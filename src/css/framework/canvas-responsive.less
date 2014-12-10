@@ -1,0 +1,105 @@
+@-webkit-viewport { width:device-width }
+@-moz-viewport { width:device-width }
+@-ms-viewport { width:device-width }
+@-o-viewport { width:device-width }
+@viewport { width:device-width }
+
+@media screen and (max-width: 1050px) {
+	div#left-side {
+		display: none !important;
+	}
+
+	.with-left-side {
+		#main {
+			margin-left: 0 !important;
+		}
+
+		#footer {
+			margin-left: 20px !important;
+		}
+	}
+
+}
+
+body {
+	background-image: none !important;
+	background: #fff !important;	
+}
+
+/* Override fixed Canvas minimum width */
+.with-right-side, .with-left-side, .with-right-side.with-left-side {
+	min-width: 320px !important;
+}
+
+#wrapper-container {
+	min-width: 320px !important;
+}
+
+
+@media screen and (max-width: 850px) {
+	.with-scrolling-right-side {
+		/* Override Canvas fixed position of right aside */
+		#right-side {
+    		position: static !important;
+    		top: auto !important;
+    	}
+	}
+
+	.with-right-side {
+		#right-side-wrapper {
+			margin-top: 0 !important;
+			padding: 10px !important;
+			float: none !important;
+			width: 100% !important;
+			box-sizing: border-box;
+			float: none !important;
+			position: static !important;
+		}
+
+		#right-side {
+			box-sizing: border-box;
+			width: 100% !important;
+			margin: 0 !important;
+			padding: 10px !important;
+			border: 1px solid;
+			background: #eee !important;
+			border-radius: 3px;
+
+			button.button-sidebar-wide {
+				width: 100% !important;
+			}
+
+			.button-sidebar-wide {
+				margin: 5px 5px !important;
+				text-align: center;
+			}
+		}
+
+		#main {
+	 	   margin-right: 0 !important;
+		}
+	}
+}
+
+@media screen and (max-width: 580px) {
+	#header-logo {
+		display: none !important;
+	}
+
+	#menu {
+		margin: 0 !important;
+	}
+}
+
+@media screen and (max-width: 480px) {
+	#footer-links {
+		display: block;
+		padding-left: 0 !important;
+
+		a {
+			padding-left: 0 !important;
+		}
+	}
+}
+
+
