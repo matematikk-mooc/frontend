@@ -3,6 +3,8 @@ this.mmooc=this.mmooc||{};
 
 this.mmooc.api = function() {
     return {
+        _ajax: typeof $ !== "undefined" ? $ : {},
+
         _uriPrefix: "/api/v1",
 
         _defaultError: function (event, jqxhr, settings, thrownError) {
@@ -14,7 +16,7 @@ this.mmooc.api = function() {
             var uri      = this._uriPrefix + options.uri;
             var params   = options.params || {};
             var callback = options.callback;
-            $.get(uri, params, callback).fail(error);
+            this._ajax.get(uri, params, callback).fail(error);
         },
 
         getEnrolledCourses: function(callback, error) {
@@ -46,3 +48,7 @@ this.mmooc.api = function() {
         }
     };
 }();
+
+if (typeof module !== "undefined" && module !== null) {
+    module.exports = this.mmooc.api;
+}
