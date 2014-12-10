@@ -3,7 +3,9 @@ this.mmooc=this.mmooc||{};
 
 this.mmooc.api = function() {
     return {
-        _ajax: typeof $ !== "undefined" ? $ : {},
+        _ajax: typeof $   !== "undefined" ? $   : {},
+
+        _env:  typeof ENV !== "undefined" ? ENV : {},
 
         _uriPrefix: "/api/v1",
 
@@ -38,7 +40,7 @@ this.mmooc.api = function() {
          * returned.
          */
         getModulesForCurrentCourse: function(callback, error) {
-            var courseId = ENV.COURSE_ID;
+            var courseId = this._env.COURSE_ID;
             this._get({
                 "callback": callback,
                 "error":    error,
