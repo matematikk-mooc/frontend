@@ -10,8 +10,8 @@ this.mmooc.api = function() {
         },
 
         _get: function(options) {
-            var error    = options.error || this.defaultError;
-            var uri      = this.uriPrefix + options.uri;
+            var error    = options.error || this._defaultError;
+            var uri      = this._uriPrefix + options.uri;
             var params   = options.params || {};
             var callback = options.callback;
             $.get(uri, params, callback).fail(error);
