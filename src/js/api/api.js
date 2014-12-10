@@ -13,7 +13,6 @@ this.mmooc.api = function() {
             error = error || this.default_error;
             var uri = this.uri_prefix + "/courses";
             var params = { "include": ["syllabus_body" , "course_progress"] };
-            debugger;
             $.get(uri, params, callback).fail(error);
         },
 

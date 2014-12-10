@@ -1,7 +1,25 @@
 <div class="mmooc-course-list">
 	{{#each courses}}
-		<div class="mmooc-course">
-			<h2><a href="{{url}}">{{title}}</a></h2>	
+		<div class="mmooc-course-list-item">
+			<!-- Hent id fra en funksjon -->
+			<h2><a href="/courses/{{id}}">{{name}} &gt;</a></h2>
+
+			{{#if syllabus_body}}
+            	<div class="mmocc-course-list-description">
+					{{syllabus_body}}
+            	</div>
+			{{/if}}
+
+			{{#with course_progress}}
+				{{#if requirement_count}}
+					<div class="mmooc-progress-bar">
+                    	<div class="mmooc-progress-bar-inner" style="width:{{percentage requirement_completed_count requirement_count}}%">
+							{{percentage requirement_completed_count requirement_count}}%
+						</div>
+                    </div>
+				{{/if}}
+			{{/with}}
+
 		</div>
 	{{/each}}
 </div>
