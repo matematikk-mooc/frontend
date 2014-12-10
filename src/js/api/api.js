@@ -18,8 +18,8 @@ this.mmooc.api = function() {
 
         getModulesForCurrentCourse: function(callback, error) {
             error = error || this.default_error;
-            var course_id = ENV.COURSE_ID;
-            var uri = this.uri_prefix + "/courses/" + course_id + "/modules";
+            var courseId = ENV.COURSE_ID;
+            var uri = this.uri_prefix + "/courses/" + courseId + "/modules";
             var params = { "include": ["items"] };
             /* FIXME
              * Regarding include items:
