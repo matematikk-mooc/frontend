@@ -13,11 +13,9 @@ this.mmooc.main = function() {
 */
 
 
-
-
 $(document).ready(function() {
     mmooc.routes.addRouteForPath(/\/$/, function() {
-        //mmooc.courseList.listCourses('content');
+        mmooc.courseList.listCourses('content');
     });
 
     mmooc.routes.addRouteForPath(/\/courses\/\d$/, function() {
@@ -30,4 +28,3 @@ $(document).ready(function() {
 
     mmooc.routes.performHandlerForCurrentUrl();
 });
-
