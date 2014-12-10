@@ -39,4 +39,3 @@ this.mmooc.routes = function() {
         }
     };
 }();
-
