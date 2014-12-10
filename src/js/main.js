@@ -1,18 +1,3 @@
-/*
-this.mmooc=this.mmooc||{};
-
-
-this.mmooc.main = function() {
-    return {
-        fixResponsiveVideos : function() {
-            var content = $("#content");
-            content.fitVids();
-        }
-    };
-}();
-*/
-
-
 $(document).ready(function() {
     mmooc.routes.addRouteForPath(/\/$/, function() {
         mmooc.courseList.listCourses('content');
