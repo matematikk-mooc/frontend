@@ -1,6 +1,5 @@
 this.mmooc=this.mmooc||{};
 
-
 this.mmooc.api = function() {
     return {
         _ajax: typeof $   !== "undefined" ? $   : {},

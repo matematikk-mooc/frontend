@@ -1,7 +1,7 @@
 var api = require("../src/js/api/api.js");
 
 describe("api", function() {
-    var ajax;
+    var ajax, callback;
 
     beforeEach(function() {
         ajax = {
@@ -15,27 +15,29 @@ describe("api", function() {
         api._env = {
             "COURSE_ID": 1
         };
+
+        callback = "The callback";
     });
 
     describe("getEnrolledCourses", function() {
-        it(function() {
-            api.getEnrolledCourses();
+        it("Calls ajax.get() with correct parameters", function() {
+            api.getEnrolledCourses(callback);
             expect(ajax.get).toHaveBeenCalledWith(
                 '/api/v1/courses',
                 {include: ['syllabus_body', 'course_progress']},
-                undefined
+                callback
             );
         });
     });
 
 
     describe("getModulesForCurrentCourse", function() {
-        it(function() {
-            api.getModulesForCurrentCourse();
+        it("Calls ajax.get() with correct parameters", function() {
+            api.getModulesForCurrentCourse(callback);
             expect(ajax.get).toHaveBeenCalledWith(
                 '/api/v1/courses/1/modules',
                 {include: [ 'items' ] },
-                undefined
+                callback
             );
         });
     });
