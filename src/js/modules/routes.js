@@ -18,9 +18,9 @@ this.mmooc.routes = function() {
             routes.push(new Route(null, queryString, handler));
         },
 
-        performHandlerForCurrentUrl: function() {
-            var path = document.location.pathname;
-            var queryString = document.location.search;
+        performHandlerForUrl: function(location) {
+            var path = location.pathname;
+            var queryString = location.search;
 
             for (var i = 0; i < routes.length; i++) {
                 var route = routes[i];
@@ -39,3 +39,7 @@ this.mmooc.routes = function() {
         }
     };
 }();
+
+if (typeof module !== "undefined" && module !== null) {
+    module.exports = this.mmooc.routes;
+}

@@ -11,5 +11,5 @@ $(document).ready(function() {
         // Kurs innhold
     });
 
-    mmooc.routes.performHandlerForCurrentUrl();
+    mmooc.routes.performHandlerForUrl(document.location);
 });
