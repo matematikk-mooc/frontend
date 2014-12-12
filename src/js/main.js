@@ -8,7 +8,7 @@ $(document).ready(function() {
     });
 
     mmooc.routes.addRouteForQueryString(/module_item_id=/, function() {
-        // Kurs innhold
+        mmooc.moduleItems.listModuleItems('left-side');
     });
 
     mmooc.routes.performHandlerForUrl(document.location);

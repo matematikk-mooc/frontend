@@ -1,0 +1,13 @@
+<nav class="mmooc-module-items">
+    <div class="module-items-header">
+        <h2>{{name}}</h2>
+    </div>
+
+    {{#if items}}
+        <ul>
+            {{#each items}}
+                <li><a class="{{#if isCurrent}}active{{/if}}" href="{{html_url}}">{{title}}</a></li>
+            {{/each}}
+        </ul>
+    {{/if}}
+</nav>

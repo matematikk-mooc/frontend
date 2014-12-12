@@ -6,6 +6,8 @@ this.mmooc.api = function() {
 
         _env:  typeof ENV !== "undefined" ? ENV : {},
 
+        _location: typeof document !== "undefined" ? document.location : {},
+
         _uriPrefix: "/api/v1",
 
         _defaultError: function (event, jqxhr, settings, thrownError) {
@@ -18,6 +20,21 @@ this.mmooc.api = function() {
             var params   = options.params || {};
             var callback = options.callback;
             this._ajax.get(uri, params, callback).fail(error);
+        },
+
+        getCurrentModuleItemId : function() {
+            var paramName = "module_item_id";
+            var q = "" + this._location.search;
+            if (typeof q === "undefined" || q.indexOf(paramName) == -1) {
+                return null;
+            }
+
+            var moduleId = q.substring(q.indexOf(paramName) + paramName.length + 1, q.length);
+            if (moduleId.indexOf("&") != -1) {
+                moduleId = moduleId.substring(0, moduleId.indexOf("&"));
+            }
+
+            return parseInt(moduleId, 10);
         },
 
         getEnrolledCourses: function(callback, error) {
@@ -46,6 +63,29 @@ this.mmooc.api = function() {
                 "uri":      "/courses/" + courseId + "/modules",
                 "params":   { "include": ["items"] }
             });
+        },
+
+        getCurrentModule: function(callback, error) {
+            var currentModuleItemId = this.getCurrentModuleItemId()
+            if (currentModuleItemId == null) {
+                return;
+            }
+
+            this.getModulesForCurrentCourse(function(modules) {
+                for (var i = 0; i < modules.length; i++) {
+                    var module = modules[i];
+                    var items = module.items;
+                    for (var j = 0; j < items.length; j++) {
+                        var item = items[j];
+                        if (item.id == currentModuleItemId) {
+                            item.isCurrent = true;
+                            callback(module);
+                            return;
+                        }
+                    }
+                }
+
+            }, error);
         }
     };
 }();

@@ -6,5 +6,5 @@ Handlebars.registerHelper('percentage', function(number1, number2) {
 });
 
 Handlebars.registerHelper('urlForCourseId', function(courseId) {
-    return "/course/" + courseId;
+    return "/courses/" + courseId;
 });
