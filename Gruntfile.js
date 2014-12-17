@@ -37,7 +37,7 @@ module.exports = function(grunt) {
 	            	cleancss: true
 	        	},
 	        	files: {
-	            	'dist/mmooc-min.css': ['src/css/**/*.less']
+	            	'dist/mmooc-min.css': ['src/css/all.less']
 	        	}
 	    	}
 		},

@@ -1,0 +1,42 @@
+.list-view {
+    background: @backgroundColor;
+
+    header, .header, header,  #section-tabs-header, #section-tabs-header {
+        background: @darkTealColor !important;
+        border-top: none !important;
+        border-left: none !important;
+        border-right: none !important;
+        border-radius: 5px 5px 0 0;
+        padding: 14px 14px;
+        text-align: center;
+        border-bottom: 1px solid #D6E2E5;
+        color: #fff !important;
+        text-shadow: none !important;
+        margin-top: 30px;
+    }
+
+    ul > li {
+        padding: 8px 12px !important;
+        background: #fff !important;
+        border-top: 1px solid #EEF3F4 !important;
+        border-bottom: 1px solid #A9C1C9 !important;
+
+        &:first-of-type {
+            border-top: none !important;
+        }
+        &:last-of-type {
+            border-bottom: none !important;
+        }
+
+        a {
+            border: none !important;
+            font-size: 13px !important;
+            color: @textColor !important;
+        }
+
+        a.active, a:active:hover {
+            background: #fff;
+            font-weight: bold;
+        }
+    }
+}
