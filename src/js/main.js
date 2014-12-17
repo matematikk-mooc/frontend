@@ -8,7 +8,9 @@ $(document).ready(function() {
     });
 
     mmooc.routes.addRouteForQueryString(/module_item_id=/, function() {
-        mmooc.moduleItems.listModuleItems('left-side');
+        mmooc.menu.listModuleItems();
+        mmooc.menu.showTeacherAdminMenu();
+
     });
 
     mmooc.routes.performHandlerForUrl(document.location);

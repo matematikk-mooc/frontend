@@ -86,7 +86,13 @@ this.mmooc.api = function() {
                 }
 
             }, error);
+        },
+
+        getRoles : function() {
+            return this._env.current_user_roles;
         }
+
+
     };
 }();
 

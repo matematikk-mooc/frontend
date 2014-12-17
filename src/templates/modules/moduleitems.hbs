@@ -4,9 +4,9 @@
     </div>
 
     {{#if items}}
-        <ul>
+        <ul class="mmooc-module-list">
             {{#each items}}
-                <li><a class="{{#if isCurrent}}active{{/if}}" href="{{html_url}}">{{title}}</a></li>
+                <li class="mmooc-module-item"><a class="{{#if isCurrent}}active{{/if}}" href="{{html_url}}">{{title}}{{#ifItemIsCompleted completion_requirement}}<i class="icon-check"></i>{{/ifItemIsCompleted}}</a></li>
             {{/each}}
         </ul>
     {{/if}}
