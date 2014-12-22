@@ -1,14 +1,47 @@
 .mmooc-course-list {
 	.mmooc-course-list-item {
-		background: #ccc;
+		background: #FFF;
 		border-radius: 4px;
-		margin-bottom: 1em;
-		padding: 3px;
+		margin-bottom: 20px;
+		padding: 2px 22px 22px 22px; /* Less padding on top since heading will add padding when only one line */
 
-		h2 {
-			font-size: 20px;
-			line-height: 20px;
+		.border-box;
+
+		.mmooc-course-list-heading {
+			.vertical-align-parent;
+			height: 50px;
+
+			h2 {
+				line-height: 24px;
+				font-size: 20px;
+				 text-align: center;
+
+				.vertical-align;
+				a {
+					color: #000;
+				}
+
+			}
 		}
-	}	
+
+		.mmooc-course-list-description {
+			line-height: 20px;
+			height: 60px;
+			overflow: hidden;
+		}
+
+		.mmooc-course-list-button {
+			margin: 24px 0;
+		}
+
+		.mmooc-course-list-button {
+			text-align: center;
+			padding: 4px 40px;
+		}
+
+		.mmooc-course-list-progress {
+			height: 10px; /* Fixed height since all courses might not have progress bar */
+		}
+	}
 }
 

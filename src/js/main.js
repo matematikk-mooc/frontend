@@ -3,6 +3,10 @@ $(document).ready(function() {
         mmooc.courseList.listCourses('content');
     });
 
+    mmooc.routes.addRouteForPath(/\/courses$/, function() {
+        mmooc.courseList.listCourses('content');
+    });
+
     mmooc.routes.addRouteForPath(/\/courses\/\d$/, function() {
         // Kurs side
     });

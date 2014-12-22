@@ -1,24 +1,38 @@
 <div class="mmooc-course-list">
-	{{#each courses}}
-		<div class="mmooc-course-list-item">
-			<h2><a href="{{urlForCourseId id}}">{{name}} &gt;</a></h2>
-
-			{{#if syllabus_body}}
-            	<div class="mmocc-course-list-description">
-					{{{syllabus_body}}}
-            	</div>
-			{{/if}}
-
-			{{#with course_progress}}
-				{{#if requirement_count}}
-					<div class="mmooc-progress-bar">
-                    	<div class="mmooc-progress-bar-inner" style="width:{{percentage requirement_completed_count requirement_count}}%">
-							{{percentage requirement_completed_count requirement_count}}%
-						</div>
+    <h2>Mine kurs</h2>
+    <div class="mmooc-row">
+		{{#each courses}}
+            <div class="mmooc-size-1of3">
+                <div class="mmooc-course-list-item">
+                    <div class="mmooc-course-list-heading">
+                        <h2><a href="{{urlForCourseId id}}">{{name}}</a></h2>
                     </div>
-				{{/if}}
-			{{/with}}
 
-		</div>
-	{{/each}}
+                    <div class="mmooc-course-list-description">
+						{{#if syllabus_body}}
+
+							{{{syllabus_body}}}
+
+						{{/if}}
+                    </div>
+
+                    <div class="mmooc-course-list-button">
+                        <a href="{{urlForCourseId id}}" class="btn rounded">Gå til kursside</a>
+                    </div>
+
+                    <div class="mmooc-course-list-progress">
+						{{#with course_progress}}
+							{{#if requirement_count}}
+                                <div class="mmooc-progress-bar">
+                                    <div class="mmooc-progress-bar-inner" style="width:{{percentage requirement_completed_count requirement_count}}%">
+                                    </div>
+                                </div>
+							{{/if}}
+						{{/with}}
+                    </div>
+                </div>
+            </div>
+
+		{{/each}}
+    </div>
 </div>

@@ -4,23 +4,49 @@ body {
     color: @textColor;
 }
 
-#left-side {
-    width: 235px;
+#dashboard {
+    display:none;
 }
 
-.with-left-side #main {
-    margin-left: 300px;
+#my_courses_table {
+    display: none;
 }
 
-#main {
-    max-width: 590px;
-    background: @backgroundColor;
+
+#identity {
+    background-image: none;
+    box-shadow: none;
     border: none;
 }
 
+#left-side {
+    width: 243px;
+    border: none !important;
+}
+
+#content {
+    padding: 10px 0 0 0 !important;
+}
+
+#main {
+    background: @backgroundColor;
+    border: none !important;
+}
+
 .with-right-side #main {
+    max-width: 890px;
     margin-right: 300px;
 }
+
+.with-left-side #main {
+    max-width: 890px;
+    margin-left: 305px;
+}
+
+.with-left-side.with-right-side #main {
+    max-width: 590px;
+}
+
 
 #right-side {
     margin: 13px 0 0 65px;
