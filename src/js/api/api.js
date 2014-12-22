@@ -56,7 +56,7 @@ this.mmooc.api = function() {
          * returned.
          */
         getModulesForCurrentCourse: function(callback, error) {
-            var courseId = this._env.COURSE_ID;
+            var courseId = this.getCurrentCourseId();
             this._get({
                 "callback": callback,
                 "error":    error,
@@ -65,8 +65,12 @@ this.mmooc.api = function() {
             });
         },
 
+        getCurrentCourseId: function() {
+            return this._env.COURSE_ID;
+        },
+
         getCurrentModule: function(callback, error) {
-            var currentModuleItemId = this.getCurrentModuleItemId()
+            var currentModuleItemId = this.getCurrentModuleItemId();
             if (currentModuleItemId == null) {
                 return;
             }

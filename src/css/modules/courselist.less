@@ -1,9 +1,16 @@
 .mmooc-course-list {
+	margin-top: 40px;
+
+	h1 {
+		margin-bottom: 44px;
+	}
+
 	.mmooc-course-list-item {
+
 		background: #FFF;
-		border-radius: 4px;
-		margin-bottom: 20px;
+		margin-bottom: 40px;
 		padding: 2px 22px 22px 22px; /* Less padding on top since heading will add padding when only one line */
+		box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.35);
 
 		.border-box;
 
@@ -14,7 +21,8 @@
 			h2 {
 				line-height: 24px;
 				font-size: 20px;
-				 text-align: center;
+				text-align: center;
+
 
 				.vertical-align;
 				a {
@@ -25,8 +33,7 @@
 		}
 
 		.mmooc-course-list-description {
-			line-height: 20px;
-			height: 60px;
+			height: 3*@lineHeight;
 			overflow: hidden;
 		}
 
@@ -36,7 +43,10 @@
 
 		.mmooc-course-list-button {
 			text-align: center;
-			padding: 4px 40px;
+			a {
+				padding: 4px 44px;
+			}
+
 		}
 
 		.mmooc-course-list-progress {

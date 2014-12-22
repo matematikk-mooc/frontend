@@ -2,6 +2,12 @@ body {
     background-image: none !important;
     background: @backgroundColor !important;
     color: @textColor;
+    font-size: @fontSize;
+    line-height: @lineHeight;
+}
+
+a {
+    color: @linkColor;
 }
 
 #dashboard {
@@ -20,7 +26,7 @@ body {
 }
 
 #left-side {
-    width: 243px;
+    width: @leftColIncludingIndicator;
     border: none !important;
 }
 
@@ -34,23 +40,23 @@ body {
 }
 
 .with-right-side #main {
-    max-width: 890px;
-    margin-right: 300px;
+    max-width: @maxWidth - @rightColWidth - @columnPadding;
+    margin-right: @rightColWidth + @columnPadding;
 }
 
 .with-left-side #main {
-    max-width: 890px;
+    max-width: @maxWidth - @leftColWidth - @rightColWidth - 2*@columnPadding; /* Same width as for pages with right column in increase readability */
     margin-left: 305px;
 }
 
 .with-left-side.with-right-side #main {
-    max-width: 590px;
+    max-width: @maxWidth - @leftColWidth - @rightColWidth - 2*@columnPadding;
 }
 
 
 #right-side {
-    margin: 13px 0 0 65px;
-    width: 235px;
+    padding-left: @columnPadding;
+    width: @rightColWidth;
 }
 
 #wrapper {
