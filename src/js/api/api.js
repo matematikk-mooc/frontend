@@ -6,7 +6,7 @@ this.mmooc.api = function() {
 
         _env:  typeof ENV !== "undefined" ? ENV : {},
 
-        _location: typeof document !== "undefined" ? document.location : {},
+        _location: typeof document !== "undefined" ? document.location : {search:"", href:""},
 
         _uriPrefix: "/api/v1",
 
@@ -66,7 +66,13 @@ this.mmooc.api = function() {
         },
 
         getCurrentCourseId: function() {
-            return this._env.COURSE_ID;
+            var currentUrl = "" + this._location.pathname;
+            var matches = currentUrl.match(/\/courses\/(\d+)/);
+            if (matches != null) {
+                return parseInt(matches[1], 10);
+            }
+
+            return null;
         },
 
         getCurrentModule: function(callback, error) {

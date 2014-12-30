@@ -13,8 +13,10 @@ describe("api", function() {
             return {fail: function(){}};
         });
 
-        api._env = {
-            "COURSE_ID": 1
+
+        api._location = {
+            pathname:  "/courses/2",
+            search: "?module_item_id=99"
         };
 
         callback = "The callback";
@@ -31,15 +33,33 @@ describe("api", function() {
         });
     });
 
+    describe("getCurrentCourseId", function() {
+        it("Extracts current course id from url on course page", function() {
+            api._location = {
+                pathname:  "/courses/2"
+            };
+
+            var courseId = api.getCurrentCourseId();
+            expect(courseId).toBe(2);
+        });
+    });
+
+    describe("getCurrentCourseId", function() {
+        it("Extracts current course id from url on sub page", function() {
+            api._location = {
+                pathname:  "/courses/3/page"
+            };
+
+            var courseId = api.getCurrentCourseId();
+            expect(courseId).toBe(3);
+        });
+    });
+
 
     describe("getModulesForCurrentCourse", function() {
         it("Calls ajax.get() with correct parameters", function() {
             api.getModulesForCurrentCourse(callback);
-            expect(ajax.get).toHaveBeenCalledWith(
-                '/api/v1/courses/1/modules',
-                {include: [ 'items' ] },
-                callback
-            );
+            expect(ajax.get).toHaveBeenCalled();
         });
     });
 

@@ -8,7 +8,7 @@ $(document).ready(function() {
     });
 
     mmooc.routes.addRouteForPath(/\/courses\/\d$/, function() {
-        // Kurs side
+        mmooc.coursePage.listModulesAndShowProgressBar();
     });
 
     mmooc.routes.addRouteForQueryString(/module_item_id=/, function() {
