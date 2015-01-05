@@ -54,10 +54,25 @@ a {
 }
 
 
+.home #main {
+    margin-left: 0;
+    max-width: @maxWidth - @rightColLargeWidth - @columnPadding;
+    /*  max-width: @maxWidth - @leftColWidth - @rightColLargeWidth - 2*@columnPadding; */
+}
+
+.home #left-side {
+    display: none;
+}
+
 #right-side {
     padding-left: @columnPadding;
     width: @rightColWidth;
 }
+
+.home #right-side {
+    width: @rightColLargeWidth;
+}
+
 
 #wrapper {
     max-width: 1200px;
