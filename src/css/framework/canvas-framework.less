@@ -53,7 +53,6 @@ a {
 #mmooc-course-tabs-container-inner {
     margin: 0 auto;
     max-width: 1200px;
-
 }
 
 .with-right-side #main {
@@ -61,15 +60,21 @@ a {
     margin-right: @rightColWidth + @columnPadding;
 }
 
-.with-left-side #main {
-    max-width: @maxWidth - @leftColWidth - @rightColWidth - 2*@columnPadding; /* Same width as for pages with right column in increase readability */
-    margin-left: 305px;
-}
+.with-left-side {
+    #main {
+        /* We hide left menu as default */
+        margin-left: 0;
+    }
 
-.with-left-side.with-right-side #main {
-    max-width: @maxWidth - @leftColWidth - @rightColWidth - 2*@columnPadding;
-}
+    #left-side {
+        /* Hide left menu as default */
+        display: none;
+    }
 
+    #wrapper {
+        margin-left: auto;
+    }
+}
 
 .home #main {
     margin-left: 0;
@@ -77,9 +82,11 @@ a {
     /*  max-width: @maxWidth - @leftColWidth - @rightColLargeWidth - 2*@columnPadding; */
 }
 
-.home #left-side {
-    display: none;
+.pages #main {
+    /* Increase readability */
+    max-width: 680px;
 }
+
 
 #right-side {
     padding-left: @columnPadding;
@@ -96,9 +103,10 @@ a {
     margin: 0 auto;
 }
 
-.with-left-side #wrapper {
-    margin-left: auto;
+#wrapper-container {
+    clear: both;
 }
+
 
 #breadcrumbs {
     display: none;

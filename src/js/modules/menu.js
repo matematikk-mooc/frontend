@@ -10,13 +10,19 @@ this.mmooc.menu = function() {
                 document.getElementById('left-side').insertAdjacentHTML('afterbegin', html);
             });
         },
+        showLeftMenu: function() {
+            if ($("body").hasClass("with-left-side")) {
+                $("#main").css('margin-left', '305px');
+                $("#left-side").show();
+            }
+        },
+
         showTeacherAdminMenu: function() {
             var roles = mmooc.api.getRoles();
             if (roles.indexOf('teacher') != -1 || roles.indexOf('admin') != -1) {
                 $('#section-tabs-header').show();
                 $("nav[aria-label='context']").show();
-                $("#main").css('margin-left', '305px');
-                $("#left-side").show();
+                this.showLeftMenu();
             }
         },
         hideRightMenu: function() {
