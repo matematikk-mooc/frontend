@@ -100,9 +100,16 @@ this.mmooc.api = function() {
 
         getRoles : function() {
             return this._env.current_user_roles;
+        },
+
+        getGroupsForCurrentUser: function(callback, error) {
+            this._get({
+                "callback": callback,
+                "error":    error,
+                "uri":      "/users/self/groups",
+                "params":   { }
+            });
         }
-
-
     };
 }();
 

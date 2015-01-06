@@ -19,22 +19,27 @@ this.mmooc.routes = function() {
         },
 
         performHandlerForUrl: function(location) {
-            var path = location.pathname;
-            var queryString = location.search;
 
-            for (var i = 0; i < routes.length; i++) {
-                var route = routes[i];
-                if (route.path != null) {
-                    if (route.path.test(path)) {
-                        route.handler();
-                        return;
-                    }
-                } else if (route.queryString != null) {
-                    if (route.queryString.test(queryString)) {
-                        route.handler();
-                        return;
+            try {
+                var path = location.pathname;
+                var queryString = location.search;
+
+                for (var i = 0; i < routes.length; i++) {
+                    var route = routes[i];
+                    if (route.path != null) {
+                        if (route.path.test(path)) {
+                            route.handler();
+                            return;
+                        }
+                    } else if (route.queryString != null) {
+                        if (route.queryString.test(queryString)) {
+                            route.handler();
+                            return;
+                        }
                     }
                 }
+            } catch (e) {
+                console.log(e);
             }
         }
     };

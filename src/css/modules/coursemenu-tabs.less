@@ -1,0 +1,33 @@
+
+.mmooc-course-tabs {
+    margin: 40px 0 -5px 0;
+
+    clear: both;
+
+
+    &:after {
+        content: " ";
+        display: block;
+        height: 0;
+        clear: both;
+    }
+
+    li {
+        list-style: outside none none;
+        float: left;
+        margin-right: 30px;
+        padding: 10px 45px;
+
+        a {
+            color: @textColor;
+        }
+    }
+
+    li.selected {
+        background: @backgroundColor;
+        border-radius: 5px 5px 0 0;
+        border-width: 3px 1px 0 1px;
+        border-color: #DCDCDC;
+        border-style: solid;
+    }
+}

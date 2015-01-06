@@ -1,0 +1,11 @@
+<div id="mmooc-course-tabs-container">
+    <div id="mmooc-course-tabs-container-inner">
+        <h1>Kursnavn</h1>
+
+        <ul class="mmooc-course-tabs">
+            {{#each menuItems}}
+                <li class="mmooc-course-tab {{#ifEquals title ../selectedMenuItem}}selected{{/ifEquals}}"><a href="{{url}}">{{title}}</a></li>
+            {{/each}}
+        </ul>
+    </div>
+</div>
