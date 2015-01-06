@@ -1,3 +1,11 @@
+Handlebars.registerHelper('lowercase', function(str) {
+    return ("" + str).toLowerCase();
+});
+
+Handlebars.registerHelper('uppercase', function(str) {
+    return ("" + str).toUpperCase();
+});
+
 Handlebars.registerHelper('percentage', function(number1, number2) {
     if (number2 == 0) {
         return 0;
@@ -21,6 +29,7 @@ Handlebars.registerHelper('ifEquals', function(var1, var2, options) {
 
 
 Handlebars.registerHelper('ifItemIsCompleted', function(completion_requirement, options) {
+
     if (completion_requirement && completion_requirement.completed) {
         return options.fn(this);
     } else {

@@ -5,6 +5,7 @@ this.mmooc.coursePage = function() {
     return {
         listModulesAndShowProgressBar: function() {
             mmooc.api.getModulesForCurrentCourse(function(modules) {
+                console.log(modules);
                 var modulesHTML = mmooc.util.renderTemplateWithData("modules", {modules: modules});
                 document.getElementById('content').insertAdjacentHTML('afterbegin', modulesHTML);
 
