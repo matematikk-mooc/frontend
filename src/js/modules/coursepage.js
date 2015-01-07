@@ -12,9 +12,7 @@ this.mmooc.coursePage = function() {
         menuItems[menuItems.length] = {"title": "Kunngjøringer", url: "/courses/" + courseId + "/announcements"};
         menuItems[menuItems.length] = {"title": "Kursdiskusjoner", url: "/courses/" + courseId + "/discussion_topics"};
 
-
-        var html = mmooc.util.renderTemplateWithData("coursemenu", {menuItems: menuItems, selectedMenuItem: selectedMenuItem });
-        console.log(html);
+        var html = mmooc.util.renderTemplateWithData("coursemenu", {menuItems: menuItems, selectedMenuItem: selectedMenuItem, title: document.title });
         document.getElementById('header').insertAdjacentHTML('afterend', html);
     }
 
