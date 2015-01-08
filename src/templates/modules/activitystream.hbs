@@ -1,0 +1,5 @@
+<ul id="mmooc-notifications">
+{{#each activities}}
+    <li {{#unless read_state}}class="unread"{{/unless}}><a href="{{html_url}}">{{title}} ({{type}})</a></li>
+{{/each}}
+</ul>

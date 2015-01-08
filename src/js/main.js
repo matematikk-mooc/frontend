@@ -45,6 +45,7 @@ $(document).ready(function() {
     });
 
     mmooc.menu.showTeacherAdminMenu();
+    mmooc.menu.showUserMenu();
 
 
     mmooc.routes.performHandlerForUrl(document.location);

@@ -28,6 +28,16 @@ this.mmooc.menu = function() {
         hideRightMenu: function() {
             $("#right-side").hide();
             $("body").removeClass('with-right-side');
+        },
+
+        showUserMenu: function() {
+            var html = mmooc.util.renderTemplateWithData("usermenu", {user: mmooc.api.getUser()});
+            document.getElementById('menu').insertAdjacentHTML('afterend', html);
+
+            mmooc.api.getActivityStreamForUser(function(activities) {
+                var activityHTML = mmooc.util.renderTemplateWithData("activitystream", {activities: activities});
+                document.getElementById('mmooc-activity-stream').innerHTML = activityHTML;
+            });
         }
 
     };

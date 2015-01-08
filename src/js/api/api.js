@@ -105,11 +105,15 @@ this.mmooc.api = function() {
             return this._env.current_user_roles;
         },
 
-        getGroupsForCurrentUser: function(callback, error) {
+        getUser : function() {
+            return this._env.current_user;
+        },
+
+        getActivityStreamForUser: function(callback, error) {
             this._get({
                 "callback": callback,
                 "error":    error,
-                "uri":      "/users/self/groups",
+                "uri":      "/users/self/activity_stream",
                 "params":   { }
             });
         }

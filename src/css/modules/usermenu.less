@@ -1,0 +1,61 @@
+.mmooc-menu-item {
+    float: left;
+    margin: 0;
+    padding: 0;
+    display: block;
+    float: left;
+    position: relative;
+    margin-right: 25px;
+
+    .mmooc-menu-item-title {
+        color: #FFF;
+        text-decoration: none;
+
+        &:hover {
+            color: #FFF;
+        }
+    }
+
+    .mmooc-menu-item-drop {
+        display: none;
+        position: absolute;
+        background: @darkTealColor;
+        width: 200px;
+
+        ul {
+            margin: 30px 15px 0 25px;
+
+            li {
+                padding: 4px 0;
+                color: #FF8300;
+                list-style: none outside none;
+
+                a {
+                    color: #FFF;
+                    font-size: 12px;
+                }
+
+                border-top: 1px solid #105569;
+                border-bottom: 1px solid #3F7687;
+
+                &:first-of-type {
+                    border-top: none;
+                }
+
+                &:last-of-type {
+                    border-bottom: none;
+                }
+
+                &.unread {
+                    list-style: disc outside;
+                }
+
+            }
+        }
+    }
+
+    &:hover .mmooc-menu-item-drop {
+        display: block;
+    }
+
+}
