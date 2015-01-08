@@ -2,17 +2,16 @@ this.mmooc=this.mmooc||{};
 
 
 this.mmooc.coursePage = function() {
-    function _renderCourseMenu(courseId, selectedMenuItem, groupUrl) {
+    function _renderCourseMenu(courseId, selectedMenuItem) {
         var menuItems = [];
 
         menuItems[menuItems.length] = {"title": "Kursforside", url: "/courses/" + courseId};
-        if (groupUrl != null) {
-            menuItems[menuItems.length] = {"title": "Din gruppe", url: groupUrl};
-        }
         menuItems[menuItems.length] = {"title": "Kunngjøringer", url: "/courses/" + courseId + "/announcements"};
-        menuItems[menuItems.length] = {"title": "Kursdiskusjoner", url: "/courses/" + courseId + "/discussion_topics"};
+        menuItems[menuItems.length] = {"title": "Grupper", url: "/courses/" + courseId + "/groups"};
+        menuItems[menuItems.length] = {"title": "Diskusjoner", url: "/courses/" + courseId + "/discussion_topics"};
 
-        var html = mmooc.util.renderTemplateWithData("coursemenu", {menuItems: menuItems, selectedMenuItem: selectedMenuItem, title: document.title });
+        var title = document.title.replace(":", " for ");
+        var html = mmooc.util.renderTemplateWithData("coursemenu", {menuItems: menuItems, selectedMenuItem: selectedMenuItem, title: title });
         document.getElementById('header').insertAdjacentHTML('afterend', html);
     }
 
@@ -31,12 +30,8 @@ this.mmooc.coursePage = function() {
         showCourseMenu: function(selectedMenuItem) {
             var courseId = mmooc.api.getCurrentCourseId();
 
-            mmooc.api.getGroupsForCurrentUser(function(groups) {
-                // TODO: Plukk ut grupper
-                _renderCourseMenu(courseId, selectedMenuItem, null);
-            }, function() {
-                _renderCourseMenu(courseId, selectedMenuItem, null);
-            });
+            $("#body").addClass("with-course-menu");
+            _renderCourseMenu(courseId, selectedMenuItem);
         }
     };
 }();

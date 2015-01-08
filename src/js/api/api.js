@@ -70,6 +70,9 @@ this.mmooc.api = function() {
             var matches = currentUrl.match(/\/courses\/(\d+)/);
             if (matches != null) {
                 return parseInt(matches[1], 10);
+            } else if (this._env.group) {
+                // Group pages does not contain course id in URL, but is available via JavaScript variable
+                return this._env.group.context_id;
             }
 
             return null;

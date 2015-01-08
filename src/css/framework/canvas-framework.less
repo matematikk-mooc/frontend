@@ -28,11 +28,17 @@ a {
 #left-side {
     width: @leftColIncludingIndicator;
     border: none !important;
+    padding-top: 25px;
 }
 
 #content {
+    padding: @contentTopMargin 0 0 0 !important;
+}
+
+.with-course-menu #content {
     padding: 10px 0 0 0 !important;
 }
+
 
 #main {
     background: @backgroundColor;
@@ -93,6 +99,7 @@ a {
 #right-side {
     padding-left: @columnPadding;
     width: @rightColWidth;
+    padding-top: @contentTopMargin;
 }
 
 .home #right-side {

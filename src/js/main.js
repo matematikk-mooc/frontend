@@ -19,7 +19,23 @@ $(document).ready(function() {
     });
 
     mmooc.routes.addRouteForPath(/\/courses\/\d\/discussion_topics$/, function() {
-        mmooc.coursePage.showCourseMenu('Kursdiskusjoner');
+        mmooc.coursePage.showCourseMenu('Diskusjoner');
+    });
+
+    mmooc.routes.addRouteForPath(/\/courses\/\d\/discussion_topics\/\d\$/, function() {
+        mmooc.discussions.showTeacherAdminDiscussionMenu();
+    });
+
+    mmooc.routes.addRouteForPath(/\/courses\/\d\/groups$/, function() {
+        mmooc.coursePage.showCourseMenu('Grupper');
+    });
+
+    mmooc.routes.addRouteForPath(/\/groups\/\d$/, function() {
+        mmooc.coursePage.showCourseMenu('Grupper');
+    });
+
+    mmooc.routes.addRouteForPath(/\/courses\/\d\/users$/, function() {
+        mmooc.coursePage.showCourseMenu('');
     });
 
 
@@ -30,5 +46,8 @@ $(document).ready(function() {
 
     mmooc.menu.showTeacherAdminMenu();
 
+
     mmooc.routes.performHandlerForUrl(document.location);
 });
+
+

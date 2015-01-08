@@ -33,7 +33,7 @@ describe("api", function() {
         });
     });
 
-    describe("getCurrentCourseId", function() {
+    describe("getCurrentCourseIdFromUrl", function() {
         it("Extracts current course id from url on course page", function() {
             api._location = {
                 pathname:  "/courses/2"
@@ -41,6 +41,23 @@ describe("api", function() {
 
             var courseId = api.getCurrentCourseId();
             expect(courseId).toBe(2);
+        });
+    });
+
+    describe("getCurrentCourseIdFromGroup", function() {
+        it("Extracts current course id from ENV.group on group page", function() {
+            api._location = {
+                pathname:  "/groups/2"
+            };
+
+            api._env = {
+                group: {
+                    context_id: 3
+                }
+            };
+
+            var courseId = api.getCurrentCourseId();
+            expect(courseId).toBe(3);
         });
     });
 
