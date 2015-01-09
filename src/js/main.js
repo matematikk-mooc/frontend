@@ -22,7 +22,7 @@ $(document).ready(function() {
         mmooc.coursePage.showCourseMenu('Diskusjoner');
     });
 
-    mmooc.routes.addRouteForPath(/\/courses\/\d\/discussion_topics\/\d\$/, function() {
+    mmooc.routes.addRouteForPath(/\/courses\/\d\/discussion_topics\/\d$/, function() {
         mmooc.discussions.showTeacherAdminDiscussionMenu();
     });
 
@@ -39,7 +39,7 @@ $(document).ready(function() {
     });
 
 
-    mmooc.routes.addRouteForQueryString(/module_item_id=/, function() {
+    mmooc.routes.addRouteForPathOrQueryString([/\/courses\/\d\/assignments\/\d/, /\/courses\/\d\/discussion_topics\/\d/, /\/courses\/\d\/quizzes\/\d/], /module_item_id=/, function() {
         mmooc.menu.showLeftMenu();
         mmooc.menu.listModuleItems();
     });

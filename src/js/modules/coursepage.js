@@ -29,8 +29,7 @@ this.mmooc.coursePage = function() {
 
         showCourseMenu: function(selectedMenuItem) {
             var courseId = mmooc.api.getCurrentCourseId();
-
-            $("#body").addClass("with-course-menu");
+            $("body").addClass("with-course-menu");
             _renderCourseMenu(courseId, selectedMenuItem);
         }
     };

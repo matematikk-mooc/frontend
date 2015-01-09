@@ -11,8 +11,12 @@
     <li class="mmooc-menu-item">
         <a href="#" class="mmooc-menu-item-title">{{user.display_name}}</a>
         <div class="mmooc-menu-item-drop">
-            <a href="/logout">Innstillinger</a><br>
-            <a href="/logout">Logg ut</a>
+            <ul>
+                <li><a href="/about/{{user.id}}">Innstillinger</a><br></li>
+                <li><a href="/logout">Logg ut</a></li>
+            </ul>
+
+
         </div>
     </li>
 </ul>

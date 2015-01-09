@@ -102,4 +102,16 @@ describe("api", function() {
         });
     });
 
+    describe("getCurrentTypeAndContentId", function() {
+        it("Should return correct type and contentid based on URL", function() {
+            api._location = {
+                pathname: "/courses/1/assignments/2"
+            };
+
+            var typeAndContentId = api.getCurrentTypeAndContentId();
+            expect(typeAndContentId.contentId).toBe(2);
+            expect(typeAndContentId.type).toBe('Assignment');
+        });
+    });
+
 });

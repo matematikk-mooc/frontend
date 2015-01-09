@@ -2,9 +2,19 @@ this.mmooc=this.mmooc||{};
 
 
 this.mmooc.routes = function() {
-    function Route(path, queryString, handler) {
-        this.path = path;
-        this.queryString = queryString;
+    function Route(paths, queryStrings, handler) {
+        if (paths != null) {
+            this.paths = paths instanceof Array ? paths : [paths];
+        } else {
+            this.paths = null;
+        }
+
+        if (queryStrings != null) {
+            this.queryStrings = queryStrings instanceof Array ? queryStrings : [queryStrings];
+        } else {
+            this.queryStrings = null;
+        }
+
         this.handler = handler;
     }
 
@@ -18,6 +28,10 @@ this.mmooc.routes = function() {
             routes.push(new Route(null, queryString, handler));
         },
 
+        addRouteForPathOrQueryString: function(path, queryString, handler) {
+            routes.push(new Route(path, queryString, handler));
+        },
+
         performHandlerForUrl: function(location) {
 
             try {
@@ -26,15 +40,22 @@ this.mmooc.routes = function() {
 
                 for (var i = 0; i < routes.length; i++) {
                     var route = routes[i];
-                    if (route.path != null) {
-                        if (route.path.test(path)) {
-                            route.handler();
-                            return;
+                    if (route.paths != null) {
+                        for (var j = 0; j < route.paths.length; j++) {
+                            if (route.paths[j].test(path)) {
+                                route.handler();
+                                return;
+                            }
                         }
-                    } else if (route.queryString != null) {
-                        if (route.queryString.test(queryString)) {
-                            route.handler();
-                            return;
+                    }
+
+                    if (route.queryStrings != null) {
+                        for (var k = 0; k < route.queryStrings.length; k++) {
+
+                            if (route.queryStrings[k].test(queryString)) {
+                                route.handler();
+                                return;
+                            }
                         }
                     }
                 }
