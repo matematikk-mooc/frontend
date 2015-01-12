@@ -106,8 +106,23 @@ this.mmooc.api = function() {
             } else if (this._env.group) {
                 // Group pages does not contain course id in URL, but is available via JavaScript variable
                 return this._env.group.context_id;
+            } else if ($("#section-tabs-header-subtitle").size() > 0) {
+                // Group subpages contains course id only in a link
+                var tmp = $("#section-tabs-header-subtitle").attr("href").split("/");
+                if (tmp.length == 3) {
+                    return parseInt(tmp[2], 10);
+                }
             }
 
+            return null;
+        },
+
+        getCurrentGroupId: function() {
+            var currentUrl = "" + this._location.pathname;
+            var matches = currentUrl.match(/\/groups\/(\d+)/);
+            if (matches != null) {
+                return parseInt(matches[1], 10);
+            }
             return null;
         },
 
