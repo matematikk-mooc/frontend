@@ -9,7 +9,7 @@ $(document).ready(function() {
         mmooc.courseList.listCourses('content');
     });
 
-    mmooc.routes.addRouteForPath(/\/courses\/\d$/, function() {
+    mmooc.routes.addRouteForPath(/\/courses\/\d+$/, function() {
         mmooc.coursePage.listModulesAndShowProgressBar();
         mmooc.coursePage.showCourseMenu('Kursforside');
     });
@@ -30,16 +30,16 @@ $(document).ready(function() {
         mmooc.coursePage.showCourseMenu('Grupper');
     });
 
-    mmooc.routes.addRouteForPath(/\/groups\/\d$/, function() {
+    mmooc.routes.addRouteForPath(/\/groups\/\d+$/, function() {
         mmooc.coursePage.showCourseMenu('Grupper');
     });
 
-    mmooc.routes.addRouteForPath(/\/courses\/\d\/users$/, function() {
+    mmooc.routes.addRouteForPath(/\/courses\/\d+\/users$/, function() {
         mmooc.coursePage.showCourseMenu('');
     });
 
 
-    mmooc.routes.addRouteForPathOrQueryString([/\/courses\/\d\/assignments\/\d/, /\/courses\/\d\/discussion_topics\/\d/, /\/courses\/\d\/quizzes\/\d/], /module_item_id=/, function() {
+    mmooc.routes.addRouteForPathOrQueryString([/\/courses\/\d+\/assignments\/\d+/, /\/courses\/\d\/discussion_topics\/\d+/, /\/courses\/\d+\/quizzes\/\d+/], /module_item_id=/, function() {
         mmooc.menu.showLeftMenu();
         mmooc.menu.listModuleItems();
     });
