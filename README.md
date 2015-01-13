@@ -8,36 +8,37 @@ The custom JS and CSS frontend is built on top of Canvas using the mechanism in 
 
 The frontend changes the Canvas graphical design and user interface by using [LESS](http://lesscss.org) and custom HTML injected using JavaScript and [Handlebars.js](http://handlebarsjs.com/) templates.
 
-The custom JS and CSS frontend is compiled and concatenated into a single CSS and JavaScript file using Node and Grunt (JavaScript Task Runner), see Getting started
-on how to build the frontend on your local machine.
+The custom JS and CSS frontend is compiled and concatenated into a single CSS and JavaScript file using Node and [Grunt - JavaScript Task Runner](http://gruntjs.com)
 
 
 # Getting started
+If you want to to build the frontend on your local machine you need to follow these steps:
+
 
 ## Install Node
 To build CSS and JavaScript files you need to install [Node JS](http://nodejs.org) or update to the latest version if you are already have it installed.
 
 
-## Download or clone frontend project
+## Clone or download frontend project to local machine
 Clone the frontend from https://github.com/matematikk-mooc/frontend or download using your browser
 ```
 git clone https://github.com/matematikk-mooc/frontend.git
 ```
 
 ## Install Grunt and build dependencies (Node packages)
-Switch to the directory where the frontend is located and install the dependencies:
+Switch to the directory where the frontend is located and install the dependencies using [NPM](https://www.npmjs.com/):
 
 ```
 npm install
 ```
 
-## Compile JS and CSS files
+## Compile JS and CSS files using Grunt
 ```
 grunt
 ```
 
-## Start a web server on your development machine
-If you want to serve the CSS and JS files on your local machine for development, you can do this using grunt:
+## Start a web server on your local machine
+If you want to serve the CSS and JS files on your local machine for development, you can do this using Grunt:
 
 ```
 grunt serve
@@ -45,8 +46,8 @@ grunt serve
 
 All changes in LESS (CSS) and JavaScript will automatically be compiled and are available using the following URLs:
 
-* http://localhost:9000/mmooc-min.css
-* http://localhost:9000/mmooc-min.js
+* [http://localhost:9000/mmooc-min.css](http://localhost:9000/mmooc-min.css)
+* [http://localhost:9000/mmooc-min.js](http://localhost:9000/mmooc-min.js)
 
 
 ## Run Jasmine JavaScript tests
