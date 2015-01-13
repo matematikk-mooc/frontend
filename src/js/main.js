@@ -48,6 +48,7 @@ $(document).ready(function() {
     mmooc.routes.addRouteForPathOrQueryString([/\/courses\/\d+\/assignments\/\d+/, /\/courses\/\d+\/discussion_topics\/\d+/, /\/courses\/\d+\/quizzes\/\d+/], /module_item_id=/, function() {
         mmooc.menu.showLeftMenu();
         mmooc.menu.listModuleItems();
+        mmooc.pages.modifyMarkAsDoneButton();
     });
 
     mmooc.menu.showTeacherAdminMenu();

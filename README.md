@@ -20,7 +20,7 @@ To build CSS and JavaScript files you need to install [Node JS](http://nodejs.or
 
 
 ## Clone or download frontend project to local machine
-Clone the frontend from https://github.com/matematikk-mooc/frontend or download using your browser
+Clone the frontend from https://github.com/matematikk-mooc/frontend or download using your browser:
 ```
 git clone https://github.com/matematikk-mooc/frontend.git
 ```
