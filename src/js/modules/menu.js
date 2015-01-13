@@ -35,6 +35,21 @@ this.mmooc.menu = function() {
             document.getElementById('menu').insertAdjacentHTML('afterend', html);
 
             mmooc.api.getActivityStreamForUser(function(activities) {
+                var unreadNotifications = 0;
+                for (var i = 0; i < activities.length; i++) {
+                    if (activities[i].read_state == false) {
+                        unreadNotifications++;
+                    }
+                }
+
+                var badge = $("#mmooc-notification-count");
+                if (unreadNotifications == 0) {
+                    badge.hide();
+                } else {
+                    badge.html(unreadNotifications);
+                    badge.show();
+                }
+
                 var activityHTML = mmooc.util.renderTemplateWithData("activitystream", {activities: activities});
                 document.getElementById('mmooc-activity-stream').innerHTML = activityHTML;
             });
