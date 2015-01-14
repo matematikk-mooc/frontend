@@ -34,34 +34,29 @@ this.mmooc.routes = function() {
         },
 
         performHandlerForUrl: function(location) {
+            var path = location.pathname;
+            var queryString = location.search;
 
-            try {
-                var path = location.pathname;
-                var queryString = location.search;
-
-                for (var i = 0; i < routes.length; i++) {
-                    var route = routes[i];
-                    if (route.paths != null) {
-                        for (var j = 0; j < route.paths.length; j++) {
-                            if (route.paths[j].test(path) && !route.isAlreadyHandled) {
-                                route.isAlreadyHandled = true;
-                                route.handler();
-                            }
-                        }
-                    }
-
-                    if (route.queryStrings != null) {
-                        for (var k = 0; k < route.queryStrings.length; k++) {
-                            if (route.queryStrings[k].test(queryString) && !route.isAlreadyHandled) {
-                                route.isAlreadyHandled = true;
-                                route.handler();
-                                return;
-                            }
+            for (var i = 0; i < routes.length; i++) {
+                var route = routes[i];
+                if (route.paths != null) {
+                    for (var j = 0; j < route.paths.length; j++) {
+                        if (route.paths[j].test(path) && !route.isAlreadyHandled) {
+                            route.isAlreadyHandled = true;
+                            route.handler();
                         }
                     }
                 }
-            } catch (e) {
-                console.log(e);
+
+                if (route.queryStrings != null) {
+                    for (var k = 0; k < route.queryStrings.length; k++) {
+                        if (route.queryStrings[k].test(queryString) && !route.isAlreadyHandled) {
+                            route.isAlreadyHandled = true;
+                            route.handler();
+                            return;
+                        }
+                    }
+                }
             }
         }
     };

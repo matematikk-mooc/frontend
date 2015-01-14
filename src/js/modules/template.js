@@ -82,7 +82,7 @@ Handlebars.registerHelper('percentageForModules', function(modules) {
 });
 
 Handlebars.registerHelper('urlForFirstNoneCompleteItem', function(items) {
-    if (items != null && items != undefined) {
+    if (items != null && items != undefined && items.length > 0) {
         for (var i = 0; i < items.length; i++) {
             var item = items[i];
             if (item.completion_requirement && !item.completion_requirement.completed) {
