@@ -16,6 +16,7 @@ this.mmooc.routes = function() {
         }
 
         this.handler = handler;
+        this.isAlreadyHandled = false;
     }
 
     var routes = [];
@@ -42,17 +43,17 @@ this.mmooc.routes = function() {
                     var route = routes[i];
                     if (route.paths != null) {
                         for (var j = 0; j < route.paths.length; j++) {
-                            if (route.paths[j].test(path)) {
+                            if (route.paths[j].test(path) && !route.isAlreadyHandled) {
+                                route.isAlreadyHandled = true;
                                 route.handler();
-                                return;
                             }
                         }
                     }
 
                     if (route.queryStrings != null) {
                         for (var k = 0; k < route.queryStrings.length; k++) {
-
-                            if (route.queryStrings[k].test(queryString)) {
+                            if (route.queryStrings[k].test(queryString) && !route.isAlreadyHandled) {
+                                route.isAlreadyHandled = true;
                                 route.handler();
                                 return;
                             }
