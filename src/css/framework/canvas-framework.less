@@ -35,6 +35,10 @@ a {
     padding: @contentTopMargin 0 0 0 !important;
 }
 
+body.no-headers #content, body.embedded #content {
+    padding-top: 0 !important;
+}
+
 .with-course-menu #content {
     padding: 10px 0 0 0 !important;
 }
@@ -113,9 +117,17 @@ a {
 }
 
 .full-width #wrapper {
+    /* Canvas Inbox */
     max-width: none;
     margin: 0;
 }
+
+.full-width.with-right-side #wrapper {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+
 
 #wrapper-container {
     clear: both;

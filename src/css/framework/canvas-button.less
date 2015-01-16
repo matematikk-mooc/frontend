@@ -1,44 +1,6 @@
 .btn, #right-side .button-sidebar-wide {
-    background: @darkTealColor;
-    background: linear-gradient(-180deg, @darkTealGradientStart 0%, @darkTealGradientEnd 100%) !important;
-    border: 1px solid @darkTealGradientBorder;
-    box-shadow: inset 0 1px 0 0 @darkTealGradientBoxShadow;
-    border-radius: 5px;
-    color: #fff !important;
-    text-shadow: none !important;
-    font-weight: normal;
-    line-height: 25px;
-
-
-    i[class*="icon-"]:before, #right-side .button-sidebar-wide i[class^="icon-"]:before {
-        color: #fff !important;
-    }
-
-    &:hover {
-        background-image: linear-gradient(-180deg, @lightTealGradientStart 0%, @lightTealGradientEnd 100%) !important;
-        color: #fff;
-        background-position: 0 0;
-        transition: none;
-    }
-
-    &.active {
-        background-image: linear-gradient(-180deg, @orangeGradientStart 0%, @orangeGradientEnd 100%) !important;
-        box-shadow: inset 0 1px 0 0 @orangeGradientBoxShadow;
-        border: 1px solid @orangeGradientBorder;
-        color: #fff;
-        background-position: 0 0;
-        transition: none;
-    }
-
-    &.rounded {
-        border-radius: 40px;
-        padding-left: 30px;
-        padding-right: 30px;
-    }
+    .button;
 }
-
-
-
 
 #right-side .button-sidebar-wide {
     padding: 12px !important;
@@ -55,4 +17,9 @@
     background-image: linear-gradient(-180deg, @doneGradientStart 0%, @doneGradientEnd 100%) !important;
     border: 1px solid @doneGradientBorder !important;
     box-shadow: inset 0 1px 0 0 @doneGradientBoxShadow !important;
+
+    &:hover {
+        background-image: linear-gradient(-180deg, #00c700 0%, #009100 100%) !important;
+    }
+
 }

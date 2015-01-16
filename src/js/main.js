@@ -11,6 +11,7 @@ $(document).ready(function() {
 
     mmooc.routes.addRouteForPath(/\/courses\/\d+$/, function() {
         mmooc.coursePage.listModulesAndShowProgressBar();
+        mmooc.groups.interceptLinksToGroupPage();
         mmooc.coursePage.showCourseMenu('Kursforside');
     });
 
@@ -45,6 +46,11 @@ $(document).ready(function() {
         mmooc.menu.showLeftMenu();
         mmooc.menu.listModuleItems();
         mmooc.pages.modifyMarkAsDoneButton();
+    });
+
+
+    mmooc.routes.addRouteForQueryString(/enrolled=1/, function() {
+        mmooc.enroll.changeButtonText();
     });
 
     try {

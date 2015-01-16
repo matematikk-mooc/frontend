@@ -11,8 +11,39 @@
 }
 
 
-.new-and-total-badge .new-items {
-    background: #004A5F;
+.discussions {
+    .discussion-unread-status {
+        width: auto;
+    }
+
+    .topic {
+        .discussion-entry-reply-area {
+            border: 0 none;
+            border-radius: 0 0 3px 3px;
+            margin: 0;
+            padding-bottom: 1px;
+            padding-top: 1px;
+        }
+    }
+}
+
+
+
+.new-and-total-badge {
+    .new-items  {
+        background: #004A5F;
+        margin-right: 8px;
+
+        &:after {
+            content: " uleste";
+        }
+    }
+
+    .total-items {
+        &:after {
+            content: " svar";
+        }
+    }
 }
 
 #discussionsFilter {
@@ -40,3 +71,7 @@
 #discussion-search {
     margin-left: 14px;
 }
+
+
+
+

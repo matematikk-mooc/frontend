@@ -36,6 +36,16 @@ Handlebars.registerHelper('ifItemIsCompleted', function(completion_requirement, 
     }
 });
 
+Handlebars.registerHelper('localize', function(key, options) {
+    console.log("lookup:" + key);
+    if (mmooc.i18n[key] != null) {
+        return mmooc.i18n[key];
+    } else {
+        return key;
+    }
+});
+
+
 Handlebars.registerHelper('ifAllItemsCompleted', function(items, options) {
     for (var i = 0; i < items.length; i++) {
         var item = items[i];
