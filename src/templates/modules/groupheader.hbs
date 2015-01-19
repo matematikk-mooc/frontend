@@ -2,15 +2,21 @@
     <div id="mmooc-group-members">
         <p><b>Gruppemedlemmer</b></p>
 
-        <ul>
-            <li>Anders</li>
-            <li>Pål Einar</li>
-            <li>Hans Jørgen</li>
-        </ul>
+        <div class="mmooc-group-members-list">
+            {{#each members}}
+                <div class="mmooc-group-member">
+                    <div class="mmooc-group-member-avatar" style="background-image: url('{{avatar_url}}')">
+                    </div>
+                    <div class="mmooc-group-member-link">
+                        <a href="/about/{{id}}">{{name}}</a>
+                    </div>
+                </div>
+            {{/each}}
+        </div>
     </div>
     <div id="mmooc-group-links">
         <p>
-            <b>Videorom for gruppa:</b> <a href="https://connect.uninett.no/gruppe10">https://connect.uninett.no/gruppe10</a>
+            <b>Videorom for gruppa:</b> <a href="https://connect.uninett.no/gruppe{{groupId}}">https://connect.uninett.no/gruppe{{groupId}}</a>
         </p>
     </div>
 

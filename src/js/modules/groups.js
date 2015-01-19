@@ -24,8 +24,13 @@ this.mmooc.groups = function() {
 
         showGroupHeader: function() {
             var groupId = mmooc.api.getCurrentGroupId();
-            var headerHTML = mmooc.util.renderTemplateWithData("groupheader", {groupId: groupId});
-            document.getElementById('content-wrapper').insertAdjacentHTML('afterbegin', headerHTML);
+            if (groupId != null) {
+                mmooc.api.getGroupMembers(groupId, function(members) {
+                    console.log(members);
+                    var headerHTML = mmooc.util.renderTemplateWithData("groupheader", {groupId: groupId, members: members});
+                    document.getElementById('content-wrapper').insertAdjacentHTML('afterbegin', headerHTML);
+                });
+            }
         }
     };
 }();
