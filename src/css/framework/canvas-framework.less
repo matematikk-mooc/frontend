@@ -8,6 +8,19 @@ body {
 
 a {
     color: @linkColor;
+
+    &:hover {
+        color: @linkColor;
+        text-decoration: underline;
+    }
+
+    &:active {
+        color: @linkColor;
+    }
+
+    &:visited {
+        color: @linkColor;
+    }
 }
 
 #dashboard {
