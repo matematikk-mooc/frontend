@@ -126,6 +126,15 @@ this.mmooc.api = function() {
             return null;
         },
 
+        getGroup: function(groupId, callback, error) {
+            this._get({
+                "callback": callback,
+                "error":    error,
+                "uri":      "/groups/" + groupId,
+                "params":   {}
+            });
+        },
+
         getGroupMembers: function(groupId, callback, error) {
             this._get({
                 "callback": callback,

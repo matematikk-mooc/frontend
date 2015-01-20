@@ -25,12 +25,7 @@ this.mmooc.coursePage = function() {
                 var progressHTML = mmooc.util.renderTemplateWithData("courseprogress", {modules: modules});
                 document.getElementById('content').insertAdjacentHTML('afterbegin', progressHTML);
             });
-        },
-
-        showCourseMenu: function(selectedMenuItem) {
-            var courseId = mmooc.api.getCurrentCourseId();
-            $("body").addClass("with-course-menu");
-            _renderCourseMenu(courseId, selectedMenuItem);
         }
+
     };
 }();

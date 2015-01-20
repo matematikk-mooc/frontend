@@ -12,33 +12,58 @@ $(document).ready(function() {
     mmooc.routes.addRouteForPath(/\/courses\/\d+$/, function() {
         mmooc.coursePage.listModulesAndShowProgressBar();
         mmooc.groups.interceptLinksToGroupPage();
-        mmooc.coursePage.showCourseMenu('Kursforside');
+
+        var courseId = mmooc.api.getCurrentCourseId();
+        mmooc.menu.showCourseMenu(courseId, 'Kursforside');
     });
 
     mmooc.routes.addRouteForPath(/\/courses\/\d+\/announcements$/, function() {
-        mmooc.coursePage.showCourseMenu('Kunngjøringer');
+        var courseId = mmooc.api.getCurrentCourseId();
+        mmooc.menu.showCourseMenu(courseId, 'Kunngjøringer');
     });
 
+    /*
+    mmooc.routes.addRouteForPath(/\/courses\/\d+\/announcements\/\d+$/, function() {
+        var courseId = mmooc.api.getCurrentCourseId();
+        mmooc.menu.showCourseMenu(courseId, 'Kunngjøringer');
+        mmooc.menu.showBackButton("/courses/" + courseId + "/announcements", "Tilbake til kunngjøringer");
+    });*/
+
     mmooc.routes.addRouteForPath(/\/courses\/\d+\/discussion_topics$/, function() {
-        mmooc.coursePage.showCourseMenu('Diskusjoner');
+        var courseId = mmooc.api.getCurrentCourseId();
+        mmooc.menu.showCourseMenu(courseId, 'Diskusjoner');
+    });
+
+    mmooc.routes.addRouteForPath(/\/courses\/\d+\/discussion_topics\/\d+/, function() {
+        var courseId = mmooc.api.getCurrentCourseId();
+        mmooc.menu.showCourseMenu(courseId, 'Diskusjoner');
+        mmooc.menu.showBackButton("/courses/" + courseId + "/discussion_topics", "Tilbake til diskusjoner");
     });
 
     mmooc.routes.addRouteForPath(/\/courses\/\d+\/groups$/, function() {
         mmooc.groups.interceptLinksToGroupPage();
-        mmooc.coursePage.showCourseMenu('Grupper');
+        var courseId = mmooc.api.getCurrentCourseId();
+        mmooc.menu.showCourseMenu(courseId, 'Grupper');
     });
 
     mmooc.routes.addRouteForPath(/\/courses\/\d+\/users$/, function() {
-        mmooc.coursePage.showCourseMenu('');
+        var courseId = mmooc.api.getCurrentCourseId();
+        mmooc.menu.showCourseMenu(courseId, '');
     });
 
     mmooc.routes.addRouteForPath(/\/groups\/\d+$/, function() {
-        mmooc.coursePage.showCourseMenu('Grupper');
+        var courseId = mmooc.api.getCurrentCourseId();
+        mmooc.menu.showCourseMenu(courseId, 'Grupper');
     });
 
     mmooc.routes.addRouteForPath(/\/groups\/\d+\/discussion_topics$/, function() {
-        mmooc.coursePage.showCourseMenu('Grupper');
+        var courseId = mmooc.api.getCurrentCourseId();
+        mmooc.menu.showCourseMenu(courseId, 'Grupper');
         mmooc.groups.showGroupHeader();
+    });
+
+    mmooc.routes.addRouteForPath(/\/groups\/\d+\/discussion_topics\/\d+$/, function() {
+        mmooc.menu.showDiscussionGroupMenu();
     });
 
 

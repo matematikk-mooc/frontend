@@ -17,6 +17,10 @@ Handlebars.registerHelper('urlForCourseId', function(courseId) {
     return "/courses/" + courseId;
 });
 
+Handlebars.registerHelper('urlForGroupId', function(groupId) {
+    return "/groups/" + groupId + "/discussion_topics";
+});
+
 Handlebars.registerHelper('ifEquals', function(var1, var2, options) {
     if (var1 == var2) {
         return options.fn(this);
