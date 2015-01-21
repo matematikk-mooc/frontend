@@ -41,7 +41,6 @@ Handlebars.registerHelper('ifItemIsCompleted', function(completion_requirement, 
 });
 
 Handlebars.registerHelper('localize', function(key, options) {
-    console.log("lookup:" + key);
     if (mmooc.i18n[key] != null) {
         return mmooc.i18n[key];
     } else {

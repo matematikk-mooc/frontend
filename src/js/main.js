@@ -22,22 +22,9 @@ $(document).ready(function() {
         mmooc.menu.showCourseMenu(courseId, 'Kunngjøringer');
     });
 
-    /*
-    mmooc.routes.addRouteForPath(/\/courses\/\d+\/announcements\/\d+$/, function() {
-        var courseId = mmooc.api.getCurrentCourseId();
-        mmooc.menu.showCourseMenu(courseId, 'Kunngjøringer');
-        mmooc.menu.showBackButton("/courses/" + courseId + "/announcements", "Tilbake til kunngjøringer");
-    });*/
-
     mmooc.routes.addRouteForPath(/\/courses\/\d+\/discussion_topics$/, function() {
         var courseId = mmooc.api.getCurrentCourseId();
         mmooc.menu.showCourseMenu(courseId, 'Diskusjoner');
-    });
-
-    mmooc.routes.addRouteForPath(/\/courses\/\d+\/discussion_topics\/\d+/, function() {
-        var courseId = mmooc.api.getCurrentCourseId();
-        mmooc.menu.showCourseMenu(courseId, 'Diskusjoner');
-        mmooc.menu.showBackButton("/courses/" + courseId + "/discussion_topics", "Tilbake til diskusjoner");
     });
 
     mmooc.routes.addRouteForPath(/\/courses\/\d+\/groups$/, function() {
@@ -66,8 +53,21 @@ $(document).ready(function() {
         mmooc.menu.showDiscussionGroupMenu();
     });
 
+    mmooc.routes.addRouteForPath(/\/courses\/\d+\/discussion_topics\/\d+/, function() {
+        // Announcements are some as discussions, must use a hack to determine if this is an announcement
+        var courseId = mmooc.api.getCurrentCourseId();
+        if (mmooc.api.currentPageIsAnnouncement()) {
+            mmooc.menu.showCourseMenu(courseId, 'Kunngjøringer');
+            mmooc.menu.showBackButton("/courses/" + courseId + "/announcements", "Tilbake til kunngjøringer");
+        } else if (mmooc.api.getCurrentModuleItemId() == null) {
+            // Only show course menu if this discussion is not a module item
+            // Note detection if this is a module item is based on precense of query parameter
+            mmooc.menu.showCourseMenu(courseId, 'Diskusjoner');
+            mmooc.menu.showBackButton("/courses/" + courseId + "/discussion_topics", "Tilbake til diskusjoner");
+        }
+    });
 
-    mmooc.routes.addRouteForPathOrQueryString([/\/courses\/\d+\/assignments\/\d+/, /\/courses\/\d+\/discussion_topics\/\d+/, /\/courses\/\d+\/quizzes\/\d+/], /module_item_id=/, function() {
+    mmooc.routes.addRouteForPathOrQueryString([/\/courses\/\d+\/assignments\/\d+/, /\/courses\/\d+\/quizzes\/\d+/], /module_item_id=/, function() {
         mmooc.menu.showLeftMenu();
         mmooc.menu.listModuleItems();
         mmooc.pages.modifyMarkAsDoneButton();

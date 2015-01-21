@@ -38,8 +38,8 @@ this.mmooc.menu = function() {
             });
         },
         showLeftMenu: function() {
-            stylesheet.insertRule("body.with-left-side #main { margin-left: 305px }", stylesheet.cssRules.length);
-            stylesheet.insertRule(".with-left-side #left-side { display: block }", stylesheet.cssRules.length);
+            stylesheet.insertRule("body.with-left-side #main { margin-left: 305px !important }", stylesheet.cssRules.length);
+            stylesheet.insertRule(".with-left-side #left-side { display: block !important }", stylesheet.cssRules.length);
         },
 
         showTeacherAdminMenu: function() {
@@ -53,6 +53,12 @@ this.mmooc.menu = function() {
                 // Done via CSS since content is loaded using AJAX
                 stylesheet.insertRule("body.pages .header-bar-outer-container { display: block }", stylesheet.cssRules.length);
                 stylesheet.insertRule("#discussion-managebar { display: block }", stylesheet.cssRules.length);
+            }
+
+            if (roles != null && roles.indexOf('admin') != -1) {
+                $("#courses_menu_item").show();
+            } else {
+                document.getElementById('menu').insertAdjacentHTML('afterbegin', '<li class="menu-item"><a href="/" class="menu-item-no-drop">Kurs</a></li>');
             }
         },
 

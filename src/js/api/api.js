@@ -186,6 +186,18 @@ this.mmooc.api = function() {
                 "uri":      "/users/self/activity_stream",
                 "params":   { }
             });
+        },
+
+        currentPageIsAnnouncement: function() {
+            return ($("#section-tabs").find("a.announcements.active").size() == 1);
+        },
+
+        currentPageIsModuleItem: function() {
+            if (this.getCurrentModuleItemId() != null || this.getCurrentTypeAndContentId() != null) {
+                return true;
+            } else {
+                return false;
+            }
         }
     };
 }();
