@@ -8,5 +8,12 @@ this.mmooc.i18n = {
     'Page' : 'Innholdsside',
     'ExternalUrl' : 'Ekstern lenke',
     'ExternalTool' : 'Eksternt verktøy',
-    'File' : 'Fil'
+    'File' : 'Fil',
+    'DiscussionTopic': 'Diskusjon',
+    'Conversation': 'Innboksmelding',
+    'Message': 'Oppgavevarsel',
+    'Submission': 'Innlevering',
+    'AssessmentRequest': 'AssessmentRequest',
+    'Conference': 'Conference',
+    'Collaboration': 'Collaboration'
 }

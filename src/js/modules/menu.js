@@ -2,7 +2,7 @@ this.mmooc=this.mmooc||{};
 
 
 this.mmooc.menu = function() {
-    function _renderCourseMenu(courseId, selectedMenuItem) {
+    function _renderCourseMenu(courseId, selectedMenuItem, customTitle) {
         var menuItems = [];
 
         menuItems[menuItems.length] = {"title": "Kursforside", url: "/courses/" + courseId};
@@ -10,7 +10,7 @@ this.mmooc.menu = function() {
         menuItems[menuItems.length] = {"title": "Grupper", url: "/courses/" + courseId + "/groups"};
         menuItems[menuItems.length] = {"title": "Diskusjoner", url: "/courses/" + courseId + "/discussion_topics"};
 
-        var title = document.title.replace(":", " for ");
+        var title = typeof customTitle !== "undefined" ? customTitle : document.title.replace(":", " for ");
         var html = mmooc.util.renderTemplateWithData("coursemenu", {menuItems: menuItems, selectedMenuItem: selectedMenuItem, title: title });
         document.getElementById('header').insertAdjacentHTML('afterend', html);
     }
@@ -49,6 +49,8 @@ this.mmooc.menu = function() {
 
                 $("#section-tabs-header").show();
                 $("nav[aria-label='context']").show();
+                $("#edit_discussions_settings").show();
+                $("#editor_tabs");
 
                 // Done via CSS since content is loaded using AJAX
                 stylesheet.insertRule("body.pages .header-bar-outer-container { display: block }", stylesheet.cssRules.length);
@@ -95,13 +97,12 @@ this.mmooc.menu = function() {
             }
         },
 
-        showCourseMenu: function(courseId, selectedMenuItem) {
+        showCourseMenu: function(courseId, selectedMenuItem, customTitle) {
             $("body").addClass("with-course-menu");
-            _renderCourseMenu(courseId, selectedMenuItem);
+            _renderCourseMenu(courseId, selectedMenuItem, customTitle);
         },
 
         showBackButton: function(url, title) {
-            console.log("show button with title:" + title);
             var buttonHTML = mmooc.util.renderTemplateWithData("backbutton", {url: url, title: title});
             document.getElementById('content-wrapper').insertAdjacentHTML('afterbegin', buttonHTML);
         },
@@ -116,7 +117,10 @@ this.mmooc.menu = function() {
             var groupId = mmooc.api.getCurrentGroupId();
             if (groupId != null) {
                 mmooc.api.getGroup(groupId, function(group) {
-                    mmooc.menu.showCourseMenu(group.course_id, "Grupper");
+                    // For discussion pages we only want the title to be "<discussion>" instead of "Discussion: <discussion>"
+                    var title = mmooc.util.getPageTitleByRemovingColon();
+
+                    mmooc.menu.showCourseMenu(group.course_id, "Grupper", title);
                     mmooc.menu.showBackButton("/groups/" + group.id + "/discussion_topics", "Tilbake til " + group.name);
                 });
             }

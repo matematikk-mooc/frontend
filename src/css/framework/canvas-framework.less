@@ -29,7 +29,13 @@ a {
 }
 
 #wrapper-container {
+    clear: both;
     min-width: 800px !important;
+}
+
+body.no-headers #wrapper-container {
+    /* Used when Canvas uses iframes */
+    min-width: 300px !important;
 }
 
 #dashboard {
@@ -58,8 +64,10 @@ a {
 }
 
 body.no-headers #content, body.embedded #content {
+    /* Used when Canvas uses iframes */
     padding-top: 0 !important;
 }
+
 
 .with-course-menu #content {
     padding: 10px 0 0 0 !important;
@@ -149,12 +157,6 @@ body.no-headers #content, body.embedded #content {
     margin: 0 auto;
 }
 
-
-
-#wrapper-container {
-    clear: both;
-    min-width: 300px;
-}
 
 
 #breadcrumbs {

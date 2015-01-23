@@ -13,7 +13,17 @@ this.mmooc.util = function() {
 
             return html;
 
+        },
+
+        getPageTitleByRemovingColon: function() {
+            // For discussion pages we only want the title to be "<discussion>" instead of "Discussion: <discussion>"
+            var title = document.title;
+            if (title.indexOf(":")) {
+                title = title.substring(title.indexOf(":") + 1, title.length);
+            }
+            return title;
         }
+
     };
 }();
 

@@ -44,25 +44,31 @@ $(document).ready(function() {
     });
 
     mmooc.routes.addRouteForPath(/\/groups\/\d+\/discussion_topics$/, function() {
+        // For discussion pages we only want the title to be "<discussion>" instead of "Discussion: <discussion>"
+        var title = mmooc.util.getPageTitleByRemovingColon();
+
         var courseId = mmooc.api.getCurrentCourseId();
-        mmooc.menu.showCourseMenu(courseId, 'Grupper');
+        mmooc.menu.showCourseMenu(courseId, 'Grupper', title);
         mmooc.groups.showGroupHeader();
     });
 
-    mmooc.routes.addRouteForPath(/\/groups\/\d+\/discussion_topics\/\d+$/, function() {
+    mmooc.routes.addRouteForPath([/\/groups\/\d+\/discussion_topics\/\d+$/, /\/groups\/\d+\/discussion_topics\/new$/], function() {
         mmooc.menu.showDiscussionGroupMenu();
     });
 
-    mmooc.routes.addRouteForPath(/\/courses\/\d+\/discussion_topics\/\d+/, function() {
-        // Announcements are some as discussions, must use a hack to determine if this is an announcement
+    mmooc.routes.addRouteForPath([/\/courses\/\d+\/discussion_topics\/\d+/, /\/courses\/\d+\/discussion_topics\/new/], function() {
+        // For discussion pages we only want the title to be "<discussion>" instead of "Discussion: <discussion>"
+        var title = mmooc.util.getPageTitleByRemovingColon();
+
+        // Announcements are some as type of discussions, must use a hack to determine if this is an announcement
         var courseId = mmooc.api.getCurrentCourseId();
         if (mmooc.api.currentPageIsAnnouncement()) {
-            mmooc.menu.showCourseMenu(courseId, 'Kunngjøringer');
+            mmooc.menu.showCourseMenu(courseId, 'Kunngjøringer', title);
             mmooc.menu.showBackButton("/courses/" + courseId + "/announcements", "Tilbake til kunngjøringer");
         } else if (mmooc.api.getCurrentModuleItemId() == null) {
             // Only show course menu if this discussion is not a module item
             // Note detection if this is a module item is based on precense of query parameter
-            mmooc.menu.showCourseMenu(courseId, 'Diskusjoner');
+            mmooc.menu.showCourseMenu(courseId, 'Diskusjoner', title);
             mmooc.menu.showBackButton("/courses/" + courseId + "/discussion_topics", "Tilbake til diskusjoner");
         }
     });
