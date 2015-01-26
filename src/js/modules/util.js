@@ -15,7 +15,16 @@ this.mmooc.util = function() {
 
         },
 
-        getPageTitleByRemovingColon: function() {
+        getPageTitleBeforeColon: function() {
+            // For discussion pages we only want the title to be "<discussion>" instead of "Discussion: <discussion>"
+            var title = document.title;
+            if (title.indexOf(":")) {
+                title = title.substring(0, title.indexOf(":"));
+            }
+            return title;
+        },
+
+        getPageTitleAfterColon: function() {
             // For discussion pages we only want the title to be "<discussion>" instead of "Discussion: <discussion>"
             var title = document.title;
             if (title.indexOf(":")) {

@@ -13,20 +13,30 @@ Handlebars.registerHelper('percentage', function(number1, number2) {
     return Math.round(number1*100/number2);
 });
 
-Handlebars.registerHelper('urlForCourseId', function(courseId) {
-    return "/courses/" + courseId;
-});
-
-Handlebars.registerHelper('urlForGroupId', function(groupId) {
-    return "/groups/" + groupId + "/discussion_topics";
-});
-
 Handlebars.registerHelper('ifEquals', function(var1, var2, options) {
     if (var1 == var2) {
         return options.fn(this);
     } else {
         return options.inverse(this);
     }
+});
+
+
+Handlebars.registerHelper('ifGreaterThan', function(value1, value2, options) {
+    if (value1 > value2) {
+        return options.fn(this);
+    } else {
+        return options.inverse(this);
+    }
+});
+
+
+Handlebars.registerHelper('urlForCourseId', function(courseId) {
+    return "/courses/" + courseId;
+});
+
+Handlebars.registerHelper('urlForGroupId', function(groupId) {
+    return "/groups/" + groupId + "/discussion_topics";
 });
 
 

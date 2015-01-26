@@ -2,16 +2,24 @@ this.mmooc=this.mmooc||{};
 
 
 this.mmooc.menu = function() {
-    function _renderCourseMenu(courseId, selectedMenuItem, customTitle) {
+    function _renderCourseMenu(course, selectedMenuItem, title) {
         var menuItems = [];
+
+        var courseId = course.id;
 
         menuItems[menuItems.length] = {"title": "Kursforside", url: "/courses/" + courseId};
         menuItems[menuItems.length] = {"title": "Kunngjøringer", url: "/courses/" + courseId + "/announcements"};
         menuItems[menuItems.length] = {"title": "Grupper", url: "/courses/" + courseId + "/groups"};
         menuItems[menuItems.length] = {"title": "Diskusjoner", url: "/courses/" + courseId + "/discussion_topics"};
 
-        var title = typeof customTitle !== "undefined" ? customTitle : document.title.replace(":", " for ");
-        var html = mmooc.util.renderTemplateWithData("coursemenu", {menuItems: menuItems, selectedMenuItem: selectedMenuItem, title: title });
+
+        var subtitle = course.name;
+        if (title == null) {
+            title = course.name;
+            subtitle = "";
+        }
+
+        var html = mmooc.util.renderTemplateWithData("coursemenu", {course: course, menuItems: menuItems, selectedMenuItem: selectedMenuItem, title: title, subtitle: subtitle });
         document.getElementById('header').insertAdjacentHTML('afterend', html);
     }
 
@@ -50,6 +58,7 @@ this.mmooc.menu = function() {
                 $("#section-tabs-header").show();
                 $("nav[aria-label='context']").show();
                 $("#edit_discussions_settings").show();
+                $("#availability_options").show();
                 $("#editor_tabs");
 
                 // Done via CSS since content is loaded using AJAX
@@ -91,15 +100,32 @@ this.mmooc.menu = function() {
                         badge.show();
                     }
 
-                    var activityHTML = mmooc.util.renderTemplateWithData("activitystream", {activities: activities});
-                    document.getElementById('mmooc-activity-stream').innerHTML = activityHTML;
+                    document.getElementById('mmooc-activity-stream').innerHTML = mmooc.util.renderTemplateWithData("activitystream", {activities: activities});
+
+                    var notifications = $("#mmooc-notifications").find("li");
+                    var showAllItems = $("#mmooc-notifications-showall");
+                    if (notifications.size() > 10) {
+                        notifications.slice(10).addClass("hidden");
+
+                        showAllItems.click(function() {
+                            notifications.removeClass("hidden");
+                            showAllItems.hide();
+                        });
+
+
+                    } else {
+                        showAllItems.hide();
+                    }
+
                 });
             }
         },
 
-        showCourseMenu: function(courseId, selectedMenuItem, customTitle) {
+        showCourseMenu: function(courseId, selectedMenuItem, title) {
             $("body").addClass("with-course-menu");
-            _renderCourseMenu(courseId, selectedMenuItem, customTitle);
+            mmooc.api.getCourse(courseId, function(course) {
+                _renderCourseMenu(course, selectedMenuItem, title);
+            });
         },
 
         showBackButton: function(url, title) {
@@ -118,8 +144,7 @@ this.mmooc.menu = function() {
             if (groupId != null) {
                 mmooc.api.getGroup(groupId, function(group) {
                     // For discussion pages we only want the title to be "<discussion>" instead of "Discussion: <discussion>"
-                    var title = mmooc.util.getPageTitleByRemovingColon();
-
+                    var title = mmooc.util.getPageTitleAfterColon();
                     mmooc.menu.showCourseMenu(group.course_id, "Grupper", title);
                     mmooc.menu.showBackButton("/groups/" + group.id + "/discussion_topics", "Tilbake til " + group.name);
                 });

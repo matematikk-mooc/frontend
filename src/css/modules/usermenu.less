@@ -19,7 +19,9 @@
 
     .mmooc-menu-item-drop {
         display: none;
-        position: fixed;
+        position: absolute;
+        left: 0;
+        right: 0;
         background: @darkTealColor;
         ul {
             margin: 40px 15px 10px 35px;
@@ -68,6 +70,11 @@
 
 }
 
+#mmooc-activity-stream {
+    width: 380px;
+    right: auto;
+}
+
 #mmooc-notification-count {
     display: none;
     color: @darkTealColor;
@@ -81,4 +88,13 @@
     text-align: center;
     font-weight: bold;
     top: -8px;
+}
+
+#mmooc-notifications-showall {
+    color: #09f6ff;
+    display: block;
+    margin-bottom: 10px;
+    text-align: center;
+    text-decoration: underline;
+
 }

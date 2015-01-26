@@ -14,41 +14,38 @@ $(document).ready(function() {
         mmooc.groups.interceptLinksToGroupPage();
 
         var courseId = mmooc.api.getCurrentCourseId();
-        mmooc.menu.showCourseMenu(courseId, 'Kursforside');
+        mmooc.menu.showCourseMenu(courseId, 'Kursforside', null);
     });
 
     mmooc.routes.addRouteForPath(/\/courses\/\d+\/announcements$/, function() {
         var courseId = mmooc.api.getCurrentCourseId();
-        mmooc.menu.showCourseMenu(courseId, 'Kunngjøringer');
+        mmooc.menu.showCourseMenu(courseId, 'Kunngjøringer', mmooc.util.getPageTitleBeforeColon());
     });
 
     mmooc.routes.addRouteForPath(/\/courses\/\d+\/discussion_topics$/, function() {
         var courseId = mmooc.api.getCurrentCourseId();
-        mmooc.menu.showCourseMenu(courseId, 'Diskusjoner');
+        mmooc.menu.showCourseMenu(courseId, 'Diskusjoner', mmooc.util.getPageTitleBeforeColon());
     });
 
     mmooc.routes.addRouteForPath(/\/courses\/\d+\/groups$/, function() {
         mmooc.groups.interceptLinksToGroupPage();
         var courseId = mmooc.api.getCurrentCourseId();
-        mmooc.menu.showCourseMenu(courseId, 'Grupper');
+        mmooc.menu.showCourseMenu(courseId, 'Grupper', mmooc.util.getPageTitleBeforeColon());
     });
 
     mmooc.routes.addRouteForPath(/\/courses\/\d+\/users$/, function() {
         var courseId = mmooc.api.getCurrentCourseId();
-        mmooc.menu.showCourseMenu(courseId, '');
+        mmooc.menu.showCourseMenu(courseId, '', mmooc.util.getPageTitleBeforeColon());
     });
 
     mmooc.routes.addRouteForPath(/\/groups\/\d+$/, function() {
         var courseId = mmooc.api.getCurrentCourseId();
-        mmooc.menu.showCourseMenu(courseId, 'Grupper');
+        mmooc.menu.showCourseMenu(courseId, 'Grupper', mmooc.util.getPageTitleBeforeColon());
     });
 
     mmooc.routes.addRouteForPath(/\/groups\/\d+\/discussion_topics$/, function() {
-        // For discussion pages we only want the title to be "<discussion>" instead of "Discussion: <discussion>"
-        var title = mmooc.util.getPageTitleByRemovingColon();
-
         var courseId = mmooc.api.getCurrentCourseId();
-        mmooc.menu.showCourseMenu(courseId, 'Grupper', title);
+        mmooc.menu.showCourseMenu(courseId, 'Grupper', mmooc.util.getPageTitleAfterColon());
         mmooc.groups.showGroupHeader();
     });
 
@@ -58,7 +55,7 @@ $(document).ready(function() {
 
     mmooc.routes.addRouteForPath([/\/courses\/\d+\/discussion_topics\/\d+/, /\/courses\/\d+\/discussion_topics\/new/], function() {
         // For discussion pages we only want the title to be "<discussion>" instead of "Discussion: <discussion>"
-        var title = mmooc.util.getPageTitleByRemovingColon();
+        var title = mmooc.util.getPageTitleAfterColon();
 
         // Announcements are some as type of discussions, must use a hack to determine if this is an announcement
         var courseId = mmooc.api.getCurrentCourseId();

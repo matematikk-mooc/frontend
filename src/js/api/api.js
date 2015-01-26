@@ -117,6 +117,15 @@ this.mmooc.api = function() {
             return null;
         },
 
+        getCourse: function(courseId, callback, error) {
+            this._get({
+                "callback": callback,
+                "error":    error,
+                "uri":      "/courses/" + courseId,
+                "params":   {  }
+            });
+        },
+
         getCurrentGroupId: function() {
             var currentUrl = "" + this._location.pathname;
             var matches = currentUrl.match(/\/groups\/(\d+)/);
