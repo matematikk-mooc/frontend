@@ -9,11 +9,12 @@ this.mmooc.i18n = {
     'ExternalUrl' : 'Ekstern lenke',
     'ExternalTool' : 'Eksternt verktøy',
     'File' : 'Fil',
+    'Announcement' : 'Kunngjøring',
     'DiscussionTopic': 'Diskusjon',
     'Conversation': 'Innboksmelding',
     'Message': 'Oppgavevarsel',
     'Submission': 'Innlevering',
-    'AssessmentRequest': 'AssessmentRequest',
+    'AssessmentRequest': 'Vurderingsforespørsel',
     'Conference': 'Conference',
     'Collaboration': 'Collaboration'
 }

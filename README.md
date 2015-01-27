@@ -96,8 +96,8 @@ Copy all files from the dist directory to your web server.
 
 ## Image paths
 
-The CSS files have URL references to bitmaps which are replaced during build time using grunt-text-replace.  To change the URL for the production server,
-modify the following line in Gruntfile.js
+The CSS files have URL references to bitmaps which are replaced at build time using grunt-text-replace.  To change the URL for the production server,
+modify the following section in Gruntfile.js
 
 ```
     replacements: [{

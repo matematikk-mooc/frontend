@@ -1,6 +1,6 @@
 <ul id="mmooc-notifications">
 {{#each activities}}
-    <li class="{{#unless read_state}}unread{{/unless}}{{#ifGreaterThan @index 9}}hidden{{/ifGreaterThan}}"><a href="{{html_url}}">{{title}}<br><span class="mmooc-notification-type">{{localize type}}</span></a></li>
+    <li class="{{#unless read_state}}unread{{/unless}}"><a href="{{html_url}}">{{title}}<br><span class="mmooc-notification-type">{{localize type}}</span></a></li>
 {{/each}}
 
 </ul>
