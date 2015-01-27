@@ -32,12 +32,12 @@ module.exports = function(grunt) {
 		},
 
 		less: {	    	
-	    	development: {
+	    	all: {
 	        	options: {
 	            	cleancss: true
 	        	},
 	        	files: {
-	            	'dist/mmooc-min.css': ['src/css/all.less']
+	            	'tmp/mmooc-min.css': ['src/css/all.less']
 	        	}
 	    	}
 		},
@@ -55,6 +55,33 @@ module.exports = function(grunt) {
 		      'dist/mmooc-min.js': ['tmp/mmooc.js']
 		    }
 		  }
+		},
+
+		replace: {
+			production: {
+				src: ['tmp/mmooc-min.css'],
+				dest: 'dist/mmooc-min.css',
+				replacements: [{
+					from: 'https://server',
+					to: 'https://apps.kantega.no/mmooc'
+				}]
+			},
+			development: {
+				src: ['tmp/mmooc-min.css'],
+				dest: 'dist/mmooc-min-dev.css',
+				replacements: [{
+					from: 'https://server',
+					to: 'http://localhost:9000'
+				}]
+			}
+		},
+
+		copy: {
+			main: {
+				files: [
+					{expand: true, src: ['bitmaps/*'], cwd: 'src/', dest: 'dist/'}
+				]
+			}
 		},
 
 		connect: {
@@ -84,7 +111,10 @@ module.exports = function(grunt) {
 		'handlebars',
 		'concat',
 		//'uglify',
-		'less'
+		'less',
+		'copy',
+		'replace:production',
+		'replace:development'
 		]);
 
 	grunt.registerTask('serve', [

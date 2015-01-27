@@ -46,8 +46,10 @@ grunt serve
 
 All changes in LESS (CSS) and JavaScript will automatically be compiled and are available using the following URLs:
 
-* [http://localhost:9000/mmooc-min.css](http://localhost:9000/mmooc-min.css)
+* [http://localhost:9000/mmooc-min.css](http://localhost:9000/mmooc-min-dev.css) (for development)
+* [http://localhost:9000/mmooc-min.css](http://localhost:9000/mmooc-min.css) (for production)
 * [http://localhost:9000/mmooc-min.js](http://localhost:9000/mmooc-min.js)
+
 
 
 ## Run Jasmine JavaScript tests
@@ -58,6 +60,7 @@ node_modules/jasmine-node/bin/jasmine-node --verbose spec
 
 # Project structure
 
+## Directories
 | Directory      | Description                               |
 | -------------- | ----------------------------------------- |
 | spec           | Jasmine JavaScript tests                  |
@@ -67,7 +70,7 @@ node_modules/jasmine-node/bin/jasmine-node --verbose spec
 | src/templates  | Handlebars.js templates for creating HTML |
 | dist/          | Build output directory                    |
 
-# src/css
+## src/css
 
 | Directory | Description                                     |
 | ----------------------- | --------------------------------- |
@@ -77,7 +80,7 @@ node_modules/jasmine-node/bin/jasmine-node --verbose spec
 | setup     | Global LESS variables, mixins, custom font      |
 
 
-# src/js
+## src/js
 
 | File                    | Description                                                              |
 | ----------------------- | ------------------------------------------------------------------------ |
@@ -86,3 +89,19 @@ node_modules/jasmine-node/bin/jasmine-node --verbose spec
 | modules/                | Various JavaScripts called from main.js                                  |
 | modules/routes.js       | Library used to call different JS functions based on URLs using RegExps  |
 
+
+# Deployment
+
+Copy all files from the dist directory to your web server.
+
+## Image paths
+
+The CSS files have URL references to bitmaps which are replaced during build time using grunt-text-replace.  To change the URL for the production server,
+modify the following line in Gruntfile.js
+
+```
+    replacements: [{
+	    from: 'https://server',
+		to: 'https://apps.kantega.no/mmooc'
+    }]
+```

@@ -18,7 +18,10 @@
     }
 
     .mmooc-menu-item-drop {
-        display: none;
+        visibility:hidden;
+        opacity:0;
+        transition: visibility 0s linear 1s, opacity 0.3s linear 0.7s;
+
         position: absolute;
         left: 0;
         right: 0;
@@ -65,7 +68,9 @@
     }
 
     &:hover .mmooc-menu-item-drop {
-        display: block;
+        visibility:visible;
+        opacity: 1;
+        transition: visibility 0s linear 0s, opacity 0s linear 0s;
     }
 
 }
