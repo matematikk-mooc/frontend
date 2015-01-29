@@ -98,6 +98,12 @@ body.no-headers #content, body.embedded #content {
     max-width: 1200px;
 }
 
+@media screen and (max-width: 1240px) {
+    #mmooc-course-tabs-container-inner {
+        margin: 0 @minimumSidePadding;
+    }
+}
+
 .with-right-side #main {
     max-width: @maxWidth - @rightColWidth - @columnPadding;
     margin-right: @rightColWidth + @columnPadding;
@@ -122,7 +128,7 @@ body.no-headers #content, body.embedded #content {
 .home #main {
     margin-left: 0;
     max-width: @maxWidth - @rightColLargeWidth - @columnPadding;
-    /*  max-width: @maxWidth - @leftColWidth - @rightColLargeWidth - 2*@columnPadding; */
+    margin-right: @rightColLargeWidth + @columnPadding;
 }
 
 .pages #main {
@@ -141,6 +147,18 @@ body.no-headers #content, body.embedded #content {
     width: @rightColLargeWidth;
 }
 
+@media screen and (max-width: 1020px) {
+    .home #right-side {
+        width: @rightColWidth;
+    }
+
+    .home #main {
+        max-width: @maxWidth - @rightColWidth - @columnPadding;
+        margin-right: @rightColWidth + @columnPadding;
+    }
+}
+
+
 
 #wrapper {
     max-width: 1200px;
@@ -151,6 +169,16 @@ body.no-headers #content, body.embedded #content {
     /* Canvas Inbox */
     max-width: none;
     margin: 0;
+}
+
+@media screen and (max-width: 1240px) {
+    #wrapper {
+        margin: @minimumSidePadding;
+    }
+
+    .with-left-side #wrapper {
+        margin-left: @minimumSidePadding;
+    }
 }
 
 .full-width.with-right-side #wrapper {

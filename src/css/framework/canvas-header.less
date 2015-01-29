@@ -26,6 +26,13 @@
     margin: 0 auto;
 }
 
+@media screen and (max-width: 1240px) {
+    #header-inner, .with-left-side #header-inner, .with-right-side #header-inner, .with-right-side.with-left-side #header-inner {
+        margin: 0 @minimumSidePadding;
+    }
+}
+
+
 #user-menu {
     position: absolute;
     bottom: 14px;
@@ -35,6 +42,23 @@
 
 #menu {
     margin: 0 0 0 275px;
+}
+
+@media screen and (max-width: 1024px) {
+    #header-logo, #header.no-user #header-logo {
+        margin-left: 17px;
+        bottom: 40px;
+    }
+
+    #user-menu {
+        /* Move to top for smaller screens */
+        bottom: 44px;
+    }
+
+    #menu {
+        margin: 0;
+    }
+
 }
 
 

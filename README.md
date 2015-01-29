@@ -46,7 +46,7 @@ grunt serve
 
 All changes in LESS (CSS) and JavaScript will automatically be compiled and are available using the following URLs:
 
-* [http://localhost:9000/mmooc-min.css](http://localhost:9000/mmooc-min-dev.css) (for development)
+* [http://localhost:9000/mmooc-min-dev.css](http://localhost:9000/mmooc-min-dev.css) (for development)
 * [http://localhost:9000/mmooc-min.css](http://localhost:9000/mmooc-min.css) (for production)
 * [http://localhost:9000/mmooc-min.js](http://localhost:9000/mmooc-min.js)
 

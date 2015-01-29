@@ -14,15 +14,21 @@ this.mmooc.pages = function() {
 
     return {
         modifyMarkAsDoneButton: function() {
-            var container = $("#mark-as-done-container");
-            var input = container.find("input");
-            var label = container.find("label");
-            input.change(function() {
-                updateButtonText(container, input, label);
-            });
+            $("body").bind("wiki-page-rendered", function() {
+                var container = $("#mark-as-done-container");
+                container.appendTo("#content .usercontent");
 
-            updateButtonText(container, input, label);
-            container.show();
+                var input = container.find("input");
+                var label = container.find("label");
+                input.change(function() {
+                    updateButtonText(container, input, label);
+                });
+
+                updateButtonText(container, input, label);
+
+
+                container.show();
+            });
         }
     };
 }();

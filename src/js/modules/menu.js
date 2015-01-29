@@ -67,7 +67,12 @@ this.mmooc.menu = function() {
             }
 
             if (roles != null && roles.indexOf('admin') != -1) {
+                // Admin needs original canvas Course dropdown to access site admin settings
                 $("#courses_menu_item").show();
+
+                // Admin needs more profile settings
+                $(".add_access_token_link").show();
+                $("body.profile_settings").find("#content > table, #content > h2, #content > p").show();
             } else {
                 document.getElementById('menu').insertAdjacentHTML('afterbegin', '<li class="menu-item"><a href="/" class="menu-item-no-drop">Kurs</a></li>');
             }
@@ -103,6 +108,12 @@ this.mmooc.menu = function() {
                     document.getElementById('mmooc-activity-stream').innerHTML = mmooc.util.renderTemplateWithData("activitystream", {activities: activities});
 
                     var notifications = $("#mmooc-notifications").find("li");
+                    if (notifications.size() == 0) {
+                        $("#mmooc-notifications").hide();
+                    } else {
+                        $("#mmooc-notifications").show();
+                    }
+
                     var showAllItems = $("#mmooc-notifications-showall");
                     if (notifications.size() > 10) {
                         notifications.slice(10).addClass("hidden");
@@ -111,8 +122,6 @@ this.mmooc.menu = function() {
                             notifications.removeClass("hidden");
                             showAllItems.hide();
                         });
-
-
                     } else {
                         showAllItems.hide();
                     }

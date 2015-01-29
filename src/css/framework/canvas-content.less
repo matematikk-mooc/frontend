@@ -18,6 +18,15 @@
     background: @darkTealColor;
     color: #FFF;
     font-weight: bold;
+
+    th {
+        background: @darkTealColor;
+        color: #FFF;
+    }
+}
+
+.table-columns-striped tr td:nth-child(2n), .table-columns-striped tr th:nth-child(2n) {
+    color: @textColor;
 }
 
 .form-actions {
