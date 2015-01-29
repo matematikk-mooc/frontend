@@ -14,7 +14,7 @@
 
     .btn {
         position: absolute;
-        top: 36px;
+        top: 34px;
         right: 80px;
     }
 
@@ -30,28 +30,38 @@
         }
 
         li {
-            margin: 0 8px 0 0;
+            margin: 0 6px 0 0;
             list-style: outside none none;
             float: left;
 
             a {
                 border-radius: 3px;
                 background: grey;
-                line-height: 10px;
                 display: inline-block;
                 width: 20px;
                 height: 20px;
                 padding: 2px;
                 text-align: center;
+                margin-right: 2px;
+                margin-bottom: 2px;
+
+                &:hover {
+                    width: 22px;
+                    height: 22px;
+                    margin-right: 0;
+                    margin-bottom: 0;
+                }
+
+                i[class*="icon-"], i[class^="icon-"] {
+                    color: #FFF;
+                }
+
+                &.done {
+                    background: @doneColor;
+                }
             }
 
-            i[class*="icon-"], i[class^="icon-"] {
-                color: #FFF;
-            }
 
-            a.done {
-                background: @doneColor;
-            }
 
         }
 

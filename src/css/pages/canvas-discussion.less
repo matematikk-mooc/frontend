@@ -110,3 +110,32 @@
 #editor_tabs {
     display: none !important;
 }
+
+.discussionTopicIndexList {
+    .discussion-topic {
+        box-shadow: 0 1px 2px 0 rgba(0,0,0,0.35);
+        border: none;
+        border-radius: 0;
+        padding: 20px 35px;
+        margin: 0 5px 12px 5px;
+        background-color: #fff !important;
+        position: relative;
+
+        &.unread:before {
+            font-size: 25px;
+            content:"\2022";
+            position: absolute;
+            color: @linkColor;
+            top: 35px;
+            left: 15px;
+        }
+
+        .discussion-title {
+            font-family: 'Roboto Slab', 'Helvetica Neue', serif;
+        }
+
+        .discussion-author {
+            font-size: 12px;
+        }
+    }
+}
