@@ -1,7 +1,7 @@
 Frontend
 ========
 
-Custom JS and CSS frontend for inclusion in Canvas.
+Custom JS and CSS frontend for inclusion in [Canvas](http://www.instructure.com/).
 
 # Description
 The custom JS and CSS frontend is built on top of Canvas using the mechanism in Canvas for including custom .js and .css files.
