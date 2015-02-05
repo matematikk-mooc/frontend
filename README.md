@@ -12,7 +12,7 @@ The custom JS and CSS frontend is compiled and concatenated into a single CSS an
 
 
 # Getting started
-If you want to to build the frontend on your local machine you need to follow these steps:
+If you want to to build the frontend on your local machine you need to follow the steps below. Note that some of the commands might require sudo on certain systems.
 
 
 ## Install Node
@@ -32,10 +32,16 @@ Switch to the directory where the frontend is located and install the dependenci
 npm install
 ```
 
-## Compile JS and CSS files using Grunt
+## Compile JS and CSS files
+
+Compile JS and CSS files using [GRUNT](http://gruntjs.com/)
+
 ```
 grunt
 ```
+
+The resulting JS and CSS file can then be found in the **dist** directory
+
 
 ## Start a web server on your local machine
 If you want to serve the CSS and JS files on your local machine for development, you can do this using Grunt:
