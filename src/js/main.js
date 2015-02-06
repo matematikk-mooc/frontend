@@ -2,6 +2,7 @@ $(document).ready(function() {
     mmooc.routes.addRouteForPath(/\/$/, function() {
         mmooc.menu.hideRightMenu();
         mmooc.courseList.listCourses('content');
+        mmooc.courseList.showAddCourseButton();
     });
 
     mmooc.routes.addRouteForPath(/\/courses$/, function() {
