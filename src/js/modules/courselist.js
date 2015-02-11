@@ -10,10 +10,12 @@ this.mmooc.courseList = function() {
             });
         },
         showAddCourseButton : function() {
-            var button = $('#start_new_course');
-            if (button.size() > 0) {
-                $('#content').append(button);
-            }
+            $(document).ajaxSuccess(function () {
+                var button = $('#start_new_course');
+                if (button.size() > 0) {
+                    $('#content').append(button);
+                }
+            });
         }
     };
 }();
