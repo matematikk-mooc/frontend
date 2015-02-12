@@ -9,7 +9,7 @@ $(document).ready(function() {
     });
 
     mmooc.routes.addRouteForPath(/\/login$/, function() {
-        $('#register-link').innerHTML("<i>Trenger du en konto?</i><b>Klikk her.</b>");
+        $('#register-link').html("<i>Trenger du en konto?</i><b>Klikk her.</b>");
     });
 
     mmooc.routes.addRouteForPath(/\/courses$/, function() {
