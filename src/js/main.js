@@ -8,6 +8,10 @@ $(document).ready(function() {
     mmooc.routes.addRouteForQueryString(/invitation=/, function() {
     });
 
+    mmooc.routes.addRouteForPath(/\/login$/, function() {
+        $('#register-link').innerHTML("<i>Trenger du en konto?</i><b>Klikk her.</b>");
+    });
+
     mmooc.routes.addRouteForPath(/\/courses$/, function() {
         mmooc.menu.hideRightMenu();
         mmooc.courseList.listCourses('content');
@@ -88,6 +92,11 @@ $(document).ready(function() {
     try {
         mmooc.menu.showTeacherAdminMenu();
         mmooc.menu.showUserMenu();
+    } catch (e) {
+        console.log(e);
+    }
+
+    try {
         mmooc.routes.performHandlerForUrl(document.location);
     } catch (e) {
         console.log(e);
