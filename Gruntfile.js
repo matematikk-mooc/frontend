@@ -2,7 +2,7 @@
 
 module.exports = function(grunt) {
 
-	// Helper function to load pre-defined grunt tasks 
+	// Helper function to load pre-defined grunt tasks
 	require('load-grunt-tasks')(grunt);
 
 	// Configures grunt tasks
@@ -24,14 +24,14 @@ module.exports = function(grunt) {
                     processName: function(filePath) {
      				   return filePath.replace('src/templates/modules/', '').replace(/\.hbs$/, '');
     				}
-                },                
+                },
 		        files: {
 		            "tmp/templates.js": ["src/templates/**/*.hbs"]
 		        }
 		    }
 		},
 
-		less: {	    	
+		less: {
 	    	all: {
 	        	options: {
 	            	cleancss: true
@@ -46,7 +46,7 @@ module.exports = function(grunt) {
 	        js: {
 	            src: ['tmp/templates.js', 'src/js/api/*.js', 'src/js/modules/*.js', 'src/js/i18n.js', 'src/js/main.js', 'src/js/3party/*.js'],
 	            dest: 'dist/mmooc-min.js'
-	        }        
+	        }
 	    },
 
 		uglify: {
@@ -63,7 +63,7 @@ module.exports = function(grunt) {
 				dest: 'dist/mmooc-min.css',
 				replacements: [{
 					from: 'https://server',
-					to: 'https://apps.kantega.no/mmooc'
+					to: 'https://matematikk-mooc.github.io/frontend'
 				}]
 			},
 			development: {
