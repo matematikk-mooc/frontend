@@ -5,6 +5,9 @@ $(document).ready(function() {
         mmooc.courseList.showAddCourseButton();
     });
 
+    mmooc.routes.addRouteForQueryString(/invitation=/, function() {
+    });
+
     mmooc.routes.addRouteForPath(/\/courses$/, function() {
         mmooc.menu.hideRightMenu();
         mmooc.courseList.listCourses('content');
@@ -92,5 +95,3 @@ $(document).ready(function() {
 
 
 });
-
-
