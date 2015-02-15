@@ -11,6 +11,7 @@ this.mmooc.courseList = function() {
         },
         showAddCourseButton : function() {
             $(document).ajaxSuccess(function () {
+                // Move canvas Start new course button, since we hide its original location
                 var button = $('#start_new_course');
                 if (button.size() > 0) {
                     $('#content').append(button);

@@ -27,7 +27,6 @@ this.mmooc.groups = function() {
             var groupId = mmooc.api.getCurrentGroupId();
             if (groupId != null) {
                 mmooc.api.getGroupMembers(groupId, function(members) {
-                    console.log(members);
                     var headerHTML = mmooc.util.renderTemplateWithData("groupheader", {groupId: groupId, courseId: courseId, members: members});
                     document.getElementById('content-wrapper').insertAdjacentHTML('afterbegin', headerHTML);
                 });

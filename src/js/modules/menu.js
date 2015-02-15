@@ -155,7 +155,9 @@ this.mmooc.menu = function() {
                     // For discussion pages we only want the title to be "<discussion>" instead of "Discussion: <discussion>"
                     var title = mmooc.util.getPageTitleAfterColon();
                     mmooc.menu.showCourseMenu(group.course_id, "Grupper", title);
-                    mmooc.menu.showBackButton("/groups/" + group.id + "/discussion_topics", "Tilbake til " + group.name);
+
+                    var headerHTML = mmooc.util.renderTemplateWithData("groupdiscussionheader", { group: group});
+                    document.getElementById('content-wrapper').insertAdjacentHTML('afterbegin', headerHTML);
                 });
             }
         }
