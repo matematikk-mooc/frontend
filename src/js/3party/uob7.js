@@ -1,4 +1,9 @@
 ﻿// ==========================================================================================
+// This code was copied and adapted on January 27th 2015 from:
+// https://s3.amazonaws.com/SSL_Assets/bham/uob/uob7.js 
+// The functionality in the file is documented here:
+// https://birmingham.instructure.com/courses/3915/pages/faq-jquery-in-canvas
+// ==========================================================================================
 // UOB7.JS
 //
 // Generic top-level script for University of Birmingham's Canvas implementation. This
@@ -17,6 +22,7 @@
 //
 // Most code is implemented within a $(document).load() to ensure that jQuery and the
 // jQuery UI are both available, especially in Internet Explorer.
+// 
 //
 // ==========================================================================================
 
@@ -30,116 +36,13 @@ $(document).load(
 		var i;
 		var strSetNum = 0;
 
-
-		// -----------------------------------------------------------------------------------
-		// Add link for FindIt@Bham to the help corner on every page.
-		// -----------------------------------------------------------------------------------
-		onElementRendered("#identity", function($identity) {
-			var $nodeA = $(document.createElement("A"))
-				.attr("id", "finditatbham")
-				.attr("href", "http://findit.bham.ac.uk")
-				.attr("target", "FindItAtBham")
-				.text("FindIt@Bham");
-
-			var $nodeLI = $(document.createElement("LI"))
-				.append($nodeA);
-
-			$identity.append($nodeLI);
-		});
-
-
-		// -----------------------------------------------------------------------------------
-		// Add UoB footer line to login and entry pages (add for the Canvas Gallery).
-		// -----------------------------------------------------------------------------------
-		onElementRendered("#footer", function($footer) {
-			if (!location.pathname.match(/\/courses\/[0-9]+/)) {
-				var $nodeA = $(document.createElement("A"))
-					.attr("id", "canvas_gallery")
-					.attr("href", "/courses/9105")
-					.attr("target", "CanvasGallery")
-					.text("Canvas Gallery");
-
-				var $nodeDIV = $(document.createElement("DIV"))
-					.attr("class", "uob-footer-line")
-					.append("For access to open and self-enrolment courses, visit the ")
-					.append($nodeA)
-					.append(".");
-
-				$footer.prepend($nodeDIV);
-			}
-		});
-
-
-		// -----------------------------------------------------------------------------------
-		// If the current user is an administrator then add the uob-admin class to the body of
-		// the document so that the CSS will display the option to show the "Report a Problem"
-		// Zendesk option in the Help menu.
-		// -----------------------------------------------------------------------------------
-		hasAnyRole("admin", function(bAdmin) {
-			if (bAdmin)
-				$("body").addClass("uob-admin");
-		});
-
-
 		// -----------------------------------------------------------------------------------
 		// Add UoB enhancements to rich content displayed in courses.
 		// -----------------------------------------------------------------------------------
 		onPage(/\/(courses|groups)\/\d+/, function() {
 			uobAddComponents();
 		});
-
-
-		// -----------------------------------------------------------------------------------
-		// Remove forgot-password link on login page.
-		// -----------------------------------------------------------------------------------
-		// 16022015ERTH: We need the forgotten password link
-		/*
-		onPage(/\/login/, function() {
-			onElementRendered("#login_forgot_password", function($forgotPassword) {
-				$forgotPassword.remove();
-			});
-		});
-		*/
-
-		// -----------------------------------------------------------------------------------
-		// Change prompts for email address to username. in People.
-		// -----------------------------------------------------------------------------------
-
-		// Change prompts in People.
-		onPage(/\/courses\/\d+\/users/, function() {
-			onElementRendered("a#addUsers", function($addUsers) {
-				$addUsers.on("click", function() {
-					$("#create-users-step-1 > p:first").text("Type or paste a list of usernames below:");
-					$("#create-users-step-1 #user_list_textarea").attr("placeholder","For example bloggsj, abc123, pqr456, xyz789");
-				});
-			});
-		});
-
-		// Change prompts on self-enrolment page.
-		onPage(/\/enroll\/[A-Z0-9]+$/, function() {
-			onElementRendered("#modal-box", function($modalBox) {
-				$("#modal-box p:contains('enter your email')").text("Please enter your University of Birmingham username and password:");
-				$("#modal-box label[for=student_email]").text("Username");
-			});
-		});
-
-
-		// --------------------------------------------------------------------------------
-		// Google analytics
-		// --------------------------------------------------------------------------------
-
-		(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-		(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-		m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-		})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-		ga('create', 'UA-45967031-1', 'bham.ac.uk');
-		ga('send', 'pageview');
-
-		// --------------------------------------------------------------------------------
-
 	})
-
 )
 
 
