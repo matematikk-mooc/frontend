@@ -92,12 +92,14 @@ $(document).load(
 		// -----------------------------------------------------------------------------------
 		// Remove forgot-password link on login page.
 		// -----------------------------------------------------------------------------------
+		// 16022015ERTH: We need the forgotten password link
+		/*
 		onPage(/\/login/, function() {
 			onElementRendered("#login_forgot_password", function($forgotPassword) {
 				$forgotPassword.remove();
 			});
 		});
-
+		*/
 
 		// -----------------------------------------------------------------------------------
 		// Change prompts for email address to username. in People.
