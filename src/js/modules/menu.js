@@ -59,7 +59,8 @@ this.mmooc.menu = function() {
                 $("nav[aria-label='context']").show();
                 $("#edit_discussions_settings").show();
                 $("#availability_options").show();
-                $("#editor_tabs");
+                $("#group_category_options").show();
+                $("#editor_tabs").show();
 
                 // Done via CSS since content is loaded using AJAX
                 stylesheet.insertRule("body.pages .header-bar-outer-container { display: block }", stylesheet.cssRules.length);
