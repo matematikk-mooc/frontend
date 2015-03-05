@@ -82,6 +82,7 @@ $(document).ready(function() {
         mmooc.menu.showLeftMenu();
         mmooc.menu.listModuleItems();
         mmooc.pages.modifyMarkAsDoneButton();
+        mmooc.pages.changeTranslations();
     });
 
 

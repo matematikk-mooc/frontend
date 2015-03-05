@@ -29,6 +29,10 @@ this.mmooc.pages = function() {
 
                 container.show();
             });
+        },
+
+        changeTranslations : function() {
+            $("a.submit_assignment_link").text('Lever besvarelse');
         }
     };
 }();
