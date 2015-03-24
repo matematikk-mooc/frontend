@@ -92,7 +92,17 @@ module.exports = function(grunt) {
 					hostname: 'localhost',
 					open: true
 				}
-			}
+			}, test: {
+                options: {
+                    port: 9988,
+                    base: [
+                        'spec',
+                        'src/js/api',
+                        'src/js/modules',
+                        'src/js'
+                    ]
+                }
+            }
 		},
 
 		watch: {
@@ -103,7 +113,16 @@ module.exports = function(grunt) {
 				],
 				tasks: ['clean', 'build']
 			}
-		}
+		},
+
+        karma: {
+            unitTest: {
+                configFile: 'test/js/karma.conf.js',
+                autoWatch: false,
+                singleRun: true,
+                browsers: process.env.KARMA_BROWSER == null ? ['PhantomJS', 'Chrome'] : ['PhantomJS', 'Chrome', '<%= extraBrowser %>']
+            }
+        }
 
 	});
 
@@ -128,5 +147,12 @@ module.exports = function(grunt) {
 		'clean',
 		'build'
 		]);
+
+    grunt.registerTask('test', [
+        'clean',
+        'build',
+        'connect:test',
+        'karma:unitTest'
+    ]);
 
 };

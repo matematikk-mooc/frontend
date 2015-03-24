@@ -5,7 +5,8 @@ this.mmooc.courseList = function() {
     return {
         listCourses: function(parentId) {
             mmooc.api.getEnrolledCourses(function(courses) {
-                var html = mmooc.util.renderTemplateWithData("courselist", {courses: courses});
+                var sortedCourses = mmooc.util.arraySorted(courses, "course_code"),
+                    html = mmooc.util.renderTemplateWithData("courselist", {courses: sortedCourses});
                 document.getElementById(parentId).innerHTML = html;
             });
         },
