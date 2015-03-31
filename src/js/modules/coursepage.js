@@ -20,10 +20,10 @@ this.mmooc.coursePage = function() {
         listModulesAndShowProgressBar: function() {
             mmooc.api.getModulesForCurrentCourse(function(modules) {
                 var progressHTML = mmooc.util.renderTemplateWithData("courseprogress", {modules: modules});
-                document.getElementById('content').insertAdjacentHTML('beforeend', progressHTML);
+                document.getElementById('course_home_content').insertAdjacentHTML('beforebegin', progressHTML);
 
                 var modulesHTML = mmooc.util.renderTemplateWithData("modules", {modules: modules});
-                document.getElementById('content').insertAdjacentHTML('beforeend', modulesHTML);
+                document.getElementById('course_home_content').insertAdjacentHTML('beforebegin', modulesHTML);
             });
         }
 
