@@ -1,11 +1,15 @@
 .mmooc-back-button {
     margin-bottom: 22px;
 
-    a {
+    a, span {
         font-weight: bold;
     }
-    a:before {
+    a:before, span:before{
         content: "\2B05";
         margin-right: 4px;
+    }
+    span {
+        color: @linkColor;
+        cursor: pointer;
     }
 }
