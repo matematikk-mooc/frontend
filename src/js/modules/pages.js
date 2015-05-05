@@ -33,6 +33,13 @@ this.mmooc.pages = function() {
 
         changeTranslations : function() {
             $("a.submit_assignment_link").text('Lever besvarelse');
+        },
+
+        showBackLinkIfNecessary: function() {
+            if ($('#left-side').is(':hidden')) {
+                var linkBack = mmooc.util.renderTemplateWithData("navigateToPreviousPage", {linkText: mmooc.i18n.LinkBack});
+                $(linkBack).prependTo($('#content'));
+            }
         }
     };
 }();

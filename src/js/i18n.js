@@ -16,5 +16,7 @@ this.mmooc.i18n = {
     'Submission': 'Innlevering',
     'AssessmentRequest': 'Vurderingsforespørsel',
     'Conference': 'Conference',
-    'Collaboration': 'Collaboration'
-}
+    'Collaboration': 'Collaboration',
+    'LinkBack': 'Tilbake til forrige side',
+    'Badgesafe': 'Utmerkelser'
+};

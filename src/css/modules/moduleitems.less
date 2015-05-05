@@ -1,5 +1,5 @@
 .mmooc-module-item {
-    a {
+    a, span {
         display: block;
         padding-right: 30px !important;
         position: relative;
@@ -17,11 +17,15 @@
 
 .mmooc-module-items-back-to-course-button {
     text-align: center;
-    a {
+    a, span {
         font-weight: bold;
     }
-    a:before {
+    a:before, span:before {
         content: "\2B05";
         margin-right: 4px;
     }
+}
+
+#not_right_side  .mmooc-module-items-back-to-course-button {
+    text-align: left;
 }
