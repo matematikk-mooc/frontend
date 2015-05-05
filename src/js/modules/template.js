@@ -118,3 +118,7 @@ Handlebars.registerHelper('urlForFirstNoneCompleteItem', function(items) {
 
     return null;
 });
+
+Handlebars.registerHelper('findRightUrlFor', function(activity) {
+    return activity.type === 'Submission' ? '/courses/' + activity.course_id + '/grades' : activity.html_url;
+});
