@@ -1,8 +1,13 @@
 $(document).ready(function() {
     mmooc.routes.addRouteForPath(/\/$/, function() {
         mmooc.menu.hideRightMenu();
-        mmooc.courseList.listCourses('content');
-        mmooc.courseList.showAddCourseButton();
+        var parentId = 'content'
+        if (document.location.search === "?mmpf") {
+            mmooc.powerFunctions.show(parentId);
+        } else {
+            mmooc.courseList.listCourses(parentId);
+            mmooc.courseList.showAddCourseButton();
+        }
     });
 
     mmooc.routes.addRouteForQueryString(/invitation=/, function() {
