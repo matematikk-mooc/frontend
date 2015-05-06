@@ -90,6 +90,11 @@ $(document).ready(function() {
         mmooc.pages.changeTranslations();
     });
 
+    mmooc.routes.addRouteForPath([/\/pages/], function() {
+        mmooc.pages.showBackLinkIfNecessary();
+    });
+
+
 
     mmooc.routes.addRouteForQueryString(/enrolled=1/, function() {
         mmooc.enroll.changeButtonText();

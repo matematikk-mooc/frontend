@@ -2,6 +2,12 @@ this.mmooc=this.mmooc||{};
 
 
 this.mmooc.menu = function() {
+
+    function extractBadgesLinkFromPage() {
+        var href = $('li.section:contains("BadgeSafe")').find('a').attr('href');
+        return {"title": mmooc.i18n.Badgesafe , url: href};
+    }
+
     function _renderCourseMenu(course, selectedMenuItem, title) {
         var menuItems = [];
 
@@ -11,7 +17,7 @@ this.mmooc.menu = function() {
         menuItems[menuItems.length] = {"title": "Kunngjøringer", url: "/courses/" + courseId + "/announcements"};
         menuItems[menuItems.length] = {"title": "Grupper", url: "/courses/" + courseId + "/groups"};
         menuItems[menuItems.length] = {"title": "Diskusjoner", url: "/courses/" + courseId + "/discussion_topics"};
-
+        menuItems[menuItems.length] = extractBadgesLinkFromPage();
 
         var subtitle = course.name;
         if (title == null) {
@@ -93,7 +99,7 @@ this.mmooc.menu = function() {
                 mmooc.api.getActivityStreamForUser(function(activities) {
                     var unreadNotifications = 0;
                     for (var i = 0; i < activities.length; i++) {
-                        if (activities[i].read_state == false) {
+                        if (mmooc.menu.checkReadStateFor(activities[i])) {
                             unreadNotifications++;
                         }
                     }
@@ -161,6 +167,11 @@ this.mmooc.menu = function() {
                     document.getElementById('content-wrapper').insertAdjacentHTML('afterbegin', headerHTML);
                 });
             }
+        },
+
+        checkReadStateFor: function (activity) {
+            return activity.read_state === false
+                && activity.submission_type !== "online_quiz";
         }
     };
 }();

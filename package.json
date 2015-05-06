@@ -14,12 +14,18 @@
     "grunt-contrib-less": "~0.12.0",
     "grunt-contrib-uglify": "~0.6.0",
     "grunt-contrib-watch": "~0.6.1",
+    "grunt-karma": "^0.10.1",
     "grunt-text-replace": "^0.4.0",
     "jasmine-node": "~1.14.5",
+    "karma": "^0.12.31",
+    "karma-jasmine": "^0.3.5",
+    "karma-chrome-launcher": "^0.1.7",
+    "karma-phantomjs-launcher": "^0.1.4",
+    "karma-script-launcher": "0.1.0",
     "load-grunt-tasks": "1.0.0"
   },
-  "repository" :
-  { "type" : "git"
-  , "url" : "http://github.com/matematikk-mooc/frontend.git"
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/matematikk-mooc/frontend.git"
   }
 }
