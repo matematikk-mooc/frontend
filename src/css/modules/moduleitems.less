@@ -1,17 +1,45 @@
 .mmooc-module-item {
     a, span {
-        display: block;
+        display: inline-block;
         padding-right: 30px !important;
         position: relative;
 
-        i.icon-check {
-            position: absolute;
-            top: 8px;
-            right: 8px;
-            color: @doneColor;
-        }
-
     }
+  span.mmooc-module-item-title {
+    width: 85%;
+    padding: 0px !important;
+    white-space: normal;
+  }
+
+}
+
+.mmooc-module-items li.mmooc-module-item-icon {
+
+  a {
+    padding: 7px 12px 7px 12px!important;
+  }
+
+  span[class*="mmooc-module-items-icons-"], span[class^="mmooc-module-items-icons-"] {
+    border-radius: 3px;
+    background: grey;
+    display: inline-block;
+//    width: 16px;
+    width: 10%;
+    height: 20px;
+    padding: 2px !important;
+    text-align: center;
+    margin-right: 2px;
+    margin-bottom: 2px;
+    float: right;
+
+    i[class*="icon-"], i[class^="icon-"] {
+      color: #FFF;
+    }
+
+    &.done {
+      background: @doneColor;
+    }
+  }
 
 }
 
