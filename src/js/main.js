@@ -85,6 +85,11 @@ $(document).ready(function() {
         mmooc.pages.changeTranslations();
     });
 
+    mmooc.routes.addRouteForPath(/\/groups\/\d+\/external_tools\/\d+$/, function() {
+        var courseId = mmooc.api.getCurrentCourseId();
+        mmooc.menu.showCourseMenu(courseId, 'Utmerkelser', mmooc.util.getPageTitleBeforeColon());
+    });
+
     mmooc.routes.addRouteForPath([/\/pages/], function() {
         mmooc.pages.showBackLinkIfNecessary();
     });
