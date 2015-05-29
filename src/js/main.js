@@ -87,7 +87,7 @@ $(document).ready(function() {
 
     mmooc.routes.addRouteForPath(/\/groups\/\d+\/external_tools\/\d+$/, function() {
         var courseId = mmooc.api.getCurrentCourseId();
-        mmooc.menu.showCourseMenu(courseId, 'Utmerkelser', mmooc.util.getPageTitleBeforeColon());
+        mmooc.menu.showCourseMenu(courseId, 'Utmerkelser', 'Utmerkelser');
     });
 
     mmooc.routes.addRouteForPath([/\/pages/], function() {
