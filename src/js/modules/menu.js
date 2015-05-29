@@ -170,8 +170,7 @@ this.mmooc.menu = function() {
         },
 
         checkReadStateFor: function (activity) {
-            return activity.read_state === false
-                && activity.submission_type !== "online_quiz";
+            return activity.read_state === false;
         }
     };
 }();
