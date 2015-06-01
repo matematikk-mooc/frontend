@@ -86,8 +86,21 @@ $(document).ready(function() {
     });
 
     mmooc.routes.addRouteForPath(/\/groups\/\d+\/external_tools\/\d+$/, function() {
-        var courseId = mmooc.api.getCurrentCourseId();
-        mmooc.menu.showCourseMenu(courseId, 'Utmerkelser', 'Utmerkelser');
+        function isBadgesafePage() {
+            function extractPluginNumber(input) {
+                 return input.substring(input.lastIndexOf('/') + 1);
+            }
+
+            var badgesafeUrl = mmooc.menu.extractBadgesLinkFromPage().url;
+
+            return extractPluginNumber(badgesafeUrl) === extractPluginNumber(window.location.pathname);
+        };
+
+        if (isBadgesafePage()) {
+            var courseId = mmooc.api.getCurrentCourseId();
+            mmooc.menu.showCourseMenu(courseId, 'Utmerkelser', 'Utmerkelser');
+            mmooc.pages.badges.initPage()
+        }
     });
 
     mmooc.routes.addRouteForPath([/\/pages/], function() {
