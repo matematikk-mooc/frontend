@@ -6,15 +6,17 @@ module.exports = function (config) {
         colors: true,
         frameworks: ['jasmine'],
         files: [
-            'src/js/api/*.js',
-            'src/js/modules/*.js',
+            'node_modules/grunt-contrib-handlebars/node_modules/handlebars/dist/handlebars.js',
+            'tmp/templates.js',
+            'src/js/**/*.js',
             'spec/**/*.js'
         ],
         exclude: [
             'src/test/js/karma.conf.js',
+            'src/js/3party/**/*.js',
+            'src/js/main.js',
             'spec/api_spec.js',
-            'spec/routes_spec.js',
-            'src/js/modules/template.js'
+            'spec/routes_spec.js'
         ],
         // web server port
         port: 9876,
