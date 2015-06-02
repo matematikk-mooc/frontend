@@ -1,4 +1,4 @@
-var routes = require("../src/js/modules/routes.js");
+var routes = mmooc.routes;
 
 describe("routes", function() {
     var callbacks;

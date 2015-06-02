@@ -12,8 +12,6 @@ module.exports = function (config) {
         ],
         exclude: [
             'src/test/js/karma.conf.js',
-            'spec/api_spec.js',
-            'spec/routes_spec.js',
             'src/js/modules/template.js'
         ],
         // web server port
@@ -21,4 +19,4 @@ module.exports = function (config) {
         // possible values: LOG_DISABLE|ERROR|WARN|INFO|DEBUG
         logLevel: config.LOG_INFO
     });
-};
+  };
