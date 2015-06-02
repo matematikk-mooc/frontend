@@ -126,7 +126,7 @@ module.exports = function(grunt) {
 
 	});
 
-	grunt.registerTask('build', [
+	grunt.registerTask('make', [
 		'handlebars',
 		'concat',
 		//'uglify',
@@ -134,25 +134,36 @@ module.exports = function(grunt) {
 		'copy',
 		'replace:production',
 		'replace:development'
-		]);
+	]);
+
+	grunt.registerTask('runTest', [
+		'connect:test',
+    'karma:unitTest'
+	]);
+
+	grunt.registerTask('test', [
+    'clean',
+    'make',
+    'runTest'
+  ]);
+
+	grunt.registerTask('build', [
+		'make',
+		'runTest'
+	]);
 
 	grunt.registerTask('serve', [
-				'clean',
-                'build',
-                'connect',
-                'watch'
-                ]);
+		'clean',
+    'make',
+    'connect',
+    'watch'
+  ]);
 
 	grunt.registerTask('default', [
 		'clean',
-		'build'
-		]);
+		'make'
+	]);
 
-    grunt.registerTask('test', [
-        'clean',
-        'build',
-        'connect:test',
-        'karma:unitTest'
-    ]);
+
 
 };
