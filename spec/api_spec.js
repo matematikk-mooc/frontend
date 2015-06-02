@@ -1,4 +1,3 @@
-// var api = require("../src/js/api/api.js");
 var api = mmooc.api;
 
 describe("api", function() {
