@@ -22,11 +22,12 @@ module.exports = function(grunt) {
                 options: {
                     namespace: 'mmooc.templates',
                     processName: function(filePath) {
-     				   return filePath.replace('src/templates/modules/', '').replace(/\.hbs$/, '');
+     				   return filePath.replace('src/templates/modules/', '').replace('src/addons/badges/templates', '').replace(/\.hbs$/, '');
     				}
                 },
 		        files: {
-		            "tmp/templates.js": ["src/templates/**/*.hbs"]
+		            "tmp/templates.js": ["src/templates/**/*.hbs"],
+                    "tmp/badges_template.js": ["src/addons/badges/templates/*.hbs"]
 		        }
 		    }
 		},
@@ -37,7 +38,8 @@ module.exports = function(grunt) {
 	            	cleancss: true
 	        	},
 	        	files: {
-	            	'tmp/mmooc-min.css': ['src/css/all.less']
+	            	'tmp/mmooc-min.css': ['src/css/all.less'],
+	            	'tmp/badges-min.css': ['src/addons/badges/css/all.less']
 	        	}
 	    	}
 		},
@@ -46,7 +48,11 @@ module.exports = function(grunt) {
 	        js: {
 	            src: ['tmp/templates.js', 'src/js/api/*.js', 'src/js/modules/*.js', 'src/js/i18n.js', 'src/js/main.js', 'src/js/3party/*.js'],
 	            dest: 'dist/mmooc-min.js'
-	        }
+	        },
+            extras: {
+                src: ['tmp/badges_template.js', 'src/addons/badges/js/*.js'],
+                dest: 'dist/badges_concat.js'
+            }
 	    },
 
 		uglify: {
