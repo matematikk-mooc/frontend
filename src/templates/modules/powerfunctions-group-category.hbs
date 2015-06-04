@@ -1,0 +1,26 @@
+<div class="mmooc-power-functions">
+  <h1 class="xl">Power Functions</h1>
+  <h2>Create groups</h2>
+  <p><a href="/?mmpf">Back</a></p>
+
+  <form>
+    <dl>
+      <dt><label for="account">Choose the account</label></dt>
+      <dd>
+        <select name="account">
+          {{#accounts}}
+            <option value="{{id}}">{{name}}</option>
+          {{/accounts}}
+        </select>
+      </dd>
+      <dt><label for="csv">Upload CSV file</label></dt>
+      <dd><input type="file" name="csv"></dd>
+    </dl>
+  </form>
+
+  <div class="side-information">
+    <p>
+      Description of CSV format
+    </p>
+  </div>
+</div>

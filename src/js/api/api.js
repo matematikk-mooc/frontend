@@ -207,6 +207,16 @@ this.mmooc.api = function() {
             } else {
                 return false;
             }
+        },
+
+        getAccounts: function(callback, error) {
+            this._get({
+                "callback": callback,
+                "error":    error,
+                "uri":      "/accounts",
+                "params":   { }
+            });
+
         }
     };
 }();
