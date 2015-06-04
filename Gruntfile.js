@@ -39,7 +39,7 @@ module.exports = function(grunt) {
 	        	},
 	        	files: {
 	            	'tmp/mmooc-min.css': ['src/css/all.less'],
-	            	'tmp/badges-min.css': ['src/addons/badges/css/all.less']
+	            	'dist/badges-min.css': ['src/addons/badges/css/all.less']
 	        	}
 	    	}
 		},
@@ -51,7 +51,7 @@ module.exports = function(grunt) {
 	        },
             extras: {
                 src: ['tmp/badges_template.js', 'src/addons/badges/js/*.js'],
-                dest: 'dist/badges_concat.js'
+                dest: 'dist/badges-min.js'
             }
 	    },
 
@@ -116,6 +116,8 @@ module.exports = function(grunt) {
 				files: [
 				'src/css/**/*.less',
 				'src/js/**/*.js',
+                'src/addons/badges/js/*.js',
+                'src/addons/badges/css/*.less'
 				],
 				tasks: ['clean', 'build']
 			}
