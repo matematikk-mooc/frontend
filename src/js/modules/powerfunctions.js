@@ -6,6 +6,15 @@ this.mmooc.powerFunctions = function() {
         document.getElementById(rootId).innerHTML = html;
     }
 
+    function _readFile(file, callback) {
+        var reader = new FileReader();
+        reader.onload = function(event){
+            callback(event.target.result);
+        };
+        reader.onerror = function(){ alert('Unable to read ' + file.fileName); };
+        reader.readAsText(file);
+    }
+
     function _renderGroupCategoryOptions(el) {
         var account_id = $("option:selected", el).val();
         mmooc.api.getGroupCategoriesForAccount(account_id, function(categories) {
@@ -30,6 +39,10 @@ this.mmooc.powerFunctions = function() {
     function _renderAssignView(rootId) {
         _render(rootId, "powerfunctions-assign", {});
         $('input[type="submit"]').click(function() {
+            _readFile($('input:file')[0].files.item(0), function(content) {
+                var x= $.csv.toObjects(content);
+                debugger;
+            });
             return false;
         });
 
