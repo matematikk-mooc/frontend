@@ -1,16 +1,40 @@
-<div class="span2">
-    <div class="kbadge text-center">
-        <a class="badge-content" href="{{link}}">
-            <img class="badgeImage" src="{{badgeImage}}">
-            <h3>{{name}}</h3>
-        </a>
+<div id="badge_container">
+    <div>
+        <h1>Kurs utmerkelser</h1>
+
+        <p>
+            Her er en oversikr over alle utmerkelser du har f&aring;tt og som du kan f&aring;.<br/>
+            Utmerkelser er bare for dette kurset.
+        </p>
     </div>
-    <div class="kbadge text-center" style="display: none">
-        <h3>TIPS</h3>
-        <span class="criteria"></span>
-        <a href="tilModul"></a>
+    <div>
+        <div class="btn-group">
+            <div class="btn">Alle utmerkelse</div>
+            <div class="btn">Dine utmerkelse</div>
+            <div class="btn">Uopn&aring;dde utmerkelse</div>
+        </div>
     </div>
-    <div class="badge-foot">
-        <span class="badge-type {{type}}">{{badgeFooter}}</span>
+    <div class="bagde-list">
+        {{#each badges}}
+            <div class="badge-view">
+                <div class="kbadge text-center">
+                    <a class="badge-content" href="{{link}}">
+                        <img class="badgeImage" src="{{badgeImage}}">
+
+                        <h3>{{name}}</h3>
+                    </a>
+                </div>
+                <div class="kbadge text-center" style="display: none">
+                    <h3>TIPS</h3>
+                    <span class="criteria"></span>
+                    <a href="tilModul"></a>
+                </div>
+                <div class="badge-foot">
+                    <span class="badge-type {{type}}">{{badgeFooter}}</span>
+                </div>
+            </div>
+        {{/each}}
+
     </div>
+
 </div>

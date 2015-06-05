@@ -49,11 +49,9 @@ this.mmooc.iframe = {
 
             displayElements: function(elements) {
 
-                var templates = elements.map(function (element) {
-                    return mmooc.util.renderTemplateWithData("badgeView", element);
-                });
+                var templates = mmooc.util.renderTemplateWithData("badgeView", {badges: elements});
 
-                $('#backpack .row-fluid').append(templates);
+                $('#badge-wrap').after(templates);
             },
 
             extractIdsFromString: function(string) {

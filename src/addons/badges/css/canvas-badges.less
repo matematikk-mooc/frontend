@@ -2,16 +2,8 @@ body {
   font-family: Roboto-Condensed, Roboto, 'Helvetica Neue', serif;
   background-color: @backgroundColor;
 
-  #page-wrap {
-    h2, p {
-      display: none;
-    }
-  }
-
-  #backpack {
-    div.span4 {
-      display: none;
-    }
+  #badge-wrap {
+    display: none;
   }
 
   .kbadge {
@@ -36,16 +28,20 @@ body {
     }
 
   }
-  .span2 {
-
-
+  .badge-list {
+    width: 1200px;
+  }
+  .badge-view {
+    display: inline-block;
+    margin-right: 25px;
     div.badge-foot {
       text-align: center;
+      height: 30px;
     }
     span.badge-type {
       background-color: #885e55;
       color: #FFF;
-      padding: 2px 25px;
+      padding: 3px 25px;
       border-radius: 4px;
       font-family: Roboto-Bold, Roboto, 'Helvetica Neue', serif;;
       font-size: 13px;
