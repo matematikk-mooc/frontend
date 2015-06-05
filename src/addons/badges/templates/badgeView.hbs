@@ -1,5 +1,5 @@
 <div id="badge_container">
-    <div>
+    <div class="badge-header">
         <h1>Kurs utmerkelser</h1>
 
         <p>
@@ -7,16 +7,16 @@
             Utmerkelser er bare for dette kurset.
         </p>
     </div>
-    <div>
+    <div class="badge-filter">
         <div class="btn-group">
-            <div class="btn">Alle utmerkelse</div>
+            <div class="btn selected">Alle utmerkelse</div>
             <div class="btn">Dine utmerkelse</div>
             <div class="btn">Uopn&aring;dde utmerkelse</div>
         </div>
     </div>
     <div class="bagde-list">
         {{#each badges}}
-            <div class="badge-view">
+            <div class="badge-view {{#unless complete}}locked{{/unless}}">
                 <div class="kbadge text-center">
                     <a class="badge-content" href="{{link}}">
                         <img class="badgeImage" src="{{badgeImage}}">

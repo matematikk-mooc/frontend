@@ -6,6 +6,34 @@ body {
     display: none;
   }
 
+  .badge-header {
+    margin-bottom: 40px;
+    h1 {
+      font-size: 18px;
+      line-height: 20px;
+      margin: 5px 0;
+    }
+  }
+
+  .badge-filter {
+    width: 1244px;
+    height: 65px;
+    text-align: center;
+
+    .btn-group {
+      width: 740px;
+      .btn {
+        width: 220px;
+        border-color: @textColor;
+      }
+      .selected {
+        background-color: #dadada;
+        background-image: linear-gradient(rgb(200,200,200), rgb(219,219,219));
+      }
+    }
+  }
+
+
   .kbadge {
     background-color: @darkTealColor;
     padding: 5px;
@@ -31,6 +59,28 @@ body {
   .badge-list {
     width: 1200px;
   }
+
+  .badge-view.locked {
+
+    .kbadge {
+      background-color: white;
+      .badge-content {
+        h3 {
+          color: @textColor;
+        }
+      }
+    }
+
+    span.badge-type.Kurs {
+      background-color: rgba(194, 133, 53, 0.75);
+    }
+
+    span.badge-type.Modul {
+      background-color: rgba(115, 143, 154, 0.75);
+    }
+
+  }
+
   .badge-view {
     display: inline-block;
     margin-right: 25px;
@@ -58,5 +108,6 @@ body {
     span.badge-type.Kurs {
       background-color: #C28535;
     }
+
   }
 }
