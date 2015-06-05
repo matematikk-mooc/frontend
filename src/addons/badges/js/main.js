@@ -1,3 +1,7 @@
-/**
- * Created by clabar on 04.06.15.
- */
+$(document).ready(function() {
+   try {
+       mmooc.iframe.badges.initPage(25);
+   } catch (e) {
+       console.log("something went wrong!", e);
+   }
+});

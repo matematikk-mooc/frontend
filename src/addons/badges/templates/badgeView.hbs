@@ -1,14 +1,16 @@
-<div class="span3">
-    <div class="thumbnail text-center">
+<div class="span2">
+    <div class="kbadge text-center">
         <a class="badge-content" href="{{link}}">
-            <img src="{{badgeImage}}">
-            <span>{{name}}</span>
+            <img class="badgeImage" src="{{badgeImage}}">
+            <h3>{{name}}</h3>
         </a>
-        <div class="badge-type">{{type}}</div>
     </div>
-    <div class="thumbnail-back text-center">
+    <div class="kbadge text-center" style="display: none">
         <h3>TIPS</h3>
         <span class="criteria"></span>
         <a href="tilModul"></a>
+    </div>
+    <div class="badge-foot">
+        <span class="badge-type {{type}}">{{badgeFooter}}</span>
     </div>
 </div>

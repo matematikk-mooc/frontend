@@ -22,7 +22,7 @@ module.exports = function(grunt) {
                 options: {
                     namespace: 'mmooc.templates',
                     processName: function(filePath) {
-     				   return filePath.replace('src/templates/modules/', '').replace('src/addons/badges/templates', '').replace(/\.hbs$/, '');
+     				   return filePath.replace('src/templates/modules/', '').replace('src/addons/badges/templates/', '').replace(/\.hbs$/, '');
     				}
                 },
 		        files: {
@@ -50,8 +50,12 @@ module.exports = function(grunt) {
 	            dest: 'dist/mmooc-min.js'
 	        },
             extras: {
-                src: ['tmp/badges_template.js', 'src/addons/badges/js/*.js'],
-                dest: 'dist/badges-min.js'
+                src: [
+                        'node_modules/grunt-contrib-handlebars/node_modules/handlebars/dist/handlebars.min.js',// we need to embed handlebars here because it is not included in the iframe
+                        'tmp/badges_template.js', 'src/addons/badges/js/*.js', 'src/js/modules/template.js', 'src/js/modules/util.js',
+                        'src/js/i18n.js'
+                    ],
+                dest: 'tmp/badges-min.js'
             }
 	    },
 
@@ -79,7 +83,23 @@ module.exports = function(grunt) {
 					from: 'https://server',
 					to: 'http://localhost:9000'
 				}]
-			}
+			},
+            production_badge: {
+                src: ['tmp/badges-min.js'],
+                dest: 'dist/badges-min.js',
+                replacements: [{
+                    from: 'https://server',
+                    to: 'https://matematikk-mooc.github.io/frontend'
+                }]
+            },
+            development_badge: {
+                src: ['tmp/badges-min.js'],
+                dest: 'dist/badges-min.js',
+                replacements: [{
+                    from: 'https://server',
+                    to: 'http://localhost:9000'
+                }]
+            }
 		},
 
 		copy: {
@@ -141,7 +161,9 @@ module.exports = function(grunt) {
 		'less',
 		'copy',
 		'replace:production',
-		'replace:development'
+		'replace:development',
+		//'replace:production_badge',
+		'replace:development_badge'
 		]);
 
 	grunt.registerTask('serve', [

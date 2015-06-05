@@ -1,4 +1,5 @@
 body {
+  font-family: Roboto-Condensed, Roboto, 'Helvetica Neue', serif;
   background-color: @backgroundColor;
 
   #page-wrap {
@@ -7,8 +8,59 @@ body {
     }
   }
 
-  .thumbnail {
+  #backpack {
+    div.span4 {
+      display: none;
+    }
+  }
+
+  .kbadge {
     background-color: @darkTealColor;
-    width: 250px;
+    padding: 5px;
+    border-radius: 4px;
+    margin-bottom: 17px;
+    height: 250px;
+    width: 216px;
+
+    .badge-content{
+      h3 {
+        line-height: 20px;
+        font-size: @fontSize;
+        color: #FFF;
+        padding-bottom: 10px;
+      }
+      img.badgeImage {
+        width: 188px;
+        height: 188px;
+      }
+    }
+
+  }
+  .span2 {
+
+
+    div.badge-foot {
+      text-align: center;
+    }
+    span.badge-type {
+      background-color: #885e55;
+      color: #FFF;
+      padding: 2px 25px;
+      border-radius: 4px;
+      font-family: Roboto-Bold, Roboto, 'Helvetica Neue', serif;;
+      font-size: 13px;
+      font-weight: 600;
+      margin: auto;
+      letter-spacing: 0.2px;
+      line-height: 15px;
+    }
+
+    span.badge-type.Modul {
+      background-color: #738f9a;
+    }
+
+    span.badge-type.Kurs {
+      background-color: #C28535;
+    }
   }
 }
