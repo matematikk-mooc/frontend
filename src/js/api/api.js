@@ -217,7 +217,18 @@ this.mmooc.api = function() {
                 "params":   { }
             });
 
+        },
+
+        getGroupCategoriesForAccount: function(account, callback, error) {
+            this._get({
+                "callback": callback,
+                "error":    error,
+                "uri":      "/accounts/" + account + "/group_categories",
+                "params":   { }
+            });
+
         }
+
     };
 }();
 
