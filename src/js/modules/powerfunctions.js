@@ -36,13 +36,18 @@ this.mmooc.powerFunctions = function() {
         });
     }
 
+    function _processAssignFile(file) {
+        _readFile(file, function(content) {
+            var assigns = $.csv.toObjects(content);
+            _render(rootId, "powerfunctions-assign-process", {assigns: assigns});
+        });
+    }
+
     function _renderAssignView(rootId) {
         _render(rootId, "powerfunctions-assign", {});
         $('input[type="submit"]').click(function() {
-            _readFile($('input:file')[0].files.item(0), function(content) {
-                var x= $.csv.toObjects(content);
-                debugger;
-            });
+            var file = $('input:file')[0].files.item(0);
+            _processAssignFile(file);
             return false;
         });
 
