@@ -52,6 +52,7 @@ this.mmooc.iframe = {
             displayElements: function(elements) {
 
                 var templates = mmooc.util.renderTemplateWithData("badgeView", {badges: elements});
+                var vel = 200;
 
                 $('#badge-wrap').after(templates);
                 function toggleSelected($element ) {
@@ -60,19 +61,19 @@ this.mmooc.iframe = {
                 }
                 $('.show-all').click(function () {
                     toggleSelected($(this));
-                    $('.badge-list .badge-view').show();
+                    $('.badge-list .badge-view').show(vel);
                 });
 
                 $('.show-unlocked').click(function () {
                     toggleSelected($(this));
-                    $('.badge-list .badge-view.locked').hide();
-                    $('.badge-list .badge-view:not(.locked)').show();
+                    $('.badge-list .badge-view.locked').hide(vel);
+                    $('.badge-list .badge-view:not(.locked)').show(vel);
                 });
 
                 $('.show-locked').click(function () {
                     toggleSelected($(this));
-                    $('.badge-list .badge-view:not(.locked)').hide();
-                    $('.badge-list .badge-view.locked').show();
+                    $('.badge-list .badge-view:not(.locked)').hide(vel);
+                    $('.badge-list .badge-view.locked').show(vel);
                 });
             },
 
