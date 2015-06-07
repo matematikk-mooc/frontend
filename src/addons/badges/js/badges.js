@@ -54,6 +54,26 @@ this.mmooc.iframe = {
                 var templates = mmooc.util.renderTemplateWithData("badgeView", {badges: elements});
 
                 $('#badge-wrap').after(templates);
+                function toggleSelected($element ) {
+                    $element.siblings().removeClass('selected');
+                    $element.addClass('selected');
+                }
+                $('.show-all').click(function () {
+                    toggleSelected($(this));
+                    $('.badge-list .badge-view').show();
+                });
+
+                $('.show-unlocked').click(function () {
+                    toggleSelected($(this));
+                    $('.badge-list .badge-view.locked').hide();
+                    $('.badge-list .badge-view:not(.locked)').show();
+                });
+
+                $('.show-locked').click(function () {
+                    toggleSelected($(this));
+                    $('.badge-list .badge-view:not(.locked)').hide();
+                    $('.badge-list .badge-view.locked').show();
+                });
             },
 
             extractIdsFromString: function(string) {
