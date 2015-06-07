@@ -44,6 +44,9 @@ body {
             color: @textColor;
           }
         }
+        a:hover, a:focus {
+          text-decoration: none;
+        }
       }
 
       div.badge-foot {
@@ -116,10 +119,12 @@ body {
         top: 0;
         z-index: 10;
         background-color: rgba(3, 73, 97, 0.95);
-        display: none;
         color: @white;
         padding: @badge-padding 12px;
         width: 202px;
+        visibility: hidden;
+        transition: visibility 0s linear 0.3s, opacity 0.3s linear;
+        opacity: 0;
 
         text-align: left;
 
@@ -151,7 +156,9 @@ body {
 
     .badge-view:hover {
       .kbadge.back {
-        display: block;
+        visibility: visible;
+        opacity: 1;
+        transition-delay: 0s;
       }
     }
   }
