@@ -14,7 +14,7 @@
             <div class="btn">Uopn&aring;dde utmerkelse</div>
         </div>
     </div>
-    <div class="bagde-list">
+    <div class="badge-list">
         {{#each badges}}
             <div class="badge-view {{#unless complete}}locked{{/unless}}">
                 <div class="kbadge text-center">
@@ -24,10 +24,10 @@
                         <h3>{{name}}</h3>
                     </a>
                 </div>
-                <div class="kbadge text-center" style="display: none">
+                <div class="kbadge back text-center">
                     <h3>TIPS</h3>
-                    <span class="criteria"></span>
-                    <a href="tilModul"></a>
+                    <span class="criteria">{{criteria}}</span>
+                    <a href="tilModul">G&aring; til modul</a>
                 </div>
                 <div class="badge-foot">
                     <span class="badge-type {{type}}">{{badgeFooter}}</span>
