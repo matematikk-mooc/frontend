@@ -33,125 +33,128 @@ body {
     }
   }
 
-  .kbadge {
-    background-color: @darkTealColor;
-    padding: 5px;
-    border-radius: 4px;
-    margin-bottom: 17px;
-    height: 244px;
-    width: 216px;
 
-    .badge-content {
-      h3 {
-        line-height: 20px;
-        font-size: @fontSize;
-        color: #FFF;
-        padding-bottom: 10px;
-      }
-      img.badgeImage {
-        width: 188px;
-        height: 188px;
-      }
-    }
-
-  }
   .badge-list {
     width: 1270px;
-  }
 
-  .badge-view.locked {
-    .kbadge {
-      background-color: white;
-      z-index: 0;
-      .badge-content {
-        h3 {
-          color: @textColor;
+    .badge-view.locked {
+      .kbadge {
+        background-color: white;
+        z-index: 0;
+        .badge-content {
+          h3 {
+            color: @textColor;
+          }
         }
       }
-    }
 
-    span.badge-type.Kurs {
-      background-color: rgba(194, 133, 53, 0.75);
-    }
-
-    span.badge-type.Modul {
-      background-color: rgba(115, 143, 154, 0.75);
-    }
-
-  }
-
-  .badge-view {
-    display: inline-block;
-    margin-right: 25px;
-    margin-bottom: 50px;
-    position: relative;
-    div.badge-foot {
-      text-align: center;
-      height: 30px;
-    }
-    span.badge-type {
-      background-color: #885e55;
-      color: #FFF;
-      padding: 3px 25px;
-      border-radius: 4px;
-      font-family: Roboto-Bold, Roboto, 'Helvetica Neue', serif;
-      font-size: 13px;
-      font-weight: 600;
-      margin: auto;
-      letter-spacing: 0.2px;
-      line-height: 15px;
-    }
-
-    span.badge-type.Modul {
-      background-color: #738f9a;
-    }
-
-    span.badge-type.Kurs {
-      background-color: #C28535;
-    }
-
-    .kbadge.back {
-      position: absolute;
-      top: 0;
-      z-index: 10;
-      background-color: rgba(3, 73, 97, 0.95);
-      display: none;
-      color: #FFF;
-      padding: 5px 12px;
-      width: 202px;
-
-      text-align: left;
-
-      h3 {
-        font-size: 14px;
-        margin-top: 35px;
-        font-family: Roboto-Bold, Roboto, 'Helvetica Neue', serif;
-        font-weight: 600;
+      span.badge-type.Kurs {
+        background-color: rgba(194, 133, 53, 0.75);
       }
 
-      a {
-        background-color: #00a958;
-        width: 150px;
-        border-radius: 20px;
-        height: 40px;
-        margin: auto;
-        display: block;
+      span.badge-type.Modul {
+        background-color: rgba(115, 143, 154, 0.75);
+      }
+    }
+
+    .badge-view {
+      display: inline-block;
+      margin-right: 25px;
+      margin-bottom: 50px;
+      position: relative;
+
+
+      .kbadge {
+        background-color: @darkTealColor;
+        padding: 5px;
+        border-radius: 4px;
+        margin-bottom: 17px;
+        height: 244px;
+        width: 216px;
+
+        .badge-content {
+          h3 {
+            line-height: 20px;
+            font-size: @fontSize;
+            color: #FFF;
+            padding-bottom: 10px;
+          }
+          img.badgeImage {
+            width: 188px;
+            height: 188px;
+          }
+        }
+
+      }
+
+      div.badge-foot {
         text-align: center;
-        color: #fff;
-        line-height: 40px;
-        margin-top: 20px;
+        height: 30px;
+      }
+      span.badge-type {
+        background-color: #885e55;
+        color: #FFF;
+        padding: 3px 25px;
+        border-radius: 4px;
+        font-family: Roboto-Bold, Roboto, 'Helvetica Neue', serif;
+        font-size: 13px;
+        font-weight: 600;
+        margin: auto;
+        letter-spacing: 0.2px;
+        line-height: 15px;
       }
 
-      a:hover, a:focus {
-        text-decoration: none;
+      span.badge-type.Modul {
+        background-color: #738f9a;
       }
+
+      span.badge-type.Kurs {
+        background-color: #C28535;
+      }
+
+
+      .kbadge.back {
+        position: absolute;
+        top: 0;
+        z-index: 10;
+        background-color: rgba(3, 73, 97, 0.95);
+        display: none;
+        color: #FFF;
+        padding: 5px 12px;
+        width: 202px;
+
+        text-align: left;
+
+        h3 {
+          font-size: 14px;
+          margin-top: 35px;
+          font-family: Roboto-Bold, Roboto, 'Helvetica Neue', serif;
+          font-weight: 600;
+        }
+
+        a {
+          background-color: #00a958;
+          width: 150px;
+          border-radius: 20px;
+          height: 40px;
+          margin: 20px auto 0 auto;
+          display: block;
+          text-align: center;
+          color: #fff;
+          line-height: 40px;
+        }
+
+        a:hover, a:focus {
+          text-decoration: none;
+        }
+      }
+
     }
 
-  }
-
-  .badge-view:hover {
-    .kbadge.back {
-      display: block;
+    .badge-view:hover {
+      .kbadge.back {
+        display: block;
+      }
     }
   }
 
