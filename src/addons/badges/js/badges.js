@@ -42,7 +42,7 @@ this.mmooc.iframe = {
                         $element.find('.thumbnail a img').attr("src") :
                         mmooc.constants.BADGE_LOCKED_IMAGE_URL,
                     name: $element.find('.thumbnail h3').html(),
-                    badgeFooter: type  + ' utmerkelse',
+                    badgeFooter: type  + 'utmerkelse',
                     type: type,
                     criteria: criteria,
                     link: link,
