@@ -207,6 +207,9 @@ this.mmooc.api = function() {
             } else {
                 return false;
             }
+        },
+        getUnreadMessageSize: function() {
+          return parseInt(document.getElementsByClassName('unread-messages-count')[0].innerHTML);
         }
     };
 }();
