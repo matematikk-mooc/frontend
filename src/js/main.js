@@ -85,7 +85,7 @@ $(document).ready(function() {
         mmooc.pages.changeTranslations();
     });
 
-    mmooc.routes.addRouteForPath(/\/groups\/\d+\/external_tools\/\d+$/, function() {
+    mmooc.routes.addRouteForPath(/\/courses\/\d+\/external_tools\/\d+$/, function() {
         function isBadgesafePage() {
             function extractPluginNumber(input) {
                  return input.substring(input.lastIndexOf('/') + 1);
