@@ -20,6 +20,8 @@ this.mmooc.iframe = {
                 });
 
                 mmooc.iframe.badges.displayElements(redesignedBadges);
+                $('body').attr("style", "margin: 0 !important;");
+                $('head').append('<base target="_parent"/>');
             },
 
             applyNewDesign: function($element) {
@@ -54,7 +56,7 @@ this.mmooc.iframe = {
                 var templates = mmooc.util.renderTemplateWithData("badgeView", {badges: elements});
                 var vel = 200;
 
-                $('#badge-wrap').after(templates);
+                $('#badge-wrap').before(templates);
 
                 function toggleSelected($element ) {
                     $element.siblings().removeClass('selected');

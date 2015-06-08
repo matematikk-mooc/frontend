@@ -3,7 +3,7 @@ body {
   background-color: @backgroundColor;
 
   #badge-wrap {
-    display: none;
+    display: none !important;
   }
 
   .badge-header {
@@ -120,8 +120,8 @@ body {
         z-index: 10;
         background-color: rgba(3, 73, 97, 0.95);
         color: @white;
-        padding: @badge-padding 12px;
-        width: 202px;
+        padding: @badge-padding @back-horizontal-padding;
+        width: @badge-view-width - (2 * @back-horizontal-padding);
         visibility: hidden;
         transition: visibility 0s linear 0.3s, opacity 0.3s linear;
         opacity: 0;

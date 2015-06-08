@@ -39,7 +39,7 @@ module.exports = function(grunt) {
 	        	},
 	        	files: {
 	            	'tmp/mmooc-min.css': ['src/css/all.less'],
-	            	'dist/badges-min.css': ['src/addons/badges/css/all.less']
+	            	'dist/badgesafe.css': ['src/addons/badges/css/all.less']
 	        	}
 	    	}
 		},
@@ -86,10 +86,10 @@ module.exports = function(grunt) {
 			},
             production_badge: {
                 src: ['tmp/badges-min.js'],
-                dest: 'dist/badges-min.js',
+                dest: 'dist/badgesafe.js',
                 replacements: [{
                     from: 'https://server',
-                    to: 'https://matematikk-mooc.github.io/frontend'
+                    to: 'https://matematikk-mooc.github.io'
                 }]
             },
             development_badge: {
@@ -162,7 +162,7 @@ module.exports = function(grunt) {
 		'copy',
 		'replace:production',
 		'replace:development',
-		//'replace:production_badge',
+		'replace:production_badge',
 		'replace:development_badge'
 		]);
 
