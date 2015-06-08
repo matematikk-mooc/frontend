@@ -1,7 +1,9 @@
 this.mmooc=this.mmooc||{};
 
 this.mmooc.powerFunctions = function() {
-    function _render(rootId, template, data) {
+    var rootId = undefined;
+
+    function _render(template, data) {
         var html = mmooc.util.renderTemplateWithData(template, data);
         document.getElementById(rootId).innerHTML = html;
     }
@@ -25,10 +27,9 @@ this.mmooc.powerFunctions = function() {
         });
     }
 
-    function _renderGroupView(rootId) {
+    function _renderGroupView() {
         mmooc.api.getAccounts(function(accounts) {
-            _render(rootId,
-                    "powerfunctions-group-category",
+            _render("powerfunctions-group-category",
                     {accounts: accounts});
             $('select[name="account"]').change(function() {
                 _renderGroupCategoryOptions($(this));
@@ -39,12 +40,27 @@ this.mmooc.powerFunctions = function() {
     function _processAssignFile(file) {
         _readFile(file, function(content) {
             var assigns = $.csv.toObjects(content);
-            _render(rootId, "powerfunctions-assign-process", {assigns: assigns});
+            _render("powerfunctions/assign-process", {assigns: assigns});
+            for (var i = 0; i < assigns.length; i++) {
+                var gid = assigns[i]["group_id"];
+                var uid = assigns[i]["user_id"];
+                var row = $("mmpf-assign-"+gid+"-"+uid);
+                mmooc.api.createGroupMembership(
+                    gid, uid,
+                    function () {
+                        $("td.status", row).removeClass("waiting").addClass("ok").text("OK");
+                    },
+                    function () {
+                        debugger;
+                        $("td.status", row).removeClass("waiting").addClass("failed").text("Failed");
+                    }
+                );
+            }
         });
     }
 
-    function _renderAssignView(rootId) {
-        _render(rootId, "powerfunctions-assign", {});
+    function _renderAssignView() {
+        _render("powerfunctions-assign", {});
         $('input[type="submit"]').click(function() {
             var file = $('input:file')[0].files.item(0);
             _processAssignFile(file);
@@ -52,13 +68,12 @@ this.mmooc.powerFunctions = function() {
         });
 
     }
-    function _renderLoginsView(rootId) {
-        _render(rootId,
-                "powerfunctions-logins",
+    function _renderLoginsView() {
+        _render("powerfunctions-logins",
                 {});
     }
 
-    function _setUpClickHandlers(rootId) {
+    function _setUpClickHandlers() {
         $("#mmooc-pf-group-btn").click(function() {
             _renderGroupView(rootId);
         });
@@ -72,8 +87,10 @@ this.mmooc.powerFunctions = function() {
 
     return {
         show: function(parentId) {
-            _render(parentId, "powerfunctions", {});
-            _setUpClickHandlers(parentId);
+            rootId = parentId;
+            //_render("powerfunctions", {});
+            _renderAssignView();
+            //_setUpClickHandlers();
         }
 
     };

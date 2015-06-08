@@ -227,6 +227,17 @@ this.mmooc.api = function() {
                 "params":   { }
             });
 
+        },
+
+
+        createGroupMembership: function(gid, uid, callback, error) {
+            this._get({
+                "callback": callback,
+                "error":    error,
+                "uri":      "/groups/" + gid + "/membership",
+                "params":   { user_id: uid }
+            });
+
         }
 
     };
