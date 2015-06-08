@@ -96,6 +96,15 @@ this.mmooc.menu = function() {
                 var html = mmooc.util.renderTemplateWithData("usermenu", {user: mmooc.api.getUser()});
                 menu.insertAdjacentHTML('afterend', html);
 
+                var msgBadge = $("#mmooc-unread-messages-count");
+                if (mmooc.api.getUnreadMessageSize() === 0) {
+                  msgBadge.hide();
+                }
+                else {
+                  msgBadge.html(mmooc.api.getUnreadMessageSize());
+                  msgBadge.show();
+                }
+
                 mmooc.api.getActivityStreamForUser(function(activities) {
                     var unreadNotifications = 0;
                     for (var i = 0; i < activities.length; i++) {
