@@ -37,6 +37,18 @@ this.mmooc.powerFunctions = function() {
         });
     }
 
+    function _success(row) {
+        return function () {
+            $("td.status", row).removeClass("waiting").addClass("ok").text("OK");
+        };
+    }
+
+    function _error(row) {
+        return function (jqXHR, textStatus, errorThrown ) {
+            $("td.status", row).removeClass("waiting").addClass("failed").text("Failed: " + errorThrown);
+        };
+    }
+
     function _processAssignFile(file) {
         _readFile(file, function(content) {
             var assigns = $.csv.toObjects(content);
@@ -44,17 +56,8 @@ this.mmooc.powerFunctions = function() {
             for (var i = 0; i < assigns.length; i++) {
                 var gid = assigns[i]["group_id"];
                 var uid = assigns[i]["user_id"];
-                var row = $("mmpf-assign-"+gid+"-"+uid);
-                mmooc.api.createGroupMembership(
-                    gid, uid,
-                    function () {
-                        $("td.status", row).removeClass("waiting").addClass("ok").text("OK");
-                    },
-                    function () {
-                        debugger;
-                        $("td.status", row).removeClass("waiting").addClass("failed").text("Failed");
-                    }
-                );
+                var row = $("#mmpf-assign-"+gid+"-"+uid);
+                mmooc.api.createGroupMembership(gid, uid, _success(row), _error(row));
             }
         });
     }
@@ -88,9 +91,8 @@ this.mmooc.powerFunctions = function() {
     return {
         show: function(parentId) {
             rootId = parentId;
-            //_render("powerfunctions", {});
-            _renderAssignView();
-            //_setUpClickHandlers();
+            _render("powerfunctions", {});
+            _setUpClickHandlers();
         }
 
     };
