@@ -53,7 +53,11 @@ this.mmooc.iframe = {
 
             displayElements: function(elements) {
 
-                var templates = mmooc.util.renderTemplateWithData("badgeView", {badges: elements});
+                var templates = mmooc.util.renderTemplateWithData("badgeView", {
+                    badges: elements,
+                    total: elements.length,
+                    completed_amount: elements.filter(function (e) {return e.complete;}).length
+                });
                 var vel = 200;
 
                 $('#badge-wrap').before(templates);
