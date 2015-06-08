@@ -4,7 +4,6 @@ this.mmooc=this.mmooc||{};
 this.mmooc.iframe = {
     badges : function() {
 
-
         var getRightType = function ($element) {
             var type = $element.find('.thumbnail p:last').html();
             return mmooc.i18n[type] ? mmooc.i18n[type] : type;
@@ -12,12 +11,11 @@ this.mmooc.iframe = {
 
         return {
             initPage: function() {
+
                 var $badges = $(document).find('#badge-wrap .row-fluid .span4');
-
                 var redesignedBadges = [];
-                $badges.each(function (){
-                    $(this).hide();
 
+                $badges.each(function (){
                     redesignedBadges.push(mmooc.iframe.badges.applyNewDesign($(this)));
                 });
 
@@ -30,6 +28,11 @@ this.mmooc.iframe = {
                 var badgeIds = mmooc.iframe.badges.extractIdsFromString($element.find('.thumbnail a').attr('onclick'));
                 var type = getRightType($element);
                 var criteria = $element.find('p:first').html();
+                var link = "badge-details.php?badge_id=" +
+                    badgeIds.badgeId + "&CLIKEY=" +
+                    badgeIds.clickey + "&course_id=" +
+                    badgeIds.courseId + "&user_id=" +
+                    badgeIds.userId;
 
                 var badgeModel = {
                     complete: complete,
@@ -40,11 +43,8 @@ this.mmooc.iframe = {
                     badgeFooter: type  + ' utmerkelse',
                     type: type,
                     criteria: criteria,
-                    link: "badge-details.php?badge_id=" +
-                    badgeIds.badgeId + "&CLIKEY=" +
-                    badgeIds.clickey + "&course_id=" +
-                    badgeIds.courseId + "&user_id=" +
-                    badgeIds.userId
+                    link: link,
+                    courseId: badgeIds.courseId
                 };
                 return badgeModel;
             },
@@ -55,6 +55,7 @@ this.mmooc.iframe = {
                 var vel = 200;
 
                 $('#badge-wrap').after(templates);
+
                 function toggleSelected($element ) {
                     $element.siblings().removeClass('selected');
                     $element.addClass('selected');
