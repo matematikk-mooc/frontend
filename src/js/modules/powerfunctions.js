@@ -41,6 +41,7 @@ this.mmooc.powerFunctions = function() {
             $('select[name="account"]').change(function() {
                 _renderGroupCategoryOptions();
             });
+            _setUpSubmitHandler(_processGroupFile);
         });
     }
 
@@ -67,7 +68,16 @@ this.mmooc.powerFunctions = function() {
         });
     }
 
-    function _processAssignFile(file) {
+    function _processGroupFile(content) {
+        var groups = $.csv.toObjects(content);
+        _render("powerfunctions/group-process", {groups: groups});
+        for (var i = 0; i < groups.length; i++) {
+            //FIXME check on create in account or group category
+        //    mmooc.api.createGroupMembership(gid, uid, _success(row), _error(row));
+        }
+    }
+
+    function _processAssignFile(content) {
         var assigns = $.csv.toObjects(content);
         _render("powerfunctions/assign-process", {assigns: assigns});
         for (var i = 0; i < assigns.length; i++) {
