@@ -39,7 +39,7 @@ this.mmooc.util = function () {
                     if (a.hasOwnProperty(elementToSort) && b.hasOwnProperty(elementToSort)) {
                         var field1 = a[elementToSort].toLocaleLowerCase();
                         var field2 = b[elementToSort].toLocaleLowerCase();
-                        return field1.localeCompare(field2);
+                        return field1.localeCompare(field2, 'nb', {usage: 'sort'});
                     }
                     return 0;
                 });
@@ -84,6 +84,13 @@ this.mmooc.util = function () {
                     e.preventPropagation();
             }
             return false; // stop event propagation and browser default event
+        },
+
+        adaptHeghtToIframeContentForId: function (id) {
+            // thanks to Ahmy http://stackoverflow.com/questions/819416/adjust-width-height-of-iframe-to-fit-with-content-in-it
+
+            document.getElementById(id).height = document.getElementById(id).contentWindow.document.body.scrollHeight + "px";
+            document.getElementById(id).width = document.getElementById(id).contentWindow.document.body.scrollWidth + "px";
         }
 
     };

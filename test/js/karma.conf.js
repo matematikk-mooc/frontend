@@ -4,11 +4,12 @@ module.exports = function (config) {
         basePath: '../..',
         reporters: ['progress'],
         colors: true,
-        frameworks: ['jasmine'],
+        frameworks: ['jasmine-jquery','jasmine'],
         files: [
             'node_modules/grunt-contrib-handlebars/node_modules/handlebars/dist/handlebars.js',
             'tmp/templates.js',
             'src/js/**/*.js',
+            'src/addons/badges/js/*.js',
             'spec/**/*.js'
         ],
         exclude: [
@@ -16,6 +17,7 @@ module.exports = function (config) {
             'src/js/3party/**/*.js',
             'src/js/main.js',
             'spec/api_spec.js',
+            'src/addons/badges/js/main.js',
             'spec/routes_spec.js'
         ],
         // web server port
