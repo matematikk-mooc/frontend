@@ -39,7 +39,7 @@ this.mmooc.util = function () {
                     if (a.hasOwnProperty(elementToSort) && b.hasOwnProperty(elementToSort)) {
                         var field1 = a[elementToSort].toLocaleLowerCase();
                         var field2 = b[elementToSort].toLocaleLowerCase();
-                        return field1.localeCompare(field2);
+                        return field1.localeCompare(field2, 'nb', {usage: 'sort'});
                     }
                     return 0;
                 });

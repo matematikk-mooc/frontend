@@ -4,7 +4,7 @@ describe("util", function () {
         var elem1, elem2, unsorted;
 
         beforeEach(function () {
-            elem1 = {name: 'AAAA002'};
+            elem1 = {name: 'AKTZ002'};
             elem2 = {name: 'CC001'};
             unsorted = [elem2, elem1];
         });
@@ -16,6 +16,14 @@ describe("util", function () {
             expect(arraySorted.length).toBe(4);
             expect(arraySorted[0]).toBe(elem1);
             expect(arraySorted[arraySorted.length - 1]).toBe(elem2);
+        });
+
+        it("should sort using norwegian locale", function() {
+            var aring = {name: 'AA'};
+            unsorted.push(aring);
+            var arraySorted = mmooc.util.arraySorted(unsorted, 'name');
+            expect(arraySorted[0]).toBe(elem1);
+            expect(arraySorted[arraySorted.length - 1]).toBe(aring);
         });
 
         it("should not sort if element to sort not given", function () {

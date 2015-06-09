@@ -148,7 +148,7 @@ module.exports = function(grunt) {
                 configFile: 'test/js/karma.conf.js',
                 autoWatch: false,
                 singleRun: true,
-                browsers: process.env.KARMA_BROWSER == null ? ['PhantomJS', 'Chrome'] : ['PhantomJS', 'Chrome', '<%= extraBrowser %>']
+                browsers: process.env.KARMA_BROWSER == null ? ['Firefox', 'Chrome'] : ['Firefox', 'Chrome', '<%= extraBrowser %>']
             }
         }
 
