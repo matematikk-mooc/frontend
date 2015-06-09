@@ -18,7 +18,6 @@
     "grunt-text-replace": "^0.4.0",
     "jasmine-node": "~1.14.5",
     "karma": "^0.12.31",
-    "karma-jasmine": "^0.3.5",
     "karma-chrome-launcher": "^0.1.7",
     "karma-firefox-launcher": "~0.1",
     "karma-script-launcher": "0.1.0",

@@ -1,4 +1,4 @@
-var api = require("../src/js/api/api.js");
+var api = mmooc.api;
 
 describe("api", function() {
     var ajax, callback;
@@ -9,7 +9,9 @@ describe("api", function() {
         };
         api._ajax = ajax;
 
-        spyOn(ajax, 'get').andCallFake(function(){
+
+
+        spyOn(ajax, 'get').and.callFake(function(){
             return {fail: function(){}};
         });
 

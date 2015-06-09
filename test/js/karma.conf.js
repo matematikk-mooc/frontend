@@ -25,4 +25,4 @@ module.exports = function (config) {
         // possible values: LOG_DISABLE|ERROR|WARN|INFO|DEBUG
         logLevel: config.LOG_INFO
     });
-};
+  };
