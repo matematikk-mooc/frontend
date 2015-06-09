@@ -1,0 +1,45 @@
+<div id="badge_container">
+    <div class="badge-header">
+        <h1>Kursutmerkelser</h1>
+
+        <div class="intro-text">
+            Her er en oversikr over alle utmerkelser du har f&aring;tt og som du kan f&aring;.<br/>
+            Utmerkelser er bare for dette kurset.
+        </div>
+        <div class="counter-text">
+            Du har oppn&aring;dd {{completed_amount}} av {{total}}
+            utmerkelser i dette kurset
+        </div>
+        <span class="counter">{{completed_amount}}/{{total}}</span>
+    </div>
+    <div class="badge-filter">
+        <div class="btn-group">
+            <div class="btn selected show-all">Alle utmerkelse</div>
+            <div class="btn show-unlocked">Dine utmerkelse</div>
+            <div class="btn show-locked">Uopn&aring;dde utmerkelse</div>
+        </div>
+    </div>
+    <div class="badge-list">
+        {{#each badges}}
+            <div class="badge-view {{#unless complete}}locked{{/unless}}">
+                <div class="kbadge text-center">
+                    <a class="badge-content" href="{{link}}">
+                        <img class="badgeImage" src="{{badgeImage}}">
+
+                        <h3>{{name}}</h3>
+                    </a>
+                </div>
+                <div class="kbadge back text-center">
+                    <h3>TIPS</h3>
+                    <span class="criteria">{{criteria}}</span>
+                    <a href="https://server/courses/{{courseId}}">G&aring; til kurs</a>
+                </div>
+                <div class="badge-foot">
+                    <span class="badge-type {{type}}">{{badgeFooter}}</span>
+                </div>
+            </div>
+        {{/each}}
+
+    </div>
+
+</div>

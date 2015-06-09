@@ -1,6 +1,6 @@
 <ul id="mmooc-notifications">
 {{#each activities}}
-    <li class="{{#mmooc.menu.checkReadStateFor this}}unread{{/mmooc.menu.checkReadStateFor}}"><a href="{{findRightUrlFor this}}">{{title}}<br><span class="mmooc-notification-type">{{localize type}}</span></a></li>
+    <li class="{{checkReadStateFor this}}"><a href="{{findRightUrlFor this}}">{{title}}<br><span class="mmooc-notification-type">{{localize type}}</span></a></li>
 {{/each}}
 
 </ul>

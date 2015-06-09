@@ -122,3 +122,7 @@ Handlebars.registerHelper('urlForFirstNoneCompleteItem', function(items) {
 Handlebars.registerHelper('findRightUrlFor', function(activity) {
     return activity.type === 'Submission' ? '/courses/' + activity.course_id + '/grades' : activity.html_url;
 });
+
+Handlebars.registerHelper('checkReadStateFor', function(activity) {
+    return mmooc.menu.checkReadStateFor(activity) ? "unread" : "";
+});

@@ -56,7 +56,7 @@ this.mmooc.api = function() {
         },
 
         getCurrentTypeAndContentId: function() {
-            var regexp = /\/courses\/\d\/\w+\/\d/;
+            var regexp = /\/courses\/\d+\/\w+\/\d+/;
 
             if (regexp.test("" + this._location.pathname)) {
                 var tmp = this._location.pathname.split("/");
@@ -207,6 +207,9 @@ this.mmooc.api = function() {
             } else {
                 return false;
             }
+        },
+        getUnreadMessageSize: function() {
+          return parseInt(document.getElementsByClassName('unread-messages-count')[0].innerHTML);
         }
     };
 }();

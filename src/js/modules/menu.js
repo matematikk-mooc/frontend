@@ -3,11 +3,6 @@ this.mmooc=this.mmooc||{};
 
 this.mmooc.menu = function() {
 
-    function extractBadgesLinkFromPage() {
-        var href = $('li.section:contains("BadgeSafe")').find('a').attr('href');
-        return {"title": mmooc.i18n.Badgesafe , url: href};
-    }
-
     function _renderCourseMenu(course, selectedMenuItem, title) {
         var menuItems = [];
 
@@ -17,7 +12,7 @@ this.mmooc.menu = function() {
         menuItems[menuItems.length] = {"title": "Kunngjøringer", url: "/courses/" + courseId + "/announcements"};
         menuItems[menuItems.length] = {"title": "Grupper", url: "/courses/" + courseId + "/groups"};
         menuItems[menuItems.length] = {"title": "Diskusjoner", url: "/courses/" + courseId + "/discussion_topics"};
-        menuItems[menuItems.length] = extractBadgesLinkFromPage();
+        menuItems[menuItems.length] = mmooc.menu.extractBadgesLinkFromPage();
 
         var subtitle = course.name;
         if (title == null) {
@@ -96,6 +91,15 @@ this.mmooc.menu = function() {
                 var html = mmooc.util.renderTemplateWithData("usermenu", {user: mmooc.api.getUser()});
                 menu.insertAdjacentHTML('afterend', html);
 
+                var msgBadge = $("#mmooc-unread-messages-count");
+                if (mmooc.api.getUnreadMessageSize() === 0) {
+                  msgBadge.hide();
+                }
+                else {
+                  msgBadge.html(mmooc.api.getUnreadMessageSize());
+                  msgBadge.show();
+                }
+
                 mmooc.api.getActivityStreamForUser(function(activities) {
                     var unreadNotifications = 0;
                     for (var i = 0; i < activities.length; i++) {
@@ -171,6 +175,11 @@ this.mmooc.menu = function() {
 
         checkReadStateFor: function (activity) {
             return activity.read_state === false;
+        },
+
+        extractBadgesLinkFromPage: function () {
+            var href = $('li.section:contains("BadgeSafe")').find('a').attr('href');
+            return {"title": mmooc.i18n.Badgesafe, url: href};
         }
     };
 }();
