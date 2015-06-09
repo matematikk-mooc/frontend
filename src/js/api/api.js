@@ -21,12 +21,20 @@ this.mmooc.api = function() {
             console.log(event, jqxhr, settings, thrownError);
         },
 
-        _get: function(options) {
+        _sendRequest: function(method, options) {
             var error    = options.error || this._defaultError;
             var uri      = this._uriPrefix + options.uri;
             var params   = options.params || {};
             var callback = options.callback;
-            this._ajax.get(uri, params, callback).fail(error);
+            method(uri, params, callback).fail(error);
+        },
+
+        _get: function(options) {
+            this._sendRequest(this._ajax.get, options);
+        },
+
+        _post: function(options) {
+            this._sendRequest(this._ajax.post, options);
         },
 
         getCurrentModuleItemId : function() {
@@ -231,15 +239,24 @@ this.mmooc.api = function() {
 
 
         createGroupMembership: function(gid, uid, callback, error) {
-            this._get({
+            this._post({
                 "callback": callback,
                 "error":    error,
                 "uri":      "/groups/" + gid + "/membership",
                 "params":   { user_id: uid }
             });
 
-        }
+        },
 
+
+        createUserLogin: function(params, callback, error) {
+            this._post({
+                "callback": callback,
+                "error":    error,
+                "uri":      "/accounts/" + params.account_id + "/logins",
+                "params":   { user_id: params.user_id }
+            });
+        }
     };
 }();
 

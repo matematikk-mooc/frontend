@@ -17,13 +17,20 @@ this.mmooc.powerFunctions = function() {
         reader.readAsText(file);
     }
 
-    function _renderGroupCategoryOptions(el) {
-        var account_id = $("option:selected", el).val();
-        mmooc.api.getGroupCategoriesForAccount(account_id, function(categories) {
+    function _accountID() {
+        return $('select[name="account"] option:selected').val();
+    }
+
+    function _renderGroupCategoryOptions() {
+        mmooc.api.getGroupCategoriesForAccount(_accountID(), function(categories) {
+            var html;
             if (categories.length === 0) {
-                var html = "<option value=\"\">No category for account</option>";
-                $("select[name='category']").html(html);
+                html = "<option value=\"\">No category for account</option>";
             }
+            else {
+                html = "<option value=\"\">FIXME</option>";
+            }
+            $("select[name='category']").html(html);
         });
     }
 
@@ -32,7 +39,7 @@ this.mmooc.powerFunctions = function() {
             _render("powerfunctions-group-category",
                     {accounts: accounts});
             $('select[name="account"]').change(function() {
-                _renderGroupCategoryOptions($(this));
+                _renderGroupCategoryOptions();
             });
         });
     }
@@ -45,35 +52,59 @@ this.mmooc.powerFunctions = function() {
 
     function _error(row) {
         return function (jqXHR, textStatus, errorThrown ) {
-            $("td.status", row).removeClass("waiting").addClass("failed").text("Failed: " + errorThrown);
+            debugger;
+            $("td.status", row).removeClass("waiting").addClass("failed").
+                text("Failed: " + errorThrown + ": " + JSON.parse(jqXHR.responseText).errors[0].message);
         };
     }
 
-    function _processAssignFile(file) {
-        _readFile(file, function(content) {
-            var assigns = $.csv.toObjects(content);
-            _render("powerfunctions/assign-process", {assigns: assigns});
-            for (var i = 0; i < assigns.length; i++) {
-                var gid = assigns[i]["group_id"];
-                var uid = assigns[i]["user_id"];
-                var row = $("#mmpf-assign-"+gid+"-"+uid);
-                mmooc.api.createGroupMembership(gid, uid, _success(row), _error(row));
-            }
+    function _setUpSubmitHandler(callback) {
+        $('input[type="submit"]').click(function() {
+            var file = $('input:file')[0].files.item(0);
+            _readFile(file, function(content) {
+                callback(content);
+            });
+            return false;
         });
+    }
+
+    function _processAssignFile(file) {
+        var assigns = $.csv.toObjects(content);
+        _render("powerfunctions/assign-process", {assigns: assigns});
+        for (var i = 0; i < assigns.length; i++) {
+            var gid = assigns[i]["group_id"];
+            var uid = assigns[i]["user_id"];
+            var row = $("#mmpf-assign-"+gid+"-"+uid);
+            mmooc.api.createGroupMembership(gid, uid, _success(row), _error(row));
+        }
+    }
+
+    function _processLoginsFile(content) {
+        var logins = $.csv.toObjects(content);
+        _render("powerfunctions/logins-process", {logins: logins});
+        for (var i = 0; i < logins.length; i++) {
+            var uid = logins[i]["user_id"];
+            var lid = logins[i]["login_id"];
+            var row = $("#mmpf-logins-"+uid);
+            var params = {
+                user_id: uid,
+                login_id: lid,
+                account_id: _accountID()
+            };
+            mmooc.api.createUserLogin(params, _success(row), _error(row));
+        }
     }
 
     function _renderAssignView() {
         _render("powerfunctions-assign", {});
-        $('input[type="submit"]').click(function() {
-            var file = $('input:file')[0].files.item(0);
-            _processAssignFile(file);
-            return false;
-        });
-
+        _setUpSubmitHandler(_processAssignFile);
     }
+
     function _renderLoginsView() {
-        _render("powerfunctions-logins",
-                {});
+        mmooc.api.getAccounts(function(accounts) {
+            _render("powerfunctions-logins", {accounts: accounts});
+            _setUpSubmitHandler(_processLoginsFile);
+        });
     }
 
     function _setUpClickHandlers() {
