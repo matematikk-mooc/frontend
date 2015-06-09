@@ -52,7 +52,6 @@ this.mmooc.powerFunctions = function() {
 
     function _error(row) {
         return function (jqXHR, textStatus, errorThrown ) {
-            debugger;
             $("td.status", row).removeClass("waiting").addClass("failed").
                 text("Failed: " + errorThrown + ": " + JSON.parse(jqXHR.responseText).errors[0].message);
         };
