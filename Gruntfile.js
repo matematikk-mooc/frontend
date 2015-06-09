@@ -89,12 +89,12 @@ module.exports = function(grunt) {
                 dest: 'dist/badgesafe.js',
                 replacements: [{
                     from: 'https://server',
-                    to: 'https://matematikk-mooc.github.io'
+                    to: 'https://matematikk-mooc.github.io/frontend'
                 }]
             },
             development_badge: {
                 src: ['tmp/badges-min.js'],
-                dest: 'dist/badges-min.js',
+                dest: 'dist/badges-dev.js',
                 replacements: [{
                     from: 'https://server',
                     to: 'http://localhost:9000'
