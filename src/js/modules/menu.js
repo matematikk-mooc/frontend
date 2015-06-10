@@ -180,6 +180,10 @@ this.mmooc.menu = function() {
         extractBadgesLinkFromPage: function () {
             var href = $('li.section:contains("BadgeSafe")').find('a').attr('href');
             return {"title": mmooc.i18n.Badgesafe, url: href};
+        },
+        
+        injectGroupsPage: function() {
+          $('#courses_menu_item').after('<li class="menu-item"><a href="/groups" class="menu-item-no-drop">Grupper</a></li>');
         }
     };
 }();
