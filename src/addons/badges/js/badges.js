@@ -84,16 +84,19 @@ this.mmooc.iframe = {
 
 
             backpack: function (complete, element) {
+
                 var btn = element.find('p[id*=badge-btn-]')[0];
-                if (complete) {
+                if (complete && btn && btn.childNodes[0]) {
                     btn.childNodes[0].setAttribute('class', btn.childNodes[0].getAttribute('class').replace('btn', ''));
                     return {
+                        active: true,
                         button: btn.innerHTML,
                         awardId: btn.childNodes[0].getAttribute('award-id')
                     };
-                } else {
-                    return {};
                 }
+                return {
+                    active: false
+                };
             },
 
             extractIdsFromString: function(string) {

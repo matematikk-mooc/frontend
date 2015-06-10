@@ -14,8 +14,20 @@ describe("badges", function () {
 
     beforeEach(function () {
 
-        generateTemplate = function (name, type, imgSrc, courseId, completedText) {
-            return '<div class="span4">' +
+
+        generateTemplate = function (name, type, imgSrc, courseId, completedText, backpackEnabled) {
+
+            function addBackPackButton(backpackEnabled) {
+                if (backpackEnabled) {
+                    return '<a href="javascript: void(0);" class="claimbadge btn"' +
+                        'badge-url="' + mozilla.url + '"' +
+                        'badge-name="' + mozilla.name + '" badge-earner="' + mozilla.earner +
+                        '" award-id="' + mozilla.awardId + '">Export</a>';
+                }
+                return '';
+            }
+
+            var template = '<div class="span4">' +
                 '<div class="thumbnail text-center">' +
                     '<a href="javascript:void(0)" onclick="openmypage(299,40,' + courseId + ',4); return false">' +
                         '<img src="' + imgSrc + '" style="max-width: 125px">' +
@@ -26,13 +38,11 @@ describe("badges", function () {
                     '<div class="progress active">' +
                         '<div class="bar bar-success" style="width: 100%;"></div>' +
                     '</div>' +
-                    '<p id="badge-btn-22"><a href="javascript: void(0);" class="claimbadge btn"' +
-                        'badge-url="' + mozilla.url + '"' +
-                        'badge-name="' + mozilla.name + '" badge-earner="' + mozilla.earner +
-                        '" award-id="' + mozilla.awardId + '">Export</a>'+
-                    '</p>'+
+                    '<p id="badge-btn-22">' + addBackPackButton(backpackEnabled) + '</p>' +
                     '<p>' + type + '</p>' +
                 '</div></div>';
+
+            return template;
         };
     });
 
@@ -55,7 +65,7 @@ describe("badges", function () {
         var parsed, template;
 
         beforeEach(function () {
-            template = generateTemplate(name, type, imgSrc, courseId, completedText);
+            template = generateTemplate(name, type, imgSrc, courseId, completedText, false);
             parsed = mmooc.iframe.badges.applyNewDesign(jQuery(template));
         });
 
@@ -91,17 +101,27 @@ describe("badges", function () {
         var template;
 
         beforeEach(function () {
-            template = jQuery(generateTemplate(name, type, imgSrc, courseId, completedText));
+            template = jQuery(generateTemplate(name, type, imgSrc, courseId, completedText, true));
         });
 
         it("should generate bacpack in case completed", function(){
             var backpack = mmooc.iframe.badges.backpack(true, template);
+            expect(backpack.active).toBe(true);
             expect(backpack.button).toExist();
             expect(backpack.awardId).toBe(mozilla.awardId);
         });
 
         it("should not generate bacpack when is not completed", function(){
             var backpack = mmooc.iframe.badges.backpack(false, template);
+            expect(backpack.active).toBe(false);
+            expect(backpack.button).not.toExist();
+            expect(backpack.awardId).not.toExist();
+        });
+
+        it("not all completed modules have a backpack", function() {
+            template = jQuery(generateTemplate(name, type, imgSrc, courseId, completedText, false));
+            var backpack = mmooc.iframe.badges.backpack(true, template);
+            expect(backpack.active).toBe(false);
             expect(backpack.button).not.toExist();
             expect(backpack.awardId).not.toExist();
         });
