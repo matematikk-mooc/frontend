@@ -60,14 +60,6 @@ describe("badges", function () {
                 expect(parsed.badgeImage).toBe(mmooc.constants.BADGE_LOCKED_IMAGE_URL);
             });
 
-            it("should set the right type", function() {
-                expect(parsed.type).toBe(mmooc.i18n[type]);
-            });
-
-            it("should generate the right label", function() {
-                expect(parsed.badgeFooter).toBe(mmooc.i18n[type] + mmooc.constants.BADGE_LABEL);
-            });
-
             it("criteria is the first p element", function() {
                 expect(parsed.criteria).toBe(jQuery(template).find('p:first').html());
             });

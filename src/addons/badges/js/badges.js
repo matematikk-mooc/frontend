@@ -28,7 +28,6 @@ this.mmooc.iframe = {
 
                 var complete = $element.find(":contains('You have completed the modules required to achieve this badge.')").size() > 0;
                 var badgeIds = mmooc.iframe.badges.extractIdsFromString($element.find('.thumbnail a').attr('onclick'));
-                var type = getRightType($element);
                 var criteria = $element.find('p:first').html();
                 var link = "badge-details.php?badge_id=" +
                     badgeIds.badgeId + "&CLIKEY=" +
@@ -42,8 +41,6 @@ this.mmooc.iframe = {
                         $element.find('.thumbnail a img').attr("src") :
                         mmooc.constants.BADGE_LOCKED_IMAGE_URL,
                     name: $element.find('.thumbnail h3').html(),
-                    badgeFooter: type  + mmooc.constants.BADGE_LABEL,
-                    type: type,
                     criteria: criteria,
                     link: link,
                     courseId: badgeIds.courseId
