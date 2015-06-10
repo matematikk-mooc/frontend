@@ -43,7 +43,8 @@ this.mmooc.iframe = {
                     name: $element.find('.thumbnail h3').html(),
                     criteria: criteria,
                     link: link,
-                    courseId: badgeIds.courseId
+                    courseId: badgeIds.courseId,
+                    backpack: this.backpack(complete, $element)
                 };
                 return badgeModel;
             },
@@ -79,6 +80,20 @@ this.mmooc.iframe = {
                     $('.badge-list .badge-view:not(.locked)').hide(vel);
                     $('.badge-list .badge-view.locked').show(vel);
                 });
+            },
+
+
+            backpack: function (complete, element) {
+                var btn = element.find('p[id*=badge-btn-]')[0];
+                if (complete) {
+                    btn.childNodes[0].setAttribute('class', btn.childNodes[0].getAttribute('class').replace('btn', ''));
+                    return {
+                        button: btn.innerHTML,
+                        awardId: btn.childNodes[0].getAttribute('award-id')
+                    };
+                } else {
+                    return {};
+                }
             },
 
             extractIdsFromString: function(string) {

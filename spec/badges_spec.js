@@ -1,4 +1,42 @@
 describe("badges", function () {
+    const name = "Jasmine test",
+        type = "Course",
+        imgSrc ='https://animg.png',
+        courseId = '1',
+        completedText = 'You have completed the modules required to achieve this badge.',
+        mozilla = {
+            url: "https://beta.matematikk.mooc.no/badgesafe/badge/40/4/299-znegva@reyraqguhar.pbz-assertion.json",
+            name: "Mozilla export",
+            earner: "martin@erlendthune.com",
+            awardId: "11"
+        };
+    var generateTemplate;
+
+    beforeEach(function () {
+
+        generateTemplate = function (name, type, imgSrc, courseId, completedText) {
+            return '<div class="span4">' +
+                '<div class="thumbnail text-center">' +
+                    '<a href="javascript:void(0)" onclick="openmypage(299,40,' + courseId + ',4); return false">' +
+                        '<img src="' + imgSrc + '" style="max-width: 125px">' +
+                    '</a>' +
+                    '<h3>' + name + '</h3>' +
+                    '<p>Some text here</p>' +
+                    '<p>' + completedText + ' </p>' +
+                    '<div class="progress active">' +
+                        '<div class="bar bar-success" style="width: 100%;"></div>' +
+                    '</div>' +
+                    '<p id="badge-btn-22"><a href="javascript: void(0);" class="claimbadge btn"' +
+                        'badge-url="' + mozilla.url + '"' +
+                        'badge-name="' + mozilla.name + '" badge-earner="' + mozilla.earner +
+                        '" award-id="' + mozilla.awardId + '">Export</a>'+
+                    '</p>'+
+                    '<p>' + type + '</p>' +
+                '</div></div>';
+        };
+    });
+
+
 
     describe("initialize", function() {
 
@@ -10,64 +48,62 @@ describe("badges", function () {
             expect(parsed.courseId).toBe('21');
             expect(parsed.userId).toBe('4');
         });
+    });
 
+    describe("applyNewDesign", function() {
 
-        describe("applyNewDesign", function() {
-            const name = "Jasmine test",
-                type = "Course",
-                imgSrc ='https://animg.png',
-                courseId = '1',
-                completedText = 'You have completed the modules required to achieve this badge.';
-            var parsed, generateTemplate, template;
+        var parsed, template;
 
-            beforeEach(function () {
-
-                generateTemplate = function (name, type, imgSrc, courseId, completedText) {
-                    return '<div class="span4">' +
-                        '<div class="thumbnail text-center">' +
-                            '<a href="javascript:void(0)" onclick="openmypage(299,40,' + courseId + ',4); return false">' +
-                                '<img src="' + imgSrc + '" style="max-width: 125px">' +
-                            '</a>' +
-                            '<h3>' + name + '</h3>' +
-                            '<p>Some text here</p>' +
-                            '<p>' + completedText + ' </p>' +
-                            '<div class="progress active">' +
-                                '<div class="bar bar-success" style="width: 100%;"></div>' +
-                            '</div>' +
-                            '<p>' + type + '</p>' +
-                        '</div></div>';
-                };
-
-                template = generateTemplate(name, type, imgSrc, courseId, completedText);
-                parsed = mmooc.iframe.badges.applyNewDesign(jQuery(template));
-            });
-
-            it("should mark as complete", function() {
-                expect(parsed.complete).toBeTruthy();
-            });
-
-            it("should use the right url", function() {
-                expect(parsed.badgeImage).toBe(jQuery(template).find('.thumbnail a img').attr("src"));
-            });
-
-            it("should render the correct name", function() {
-                expect(parsed.name).toBe(name);
-            });
-            it("should use the default image if not complete", function() {
-                var template = generateTemplate(name, type, imgSrc, courseId, "not finished yet");
-                parsed = mmooc.iframe.badges.applyNewDesign(jQuery(template));
-                expect(parsed.complete).toBeFalsy();
-                expect(parsed.badgeImage).toBe(mmooc.constants.BADGE_LOCKED_IMAGE_URL);
-            });
-
-            it("criteria is the first p element", function() {
-                expect(parsed.criteria).toBe(jQuery(template).find('p:first').html());
-            });
-
-            it("should give the right course Id", function() {
-                expect(parsed.courseId).toBe(courseId);
-            })
+        beforeEach(function () {
+            template = generateTemplate(name, type, imgSrc, courseId, completedText);
+            parsed = mmooc.iframe.badges.applyNewDesign(jQuery(template));
         });
 
+        it("should mark as complete", function() {
+            expect(parsed.complete).toBeTruthy();
+        });
+
+        it("should use the right url", function() {
+            expect(parsed.badgeImage).toBe(jQuery(template).find('.thumbnail a img').attr("src"));
+        });
+
+        it("should render the correct name", function() {
+            expect(parsed.name).toBe(name);
+        });
+        it("should use the default image if not complete", function() {
+            var template = generateTemplate(name, type, imgSrc, courseId, "not finished yet");
+            parsed = mmooc.iframe.badges.applyNewDesign(jQuery(template));
+            expect(parsed.complete).toBeFalsy();
+            expect(parsed.badgeImage).toBe(mmooc.constants.BADGE_LOCKED_IMAGE_URL);
+        });
+
+        it("criteria is the first p element", function() {
+            expect(parsed.criteria).toBe(jQuery(template).find('p:first').html());
+        });
+
+        it("should give the right course Id", function() {
+            expect(parsed.courseId).toBe(courseId);
+        });
+    });
+
+
+    describe("backpack", function () {
+        var template;
+
+        beforeEach(function () {
+            template = jQuery(generateTemplate(name, type, imgSrc, courseId, completedText));
+        });
+
+        it("should generate bacpack in case completed", function(){
+            var backpack = mmooc.iframe.badges.backpack(true, template);
+            expect(backpack.button).toExist();
+            expect(backpack.awardId).toBe(mozilla.awardId);
+        });
+
+        it("should not generate bacpack when is not completed", function(){
+            var backpack = mmooc.iframe.badges.backpack(false, template);
+            expect(backpack.button).not.toExist();
+            expect(backpack.awardId).not.toExist();
+        });
     });
 });
