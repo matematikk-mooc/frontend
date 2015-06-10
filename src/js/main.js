@@ -126,5 +126,13 @@ $(document).ready(function() {
         console.log(e);
     }
 
+    try {
+      mmooc.menu.injectGroupsPage();
+    }
+    catch(e) {
+      console.log(e);
+    }
+
+    mmooc.groups.changeGroupListURLs();
 
 });
