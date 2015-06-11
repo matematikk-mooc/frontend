@@ -34,7 +34,8 @@ this.mmooc.groups = function() {
         },
 
         changeGroupListURLs: function() {
-          if (location.href.substring((location.href.length - 6), location.href.length) === 'groups') {
+          var href = location.href;
+          if (/\/groups(\??([A-Za-z0-9\=\&]{0,}))$/.test(href)) {
             var list = $('.context_list li a');
             list.each(function(i) {
               this.setAttribute('href', this.getAttribute('href') + '/discussion_topics');
