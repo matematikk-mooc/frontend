@@ -133,6 +133,7 @@ $(document).ready(function() {
       console.log(e);
     }
 
-    mmooc.groups.changeGroupListURLs();
+    mmooc.groups.changeGroupListURLs(document.location.href);
+
 
 });
