@@ -40,7 +40,7 @@ this.mmooc.iframe = {
                     badgeIds.courseId + "&user_id=" +
                     badgeIds.userId;
 
-                var badgeModel = {
+                return {
                     complete: complete,
                     badgeImage: complete ?
                         $element.find('.thumbnail a img').attr("src") :
@@ -51,7 +51,6 @@ this.mmooc.iframe = {
                     courseId: badgeIds.courseId,
                     backpack: this.backpack(complete, $element)
                 };
-                return badgeModel;
             },
 
             displayElements: function(elements) {
@@ -99,30 +98,35 @@ this.mmooc.iframe = {
                 var badgeName = jQuery(this).attr('badge-name');
                 var badgeEarner = jQuery(this).attr('badge-earner');
                 var award = jQuery(this).attr('award-id');
-                var assertionUrl = badgeUrl;
 
-                // Open Badges function call
-                parent.mmooc.badges.claimBadge(OpenBadges, [''+assertionUrl+''], function(errors, successes) {
-                    if (errors.length > 0 ) {
-                        var data = 'ERROR, ' + badgeName + ', ' + badgeEarner + ', ' +  JSON.stringify(errors);
+                function handleResults(errors, successes) {
+
+                    var badgeDetails = ', ' + badgeName + ', ' + badgeEarner + ', ';
+                    function notifyBadges(data) {
+                        jQuery.ajax({
+                            url: '/badgesafe/record-issued-badges.php',
+                            type: 'POST',
+                            data: data
+                        });
+                    }
+
+                    if (errors.length > 0) {
                         var error = 'ERROR';
-                        jQuery.ajax({
-                            url: '/badgesafe/record-issued-badges.php',
-                            type: 'POST',
-                            data: { data: data, error : error }
+                        notifyBadges({
+                            data: error + badgeDetails + JSON.stringify(errors),
+                            error: error
                         });
                     }
-
                     if (successes.length > 0) {
-                        jQuery('#badge-btn-'+award).html('<a href="#" class="disabled">Exported</a>');
-                        var data = 'SUCCESS, ' + badgeName + ', ' + badgeEarner + ', ' + badgeUrl;
-                        jQuery.ajax({
-                            url: '/badgesafe/record-issued-badges.php',
-                            type: 'POST',
-                            data: { data: data, award : award }
+                        jQuery('#badge-btn-' + award).html('<a href="#" class="disabled">Exported</a>');
+                        notifyBadges({
+                            data: 'SUCCESS' + badgeDetails + badgeUrl,
+                            award: award
                         });
                     }
-                });
+                }
+
+                parent.mmooc.badges.claimBadge(OpenBadges, [badgeUrl], handleResults);
             },
 
             backpack: function (complete, element) {
