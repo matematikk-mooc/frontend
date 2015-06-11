@@ -10,7 +10,6 @@ this.mmooc.menu = function() {
 
         menuItems[menuItems.length] = {"title": "Kursforside", url: "/courses/" + courseId};
         menuItems[menuItems.length] = {"title": "Kunngjøringer", url: "/courses/" + courseId + "/announcements"};
-        menuItems[menuItems.length] = {"title": "Grupper", url: "/courses/" + courseId + "/groups"};
         menuItems[menuItems.length] = {"title": "Diskusjoner", url: "/courses/" + courseId + "/discussion_topics"};
         menuItems[menuItems.length] = mmooc.menu.extractBadgesLinkFromPage();
 
@@ -181,7 +180,7 @@ this.mmooc.menu = function() {
             var href = $('li.section:contains("BadgeSafe")').find('a').attr('href');
             return {"title": mmooc.i18n.Badgesafe, url: href};
         },
-        
+
         injectGroupsPage: function() {
           $('#courses_menu_item').after('<li class="menu-item"><a href="/groups" class="menu-item-no-drop">Grupper</a></li>');
         }
