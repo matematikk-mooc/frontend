@@ -21,6 +21,7 @@
     "karma-jasmine-jquery": "0.1.1",
     "karma-chrome-launcher": "^0.1.7",
     "karma-firefox-launcher": "~0.1",
+    "karma-jasmine-jquery": "^0.1.1",
     "karma-script-launcher": "0.1.0",
     "load-grunt-tasks": "1.0.0"
   },
