@@ -3,12 +3,6 @@ this.mmooc=this.mmooc||{};
 
 this.mmooc.iframe = {
     badges : function() {
-
-        var getRightType = function ($element) {
-            var type = $element.find('.thumbnail p:last').html();
-            return mmooc.i18n[type] ? mmooc.i18n[type] : type;
-        };
-
         return {
             initPage: function() {
 
