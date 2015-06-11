@@ -33,14 +33,16 @@ this.mmooc.groups = function() {
             }
         },
 
-        changeGroupListURLs: function() {
-          var href = location.href;
+        changeGroupListURLs: function(href) {
           if (/\/groups(\??([A-Za-z0-9\=\&]{0,}))$/.test(href)) {
             var list = $('.context_list li a');
             list.each(function(i) {
               this.setAttribute('href', this.getAttribute('href') + '/discussion_topics');
             });
+            return true;
           }
+
+          return false;
         }
     };
 }();
