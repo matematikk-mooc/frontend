@@ -17,6 +17,7 @@ this.mmooc.iframe = {
 
                 $badges.each(function (){
                     redesignedBadges.push(mmooc.iframe.badges.applyNewDesign($(this)));
+                    $(this).remove();
                 });
 
                 mmooc.iframe.badges.displayElements(redesignedBadges);
@@ -59,6 +60,7 @@ this.mmooc.iframe = {
                 var vel = 200;
 
                 $('#badge-wrap').before(templates);
+                this.notifyParentAndSetSize();
 
                 function toggleSelected($element ) {
                     $element.siblings().removeClass('selected');
@@ -80,14 +82,51 @@ this.mmooc.iframe = {
                     $('.badge-list .badge-view:not(.locked)').hide(vel);
                     $('.badge-list .badge-view.locked').show(vel);
                 });
+
+                $('.claim').click(this.handleBackPackClick);
             },
 
+            notifyParentAndSetSize: function() {
+                parent.mmooc.badges.initPage();
+            },
+
+            handleBackPackClick: function(){
+
+                var badgeUrl = jQuery(this).attr('badge-url');
+                var badgeName = jQuery(this).attr('badge-name');
+                var badgeEarner = jQuery(this).attr('badge-earner');
+                var award = jQuery(this).attr('award-id');
+                var assertionUrl = badgeUrl;
+
+                // Open Badges function call
+                parent.mmooc.badges.claimBadge(OpenBadges, [''+assertionUrl+''], function(errors, successes) {
+                    if (errors.length > 0 ) {
+                        var data = 'ERROR, ' + badgeName + ', ' + badgeEarner + ', ' +  JSON.stringify(errors);
+                        var error = 'ERROR';
+                        jQuery.ajax({
+                            url: '/badgesafe/record-issued-badges.php',
+                            type: 'POST',
+                            data: { data: data, error : error }
+                        });
+                    }
+
+                    if (successes.length > 0) {
+                        jQuery('#badge-btn-'+award).html('<a href="#" class="disabled">Exported</a>');
+                        var data = 'SUCCESS, ' + badgeName + ', ' + badgeEarner + ', ' + badgeUrl;
+                        jQuery.ajax({
+                            url: '/badgesafe/record-issued-badges.php',
+                            type: 'POST',
+                            data: { data: data, award : award }
+                        });
+                    }
+                });
+            },
 
             backpack: function (complete, element) {
 
                 var btn = element.find('p[id*=badge-btn-]')[0];
                 if (complete && btn && btn.childNodes[0]) {
-                    btn.childNodes[0].setAttribute('class', btn.childNodes[0].getAttribute('class').replace('btn', ''));
+                    btn.childNodes[0].setAttribute('class', 'claim');
                     return {
                         active: true,
                         button: btn.innerHTML,
