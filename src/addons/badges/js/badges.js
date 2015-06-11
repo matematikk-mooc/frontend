@@ -12,17 +12,21 @@ this.mmooc.iframe = {
         return {
             initPage: function() {
 
-                var $badges = $(document).find('#badge-wrap .row-fluid .span4');
-                var redesignedBadges = [];
+                if (! parent.mmooc.util.isTeacherOrAdmin()) {
+                    $('#badge-wrap').addClass('hide');
+                    var $badges = $(document).find('#badge-wrap .row-fluid .span4');
+                    var redesignedBadges = [];
 
-                $badges.each(function (){
-                    redesignedBadges.push(mmooc.iframe.badges.applyNewDesign($(this)));
-                    $(this).remove();
-                });
+                    $badges.each(function (){
+                        redesignedBadges.push(mmooc.iframe.badges.applyNewDesign($(this)));
+                        $(this).remove();
+                    });
 
-                mmooc.iframe.badges.displayElements(redesignedBadges);
-                $('body').attr("style", "margin: 0 !important;");
-                $('head').append('<base target="_parent"/>');
+                    mmooc.iframe.badges.displayElements(redesignedBadges);
+                    $('body').attr("style", "margin: 0 !important;");
+                    $('head').append('<base target="_parent"/>');
+                }
+                this.notifyParentAndSetSize();
             },
 
             applyNewDesign: function($element) {
@@ -60,7 +64,6 @@ this.mmooc.iframe = {
                 var vel = 200;
 
                 $('#badge-wrap').before(templates);
-                this.notifyParentAndSetSize();
 
                 function toggleSelected($element ) {
                     $element.siblings().removeClass('selected');

@@ -91,6 +91,13 @@ this.mmooc.util = function () {
 
             document.getElementById(id).height = document.getElementById(id).contentWindow.document.body.scrollHeight + "px";
             document.getElementById(id).width = document.getElementById(id).contentWindow.document.body.scrollWidth + "px";
+        },
+
+        isTeacherOrAdmin: function() {
+            var roles = mmooc.api.getRoles();
+            return roles != null
+                && (roles.indexOf('teacher') != -1
+                    || roles.indexOf('admin') != -1);
         }
 
     };
