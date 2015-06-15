@@ -40,6 +40,9 @@ mmooc.greeting = function () {
                     if ($diplomaButton.hasClass('btn-done')) {
                         return;
                     }
+
+                    $('#info').html(mmooc.util.renderTemplateWithData("waitIcon", {}));
+
                     var formId = $formIdDiv.text();
                     var nameEntryId = $nameEntryIdDiv.text();
                     var emailEntryId = $emailEntryIdDiv.text();
