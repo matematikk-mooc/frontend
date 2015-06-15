@@ -7,24 +7,26 @@ mmooc.greeting = function () {
     }
 
     function fixLinkToModules($content) {
-        if ($content.find(":contains('Denne siden vil bli tilgjengelig når du har fullført disse modulene')").size() > 0) {
-            redesignPage();
-            var firstItemPerModule = {};
-            mmooc.api.getModulesForCurrentCourse(function (modules) {
-                for (var i in modules) {
-                    firstItemPerModule[modules[i].id] = modules[i].items[0];
-                }
-
-                $('.alert li > a').each(function() {
-                    var oldPath = $(this).attr('href');
-                    var moduleNumber = /courses\/\d+\/modules\/(\d+)/.exec(oldPath);
-                    if (moduleNumber.length > 0) {
-                        $(this).attr('href', firstItemPerModule[moduleNumber[1]].html_url);
-                    }
-                });
-
-            });
+        if ($content.find(".alert li > a").size() <= 0) {
+            return;
         }
+
+        redesignPage();
+        mmooc.api.getModulesForCurrentCourse(function (modules) {
+            var firstItemPerModule = {};
+            for (var i in modules) {
+                firstItemPerModule[modules[i].id] = modules[i].items[0];
+            }
+
+            $('.alert li > a').each(function () {
+                var oldPath = $(this).attr('href');
+                var moduleNumber = /courses\/\d+\/modules\/(\d+)/.exec(oldPath);
+                if (moduleNumber.length > 0) {
+                    $(this).attr('href', firstItemPerModule[moduleNumber[1]].html_url);
+                }
+            });
+
+        });
     }
 
     return {
