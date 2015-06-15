@@ -2,6 +2,11 @@ mmooc = mmooc || {};
 
 mmooc.greeting = function () {
 
+    function redesignPage() {
+        $('#wrapper').addClass('diploma-page');
+    }
+
+
     return {
         enableGreetingButtonIfNecessary: function ($content) {
             // Erlends diploma
@@ -52,6 +57,7 @@ mmooc.greeting = function () {
                         }); //End Google callback
                     }); //End Canvas user profile callback
                 }); //End diploma button clicked
+                redesignPage();
             } //End if valid diploma fields
         }
     }
