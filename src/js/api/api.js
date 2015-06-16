@@ -188,6 +188,15 @@ this.mmooc.api = function() {
             return this._env.current_user;
         },
 
+        getUserProfile : function(callback, error) {
+            this._get({
+                "callback": callback,
+                "error":    error,
+                "uri":      "/users/self/profile",
+                "params":   { }
+            });
+        },
+
         getActivityStreamForUser: function(callback, error) {
             this._get({
                 "callback": callback,
