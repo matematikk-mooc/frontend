@@ -89,7 +89,8 @@ this.mmooc.util = function () {
         adaptHeghtToIframeContentForId: function (id) {
             // thanks to Ahmy http://stackoverflow.com/questions/819416/adjust-width-height-of-iframe-to-fit-with-content-in-it
 
-            document.getElementById(id).height = document.getElementById(id).contentWindow.document.body.scrollHeight + "px";
+            var scrollHeight = Number(document.getElementById(id).contentWindow.document.body.scrollHeight) + 20;
+            document.getElementById(id).height = scrollHeight + "px";
             document.getElementById(id).width = document.getElementById(id).contentWindow.document.body.scrollWidth + "px";
         },
 
