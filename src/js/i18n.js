@@ -18,7 +18,5 @@ this.mmooc.i18n = {
     'Conference': 'Conference',
     'Collaboration': 'Collaboration',
     'LinkBack': 'Tilbake til forrige side',
-    'Badgesafe': 'Utmerkelser',
-    'Course' : 'Kurs',
-    'Module': 'Modul'
+    'Badgesafe': 'Utmerkelser'
 };

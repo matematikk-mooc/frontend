@@ -2,7 +2,7 @@ body {
   font-family: Roboto-Condensed, Roboto, 'Helvetica Neue', serif;
   background-color: @backgroundColor;
 
-  #badge-wrap {
+  #badge-wrap.hide {
     display: none !important;
   }
 
@@ -32,7 +32,7 @@ body {
       font-weight: @bold-weight;
       color: @darkTealColor;
       border-radius: @counter-size / 2;
-      padding: 0px @counter-size / 2;
+      padding: 0 @counter-size / 2;
       position: relative;
       top: -8px;
     }
@@ -72,15 +72,6 @@ body {
         }
       }
 
-      div.badge-foot {
-        span.badge-type.Kurs {
-          background-color: rgba(194, 133, 53, 0.75);
-        }
-
-        span.badge-type.Modul {
-          background-color: rgba(115, 143, 154, 0.75);
-        }
-      }
     }
 
     .badge-view {
@@ -103,6 +94,8 @@ body {
             line-height: 20px;
             font-size: @fontSize;
             color: @white;
+            overflow: hidden;
+            height: 60px;
           }
           img.badgeImage {
             width: @badge-image;
@@ -110,31 +103,6 @@ body {
           }
         }
 
-      }
-
-      div.badge-foot {
-        text-align: center;
-        height: 30px;
-        span.badge-type {
-          background-color: #885e55;
-          color: @white;
-          padding: 3px 25px;
-          border-radius: 4px;
-          font-family: @font-bold;
-          font-size: 13px;
-          font-weight: @bold-weight;
-          margin: auto;
-          letter-spacing: 0.2px;
-          line-height: 15px;
-        }
-
-        span.badge-type.Modul {
-          background-color: #738f9a;
-        }
-
-        span.badge-type.Kurs {
-          background-color: #C28535;
-        }
       }
 
       .kbadge.back {

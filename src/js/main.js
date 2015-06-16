@@ -99,7 +99,6 @@ $(document).ready(function() {
         if (isBadgesafePage()) {
             var courseId = mmooc.api.getCurrentCourseId();
             mmooc.menu.showCourseMenu(courseId, 'Utmerkelser', 'Utmerkelser');
-            mmooc.pages.badges.initPage()
         }
     });
 

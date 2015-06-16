@@ -51,8 +51,7 @@ this.mmooc.menu = function() {
         },
 
         showTeacherAdminMenu: function() {
-            var roles = mmooc.api.getRoles();
-            if (roles != null && (roles.indexOf('teacher') != -1 || roles.indexOf('admin') != -1)) {
+            if (mmooc.util.isTeacherOrAdmin()) {
                 this.showLeftMenu();
 
                 $("#section-tabs-header").show();
@@ -67,6 +66,7 @@ this.mmooc.menu = function() {
                 stylesheet.insertRule("#discussion-managebar { display: block }", stylesheet.cssRules.length);
             }
 
+            var roles = mmooc.api.getRoles();
             if (roles != null && roles.indexOf('admin') != -1) {
                 // Admin needs original canvas Course dropdown to access site admin settings
                 $("#courses_menu_item").show();

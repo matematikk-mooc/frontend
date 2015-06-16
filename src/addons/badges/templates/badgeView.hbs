@@ -3,7 +3,7 @@
         <h1>Kursutmerkelser</h1>
 
         <div class="intro-text">
-            Her er en oversikr over alle utmerkelser du har f&aring;tt og som du kan f&aring;.<br/>
+            Her er en oversikt over alle utmerkelser du har f&aring;tt og som du kan f&aring; i dette kurset.<br/>
             Utmerkelser er bare for dette kurset.
         </div>
         <div class="counter-text">
@@ -29,13 +29,14 @@
                         <h3>{{name}}</h3>
                     </a>
                 </div>
-                <div class="kbadge back text-center">
+                <div class="kbadge back text-center" {{#if backpack.active}}id="badge-btn-{{backpack.awardId}}"{{/if}}>
                     <h3>TIPS</h3>
                     <span class="criteria">{{criteria}}</span>
-                    <a href="/courses/{{courseId}}">G&aring; til kurs</a>
-                </div>
-                <div class="badge-foot">
-                    <span class="badge-type {{type}}">{{badgeFooter}}</span>
+                    {{#if backpack.active}}
+                        {{{backpack.button}}}
+                    {{else}}
+                        <a href="/courses/{{courseId}}">G&aring; til kurs</a>
+                    {{/if}}
                 </div>
             </div>
         {{/each}}
