@@ -23,12 +23,15 @@ this.mmooc.powerFunctions = function() {
 
     function _renderGroupCategoryOptions() {
         mmooc.api.getGroupCategoriesForAccount(_accountID(), function(categories) {
-            var html;
+            var html = "";
             if (categories.length === 0) {
-                html = "<option value=\"\">No category for account</option>";
+                html = "<option value=\"\">No group sets defined for account</option>";
             }
             else {
-                html = "<option value=\"\">FIXME</option>";
+                html = html + "<option value=''>Choose a group set</option>";
+                for (var i = 0; i < categories.length; i++) {
+                    html = html + "<option value=" + categories[i].id + ">" + categories[i].name + "</option>";
+                }
             }
             $("select[name='category']").html(html);
         });
