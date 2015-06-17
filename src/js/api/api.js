@@ -238,6 +238,20 @@ this.mmooc.api = function() {
         },
 
 
+        createGroup: function(params, callback, error) {
+            this._post({
+                "callback": callback,
+                "error":    error,
+                "uri":      "/group_categories/" + params.category + "/groups",
+                "params":   {
+                    name: params.name,
+                    description: params.description,
+                    is_public: false,
+                    join_level: 'invitation_only'
+                }
+            });
+        },
+
         createGroupMembership: function(gid, uid, callback, error) {
             this._post({
                 "callback": callback,

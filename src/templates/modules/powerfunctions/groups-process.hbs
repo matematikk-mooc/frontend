@@ -6,16 +6,16 @@
   <table>
     <thead>
       <tr>
-        <th>FIXME</th>
-        <th>FIXME/th>
+        <th>Name</th>
+        <th>Description</th>
         <th>Status</th>
       </tr>
     </thead>
     <tbody>
       {{#groups}}
-      <tr id="mmpf-group-FIXME">
-        <td>FIXME</td>
-        <td>FIXME</td>
+      <tr id="mmpf-group-{{@index}}">
+        <td>{{name}}</td>
+        <td>{{description}}</td>
         <td class="status waiting">Waiting</td>
       {{/groups}}
     </tbody>

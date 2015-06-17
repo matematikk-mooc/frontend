@@ -73,10 +73,16 @@ this.mmooc.powerFunctions = function() {
 
     function _processGroupFile(content) {
         var groups = $.csv.toObjects(content);
-        _render("powerfunctions/group-process", {groups: groups});
+        var params = {
+            account: document.getElementsByName("account")[0].value,
+            category: document.getElementsByName("category")[0].value
+        };
+        _render("powerfunctions/groups-process", {groups: groups});
         for (var i = 0; i < groups.length; i++) {
-            //FIXME check on create in account or group category
-        //    mmooc.api.createGroupMembership(gid, uid, _success(row), _error(row));
+            var row = $("#mmpf-group-"+i);
+            params.name = groups[i].name;
+            params.description = groups[i].description;
+            mmooc.api.createGroup(params, _success(row), _error(row));
         }
     }
 
