@@ -1,3 +1,5 @@
+.responsive(@frame-width, 850px, 0.02);
+
 body {
   font-family: Roboto-Condensed, Roboto, 'Helvetica Neue', serif;
   background-color: @backgroundColor;
@@ -16,9 +18,6 @@ body {
 
     div {
       display: inline-block;
-    }
-    .intro-text {
-      width: 850px;
     }
     .counter-text {
       width: 200px;
@@ -39,13 +38,11 @@ body {
   }
 
   .badge-filter {
-    width: @frame-width - (@frame-width * 0.02);
     height: 65px;
     text-align: center;
 
     .btn-group {
       .btn {
-        width: @frame-width * 0.173;
         border-color: @textColor;
       }
       .selected {
@@ -56,8 +53,6 @@ body {
   }
 
   .badge-list {
-    width: @frame-width;
-
     .badge-view.locked {
       .kbadge {
         background-color: @white;
@@ -154,4 +149,56 @@ body {
     }
   }
 
+}
+
+
+
+@media @medium {
+  .responsive(960px, 546px, 0);
+}
+
+
+
+@media @small {
+  .responsive(776px, 546px, 0);
+
+  body {
+    .badge-header {
+      span.counter {
+        float: right;
+        top: 0px;
+        left: -143px;
+      }
+    }
+  }
+}
+
+/**
+* @frame-width: width of the frame/ content
+* @intro-text-width: width of the intro text
+* @badge-filter-scale: how smaller should the badge filter be compared to the content width to place it in the right position
+*/
+.responsive(@frame-width, @intro-text-width, @badge-filter-scale) {
+  body {
+
+    .badge-header {
+      width: @frame-width;
+      .intro-text {
+        width: @intro-text-width;
+      }
+    }
+
+    .badge-filter {
+      width: @frame-width - (@frame-width * @badge-filter-scale);;
+      .btn-group {
+        .btn {
+          width: @frame-width * 0.173;
+        }
+      }
+    }
+
+    .badge-list {
+      width: @frame-width;
+    }
+  }
 }

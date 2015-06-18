@@ -86,12 +86,10 @@ this.mmooc.util = function () {
             return false; // stop event propagation and browser default event
         },
 
-        adaptHeghtToIframeContentForId: function (id) {
-            // thanks to Ahmy http://stackoverflow.com/questions/819416/adjust-width-height-of-iframe-to-fit-with-content-in-it
+        adaptHeghtToIframeContentForId: function (containerId, frameId) {
 
-            var scrollHeight = Number(document.getElementById(id).contentWindow.document.body.scrollHeight) + 20;
-            document.getElementById(id).height = scrollHeight + "px";
-            document.getElementById(id).width = document.getElementById(id).contentWindow.document.body.scrollWidth + "px";
+            var scrollHeight = Number(document.getElementById(frameId).contentWindow.document.body.scrollHeight) + 20;
+            document.getElementsByClassName(containerId)[0].style.height = scrollHeight + "px";
         },
 
         isTeacherOrAdmin: function() {
