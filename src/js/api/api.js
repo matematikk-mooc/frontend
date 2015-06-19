@@ -90,6 +90,10 @@ this.mmooc.api = function() {
          */
         getModulesForCurrentCourse: function(callback, error) {
             var courseId = this.getCurrentCourseId();
+            this.getModulesForCourseId(callback, error, courseId);
+        },
+
+        getModulesForCourseId: function(callback, error, courseId) {
             this._get({
                 "callback": callback,
                 "error":    error,

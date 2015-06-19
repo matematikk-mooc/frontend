@@ -71,17 +71,10 @@ Handlebars.registerHelper('ifAllItemsCompleted', function(items, options) {
 });
 
 Handlebars.registerHelper('ifAllModulesCompleted', function(modules, options) {
-    for (var i = 0; i < modules.length; i++) {
-        var module = modules[i];
-        for (var j = 0; j < module.items.length; j++) {
-            var item = module.items[j];
-            if (item.completion_requirement && !item.completion_requirement.completed) {
-                return options.inverse(this);
-            }
-        }
+    if (mmooc.courseList.isCourseCompleted(modules)) {
+        return options.fn(this);
     }
-
-    return options.fn(this);
+    return options.inverse(this);
 });
 
 Handlebars.registerHelper('percentageForModules', function(modules) {
