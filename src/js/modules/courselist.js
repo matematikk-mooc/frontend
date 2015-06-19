@@ -18,7 +18,6 @@ this.mmooc.courseList = function() {
                                 $course.find('.mmooc-course-list-button .btn').addClass('btn-done');
                                 $course.find('.mmooc-progress-bar').addClass('mmooc-progress-bar-done');
                             }
-                            console.log("adjusting course status for id " + id + " status found is " + mmooc.courseList.isCourseCompleted(modules));
                         };
                     };
 
