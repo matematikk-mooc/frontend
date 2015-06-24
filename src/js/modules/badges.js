@@ -4,7 +4,7 @@ this.mmooc=this.mmooc||{};
 this.mmooc.badges = function() {
 
     function resizeIframe() {
-        mmooc.util.adaptHeghtToIframeContentForId('tool_content_wrapper', 'tool_content');
+        mmooc.util.adaptHeightToIframeContentForId('tool_content_wrapper', 'tool_content');
     };
     return {
         initPage: function() {

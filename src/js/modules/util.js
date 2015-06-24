@@ -86,7 +86,7 @@ this.mmooc.util = function () {
             return false; // stop event propagation and browser default event
         },
 
-        adaptHeghtToIframeContentForId: function (containerId, frameId) {
+        adaptHeightToIframeContentForId: function (containerId, frameId) {
 
             var scrollHeight = Number(document.getElementById(frameId).contentWindow.document.body.scrollHeight) + 20;
             document.getElementsByClassName(containerId)[0].style.height = scrollHeight + "px";
