@@ -19,6 +19,8 @@ this.mmooc.iframe = {
                     mmooc.iframe.badges.displayElements(redesignedBadges);
                     $('body').attr("style", "margin: 0 !important;");
                     $('head').append('<base target="_parent"/>');
+                } else {
+                    $('#badge-wrap').attr('style', 'display: block')
                 }
                 this.notifyParentAndSetSize();
             },
