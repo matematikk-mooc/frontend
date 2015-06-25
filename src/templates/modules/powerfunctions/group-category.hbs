@@ -22,20 +22,12 @@
 
   <div class="side-information">
     <h3>Decription of CSV format</h3>
-    <p>First line of the file must be the name of the columns. Column separators are commas.
+    <p>First line of the file must be the name of the columns. Column separators are commas. Fields optionally encloused by double quotes (").
     <dl>
       <dt>name [String]
       <dd>The name of the group
       <dt>description [String]
       <dd>A description of the group
-      <dt>is_public [Boolean]
-      <dd>whether the group is public (applies only to community groups)
-      <dt>join_level [String]
-      <dd>“parent_context_auto_join” | “parent_context_request” | “invitation_only”
-      <dt>storage_quota_mb [Integer]
-      <dd>The allowed file storage for the group, in megabytes. This
-        parameter is ignored if the caller does not have the
-        manage_storage_quotas permission.
     </dl>
   </div>
 </div>
