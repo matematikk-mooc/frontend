@@ -39,7 +39,7 @@ this.mmooc.powerFunctions = function() {
 
     function _renderGroupView() {
         mmooc.api.getAccounts(function(accounts) {
-            _render("powerfunctions-group-category",
+            _render("powerfunctions/group-category",
                     {accounts: accounts});
             $('select[name="account"]').change(function() {
                 _renderGroupCategoryOptions();
@@ -114,13 +114,13 @@ this.mmooc.powerFunctions = function() {
     }
 
     function _renderAssignView() {
-        _render("powerfunctions-assign", {});
+        _render("powerfunctions/assign", {});
         _setUpSubmitHandler(_processAssignFile);
     }
 
     function _renderLoginsView() {
         mmooc.api.getAccounts(function(accounts) {
-            _render("powerfunctions-logins", {accounts: accounts});
+            _render("powerfunctions/logins", {accounts: accounts});
             _setUpSubmitHandler(_processLoginsFile);
         });
     }
@@ -140,7 +140,7 @@ this.mmooc.powerFunctions = function() {
     return {
         show: function(parentId) {
             rootId = parentId;
-            _render("powerfunctions", {});
+            _render("powerfunctions/main", {});
             _setUpClickHandlers();
         }
 
