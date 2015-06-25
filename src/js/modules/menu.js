@@ -3,11 +3,6 @@ this.mmooc=this.mmooc||{};
 
 this.mmooc.menu = function() {
 
-    function extractBadgesLinkFromPage() {
-        var href = $('li.section:contains("BadgeSafe")').find('a').attr('href');
-        return {"title": mmooc.i18n.Badgesafe , url: href};
-    }
-
     function _renderCourseMenu(course, selectedMenuItem, title) {
         var menuItems = [];
 
@@ -15,9 +10,8 @@ this.mmooc.menu = function() {
 
         menuItems[menuItems.length] = {"title": "Kursforside", url: "/courses/" + courseId};
         menuItems[menuItems.length] = {"title": "Kunngjøringer", url: "/courses/" + courseId + "/announcements"};
-        menuItems[menuItems.length] = {"title": "Grupper", url: "/courses/" + courseId + "/groups"};
         menuItems[menuItems.length] = {"title": "Diskusjoner", url: "/courses/" + courseId + "/discussion_topics"};
-        menuItems[menuItems.length] = extractBadgesLinkFromPage();
+        menuItems[menuItems.length] = mmooc.menu.extractBadgesLinkFromPage();
 
         var subtitle = course.name;
         if (title == null) {
@@ -57,8 +51,7 @@ this.mmooc.menu = function() {
         },
 
         showTeacherAdminMenu: function() {
-            var roles = mmooc.api.getRoles();
-            if (roles != null && (roles.indexOf('teacher') != -1 || roles.indexOf('admin') != -1)) {
+            if (mmooc.util.isTeacherOrAdmin()) {
                 this.showLeftMenu();
 
                 $("#section-tabs-header").show();
@@ -73,6 +66,7 @@ this.mmooc.menu = function() {
                 stylesheet.insertRule("#discussion-managebar { display: block }", stylesheet.cssRules.length);
             }
 
+            var roles = mmooc.api.getRoles();
             if (roles != null && roles.indexOf('admin') != -1) {
                 // Admin needs original canvas Course dropdown to access site admin settings
                 $("#courses_menu_item").show();
@@ -95,6 +89,15 @@ this.mmooc.menu = function() {
             if (menu !=  null) {
                 var html = mmooc.util.renderTemplateWithData("usermenu", {user: mmooc.api.getUser()});
                 menu.insertAdjacentHTML('afterend', html);
+
+                var msgBadge = $("#mmooc-unread-messages-count");
+                if (mmooc.api.getUnreadMessageSize() === 0) {
+                  msgBadge.hide();
+                }
+                else {
+                  msgBadge.html(mmooc.api.getUnreadMessageSize());
+                  msgBadge.show();
+                }
 
                 mmooc.api.getActivityStreamForUser(function(activities) {
                     var unreadNotifications = 0;
@@ -170,8 +173,16 @@ this.mmooc.menu = function() {
         },
 
         checkReadStateFor: function (activity) {
-            return activity.read_state === false
-                && activity.submission_type !== "online_quiz";
+            return activity.read_state === false;
+        },
+
+        extractBadgesLinkFromPage: function () {
+            var href = $('li.section:contains("BadgeSafe")').find('a').attr('href');
+            return {"title": mmooc.i18n.Badgesafe, url: href};
+        },
+
+        injectGroupsPage: function() {
+          $('#courses_menu_item').after('<li class="menu-item"><a href="/groups" class="menu-item-no-drop">Grupper</a></li>');
         }
     };
 }();

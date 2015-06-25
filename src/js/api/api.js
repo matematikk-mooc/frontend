@@ -64,7 +64,7 @@ this.mmooc.api = function() {
         },
 
         getCurrentTypeAndContentId: function() {
-            var regexp = /\/courses\/\d\/\w+\/\d/;
+            var regexp = /\/courses\/\d+\/\w+\/\d+/;
 
             if (regexp.test("" + this._location.pathname)) {
                 var tmp = this._location.pathname.split("/");
@@ -98,6 +98,10 @@ this.mmooc.api = function() {
          */
         getModulesForCurrentCourse: function(callback, error) {
             var courseId = this.getCurrentCourseId();
+            this.getModulesForCourseId(callback, error, courseId);
+        },
+
+        getModulesForCourseId: function(callback, error, courseId) {
             this._get({
                 "callback": callback,
                 "error":    error,
@@ -196,6 +200,15 @@ this.mmooc.api = function() {
             return this._env.current_user;
         },
 
+        getUserProfile : function(callback, error) {
+            this._get({
+                "callback": callback,
+                "error":    error,
+                "uri":      "/users/self/profile",
+                "params":   { }
+            });
+        },
+
         getActivityStreamForUser: function(callback, error) {
             this._get({
                 "callback": callback,
@@ -215,6 +228,10 @@ this.mmooc.api = function() {
             } else {
                 return false;
             }
+        },
+
+        getUnreadMessageSize: function() {
+          return parseInt(document.getElementsByClassName('unread-messages-count')[0].innerHTML);
         },
 
         getAccounts: function(callback, error) {

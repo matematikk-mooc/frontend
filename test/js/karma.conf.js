@@ -4,21 +4,25 @@ module.exports = function (config) {
         basePath: '../..',
         reporters: ['progress'],
         colors: true,
-        frameworks: ['jasmine'],
+        frameworks: ['jasmine-jquery','jasmine'],
         files: [
-            'src/js/api/*.js',
-            'src/js/modules/*.js',
+            'node_modules/grunt-contrib-handlebars/node_modules/handlebars/dist/handlebars.js',
+            'tmp/templates.js',
+            'src/js/**/*.js',
+            'src/addons/badges/js/*.js',
             'spec/**/*.js'
         ],
         exclude: [
             'src/test/js/karma.conf.js',
+            'src/js/3party/**/*.js',
+            'src/js/main.js',
             'spec/api_spec.js',
-            'spec/routes_spec.js',
-            'src/js/modules/template.js'
+            'src/addons/badges/js/main.js',
+            'spec/routes_spec.js'
         ],
         // web server port
         port: 9876,
         // possible values: LOG_DISABLE|ERROR|WARN|INFO|DEBUG
         logLevel: config.LOG_INFO
     });
-};
+  };

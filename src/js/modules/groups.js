@@ -31,6 +31,18 @@ this.mmooc.groups = function() {
                     document.getElementById('content-wrapper').insertAdjacentHTML('afterbegin', headerHTML);
                 });
             }
+        },
+
+        changeGroupListURLs: function(href) {
+          if (/\/groups(\/)?$/.test(href) || /(\/groups(\??([A-Za-z0-9\=\&]{0,})))$/.test(href)) {
+            var list = $('.context_list li a');
+            list.each(function(i) {
+              this.setAttribute('href', this.getAttribute('href') + '/discussion_topics');
+            });
+            return true;
+          }
+
+          return false;
         }
     };
 }();

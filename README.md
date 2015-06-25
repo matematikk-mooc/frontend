@@ -55,13 +55,16 @@ All changes in LESS (CSS) and JavaScript will automatically be compiled and are 
 * [http://localhost:9000/mmooc-min-dev.css](http://localhost:9000/mmooc-min-dev.css) (for development)
 * [http://localhost:9000/mmooc-min.css](http://localhost:9000/mmooc-min.css) (for production)
 * [http://localhost:9000/mmooc-min.js](http://localhost:9000/mmooc-min.js)
+* [http://localhost:9000/badges-dev.js](http://localhost:9000/badges-dev.js) (for dev)
+* [http://localhost:9000/badgesafe.js](http://localhost:9000/badgesafe.js) (for prod)
+* [http://localhost:9000/badgesafe.css](http://localhost:9000/badgesafe.css)
 
 
 
 ## Run Jasmine JavaScript tests
 
 ```
-node_modules/jasmine-node/bin/jasmine-node --verbose spec
+grunt test
 ```
 
 # Project structure
@@ -71,6 +74,7 @@ node_modules/jasmine-node/bin/jasmine-node --verbose spec
 | -------------- | ----------------------------------------- |
 | spec           | Jasmine JavaScript tests                  |
 | src            | Source code                               |
+| src/addons     | modules for canvas addons                 |
 | src/css        | CSS(LESS)                                 |
 | src/js         | JavaScript                                |
 | src/templates  | Handlebars.js templates for creating HTML |
@@ -99,6 +103,7 @@ node_modules/jasmine-node/bin/jasmine-node --verbose spec
 # Deployment
 
 Copy all files from the dist directory to your web server.
+Note that addons generate different files that may be destinated to different directories in your production server.
 
 ## Image paths
 

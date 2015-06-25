@@ -40,6 +40,15 @@ this.mmooc.pages = function() {
                 var linkBack = mmooc.util.renderTemplateWithData("navigateToPreviousPage", {linkText: mmooc.i18n.LinkBack});
                 $(linkBack).prependTo($('#content'));
             }
+        },
+
+        showBackToAssignmentLink: function(href) {
+          if (/\/courses\/\d+\/assignments\/\d+\/submissions\/\d+$/.test(href)) {
+            $('#add_comment_form').append('<a href="javascript:window.history.back();" style="margin-top: 20px; display: inline-block;">Tilbake til oppgaven</a>');
+            return true;
+          }
+
+          return false;
         }
     };
 }();

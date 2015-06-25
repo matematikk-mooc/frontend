@@ -39,7 +39,7 @@ this.mmooc.util = function () {
                     if (a.hasOwnProperty(elementToSort) && b.hasOwnProperty(elementToSort)) {
                         var field1 = a[elementToSort].toLocaleLowerCase();
                         var field2 = b[elementToSort].toLocaleLowerCase();
-                        return field1.localeCompare(field2);
+                        return field1.localeCompare(field2, 'nb', {usage: 'sort'});
                     }
                     return 0;
                 });
@@ -84,6 +84,19 @@ this.mmooc.util = function () {
                     e.preventPropagation();
             }
             return false; // stop event propagation and browser default event
+        },
+
+        adaptHeightToIframeContentForId: function (containerId, frameId) {
+
+            var scrollHeight = Number(document.getElementById(frameId).contentWindow.document.body.scrollHeight) + 20;
+            document.getElementsByClassName(containerId)[0].style.height = scrollHeight + "px";
+        },
+
+        isTeacherOrAdmin: function() {
+            var roles = mmooc.api.getRoles();
+            return roles != null
+                && (roles.indexOf('teacher') != -1
+                    || roles.indexOf('admin') != -1);
         }
 
     };

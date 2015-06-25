@@ -70,6 +70,10 @@ $(document).ready(function() {
         // For discussion pages we only want the title to be "<discussion>" instead of "Discussion: <discussion>"
         var title = mmooc.util.getPageTitleAfterColon();
 
+        if (!mmooc.util.isTeacherOrAdmin()) {
+            mmooc.menu.hideRightMenu();
+        }
+
         // Announcements are some as type of discussions, must use a hack to determine if this is an announcement
         var courseId = mmooc.api.getCurrentCourseId();
         if (mmooc.api.currentPageIsAnnouncement()) {
@@ -88,6 +92,23 @@ $(document).ready(function() {
         mmooc.menu.listModuleItems();
         mmooc.pages.modifyMarkAsDoneButton();
         mmooc.pages.changeTranslations();
+    });
+
+    mmooc.routes.addRouteForPath(/\/courses\/\d+\/external_tools\/\d+$/, function() {
+        function isBadgesafePage() {
+            function extractPluginNumber(input) {
+                 return input.substring(input.lastIndexOf('/') + 1);
+            }
+
+            var badgesafeUrl = mmooc.menu.extractBadgesLinkFromPage().url;
+
+            return extractPluginNumber(badgesafeUrl) === extractPluginNumber(window.location.pathname);
+        };
+
+        if (isBadgesafePage()) {
+            var courseId = mmooc.api.getCurrentCourseId();
+            mmooc.menu.showCourseMenu(courseId, 'Utmerkelser', 'Utmerkelser');
+        }
     });
 
     mmooc.routes.addRouteForPath([/\/pages/], function() {
@@ -113,5 +134,15 @@ $(document).ready(function() {
         console.log(e);
     }
 
+    try {
+      mmooc.menu.injectGroupsPage();
+    }
+    catch(e) {
+      console.log(e);
+    }
+
+    mmooc.groups.changeGroupListURLs(document.location.href);
+
+    mmooc.pages.showBackToAssignmentLink(document.location.href);
 
 });

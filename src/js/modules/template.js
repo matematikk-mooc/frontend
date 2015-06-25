@@ -71,17 +71,10 @@ Handlebars.registerHelper('ifAllItemsCompleted', function(items, options) {
 });
 
 Handlebars.registerHelper('ifAllModulesCompleted', function(modules, options) {
-    for (var i = 0; i < modules.length; i++) {
-        var module = modules[i];
-        for (var j = 0; j < module.items.length; j++) {
-            var item = module.items[j];
-            if (item.completion_requirement && !item.completion_requirement.completed) {
-                return options.inverse(this);
-            }
-        }
+    if (mmooc.courseList.isCourseCompleted(modules)) {
+        return options.fn(this);
     }
-
-    return options.fn(this);
+    return options.inverse(this);
 });
 
 Handlebars.registerHelper('percentageForModules', function(modules) {
@@ -117,4 +110,12 @@ Handlebars.registerHelper('urlForFirstNoneCompleteItem', function(items) {
     }
 
     return null;
+});
+
+Handlebars.registerHelper('findRightUrlFor', function(activity) {
+    return activity.type === 'Submission' ? '/courses/' + activity.course_id + '/grades' : activity.html_url;
+});
+
+Handlebars.registerHelper('checkReadStateFor', function(activity) {
+    return mmooc.menu.checkReadStateFor(activity) ? "unread" : "";
 });
