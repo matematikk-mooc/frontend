@@ -4,8 +4,8 @@ this.mmooc.powerFunctions = function() {
     var rootId = undefined;
 
     function _render(template, data) {
-        var html = mmooc.util.renderTemplateWithData(template, data);
-        document.getElementById(rootId).innerHTML = html;
+      var html = mmooc.util.renderTemplateWithData(template, data);
+      document.getElementById(rootId).innerHTML = html;
     }
 
     function _readFile(file, callback) {
@@ -125,7 +125,38 @@ this.mmooc.powerFunctions = function() {
         });
     }
 
+    function _renderListGroupsView() {
+      mmooc.api.getAccounts(function(accounts) {
+        _render("powerfunctions/list-groups",
+                {accounts: accounts});
+        $('select[name="account"]').change(function() {
+          _renderGroupListItems();
+        });
+      });
+    }
+
+  function _renderGroupListItems() {
+    mmooc.api.getGroupsForAccount(_accountID(), function(groups) {
+      var html = "";
+      if (groups.length === 0) {
+        html = "No groups found for account";
+      }
+      else {
+        html = "<table>"
+          + "<tr><th>ID</th><th>Name</th></tr>";
+        for (var i = 0; i < groups.length; i++) {
+          html = html + "<tr><td>" + groups[i].id + "</td><td>" + groups[i].name + "</td></tr>";
+        }
+        html = html + "</table>"
+      }
+      $("#mmpf-group-list").html(html);
+    });
+  }
+
     function _setUpClickHandlers() {
+        $("#mmooc-pf-list-group-btn").click(function() {
+            _renderListGroupsView(rootId);
+        });
         $("#mmooc-pf-group-btn").click(function() {
             _renderGroupView(rootId);
         });
