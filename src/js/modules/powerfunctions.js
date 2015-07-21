@@ -143,13 +143,13 @@ this.mmooc.powerFunctions = function() {
       }
       else {
         html = "<table>"
-          + "<tr><th>ID</th><th>Name</th></tr>";
+          + "<tr><th>ID</th><th>Name</th><th>Description</th></tr>";
         for (var i = 0; i < groups.length; i++) {
-          html = html + "<tr><td>" + groups[i].id + "</td><td>" + groups[i].name + "</td></tr>";
+          html = html + "<tr><td>" + groups[i].id + "</td><td>" + groups[i].name + "</td><td>" + groups[i].description + "</td></tr>";
         }
         html = html + "</table>"
       }
-      $("#mmpf-group-list").html(html);
+      $("#mmpf-group-result").html(html);
     });
   }
 
