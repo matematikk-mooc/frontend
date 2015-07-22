@@ -21,37 +21,15 @@ this.mmooc.powerFunctions = function() {
         reader.readAsText(file);
     }
 
-    function _setAccountID() {
-      accountID =  $('select[name="account"] option:selected').val();
-    }
+  function _renderGroupView() {
+    mmooc.api.getGroupCategoriesForAccount(accountID, function(categories) {
+      _render("powerfunctions/group-category",
+              "Create groups",
+              {categories: categories});
+      _setUpSubmitHandler(_processGroupFile);
+    });
+  }
 
-    function _renderGroupCategoryOptions() {
-        mmooc.api.getGroupCategoriesForAccount(_accountID(), function(categories) {
-            var html = "";
-            if (categories.length === 0) {
-                html = "<option value=\"\">No group sets defined for account</option>";
-            }
-            else {
-                html = html + "<option value=''>Choose a group set</option>";
-                for (var i = 0; i < categories.length; i++) {
-                    html = html + "<option value=" + categories[i].id + ">" + categories[i].name + "</option>";
-                }
-            }
-            $("select[name='category']").html(html);
-        });
-    }
-
-    function _renderGroupView() {
-        mmooc.api.getAccounts(function(accounts) {
-          _render("powerfunctions/group-category",
-                  "Create groups",
-                    {accounts: accounts});
-            $('select[name="account"]').change(function() {
-                _renderGroupCategoryOptions();
-            });
-            _setUpSubmitHandler(_processGroupFile);
-        });
-    }
 
     function _success(row) {
         return function () {
@@ -79,7 +57,7 @@ this.mmooc.powerFunctions = function() {
     function _processGroupFile(content) {
         var groups = $.csv.toObjects(content);
         var params = {
-            account: document.getElementsByName("account")[0].value,
+            account: accountID,
             category: document.getElementsByName("category")[0].value
         };
       _render("powerfunctions/groups-process",
@@ -149,6 +127,10 @@ this.mmooc.powerFunctions = function() {
   }
 
   function AccountPicker() {
+    function _setAccountID() {
+      accountID =  $('select[name="account"] option:selected').val();
+    }
+
     return {
       run: function(params) {
         mmooc.api.getAccounts(function(accounts) {
