@@ -1,7 +1,8 @@
 this.mmooc=this.mmooc||{};
 
 this.mmooc.powerFunctions = function() {
-    var rootId = undefined;
+  var rootId = undefined;
+  var accountID = undefined;
 
   function _render(template, heading, data) {
     var html =
@@ -20,8 +21,8 @@ this.mmooc.powerFunctions = function() {
         reader.readAsText(file);
     }
 
-    function _accountID() {
-        return $('select[name="account"] option:selected').val();
+    function _setAccountID() {
+      accountID =  $('select[name="account"] option:selected').val();
     }
 
     function _renderGroupCategoryOptions() {
@@ -140,55 +141,60 @@ this.mmooc.powerFunctions = function() {
     }
 
     function _renderListGroupsView() {
-      mmooc.api.getAccounts(function(accounts) {
+      mmooc.api.getGroupsForAccount(accountID, function(groups) {
         _render("powerfunctions/list-groups",
                 "List groups",
-                {accounts: accounts});
-        $('select[name="account"]').change(function() {
-          _renderGroupListItems();
-        });
-      });
-    }
-
-  function _renderGroupListItems() {
-    mmooc.api.getGroupsForAccount(_accountID(), function(groups) {
-      var html = "";
-      if (groups.length === 0) {
-        html = "No groups found for account";
-      }
-      else {
-        html = "<table>"
-          + "<tr><th>ID</th><th>Name</th><th>Description</th></tr>";
-        for (var i = 0; i < groups.length; i++) {
-          html = html + "<tr><td>" + groups[i].id + "</td><td>" + groups[i].name + "</td><td>" + groups[i].description + "</td></tr>";
-        }
-        html = html + "</table>"
-      }
-      $("#mmpf-group-result").html(html);
+                {groups: groups});
     });
   }
 
+  function AccountPicker() {
+    return {
+      run: function(params) {
+        mmooc.api.getAccounts(function(accounts) {
+          _render("powerfunctions/account-picker",
+                  "Choose account",
+                  {accounts: accounts});
+          $('select[name="account"]').change(function() {
+            _setAccountID();
+            params.nextStep();
+          });
+        });
+
+      }
+    };
+  }
+
+  function Menu() {
     function _setUpClickHandlers() {
-        $("#mmooc-pf-list-group-btn").click(function() {
-            _renderListGroupsView(rootId);
-        });
-        $("#mmooc-pf-group-btn").click(function() {
-            _renderGroupView(rootId);
-        });
-        $("#mmooc-pf-assign-btn").click(function() {
-            _renderAssignView(rootId);
-        });
-        $("#mmooc-pf-logins-btn").click(function() {
-            _renderLoginsView(rootId);
-        });
+      $("#mmooc-pf-list-group-btn").click(function() {
+        _renderListGroupsView(rootId);
+      });
+      $("#mmooc-pf-group-btn").click(function() {
+        _renderGroupView(rootId);
+      });
+      $("#mmooc-pf-assign-btn").click(function() {
+        _renderAssignView(rootId);
+      });
+      $("#mmooc-pf-logins-btn").click(function() {
+        _renderLoginsView(rootId);
+      });
     }
+
+    return {
+      run: function() {
+        _render("powerfunctions/main", {});
+        _setUpClickHandlers();
+      }
+    };
+  }
 
   return {
         show: function(parentId) {
-            rootId = parentId;
-            _render("powerfunctions/main", {});
-            _setUpClickHandlers();
+          rootId = parentId;
+          new AccountPicker().run({nextStep: function () {
+            new Menu().run();
+          }});
         }
-
     };
 }();
