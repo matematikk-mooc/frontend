@@ -3,8 +3,11 @@ this.mmooc=this.mmooc||{};
 this.mmooc.powerFunctions = function() {
     var rootId = undefined;
 
-    function _render(template, data) {
-      var html = mmooc.util.renderTemplateWithData(template, data);
+  function _render(template, heading, data) {
+    var html =
+          mmooc.util.renderTemplateWithData('powerfunctions/head', {heading: heading}) +
+          mmooc.util.renderTemplateWithData(template, data) +
+          mmooc.util.renderTemplateWithData('powerfunctions/tail', {});
       document.getElementById(rootId).innerHTML = html;
     }
 
@@ -39,7 +42,8 @@ this.mmooc.powerFunctions = function() {
 
     function _renderGroupView() {
         mmooc.api.getAccounts(function(accounts) {
-            _render("powerfunctions/group-category",
+          _render("powerfunctions/group-category",
+                  "Create groups",
                     {accounts: accounts});
             $('select[name="account"]').change(function() {
                 _renderGroupCategoryOptions();
@@ -77,7 +81,9 @@ this.mmooc.powerFunctions = function() {
             account: document.getElementsByName("account")[0].value,
             category: document.getElementsByName("category")[0].value
         };
-        _render("powerfunctions/groups-process", {groups: groups});
+      _render("powerfunctions/groups-process",
+              "Processing group creations",
+              {groups: groups});
         for (var i = 0; i < groups.length; i++) {
             var row = $("#mmpf-group-"+i);
             params.name = groups[i].name;
@@ -88,7 +94,9 @@ this.mmooc.powerFunctions = function() {
 
     function _processAssignFile(content) {
         var assigns = $.csv.toObjects(content);
-        _render("powerfunctions/assign-process", {assigns: assigns});
+      _render("powerfunctions/assign-process",
+              "Processing assigning student to groups",
+              {assigns: assigns});
         for (var i = 0; i < assigns.length; i++) {
             var gid = assigns[i]["group_id"];
             var uid = assigns[i]["user_id"];
@@ -99,7 +107,9 @@ this.mmooc.powerFunctions = function() {
 
     function _processLoginsFile(content) {
         var logins = $.csv.toObjects(content);
-        _render("powerfunctions/logins-process", {logins: logins});
+      _render("powerfunctions/logins-process",
+              "Processing new logins",
+              {logins: logins});
         for (var i = 0; i < logins.length; i++) {
             var uid = logins[i]["user_id"];
             var lid = logins[i]["login_id"];
@@ -114,20 +124,25 @@ this.mmooc.powerFunctions = function() {
     }
 
     function _renderAssignView() {
-        _render("powerfunctions/assign", {});
+      _render("powerfunctions/assign",
+              "Assign students to groups",
+              {});
         _setUpSubmitHandler(_processAssignFile);
     }
 
     function _renderLoginsView() {
         mmooc.api.getAccounts(function(accounts) {
-            _render("powerfunctions/logins", {accounts: accounts});
-            _setUpSubmitHandler(_processLoginsFile);
+          _render("powerfunctions/logins",
+                  "Add new logins to students",
+                  {accounts: accounts});
+          _setUpSubmitHandler(_processLoginsFile);
         });
     }
 
     function _renderListGroupsView() {
       mmooc.api.getAccounts(function(accounts) {
         _render("powerfunctions/list-groups",
+                "List groups",
                 {accounts: accounts});
         $('select[name="account"]').change(function() {
           _renderGroupListItems();
@@ -168,7 +183,7 @@ this.mmooc.powerFunctions = function() {
         });
     }
 
-    return {
+  return {
         show: function(parentId) {
             rootId = parentId;
             _render("powerfunctions/main", {});

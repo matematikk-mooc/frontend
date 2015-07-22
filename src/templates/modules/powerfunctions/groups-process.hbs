@@ -1,23 +1,18 @@
-<div class="mmooc-power-functions">
-  <h1 class="xl">Power Functions</h1>
-  <h2>Processing group creations</h2>
-  <p><a href="/?mmpf">Back</a></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Description</th>
+      <th>Status</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#groups}}
+    <tr id="mmpf-group-{{@index}}">
+      <td>{{name}}</td>
+      <td>{{description}}</td>
+      <td class="status waiting">Waiting</td>
+    {{/groups}}
+  </tbody>
+<table>
 
-  <table>
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Description</th>
-        <th>Status</th>
-      </tr>
-    </thead>
-    <tbody>
-      {{#groups}}
-      <tr id="mmpf-group-{{@index}}">
-        <td>{{name}}</td>
-        <td>{{description}}</td>
-        <td class="status waiting">Waiting</td>
-      {{/groups}}
-    </tbody>
-  <table>
-</div>

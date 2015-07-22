@@ -1,33 +1,27 @@
-<div class="mmooc-power-functions">
-  <h1 class="xl">Power Functions</h1>
-  <h2>Create groups</h2>
-  <p><a href="/?mmpf">Back</a></p>
+<form>
+  <ol>
+    <li class="step-1">
+      <select name="account" onchange="$('.step-2').css('display', 'list-item')">
+        <option value="">Choose the account...</option>
+        {{#accounts}}
+          <option value="{{id}}">{{name}}</option>
+        {{/accounts}}
+      </select>
+    <li class="step-2">
+      <select name="category"  onchange="$('.step-3').css('display', 'list-item')">
+      </select>
+    <li class="step-3"><input type="file" name="csv"  onchange="$('.step-4').css('display', 'list-item')">
+    <li class="step-4"><input type="submit"/>
+  </ol>
+</form>
 
-  <form>
-    <ol>
-      <li class="step-1">
-        <select name="account" onchange="$('.step-2').css('display', 'list-item')">
-          <option value="">Choose the account...</option>
-          {{#accounts}}
-            <option value="{{id}}">{{name}}</option>
-          {{/accounts}}
-        </select>
-      <li class="step-2">
-        <select name="category"  onchange="$('.step-3').css('display', 'list-item')">
-        </select>
-      <li class="step-3"><input type="file" name="csv"  onchange="$('.step-4').css('display', 'list-item')">
-      <li class="step-4"><input type="submit"/>
-    </ol>
-  </form>
-
-  <div class="side-information">
-    <h3>Decription of CSV format</h3>
-    <p>First line of the file must be the name of the columns. Column separators are commas. Fields optionally encloused by double quotes (").
-    <dl>
-      <dt>name [String]
-      <dd>The name of the group
-      <dt>description [String]
-      <dd>A description of the group
-    </dl>
-  </div>
+<div class="side-information">
+  <h3>Decription of CSV format</h3>
+  <p>First line of the file must be the name of the columns. Column separators are commas. Fields optionally encloused by double quotes (").
+  <dl>
+    <dt>name [String]
+    <dd>The name of the group
+    <dt>description [String]
+    <dd>A description of the group
+  </dl>
 </div>

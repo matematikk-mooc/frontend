@@ -1,23 +1,17 @@
-<div class="mmooc-power-functions">
-  <h1 class="xl">Power Functions</h1>
-  <h2>Processing new logins</h2>
-  <p><a href="/?mmpf">Back</a></p>
-
-  <table>
-    <thead>
-      <tr>
-        <th>User ID</th>
-        <th>Login ID</th>
-        <th>Status</th>
-      </tr>
-    </thead>
-    <tbody>
-      {{#logins}}
-      <tr id="mmpf-logins-{{user_id}}">
-        <td>{{user_id}}</td>
-        <td>{{login_id}}</td>
-        <td class="status waiting">Waiting</td>
-      {{/logins}}
-    </tbody>
-  <table>
-</div>
+<table>
+  <thead>
+    <tr>
+      <th>User ID</th>
+      <th>Login ID</th>
+      <th>Status</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#logins}}
+    <tr id="mmpf-logins-{{user_id}}">
+      <td>{{user_id}}</td>
+      <td>{{login_id}}</td>
+      <td class="status waiting">Waiting</td>
+    {{/logins}}
+  </tbody>
+<table>
