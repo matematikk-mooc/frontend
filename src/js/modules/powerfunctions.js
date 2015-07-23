@@ -165,6 +165,12 @@ this.mmooc.powerFunctions = function() {
 
     return {
       run: function() {
+        // I tried getting all users registered for account with a
+        // call to /account/:id/users. To save on the number of calls
+        // to the API. This did only give me a very limited set of
+        // attributes per user, and most importantly did not give me
+        // the SIS ID. So we must call the API for each user when
+        // processing CSV data.
         _render("powerfunctions/main", {});
         _setUpClickHandlers();
       }

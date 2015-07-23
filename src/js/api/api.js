@@ -244,6 +244,15 @@ this.mmooc.api = function() {
 
         },
 
+        getUsersForAccount: function(account, callback, error) {
+            this._get({
+                "callback": callback,
+                "error":    error,
+                "uri":      "/accounts/" + account + "/users",
+                "params":   { }
+            });
+        },
+
         getGroupCategoriesForAccount: function(account, callback, error) {
             this._get({
                 "callback": callback,
@@ -255,15 +264,14 @@ this.mmooc.api = function() {
         },
 
 
-      getGroupsForAccount: function(account, callback, error) {
-        this._get({
-          "callback": callback,
-          "error":    error,
-          "uri":      "/accounts/" + account + "/groups",
-          "params":   { }
-        });
-
-      },
+        getGroupsForAccount: function(account, callback, error) {
+            this._get({
+                "callback": callback,
+                "error":    error,
+                "uri":      "/accounts/" + account + "/groups",
+                "params":   { }
+            });
+        },
 
 
         createGroup: function(params, callback, error) {
