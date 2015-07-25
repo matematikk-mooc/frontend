@@ -7,12 +7,12 @@
     </tr>
   </thead>
   <tbody>
-    {{#assigns}}
-    <tr id="mmpf-assign-{{group_id}}-{{user_id}}">
+    {{#each assigns}}
+    <tr id="mmpf-assign-{{@index}}">
       <td>{{group_id}}</td>
       <td>{{user_id}}</td>
       <td class="status waiting">Waiting</td>
-    {{/assigns}}
+    {{/each}}
   </tbody>
 <table>
 

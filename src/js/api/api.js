@@ -292,7 +292,7 @@ this.mmooc.api = function() {
             this._post({
                 "callback": callback,
                 "error":    error,
-                "uri":      "/groups/" + gid + "/membership",
+                "uri":      "/groups/" + gid + "/memberships",
                 "params":   { user_id: uid }
             });
 

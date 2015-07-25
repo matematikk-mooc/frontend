@@ -71,53 +71,6 @@ this.mmooc.powerFunctions = function() {
     }
   }
 
-  function _processAssignFile(content) {
-    var assigns = $.csv.toObjects(content);
-    _render("powerfunctions/assign-process",
-            "Processing assigning student to groups",
-            {assigns: assigns});
-    for (var i = 0; i < assigns.length; i++) {
-      var gid = assigns[i]["group_id"];
-      var uid = assigns[i]["user_id"];
-      var row = $("#mmpf-assign-"+gid+"-"+uid);
-      mmooc.api.createGroupMembership(gid, uid, _success(row), _error(row));
-    }
-  }
-
-  function _processLoginsFile(content) {
-    var logins = $.csv.toObjects(content);
-    _render("powerfunctions/logins-process",
-            "Processing new logins",
-            {logins: logins});
-    for (var i = 0; i < logins.length; i++) {
-      var uid = logins[i]["user_id"];
-      var lid = logins[i]["login_id"];
-      var row = $("#mmpf-logins-"+uid);
-      var params = {
-        user_id: uid,
-        login_id: lid,
-        account_id: _accountID()
-      };
-      mmooc.api.createUserLogin(params, _success(row), _error(row));
-    }
-  }
-
-  function _renderAssignView() {
-    _render("powerfunctions/assign",
-            "Assign students to groups",
-            {});
-    _setUpSubmitHandler(_processAssignFile);
-  }
-
-  function _renderLoginsView() {
-    mmooc.api.getAccounts(function(accounts) {
-      _render("powerfunctions/logins",
-              "Add new logins to students",
-              {accounts: accounts});
-      _setUpSubmitHandler(_processLoginsFile);
-    });
-  }
-
   function _renderListGroupsView() {
     mmooc.api.getGroupsForAccount(accountID, function(groups) {
       _render("powerfunctions/list-groups",
@@ -126,9 +79,82 @@ this.mmooc.powerFunctions = function() {
     });
   }
 
+
+  function CreateNewLoginsTask() {
+
+    function _renderView() {
+        _render("powerfunctions/logins",
+                "Add new logins to students",
+                {});
+    }
+
+    function _processFile(content) {
+      var logins = $.csv.toObjects(content);
+      _render("powerfunctions/logins-process",
+              "Processing new logins",
+              {logins: logins});
+      for (var i = 0; i < logins.length; i++) {
+        _processItem(i, logins[i]);
+      }
+    }
+
+    function _processItem(i, login) {
+      var uid = "sis_user_id:" + encodeURIComponent(login.user_id);
+      var lid = login.login_id;
+      var row = $("#mmpf-logins-"+i);
+      var params = {
+        user_id: uid,
+        login_id: lid,
+        account_id: accountID
+      };
+      mmooc.api.createUserLogin(params, _success(row), _error(row));
+    }
+
+    return {
+      run: function() {
+        _renderView();
+        _setUpSubmitHandler(_processFile);
+      }
+    };
+  }
+
+
+  function AssignStudentsToGroupsTask() {
+
+    function _renderView() {
+      _render("powerfunctions/assign",
+              "Assign students to groups",
+              {});
+    }
+
+    function _processFile(content) {
+      var assigns = $.csv.toObjects(content);
+      _render("powerfunctions/assign-process",
+              "Processing assigning student to groups",
+              {assigns: assigns});
+      for (var i = 0; i < assigns.length; i++) {
+        _processItem(i, assigns[i]);
+      }
+    }
+
+    function _processItem(i, assignment) {
+      var gid = assignment.group_id;
+      var uid = "sis_user_id:" + encodeURIComponent(assignment.user_id);
+      var row = $("#mmpf-assign-"+i);
+      mmooc.api.createGroupMembership(gid, uid, _success(row), _error(row));
+    }
+
+    return {
+      run: function() {
+        _renderView();
+        _setUpSubmitHandler(_processFile);
+      }
+    };
+  }
+
   function AccountPicker() {
     function _setAccountID() {
-      accountID =  $('select[name="account"] option:selected').val();
+      accountID = $('select[name="account"] option:selected').val();
     }
 
     return {
@@ -156,21 +182,15 @@ this.mmooc.powerFunctions = function() {
         _renderGroupView(rootId);
       });
       $("#mmooc-pf-assign-btn").click(function() {
-        _renderAssignView(rootId);
+        new AssignStudentsToGroupsTask().run();
       });
       $("#mmooc-pf-logins-btn").click(function() {
-        _renderLoginsView(rootId);
+        new CreateNewLoginsTask().run();
       });
     }
 
     return {
       run: function() {
-        // I tried getting all users registered for account with a
-        // call to /account/:id/users. To save on the number of calls
-        // to the API. This did only give me a very limited set of
-        // attributes per user, and most importantly did not give me
-        // the SIS ID. So we must call the API for each user when
-        // processing CSV data.
         _render("powerfunctions/main", {});
         _setUpClickHandlers();
       }
