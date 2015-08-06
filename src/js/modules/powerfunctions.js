@@ -138,7 +138,10 @@ this.mmooc.powerFunctions = function() {
 
     function _processItem(i, assignment) {
       var gid = assignment.group_id;
-      var uid = "sis_user_id:" + encodeURIComponent(assignment.user_id);
+      // According to the API documentation the SIS params should be
+      // encoded, but this fails. Was:
+      // encodeURIComponent(assignment.user_id);
+      var uid = "sis_user_id:" + assignment.user_id;
       var row = $("#mmpf-assign-"+i);
       mmooc.api.createGroupMembership(gid, uid, _success(row), _error(row));
     }
