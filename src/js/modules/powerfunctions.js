@@ -98,8 +98,8 @@ this.mmooc.powerFunctions = function() {
     }
 
     function _processItem(i, login) {
-      var uid = "sis_user_id:" + encodeURIComponent(login.user_id);
-      var lid = login.login_id;
+      var uid = "sis_user_id:" + encodeURIComponent(login.current_id);
+      var lid = login.new_id;
       var row = $("#mmpf-logins-"+i);
       var params = {
         user_id: uid,
