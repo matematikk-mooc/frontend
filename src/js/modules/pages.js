@@ -31,6 +31,12 @@ this.mmooc.pages = function() {
             });
         },
 
+        moveMarkAsDoneButton: function() {
+          var button = $("#mark-as-done-checkbox");
+          var container = $("#mark-as-done-container");
+          button.appendTo(container);
+        },
+
         changeTranslations : function() {
             $("a.submit_assignment_link").text('Lever besvarelse');
         },
