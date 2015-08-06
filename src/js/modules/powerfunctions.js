@@ -21,16 +21,6 @@ this.mmooc.powerFunctions = function() {
     reader.readAsText(file);
   }
 
-  function _renderGroupView() {
-    mmooc.api.getGroupCategoriesForAccount(accountID, function(categories) {
-      _render("powerfunctions/group-category",
-              "Create groups",
-              {categories: categories});
-      _setUpSubmitHandler(_processGroupFile);
-    });
-  }
-
-
   function _success(row) {
     return function () {
       $("td.status", row).removeClass("waiting").addClass("ok").text("OK");
@@ -51,6 +41,15 @@ this.mmooc.powerFunctions = function() {
         callback(content);
       });
       return false;
+    });
+  }
+
+  function _renderGroupView() {
+    mmooc.api.getGroupCategoriesForAccount(accountID, function(categories) {
+      _render("powerfunctions/group-category",
+              "Create groups",
+              {categories: categories});
+      _setUpSubmitHandler(_processGroupFile);
     });
   }
 
