@@ -32,9 +32,11 @@ this.mmooc.pages = function() {
         },
 
         moveMarkAsDoneButton: function() {
-          var button = $("#mark-as-done-checkbox");
-          var container = $("#mark-as-done-container");
-          button.appendTo(container);
+          $("body").bind("wiki-page-rendered", function() {
+            var button = $("#mark-as-done-checkbox");
+            var container = $("#mark-as-done-container");
+            button.appendTo(container);
+          });
         },
 
         changeTranslations : function() {
