@@ -147,5 +147,4 @@ $(document).ready(function() {
 
     mmooc.pages.moveMarkAsDoneButton();
 
-
 });
