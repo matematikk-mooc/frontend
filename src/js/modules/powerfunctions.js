@@ -21,16 +21,6 @@ this.mmooc.powerFunctions = function() {
     reader.readAsText(file);
   }
 
-  function _renderGroupView() {
-    mmooc.api.getGroupCategoriesForAccount(accountID, function(categories) {
-      _render("powerfunctions/group-category",
-              "Create groups",
-              {categories: categories});
-      _setUpSubmitHandler(_processGroupFile);
-    });
-  }
-
-
   function _success(row) {
     return function () {
       $("td.status", row).removeClass("waiting").addClass("ok").text("OK");
@@ -51,6 +41,15 @@ this.mmooc.powerFunctions = function() {
         callback(content);
       });
       return false;
+    });
+  }
+
+  function _renderGroupView() {
+    mmooc.api.getGroupCategoriesForAccount(accountID, function(categories) {
+      _render("powerfunctions/group-category",
+              "Create groups",
+              {categories: categories});
+      _setUpSubmitHandler(_processGroupFile);
     });
   }
 
@@ -99,8 +98,8 @@ this.mmooc.powerFunctions = function() {
     }
 
     function _processItem(i, login) {
-      var uid = "sis_user_id:" + encodeURIComponent(login.user_id);
-      var lid = login.login_id;
+      var uid = "sis_user_id:" + encodeURIComponent(login.current_id);
+      var lid = login.new_id;
       var row = $("#mmpf-logins-"+i);
       var params = {
         user_id: uid,
@@ -139,7 +138,10 @@ this.mmooc.powerFunctions = function() {
 
     function _processItem(i, assignment) {
       var gid = assignment.group_id;
-      var uid = "sis_user_id:" + encodeURIComponent(assignment.user_id);
+      // According to the API documentation the SIS params should be
+      // encoded, but this fails. Was:
+      // encodeURIComponent(assignment.user_id);
+      var uid = "sis_user_id:" + assignment.user_id;
       var row = $("#mmpf-assign-"+i);
       mmooc.api.createGroupMembership(gid, uid, _success(row), _error(row));
     }
