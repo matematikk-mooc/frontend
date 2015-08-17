@@ -299,14 +299,16 @@ this.mmooc.api = function() {
         },
 
 
-        createUserLogin: function(params, callback, error) {
-            this._post({
-                "callback": callback,
-                "error":    error,
-                "uri":      "/accounts/" + params.account_id + "/logins",
-                "params":   { user_id: params.user_id }
-            });
-        }
+      createUserLogin: function(params, callback, error) {
+        account_id = params.account.id:
+        delete params.account_id;
+        this._post({
+          "callback": callback,
+          "error":  error,
+          "uri": "/accounts/" + params.account_id + "/logins",
+          "params": params
+        });
+      }
     };
 }();
 

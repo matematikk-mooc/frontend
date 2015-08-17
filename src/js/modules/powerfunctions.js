@@ -98,12 +98,13 @@ this.mmooc.powerFunctions = function() {
     }
 
     function _processItem(i, login) {
-      var uid = "sis_user_id:" + encodeURIComponent(login.current_id);
-      var lid = login.new_id;
+      var uid = "sis_user_id:" + login.current_id;
+      var nid = login.new_id;
       var row = $("#mmpf-logins-"+i);
       var params = {
-        user_id: uid,
-        login_id: lid,
+        'user[id]': uid,
+        'login[unique_id]': nid,
+        'login[sis_user_id]': nid,
         account_id: accountID
       };
       mmooc.api.createUserLogin(params, _success(row), _error(row));
