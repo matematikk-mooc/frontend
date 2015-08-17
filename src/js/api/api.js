@@ -263,13 +263,37 @@ this.mmooc.api = function() {
 
         },
 
+      // Recursively fetch all groups by following the next links
+      // found in the Links response header:
+      // https://canvas.instructure.com/doc/api/file.pagination.html
+      _getGroupsForAccountHelper: function(accumulatedGroups, callback, error) {
+        var that = this;
+        return function(groups, status, xhr) {
+          Array.prototype.push.apply(accumulatedGroups, groups);
+          var next = xhr.getResponseHeader('Link').split(',').find(function (e) {
+            return e.match("rel=\"next\"");
+          });
+          if (next === undefined) {
+            callback(accumulatedGroups);
+          }
+          else {
+            var fullURI = next.match("<([^>]+)>")[1];
+            that._get({
+              "callback": that._getGroupsForAccountHelper(accumulatedGroups, callback, error),
+              "error":    error,
+              "uri":      fullURI.split("api/v1")[1],
+              "params":   { }
+            });
+          }
+        };
+      },
 
         getGroupsForAccount: function(account, callback, error) {
             this._get({
-                "callback": callback,
-                "error":    error,
-                "uri":      "/accounts/" + account + "/groups",
-                "params":   { }
+              "callback": this._getGroupsForAccountHelper([], callback, error),
+              "error":    error,
+              "uri":      "/accounts/" + account + "/groups",
+              "params":   { per_page: 999 }
             });
         },
 
