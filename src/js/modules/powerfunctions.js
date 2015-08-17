@@ -70,12 +70,21 @@ this.mmooc.powerFunctions = function() {
     }
   }
 
-  function _renderListGroupsView() {
-    mmooc.api.getGroupsForAccount(accountID, function(groups) {
-      _render("powerfunctions/list-groups",
-              "List groups",
-              {groups: groups});
-    });
+
+  function ListGroupsTask() {
+    function _renderView() {
+      mmooc.api.getGroupsForAccount(accountID, function(groups) {
+        _render("powerfunctions/list-groups",
+                "List groups",
+                {groups: groups});
+      });
+    }
+
+    return {
+      run: function() {
+        _renderView();
+      }
+    };
   }
 
 
@@ -171,7 +180,6 @@ this.mmooc.powerFunctions = function() {
             params.nextStep();
           });
         });
-
       }
     };
   }
@@ -179,7 +187,7 @@ this.mmooc.powerFunctions = function() {
   function Menu() {
     function _setUpClickHandlers() {
       $("#mmooc-pf-list-group-btn").click(function() {
-        _renderListGroupsView(rootId);
+        new ListGroupsTask().run();
       });
       $("#mmooc-pf-group-btn").click(function() {
         _renderGroupView(rootId);
