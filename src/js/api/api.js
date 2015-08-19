@@ -324,12 +324,12 @@ this.mmooc.api = function() {
 
 
       createUserLogin: function(params, callback, error) {
-        account_id = params.account.id;
+        var account_id = params.account_id;
         delete params.account_id;
         this._post({
           "callback": callback,
           "error":  error,
-          "uri": "/accounts/" + params.account_id + "/logins",
+          "uri": "/accounts/" + account_id + "/logins",
           "params": params
         });
       }
