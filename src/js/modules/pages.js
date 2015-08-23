@@ -32,16 +32,15 @@ this.mmooc.pages = function() {
         },
 
         updateSidebarWhenMarkedAsDone: function() {
-          var button = $("#mark-as-done-checkbox");
-          var icon = $("ul.mmooc-module-items .active span:last-child");
+          $("body").on("click", "#mark-as-done-checkbox", function() {
+            var icon = $("ul.mmooc-module-items .active span:last-child");
 
-          button.click(function() {
             if (icon.hasClass("done")) {
               icon.removeClass("done");
             } else {
               icon.addClass("done");
             }
-          });
+          })
         },
 
         changeTranslations : function() {
