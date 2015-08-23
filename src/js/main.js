@@ -145,4 +145,5 @@ $(document).ready(function() {
 
     mmooc.pages.showBackToAssignmentLink(document.location.href);
 
+
 });
