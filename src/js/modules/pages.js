@@ -31,6 +31,19 @@ this.mmooc.pages = function() {
             });
         },
 
+        updateSidebarWhenMarkedAsDone: function() {
+          var button = $("#mark-as-done-checkbox");
+          var icon = $("ul.mmooc-module-items .active span:last-child");
+
+          button.click(function() {
+            if (icon.hasClass("done")) {
+              icon.removeClass("done");
+            } else {
+              icon.addClass("done");
+            }
+          });
+        },
+
         changeTranslations : function() {
             $("a.submit_assignment_link").text('Lever besvarelse');
         },

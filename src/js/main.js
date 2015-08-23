@@ -144,6 +144,7 @@ $(document).ready(function() {
     mmooc.groups.changeGroupListURLs(document.location.href);
 
     mmooc.pages.showBackToAssignmentLink(document.location.href);
+    mmooc.pages.updateSidebarWhenMarkedAsDone();
 
 
 });
