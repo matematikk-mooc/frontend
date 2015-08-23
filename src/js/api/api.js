@@ -83,7 +83,7 @@ this.mmooc.api = function() {
                 "callback": callback,
                 "error":    error,
                 "uri":      "/courses",
-                "params":   { "include": ["syllabus_body" , "course_progress"] }
+                "params":   { "include": ["syllabus_body" , "course_progress"], "per_page": "100" }
             });
         },
 
