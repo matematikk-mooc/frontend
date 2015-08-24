@@ -44,30 +44,54 @@ this.mmooc.powerFunctions = function() {
     });
   }
 
-  function _renderGroupView() {
-    mmooc.api.getGroupCategoriesForAccount(accountID, function(categories) {
-      _render("powerfunctions/group-category",
-              "Create groups",
-              {categories: categories});
-      _setUpSubmitHandler(_processGroupFile);
-    });
+  function _parseCSV(content) {
+    try {
+      return $.csv.toObjects(content);
+    }
+    catch (e) {
+      alert(e.message);
+      console.log(e);
+      throw e;
+    }
   }
 
-  function _processGroupFile(content) {
-    var groups = $.csv.toObjects(content);
-    var params = {
-      account: accountID,
-      category: document.getElementsByName("category")[0].value
-    };
-    _render("powerfunctions/groups-process",
-            "Processing group creations",
-            {groups: groups});
-    for (var i = 0; i < groups.length; i++) {
+  function CreateGroupsTask() {
+
+    function _renderView() {
+      mmooc.api.getGroupCategoriesForAccount(accountID, function(categories) {
+        _render("powerfunctions/group-category",
+                "Create groups",
+                {categories: categories});
+        _setUpSubmitHandler(_processFile);
+      });
+    }
+
+    function _processFile(content) {
+      var groups = _parseCSV(content);
+      var params = {
+        account: accountID,
+        category: document.getElementsByName("category")[0].value
+      };
+      _render("powerfunctions/groups-process",
+              "Processing group creations",
+              {groups: groups});
+      for (var i = 0; i < groups.length; i++) {
+        _processItem(params, i, groups[i]);
+      }
+    }
+
+    function _processItem(params, i, group) {
       var row = $("#mmpf-group-"+i);
-      params.name = groups[i].name;
-      params.description = groups[i].description;
+      params.name = group.name;
+      params.description = group.description;
       mmooc.api.createGroup(params, _success(row), _error(row));
     }
+
+    return {
+      run: function() {
+        _renderView();
+      }
+    };
   }
 
 
@@ -97,7 +121,7 @@ this.mmooc.powerFunctions = function() {
     }
 
     function _processFile(content) {
-      var logins = $.csv.toObjects(content);
+      var logins = _parseCSV(content);
       _render("powerfunctions/logins-process",
               "Processing new logins",
               {logins: logins});
@@ -137,7 +161,7 @@ this.mmooc.powerFunctions = function() {
     }
 
     function _processFile(content) {
-      var assigns = $.csv.toObjects(content);
+      var assigns = _parseCSV(content);
       _render("powerfunctions/assign-process",
               "Processing assigning student to groups",
               {assigns: assigns});
@@ -190,7 +214,7 @@ this.mmooc.powerFunctions = function() {
         new ListGroupsTask().run();
       });
       $("#mmooc-pf-group-btn").click(function() {
-        _renderGroupView(rootId);
+        new CreateGroupsTask().run();
       });
       $("#mmooc-pf-assign-btn").click(function() {
         new AssignStudentsToGroupsTask().run();
