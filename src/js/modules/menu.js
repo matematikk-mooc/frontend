@@ -183,6 +183,14 @@ this.mmooc.menu = function() {
 
         injectGroupsPage: function() {
           $('#courses_menu_item').after('<li class="menu-item"><a href="/groups" class="menu-item-no-drop">Grupper</a></li>');
+        },
+
+        alterHomeLink: function() {
+          $('#header-logo').attr('href', '/courses');
+        },
+
+        alterCourseLink: function() {
+          $('#menu > li:first-child a').attr('href', '/courses');
         }
     };
 }();

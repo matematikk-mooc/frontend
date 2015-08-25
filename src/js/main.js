@@ -146,5 +146,7 @@ $(document).ready(function() {
     mmooc.pages.showBackToAssignmentLink(document.location.href);
     mmooc.pages.updateSidebarWhenMarkedAsDone();
 
+    mmooc.menu.alterHomeLink();
+    mmooc.menu.alterCourseLink();
 
 });
