@@ -59,6 +59,9 @@ $(document).ready(function() {
     mmooc.routes.addRouteForPath(/\/groups\/\d+\/discussion_topics$/, function() {
         var courseId = mmooc.api.getCurrentCourseId();
         mmooc.menu.showCourseMenu(courseId, 'Grupper', mmooc.util.getPageTitleAfterColon());
+
+        //TODO: Check whether or not courseId is undefined or not valid, only insert the group header
+        //when it is.
         mmooc.groups.showGroupHeader();
     });
 
