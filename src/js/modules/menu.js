@@ -190,7 +190,9 @@ this.mmooc.menu = function() {
         },
 
         alterCourseLink: function() {
-          $('#menu > li:first-child a').attr('href', '/courses');
+          if ($('#menu > li:first-child a').hasClass('menu-item-no-drop')) {
+            $('#menu > li:first-child a').attr('href', '/courses');
+          }
         }
     };
 }();
