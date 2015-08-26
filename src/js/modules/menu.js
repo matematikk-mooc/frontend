@@ -10,6 +10,7 @@ this.mmooc.menu = function() {
 
         menuItems[menuItems.length] = {"title": "Kursforside", url: "/courses/" + courseId};
         menuItems[menuItems.length] = {"title": "Kunngjøringer", url: "/courses/" + courseId + "/announcements"};
+        menuItems[menuItems.length] = {"title": "Grupper", url: "/courses/" + courseId + "/groups"};
         menuItems[menuItems.length] = {"title": "Diskusjoner", url: "/courses/" + courseId + "/discussion_topics"};
         menuItems[menuItems.length] = mmooc.menu.extractBadgesLinkFromPage();
 
