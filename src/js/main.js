@@ -69,6 +69,10 @@ $(document).ready(function() {
         mmooc.menu.showDiscussionGroupMenu();
     });
 
+    mmooc.routes.addRouteForPath([/\/groups\/\d+\/discussion_topics\/\d+$/], function() {
+      mmooc.groups.moveSequenceLinks();
+    });
+
     mmooc.routes.addRouteForPath([/\/courses\/\d+\/discussion_topics\/\d+/, /\/courses\/\d+\/discussion_topics\/new/], function() {
         // For discussion pages we only want the title to be "<discussion>" instead of "Discussion: <discussion>"
         var title = mmooc.util.getPageTitleAfterColon();
