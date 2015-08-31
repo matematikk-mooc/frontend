@@ -60,7 +60,7 @@ this.mmooc.powerFunctions = function() {
     function _renderView() {
       mmooc.api.getGroupCategoriesForAccount(accountID, function(categories) {
         _render("powerfunctions/group-category",
-                "Create groups",
+                "Create account groups",
                 {categories: categories});
         _setUpSubmitHandler(_processFile);
       });
@@ -71,6 +71,57 @@ this.mmooc.powerFunctions = function() {
       var params = {
         account: accountID,
         category: document.getElementsByName("category")[0].value
+      };
+      _render("powerfunctions/groups-process",
+              "Processing group creations",
+              {groups: groups});
+      for (var i = 0; i < groups.length; i++) {
+        _processItem(params, i, groups[i]);
+      }
+    }
+
+    function _processItem(params, i, group) {
+      var row = $("#mmpf-group-"+i);
+      params.name = group.name;
+      params.description = group.description;
+      mmooc.api.createGroup(params, _success(row), _error(row));
+    }
+
+    return {
+      run: function() {
+        _renderView();
+      }
+    };
+  }
+
+
+  function CreateCourseGroupsTask() {
+
+    function _renderView() {
+      console.log("Here");
+      mmooc.api.getCoursesForAccount(accountID, function(courses) {
+        _render("powerfunctions/course-groups",
+                "Create course groups",
+                {courses: courses});
+        $('#mmpf-course-select').change(function () {
+          var courseID = $('#mmpf-course-select option:selected').val();
+          mmooc.api.getGroupCategoriesForCourse(courseID, function(categories) {
+            $('.step-2').css('display', 'list-item');
+            var html = html + "<option value=''>Choose a group set</option>";
+            for (var i = 0; i < categories.length; i++) {
+              html = html + "<option value=" + categories[i].id + ">" + categories[i].name + "</option>";
+            }
+            $("select[name='category']").html(html);
+            _setUpSubmitHandler(_processFile);
+          });
+        });
+      });
+    }
+
+    function _processFile(content) {
+      var groups = _parseCSV(content);
+      var params = {
+        category: $("select[name='category'] option:selected").val()
       };
       _render("powerfunctions/groups-process",
               "Processing group creations",
@@ -213,6 +264,9 @@ this.mmooc.powerFunctions = function() {
       $("#mmooc-pf-list-group-btn").click(function() {
         new ListGroupsTask().run();
       });
+      $("#mmooc-pf-course-group-btn").click(function() {
+        new CreateCourseGroupsTask().run();
+      });
       $("#mmooc-pf-group-btn").click(function() {
         new CreateGroupsTask().run();
       });
@@ -226,8 +280,14 @@ this.mmooc.powerFunctions = function() {
 
     return {
       run: function() {
-        _render("powerfunctions/main", {});
-        _setUpClickHandlers();
+        try {
+          _render("powerfunctions/main", {});
+          _setUpClickHandlers();
+        }
+        catch (e) {
+          alert (e.message);
+          console.log(e);
+        }
       }
     };
   }

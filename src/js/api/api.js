@@ -253,6 +253,15 @@ this.mmooc.api = function() {
             });
         },
 
+        getCoursesForAccount: function(account, callback, error) {
+            this._get({
+                "callback": callback,
+                "error":    error,
+                "uri":      "/accounts/" + account + "/courses",
+                "params":   { }
+            });
+        },
+
         getGroupCategoriesForAccount: function(account, callback, error) {
             this._get({
                 "callback": callback,
@@ -260,8 +269,16 @@ this.mmooc.api = function() {
                 "uri":      "/accounts/" + account + "/group_categories",
                 "params":   { }
             });
-
         },
+
+      getGroupCategoriesForCourse: function(course, callback, error) {
+        this._get({
+          "callback": callback,
+          "error":    error,
+          "uri":      "/courses/" + course + "/group_categories",
+          "params":   { }
+        });
+      },
 
       // Recursively fetch all groups by following the next links
       // found in the Links response header:
