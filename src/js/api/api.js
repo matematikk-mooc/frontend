@@ -37,6 +37,12 @@ this.mmooc.api = function() {
             this._sendRequest(this._ajax.post, options);
         },
 
+        /*  FIXME for listModulesForCourse()
+         *  This function loads data in a blocking manner no matter how many items and modules are present.
+         *  This could potentially pose problems in the future, as page load time increases rapidly when
+         *  the number of requests are numerous. This function should be updated to use non-blocking loading
+         *  if Canvas is not updated to allow for better data loading through their API.
+         */
         listModulesForCourse: function(callback, error, cid)
         {
         	var href= "/api/v1/courses/" + cid + "/modules";
