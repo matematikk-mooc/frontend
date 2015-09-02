@@ -37,6 +37,33 @@ this.mmooc.api = function() {
             this._sendRequest(this._ajax.post, options);
         },
 
+        listModulesForCourse: function(callback, error, cid)
+        {
+        	var href= "/api/v1/courses/" + cid + "/modules";
+        	$.getJSON(href, function(modules) {
+        		var noOfModules = modules.length;
+        		var asyncsDone = 0;
+        		for (var i = 0; i < noOfModules; i++) {
+        			var m = modules[i];
+        			var href= "/api/v1/courses/" + cid + "/modules/" + m.id + "/items";
+        			$.getJSON(
+        				href,
+        				(function(j) {
+        			    return function(items) {
+        						modules[j].items = items;
+        						asyncsDone++;
+
+        						if(asyncsDone === noOfModules) {
+        							callback(modules);
+        						}
+        					};
+            		}(i)) // calling the function with the current value
+        	    );
+        		};
+        	}
+        	);
+        },
+
         getCurrentModuleItemId : function() {
             var paramName = "module_item_id";
             var q = "" + this._location.search;
@@ -98,7 +125,7 @@ this.mmooc.api = function() {
          */
         getModulesForCurrentCourse: function(callback, error) {
             var courseId = this.getCurrentCourseId();
-            this.getModulesForCourseId(callback, error, courseId);
+            this.listModulesForCourse(callback, error, courseId);
         },
 
         getModulesForCourseId: function(callback, error, courseId) {
@@ -106,8 +133,17 @@ this.mmooc.api = function() {
                 "callback": callback,
                 "error":    error,
                 "uri":      "/courses/" + courseId + "/modules",
-                "params":   { "include": ["items"] }
+                "params":   { }
             });
+        },
+
+        getItemsForModuleId: function(callback, error, courseId, moduleId) {
+          this._get({
+            "callback": callback,
+            "error": error,
+            "uri": "/courses/" + courseId + "/modules/" + moduleId + "/items",
+            "params": { }
+          });
         },
 
         getCurrentCourseId: function() {
