@@ -203,7 +203,7 @@ this.mmooc.api = function() {
                 "callback": callback,
                 "error":    error,
                 "uri":      "/groups/" + groupId + "/users",
-                "params":   {"include": ["avatar_url"] }
+                "params":   {"include": ["avatar_url"], "per_page": 999 }
             });
         },
 
