@@ -94,51 +94,54 @@ this.mmooc.menu = function() {
                 var msgBadge = $("#mmooc-unread-messages-count");
                 if (mmooc.api.getUnreadMessageSize() === 0) {
                   msgBadge.hide();
-                }
-                else {
+                } else {
                   msgBadge.html(mmooc.api.getUnreadMessageSize());
                   msgBadge.show();
                 }
 
-                mmooc.api.getActivityStreamForUser(function(activities) {
-                    var unreadNotifications = 0;
-                    for (var i = 0; i < activities.length; i++) {
-                        if (mmooc.menu.checkReadStateFor(activities[i])) {
-                            unreadNotifications++;
-                        }
-                    }
-
-                    var badge = $("#mmooc-notification-count");
-                    if (unreadNotifications == 0) {
-                        badge.hide();
-                    } else {
-                        badge.html(unreadNotifications);
-                        badge.show();
-                    }
-
-                    document.getElementById('mmooc-activity-stream').innerHTML = mmooc.util.renderTemplateWithData("activitystream", {activities: activities});
-
-                    var notifications = $("#mmooc-notifications").find("li");
-                    if (notifications.size() == 0) {
-                        $("#mmooc-notifications").hide();
-                    } else {
-                        $("#mmooc-notifications").show();
-                    }
-
-                    var showAllItems = $("#mmooc-notifications-showall");
-                    if (notifications.size() > 10) {
-                        notifications.slice(10).addClass("hidden");
-
-                        showAllItems.click(function() {
-                            notifications.removeClass("hidden");
-                            showAllItems.hide();
-                        });
-                    } else {
-                        showAllItems.hide();
-                    }
-
-                });
+                this.updateNotificationsForUser();
             }
+        },
+
+        updateNotificationsForUser: function() {
+            mmooc.api.getActivityStreamForUser(function(activities) {
+                var unreadNotifications = 0;
+                for (var i = 0; i < activities.length; i++) {
+                    if (mmooc.menu.checkReadStateFor(activities[i])) {
+                        unreadNotifications++;
+                    }
+                }
+
+                var badge = $("#mmooc-notification-count");
+                if (unreadNotifications == 0) {
+                    badge.hide();
+                } else {
+                    badge.html(unreadNotifications);
+                    badge.show();
+                }
+
+                document.getElementById('mmooc-activity-stream').innerHTML = mmooc.util.renderTemplateWithData("activitystream", {activities: activities});
+
+                var notifications = $("#mmooc-notifications").find("li");
+                if (notifications.size() == 0) {
+                    $("#mmooc-notifications").hide();
+                } else {
+                    $("#mmooc-notifications").show();
+                }
+
+                var showAllItems = $("#mmooc-notifications-showall");
+                if (notifications.size() > 10) {
+                    notifications.slice(10).addClass("hidden");
+
+                    showAllItems.click(function() {
+                        notifications.removeClass("hidden");
+                        showAllItems.hide();
+                    });
+                } else {
+                    showAllItems.hide();
+                }
+
+            });
         },
 
         showCourseMenu: function(courseId, selectedMenuItem, title) {

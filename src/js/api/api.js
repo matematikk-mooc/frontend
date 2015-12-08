@@ -300,7 +300,7 @@ this.mmooc.api = function() {
                 "callback": callback,
                 "error":    error,
                 "uri":      "/accounts/" + account + "/courses",
-                "params":   { }
+                "params":   { per_page: 999 }
             });
         },
 

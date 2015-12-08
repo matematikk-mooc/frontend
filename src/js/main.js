@@ -156,4 +156,5 @@ $(document).ready(function() {
     mmooc.menu.alterHomeLink();
     mmooc.menu.alterCourseLink();
 
+    mmooc.announcements.clearAnnouncements();
 });
