@@ -76,7 +76,10 @@ this.mmooc.menu = function() {
                 $(".add_access_token_link").show();
                 $("body.profile_settings").find("#content > table, #content > h2, #content > p").show();
             } else {
-                document.getElementById('menu').insertAdjacentHTML('afterbegin', '<li class="menu-item"><a href="/" class="menu-item-no-drop">Kurs</a></li>');
+                var menu = document.getElementById('menu');
+                if (menu) {
+                    menu.insertAdjacentHTML('afterbegin', '<li class="menu-item"><a href="/" class="menu-item-no-drop">Kurs</a></li>');
+                }
             }
         },
 

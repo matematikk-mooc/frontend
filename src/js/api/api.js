@@ -37,6 +37,24 @@ this.mmooc.api = function() {
             this._sendRequest(this._ajax.post, options);
         },
 
+        _put: function(options) {
+            var uri      = this._uriPrefix + options.uri;
+            var params   = options.params || {};
+            var callback = options.callback;
+
+            $.ajax({
+                url: uri,
+                type: 'PUT',
+                data: params,
+                success: function(response) {
+                    callback(response);
+                },
+                error: function(XMLHttpRequest, textStatus, errorThrown) {
+                    console.log("Error during PUT");
+                }
+            });
+        },
+
         /*  FIXME for listModulesForCourse()
          *  This function loads data in a blocking manner no matter how many items and modules are present.
          *  This could potentially pose problems in the future, as page load time increases rapidly when
@@ -45,29 +63,29 @@ this.mmooc.api = function() {
          */
         listModulesForCourse: function(callback, error, cid)
         {
-        	var href= "/api/v1/courses/" + cid + "/modules";
-        	$.getJSON(href, function(modules) {
-        		var noOfModules = modules.length;
-        		var asyncsDone = 0;
-        		for (var i = 0; i < noOfModules; i++) {
-        			var m = modules[i];
-        			var href= "/api/v1/courses/" + cid + "/modules/" + m.id + "/items?per_page=100";
-        			$.getJSON(
-        				href,
-        				(function(j) {
-        			    return function(items) {
-        						modules[j].items = items;
-        						asyncsDone++;
+            var href= "/api/v1/courses/" + cid + "/modules";
+            $.getJSON(href, function(modules) {
+                    var noOfModules = modules.length;
+                    var asyncsDone = 0;
+                    for (var i = 0; i < noOfModules; i++) {
+                        var m = modules[i];
+                        var href= "/api/v1/courses/" + cid + "/modules/" + m.id + "/items?per_page=100";
+                        $.getJSON(
+                            href,
+                            (function(j) {
+                                return function(items) {
+                                    modules[j].items = items;
+                                    asyncsDone++;
 
-        						if(asyncsDone === noOfModules) {
-        							callback(modules);
-        						}
-        					};
-            		}(i)) // calling the function with the current value
-        	    );
-        		};
-        	}
-        	);
+                                    if(asyncsDone === noOfModules) {
+                                        callback(modules);
+                                    }
+                                };
+                            }(i)) // calling the function with the current value
+                        );
+                    };
+                }
+            );
         },
 
         getCurrentModuleItemId : function() {
@@ -76,17 +94,6 @@ this.mmooc.api = function() {
             if (typeof q === "undefined" || q.indexOf(paramName) == -1) {
                 return null;
             }
-
-            var moduleId = q.substring(q.indexOf(paramName) + paramName.length + 1, q.length);
-            if (moduleId.indexOf("&") != -1) {
-                moduleId = moduleId.substring(0, moduleId.indexOf("&"));
-            }
-
-            return parseInt(moduleId, 10);
-        },
-
-        getCurrentContentId : function() {
-            var q = "" + this._location.pathname;
 
             var moduleId = q.substring(q.indexOf(paramName) + paramName.length + 1, q.length);
             if (moduleId.indexOf("&") != -1) {
@@ -144,12 +151,12 @@ this.mmooc.api = function() {
         },
 
         getItemsForModuleId: function(callback, error, courseId, moduleId) {
-          this._get({
-            "callback": callback,
-            "error": error,
-            "uri": "/courses/" + courseId + "/modules/" + moduleId + "/items",
-            "params": { }
-          });
+            this._get({
+                "callback": callback,
+                "error": error,
+                "uri": "/courses/" + courseId + "/modules/" + moduleId + "/items",
+                "params": { }
+            });
         },
 
         getCurrentCourseId: function() {
@@ -273,7 +280,7 @@ this.mmooc.api = function() {
         },
 
         getUnreadMessageSize: function() {
-          return parseInt(document.getElementsByClassName('unread-messages-count')[0].innerHTML);
+            return parseInt(document.getElementsByClassName('unread-messages-count')[0].innerHTML);
         },
 
         getAccounts: function(callback, error) {
@@ -313,46 +320,46 @@ this.mmooc.api = function() {
             });
         },
 
-      getGroupCategoriesForCourse: function(course, callback, error) {
-        this._get({
-          "callback": callback,
-          "error":    error,
-          "uri":      "/courses/" + course + "/group_categories",
-          "params":   { }
-        });
-      },
-
-      // Recursively fetch all groups by following the next links
-      // found in the Links response header:
-      // https://canvas.instructure.com/doc/api/file.pagination.html
-      _getGroupsForAccountHelper: function(accumulatedGroups, callback, error) {
-        var that = this;
-        return function(groups, status, xhr) {
-          Array.prototype.push.apply(accumulatedGroups, groups);
-          var next = xhr.getResponseHeader('Link').split(',').find(function (e) {
-            return e.match("rel=\"next\"");
-          });
-          if (next === undefined) {
-            callback(accumulatedGroups);
-          }
-          else {
-            var fullURI = next.match("<([^>]+)>")[1];
-            that._get({
-              "callback": that._getGroupsForAccountHelper(accumulatedGroups, callback, error),
-              "error":    error,
-              "uri":      fullURI.split("api/v1")[1],
-              "params":   { }
+        getGroupCategoriesForCourse: function(course, callback, error) {
+            this._get({
+                "callback": callback,
+                "error":    error,
+                "uri":      "/courses/" + course + "/group_categories",
+                "params":   { }
             });
-          }
-        };
-      },
+        },
+
+        // Recursively fetch all groups by following the next links
+        // found in the Links response header:
+        // https://canvas.instructure.com/doc/api/file.pagination.html
+        _getGroupsForAccountHelper: function(accumulatedGroups, callback, error) {
+            var that = this;
+            return function(groups, status, xhr) {
+                Array.prototype.push.apply(accumulatedGroups, groups);
+                var next = xhr.getResponseHeader('Link').split(',').find(function (e) {
+                    return e.match("rel=\"next\"");
+                });
+                if (next === undefined) {
+                    callback(accumulatedGroups);
+                }
+                else {
+                    var fullURI = next.match("<([^>]+)>")[1];
+                    that._get({
+                        "callback": that._getGroupsForAccountHelper(accumulatedGroups, callback, error),
+                        "error":    error,
+                        "uri":      fullURI.split("api/v1")[1],
+                        "params":   { }
+                    });
+                }
+            };
+        },
 
         getGroupsForAccount: function(account, callback, error) {
             this._get({
-              "callback": this._getGroupsForAccountHelper([], callback, error),
-              "error":    error,
-              "uri":      "/accounts/" + account + "/groups",
-              "params":   { per_page: 999 }
+                "callback": this._getGroupsForAccountHelper([], callback, error),
+                "error":    error,
+                "uri":      "/accounts/" + account + "/groups",
+                "params":   { per_page: 999 }
             });
         },
 
@@ -382,16 +389,32 @@ this.mmooc.api = function() {
         },
 
 
-      createUserLogin: function(params, callback, error) {
-        var account_id = params.account_id;
-        delete params.account_id;
-        this._post({
-          "callback": callback,
-          "error":  error,
-          "uri": "/accounts/" + account_id + "/logins",
-          "params": params
-        });
-      }
+        createUserLogin: function(params, callback, error) {
+            var account_id = params.account_id;
+            delete params.account_id;
+            this._post({
+                "callback": callback,
+                "error": error,
+                "uri": "/accounts/" + account_id + "/logins",
+                "params": params
+            });
+        },
+
+        getDiscussionTopic: function(courseId, contentId, callback) {
+            this._get({
+                "callback": callback,
+                "uri":      "/courses/" + courseId + "/discussion_topics/" + contentId,
+                "params":   { per_page: 999 }
+            });
+        },
+
+        markDiscussionTopicAsRead: function(courseId, contentId, callback) {
+            this._put({
+                "callback": callback,
+                "uri":      "/courses/" + courseId + "/discussion_topics/" + contentId + "/read_all",
+                "params":   { forced_read_state: 'false' }
+            });
+        }
     };
 }();
 

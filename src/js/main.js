@@ -86,6 +86,7 @@ $(document).ready(function() {
         if (mmooc.api.currentPageIsAnnouncement()) {
             mmooc.menu.showCourseMenu(courseId, 'Kunngjøringer', title);
             mmooc.menu.showBackButton("/courses/" + courseId + "/announcements", "Tilbake til kunngjøringer");
+            mmooc.announcements.addMarkAsReadButton();
         } else if (mmooc.api.getCurrentModuleItemId() == null) {
             // Only show course menu if this discussion is not a module item
             // Note detection if this is a module item is based on precense of query parameter
