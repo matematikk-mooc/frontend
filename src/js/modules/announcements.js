@@ -28,7 +28,7 @@ this.mmooc.announcements = function () {
                 var s = '<br><div id="cdt' + courseId + discussionId + '">Markerer kunngj&oslash;ring som lest...</div>';
                 $("#clearannouncements").append(s);
 
-                var href= "/api/v1/courses/" + cid + "/discussion_topics/" + did + "/read_all.json";
+                var href= "/api/v1/courses/" + courseId + "/discussion_topics/" + discussionId + "/read_all.json";
                 $.ajax({
                     url: href,
                     type: 'PUT',
@@ -48,7 +48,7 @@ this.mmooc.announcements = function () {
                         }
                     },
                     error: function(XMLHttpRequest, textStatus, errorThrown) {
-                        alert("Status: " + textStatus); alert("Error: " + errorThrown);
+                        console.log("Error marking things as done:" + textStatus);
                     }
                 });
             }

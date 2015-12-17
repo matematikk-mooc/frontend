@@ -1,4 +1,5 @@
 $(document).ready(function() {
+
     mmooc.routes.addRouteForPath(/\/$/, function() {
         mmooc.menu.hideRightMenu();
         var parentId = 'content'
@@ -124,7 +125,6 @@ $(document).ready(function() {
     });
 
 
-
     mmooc.routes.addRouteForQueryString(/enrolled=1/, function() {
         mmooc.enroll.changeButtonText();
     });
@@ -143,19 +143,21 @@ $(document).ready(function() {
     }
 
     try {
-      mmooc.menu.injectGroupsPage();
-    }
-    catch(e) {
+        mmooc.menu.injectGroupsPage();
+        mmooc.groups.changeGroupListURLs(document.location.href);
+
+        mmooc.pages.showBackToAssignmentLink(document.location.href);
+        mmooc.pages.updateSidebarWhenMarkedAsDone();
+
+        mmooc.menu.alterHomeLink();
+        mmooc.menu.alterCourseLink();
+
+        $('#announcementbug').click(function() {
+            mmooc.announcements.clearAnnouncements();
+        });
+
+    } catch(e) {
       console.log(e);
     }
 
-    mmooc.groups.changeGroupListURLs(document.location.href);
-
-    mmooc.pages.showBackToAssignmentLink(document.location.href);
-    mmooc.pages.updateSidebarWhenMarkedAsDone();
-
-    mmooc.menu.alterHomeLink();
-    mmooc.menu.alterCourseLink();
-
-    mmooc.announcements.clearAnnouncements();
 });
