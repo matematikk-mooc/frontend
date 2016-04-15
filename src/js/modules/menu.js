@@ -35,7 +35,14 @@ this.mmooc.menu = function() {
 
         return style.sheet;
     }
-
+    
+    function insertCustomMenuElementInTopMenu(linkText, link) {
+        var menu = document.getElementById('menu');
+        if (menu) {
+            menu.insertAdjacentHTML('afterbegin', '<li class="menu-item custom-item ic-app-header__menu-list-item"><a href="' + link + '" class="menu-item-no-drop ic-app-header__menu-list-link"><div class="menu-item__text">' + linkText + '</div></a></li>');
+        }
+    }
+    
     var stylesheet = createStyleSheet();
 
     return {
@@ -49,9 +56,17 @@ this.mmooc.menu = function() {
         showLeftMenu: function() {
             stylesheet.insertRule("body.with-left-side #main { margin-left: 305px !important }", stylesheet.cssRules.length);
             stylesheet.insertRule(".with-left-side #left-side { display: block !important }", stylesheet.cssRules.length);
+            $("body").addClass("isTeacherOrAdmin"); //Used to solve problems in making the design 100% width in the new UI for students. This is the simplest way to implement this.
         },
 
-        showTeacherAdminMenu: function() {
+        renderLeftHeaderMenu: function() {
+            
+            // The entire menu is rebuilt because of unwanted popup in the new ui menu
+            insertCustomMenuElementInTopMenu("Kalender", "/calendar");
+            insertCustomMenuElementInTopMenu("Karakterer", "/grades");
+            insertCustomMenuElementInTopMenu("Grupper", "/groups");
+            insertCustomMenuElementInTopMenu("Kurs", "/courses"); 
+            
             if (mmooc.util.isTeacherOrAdmin()) {
                 this.showLeftMenu();
 
@@ -70,16 +85,11 @@ this.mmooc.menu = function() {
             var roles = mmooc.api.getRoles();
             if (roles != null && roles.indexOf('admin') != -1) {
                 // Admin needs original canvas Course dropdown to access site admin settings
-                $("#courses_menu_item").show();
-
+                //$("#courses_menu_item").show(); //Applies only for Old UI. This is the course menu item with a sub menu.
+                insertCustomMenuElementInTopMenu("Admin", "/accounts");
                 // Admin needs more profile settings
                 $(".add_access_token_link").show();
                 $("body.profile_settings").find("#content > table, #content > h2, #content > p").show();
-            } else {
-                var menu = document.getElementById('menu');
-                if (menu) {
-                    menu.insertAdjacentHTML('afterbegin', '<li class="menu-item"><a href="/" class="menu-item-no-drop">Kurs</a></li>');
-                }
             }
         },
 
@@ -197,9 +207,9 @@ this.mmooc.menu = function() {
         },
 
         alterCourseLink: function() {
-          if ($('#menu > li:first-child a').hasClass('menu-item-no-drop')) {
-            $('#menu > li:first-child a').attr('href', '/courses');
-          }
+        //   if ($('#menu > li:first-child a').hasClass('menu-item-no-drop')) {
+        //     $('#menu > li:first-child a').attr('href', '/courses');
+        //   }
         }
     };
 }();

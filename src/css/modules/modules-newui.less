@@ -1,0 +1,33 @@
+#application.ic-app {
+
+    .mmooc-module {
+
+        margin-right: 0;
+        margin-left: 0;
+        min-height: 70px;
+        
+        .mmooc-module-items-icons {
+            // margin: 0;
+            clear: none;
+
+            &:after {
+                // content: "";
+                // display: block;
+                // height: 0;
+                clear: none;
+            }
+
+
+        }
+    }
+}
+
+.home {
+    
+    #application.ic-app {
+        
+        div[class="ic-notification"] { // Hide only if there is one css class. Want to display if more than one css class which might be the case for other notifications.
+            display: none;
+        }
+    }
+}

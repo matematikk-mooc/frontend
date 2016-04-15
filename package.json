@@ -18,11 +18,11 @@
     "grunt-text-replace": "^0.4.0",
     "jasmine-node": "~1.14.5",
     "karma": "^0.12.31",
-    "karma-jasmine-jquery": "0.1.1",
     "karma-chrome-launcher": "^0.1.7",
     "karma-firefox-launcher": "~0.1",
     "karma-jasmine-jquery": "^0.1.1",
     "karma-script-launcher": "0.1.0",
+    "less-plugin-autoprefix": "^1.5.1",
     "load-grunt-tasks": "1.0.0"
   },
   "repository": {

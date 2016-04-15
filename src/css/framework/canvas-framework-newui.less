@@ -1,0 +1,151 @@
+body.with-left-side:not(.isTeacherOrAdmin) {
+    #application.ic-app {
+        
+        #main {
+            /* Main is 100% as a default */
+            max-width: 100%;
+            width: 100%;
+        }
+    }
+}
+
+
+#application.ic-app {
+
+    #wrapper-container {
+        margin-left: 0;
+        max-width: inherit;
+        
+        #wrapper {
+            display: block;
+            outline: 1px solid red;
+            
+            // #main {
+            //     float: left;
+            // }
+        }
+        
+        #left-side {
+            // width: 238px;
+            width: 18%;
+            border: none!important;
+            padding-top: 25px;
+            position: static;
+            float: left;
+            outline: 1px solid red;
+        }
+    }
+}
+
+body.with-right-side { //not left side
+    
+    #application.ic-app {
+        
+        #main {
+            max-width: 100%;
+            width: 100%;
+        
+            #content-wrapper {
+                float: left;
+                width: 70%;
+                min-width: 70%;
+                outline: 1px solid purple;
+            }
+            
+            #right-side-wrapper {
+                float: left;
+                width: 30%;
+                min-width: 30%;
+                padding: 0;
+                outline: 1px solid green;
+            }
+        }
+    }
+}
+
+body.with-left-side {
+    
+    &.with-right-side {
+        
+        #application.ic-app {
+        
+            #main {
+            
+                #content-wrapper {
+                    float: left;
+                    width: 70%;
+                    min-width: 70%;
+                    outline: 1px solid purple;
+                }
+                
+                #right-side-wrapper {
+                    float: left;
+                    width: 30%;
+                    min-width: 30%;
+                    padding: 0;
+                    outline: 1px solid green;
+                }
+            }
+        }
+    }
+    
+    #application.ic-app {
+        
+        #main {
+            float: left;
+            margin-left: 0px!important; //override inline style
+            margin-right: 0;
+            // max-width: 962px; //1200-238 on the left side
+            padding-left: 50px;
+            width: 82%;
+            min-width: 82%;
+            
+            #content-wrapper {
+                float: left;
+                width: 100%;
+                min-width: 100%;
+                outline: 1px solid purple;
+            }
+            
+            #right-side-wrapper {
+                padding: 0;
+            }
+        }
+    }
+}
+
+// body:not(.full-width) .ic-app-container {
+    /* max-width: 1366px; */
+// }
+
+body:not(.ic-no-flex-layout) {
+    
+    &.course-menu-expanded {
+        
+        #application.ic-app {
+
+            .ic-app-main-layout-horizontal {
+                margin-left: 0px;
+            }
+        }
+    }
+    
+    #application.ic-app {
+        
+        .ic-app-main-layout-horizontal {
+            display: block;
+            
+            .ic-app-main-content {
+                display: block;
+                
+                @media only screen and (min-width: 992px) {
+                    display: block;
+                }
+            }
+        }
+    }   
+}
+
+.home #right-side {
+    width: 100%;
+}

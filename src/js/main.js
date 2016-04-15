@@ -130,7 +130,7 @@ $(document).ready(function() {
     });
 
     try {
-        mmooc.menu.showTeacherAdminMenu();
+        mmooc.menu.renderLeftHeaderMenu();
         mmooc.menu.showUserMenu();
     } catch (e) {
         console.log(e);
