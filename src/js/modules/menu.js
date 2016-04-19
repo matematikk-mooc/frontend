@@ -204,6 +204,7 @@ this.mmooc.menu = function() {
 
         alterHomeLink: function() {
           $('#header-logo').attr('href', '/courses');
+          $('a.ic-app-header__logomark').attr('href', '/courses'); //New UI
         },
 
         alterCourseLink: function() {
