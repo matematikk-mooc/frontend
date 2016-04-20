@@ -38,11 +38,9 @@ this.mmooc.courseList = function() {
         },
         showAddCourseButton : function() {
             // Move canvas Start new course button, since we hide its original location
-            console.log('showAddCourseButton');
             var $button = $('#right-side-wrapper #start_new_course');
             if ($button.length) {
                 $('#content').append($button);
-                console.log('Appended showAddCourseButton');
             }
         },
         isCourseCompleted: function(modules) {
