@@ -66,7 +66,7 @@ jQuery(function($) {
     });
 
     mmooc.routes.addRouteForPath([/\/groups\/\d+\/discussion_topics\/\d+$/, /\/groups\/\d+\/discussion_topics\/new$/], function() {
-        // mmooc.menu.showDiscussionGroupMenu();
+        mmooc.menu.showDiscussionGroupMenu();
     });
 
     mmooc.routes.addRouteForPath([/\/groups\/\d+\/discussion_topics\/\d+$/], function() {

@@ -3,17 +3,18 @@ this.mmooc=this.mmooc||{};
 
 this.mmooc.menu = function() {
 
-    function _renderCourseMenu(course, selectedMenuItem, title) {
+    function _renderCourseMenu(course, selectedMenuItem, title, hideTabs) {
         var menuItems = [];
 
         var courseId = course.id;
-
-        menuItems[menuItems.length] = {"title": "Kursforside", url: "/courses/" + courseId};
-        menuItems[menuItems.length] = {"title": "Kunngjøringer", url: "/courses/" + courseId + "/announcements"};
-        menuItems[menuItems.length] = {"title": "Grupper", url: "/courses/" + courseId + "/groups"};
-        menuItems[menuItems.length] = {"title": "Diskusjoner", url: "/courses/" + courseId + "/discussion_topics"};
-        menuItems[menuItems.length] = mmooc.menu.extractBadgesLinkFromPage();
-
+        if (!hideTabs) { 
+            menuItems[menuItems.length] = {"title": "Kursforside", url: "/courses/" + courseId};
+            menuItems[menuItems.length] = {"title": "Kunngjøringer", url: "/courses/" + courseId + "/announcements"};
+            menuItems[menuItems.length] = {"title": "Grupper", url: "/courses/" + courseId + "/groups"};
+            menuItems[menuItems.length] = {"title": "Diskusjoner", url: "/courses/" + courseId + "/discussion_topics"};
+            menuItems[menuItems.length] = mmooc.menu.extractBadgesLinkFromPage();
+        }
+        
         var subtitle = course.name;
         if (title == null) {
             title = course.name;
@@ -157,10 +158,11 @@ this.mmooc.menu = function() {
             });
         },
 
-        showCourseMenu: function(courseId, selectedMenuItem, title) {
+        showCourseMenu: function(courseId, selectedMenuItem, title, hideTabs) {
+            hideTabs = hideTabs || false; //Do not hide tabs if the parameter
             $("body").addClass("with-course-menu");
             mmooc.api.getCourse(courseId, function(course) {
-                _renderCourseMenu(course, selectedMenuItem, title);
+                _renderCourseMenu(course, selectedMenuItem, title, hideTabs);
             });
         },
 
@@ -181,10 +183,13 @@ this.mmooc.menu = function() {
                 mmooc.api.getGroup(groupId, function(group) {
                     // For discussion pages we only want the title to be "<discussion>" instead of "Discussion: <discussion>"
                     var title = mmooc.util.getPageTitleAfterColon();
-                    mmooc.menu.showCourseMenu(group.course_id, "Grupper", title);
-
-                    var headerHTML = mmooc.util.renderTemplateWithData("groupdiscussionheader", { group: group});
-                    document.getElementById('content-wrapper').insertAdjacentHTML('afterbegin', headerHTML);
+                    mmooc.menu.showCourseMenu(group.course_id, "Grupper", title, true); //Group menu in tabs including title - Use optional fourth parameter for hiding tabs
+         
+                    mmooc.menu.showBackButton("/courses/" + group.course_id, "Tilbake til kursforsiden");
+                    
+                    // if (!mmooc.util.isTeacherOrAdmin()) {
+                    //     $('body').removeClass('with-left-side'); //This is already hidden so we remove this class for a better display (remove left padding)
+                    // }
                 });
             }
         },
