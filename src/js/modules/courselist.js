@@ -3,7 +3,7 @@ this.mmooc=this.mmooc||{};
 
 this.mmooc.courseList = function() {
     return {
-        listCourses: function(parentId) {
+        listCourses: function(parentId, callback) {
             mmooc.api.getEnrolledCourses(function (courses) {
                 if (document.getElementsByClassName('reaccept_terms').length === 0) {
 
@@ -30,16 +30,20 @@ this.mmooc.courseList = function() {
                         mmooc.api.getModulesForCourseId(success, error, this.id);
                     });
                 }
+                
+                if ($.isFunction(callback)) {
+                    callback();
+                }
             });
         },
         showAddCourseButton : function() {
-            $(document).ajaxSuccess(function () {
-                // Move canvas Start new course button, since we hide its original location
-                var $button = $('#start_new_course');
-                if ($button.length) {
-                    $('#content').append($button);
-                }
-            });
+            // Move canvas Start new course button, since we hide its original location
+            console.log('showAddCourseButton');
+            var $button = $('#right-side-wrapper #start_new_course');
+            if ($button.length) {
+                $('#content').append($button);
+                console.log('Appended showAddCourseButton');
+            }
         },
         isCourseCompleted: function(modules) {
             for (var i = 0; i < modules.length; i++) {

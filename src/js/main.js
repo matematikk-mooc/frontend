@@ -1,4 +1,4 @@
-$(document).ready(function() {
+jQuery(function($) {
 
     mmooc.routes.addRouteForPath(/\/$/, function() {
         mmooc.menu.hideRightMenu();
@@ -6,8 +6,7 @@ $(document).ready(function() {
         if (document.location.search === "?mmpf") {
             mmooc.powerFunctions.show(parentId);
         } else {
-            mmooc.courseList.listCourses(parentId);
-            mmooc.courseList.showAddCourseButton();
+            mmooc.courseList.listCourses(parentId, mmooc.courseList.showAddCourseButton);
         }
     });
 
@@ -20,8 +19,7 @@ $(document).ready(function() {
 
     mmooc.routes.addRouteForPath(/\/courses$/, function() {
         mmooc.menu.hideRightMenu();
-        mmooc.courseList.listCourses('content');
-        mmooc.courseList.showAddCourseButton();
+        mmooc.courseList.listCourses('content', mmooc.courseList.showAddCourseButton);
     });
 
     mmooc.routes.addRouteForPath(/\/courses\/\d+$/, function() {
@@ -68,7 +66,7 @@ $(document).ready(function() {
     });
 
     mmooc.routes.addRouteForPath([/\/groups\/\d+\/discussion_topics\/\d+$/, /\/groups\/\d+\/discussion_topics\/new$/], function() {
-        mmooc.menu.showDiscussionGroupMenu();
+        // mmooc.menu.showDiscussionGroupMenu();
     });
 
     mmooc.routes.addRouteForPath([/\/groups\/\d+\/discussion_topics\/\d+$/], function() {
