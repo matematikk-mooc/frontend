@@ -4,11 +4,16 @@
 
         margin-right: 0;
         margin-left: 0;
-        min-height: 70px;
+        
+        h2 {
+            width: ~"calc(100% - 150px)";
+            margin-bottom: 15px;
+        }
         
         .mmooc-module-items-icons {
             // margin: 0;
             clear: none;
+            width: ~"calc(100% - 150px)";
 
             &:after {
                 // content: "";
@@ -17,7 +22,11 @@
                 clear: none;
             }
 
-
+            li {
+                display: inline-block;
+                float: none;
+            } 
+            
         }
     }
 }
