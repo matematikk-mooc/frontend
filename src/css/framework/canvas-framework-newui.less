@@ -26,8 +26,7 @@ body.with-left-side:not(.isTeacherOrAdmin) {
         }
         
         #left-side {
-            // width: 238px;
-            width: 22%;
+            width: 262px;
             border: none!important;
             padding-top: 25px;
             position: static;
@@ -48,15 +47,15 @@ body.with-right-side { //not left side
         
             #content-wrapper {
                 float: left;
-                width: 70%;
-                min-width: 70%;
+                width: 76%;
+                min-width: 76%;
                 // outline: 1px solid purple;
             }
             
             #right-side-wrapper {
                 float: left;
-                width: 30%;
-                min-width: 30%;
+                width: 24%;
+                min-width: 24%;
                 padding: 0;
                 // outline: 1px solid green;
             }
@@ -74,15 +73,15 @@ body.with-left-side {
             
                 #content-wrapper {
                     float: left;
-                    width: 70%;
-                    min-width: 70%;
+                    width: 76%;
+                    min-width: 76%;
                     // outline: 1px solid purple;
                 }
                 
                 #right-side-wrapper {
                     float: left;
-                    width: 30%;
-                    min-width: 30%;
+                    width: 24%;
+                    min-width: 24%;
                     padding: 0;
                     // outline: 1px solid green;
                 }
@@ -98,8 +97,8 @@ body.with-left-side {
             margin-right: 0;
             // max-width: 962px; //1200-238 on the left side
             // padding-left: 50px;
-            width: 78%;
-            min-width: 78%;
+            width: ~"calc(100% - 262px)"; //need to escape the value for less not to interpret the value
+            min-width: ~"calc(100% - 262px)";
             
             #content-wrapper {
                 float: left;
