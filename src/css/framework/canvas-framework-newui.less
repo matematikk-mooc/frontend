@@ -26,12 +26,19 @@ body.with-left-side:not(.isTeacherOrAdmin) {
         }
         
         #left-side {
-            width: 262px;
+            width: 238px;
             border: none!important;
             padding-top: 25px;
             position: static;
             float: left;
             padding-right: 50px;
+            padding-left: 0;
+            opacity: 1;
+            -webkit-transform: none; /* Safari and Chrome */
+            -moz-transform: none; /* Firefox */
+            -ms-transform: none; /* IE 9 */
+            -o-transform: none; /* Opera */
+            transform: none;
             // outline: 1px solid red;
         }
     }
@@ -97,8 +104,8 @@ body.with-left-side {
             margin-right: 0;
             // max-width: 962px; //1200-238 on the left side
             // padding-left: 50px;
-            width: ~"calc(100% - 262px)"; //need to escape the value for less not to interpret the value
-            min-width: ~"calc(100% - 262px)";
+            width: ~"calc(100% - 238px)"; //need to escape the value for less not to interpret the value
+            min-width: ~"calc(100% - 238px)";
             
             #content-wrapper {
                 float: left;
