@@ -123,7 +123,16 @@ this.mmooc.api = function() {
                 "callback": callback,
                 "error":    error,
                 "uri":      "/courses",
-                "params":   { "include": ["syllabus_body" , "course_progress"], "per_page": "100" }
+                "params":   { "include": ["syllabus_body"], "per_page": "100" }
+            });
+        },
+        
+        getEnrolledCoursesProgress: function(callback, error) {
+            this._get({
+                "callback": callback,
+                "error":    error,
+                "uri":      "/courses",
+                "params":   { "include": ["course_progress"], "per_page": "100" }
             });
         },
 

@@ -4,13 +4,15 @@ this.mmooc=this.mmooc||{};
 this.mmooc.courseList = function() {
     return {
         listCourses: function(parentId, callback) {
-            mmooc.api.getEnrolledCourses(function (courses) {
-                if (document.getElementsByClassName('reaccept_terms').length === 0) {
-
-                    var sortedCourses = mmooc.util.arraySorted(courses, "course_code"),
-                        html = mmooc.util.renderTemplateWithData("courselist", {courses: sortedCourses});
+	        if (document.getElementsByClassName('reaccept_terms').length === 0) {
+            	mmooc.api.getEnrolledCourses(function (courses) {
+				
+                    var sortedCourses = mmooc.util.arraySorted(courses, "course_code");
+                    html = mmooc.util.renderTemplateWithData("courselist", {courses: sortedCourses});
                     document.getElementById(parentId).innerHTML = html;
 
+//Additional check if course if completed. Not in use since course_progress(check implemented in template) seems to be working as expected. (Not able to reproduce errors).
+/*
                     var createCallBackForId = function(id) {
                         return function(modules) {
                             if (mmooc.courseList.isCourseCompleted(modules)) {
@@ -21,20 +23,40 @@ this.mmooc.courseList = function() {
                         };
                     };
 
+
                     var error = function(error) {
                         console.error("error calling api, skip over this course", error);
                     };
+
 
                     $(sortedCourses).each(function() {
                         var success =  createCallBackForId(this.id);
                         mmooc.api.getModulesForCourseId(success, error, this.id);
                     });
-                }
+*/
                 
-                if ($.isFunction(callback)) {
-                    callback();
-                }
-            });
+	                if ($.isFunction(callback)) {
+	                    callback();
+	                }
+            	});
+				mmooc.api.getEnrolledCoursesProgress(function (courses) {
+	                
+                    var sortedCourses = mmooc.util.arraySorted(courses, "course_code");
+                    
+                    $(sortedCourses).each(function() {
+                        var $course = $("#course_" + this.id + " .mmooc-course-list-description");
+						html = mmooc.util.renderTemplateWithData("courselistprogress", {course: this});
+                        $course.after(html);          
+                    });					
+
+                    var error = function(error) {
+                        console.error("error calling api, skip over this course", error);
+                    };
+
+            	});
+            	
+            }
+                   
         },
         showAddCourseButton : function() {
             // Move canvas Start new course button, since we hide its original location
@@ -44,6 +66,7 @@ this.mmooc.courseList = function() {
             }
         },
         isCourseCompleted: function(modules) {
+	        console.log(modules);
             for (var i = 0; i < modules.length; i++) {
                 var module = modules[i];
                 for (var j = 0; j < module.items.length; j++) {
