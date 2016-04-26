@@ -1,5 +1,5 @@
 jQuery(function($) {
-
+	$('#main').show();
     mmooc.routes.addRouteForPath(/\/$/, function() {
         mmooc.menu.hideRightMenu();
         var parentId = 'content'
@@ -18,6 +18,7 @@ jQuery(function($) {
     });
 
     mmooc.routes.addRouteForPath(/\/courses$/, function() {
+	    $('#content').html("<div>Laster kurs....</div>");
         mmooc.menu.hideRightMenu();
         mmooc.courseList.listCourses('content', mmooc.courseList.showAddCourseButton);
     });
