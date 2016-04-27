@@ -6,6 +6,7 @@ jQuery(function($) {
         if (document.location.search === "?mmpf") {
             mmooc.powerFunctions.show(parentId);
         } else {
+	        $('#content').html("<div>Laster kurs....</div>");
             mmooc.courseList.listCourses(parentId, mmooc.courseList.showAddCourseButton);
         }
     });
