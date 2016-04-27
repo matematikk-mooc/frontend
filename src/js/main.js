@@ -150,6 +150,8 @@ jQuery(function($) {
 
         mmooc.menu.alterHomeLink();
         mmooc.menu.alterCourseLink();
+        
+        mmooc.footer.addLicenseInFooter();
 
         $('#announcementbug').click(function() {
             mmooc.announcements.clearAnnouncements();
