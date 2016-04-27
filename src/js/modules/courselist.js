@@ -6,7 +6,7 @@ this.mmooc.courseList = function() {
         listCourses: function(parentId, callback) {
 	        if (document.getElementsByClassName('reaccept_terms').length === 0) {
             	mmooc.api.getEnrolledCourses(function (courses) {
-				
+
                     var sortedCourses = mmooc.util.arraySorted(courses, "course_code");
                     html = mmooc.util.renderTemplateWithData("courselist", {courses: sortedCourses});
                     document.getElementById(parentId).innerHTML = html;
@@ -34,10 +34,17 @@ this.mmooc.courseList = function() {
                         mmooc.api.getModulesForCourseId(success, error, this.id);
                     });
 */
-                
+	                
 	                if ($.isFunction(callback)) {
 	                    callback();
 	                }
+	                
+	                mmooc.courseList.showFilter(sortedCourses);
+	                
+	                $("#filter").change(function() {
+		                mmooc.courseList.applyFilter(sortedCourses);
+	                });
+	                	                
             	});
 				mmooc.api.getEnrolledCoursesProgress(function (courses) {
 	                
@@ -48,10 +55,6 @@ this.mmooc.courseList = function() {
 						html = mmooc.util.renderTemplateWithData("courselistprogress", {course: this});
                         $course.after(html);          
                     });					
-
-                    var error = function(error) {
-                        console.error("error calling api, skip over this course", error);
-                    };
 
             	});
             	
@@ -65,6 +68,56 @@ this.mmooc.courseList = function() {
                 $('#content').append($button);
             }
         },
+        showFilter : function(sortedCourses) {
+	        // Show filter options based on first part of course code            
+            var filterOptions = ["Alle"];           
+            $(sortedCourses).each(function(index) {
+	            var values = sortedCourses[index].course_code.split('-');    
+	            if(values.length > 1) {
+		            if(filterOptions.indexOf(values[0]) == -1) {
+			            filterOptions.push(values[0]);
+		            }		 
+	        	}	        
+        	});
+        	filterOptions.push("Andre");
+        	var selectList = "<select id='filter'></select>";
+        	$('.mmooc-course-list h1').after(selectList);
+        	
+        	var option = '';
+			for(var i=0; i<filterOptions.length; i++) {
+				option += '<option value="' + filterOptions[i] + '">' + filterOptions[i] + '</option>';
+			}
+			$('#filter').append(option);                       
+        },
+        applyFilter : function(sortedCourses) {
+			if($("#filter").val() == 'Alle') {
+				$(sortedCourses).each(function() {
+					$("#course_" + this.id).show();
+				});
+			}				
+			else if($("#filter").val() == 'Andre') {
+				$(sortedCourses).each(function() {
+					if(this.course_code.indexOf("-") >= 0) {
+						$("#course_" + this.id).hide();
+					}
+					else {
+						$("#course_" + this.id).show();
+					}						
+				});
+			}				
+			else {			
+				$(sortedCourses).each(function() {
+					var courseCode = this.course_code.split('-')[0];
+					if($("#filter").val() == courseCode) {
+						$("#course_" + this.id).show();
+					}
+					else {
+						$("#course_" + this.id).hide();
+					}						
+				});				
+			}
+        }        
+/*
         isCourseCompleted: function(modules) {
 	        console.log(modules);
             for (var i = 0; i < modules.length; i++) {
@@ -78,5 +131,6 @@ this.mmooc.courseList = function() {
             }
             return true;
         }
+*/
     };
 }();
