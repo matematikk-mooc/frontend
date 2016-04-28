@@ -1,12 +1,13 @@
 jQuery(function($) {
-	$('#main').show();
+	
+    $('#main').show(); //To avoid displaying the old contents while the javascript is loading. '#main' is set to display:none in CSS.
+    
     mmooc.routes.addRouteForPath(/\/$/, function() {
         mmooc.menu.hideRightMenu();
         var parentId = 'content'
         if (document.location.search === "?mmpf") {
             mmooc.powerFunctions.show(parentId);
         } else {
-	        $('#content').html("<div>Laster kurs....</div>");
             mmooc.courseList.listCourses(parentId, mmooc.courseList.showAddCourseButton);
         }
     });
@@ -19,7 +20,6 @@ jQuery(function($) {
     });
 
     mmooc.routes.addRouteForPath(/\/courses$/, function() {
-	    $('#content').html("<div>Laster kurs....</div>");
         mmooc.menu.hideRightMenu();
         mmooc.courseList.listCourses('content', mmooc.courseList.showAddCourseButton);
     });

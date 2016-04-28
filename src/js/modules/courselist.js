@@ -6,11 +6,16 @@ this.mmooc.courseList = function() {
         listCourses: function(parentId, callback) {
 	        if (document.getElementsByClassName('reaccept_terms').length === 0) {
             	mmooc.api.getEnrolledCourses(function (courses) {
-
+					
+					var $oldContent = $('#' + parentId).children(); //After an update the 'Add course button' is in #content including a popupform. So we need to move this to another place in the DOM so we don't overwrite it.
+					$oldContent.appendTo("#right-side-wrapper #right-side");
+					
+					$('#' + parentId).html("<div>Laster kurs....</div>"); //overwrite the contents in parentID and display: 'Laster kurs....'
+					
                     var sortedCourses = mmooc.util.arraySorted(courses, "course_code");
                     html = mmooc.util.renderTemplateWithData("courselist", {courses: sortedCourses});
-                    document.getElementById(parentId).innerHTML = html;
-
+                    document.getElementById(parentId).innerHTML = html; 
+					
 //Additional check if course if completed. Not in use since course_progress(check implemented in template) seems to be working as expected. (Not able to reproduce errors).
 /*
                     var createCallBackForId = function(id) {
@@ -35,15 +40,16 @@ this.mmooc.courseList = function() {
                     });
 */
 	                
-	                if ($.isFunction(callback)) {
-	                    callback();
-	                }
-	                
+	                	                
 	                mmooc.courseList.showFilter(sortedCourses);
 	                
 	                $("#filter").change(function() {
 		                mmooc.courseList.applyFilter(sortedCourses);
 	                });
+					
+					if ($.isFunction(callback)) {
+	                    callback();
+	                }
 	                	                
             	});
 				mmooc.api.getEnrolledCoursesProgress(function (courses) {
@@ -66,6 +72,7 @@ this.mmooc.courseList = function() {
             var $button = $('#start_new_course');
             if ($button.length) {
                 $('#content').append($button);
+				$button.html('Legg til et kurs');
             }
         },
         showFilter : function(sortedCourses) {
