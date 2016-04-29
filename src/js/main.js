@@ -30,6 +30,7 @@ jQuery(function($) {
 
         var courseId = mmooc.api.getCurrentCourseId();
         mmooc.menu.showCourseMenu(courseId, 'Kursforside', null);
+        mmooc.coursePage.hideCourseInvitationsForAllUsers();
     });
 
     mmooc.routes.addRouteForPath(/\/courses\/\d+\/announcements$/, function() {
