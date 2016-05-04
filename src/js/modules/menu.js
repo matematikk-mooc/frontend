@@ -48,6 +48,13 @@ this.mmooc.menu = function() {
         event.preventDefault();
         $("a.help_dialog_trigger").click(); //Do the same as when you are clicking on the original help button (which display the help dialog)
     }
+    
+    function hideHelpMenuElementIfNotActivated() {
+        $canvasHelpButton = $("a.help_dialog_trigger")
+        if ($canvasHelpButton.length == 0) {
+            $("li.helpMenu").hide();
+        }
+    }
      
     var stylesheet = createStyleSheet();
 
@@ -119,7 +126,8 @@ this.mmooc.menu = function() {
                 }
                 this.updateNotificationsForUser();
                 
-                $(document).on("click", "#helpMenu", openHelpDialog);
+                $(document).on("click", ".helpMenu", openHelpDialog);
+                hideHelpMenuElementIfNotActivated();
             }
         },
 
