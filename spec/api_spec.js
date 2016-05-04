@@ -29,7 +29,18 @@ describe("api", function() {
             api.getEnrolledCourses(callback);
             expect(ajax.get).toHaveBeenCalledWith(
                 '/api/v1/courses',
-                {include: ['syllabus_body', 'course_progress']},
+                {include: ['syllabus_body']},
+                callback
+            );
+        });
+    });
+    
+    describe("getEnrolledCoursesProgress", function() {
+        it("Calls ajax.get() with correct parameters", function() {
+            api.getEnrolledCourses(callback);
+            expect(ajax.get).toHaveBeenCalledWith(
+                '/api/v1/courses',
+                {include: ['course_progress']},
                 callback
             );
         });
