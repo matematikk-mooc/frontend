@@ -43,7 +43,7 @@ this.mmooc.menu = function() {
             menu.insertAdjacentHTML('afterbegin', '<li class="menu-item custom-item ic-app-header__menu-list-item"><a href="' + link + '" class="menu-item-no-drop ic-app-header__menu-list-link"><div class="menu-item__text">' + linkText + '</div></a></li>');
         }
     }
-    
+     
     var stylesheet = createStyleSheet();
 
     return {
@@ -114,6 +114,11 @@ this.mmooc.menu = function() {
                 }
 
                 this.updateNotificationsForUser();
+                
+                $(menu).on("click", "#helpMenu", function(event) {
+                    event.preventDefault();
+                    $("a.help_dialog_trigger").click(); //Do the same as when you are clicking on the original help button (which display the help dialog)
+                });
             }
         },
 
