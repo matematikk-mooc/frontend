@@ -79,7 +79,7 @@ this.mmooc.courseList = function() {
 	        // Show filter options based on first part of course code            
             var filterOptions = ["Alle"];           
             $(sortedCourses).each(function(index) {
-	            var values = sortedCourses[index].course_code.split('-');    
+	            var values = sortedCourses[index].course_code.split('::');    
 	            if(values.length > 1) {
 		            if(filterOptions.indexOf(values[0]) == -1) {
 			            filterOptions.push(values[0]);
@@ -104,7 +104,7 @@ this.mmooc.courseList = function() {
 			}				
 			else if($("#filter").val() == 'Andre') {
 				$(sortedCourses).each(function() {
-					if(this.course_code.indexOf("-") >= 0) {
+					if(this.course_code.indexOf("::") >= 0) {
 						$("#course_" + this.id).hide();
 					}
 					else {
@@ -114,7 +114,7 @@ this.mmooc.courseList = function() {
 			}				
 			else {			
 				$(sortedCourses).each(function() {
-					var courseCode = this.course_code.split('-')[0];
+					var courseCode = this.course_code.split('::')[0];
 					if($("#filter").val() == courseCode) {
 						$("#course_" + this.id).show();
 					}
