@@ -89,15 +89,24 @@ this.mmooc.api = function() {
         },
 
         getCurrentModuleItemId : function() {
-            var paramName = "module_item_id";
-            var q = "" + this._location.search;
-            if (typeof q === "undefined" || q.indexOf(paramName) == -1) {
-                return null;
-            }
+            var moduleId;
+            var relativeUrl = location.pathname;
+            var patt = /\/courses\/\d+\/modules\/items\/\d+$/;
+            var isRelativeUrlMatching = patt.test(relativeUrl);
+            if (isRelativeUrlMatching) {
+                var n = relativeUrl.lastIndexOf('/');
+                moduleId = relativeUrl.substring(n + 1);
+            } else {
+                var paramName = "module_item_id";
+                var q = "" + this._location.search;
+                if (typeof q === "undefined" || q.indexOf(paramName) == -1) {
+                    return null;
+                }
 
-            var moduleId = q.substring(q.indexOf(paramName) + paramName.length + 1, q.length);
-            if (moduleId.indexOf("&") != -1) {
-                moduleId = moduleId.substring(0, moduleId.indexOf("&"));
+                moduleId = q.substring(q.indexOf(paramName) + paramName.length + 1, q.length);
+                if (moduleId.indexOf("&") != -1) {
+                    moduleId = moduleId.substring(0, moduleId.indexOf("&"));
+                }
             }
 
             return parseInt(moduleId, 10);

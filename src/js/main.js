@@ -121,6 +121,11 @@ jQuery(function($) {
             mmooc.menu.showCourseMenu(courseId, 'Utmerkelser', 'Utmerkelser');
         }
     });
+    
+    mmooc.routes.addRouteForPath(/\/courses\/\d+\/modules\/items\/\d+$/, function() { //Canva Badges uses this route for instance
+        mmooc.menu.showLeftMenu();
+        mmooc.menu.listModuleItems();
+    });
 
     mmooc.routes.addRouteForPath([/\/pages/], function() {
         mmooc.pages.showBackLinkIfNecessary();
