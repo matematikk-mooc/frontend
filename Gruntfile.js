@@ -46,7 +46,7 @@ module.exports = function(grunt) {
 
 		concat: {
 	        js: {
-	            src: ['tmp/templates.js', 'src/js/api/*.js', 'src/js/modules/*.js', 'src/js/i18n.js', 'src/js/main.js', 'src/js/3party/*.js'],
+	            src: ['tmp/templates.js', 'src/js/api/*.js', 'src/js/modules/*.js', 'src/js/i18n.js', 'src/js/main.js', 'src/js/3party/*.js', 'src/addons/canva_badges/js/*.js'],
 	            dest: 'dist/mmooc-min.js'
 	        },
             extras: {
