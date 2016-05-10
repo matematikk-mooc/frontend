@@ -17,7 +17,7 @@
                             <span class="mmooc-module-item-title">{{title}}</span>
                             <span class="mmooc-module-items-icons-{{type}}{{#ifItemIsCompleted completion_requirement}} done{{/ifItemIsCompleted}}"
                                href="{{html_url}}">
-                                <i class="icon-{{lowercase type}}"></i>
+                                <i class="icon-{{lowercase type}}{{overrideIconClassByTitle title}}"></i>
                             </span>
                         </a>
                     </li>

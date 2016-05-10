@@ -105,7 +105,8 @@ module.exports = function(grunt) {
 		copy: {
 			main: {
 				files: [
-					{expand: true, src: ['bitmaps/*'], cwd: 'src/', dest: 'dist/'}
+					{expand: true, src: ['bitmaps/*'], cwd: 'src/', dest: 'dist/'},
+					{expand: true, src: ['vector_images/*'], cwd: 'src/', dest: 'dist/'}
 				]
 			}
 		},

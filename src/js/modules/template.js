@@ -30,6 +30,16 @@ Handlebars.registerHelper('ifGreaterThan', function(value1, value2, options) {
     }
 });
 
+Handlebars.registerHelper('overrideIconClassByTitle', function(title) {
+    title = title.toLowerCase();
+    if (title.indexOf('utmerkelse') !=-1) {
+        return ' mmooc-icon-badge';
+    } else if (title.indexOf('video') !=-1) {
+        return ' mmooc-icon-video';
+    } else {
+        return '';
+    }
+});
 
 Handlebars.registerHelper('urlForCourseId', function(courseId) {
     return "/courses/" + courseId;
