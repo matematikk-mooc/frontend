@@ -46,14 +46,14 @@ module.exports = function(grunt) {
 
 		concat: {
 	        js: {
-	            src: ['tmp/templates.js', 'src/js/api/*.js', 'src/js/modules/*.js', 'src/js/i18n.js', 'src/js/main.js', 'src/js/3party/*.js', 'src/addons/canva_badges/js/*.js'],
+	            src: ['tmp/templates.js', 'src/js/api/*.js', 'src/js/modules/*.js', 'src/js/settings.js', 'src/js/i18n.js', 'src/js/main.js', 'src/js/3party/*.js', 'src/addons/canva_badges/js/*.js'],
 	            dest: 'dist/mmooc-min.js'
 	        },
             extras: {
                 src: [
                         'node_modules/grunt-contrib-handlebars/node_modules/handlebars/dist/handlebars.min.js',// we need to embed handlebars here because it is not included in the iframe
                         'tmp/badges_template.js', 'src/addons/badges/js/*.js', 'src/js/modules/template.js', 'src/js/modules/util.js',
-                        'src/js/i18n.js'
+                        'src/js/i18n.js', 'src/js/settings.js'
                     ],
                 dest: 'tmp/badges-min.js'
             }

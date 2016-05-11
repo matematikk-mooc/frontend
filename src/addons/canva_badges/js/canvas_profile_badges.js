@@ -1,12 +1,16 @@
 $(function() {
-  console.log("CANVABADGES: Loaded!");
+  // console.log("CANVABADGES: Loaded!");
   // NOTE: if pasting this code into another script, you'll need to manually change the
   // next line. Instead of assigning the value null, you need to assign the value of
   // the Canvabadges domain, i.e. "https://www.canvabadges.org". If you have a custom
   // domain configured then it'll be something like "https://www.canvabadges.org/_my_site"
   // instead.
   // var protocol_and_host = null; Overridden because of the comment above
-  var protocol_and_host = 'https://canvabadges-beta-iktsenteret.bibsys.no';
+  //Some small changes has been made to this script so it is displayed also on the about/<user id> page and /profile/settings page.
+  //The original is here: https://www.canvabadges.org/canvas_profile_badges.js
+  var protocol_and_host = mmooc.settings.CanvaBadgeProtocolAndHost; //'https://canvabadges-beta-iktsenteret.bibsys.no' - this is where the Canva Badge certificate is stored.;
+  var isProfilePage = false;
+  var user_id;
   if(!protocol_and_host) {
     var $scripts = $("script");
     $("script").each(function() {
@@ -25,9 +29,18 @@ $(function() {
     console.log("CANVABADGES: Couldn't find a valid protocol and host. Canvabadges will not appear on profile pages until this is fixed.");
   }
   var match = location.href.match(/\/(users|about)\/(\d+)$/);
+  if (!match) {
+    match = location.href.match(/\/profile\/settings$/);
+    isProfilePage = true;
+  }
   if(match && protocol_and_host) {
     console.log("CANVABADGES: This page shows badges! Loading...");
-    var user_id = match[2];
+    if (isProfilePage) {
+      user_id = mmooc.api.getUser().id;
+    } else {
+      user_id = match[2];
+    }
+    
     var domain = location.host;
     var url = protocol_and_host + "/api/v1/badges/public/" + user_id + "/" + encodeURIComponent(domain) + ".json";
     $.ajax({
@@ -50,7 +63,7 @@ $(function() {
             $box.append($badge);
           }
           $box.append($("<div/>", {style: 'clear: left'}));
-          $("#edit_profile_form,fieldset#courses,.more_user_information + div").after($box);
+          $("#edit_profile_form,fieldset#courses,.more_user_information + div, #update_profile_form").after($box);
         } else {
           console.log("CANVABADGES: No badges found for the user: " + user_id + " at " + domain);
         }
