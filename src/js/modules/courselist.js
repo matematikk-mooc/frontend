@@ -123,7 +123,7 @@ this.mmooc.courseList = function() {
 					}						
 				});				
 			}
-        }        
+        },        
         isCourseCompleted: function(modules) {
 	        console.log(modules);
             for (var i = 0; i < modules.length; i++) {
