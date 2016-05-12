@@ -11,20 +11,36 @@
         }
         
         .mmooc-module-items-icons {
-            // margin: 0;
             clear: none;
             width: ~"calc(100% - 150px)";
 
             &:after {
-                // content: "";
-                // display: block;
-                // height: 0;
                 clear: none;
             }
 
             li {
                 display: inline-block;
                 float: none;
+                
+                a {
+                    padding: 3px;
+                    line-height: 1;
+                    width: auto;
+                    height: auto;
+                    box-sizing: border-box;
+                    margin-top: 1px;
+                    margin-bottom: 1px;
+
+                    &:hover {
+                        padding: 4px;
+                        margin-top: 0;
+                        margin-bottom: 0;
+                    }
+                }
+                
+                 i[class*="icon-"], i[class^="icon-"] {
+                    line-height: 1;
+                }
             } 
             
         }
