@@ -235,6 +235,7 @@ this.mmooc.api = function() {
         getCurrentModule: function(callback, error) {
             var currentModuleItemId = this.getCurrentModuleItemId();
             var currentTypeAndContentId = null;
+            //Quizzes and assignments does not have module item id in URL
             if (currentModuleItemId == null) {
                 currentTypeAndContentId = this.getCurrentTypeAndContentId();
                 if (currentTypeAndContentId == null) {
@@ -248,7 +249,9 @@ this.mmooc.api = function() {
                     var items = module.items;
                     for (var j = 0; j < items.length; j++) {
                         var item = items[j];
-                        if (item.id == currentModuleItemId || (currentTypeAndContentId != null && currentTypeAndContentId.contentId == item.content_id && currentTypeAndContentId.type == item.type)) {
+                        //Need to check type and id for quiz and assignment items
+                        var isCurrentModuleItem = item.id == currentModuleItemId || (currentTypeAndContentId != null && currentTypeAndContentId.contentId == item.content_id && currentTypeAndContentId.type == item.type);
+                        if (isCurrentModuleItem) {
                             item.isCurrent = true;
                             callback(module);
                             return;

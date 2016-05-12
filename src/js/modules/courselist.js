@@ -125,7 +125,6 @@ this.mmooc.courseList = function() {
 			}
         },        
         isCourseCompleted: function(modules) {
-	        console.log(modules);
             for (var i = 0; i < modules.length; i++) {
                 var module = modules[i];
                 for (var j = 0; j < module.items.length; j++) {
