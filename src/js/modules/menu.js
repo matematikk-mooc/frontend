@@ -4,6 +4,17 @@ this.mmooc=this.mmooc||{};
 this.mmooc.menu = function() {
 
     function _renderCourseMenu(course, selectedMenuItem, title, hideTabs) {
+        
+        function _insertCourseMenuHtml(course, selectedMenuItem, title, menuItems) {
+            var subtitle = course.name;
+            if (title == null) {
+                title = course.name;
+                subtitle = "";
+            }
+            var html = mmooc.util.renderTemplateWithData("coursemenu", {course: course, menuItems: menuItems, selectedMenuItem: selectedMenuItem, title: title, subtitle: subtitle });
+            document.getElementById('header').insertAdjacentHTML('afterend', html);
+        }
+        
         var menuItems = [];
 
         var courseId = course.id;
@@ -12,17 +23,22 @@ this.mmooc.menu = function() {
             menuItems[menuItems.length] = {"title": "Kunngjøringer", url: "/courses/" + courseId + "/announcements"};
             menuItems[menuItems.length] = {"title": "Grupper", url: "/courses/" + courseId + "/groups"};
             menuItems[menuItems.length] = {"title": "Diskusjoner", url: "/courses/" + courseId + "/discussion_topics"};
-            menuItems[menuItems.length] = mmooc.menu.extractBadgesLinkFromPage();
+            
+            var badgeSafe = mmooc.menu.extractBadgesLinkFromPage();
+            if (badgeSafe.url) { //If the url of Badges is found then display this as an additional tab
+                menuItems[menuItems.length] = badgeSafe;
+                _insertCourseMenuHtml(course, selectedMenuItem, title, menuItems);
+            } else {
+                if (mmooc.settings.useCanvaBadge) {
+                    mmooc.menu.setCanvaBadgesLink(course, function(canvaBadgeObject) { //Second parameter is a callback function
+                        if (canvaBadgeObject.url) {
+                            menuItems[menuItems.length] = canvaBadgeObject; //check if canva badges is used for the current domain and if it is and the user has any badges then display this additional tab 
+                        }
+                        _insertCourseMenuHtml(course, selectedMenuItem, title, menuItems);
+                    });
+                }
+            }
         }
-        
-        var subtitle = course.name;
-        if (title == null) {
-            title = course.name;
-            subtitle = "";
-        }
-
-        var html = mmooc.util.renderTemplateWithData("coursemenu", {course: course, menuItems: menuItems, selectedMenuItem: selectedMenuItem, title: title, subtitle: subtitle });
-        document.getElementById('header').insertAdjacentHTML('afterend', html);
     }
 
 
@@ -215,6 +231,45 @@ this.mmooc.menu = function() {
         extractBadgesLinkFromPage: function () {
             var href = $('li.section:contains("BadgeSafe")').find('a').attr('href');
             return {"title": mmooc.i18n.Badgesafe, url: href};
+        },
+        setCanvaBadgesLink: function (course, callback) {
+            var user_id = mmooc.api.getUser().id;
+            
+            //This should be refactored to be in an api resource file
+            var domain = location.host;
+            var urlToCanvaBadgesApi = mmooc.settings.CanvaBadgeProtocolAndHost + "/api/v1/badges/public/" + user_id + "/" + encodeURIComponent(domain) + ".json";
+            $.ajax({
+                type: 'GET',
+                dataType: 'jsonp',
+                url: urlToCanvaBadgesApi,
+                timeout: 5000,
+                success: function(data) {
+                    if(data.objects && data.objects.length > 0) {
+                        if ($.isFunction(callback)) {
+                            callback({
+                                "title": mmooc.i18n.Badgesafe,
+                                url: "/courses/" + course.id + "?allcanvabadges"
+                            });
+                        }
+                        
+                    } else {
+                        if ($.isFunction(callback)) {
+                            callback({
+                                "title": mmooc.i18n.Badgesafe, 
+                                url: undefined
+                            });
+                        }
+                    }
+                },
+                error: function(err) {
+                    if ($.isFunction(callback)) {
+                        callback({
+                            "title": mmooc.i18n.Badgesafe, 
+                            url: undefined
+                        });
+                    }
+                }
+            });
         },
 
         injectGroupsPage: function() {

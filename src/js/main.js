@@ -23,14 +23,23 @@ jQuery(function($) {
         mmooc.menu.hideRightMenu();
         mmooc.courseList.listCourses('content', mmooc.courseList.showAddCourseButton);
     });
-
+    
     mmooc.routes.addRouteForPath(/\/courses\/\d+$/, function() {
-        mmooc.coursePage.listModulesAndShowProgressBar();
         mmooc.groups.interceptLinksToGroupPage();
-
-        var courseId = mmooc.api.getCurrentCourseId();
-        mmooc.menu.showCourseMenu(courseId, 'Kursforside', null);
         mmooc.coursePage.hideCourseInvitationsForAllUsers();
+        
+        var courseId = mmooc.api.getCurrentCourseId();
+        var queryString = document.location.search; 
+        if (queryString === "?allcanvabadges") { //query string = ?allcanvabadges 
+            var courseId = mmooc.api.getCurrentCourseId();
+            mmooc.menu.showCourseMenu(courseId, 'Utmerkelser', 'Utmerkelser'); 
+            //Should be refactored to use json api instead 
+            var canvabadgesForCurrentCourse = '<iframe allowfullscreen="true" height="680" id="tool_content" mozallowfullscreen="true" name="tool_content" src="' + mmooc.settings.CanvaBadgeProtocolAndHost + '/badges/course/' + courseId + '" tabindex="0" webkitallowfullscreen="true" width="100%"></iframe>';
+            $("#content").append(canvabadgesForCurrentCourse);
+        } else {
+            mmooc.coursePage.listModulesAndShowProgressBar();
+            mmooc.menu.showCourseMenu(courseId, 'Kursforside', null);
+        }
     });
 
     mmooc.routes.addRouteForPath(/\/courses\/\d+\/announcements$/, function() {
