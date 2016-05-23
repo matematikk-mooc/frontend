@@ -35,7 +35,7 @@ $(function () {
             isProfilePage = true;
         }
         if (match && protocol_and_host) {
-            // console.log("CANVABADGES: This page shows badges! Loading...");
+            console.log("CANVABADGES: This page shows badges! Loading...");
             if (isProfilePage) {
                 user_id = mmooc.api.getUser().id;
             } else {
@@ -49,9 +49,9 @@ $(function () {
                 dataType: 'jsonp',
                 url: url,
                 success: function (data) {
-                    //console.log("CANVABADGES: Data retrieved!");
+                    console.log("CANVABADGES: Data retrieved!");
                     if (data.objects && data.objects.length > 0) {
-                        //console.log("CANVABADGES: Badges found! Adding to the page...");
+                        console.log("CANVABADGES: Badges found! Adding to the page...");
                         var $box = $("<div/>", { style: 'margin-bottom: 20px;' });
                         $box.append("<h2 class='border border-b'>Badges</h2>");
                         for (idx in data.objects) {
@@ -66,7 +66,7 @@ $(function () {
                         $box.append($("<div/>", { style: 'clear: left' }));
                         $("#edit_profile_form,fieldset#courses,.more_user_information + div, #update_profile_form").after($box);
                     } else {
-                        //console.log("CANVABADGES: No badges found for the user: " + user_id + " at " + domain);
+                        console.log("CANVABADGES: No badges found for the user: " + user_id + " at " + domain);
                     }
                 },
                 error: function (err) {
@@ -76,7 +76,7 @@ $(function () {
                 timeout: 5000
             });
         } else {
-            //console.log("CANVABADGES: This page doesn't show badges");
+            console.log("CANVABADGES: This page doesn't show badges");
         }
     }
 });

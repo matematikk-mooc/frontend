@@ -244,22 +244,16 @@ this.mmooc.menu = function() {
                 url: urlToCanvaBadgesApi,
                 timeout: 5000,
                 success: function(data) {
-                    if(data.objects && data.objects.length > 0) {
-                        if ($.isFunction(callback)) {
-                            callback({
-                                "title": mmooc.i18n.Badgesafe,
-                                url: "/courses/" + course.id + "?allcanvabadges"
-                            });
-                        }
-                        
-                    } else {
-                        if ($.isFunction(callback)) {
-                            callback({
-                                "title": mmooc.i18n.Badgesafe, 
-                                url: undefined
-                            });
-                        }
+                    if ($.isFunction(callback)) {
+                        callback({
+                            "title": mmooc.i18n.Badgesafe,
+                            url: "/courses/" + course.id + "?allcanvabadges"
+                        });
                     }
+                    
+                    // if(data.objects && data.objects.length > 0) {
+                    
+                    // }
                 },
                 error: function(err) {
                     if ($.isFunction(callback)) {
