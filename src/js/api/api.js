@@ -63,7 +63,7 @@ this.mmooc.api = function() {
          */
         listModulesForCourse: function(callback, error, cid)
         {
-            var href= "/api/v1/courses/" + cid + "/modules";
+            var href= "/api/v1/courses/" + cid + "/modules?per_page=100";
             $.getJSON(href, function(modules) {
                     var noOfModules = modules.length;
                     var asyncsDone = 0;
