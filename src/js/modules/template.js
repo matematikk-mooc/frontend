@@ -41,6 +41,21 @@ Handlebars.registerHelper('overrideIconClassByTitle', function(title) {
     }
 });
 
+Handlebars.registerHelper("norwegianDateAndTime", function(timestamp) {
+    var year = new Date(timestamp).toString(' yyyy');
+    var day = new Date(timestamp).toString('dd. ');
+    var time = new Date(timestamp).toString(' HH:mm');
+    var monthNumber = parseInt(new Date(timestamp).toString('M'), 10);
+    var months = mmooc.i18n.Months;
+    var month = months[monthNumber - 1];
+    
+    return day + month + year + time; //return new Date(timestamp).toString('dd. MMMM yyyy HH:mm'); // yyyy-MM-dd
+});
+
+Handlebars.registerHelper("getPathFromUrl", function(url) {
+  return url.split("?")[0]; //returns an array even if there is no '?' so no need for extra checks
+});
+
 Handlebars.registerHelper('urlForCourseId', function(courseId) {
     return "/courses/" + courseId;
 });

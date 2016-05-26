@@ -111,9 +111,19 @@ jQuery(function($) {
         mmooc.menu.showLeftMenu();
         mmooc.menu.listModuleItems();
         mmooc.pages.modifyMarkAsDoneButton();
-        mmooc.pages.changeTranslations();
+        // mmooc.pages.changeTranslations();
+    });
+    
+    // example route: /courses/54/assignments/369 - assignment which may be a peer review (hverandrevurdering)
+    mmooc.routes.addRouteForPath(/\/courses\/\d+\/assignments\/\d+/, function() {
+        mmooc.pages.redesignAssignmentPage();
     });
 
+    // Assignment submission which might be your own or someone else's: Peer review (hverandrevurdering)
+    mmooc.routes.addRouteForPath(/\/courses\/\d+\/assignments\/\d+\/submissions\/\d+/, function() {
+        mmooc.pages.showBackToAssignmentLink(document.location.href); //Probably need to change this.
+    });
+    
     mmooc.routes.addRouteForPath(/\/courses\/\d+\/external_tools\/\d+$/, function() {
         function isBadgesafePage() {
             function extractPluginNumber(input) {
@@ -135,7 +145,7 @@ jQuery(function($) {
         mmooc.menu.showLeftMenu();
         mmooc.menu.listModuleItems();
     });
-
+    
     mmooc.routes.addRouteForPath([/\/pages/], function() {
         mmooc.pages.showBackLinkIfNecessary();
     });
@@ -162,7 +172,6 @@ jQuery(function($) {
         mmooc.menu.injectGroupsPage();
         mmooc.groups.changeGroupListURLs(document.location.href);
 
-        mmooc.pages.showBackToAssignmentLink(document.location.href);
         mmooc.pages.updateSidebarWhenMarkedAsDone();
 
         mmooc.menu.alterHomeLink();

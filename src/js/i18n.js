@@ -18,5 +18,6 @@ this.mmooc.i18n = {
     'Conference': 'Conference',
     'Collaboration': 'Collaboration',
     'LinkBack': 'Tilbake til forrige side',
-    'Badgesafe': 'Utmerkelser'
+    'Badgesafe': 'Utmerkelser',
+    'Months' : ["januar", "februar", "mars", "april", "mai", "juni", "juli", "august", "september", "Oktober", "november", "december"]
 };

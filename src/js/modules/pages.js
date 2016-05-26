@@ -43,9 +43,9 @@ this.mmooc.pages = function() {
           })
         },
 
-        changeTranslations : function() {
-            $("a.submit_assignment_link").text('Lever besvarelse');
-        },
+        // changeTranslations : function() {
+        //     $("a.submit_assignment_link").text('Lever besvarelse');
+        // },
 
         showBackLinkIfNecessary: function() {
             if ($('#left-side').is(':hidden')) {
@@ -61,6 +61,49 @@ this.mmooc.pages = function() {
           }
 
           return false;
+        },
+        
+        redesignAssignmentPage: function() {
+            //Still under development
+            var assignmentDetailsSelector = "#right-side .details";
+            // var $assignmentsDetails = $(assignmentDetailsSelector);
+            var deliveryDate = $(assignmentDetailsSelector + " .content > span:first-of-type").text();
+            
+            peerReviewObject = { 
+                deliveryDate : deliveryDate
+            };
+            
+            var courseId = mmooc.api.getCurrentCourseId();
+            var assignmentId = mmooc.api.getCurrentTypeAndContentId().contentId;
+            var user_id = mmooc.api.getUser().id;
+            console.log('user_id:' + user_id);
+
+            mmooc.api.getSingleAssignment(courseId, assignmentId, function(assignment) {
+                console.log('assignment');
+                console.log(assignment);
+                
+                if (assignment.peer_reviews) { //If this is an assignment with peer reviews
+                    mmooc.api.getSingleSubmissionForUser(courseId, assignmentId, user_id, function(submission) {
+                        console.log('submission');
+                        console.log(submission);
+                        // var peerReviewHtml = mmooc.util.renderTemplateWithData("peerReviewRightSide", peerReviewObject);
+                        
+                        mmooc.api.getPeerReviewsForUser(courseId, assignmentId, user_id, function(peerReview) {
+                            console.log('peerReview');
+                            console.log(peerReview);
+                            
+                            var peerReviewHtml = mmooc.util.renderTemplateWithData("peerReviewRightSide", { assignment: assignment, submission : submission, peerReview:peerReview });
+                            $("body.assignments #application.ic-app #right-side .details" ).append(peerReviewHtml);
+                            
+                            if (peerReview.length) {
+                                var peerReviewWarningHtml = mmooc.util.renderTemplateWithData("peerReviewWarning", { assignment: assignment, submission : submission, peerReview:peerReview });
+                                $("body.assignments #application.ic-app ul.student-assignment-overview" ).after(peerReviewWarningHtml);
+                            }
+                        });
+                        
+                    });
+                } 
+            });
         }
     };
 }();

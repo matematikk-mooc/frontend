@@ -19,4 +19,161 @@
             }
         }
     }
+    
+    /*
+    .submission-details-header.submission_details {
+        
+        h2.submission_header {
+            margin-bottom: 1em !important;
+            
+            & + span {
+                // Display the info here in a new element because of different text and design. That is the cleanest way to display the contents in a new way.
+                display: none;
+                // display: block;
+                // padding-left: 0 !important;
+                // line-height: 1.5em !important;
+                // font-size: 1em !important;
+                
+                // &:before {
+                //     content: "<strong>Oppgave: </strong>";
+                // }
+            }
+            
+            & + span + span {
+                // Display the info here in a new element because of different text and design. That is the cleanest way to display the contents in a new way.
+                display: none;
+                
+                
+                // display: block;
+                // padding-left: 0 !important;
+                // line-height: 1.5em !important;
+                // font-size: 1em !important;
+                
+                // &:before {
+                //     content: "<strong>Innlevert: </strong>";
+                // }
+            }
+        }
+        
+        .assessment_request_incomplete_message {
+            // Display the info here in a new element because of different text and design. That is the cleanest way to display the contents in a new way.
+            display: none;
+            // margin-top: 1em;
+            // margin-bottom: 2em;
+            // padding: 1em;
+            // background-color: @orangeColor;
+        }
+    }
+	*/
+}
+
+//Right side of assignment (hverandrevurdering - the assignment itself
+body.assignments {
+    #application.ic-app {
+		
+		.mmooc-peer-review-warning {
+			background-color: #E9DACB; 
+			padding: 20px;
+			margin-top: 25px;
+			margin-bottom: 25px;
+			border-top: 1px solid @seperatorDarkColor;
+			border-bottom: 1px solid @seperatorDarkColor;
+			
+			p.mmooc-warning {
+				margin: 0;
+				background-image: url("https://server/vector_images/mmooc-icon-warning.svg");
+    
+    			background-repeat: no-repeat;
+				background-size: 43px 43px;
+    		    padding-left: 60px;
+			}
+		}
+		
+        #right-side {
+            .details {
+                
+                .mmooc-assignments-rightside {
+                    margin-top: 2em;
+                    box-sizing: border-box;
+                    
+                    * {
+                        box-sizing: border-box;
+                    }
+                    
+                    .mmooc-assignments-responses, .mmooc-peer-reviews {
+                        background-color: #fff;
+                        width: 100%;
+                        margin-bottom: 40px;
+						
+						h3 {
+							background-color: @darkTealColor;
+							width: 100%;
+							margin: 0;
+							padding: 10px;
+							color: #fff;
+							font-weight: normal;
+							font-weight: 400;
+							font-size: 15px;
+							line-height: 1.3;
+							border-radius: 5px 5px 0 0;
+						}
+						
+						ul {
+							list-style-type: none;
+							margin-left: 0;
+							margin-bottom: 10px;
+							
+							li {
+								font-size: 13px;
+							}
+						}
+                    }
+                    
+                    .mmooc-assignments-responses {
+                        
+						.mmooc-assignments-responses-contents {
+							padding: 10px;
+							
+							p.mmooc-assignment-delivery-date {
+								padding-left: 0;
+								font-size: 13px;
+								margin-bottom: 6px;
+								
+								&.late {
+									color: red;
+									
+								}  
+							}
+							
+							ul.mmooc-assignment-files {
+								margin-bottom: 0;
+								
+								a.file-big {
+									background-position: 0 2px;
+									background-size: 15px 15px;
+									padding-left: 20px;
+								}
+							}
+						}
+						
+						.mmooc-assignment-details {
+                            background-color: @seperatorLightColor;
+                            border-top: 1px solid @darkTealColor;
+                            width: 100%;
+                            line-height: 1.3;
+							padding: 10px;
+                        }
+                    }
+					
+					.mmooc-peer-reviews {
+						ul {
+							margin: 0;
+							padding: 10px;
+							border-bottom: 1px solid @darkTealColor;
+						}
+					}
+                }
+            }   
+        }
+    }
 }

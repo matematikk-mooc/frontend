@@ -393,8 +393,40 @@ this.mmooc.api = function() {
                 "params":   { per_page: 999 }
             });
         },
-
-
+        
+        // /api/v1/courses/54/assignments/369
+        getSingleAssignment : function(courseId, assignmentId, callback, error) {
+            this._get({
+                "callback": callback,
+                "error":    error,
+                "uri":      "/courses/" + courseId + "/assignments/" + assignmentId,
+                "params":   {"include": ["submission", "assignment_visibility", "overrides", "observed_users"]}
+            });
+        },
+        
+        // /api/v1/courses/54/assignments/369/submissions/1725
+        getSingleSubmissionForUser : function(courseId, assignmentId, user_id, callback, error) {
+            this._get({
+                "callback": callback,
+                "error":    error,
+                "uri":      "/courses/" + courseId + "/assignments/" + assignmentId + "/submissions/" + user_id,
+                "params":   {"include": ["submission_history", "submission_comments", "rubric_assessment", "visibility", "course", "user"]}
+                // "params":   {"include": ["rubric_assessment", "visibility"]}
+            });
+        },
+        
+        // /api/v1/courses/7/assignments/11/submissions/4/peer_reviews
+        getPeerReviewsForUser : function(courseId, assignmentId, user_id, callback, error) {
+            // Returns only the student's peer reviews if you are a student. Returns all peer reviews if you are a teacher or admin
+            this._get({
+                "callback": callback,
+                "error":    error,
+                "uri":      "/courses/" + courseId + "/assignments/" + assignmentId + "/submissions/" + user_id + "/peer_reviews",
+                // "params":   {"include": ["submission_comments", "user"]}
+                "params":   {"include": ["user"]}
+            });
+        },
+        
         createGroup: function(params, callback, error) {
             this._post({
                 "callback": callback,
