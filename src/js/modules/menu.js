@@ -79,13 +79,15 @@ this.mmooc.menu = function() {
             mmooc.api.getCurrentModule(function(module) {
                 var courseId = mmooc.api.getCurrentCourseId();
                 var html = mmooc.util.renderTemplateWithData("moduleitems", {module: module, courseId: courseId});
-                document.getElementById('left-side').insertAdjacentHTML('afterbegin', html);
+                if (document.getElementById("left-side")) {
+                    document.getElementById('left-side').insertAdjacentHTML('afterbegin', html);
+                }
             });
         },
         showLeftMenu: function() {
             stylesheet.insertRule("body.with-left-side #main { margin-left: 305px !important }", stylesheet.cssRules.length);
             stylesheet.insertRule(".with-left-side #left-side { display: block !important }", stylesheet.cssRules.length);
-            $("body").addClass("isTeacherOrAdmin"); //Used to solve problems in making the design 100% width in the new UI for students. This is the simplest way to implement this.
+            $("body").addClass("useFullWidth"); //Used to solve problems in making the design 100% width in the new UI. This is the simplest way to implement this.
         },
 
         renderLeftHeaderMenu: function() {
