@@ -65,45 +65,61 @@ this.mmooc.pages = function() {
         
         redesignAssignmentPage: function() {
             //Still under development
-            var assignmentDetailsSelector = "#right-side .details";
-            // var $assignmentsDetails = $(assignmentDetailsSelector);
-            var deliveryDate = $(assignmentDetailsSelector + " .content > span:first-of-type").text();
-            
-            peerReviewObject = { 
-                deliveryDate : deliveryDate
-            };
-            
             var courseId = mmooc.api.getCurrentCourseId();
             var assignmentId = mmooc.api.getCurrentTypeAndContentId().contentId;
             var user_id = mmooc.api.getUser().id;
+            var peerReviewer = mmooc.i18n.PeerReviewer;
             console.log('user_id:' + user_id);
 
-            mmooc.api.getSingleAssignment(courseId, assignmentId, function(assignment) {
-                console.log('assignment');
-                console.log(assignment);
-                
-                if (assignment.peer_reviews) { //If this is an assignment with peer reviews
-                    mmooc.api.getSingleSubmissionForUser(courseId, assignmentId, user_id, function(submission) {
-                        console.log('submission');
-                        console.log(submission);
-                        // var peerReviewHtml = mmooc.util.renderTemplateWithData("peerReviewRightSide", peerReviewObject);
+            if ($("#right-side .details .content > h4:contains('" + peerReviewer.toLowerCase() + "')").length) {
+                mmooc.api.getSingleSubmissionForUser(courseId, assignmentId, user_id, function(submission) {
+                    console.log('submission');
+                    console.log(submission);
                         
-                        mmooc.api.getPeerReviewsForUser(courseId, assignmentId, user_id, function(peerReview) {
-                            console.log('peerReview');
-                            console.log(peerReview);
-                            
-                            var peerReviewHtml = mmooc.util.renderTemplateWithData("peerReviewRightSide", { assignment: assignment, submission : submission, peerReview:peerReview });
-                            $("body.assignments #application.ic-app #right-side .details" ).append(peerReviewHtml);
-                            
-                            if (peerReview.length) {
-                                var peerReviewWarningHtml = mmooc.util.renderTemplateWithData("peerReviewWarning", { assignment: assignment, submission : submission, peerReview:peerReview });
-                                $("body.assignments #application.ic-app ul.student-assignment-overview" ).after(peerReviewWarningHtml);
-                            }
-                        });
+                    var $peerReviewLinks = $("#right-side .details .content > h4 + ul.unstyled_list a");
+                    peerReview = []; //Peer review api is unfortunately not displaying the info we want (only info about the persons beeing peer reviewers for my submission), so we have to do this by using jquery
+                    var workflow_state;
+                    var peerReviewLinkClass;
+                    $peerReviewLinks.each(function(i){
+                        // workflow_state either 'assigned' or 'completed'
+                        console.log('peer review link class: ' + $(this).attr('class'));
+                        peerReviewLinkClass = $(this).attr('class');
+                        if (peerReviewLinkClass == "warning") {
+                            workflow_state = 'assigned';
+                        }
+                        if (peerReviewLinkClass == "pass") {
+                            workflow_state = 'completed';
+                        }
+                        console.log('Workflow state: ' + workflow_state);
                         
+                        peerReview[peerReview.length] = {"workflow_state" : workflow_state, "assessor" : { "display_name" : $(this).text(), "mmooc_url": $(this).attr('href')}};
+                        console.log('Custom peerReview array');
+                        console.log(peerReview);
                     });
-                } 
-            });
+                    
+                    var peerReviewHtml = mmooc.util.renderTemplateWithData("peerReviewRightSide", { submission : submission, peerReview:peerReview });
+                    $("body.assignments #application.ic-app #right-side .details" ).append(peerReviewHtml);
+                    
+                    //If any warnings display peer review warning in the contents column after the assignment meta data
+                    var $peerReviewLinksWarnings = $("#right-side .details .content > h4 + ul.unstyled_list a.warning");
+                    if ($peerReviewLinksWarnings.length) {
+                        var peerReviewWarningHtml = mmooc.util.renderTemplateWithData("peerReviewWarning", { submission : submission, peerReview:peerReview });
+                        $("body.assignments #application.ic-app ul.student-assignment-overview" ).after(peerReviewWarningHtml); 
+                    }
+                });
+            }
+            
+            // mmooc.api.getSingleAssignment(courseId, assignmentId, function(assignment) {
+            //     if (assignment.peer_reviews) { //If this is an assignment with peer reviews
+            //         console.log('assignment');
+            //         console.log(assignment);
+            //     } 
+            // });
+            
+            //  mmooc.api.getPeerReviewsForUser(courseId, assignmentId, user_id, function(peerReview) { 
+            //     console.log('peerReview');
+            //     console.log(peerReview);
+            // });
         }
     };
 }();

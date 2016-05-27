@@ -19,5 +19,6 @@ this.mmooc.i18n = {
     'Collaboration': 'Collaboration',
     'LinkBack': 'Tilbake til forrige side',
     'Badgesafe': 'Utmerkelser',
+    'PeerReviewer' : 'Hverandrevurderer',
     'Months' : ["januar", "februar", "mars", "april", "mai", "juni", "juli", "august", "september", "Oktober", "november", "december"]
 };

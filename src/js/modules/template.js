@@ -41,6 +41,17 @@ Handlebars.registerHelper('overrideIconClassByTitle', function(title) {
     }
 });
 
+Handlebars.registerHelper('getPeerReviewWorkflowIconClass', function(workflow_state) {
+    
+    if (workflow_state == "assigned") {
+        return ' warning';
+    } else if (workflow_state == "completed") {
+        return ' pass';
+    } else {
+        return '';
+    }
+});
+
 Handlebars.registerHelper("norwegianDateAndTime", function(timestamp) {
     var year = new Date(timestamp).toString(' yyyy');
     var day = new Date(timestamp).toString('dd. ');
@@ -63,8 +74,6 @@ Handlebars.registerHelper('urlForCourseId', function(courseId) {
 Handlebars.registerHelper('urlForGroupId', function(groupId) {
     return "/groups/" + groupId + "/discussion_topics";
 });
-
-
 
 Handlebars.registerHelper('ifItemIsCompleted', function(completion_requirement, options) {
 

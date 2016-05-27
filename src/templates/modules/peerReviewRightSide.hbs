@@ -32,7 +32,7 @@
 			{{/unless}}
 			{{#each peerReview}}
 				<li>
-					<a class="warning" href="/courses/{{../submission.course.id}}/assignments/{{../submission.assignment_id}}/submissions/{{assessor.id}}" title="ufullstendig">{{assessor.display_name}}</a>
+					<a class="{{getPeerReviewWorkflowIconClass workflow_state}}" href="{{assessor.mmooc_url}}">{{assessor.display_name}}</a>
 				</li>	
 			{{/each}}
 		</ul>
