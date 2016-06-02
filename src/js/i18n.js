@@ -19,6 +19,10 @@ this.mmooc.i18n = {
     'Collaboration': 'Collaboration',
     'LinkBack': 'Tilbake til forrige side',
     'Badgesafe': 'Utmerkelser',
+    'PeerReview' : 'Hverandrevurdering',
     'PeerReviewer' : 'Hverandrevurderer',
+    'Delivery' : 'Innlevering',
+    'DetailsAboutYourDelivery' : 'Detaljer om din innlevering',
+    'DetailsAboutDelivery' : 'Detaljer om innlevering',
     'Months' : ["januar", "februar", "mars", "april", "mai", "juni", "juli", "august", "september", "Oktober", "november", "december"]
 };
