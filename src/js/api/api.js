@@ -394,6 +394,16 @@ this.mmooc.api = function() {
             });
         },
         
+        // /api/v1/group_categories/:group_category_id/groups
+        getGroupsInCategory: function(categoryID, callback, error) {
+            this._get({
+                "callback": callback,
+                "error":    error,
+                "uri":      "/group_categories/" + categoryID + "/groups",
+                "params":   { }
+            });
+        },
+                
         // /api/v1/courses/54/assignments/369
         getSingleAssignment : function(courseId, assignmentId, callback, error) {
             this._get({
@@ -403,6 +413,16 @@ this.mmooc.api = function() {
                 "params":   {"include": ["submission", "assignment_visibility", "overrides", "observed_users"]}
             });
         },
+        
+        // /api/v1/courses/:course_id/assignments
+        getAssignmentsForCourse : function(courseId, callback, error) {
+            this._get({
+                "callback": callback,
+                "error":    error,
+                "uri":      "/courses/" + courseId + "/assignments",
+                "params":   { }
+            });
+        },       
         
         // /api/v1/courses/54/assignments/369/submissions/1725
         getSingleSubmissionForUser : function(courseId, assignmentId, user_id, callback, error) {
@@ -425,6 +445,25 @@ this.mmooc.api = function() {
                 "uri":      "/courses/" + courseId + "/assignments/" + assignmentId + "/submissions/" + user_id + "/peer_reviews",
                 // "params":   {"include": ["submission_comments", "user"]}
                 "params":   {"include": ["user"]}
+            });
+        },
+        
+        // /api/v1/courses/:course_id/assignments/:assignment_id/peer_reviews
+        getPeerReviewsForAssignment : function(courseId, assignmentId, callback, error) {
+            this._get({
+                "callback": callback,
+                "error":    error,
+                "uri":      "/courses/" + courseId + "/assignments/" + assignmentId + "/peer_reviews",
+                "params":   {"include": ["user"]}
+            });
+        },
+ 
+        createPeerReview: function(courseID, assignmentID, submissionID, userID, callback, error) {
+            this._post({
+                "callback": callback,
+                "error":    error,
+                "uri":      "/courses/" + courseID + "/assignments/" + assignmentID + "/submissions/" + submissionID + "/peer_reviews",
+                "params":   { user_id: userID }
             });
         },
         
