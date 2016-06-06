@@ -327,18 +327,17 @@ this.mmooc.powerFunctions = function() {
 			    }
 			    $(".peer-review-list").html(html + "</ul>");
 				$('.btn-create-pr').click(function () {
-					_createPeerReviewsForGroup(peerReivewsInGroup, members, courseID, assignmentID);	
+					_findSubmittedInGroup(members, courseID, assignmentID);	
 				});			        			    
 		    });       
 		});	
     }
     
     function _showButton() {
-	    $(".peer-review-create").html("<input class='number-of-reviews' type='text' style='width:30px;'> gjennomganger per bruker<br><input type='button' value='Tildel hverandrevurderinger' class='button btn-create-pr'>");
+	    $(".peer-review-create").html("<input type='button' value='Tildel hverandrevurderinger' class='button btn-create-pr'>");
     }
 
-    function _createPeerReviewsForGroup(peerReviewsInGroup, members, courseID, assignmentID) {
-	    var reviews = $('.number-of-reviews').val();
+    function _findSubmittedInGroup(members, courseID, assignmentID) {
 	    var submitted = [];
 	    var asyncsDone = 0;
 		for (var i = 0; i < members.length; i++) {
@@ -348,12 +347,12 @@ this.mmooc.powerFunctions = function() {
 				}
 				asyncsDone++;
 				if (asyncsDone == members.length) {
-					_createPeerReview();
+					_createPeerReviewsForGroup();
 				}
 			});
 		}
 		
-		function _createPeerReview() {
+		function _createPeerReviewsForGroup() {
 			asyncsDone = 0;
 			for (var i = 0; i < submitted.length; i++) {
 				if (i == submitted.length - 1) {
@@ -370,45 +369,6 @@ this.mmooc.powerFunctions = function() {
 				});		
 			}			
 		}
-		
-
-/*
-		for (var i = 0; i < members.length; i++) {
-			for (var j = 0; j < peerReviewsInGroup.length; j++) {
-				if (members[i].id == peerReviewsInGroup[j].assessor_id) {
-					hasPeerReview = true;
-				}
-			}
-			if (!hasPeerReview) {
-				if (i == members.length - 1) {
-					var userID = members[0].id; 
-				}else {
-					nextMember = i + 1;
-					var userID = members[nextMember].id;
-				}				
-				var usersObj = {assessor: members[i].id, user: userID};
-				userIds.push(usersObj);
-			}
-			hasPeerReview = false;
-		}
-
-		for (var i = 0; i < userIds.length; i++) {
-			mmooc.api.getSingleSubmissionForUser(courseID, assignmentID, userIds[i].assessor, function(submission) {
-				for (var j = 0; j < userIds.length; j++) {
-					if (userIds[j].assessor == submission.user_id) {
-						userID = userIds[j].user;
-					}	
-				}				
-				mmooc.api.createPeerReview(courseID, assignmentID, submission.id, userID, function(result) {
-					
-					asyncsDone++;
-					if (asyncsDone == userIds.length) {
-						_listPeerReviewsForGroup();	
-					}
-				});
-			});
-		}   
-*/
     }
 
     return {
