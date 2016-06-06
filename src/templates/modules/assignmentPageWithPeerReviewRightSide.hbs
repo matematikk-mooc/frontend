@@ -1,9 +1,8 @@
-<div class="mmooc-assignments-rightside">
-	<div class="mmooc-assignments-responses">
+<div class="mmooc-assignment-rightside">
+	<div class="mmooc-assignment-responses">
 		<h3>Besvarelser</h3>
-		<div class="mmooc-assignments-responses-contents">
+		<div class="mmooc-assignment-responses-contents">
 			<p class="mmooc-assignment-delivery-date{{#if submission.late}} late{{/if}}">Levert {{norwegianDateAndTime submission.submitted_at}}{{#if submission.late}} (for sen){{/if}}</p>
-			
 			{{#if submission.attachments}}
 				<ul class="mmooc-assignment-files">
 					{{#each submission.attachments}}
@@ -22,7 +21,7 @@
 		<h3>Hverandrevurdering tildelt deg</h3>
 		<ul class="unstyled_list">
 			{{#unless peerReview.length}}
-			<li>Ingen innleveringer tildelt</li>
+				<li>Ingen innleveringer tildelt</li>
 			{{/unless}}
 			{{#each peerReview}}
 				<li>

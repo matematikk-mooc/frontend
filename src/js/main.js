@@ -121,7 +121,7 @@ jQuery(function($) {
 
     // Assignment submission which might be your own or someone else's: Peer review (hverandrevurdering)
     mmooc.routes.addRouteForPath(/\/courses\/\d+\/assignments\/\d+\/submissions\/\d+/, function() {
-        mmooc.pages.showBackToAssignmentLink(document.location.href); //Probably need to change this.
+        mmooc.pages.redesignPeerReviewAndOwnSubmissionDetailsPage();
     });
     
     mmooc.routes.addRouteForPath(/\/courses\/\d+\/external_tools\/\d+$/, function() {

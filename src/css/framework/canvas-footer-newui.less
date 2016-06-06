@@ -38,3 +38,21 @@
         
     }
 }
+
+//Submission iframe - do no want double footer
+body.is-inside-submission-frame {
+    background-color: #fff !important;
+    
+    #application.ic-app {
+        footer#mmooc-footer {
+            display: none;
+        }
+        
+        #submission_preview.paper {
+            margin: -27px auto 0 0;
+            position: relative;
+            top: 27px;
+            padding-left: 10px;
+        }
+    }
+}
