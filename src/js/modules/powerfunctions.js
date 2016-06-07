@@ -238,6 +238,145 @@ this.mmooc.powerFunctions = function() {
       }
     };
   }
+  
+  function AssignPeerReviewsForGroup() {
+
+    function _renderView() {
+      mmooc.api.getCoursesForAccount(accountID, function(courses) {
+        _render("powerfunctions/peer-review",
+                "Assign peer reviews by group",
+                {courses: courses});
+        $('#mmpf-course-select').change(function () {
+          var courseID = $('#mmpf-course-select option:selected').val();
+          mmooc.api.getGroupCategoriesForCourse(courseID, function(categories) {
+            $('.step-2').css('display', 'list-item');
+            var html = html + "<option value=''>Choose a group set</option>";
+            for (var i = 0; i < categories.length; i++) {
+              html = html + "<option value=" + categories[i].id + ">" + categories[i].name + "</option>";
+            }
+            $("#mmpf-category-select").html(html);
+          });
+        });
+        $('#mmpf-category-select').change(function () {
+          var categoryID = $('#mmpf-category-select option:selected').val();
+          mmooc.api.getGroupsInCategory(categoryID, function(groups) {
+            $('.step-3').css('display', 'list-item');
+            var html = html + "<option value=''>Choose a group</option>";
+            for (var i = 0; i < groups.length; i++) {
+              html = html + "<option value=" + groups[i].id + ">" + groups[i].name + "</option>";
+            }
+            $("#mmpf-group-select").html(html);
+          });
+        });
+        $('#mmpf-group-select').change(function () {
+          var courseID = $('#mmpf-course-select option:selected').val();
+          mmooc.api.getAssignmentsForCourse(courseID, function(assignments) {
+            $('.step-4').css('display', 'list-item');
+            var html = html + "<option value=''>Choose an assignment</option>";
+            for (var i = 0; i < assignments.length; i++) {
+              html = html + "<option value=" + assignments[i].id + ">" + assignments[i].name + "</option>";
+            }
+            $("#mmpf-assignment-select").html(html);
+          });
+        });
+		$('#mmpf-assignment-select').change(function () {
+			_listPeerReviewsForGroup();
+			_showButton();
+		});
+
+      });
+    }
+
+    function _listPeerReviewsForGroup() {
+	    var courseID = $('#mmpf-course-select option:selected').val();
+	    var groupID = $('#mmpf-group-select option:selected').val();
+	    var assignmentID = $('#mmpf-assignment-select option:selected').val();
+	    var html = "<ul>";
+	    var peerReivewsInGroup = [];
+	    var count = 0;
+	    var inArray = false;
+	    mmooc.api.getGroupMembers(groupID, function(members) {
+		    mmooc.api.getPeerReviewsForAssignment(courseID, assignmentID, function(peerReviews) {	  	
+		    	for (var i = 0; i < peerReviews.length; i++) {
+			    	for (var j = 0; j < members.length; j++) {			    	
+				    	for (var k = 0; k < peerReivewsInGroup.length; k++) {
+					    	if(peerReivewsInGroup[k] === peerReviews[i]) {
+						    	inArray = true;
+					    	}
+					    }			    	
+			    		if (peerReviews.assessor_id == members.id && !inArray) {
+				    		peerReivewsInGroup[count] = peerReviews[i];
+				    		count++;
+			    		}
+			    		inArray = false;
+			    	}
+			    }			    			    			    
+		    	for (var i = 0; i < members.length; i++) {
+			    	count = 0;
+			    	html = html + "<li>" + members[i].name + "</li><ul>";			    	
+			    	for (var k = 0; k < peerReivewsInGroup.length; k++) {
+				    	if(members[i].id == peerReivewsInGroup[k].assessor_id) {
+					    	html = html + "<li>" + peerReivewsInGroup[k].user.display_name  + "</li>";
+					    	count++;
+				    	}
+			    	}
+			    	html = html + "</ul>";
+			    	if(count == 0) {
+				    	html = html + "<div>Ingen tildelt</div>";
+			    	}	    			    	
+			    }
+			    $(".peer-review-list").html(html + "</ul>");
+				$('.btn-create-pr').click(function () {
+					_findSubmittedInGroup(members, courseID, assignmentID);	
+				});			        			    
+		    });       
+		});	
+    }
+    
+    function _showButton() {
+	    $(".peer-review-create").html("<input type='button' value='Tildel hverandrevurderinger' class='button btn-create-pr'>");
+    }
+
+    function _findSubmittedInGroup(members, courseID, assignmentID) {
+	    var submitted = [];
+	    var asyncsDone = 0;
+		for (var i = 0; i < members.length; i++) {
+			mmooc.api.getSingleSubmissionForUser(courseID, assignmentID, members[i].id, function(submission) {
+				if (submission.workflow_state == "submitted") {
+					submitted.push(submission);
+				}
+				asyncsDone++;
+				if (asyncsDone == members.length) {
+					_createPeerReviewsForGroup();
+				}
+			});
+		}
+		
+		function _createPeerReviewsForGroup() {
+			asyncsDone = 0;
+			for (var i = 0; i < submitted.length; i++) {
+				if (i == submitted.length - 1) {
+					var userID = submitted[0].user_id; 
+				}else {
+					nextMember = i + 1;
+					var userID = submitted[nextMember].user_id;
+				}						
+				mmooc.api.createPeerReview(courseID, assignmentID, submitted[i].id, userID, function(result) {					
+					asyncsDone++;
+					if (asyncsDone == submitted.length) {
+						_listPeerReviewsForGroup();	
+					}
+				});		
+			}			
+		}
+    }
+
+    return {
+      run: function() {
+        _renderView();
+      }
+    };
+  }
 
   function AccountPicker() {
     function _setAccountID() {
@@ -275,6 +414,9 @@ this.mmooc.powerFunctions = function() {
       });
       $("#mmooc-pf-logins-btn").click(function() {
         new CreateNewLoginsTask().run();
+      });
+      $("#mmooc-pf-peer-review-btn").click(function() {
+        new AssignPeerReviewsForGroup().run();
       });
     }
 
