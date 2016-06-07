@@ -45,23 +45,36 @@
         }
     }
     
+    .mmooc-icon-interactive {
+        background-image: url("https://server/vector_images/mmooc-icon-interactive.svg");
+        background-size: 16px 16px;
+        position: relative;
+        left: 0;
+        
+        &:before {
+            content: '';
+        }
+    }
+    
     li.mmooc-module-item-icon {
      
         .mmooc-icon-badge, .mmooc-icon-video, .icon-page, .icon-file {
             top: 0;
         }
+        .mmooc-icon-interactive {
+            top: -1px;
+        }
         
         span[class*=mmooc-module-items-icons] {
-            .mmooc-icon-badge, .mmooc-icon-video, .icon-file {
+            .icon-page, .mmooc-icon-badge, .mmooc-icon-video, .icon-file {
                 top: 0;
             }
-            .icon-page, {
-                top: 0;
+            .mmooc-icon-interactive {
+                top: -1px;
             }
         }
         
         span[class*=mmooc-module-items-icons] i[class*=icon-]:before {
-            // top: 0;
             top: 1px;
         }
     }

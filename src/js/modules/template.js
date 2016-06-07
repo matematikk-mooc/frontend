@@ -32,10 +32,12 @@ Handlebars.registerHelper('ifGreaterThan', function(value1, value2, options) {
 
 Handlebars.registerHelper('overrideIconClassByTitle', function(title) {
     title = title.toLowerCase();
-    if (title.indexOf('utmerkelse') !=-1) {
+    if (title.indexOf('utmerkelse:') !=-1) {
         return ' mmooc-icon-badge';
-    } else if (title.indexOf('video') !=-1) {
+    } else if (title.indexOf('video:') !=-1) {
         return ' mmooc-icon-video';
+    } else if (title.indexOf('aktivitet:') !=-1) {
+        return ' mmooc-icon-interactive';
     } else {
         return '';
     }

@@ -55,7 +55,7 @@
                             font-weight: bold;
                         }
                         .mmooc-assignment-delivery-date.late {
-                            color: #AD3341;
+                            color: @redWarningColor;
                         }
                         .mmooc-new-delivery {
                             padding-left: 10px;
@@ -175,11 +175,11 @@ body.assignments {
         }
         
 		.mmooc-peer-review-warning {
-            background-color: #FFE6CD; 
+            background-color: @tequilaColor; //uses 'Name that color' 
 			padding: 20px;
 			margin-top: 25px;
 			margin-bottom: 25px;
-            border: 1px solid #FF8E1A;
+            border: 1px solid @westSideColor;
 			
 			p.mmooc-warning {
 				margin: 0;
@@ -196,11 +196,11 @@ body.assignments {
 		}
         
         .mmooc-peer-review-success {
-			background-color: #CDEEDB; 
+			background-color: @taraColor; 
 			padding: 20px;
 			margin-top: 25px;
 			margin-bottom: 25px;
-            border: 1px solid #1FB25E;
+            border: 1px solid @mountainMeadowColor;
 			
 			p.mmooc-success {
 				margin: 0;
@@ -270,7 +270,7 @@ body.assignments {
                             margin-bottom: 6px;
                             
                             &.late {
-                                color: #AD3341;
+                                color: @redWarningColor;
                                 
                             }  
                         }

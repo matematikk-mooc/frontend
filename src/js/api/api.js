@@ -471,6 +471,15 @@ this.mmooc.api = function() {
                 "params":   { per_page: 999 }
             });
         },
+        
+        //To be used later when displaying info about unread discussion comments.
+        // getDiscussionTopics: function(courseId, callback) {
+        //     this._get({
+        //         "callback": callback,
+        //         "uri":      "/courses/" + courseId + "/discussion_topics",
+        //         "params":   { per_page: 999 }
+        //     });
+        // },
 
         markDiscussionTopicAsRead: function(courseId, contentId, callback) {
             this._put({
