@@ -55,7 +55,6 @@ this.mmooc.pages = function() {
         },
 
         redesignAssignmentPage: function() {
-            //Still under development
             
             function _isAssignmentWithPeerReview() {
                 var returnValue = false;
@@ -133,7 +132,6 @@ this.mmooc.pages = function() {
         
         redesignPeerReviewAndOwnSubmissionDetailsPage: function() {
             
-            //Still under development
             function _isCodeRunningInIframe() {
                 var returnValue = true;
                 if (ENV.SUBMISSION && ENV.SUBMISSION.user_id) {
