@@ -65,6 +65,31 @@ Handlebars.registerHelper("norwegianDateAndTime", function(timestamp) {
     return day + month + year + time; //return new Date(timestamp).toString('dd. MMMM yyyy HH:mm'); // yyyy-MM-dd
 });
 
+Handlebars.registerHelper('getSubmissionAssessmentText', function(peerReview) {
+    
+    var submissionText = '';
+    var numberOfReviews = peerReview.length;
+    var numberOfReviewsCompleted = 0;
+    var submissionAssessmentText = '';
+
+    $.each(peerReview, function( index, singlePeerReview ) {
+        console.log(singlePeerReview);
+        if (singlePeerReview.workflow_state == 'completed') {
+            numberOfReviewsCompleted = numberOfReviewsCompleted + 1;
+        }
+    });
+    
+    if (numberOfReviews === 0) {
+        submissionAssessmentText = mmooc.i18n.SubmissionIsNotAssessed;
+    } else if (numberOfReviews === numberOfReviewsCompleted) {
+        submissionAssessmentText = mmooc.i18n.SubmissionIsAssessedByAll; 
+    } else {
+        submissionAssessmentText = numberOfReviewsCompleted.toString() + " " + mmooc.i18n.OutOf + " " + numberOfReviews.toString() + " " + mmooc.i18n.SubmissionAssessmentsAreReady; 
+    }
+
+    return submissionAssessmentText; 
+});
+
 Handlebars.registerHelper("getPathFromUrl", function(url) {
   return url.split("?")[0]; //returns an array even if there is no '?' so no need for extra checks
 });

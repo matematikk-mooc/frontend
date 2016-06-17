@@ -24,5 +24,9 @@ this.mmooc.i18n = {
     'Delivery' : 'Innlevering',
     'DetailsAboutYourDelivery' : 'Detaljer om din innlevering',
     'DetailsAboutDelivery' : 'Detaljer om innlevering',
+    'SubmissionIsNotAssessed' : 'Oppgaven er ikke vurdert',
+    'SubmissionIsAssessedByAll' : 'Alle vurderinger er klare',
+    'SubmissionAssessmentsAreReady' : 'vurderinger er klare',
+    'OutOf' : 'av',
     'Months' : ["januar", "februar", "mars", "april", "mai", "juni", "juli", "august", "september", "Oktober", "november", "december"]
 };
