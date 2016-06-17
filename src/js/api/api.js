@@ -436,13 +436,13 @@ this.mmooc.api = function() {
         },
         
         // /api/v1/courses/7/assignments/11/submissions/4/peer_reviews
-        // Important! This API displays info about who has the peer review of your own submission! This is often not what you are interested in.
-        getPeerReviewsForUser : function(courseId, assignmentId, user_id, callback, error) {
+        // This API displays info about who has the peer review for a specific submissionID which is the id property on the submission object (different from user id)
+        getPeerReviewsForSubmissionId : function(courseId, assignmentId, submission_id, callback, error) {
             // Returns only the student's peer reviews if you are a student. Returns all peer reviews if you are a teacher or admin
             this._get({
                 "callback": callback,
                 "error":    error,
-                "uri":      "/courses/" + courseId + "/assignments/" + assignmentId + "/submissions/" + user_id + "/peer_reviews",
+                "uri":      "/courses/" + courseId + "/assignments/" + assignmentId + "/submissions/" + submission_id + "/peer_reviews",
                 // "params":   {"include": ["submission_comments", "user"]}
                 "params":   {"include": ["user"]}
             });
