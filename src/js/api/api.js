@@ -356,7 +356,7 @@ this.mmooc.api = function() {
                 "callback": callback,
                 "error":    error,
                 "uri":      "/courses/" + course + "/group_categories",
-                "params":   { }
+                "params":   { per_page: 999 }
             });
         },
 
@@ -400,7 +400,7 @@ this.mmooc.api = function() {
                 "callback": callback,
                 "error":    error,
                 "uri":      "/group_categories/" + categoryID + "/groups",
-                "params":   { }
+                "params":   { per_page: 999 }
             });
         },
                 
@@ -420,7 +420,7 @@ this.mmooc.api = function() {
                 "callback": callback,
                 "error":    error,
                 "uri":      "/courses/" + courseId + "/assignments",
-                "params":   { }
+                "params":   { per_page: 999 }
             });
         },       
         
