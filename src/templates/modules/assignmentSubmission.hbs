@@ -17,11 +17,6 @@
 						{{#if isTeacherViewingStudentsSubmission}}
 							<span class="mmooc-assignment-delivered-by"> av {{submission.user.name}}</span>
 						{{/if}}
-						{{#unless isPeerReview}}
-							{{#unless isTeacherViewingStudentsSubmission}}
-								<span class="mmooc-new-delivery"><a class="add" href="/courses/{{submission.course.id}}/assignments/{{submission.assignment_id}}#submit">Lever oppgave på nytt</a></span>
-							{{/unless}}
-						{{/unless}}
 					</span>
 				</li>
 			</ul>
@@ -73,6 +68,6 @@
 		</div>
 	</div>
 </div>
-<div class="mmooc-assignment-submission-answers{{#if isPeerReview}} isPeerReviewPage{{else}} isSubmissionDetaisPage{{/if}}{{#unless submission.grade}} withNoGradesText{{/unless}}">
+<div class="mmooc-assignment-submission-answers{{#if isPeerReview}} isPeerReviewPage{{else}} isSubmissionDetaisPage{{/if}}{{#if submission.grade}} withGradesText{{else}} withNoGradesText{{/if}}">
 	<h3>Besvarelser</h3>
 </div>

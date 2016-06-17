@@ -245,8 +245,8 @@ this.mmooc.pages = function() {
                         mmooc.api.getPeerReviewsForSubmissionId(courseId, assignmentId, submission_id, function(peerReview) {
                             _logDataToConsole(assignment, submission, peerReview);
                             _appendSubmissionHtml(assignment, submission, peerReview);
-                            _addClickEventOnOpenAssessmentButton();  
-                        });
+                            _addClickEventOnOpenAssessmentButton(); 
+                        }); 
                         
                         
 
