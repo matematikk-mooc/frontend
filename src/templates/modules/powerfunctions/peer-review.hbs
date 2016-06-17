@@ -12,11 +12,11 @@
         {{/unless}}
       </select>
     <li class="step-2">
-      <select id="mmpf-category-select" name="category" onchange="$('.step-3').css('display', 'list-item')">
+      <select id="mmpf-category-select" name="category">
           <option value="">No group sets defined for course</option>
       </select>
     <li class="step-3">
-      <select id="mmpf-group-select" name="group" onchange="$('.step-4').css('display', 'list-item')">
+      <select id="mmpf-group-select" name="group">
           <option value="">No groups defined for course</option>
       </select>
     <li class="step-4">
@@ -25,5 +25,8 @@
       </select>
   </ol>
   <div class="peer-review-list"></div>
+  <div id="progress">
+  	<div id="bar"></div>
+  </div>
   <div class="peer-review-create"></div>
 </form>
