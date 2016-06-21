@@ -393,7 +393,7 @@ this.mmooc.powerFunctions = function() {
 						alert("For mange gjennomganger i forhold til antall besvarelser")
 						$('.btn-create-pr').show();
 						$("#progress").hide();
-						_listPeerReviewsForGroup()
+						_listPeerReviewsForGroup(submitted);
 					}
 					else {
 						_createPeerReviewsForGroup(numOfReviews);
