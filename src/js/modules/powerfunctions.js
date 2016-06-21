@@ -293,7 +293,7 @@ this.mmooc.powerFunctions = function() {
       });
     }
 
-    function _listPeerReviewsForGroup() {
+    function _listPeerReviewsForGroup(submitted) {
 	    $(".peer-review-list").html("<p>Laster hverandrevurderinger for gruppe...</p>");
 	    $("#progress").show();
 	    $("#bar").width('0%');
@@ -321,10 +321,24 @@ this.mmooc.powerFunctions = function() {
 			    		}
 			    		inArray = false;
 			    	}
-			    }			    			    			    
+			    }
+			    inArray = false;			    			    			    
 		    	for (var i = 0; i < members.length; i++) {
 			    	count = 0;
-			    	html = html + "<li>" + members[i].name + "</li><ul>";			    	
+			    	if(submitted) {
+				    	for (j = 0; j < submitted.length; j++) {
+					    	if (submitted[j].user_id == members[i].id) {
+						    	html = html + "<li>" + members[i].name + "</li><ul>";
+						    	inArray = true;
+						    	break;
+					    	}
+				    	}
+						if (!inArray) {
+						  	html = html + "<li>" + members[i].name + " <span class='no-submission'>Ikke levert besvarelse</span></li><ul>";
+						}
+			    	}else {
+				    	html = html + "<li>" + members[i].name + "</li><ul>";
+			    	}		    	
 			    	for (var k = 0; k < peerReivewsInGroup.length; k++) {
 				    	if(members[i].id == peerReivewsInGroup[k].assessor_id) {
 					    	html = html + "<li>" + peerReivewsInGroup[k].user.display_name  + "</li>";
@@ -334,14 +348,15 @@ this.mmooc.powerFunctions = function() {
 			    	html = html + "</ul>";
 			    	if(count == 0) {
 				    	html = html + "<div>Ingen tildelt</div>";
-			    	}	    			    	
+			    	}
+			    	inArray = false;	    			    	
 			    }
 			    $("#progress").hide();
 			    $(".peer-review-list").html(html + "</ul>");
 				$('.btn-create-pr').click(function () {
 					var numOfReviews = $('.number-of-reviews').val();
-					if (!_isNormalInteger(numOfReviews)) {
-						alert("Antall gjennomganger må være et heltall");
+					if (!_isNormalInteger(numOfReviews) || numOfReviews < 1) {
+						alert("Antall gjennomganger må være et positivt heltall");
 					}else {
 						$('.btn-create-pr').hide();
 						_findSubmittedInGroup(members, courseID, assignmentID, numOfReviews);
@@ -405,7 +420,7 @@ this.mmooc.powerFunctions = function() {
 						var width = (100 / (numOfReviews * submitted.length)) * asyncsDone + "%";
 						$("#bar").width(width);
 						if (asyncsDone == (submitted.length * numOfReviews)) {
-							_listPeerReviewsForGroup();
+							_listPeerReviewsForGroup(submitted);
 							$("#progress").hide();
 							$('.btn-create-pr').show();
 						}
