@@ -73,7 +73,6 @@ Handlebars.registerHelper('getSubmissionAssessmentText', function(peerReview) {
     var submissionAssessmentText = '';
 
     $.each(peerReview, function( index, singlePeerReview ) {
-        console.log(singlePeerReview);
         if (singlePeerReview.workflow_state == 'completed') {
             numberOfReviewsCompleted = numberOfReviewsCompleted + 1;
         }
@@ -82,7 +81,12 @@ Handlebars.registerHelper('getSubmissionAssessmentText', function(peerReview) {
     if (numberOfReviews === 0) {
         submissionAssessmentText = mmooc.i18n.SubmissionIsNotAssessed;
     } else if (numberOfReviews === numberOfReviewsCompleted) {
-        submissionAssessmentText = mmooc.i18n.SubmissionIsAssessedByAll; 
+        if (numberOfReviewsCompleted == 1) {
+            submissionAssessmentText = mmooc.i18n.SubmissionIsAssessedByOne;
+        } else {
+            submissionAssessmentText = mmooc.i18n.SubmissionIsAssessedByAll;
+        }
+         
     } else {
         submissionAssessmentText = numberOfReviewsCompleted.toString() + " " + mmooc.i18n.OutOf + " " + numberOfReviews.toString() + " " + mmooc.i18n.SubmissionAssessmentsAreReady; 
     }

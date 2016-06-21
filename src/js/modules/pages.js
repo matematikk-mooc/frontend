@@ -165,7 +165,7 @@ this.mmooc.pages = function() {
 
             function _isPeerReviewFinished() {
                 var returnValue = false;
-                if($('.assessment_request_incomplete_message').css('display') == 'none') {
+                if ($('.assessment_request_incomplete_message').css('display') == 'none') {
                     returnValue = true;
                 }
                 return returnValue;
@@ -176,6 +176,64 @@ this.mmooc.pages = function() {
                     event.preventDefault();
                     $('#rubric_holder').show();
                     // $('.assess_submission_link.rubric').click(); //click on the previous hidden button.
+                });
+            }
+
+            function _addClickEventOnSaveRubricButton() {
+                function _arePointsGivenInRubric() {
+                    
+                    var criterion_descriptionsCompleted = $('#rubric_holder table.rubric_table tr.criterion:not(.blank) td.criterion_description.completed').length;
+                    var criterion_descriptions = $('#rubric_holder table.rubric_table tr.criterion:not(.blank) td.criterion_description').length;
+                    var totalPoints = $('#rubric_holder table.rubric_table tr.summary .rubric_total').text();
+                    
+                    var pointsAreGiven = false;
+                    if (totalPoints != "") {
+                        if (criterion_descriptionsCompleted == criterion_descriptions) { //If all criteria are filled in 
+                            pointsAreGiven = true;
+                        }
+                    }
+                    
+                    return pointsAreGiven;
+                }
+
+                function _appendCompletedPeerReviewHtml(assignment, submission, peerReview) {
+                    var submissionTitle = _getSubmissionTitle();
+                    var isTeacherViewingStudentsSubmission = _isTeacherViewingStudentsSubmission();
+                    var isPeerReviewFinished = true;
+                    var submissionObject = {
+                            assignment : assignment,
+                            submission : submission,
+                            peerReview : peerReview,
+                            submissionTitle : submissionTitle,
+                            isPeerReview : isPeerReview,
+                            isPeerReviewFinished : isPeerReviewFinished,
+                            isTeacherViewingStudentsSubmission : isTeacherViewingStudentsSubmission
+                        };
+
+                    var submissionHtml = mmooc.util.renderTemplateWithData("assignmentSubmission", submissionObject);
+
+                    $(".mmooc-assignment-submission, .mmooc-assignment-submission-answers").remove(); //Remove old Html that was created before
+                    $("body.assignments #application.ic-app #content .submission_details" ).after(submissionHtml);
+                }
+                
+                $(document).on("click", "button.save_rubric_button", function(event) {
+                    //Functionality for this is as follows:
+                    // We want the peer review to display that it is finished without a refresh of the page.
+                    // Unfortunately we don't have any info about the peer review from the API because as a user you don't have access to that data it seems.
+                    // In order to solve this we check that the user has submitted data by checking the DOM. Then the SubmissionObject used in the template (assignmentSubmission) is changed so the peer review looks completed (which it also is).  
+
+                    if (_arePointsGivenInRubric()) {
+                        mmooc.api.getSingleAssignment(courseId, assignmentId, function(assignment) {
+                            mmooc.api.getSingleSubmissionForUser(courseId, assignmentId, submission_user_id, function(submission) {
+                                var submission_id = submission.id;
+
+                                mmooc.api.getPeerReviewsForSubmissionId(courseId, assignmentId, submission_id, function(peerReview) {
+                                    _logDataToConsole(assignment, submission, peerReview);
+                                    _appendCompletedPeerReviewHtml(assignment, submission, peerReview);
+                                });
+                            });
+                        });
+                    }
                 });
             }
 
@@ -235,7 +293,7 @@ this.mmooc.pages = function() {
             var assignmentId = mmooc.api.getCurrentTypeAndContentId().contentId;
             var isPeerReview = _isPeerReview();
             var isOwnSubmission = _isOwnSubmission();
-            var submission_user_id = ENV.SUBMISSION.user_id; 
+            var submission_user_id = ENV.SUBMISSION.user_id;
 
             if (isPeerReview || isOwnSubmission) { 
                 mmooc.api.getSingleAssignment(courseId, assignmentId, function(assignment) {
@@ -245,22 +303,9 @@ this.mmooc.pages = function() {
                         mmooc.api.getPeerReviewsForSubmissionId(courseId, assignmentId, submission_id, function(peerReview) {
                             _logDataToConsole(assignment, submission, peerReview);
                             _appendSubmissionHtml(assignment, submission, peerReview);
-                            _addClickEventOnOpenAssessmentButton(); 
+                            _addClickEventOnOpenAssessmentButton();
+                            _addClickEventOnSaveRubricButton();
                         }); 
-                        
-                        
-
-                        //  mmooc.api.getPeerReviewsForUser(courseId, assignmentId, user_id, function(peerReview) {
-                        // mmooc.api.getPeerReviewsForUser(courseId, assignmentId, submission_user_id, function(peerReview) {
-                        //     console.log('peerReview');
-                        //     console.log(peerReview);
-                        // });
-                        
-
-                        // mmooc.api.getPeerReviewsForAssignment(courseId, assignmentId, function(peerReview) {
-                        //     console.log('peerReview for assignment');
-                        //     console.log(peerReview);
-                        // });
                     });
                 });
             }

@@ -25,6 +25,7 @@ this.mmooc.i18n = {
     'DetailsAboutYourDelivery' : 'Detaljer om din innlevering',
     'DetailsAboutDelivery' : 'Detaljer om innlevering',
     'SubmissionIsNotAssessed' : 'Oppgaven er ikke vurdert',
+    'SubmissionIsAssessedByOne' : 'Vurderingen er klar',
     'SubmissionIsAssessedByAll' : 'Alle vurderinger er klare',
     'SubmissionAssessmentsAreReady' : 'vurderinger er klare',
     'OutOf' : 'av',
