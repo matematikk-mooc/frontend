@@ -410,7 +410,8 @@ this.mmooc.api = function() {
                 "callback": callback,
                 "error":    error,
                 "uri":      "/courses/" + courseId + "/assignments/" + assignmentId,
-                "params":   {"include": ["submission", "assignment_visibility", "overrides", "observed_users"]}
+                // "params":   {"include": ["submission", "assignment_visibility", "overrides", "observed_users"]}
+                "params":   {}
             });
         },
         
