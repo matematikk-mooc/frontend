@@ -179,7 +179,8 @@ this.mmooc.pages = function() {
                 });
             }
 
-            function _addClickEventOnSaveRubricButton() {
+            function _updateDomAfterSaveRubricButtonClick(event) {
+                console.log('_updateDomAfterSaveRubricButtonClick is running');
                 function _arePointsGivenInRubric() {
                     
                     var criterion_descriptionsCompleted = $('#rubric_holder table.rubric_table tr.criterion:not(.blank) td.criterion_description.completed').length;
@@ -193,7 +194,7 @@ this.mmooc.pages = function() {
                         }
                     }
                     
-                    return pointsAreGiven;
+                    return pointsAreGiven; 
                 }
 
                 function _appendCompletedPeerReviewHtml(assignment, submission, peerReview) {
@@ -216,25 +217,23 @@ this.mmooc.pages = function() {
                     $("body.assignments #application.ic-app #content .submission_details" ).after(submissionHtml);
                 }
                 
-                $(document).on("click", "button.save_rubric_button", function(event) {
-                    //Functionality for this is as follows:
-                    // We want the peer review to display that it is finished without a refresh of the page.
-                    // Unfortunately we don't have any info about the peer review from the API because as a user you don't have access to that data it seems.
-                    // In order to solve this we check that the user has submitted data by checking the DOM. Then the SubmissionObject used in the template (assignmentSubmission) is changed so the peer review looks completed (which it also is).  
+                //Functionality for this is as follows:
+                // We want the peer review to display that it is finished without a refresh of the page.
+                // Unfortunately we don't have any info about the peer review from the API because as a user you don't have access to that data it seems.
+                // In order to solve this we check that the user has submitted data by checking the DOM. Then the SubmissionObject used in the template (assignmentSubmission) is changed so the peer review looks completed (which it also is).  
 
-                    if (_arePointsGivenInRubric()) {
-                        mmooc.api.getSingleAssignment(courseId, assignmentId, function(assignment) {
-                            mmooc.api.getSingleSubmissionForUser(courseId, assignmentId, submission_user_id, function(submission) {
-                                var submission_id = submission.id;
+                if (_arePointsGivenInRubric()) {
+                    mmooc.api.getSingleAssignment(courseId, assignmentId, function(assignment) {
+                        mmooc.api.getSingleSubmissionForUser(courseId, assignmentId, submission_user_id, function(submission) {
+                            var submission_id = submission.id;
 
-                                mmooc.api.getPeerReviewsForSubmissionId(courseId, assignmentId, submission_id, function(peerReview) {
-                                    _logDataToConsole(assignment, submission, peerReview);
-                                    _appendCompletedPeerReviewHtml(assignment, submission, peerReview);
-                                });
+                            mmooc.api.getPeerReviewsForSubmissionId(courseId, assignmentId, submission_id, function(peerReview) {
+                                _logDataToConsole(assignment, submission, peerReview);
+                                _appendCompletedPeerReviewHtml(assignment, submission, peerReview);
                             });
                         });
-                    }
-                });
+                    });
+                }
             }
 
             function _isPeerReview() {
@@ -286,6 +285,96 @@ this.mmooc.pages = function() {
                 $("body.assignments #application.ic-app #content .submission_details" ).after(submissionHtml);
             }
 
+            function _addSaveRubricButtonIfItDoesNotExist() {
+
+                function _new_save_rubric_button(event) {
+                    console.log('dynamically button (#mmooc_save_rubric_button.save_rubric_button )is clicked');
+
+                    //Start original rubric button on click code in Canvas LMS
+                    var showGrade = function(submission) {
+                        $(".grading_box").val(submission.grade != undefined && submission.grade !== null ? submission.grade : "");
+                        $(".score").text(submission.score != undefined && submission.score !== null ? round(submission.score, round.DEFAULT) : "");
+                        $(".published_score").text(submission.published_score != undefined && submission.published_score !== null ? round(submission.published_score, round.DEFAULT) : "");
+                    };
+
+                    var toggleRubric = function($rubric) {
+                        ariaSetting = $rubric.is(":visible");
+                        $("#application").find("[data-hide_from_rubric]").attr("aria-hidden", ariaSetting)
+                    };
+
+                    var closeRubric = function() {
+                        $("#rubric_holder").fadeOut(function() {
+                        toggleRubric($(this));
+                        $(".assess_submission_link").focus();
+                        });
+                    };
+
+                    var $rubric = $(this).parents("#rubric_holder").find(".rubric");
+                    var data = rubricAssessment.assessmentData($rubric);
+                    var url = $(".update_rubric_assessment_url").attr('href');
+                    var method = "POST";
+                    $rubric.loadingImage();
+                    
+                    $.ajaxJSON(url, method, data, function(data) {
+                        $rubric.loadingImage('remove');
+                        var assessment = data;
+                        var found = false;
+                        if(assessment.rubric_association) {
+                            rubricAssessment.updateRubricAssociation($rubric, data.rubric_association);
+                            delete assessment.rubric_association;
+                        }
+                        for(var idx in rubricAssessments) {
+                            var a = rubricAssessments[idx].rubric_assessment;
+                            if(a && assessment && assessment.id == a.id) {
+                                rubricAssessments[idx].rubric_assessment = assessment;
+                                found = true;
+                            }
+                        }
+                        if(!found) {
+                            if (!data.rubric_assessment) {
+                                data = { rubric_assessment: data };
+                            }
+                            rubricAssessments.push(data);
+                            var $option = $(document.createElement('option'));
+                            $option.val(assessment.id).text(assessment.assessor_name).attr('id', 'rubric_assessment_option_' + assessment.id);
+                            $("#rubric_assessments_select").prepend($option).val(assessment.id);
+                        }
+                        $("#rubric_assessment_option_" + assessment.id).text(assessment.assessor_name);
+                        $("#new_rubric_assessment_option").remove();
+                        $("#rubric_assessments_list").show();
+                        rubricAssessment.populateRubric($rubric, assessment);
+                        submission = assessment.artifact;
+                        if (submission) {
+                            showGrade(submission);
+                        }
+                        closeRubric();
+                        //End original rubric button on click code in Canvas LMS
+                        console.log('Finished running #mmooc_save_rubric_button.save_rubric_button code');
+                        _updateDomAfterSaveRubricButtonClick();
+                    });
+                }
+
+                if (isPeerReview) {
+                    var isAssessingRubric = false;
+                    if ($('#rubric_holder .rubric_container.rubric.assessing').length) {
+                        isAssessingRubric = true;
+                    }
+
+                    if (isAssessingRubric) { //We know that we are in assessing mode
+                        //The button should be there
+                        var $saveRubricButton = $("#rubric_holder #rubric_criterion_comments_dialog + .button-container > button.save_rubric_button");
+                        if ($saveRubricButton.length == 0) {
+                            console.log('Adding custom save rubric button');
+                            var saveRubricButtonHtml = mmooc.util.renderTemplateWithData("assignmentPageWithPeerReviewSaveRubricButton", {});
+                            
+                            // $("#rubric_holder #rubric_criterion_comments_dialog + .button-container button.save_rubric_button").remove(); 
+                            $("#rubric_holder #rubric_criterion_comments_dialog + .button-container").append(saveRubricButtonHtml);
+                            $(document).on("click", "#mmooc_save_rubric_button", _new_save_rubric_button);
+                        }
+                    }
+                }
+            }
+
             if (_isCodeRunningInIframe()) {
                 return false; //The code is running in an iframe. Code should not be running.
             }
@@ -304,7 +393,8 @@ this.mmooc.pages = function() {
                             _logDataToConsole(assignment, submission, peerReview);
                             _appendSubmissionHtml(assignment, submission, peerReview);
                             _addClickEventOnOpenAssessmentButton();
-                            _addClickEventOnSaveRubricButton();
+                            // _addSaveRubricButtonIfItDoesNotExist(); //Enable this if the button 'Lagre kommentar' in the peer review dialog is not displaying
+                            $(document).on("click", "button.save_rubric_button", _updateDomAfterSaveRubricButtonClick);
                         }); 
                     });
                 });
