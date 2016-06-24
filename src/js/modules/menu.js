@@ -210,18 +210,71 @@ this.mmooc.menu = function() {
         },
 
         showDiscussionGroupMenu: function() {
+
+            function _addBodyClassForGroupDiscussionForStyling() {
+                var $body = $('body');
+                var bodyClassForGroupDiscussion = 'mmooc-group-discussion';
+                
+                if (!$body.hasClass(bodyClassForGroupDiscussion)) {
+                    $body.addClass(bodyClassForGroupDiscussion);
+                }
+            }
+
+            function strLeft(sourceStr, keyStr){
+                return (sourceStr.indexOf(keyStr) == -1 | keyStr=='') ? '' : sourceStr.split(keyStr)[0];
+            }
+
+            function _addGetHelpFromteacherButton(group) {
+                
+                function _selectCourseAndPrefillMessageInDialogBox() {
+                
+                    var $teacherFeedbackBody = $("#teacher-feedback-body");
+                    var courseId = mmooc.api.getCurrentCourseId();
+
+                    mmooc.api.getCourse(courseId, function(course) {
+                        var courseName = course.name;
+                        var discussionUrl = window.location.href;
+                        var discussionAndGroupTitle = $(".discussion-title").text();
+                        var discussionTitle = strLeft(discussionAndGroupTitle, " - ");
+                        var newLine = "\n";
+                        $('#teacher-feedback-recipients option:contains("' + courseName + '")').prop('selected', true);
+                        var teacherFeedbackBodyHtml = mmooc.i18n.ThisIsGroup + ' "' + group.name + '".' + newLine + newLine + mmooc.i18n.WeHaveAQuestionToTeacherInTheDiscussion + ' "' + discussionTitle + '":' + newLine + discussionUrl;
+                        $teacherFeedbackBody.val(teacherFeedbackBodyHtml);
+                    });
+                }
+
+                function _openTeacherFeedbackLink() {
+                    var $teacherFeedbackLink = $("#help-dialog a[href='#teacher_feedback']");
+                    if (!$teacherFeedbackLink.length) {
+                        console.log(mmooc.i18n.NoTeacherFeedbackLink);
+                        return false;
+                    }
+                    $teacherFeedbackLink.click();
+                    _selectCourseAndPrefillMessageInDialogBox();
+                }
+
+                function _addClickEventOnGetHelpFromTeacherButton() {
+                    $(document).on("click", "#mmooc-get-teachers-help", function(event) {
+                        $('.help_dialog_trigger').click();
+                        setTimeout(_openTeacherFeedbackLink, 600); //Need to wait for the dialog contents to be loaded
+                    });
+                }
+                
+                // Get help from teacher by clicking a button
+                var getHelpButtonFromteacherButtonHTML = mmooc.util.renderTemplateWithData("groupdiscussionGetHelpFromTeacher", {});
+                document.getElementById('content-wrapper').insertAdjacentHTML('afterbegin', getHelpButtonFromteacherButtonHTML);
+                _addClickEventOnGetHelpFromTeacherButton();
+            }
+
             var groupId = mmooc.api.getCurrentGroupId();
             if (groupId != null) {
                 mmooc.api.getGroup(groupId, function(group) {
                     // For discussion pages we only want the title to be "<discussion>" instead of "Discussion: <discussion>"
                     var title = mmooc.util.getPageTitleAfterColon();
                     mmooc.menu.showCourseMenu(group.course_id, "Grupper", title, true); //Group menu in tabs including title - Use optional fourth parameter for hiding tabs
-         
+                    _addBodyClassForGroupDiscussionForStyling(); 
+                    _addGetHelpFromteacherButton(group);
                     mmooc.menu.showBackButton("/courses/" + group.course_id, "Tilbake til kursforsiden");
-                    
-                    // if (!mmooc.util.isTeacherOrAdmin()) {
-                    //     $('body').removeClass('with-left-side'); //This is already hidden so we remove this class for a better display (remove left padding)
-                    // }
                 });
             }
         },
