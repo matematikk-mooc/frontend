@@ -293,8 +293,8 @@ this.mmooc.powerFunctions = function() {
       });
     }
 
-    function _listPeerReviewsForGroup(submitted) {
-	    $(".peer-review-list").html("<p>Laster hverandrevurderinger for gruppe...</p>");
+    function _listPeerReviewsForGroup() {
+	    $(".peer-review-list").html("<p>Laster hverandrevurderinger...</p>");
 	    $("#progress").show();
 	    $("#bar").width('0%');
 	    var courseID = $('#mmpf-course-select option:selected').val();
@@ -302,132 +302,125 @@ this.mmooc.powerFunctions = function() {
 	    var assignmentID = $('#mmpf-assignment-select option:selected').val();
 	    var html = "<ul>";
 	    var peerReivewsInGroup = [];
+	    var submitted = [];
 	    var count = 0;
+	    var asyncsDone = 0;
 	    var inArray = false;
 	    mmooc.api.getGroupMembers(groupID, function(members) {
 		    $("#bar").width('50%');
 		    mmooc.api.getPeerReviewsForAssignment(courseID, assignmentID, function(peerReviews) {
-			    $("#bar").width('100%');	  	
-		    	for (var i = 0; i < peerReviews.length; i++) {
-			    	for (var j = 0; j < members.length; j++) {			    	
-				    	for (var k = 0; k < peerReivewsInGroup.length; k++) {
-					    	if(peerReivewsInGroup[k] === peerReviews[i]) {
-						    	inArray = true;
-					    	}
-					    }			    	
-			    		if (peerReviews.assessor_id == members.id && !inArray) {
-				    		peerReivewsInGroup[count] = peerReviews[i];
-				    		count++;
-			    		}
-			    		inArray = false;
-			    	}
-			    }
-			    inArray = false;			    			    			    
-		    	for (var i = 0; i < members.length; i++) {
-			    	count = 0;
-			    	if(submitted) {
-				    	for (j = 0; j < submitted.length; j++) {
-					    	if (submitted[j].user_id == members[i].id) {
-						    	html = html + "<li>" + members[i].name + "</li><ul>";
-						    	inArray = true;
-						    	break;
-					    	}
-				    	}
-						if (!inArray) {
-						  	html = html + "<li>" + members[i].name + " <span class='no-submission'>Ikke levert besvarelse</span></li><ul>";
+			    $("#bar").width('100%');
+			    $(".peer-review-list").html("Laster besvarelser...");
+			    $("#progress").show();
+			    $("#bar").width('0%');
+				for (var i = 0; i < members.length; i++) {
+					mmooc.api.getSingleSubmissionForUser(courseID, assignmentID, members[i].id, function(submission) {
+						if (submission.workflow_state == "submitted") {
+							submitted.push(submission);
 						}
-			    	}else {
-				    	html = html + "<li>" + members[i].name + "</li><ul>";
-			    	}		    	
-			    	for (var k = 0; k < peerReivewsInGroup.length; k++) {
-				    	if(members[i].id == peerReivewsInGroup[k].assessor_id) {
-					    	html = html + "<li>" + peerReivewsInGroup[k].user.display_name  + "</li>";
-					    	count++;
+						asyncsDone++;
+						var width = (100 / members.length) * asyncsDone + "%";
+						$("#bar").width(width);
+						if (asyncsDone == members.length) {
+							_renderList();
+						}
+					});
+				}
+				function _renderList() {	  	
+			    	for (var i = 0; i < peerReviews.length; i++) {
+				    	for (var j = 0; j < members.length; j++) {			    	
+					    	for (var k = 0; k < peerReivewsInGroup.length; k++) {
+						    	if(peerReivewsInGroup[k] === peerReviews[i]) {
+							    	inArray = true;
+						    	}
+						    }			    	
+				    		if (peerReviews.assessor_id == members.id && !inArray) {
+					    		peerReivewsInGroup[count] = peerReviews[i];
+					    		count++;
+				    		}
+				    		inArray = false;
 				    	}
-			    	}
-			    	html = html + "</ul>";
-			    	if(count == 0) {
-				    	html = html + "<div>Ingen tildelt</div>";
-			    	}
-			    	inArray = false;	    			    	
-			    }
-			    $("#progress").hide();
-			    $(".peer-review-list").html(html + "</ul>");
-				$('.btn-create-pr').click(function () {
-					var numOfReviews = $('.number-of-reviews').val();
-					if (!_isNormalInteger(numOfReviews) || numOfReviews < 1) {
-						alert("Antall gjennomganger må være et positivt heltall");
-					}else {
-						$('.btn-create-pr').hide();
-						_findSubmittedInGroup(members, courseID, assignmentID, numOfReviews);
-					}	
-				});			        			    
+				    }
+				    inArray = false;			    			    			    
+			    	for (var i = 0; i < members.length; i++) {
+				    	count = 0;
+				    	if(submitted) {
+					    	for (j = 0; j < submitted.length; j++) {
+						    	if (submitted[j].user_id == members[i].id) {
+							    	html = html + "<li>" + members[i].name + "</li><ul>";
+							    	inArray = true;
+							    	break;
+						    	}
+					    	}
+							if (!inArray) {
+							  	html = html + "<li>" + members[i].name + " <span class='no-submission'>Ikke levert besvarelse</span></li><ul>";
+							}
+				    	}else {
+					    	html = html + "<li>" + members[i].name + "</li><ul>";
+				    	}		    	
+				    	for (var k = 0; k < peerReivewsInGroup.length; k++) {
+					    	if(members[i].id == peerReivewsInGroup[k].assessor_id) {
+						    	html = html + "<li>" + peerReivewsInGroup[k].user.display_name  + "</li>";
+						    	count++;
+					    	}
+				    	}
+				    	html = html + "</ul>";
+				    	if(count == 0) {
+					    	html = html + "<div>Ingen tildelt</div>";
+				    	}
+				    	inArray = false;	    			    	
+				    }
+				    $("#progress").hide();
+				    $(".peer-review-list").html(html + "</ul>");
+				    $('.input-wrapper').show();
+					$('.btn-create-pr').click(function () {
+						var numOfReviews = $('.number-of-reviews').val();
+						if (!_isNormalInteger(numOfReviews) || numOfReviews < 1) {
+							alert("Antall gjennomganger må være et positivt heltall");
+						}else if (numOfReviews > (submitted.length - 1)) {
+							alert("For mange gjennomganger i forhold til antall besvarelser");
+						}else {
+							$('.input-wrapper').hide();
+							_createPeerReviewsForGroup(courseID, assignmentID, numOfReviews, submitted);
+						}	
+					});	
+				}			        			    
 		    });       
 		});	
     }
+    
+	function _createPeerReviewsForGroup(courseID, assignmentID, numOfReviews, submitted) {
+		$(".peer-review-list").html("<p>Tildeler hverandrevurderinger...</p>");
+		$("#progress").show();
+		$("#bar").width('0%');
+		asyncsDone = 0;
+		var assigned = [];
+		var assesorIndex;
+		for (var j = 0; j < numOfReviews; j++) {
+			for (var i = 0; i < submitted.length; i++) {				
+				assesorIndex = (i + 1) + j;
+				if (assesorIndex >= submitted.length) {
+					assesorIndex = assesorIndex - submitted.length;	
+				}
+				userID = submitted[assesorIndex].user_id;					
+				mmooc.api.createPeerReview(courseID, assignmentID, submitted[i].id, userID, function(result) {					
+					asyncsDone++;
+					var width = (100 / (numOfReviews * submitted.length)) * asyncsDone + "%";
+					$("#bar").width(width);
+					if (asyncsDone == (submitted.length * numOfReviews)) {
+						_listPeerReviewsForGroup();
+					}
+				});		
+			}
+		}			
+	}
     
     function _isNormalInteger(str) {
     	return /^\+?(0|[1-9]\d*)$/.test(str);
 	}
     
     function _showInput() {
-	    $(".peer-review-create").html("<input type='text' value='1' style='width:25px;' class='number-of-reviews'> gjennomganger per bruker<br><input type='button' value='Tildel hverandrevurderinger' class='button btn-create-pr'>");
-    }
-
-    function _findSubmittedInGroup(members, courseID, assignmentID, numOfReviews) {
-	    $(".peer-review-list").html("Laster besvarelser...");
-	    $("#progress").show();
-	    $("#bar").width('0%');
-	    var submitted = [];
-	    var asyncsDone = 0;
-		for (var i = 0; i < members.length; i++) {
-			mmooc.api.getSingleSubmissionForUser(courseID, assignmentID, members[i].id, function(submission) {
-				if (submission.workflow_state == "submitted") {
-					submitted.push(submission);
-				}
-				asyncsDone++;
-				var width = (100 / members.length) * asyncsDone + "%";
-				$("#bar").width(width);
-				if (asyncsDone == members.length) {
-					if (numOfReviews > (submitted.length - 1)) {
-						alert("For mange gjennomganger i forhold til antall besvarelser")
-						$('.btn-create-pr').show();
-						$("#progress").hide();
-						_listPeerReviewsForGroup(submitted);
-					}
-					else {
-						_createPeerReviewsForGroup(numOfReviews);
-					}
-				}
-			});
-		}
-		
-		function _createPeerReviewsForGroup(numOfReviews) {
-			$(".peer-review-list").html("<p>Tildeler hverandrevurderinger...</p>");
-			$("#bar").width('0%');
-			asyncsDone = 0;
-			var assigned = [];
-			var assesorIndex;
-			for (var j = 0; j < numOfReviews; j++) {
-				for (var i = 0; i < submitted.length; i++) {				
-					assesorIndex = (i + 1) + j;
-					if (assesorIndex >= submitted.length) {
-						assesorIndex = assesorIndex - submitted.length;	
-					}
-					userID = submitted[assesorIndex].user_id;					
-					mmooc.api.createPeerReview(courseID, assignmentID, submitted[i].id, userID, function(result) {					
-						asyncsDone++;
-						var width = (100 / (numOfReviews * submitted.length)) * asyncsDone + "%";
-						$("#bar").width(width);
-						if (asyncsDone == (submitted.length * numOfReviews)) {
-							_listPeerReviewsForGroup(submitted);
-							$("#progress").hide();
-							$('.btn-create-pr').show();
-						}
-					});		
-				}
-			}			
-		}
+	    $(".peer-review-create").html("<div class='input-wrapper'><input type='text' value='1' style='width:25px;' class='number-of-reviews'> gjennomganger per bruker<br><input type='button' value='Tildel hverandrevurderinger' class='button btn-create-pr'></div>");
     }
 
     return {

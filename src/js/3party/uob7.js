@@ -458,7 +458,7 @@ function uobAddComponents() {
 		// uob-header and uob-question.
 		// --------------------------------------------------------------------------------
 
-		aBoxTags = ["uob-tip", "uob-info", "uob-warning", "uob-header", "uob-question", "uob-quote", "uob-box"];
+		aBoxTags = ["uob-tip", "uob-read", "uob-info", "uob-warning", "uob-header", "uob-question", "uob-quote", "uob-box"];
 
 		for (var i = 0; i < aBoxTags.length; i++) {
 			var strTag = aBoxTags[i];
@@ -484,7 +484,6 @@ function uobAddComponents() {
 				});
 			}
 		}
-
 
 		// ================================================================================
 		// Previews
