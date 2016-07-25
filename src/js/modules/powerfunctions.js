@@ -339,7 +339,7 @@ this.mmooc.powerFunctions = function() {
 						    }
 						    // Push object to array if assesor is member of group and object not already in array	    	
 				    		if (peerReviews.assessor_id == members.id && !inArray) {
-					    		peerReivewsInGroup[count] = peerReviews[i];
+					    		peerReveiwsInGroup[count] = peerReviews[i];
 					    		count++;
 				    		}
 				    		inArray = false;
@@ -364,13 +364,13 @@ this.mmooc.powerFunctions = function() {
 				    	}else {
 					    	html = html + "<li>" + members[i].name + "</li><ul>";
 				    	}		    	
-				    	for (var k = 0; k < peerReivewsInGroup.length; k++) {
-					    	if(members[i].id == peerReivewsInGroup[k].assessor_id) {
+				    	for (var k = 0; k < peerReveiwsInGroup.length; k++) {
+					    	if(members[i].id == peerReveiwsInGroup[k].assessor_id) {
 						    	// List user name and tag peer review as completed/not completed
-						    	if(peerReivewsInGroup[k].workflow_state == "completed") {
-						    		html = html + "<li>" + peerReivewsInGroup[k].user.display_name  + " <span style='color:green;'>Fullført</span></li>";
+						    	if(peerReveiwsInGroup[k].workflow_state == "completed") {
+						    		html = html + "<li>" + peerReveiwsInGroup[k].user.display_name  + " <span style='color:green;'>Fullført</span></li>";
 						    	}else {
-							    	html = html + "<li>" + peerReivewsInGroup[k].user.display_name  + " <span style='color:red;'>Ikke fullført</span></li>";
+							    	html = html + "<li>" + peerReveiwsInGroup[k].user.display_name  + " <span style='color:red;'>Ikke fullført</span></li>";
 						    	}
 						    	count++;
 					    	}
