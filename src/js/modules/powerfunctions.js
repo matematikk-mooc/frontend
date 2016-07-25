@@ -315,7 +315,7 @@ this.mmooc.powerFunctions = function() {
 			    $("#bar").width('0%');
 				for (var i = 0; i < members.length; i++) {
 					mmooc.api.getSingleSubmissionForUser(courseID, assignmentID, members[i].id, function(submission) {
-						if (submission.workflow_state == "submitted") {
+						if (submission.workflow_state == "submitted" || submission.workflow_state == "graded") {
 							submitted.push(submission);
 						}
 						asyncsDone++;
