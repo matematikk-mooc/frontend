@@ -301,7 +301,7 @@ this.mmooc.powerFunctions = function() {
 	    var groupID = $('#mmpf-group-select option:selected').val();
 	    var assignmentID = $('#mmpf-assignment-select option:selected').val();
 	    var html = "<ul>";
-	    var peerReivewsInGroup = [];
+	    var peerReveiwsInGroup = [];
 	    var submitted = [];
 	    var count = 0;
 	    var asyncsDone = 0;
@@ -313,6 +313,7 @@ this.mmooc.powerFunctions = function() {
 			    $(".peer-review-list").html("Laster besvarelser...");
 			    $("#progress").show();
 			    $("#bar").width('0%');
+			    // Get submissions for users in group and push to array if workflow_state is submitted or graded
 				for (var i = 0; i < members.length; i++) {
 					mmooc.api.getSingleSubmissionForUser(courseID, assignmentID, members[i].id, function(submission) {
 						if (submission.workflow_state == "submitted" || submission.workflow_state == "graded") {
@@ -326,14 +327,17 @@ this.mmooc.powerFunctions = function() {
 						}
 					});
 				}
-				function _renderList() {	  	
+				function _renderList() {
+					// Traverse all peer reviews and group members	  	
 			    	for (var i = 0; i < peerReviews.length; i++) {
-				    	for (var j = 0; j < members.length; j++) {			    	
-					    	for (var k = 0; k < peerReivewsInGroup.length; k++) {
-						    	if(peerReivewsInGroup[k] === peerReviews[i]) {
+				    	for (var j = 0; j < members.length; j++) {
+					    	// Check if object is already in array			    	
+					    	for (var k = 0; k < peerReveiwsInGroup.length; k++) {
+						    	if(peerReveiwsInGroup[k] === peerReviews[i]) {
 							    	inArray = true;
 						    	}
-						    }			    	
+						    }
+						    // Push object to array if assesor is member of group and object not already in array	    	
 				    		if (peerReviews.assessor_id == members.id && !inArray) {
 					    		peerReivewsInGroup[count] = peerReviews[i];
 					    		count++;
@@ -344,8 +348,10 @@ this.mmooc.powerFunctions = function() {
 				    inArray = false;			    			    			    
 			    	for (var i = 0; i < members.length; i++) {
 				    	count = 0;
+				    	// List users and tag users without submissions
 				    	if(submitted) {
 					    	for (j = 0; j < submitted.length; j++) {
+						    	// Check if user has submission
 						    	if (submitted[j].user_id == members[i].id) {
 							    	html = html + "<li>" + members[i].name + "</li><ul>";
 							    	inArray = true;
@@ -360,6 +366,7 @@ this.mmooc.powerFunctions = function() {
 				    	}		    	
 				    	for (var k = 0; k < peerReivewsInGroup.length; k++) {
 					    	if(members[i].id == peerReivewsInGroup[k].assessor_id) {
+						    	// List user name and tag peer review as completed/not completed
 						    	if(peerReivewsInGroup[k].workflow_state == "completed") {
 						    		html = html + "<li>" + peerReivewsInGroup[k].user.display_name  + " <span style='color:green;'>Fullført</span></li>";
 						    	}else {
@@ -379,6 +386,7 @@ this.mmooc.powerFunctions = function() {
 				    $('.input-wrapper').show();
 					$('.btn-create-pr').click(function () {
 						var numOfReviews = $('.number-of-reviews').val();
+						// Create peer reviews for group after valitadion
 						if (!_isNormalInteger(numOfReviews) || numOfReviews < 1) {
 							alert("Antall gjennomganger må være et positivt heltall");
 						}else if (numOfReviews > (submitted.length - 1)) {
@@ -403,6 +411,7 @@ this.mmooc.powerFunctions = function() {
 		for (var j = 0; j < numOfReviews; j++) {
 			for (var i = 0; i < submitted.length; i++) {				
 				assesorIndex = (i + 1) + j;
+				// Check if index exceeds array length
 				if (assesorIndex >= submitted.length) {
 					assesorIndex = assesorIndex - submitted.length;	
 				}
