@@ -360,7 +360,11 @@ this.mmooc.powerFunctions = function() {
 				    	}		    	
 				    	for (var k = 0; k < peerReivewsInGroup.length; k++) {
 					    	if(members[i].id == peerReivewsInGroup[k].assessor_id) {
-						    	html = html + "<li>" + peerReivewsInGroup[k].user.display_name  + "</li>";
+						    	if(peerReivewsInGroup[k].workflow_state == "completed") {
+						    		html = html + "<li>" + peerReivewsInGroup[k].user.display_name  + " <span style='color:green;'>Fullført</span></li>";
+						    	}else {
+							    	html = html + "<li>" + peerReivewsInGroup[k].user.display_name  + " <span style='color:red;'>Ikke fullført</span></li>";
+						    	}
 						    	count++;
 					    	}
 				    	}
