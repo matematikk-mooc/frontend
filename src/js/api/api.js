@@ -168,12 +168,12 @@ this.mmooc.api = function() {
             });
         },
 
-        getItemsForModuleId: function(callback, error, courseId, moduleId) {
+        getItemsForModuleId: function(callback, error, courseId, moduleId, params) {
             this._get({
                 "callback": callback,
                 "error": error,
                 "uri": "/courses/" + courseId + "/modules/" + moduleId + "/items",
-                "params": { }
+                "params": params
             });
         },
 
@@ -403,6 +403,16 @@ this.mmooc.api = function() {
                 "params":   { per_page: 999 }
             });
         },
+        
+        // /api/v1/courses/:course_id/sections
+        getSectionsForCourse: function(courseID, params, callback, error) {
+            this._get({
+                "callback": callback,
+                "error":    error,
+                "uri":      "/courses/" + courseID + "/sections",
+                "params":   params
+            });
+        },      
                 
         // /api/v1/courses/54/assignments/369
         getSingleAssignment : function(courseId, assignmentId, callback, error) {
