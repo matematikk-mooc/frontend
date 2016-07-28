@@ -594,7 +594,7 @@ this.mmooc.powerFunctions = function() {
     return {
       run: function() {
         try {
-          _render("powerfunctions/main", {});
+          _render("powerfunctions/main", "Choose function");
           _setUpClickHandlers();
         }
         catch (e) {
