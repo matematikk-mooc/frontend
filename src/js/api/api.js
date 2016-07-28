@@ -164,7 +164,7 @@ this.mmooc.api = function() {
                 "callback": callback,
                 "error":    error,
                 "uri":      "/courses/" + courseId + "/modules",
-                "params":   { }
+                "params":   { per_page: 999 }
             });
         },
 

@@ -446,7 +446,8 @@ this.mmooc.powerFunctions = function() {
   function ListStudentProgress() {
     var error = function(error) {
         console.error("error calling api", error);
-    };	
+    };
+    	
     function _renderView() {    
       mmooc.api.getCoursesForAccount(accountID, function(courses) {
         _render("powerfunctions/student-progress",
@@ -492,6 +493,7 @@ this.mmooc.powerFunctions = function() {
 	    var moduleID = $('#mmpf-module-select option:selected').val();
 	    var sectionIndex = $('#mmpf-section-select option:selected').val();
 	    var sectionParams = { per_page: 999, "include": ["students"] };
+	    var moduleParams = { per_page: 999 };
 	    var html = "<table><tr><th>Navn</th>";
 	    var asyncsDone = 0;
 	    mmooc.api.getItemsForModuleId(function(items) {
@@ -504,7 +506,7 @@ this.mmooc.powerFunctions = function() {
 				    $(".student-progress-table").html("Ingen studenter funnet i klasse " + sections[sectionIndex].name);
 			    }    
 			    for (var j = 0; j < sections[sectionIndex].students.length; j++) {				    
-				    var moduleParams = { student_id: sections[sectionIndex].students[j].id };
+				    moduleParams = { student_id: sections[sectionIndex].students[j].id, per_page: 999 };
 				    mmooc.api.getItemsForModuleId(function(itemsForStudent) {
 					    html = html + "<tr><td>" + sections[sectionIndex].students[asyncsDone].name + "</td>";
 					    if(itemsForStudent.length < 1) {
@@ -534,7 +536,7 @@ this.mmooc.powerFunctions = function() {
 			    }
 			    
 		    });
-	    }, error, courseID, moduleID);
+	    }, error, courseID, moduleID, moduleParams);
     }
   
     return {
