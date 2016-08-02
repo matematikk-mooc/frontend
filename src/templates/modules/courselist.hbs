@@ -1,8 +1,8 @@
 <div class="mmooc-course-list">
-    <h1 class="xl">Mine kurs</h1>
+    <h1>Mine studier</h1>
     <div class="mmooc-row">
 		{{#each courses}}
-            <div class="mmooc-size-1of3">
+            <div id="course_{{id}}" class="mmooc-size-1of3">
                 <div class="mmooc-course-list-item">
                     <div class="mmooc-course-list-heading">
                         <h2><a href="{{urlForCourseId id}}">{{name}}</a></h2>
@@ -14,21 +14,6 @@
 							{{{syllabus_body}}}
 
 						{{/if}}
-                    </div>
-
-                    <div class="mmooc-course-list-button">
-                        <a href="{{urlForCourseId id}}" class="btn rounded {{#with course_progress}} {{#if requirement_count}} {{#ifEquals requirement_completed_count requirement_count}} btn-done {{/ifEquals}} {{/if}} {{/with}}">Gå til kursside</a>
-                    </div>
-
-                    <div class="mmooc-course-list-progress">
-						{{#with course_progress}}
-							{{#if requirement_count}}
-                                <div class="mmooc-progress-bar{{#ifEquals requirement_completed_count requirement_count}} mmooc-progress-bar-done{{/ifEquals}}">
-                                    <div class="mmooc-progress-bar-inner" style="width:{{percentage requirement_completed_count requirement_count}}%">
-                                    </div>
-                                </div>
-							{{/if}}
-						{{/with}}
                     </div>
                 </div>
             </div>

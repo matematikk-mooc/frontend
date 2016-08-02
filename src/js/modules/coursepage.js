@@ -2,29 +2,30 @@ this.mmooc=this.mmooc||{};
 
 
 this.mmooc.coursePage = function() {
-    function _renderCourseMenu(courseId, selectedMenuItem) {
-        var menuItems = [];
-
-        menuItems[menuItems.length] = {"title": "Kursforside", url: "/courses/" + courseId};
-        menuItems[menuItems.length] = {"title": "Kunngjøringer", url: "/courses/" + courseId + "/announcements"};
-        menuItems[menuItems.length] = {"title": "Grupper", url: "/courses/" + courseId + "/groups"};
-        menuItems[menuItems.length] = {"title": "Diskusjoner", url: "/courses/" + courseId + "/discussion_topics"};
-
-        var title = document.title.replace(":", " for ");
-        var html = mmooc.util.renderTemplateWithData("coursemenu", {menuItems: menuItems, selectedMenuItem: selectedMenuItem, title: title });
-        document.getElementById('header').insertAdjacentHTML('afterend', html);
-    }
 
     return {
 
         listModulesAndShowProgressBar: function() {
             mmooc.api.getModulesForCurrentCourse(function(modules) {
-                var modulesHTML = mmooc.util.renderTemplateWithData("modules", {modules: modules});
-                document.getElementById('content').insertAdjacentHTML('afterbegin', modulesHTML);
-
                 var progressHTML = mmooc.util.renderTemplateWithData("courseprogress", {modules: modules});
-                document.getElementById('content').insertAdjacentHTML('afterbegin', progressHTML);
+                document.getElementById('course_home_content').insertAdjacentHTML('beforebegin', progressHTML);
+
+                var modulesHTML = mmooc.util.renderTemplateWithData("modules", {modules: modules});
+                document.getElementById('course_home_content').insertAdjacentHTML('beforebegin', modulesHTML);
             });
+        },
+        hideCourseInvitationsForAllUsers: function() {
+            
+            var acceptanceTextToSearchFor = 'invitert til å delta';
+            //If .ic-notification__message contains 'Invitert til å delta' så skjul nærmeste parent .ic-notification  
+            $(".ic-notification__message.notification_message:contains('" + acceptanceTextToSearchFor + "')")
+                .closest('.ic-notification.ic-notification--success')
+                .hide();
+            
+            var acceptanceFlashTextToSearchFor = 'delta i dette kurset';
+            
+             $("ul#flash_message_holder li:contains('" + acceptanceFlashTextToSearchFor + "')")
+                .hide();
         }
 
     };

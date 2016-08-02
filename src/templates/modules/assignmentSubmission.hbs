@@ -1,0 +1,73 @@
+<div class="mmooc-assignment-submission">
+	<div class="mmooc-assignment-submission-leftside">
+		<div class="mmooc-assignment-submission-metadata">
+			<h2 class="mmooc-assignment-submission-header">{{submissionTitle}}</h2>
+			<ul class="mmooc-assignment-submission-metadata-list">
+				<li>
+					<span class="title">Oppgave:</span>
+					<span class="value"><a href="/courses/{{submission.course.id}}/assignments/{{submission.assignment_id}}">{{assignment.name}}</a></span>
+				</li>
+				<li>
+					<span class="title">Innlevert:</span>
+					<span class="value">
+						<span class="mmooc-assignment-delivery-date{{#if submission.late}} late{{/if}}">{{norwegianDateAndTime submission.submitted_at}}{{#if submission.late}} (for sen){{/if}}</span>
+						{{#if isPeerReview}}
+							<span class="mmooc-assignment-delivered-by"> av {{submission.user.name}}</span>
+						{{/if}}
+						{{#if isTeacherViewingStudentsSubmission}}
+							<span class="mmooc-assignment-delivered-by"> av {{submission.user.name}}</span>
+						{{/if}}
+					</span>
+				</li>
+			</ul>
+		</div>
+		{{#if isPeerReview}}
+			{{#if isPeerReviewFinished}}
+				<div class="mmooc-peer-review-success">
+					<p class="mmooc-success singleLine">
+						Du har fullført hverandrevurderingen.
+					</p>
+				</div>
+			{{else}}
+				<div class="mmooc-peer-review-warning">
+					<p class="mmooc-warning singleLine">
+						Denne oppgaven er ikke ferdig før du har fylt ut vurderingsskjemaet.
+					</p>
+				</div>
+			{{/if}}
+		{{/if}}
+	</div>
+	<div class="mmooc-assignment-submission-rightside">
+		<div class="mmooc-assignment-submission-assessment">
+			<div class="mmooc-assignment-submission-assessment-header">
+				{{#if isPeerReview}}
+					<h3>Din vurdering</h3>
+				{{else}}
+					{{#if isTeacherViewingStudentsSubmission}}
+						<h3>Vurdering av besvarelse</h3>
+					{{else}}
+						<h3>Vurdering av din besvarelse</h3>	
+					{{/if}}
+					
+				{{/if}}
+			</div>
+			<div class="mmooc-assignment-submission-assessment-contents">
+				{{#if submission.grade}}
+				<p class="assessment">Karakter: {{submission.grade}}/{{assignment.points_possible}}</p>
+				{{/if}}
+				{{#if isPeerReview}}
+					{{#unless isPeerReviewFinished}}
+						<p class="assessment-warning">Du har ikke vurdert denne oppgaven.</p>
+					{{/unless}}
+					<a href="#" class="open-assessment-dialog-button">Vurderingsskjema</a>
+				{{else}}
+					<p class="assessment-text">{{getSubmissionAssessmentText peerReview}}</p>
+					<a href="#" class="open-assessment-dialog-button">Vis vurdering</a>
+				{{/if}}
+			</div>
+		</div>
+	</div>
+</div>
+<div class="mmooc-assignment-submission-answers{{#if isPeerReview}} isPeerReviewPage{{else}} isSubmissionDetaisPage{{/if}}{{#if submission.grade}} withGradesText{{else}} withNoGradesText{{/if}}">
+	<h3>Besvarelser</h3>
+</div>

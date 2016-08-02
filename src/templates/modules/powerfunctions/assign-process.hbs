@@ -1,0 +1,18 @@
+<table>
+  <thead>
+    <tr>
+      <th>Group ID</th>
+      <th>Student ID</th>
+      <th>Status</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each assigns}}
+    <tr id="mmpf-assign-{{@index}}">
+      <td>{{group_id}}</td>
+      <td>{{user_id}}</td>
+      <td class="status waiting">Waiting</td>
+    {{/each}}
+  </tbody>
+<table>
+

@@ -5,13 +5,19 @@
         </div>
     </li>
     <li class="mmooc-menu-item">
-        <a href="/conversations" class="mmooc-menu-item-title">Innboks</a>
+        <a href="/conversations" class="mmooc-menu-item-title">Innboks <span id="mmooc-unread-messages-count"></span></a>
     </li>
-    <li class="mmooc-menu-item">
-        <a href="#" class="mmooc-menu-item-title">{{user.display_name}} <i class="icon-mini-arrow-down"></i></a>
+    <li class="mmooc-menu-item profile-settings">
+        <a href="#" class="mmooc-menu-item-title">
+            <div class="ic-avatar" aria-hidden="true">
+                <img src="{{user.avatar_image_url}}" alt="{{user.display_name}}" />
+            </div>
+            <i class="icon-mini-arrow-down"></i>
+        </a>
         <div class="mmooc-menu-item-drop">
             <ul>
                 <li><a href="/profile/settings">Innstillinger</a></li>
+                <li class="helpMenu"><a href="#">Hjelp</a></li>
                 <li><a href="/logout">Logg ut</a></li>
             </ul>
         </div>

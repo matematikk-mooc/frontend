@@ -1,0 +1,58 @@
+
+#application.ic-app {
+
+    .module-sequence-footer {
+        
+        .module-sequence-footer-content {
+            height: 55px;
+            padding-top: 0px;
+            
+            a {
+                padding: 0;
+            }
+        }
+        
+
+    }
+    
+    footer#footer {
+        display: none;
+    }
+    
+    footer#mmooc-footer {
+        position: relative;
+        top: 60px;
+        display: block;
+        clear: both;
+        
+        .mmooc-license {
+            text-align: left;
+            width: 100%;
+            
+            p.public-license-text {
+                font-size: 12px;
+                padding-left: 0;
+                text-align: center;
+            }
+        }
+        
+    }
+}
+
+//Submission iframe - do no want double footer
+body.is-inside-submission-frame {
+    background-color: #fff !important;
+    
+    #application.ic-app {
+        footer#mmooc-footer {
+            display: none;
+        }
+        
+        #submission_preview.paper {
+            margin: -27px auto 0 0;
+            position: relative;
+            top: 27px;
+            padding-left: 10px;
+        }
+    }
+}

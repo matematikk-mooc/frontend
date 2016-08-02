@@ -52,7 +52,7 @@
 }
 
 .icon-page:before {
-    content: "\f1cb"; /* Warning likely to change if Canvas changes icon font */
+    content: "\f126"; /* Warning likely to change if Canvas changes icon font */
 }
 
 .icon-file:before {
@@ -65,4 +65,13 @@
 
 .icon-externaltool:before {
     content: "\f1e3"; /* Warning likely to change if Canvas changes icon font */
+}
+
+i[class*=icon-]:before, #breadcrumbs>ul>li+li:before, i[class^=icon-]:before, a[class*=icon-]:before, a[class^=icon-]:before {
+  font-size: 15px;
+  top: 0;
+}
+
+li.mmooc-module-item-icon i[class*=icon-]:before {
+  top: -1px;
 }

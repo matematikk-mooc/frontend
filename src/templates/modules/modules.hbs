@@ -7,10 +7,10 @@
             {{#if items}}
                 <ul class="mmooc-module-items-icons">
                     {{#each items}}
-                        <li class="mmooc-module-item-icon"><a class="mmooc-module-items-icons-{{type}} {{#ifItemIsCompleted completion_requirement}}done{{/ifItemIsCompleted}}" href="{{html_url}}" title="{{localize type}}: {{title}}"><i class="icon-{{lowercase type}}"></i></a></li>
+                        <li class="mmooc-module-item-icon"><a class="mmooc-module-items-icons-{{type}} {{#ifItemIsCompleted completion_requirement}}done{{/ifItemIsCompleted}}" href="{{html_url}}" title="{{title}}"><i class="icon-{{lowercase type}}{{overrideIconClassByTitle title}}"></i></a></li>
                     {{/each}}
                 </ul>
             {{/if}}
         </div>
     {{/each}}
-</div>
+</div> 

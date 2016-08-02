@@ -1,0 +1,33 @@
+body.ic-Login-Body {
+    background-color: @darkTealColor !important;
+    background-image: none           !important;
+  
+    #application.ic-app {
+  
+        .ic-Login__header__logo {
+            background-image: url("https://server/bitmaps/mmooc-logo.png") !important;
+            background-size: contain;
+            background-repeat: no-repeat;
+            width: 240px;
+            height: 25px;
+            
+            img {
+                display: none;
+            }
+        }
+        
+        .ic-Login__actions {
+            margin-top: 25px;
+            
+            .ic-Login__actions--right {
+                display: block;
+                margin-left: 25px;
+            }
+            
+            .Button--logout-link, .Button--logout-confirm, .Button--login {
+                .button;
+            }
+            
+        }
+    }
+}

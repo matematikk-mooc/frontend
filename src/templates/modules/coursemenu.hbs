@@ -1,13 +1,15 @@
-<div id="mmooc-course-tabs-container">
+<div id="mmooc-course-tabs-container"{{#unless menuItems.length}} class="no-tabs"{{subtitle}}{{/unless}}>
     <div id="mmooc-course-tabs-container-inner">
 
         <h1>{{title}}</h1>
         {{#if subtitle}}<span class="h1-sub-heading">{{subtitle}}</span>{{/if}}
-
+        
+        {{#if menuItems.length}}
         <ul class="mmooc-course-tabs">
             {{#each menuItems}}
                 <li class="mmooc-course-tab {{#ifEquals title ../selectedMenuItem}}selected{{/ifEquals}}"><a href="{{url}}">{{title}}</a></li>
             {{/each}}
         </ul>
+        {{/if}}
     </div>
 </div>

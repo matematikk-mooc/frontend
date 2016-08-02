@@ -29,8 +29,28 @@ this.mmooc.groups = function() {
                 mmooc.api.getGroupMembers(groupId, function(members) {
                     var headerHTML = mmooc.util.renderTemplateWithData("groupheader", {groupId: groupId, courseId: courseId, members: members});
                     document.getElementById('content-wrapper').insertAdjacentHTML('afterbegin', headerHTML);
+                    $("body").addClass("group-header");
                 });
             }
+        },
+
+        changeGroupListURLs: function(href) {
+          if (/\/groups(\/)?$/.test(href) || /(\/groups(\??([A-Za-z0-9\=\&]{0,})))$/.test(href)) {
+            var list = $('.context_list li a');
+            list.each(function(i) {
+              this.setAttribute('href', this.getAttribute('href') + '/discussion_topics');
+            });
+            return true;
+          }
+
+          return false;
+        },
+
+        moveSequenceLinks: function() {
+          var sequenceContainer = $("#module_sequence_footer");
+          var discussionContainer = $("#discussion_container");
+          sequenceContainer.addClass('module-sequence-top');
+          sequenceContainer.insertBefore(discussionContainer);
         }
     };
 }();

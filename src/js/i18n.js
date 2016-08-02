@@ -16,5 +16,21 @@ this.mmooc.i18n = {
     'Submission': 'Innlevering',
     'AssessmentRequest': 'Vurderingsforespørsel',
     'Conference': 'Conference',
-    'Collaboration': 'Collaboration'
-}
+    'Collaboration': 'Collaboration',
+    'LinkBack': 'Tilbake til forrige side',
+    'Badgesafe': 'Utmerkelser',
+    'PeerReview' : 'Hverandrevurdering',
+    'PeerReviewer' : 'Hverandrevurderer',
+    'Delivery' : 'Innlevering',
+    'DetailsAboutYourDelivery' : 'Detaljer om din innlevering',
+    'DetailsAboutDelivery' : 'Detaljer om innlevering',
+    'SubmissionIsNotAssessed' : 'Oppgaven er ikke vurdert',
+    'SubmissionIsAssessedByOne' : 'Vurderingen er klar',
+    'SubmissionIsAssessedByAll' : 'Alle vurderinger er klare',
+    'SubmissionAssessmentsAreReady' : 'vurderinger er klare',
+    'ThisIsGroup' : 'Dette er gruppe',
+    'WeHaveAQuestionToTeacherInTheDiscussion' : 'Vi har et spørsmål til veileder i diskusjonen',
+    'NoTeacherFeedbackLink' : 'No teacher_feedback link. Does the help menu have a link to send feedback to the teacher?',
+    'OutOf' : 'av',
+    'Months' : ["januar", "februar", "mars", "april", "mai", "juni", "juli", "august", "september", "Oktober", "november", "december"]
+};
