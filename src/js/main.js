@@ -38,7 +38,7 @@ jQuery(function($) {
             $("#content").append(canvabadgesForCurrentCourse);
         } else {
             mmooc.coursePage.listModulesAndShowProgressBar();
-            mmooc.menu.showCourseMenu(courseId, 'Kursforside', null);
+            mmooc.menu.showCourseMenu(courseId, mmooc.i18n.Course + 'forside', null);
         }
     });
 

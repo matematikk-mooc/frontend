@@ -7,10 +7,10 @@ this.mmooc.coursePage = function() {
 
         listModulesAndShowProgressBar: function() {
             mmooc.api.getModulesForCurrentCourse(function(modules) {
-                var progressHTML = mmooc.util.renderTemplateWithData("courseprogress", {modules: modules});
+                var progressHTML = mmooc.util.renderTemplateWithData("courseprogress", {title: mmooc.i18n.CourseProgressionTitle, modules: modules});
                 document.getElementById('course_home_content').insertAdjacentHTML('beforebegin', progressHTML);
 
-                var modulesHTML = mmooc.util.renderTemplateWithData("modules", {modules: modules});
+                var modulesHTML = mmooc.util.renderTemplateWithData("modules", {navname: mmooc.i18n.GoToModule, coursemodules: mmooc.i18n.ModulePlural, modules: modules});
                 document.getElementById('course_home_content').insertAdjacentHTML('beforebegin', modulesHTML);
             });
         },

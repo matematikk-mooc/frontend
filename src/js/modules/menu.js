@@ -19,7 +19,7 @@ this.mmooc.menu = function() {
 
         var courseId = course.id;
         if (!hideTabs) { 
-            menuItems[menuItems.length] = {"title": "Kursforside", url: "/courses/" + courseId};
+            menuItems[menuItems.length] = {"title": mmooc.i18n.Course + "forside", url: "/courses/" + courseId};
             menuItems[menuItems.length] = {"title": "Kunngjøringer", url: "/courses/" + courseId + "/announcements"};
             menuItems[menuItems.length] = {"title": "Grupper", url: "/courses/" + courseId + "/groups"};
             menuItems[menuItems.length] = {"title": "Diskusjoner", url: "/courses/" + courseId + "/discussion_topics"};
@@ -78,7 +78,7 @@ this.mmooc.menu = function() {
         listModuleItems: function() {
             mmooc.api.getCurrentModule(function(module) {
                 var courseId = mmooc.api.getCurrentCourseId();
-                var html = mmooc.util.renderTemplateWithData("moduleitems", {module: module, courseId: courseId});
+                var html = mmooc.util.renderTemplateWithData("moduleitems", {backToCoursePage: mmooc.i18n.BackToCoursePage, module: module, courseId: courseId});
                 if (document.getElementById("left-side")) {
                     document.getElementById('left-side').insertAdjacentHTML('afterbegin', html);
                 }
@@ -96,7 +96,7 @@ this.mmooc.menu = function() {
             insertCustomMenuElementInTopMenu("Kalender", "/calendar");
             insertCustomMenuElementInTopMenu("Karakterer", "/grades");
             insertCustomMenuElementInTopMenu("Grupper", "/groups");
-            insertCustomMenuElementInTopMenu("Kurs", "/courses"); 
+            insertCustomMenuElementInTopMenu(mmooc.i18n.Studies, "/courses"); 
             
             if (mmooc.util.isTeacherOrAdmin()) {
                 this.showLeftMenu();
@@ -274,7 +274,7 @@ this.mmooc.menu = function() {
                     mmooc.menu.showCourseMenu(group.course_id, "Grupper", title, true); //Group menu in tabs including title - Use optional fourth parameter for hiding tabs
                     _addBodyClassForGroupDiscussionForStyling(); 
                     _addGetHelpFromteacherButton(group);
-                    mmooc.menu.showBackButton("/courses/" + group.course_id, "Tilbake til kursforsiden");
+                    mmooc.menu.showBackButton("/courses/" + group.course_id, "Tilbake til " + mmooc.i18n.Course + "forsiden");
                 });
             }
         },
