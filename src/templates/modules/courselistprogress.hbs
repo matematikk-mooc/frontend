@@ -1,6 +1,6 @@
 <div class="mmooc-course-list-button">
 	{{#with course}}
-    	<a href="{{urlForCourseId id}}" class="btn rounded {{#with course_progress}} {{#if requirement_count}} {{#ifEquals requirement_completed_count requirement_count}} btn-done {{/ifEquals}} {{/if}} {{/with}}">Gå til kursside</a>
+    	<a href="{{urlForCourseId id}}" class="btn rounded {{#with course_progress}} {{#if requirement_count}} {{#ifEquals requirement_completed_count requirement_count}} btn-done {{/ifEquals}} {{/if}} {{/with}}">{{../navname}}</a>
     {{/with}}
 </div>
 

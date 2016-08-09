@@ -10,10 +10,11 @@ this.mmooc.courseList = function() {
 					var $oldContent = $('#' + parentId).children(); //After an update the 'Add course button' is in #content including a popupform. So we need to move this to another place in the DOM so we don't overwrite it.
 					$oldContent.appendTo("#right-side-wrapper #right-side");
 					
-					$('#' + parentId).html("<div>Laster kurs....</div>"); //overwrite the contents in parentID and display: 'Laster kurs....'
+					$('#' + parentId).html("<div>Laster " + mmooc.i18n.CoursePlural + "....</div>"); //overwrite the contents in parentID and display: 'Laster kurs....'
 					
                     var sortedCourses = mmooc.util.arraySorted(courses, "course_code");
                     html = mmooc.util.renderTemplateWithData("courselist", {courses: sortedCourses});
+                    document.title = "Studier";
                     document.getElementById(parentId).innerHTML = html; 
 					
 //Additional check if course if completed. Not in use since course_progress(check implemented in template) seems to be working as expected. (Not able to reproduce errors).
@@ -58,7 +59,7 @@ this.mmooc.courseList = function() {
                     
                     $(sortedCourses).each(function() {
                         var $course = $("#course_" + this.id + " .mmooc-course-list-description");
-						html = mmooc.util.renderTemplateWithData("courselistprogress", {course: this});
+						html = mmooc.util.renderTemplateWithData("courselistprogress", {navname: mmooc.i18n.GoToCourse, course: this});
                         $course.after(html);          
                     });					
 
@@ -72,7 +73,7 @@ this.mmooc.courseList = function() {
             var $button = $('#start_new_course');
             if ($button.length) {
                 $('#content').append($button);
-				$button.html('Legg til et kurs');
+				$button.html(mmooc.i18n.AddACourse);
             }
         },
         showFilter : function(sortedCourses) {
