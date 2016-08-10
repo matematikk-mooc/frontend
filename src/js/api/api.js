@@ -342,6 +342,15 @@ this.mmooc.api = function() {
             });
         },
 
+        getCoursesForUser: function(callback, error) {
+            this._get({
+                "callback": callback,
+                "error":    error,
+                "uri":      "/courses",
+                "params":   { per_page: 999 }
+            });
+        },
+
         getGroupCategoriesForAccount: function(account, callback, error) {
             this._get({
                 "callback": callback,
