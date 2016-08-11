@@ -1,6 +1,6 @@
 jQuery(function($) {
 	
-    $('#main').show(); //To avoid displaying the old contents while the javascript is loading. '#main' is set to display:none in CSS.
+    $('.header-bar, .ic-Action-header').show(); //To avoid displaying the old contents while the javascript is loading. Selectors are set to display:none in CSS.
     
     mmooc.routes.addRouteForPath(/\/$/, function() {
         mmooc.menu.hideRightMenu();
