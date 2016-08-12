@@ -5,7 +5,7 @@ this.mmooc.powerFunctions = function() {
 
   function _render(template, heading, data) {
     var html =
-          mmooc.util.renderTemplateWithData('powerfunctions/headteacher', {heading: heading}) +
+          mmooc.util.renderTemplateWithData('powerfunctions/head', {heading: heading}) +
           mmooc.util.renderTemplateWithData(template, data) +
           mmooc.util.renderTemplateWithData('powerfunctions/tail', {});
       document.getElementById(rootId).innerHTML = html;
