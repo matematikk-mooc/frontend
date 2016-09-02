@@ -280,7 +280,11 @@ this.mmooc.powerFunctions = function() {
 			    for (var j = 0; j < sections[sectionIndex].students.length; j++) {				    
 				    moduleParams = { student_id: sections[sectionIndex].students[j].id, per_page: 999 };
 				    mmooc.api.getItemsForModuleId(function(itemsForStudent) {
-					    html = html + "<tr><td>" + sections[sectionIndex].students[asyncsDone].name + "</td>";
+    				    for(var l = 0; l < sections[sectionIndex].students.length; l++) {
+        				    if (sections[sectionIndex].students[l].id == itemsForStudent[0].student_id) {
+            				    html = html + "<tr><td>" + sections[sectionIndex].students[l].name + "</td>";
+        				    }
+    				    }
 					    if(itemsForStudent.length < 1) {
 						    html = html + "<td>Ingen krav</td>";
 					    }
