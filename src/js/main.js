@@ -82,7 +82,10 @@ jQuery(function($) {
     });
 
     mmooc.routes.addRouteForPath([/\/groups\/\d+\/discussion_topics\/\d+$/], function() {
-      mmooc.groups.moveSequenceLinks();
+        mmooc.groups.moveSequenceLinks();
+        if (!mmooc.util.isTeacherOrAdmin()) {
+            mmooc.menu.hideRightMenu();
+        }
     });
 
     mmooc.routes.addRouteForPath([/\/courses\/\d+\/discussion_topics\/\d+/, /\/courses\/\d+\/discussion_topics\/new/], function() {
