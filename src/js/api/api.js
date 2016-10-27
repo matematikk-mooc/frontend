@@ -30,7 +30,31 @@ this.mmooc.api = function() {
         },
 
         _get: function(options) {
-            this._sendRequest(this._ajax.get, options);
+            //this._sendRequest(this._ajax.get, options);
+            
+            /*  Fix for returning student_id in response. 
+            *   Needed for powerfunction _printStudentProgressForSection to list progress for correct student.
+            */
+            
+            var uri      = this._uriPrefix + options.uri;
+            var params   = options.params || {};
+            var callback = options.callback;
+ 
+            $.ajax({
+                url: uri,
+                type: 'GET',
+                data: params,
+                success: function(response) {
+                    if("student_id" in params) {
+                        response = response.map(function(el){el.student_id = params.student_id; return el});
+                    }
+                    callback(response);
+                },
+                error: function(XMLHttpRequest, textStatus, errorThrown) {
+                    console.log("Error during GET");
+                }
+            });           
+                
         },
 
         _post: function(options) {

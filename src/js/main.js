@@ -1,6 +1,6 @@
 jQuery(function($) {
 	
-    $('#main').show(); //To avoid displaying the old contents while the javascript is loading. '#main' is set to display:none in CSS.
+    $('.header-bar, .ic-Action-header').show(); //To avoid displaying the old contents while the javascript is loading. Selectors are set to display:none in CSS.
     
     mmooc.routes.addRouteForPath(/\/$/, function() {
         mmooc.menu.hideRightMenu();
@@ -82,7 +82,10 @@ jQuery(function($) {
     });
 
     mmooc.routes.addRouteForPath([/\/groups\/\d+\/discussion_topics\/\d+$/], function() {
-      mmooc.groups.moveSequenceLinks();
+        mmooc.groups.moveSequenceLinks();
+        if (!mmooc.util.isTeacherOrAdmin()) {
+            mmooc.menu.hideRightMenu();
+        }
     });
 
     mmooc.routes.addRouteForPath([/\/courses\/\d+\/discussion_topics\/\d+/, /\/courses\/\d+\/discussion_topics\/new/], function() {
