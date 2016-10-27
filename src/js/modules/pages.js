@@ -393,7 +393,7 @@ this.mmooc.pages = function() {
                             _logDataToConsole(assignment, submission, peerReview);
                             _appendSubmissionHtml(assignment, submission, peerReview);
                             _addClickEventOnOpenAssessmentButton();
-                            // _addSaveRubricButtonIfItDoesNotExist(); //Enable this if the button 'Lagre kommentar' in the peer review dialog is not displaying
+                            _addSaveRubricButtonIfItDoesNotExist(); //Enable this if the button 'Lagre kommentar' in the peer review dialog is not displaying
                             $(document).on("click", "button.save_rubric_button", _updateDomAfterSaveRubricButtonClick);
                         }); 
                     });
