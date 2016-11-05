@@ -94,6 +94,23 @@ Handlebars.registerHelper('getSubmissionAssessmentText', function(peerReview) {
     return submissionAssessmentText; 
 });
 
+Handlebars.registerHelper('ifAllPeerReviewsAreComplete', function(peerReview, options) {
+
+    var allPeerReviewsAreComplete = true;
+    
+    $.each(peerReview, function (index, singlePeerReview) {
+        if (singlePeerReview.workflow_state != 'completed') {
+            allPeerReviewsAreComplete = false;
+        }
+    });
+
+    if (allPeerReviewsAreComplete) { 
+        return options.fn(this); 
+    } else {
+        return options.inverse(this);
+    }
+});
+
 Handlebars.registerHelper("getPathFromUrl", function(url) {
   return url.split("?")[0]; //returns an array even if there is no '?' so no need for extra checks
 });

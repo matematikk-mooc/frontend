@@ -14,7 +14,11 @@
             {{/if}}
 		</div>
 		<div class="mmooc-assignment-details">
+			{{#ifAllPeerReviewsAreComplete peerReview}}
 			<a href="{{getPathFromUrl submission.preview_url}}">Vis detaljer om innlevering &raquo;</a>
+			{{else}}
+    		<p>Du må gjøre hverandre-vurderingen(e) nedenfor før du kan se detaljer om din oppgave.</p>
+			{{/ifAllPeerReviewsAreComplete}}
 		</div>
 	</div>
 	<div class="mmooc-peer-reviews">
