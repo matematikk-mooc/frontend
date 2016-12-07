@@ -18,6 +18,7 @@ this.mmooc.powerFunctions = function() {
         _render("powerfunctions/peer-review",
                 "Assign peer reviews by group",
                 {courses: courses});
+        var peerReviewAssignments = [];
         $('#mmpf-course-select').change(function () {
           var courseID = $('#mmpf-course-select option:selected').val();
           mmooc.api.getGroupCategoriesForCourse(courseID, function(categories) {
@@ -48,30 +49,53 @@ this.mmooc.powerFunctions = function() {
         $('#mmpf-group-select').change(function () {
           var courseID = $('#mmpf-course-select option:selected').val();
           mmooc.api.getAssignmentsForCourse(courseID, function(assignments) {
-            $('.step-4').css('display', 'list-item');
-            var html = html + "<option value=''>Choose an assignment</option>";
             for (var i = 0; i < assignments.length; i++) {
-              html = html + "<option value=" + assignments[i].id + ">" + assignments[i].name + "</option>";
+              if(assignments[i].peer_reviews) {
+                peerReviewAssignments.push(assignments[i])
+              }
+            }
+            var html = html + "<option value=''>Choose an assignment</option>";
+            for (var j = 0; j < peerReviewAssignments.length; j++) {
+              html = html + "<option value=" + peerReviewAssignments[j].id + ">" + peerReviewAssignments[j].name + "</option>";
             }
             $("#mmpf-assignment-select").html(html);
             $(".peer-review-list").html("");
+            $('.step-4').css('display', 'list-item');
           });
         });
 		$('#mmpf-assignment-select').change(function () {
-			_listPeerReviewsForGroup();
+  		var assignmentID = $('#mmpf-assignment-select option:selected').val();
+  		for (var i = 0; i < peerReviewAssignments.length; i++) {
+    		if(peerReviewAssignments[i].id == assignmentID) {
+      		var activeAssignment = peerReviewAssignments[i];
+    		}
+  		}
+  		var assignmentDue = new Date(activeAssignment.due_at);
+  		if(typeof activeAssignment.peer_reviews_assign_at !== 'undefined') {
+    		var peerReviewDue = new Date(activeAssignment.peer_reviews_assign_at);
+    		peerReviewDue = ("0" + peerReviewDue.getDate()).slice(-2) + "." + ("0" + peerReviewDue.getMonth()).slice(-2) + "." + peerReviewDue.getFullYear();
+  		}
+  		else {
+    		peerReviewDue = "Ikke satt";
+  		}
+  		assignmentDue = ("0" + assignmentDue.getDate()).slice(-2) + "." + ("0" + assignmentDue.getMonth()).slice(-2) + "." + assignmentDue.getFullYear();
+  		var html = "<h3>" + activeAssignment.name + "</h3>" +
+  		"<p><span class='bold'>Innleveringsfrist: </span>" + assignmentDue + 
+  		"<br><span class='bold'>Hverandrevurderingsfrist: </span>" + peerReviewDue + "</p>";
+  		$(".assignment-info").html(html);
+			_listPeerReviewsForGroup(assignmentID);
 			_showInput();
 		});
 
       });
     }
 
-    function _listPeerReviewsForGroup() {
+    function _listPeerReviewsForGroup(assignmentID) {
 	    $(".peer-review-list").html("<p>Laster hverandrevurderinger...</p>");
 	    $("#progress").show();
 	    $("#bar").width('0%');
 	    var courseID = $('#mmpf-course-select option:selected').val();
 	    var groupID = $('#mmpf-group-select option:selected').val();
-	    var assignmentID = $('#mmpf-assignment-select option:selected').val();
 	    var html = "<ul>";
 	    var peerReveiwsInGroup = [];
 	    var submitted = [];
