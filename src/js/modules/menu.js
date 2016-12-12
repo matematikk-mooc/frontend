@@ -97,7 +97,9 @@ this.mmooc.menu = function() {
             if(mmooc.settings.removeGlobalGradesLink == false) {
                 insertCustomMenuElementInTopMenu("Karakterer", "/grades");
             }
-            insertCustomMenuElementInTopMenu("Grupper", "/groups");
+            if(mmooc.settings.removeGroupsLink == false) {
+                insertCustomMenuElementInTopMenu("Grupper", "/groups");
+            }
             insertCustomMenuElementInTopMenu(mmooc.i18n.Studies, "/courses"); 
             
             if (mmooc.util.isTeacherOrAdmin()) {
