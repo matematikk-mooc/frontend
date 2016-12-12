@@ -94,7 +94,9 @@ this.mmooc.menu = function() {
             
             // The entire menu is rebuilt because of unwanted popup in the new ui menu
             insertCustomMenuElementInTopMenu("Kalender", "/calendar");
-            insertCustomMenuElementInTopMenu("Karakterer", "/grades");
+            if(mmooc.settings.removeGlobalGradesLink == false) {
+                insertCustomMenuElementInTopMenu("Karakterer", "/grades");
+            }
             insertCustomMenuElementInTopMenu("Grupper", "/groups");
             insertCustomMenuElementInTopMenu(mmooc.i18n.Studies, "/courses"); 
             

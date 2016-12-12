@@ -104,7 +104,6 @@ this.mmooc.util = function () {
                 $(".assignments #right-side :submit").prop("disabled",true);
             }
         }
-
     };
 }();
 
