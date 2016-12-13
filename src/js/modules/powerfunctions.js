@@ -12,7 +12,6 @@ this.mmooc.powerFunctions = function() {
     }
   
   function AssignPeerReviewsForGroup() {
-
     function _renderView() {
       mmooc.api.getCoursesForUser(function(courses) {
         _render("powerfunctions/peer-review",
@@ -31,6 +30,7 @@ this.mmooc.powerFunctions = function() {
             }
             $("#mmpf-category-select").html(html);
             $(".peer-review-list").html("");
+            $(".assignment-info").html("");
           });
         });
         $('#mmpf-category-select').change(function () {
@@ -38,28 +38,31 @@ this.mmooc.powerFunctions = function() {
           mmooc.api.getGroupsInCategory(categoryID, function(groups) {
             $('.step-3').css('display', 'list-item');
             $('.step-4').css('display', 'none');
-            var html = html + "<option value=''>Choose a group</option>";
+            var html = html + "<option value='' disabled>Choose groups</option>";
             for (var i = 0; i < groups.length; i++) {
               html = html + "<option value=" + groups[i].id + ">" + groups[i].name + "</option>";
             }
             $("#mmpf-group-select").html(html);
             $(".peer-review-list").html("");
+            $(".assignment-info").html("");
           });
         });
         $('#mmpf-group-select').change(function () {
           var courseID = $('#mmpf-course-select option:selected').val();
           mmooc.api.getAssignmentsForCourse(courseID, function(assignments) {
+            peerReviewAssignments = [];
             for (var i = 0; i < assignments.length; i++) {
               if(assignments[i].peer_reviews) {
                 peerReviewAssignments.push(assignments[i])
               }
             }
-            var html = html + "<option value=''>Choose an assignment</option>";
+            var html = "<option value=''>Choose an assignment</option>";
             for (var j = 0; j < peerReviewAssignments.length; j++) {
               html = html + "<option value=" + peerReviewAssignments[j].id + ">" + peerReviewAssignments[j].name + "</option>";
             }
             $("#mmpf-assignment-select").html(html);
             $(".peer-review-list").html("");
+            $(".assignment-info").html("");
             $('.step-4').css('display', 'list-item');
           });
         });
@@ -83,47 +86,60 @@ this.mmooc.powerFunctions = function() {
   		"<p><span class='bold'>Innleveringsfrist: </span>" + assignmentDue + 
   		"<br><span class='bold'>Hverandrevurderingsfrist: </span>" + peerReviewDue + "</p>";
   		$(".assignment-info").html(html);
-			_listPeerReviewsForGroup(assignmentID);
+      var selectedGroups = [];
+      $("#mmpf-group-select option:selected").each(function(){
+          selectedGroups.push(this);
+      });
+      $(".peer-review-list").html("");
+			_listPeerReviewsForGroup(selectedGroups, assignmentID);
 			_showInput();
 		});
 
       });
     }
 
-    function _listPeerReviewsForGroup(assignmentID) {
-	    $(".peer-review-list").html("<p>Laster hverandrevurderinger...</p>");
+    function _listPeerReviewsForGroup(selectedGroups, assignmentID) {
+      $(".peer-review-list").html("");
 	    $("#progress").show();
 	    $("#bar").width('0%');
 	    var courseID = $('#mmpf-course-select option:selected').val();
-	    var groupID = $('#mmpf-group-select option:selected').val();
-	    var html = "<ul>";
+	    var html = "";
 	    var peerReveiwsInGroup = [];
 	    var submitted = [];
 	    var count = 0;
 	    var asyncsDone = 0;
 	    var inArray = false;
-	    mmooc.api.getGroupMembers(groupID, function(members) {
-		    $("#bar").width('50%');
-		    mmooc.api.getPeerReviewsForAssignment(courseID, assignmentID, function(peerReviews) {
-			    $("#bar").width('100%');
-			    $(".peer-review-list").html("Laster besvarelser...");
-			    $("#progress").show();
+	    var groupIndex = 0;
+	    var groupsMembers = [];
+      mmooc.api.getPeerReviewsForAssignment(courseID, assignmentID, function(peerReviews) {
+        $("#progress").show();
+		    for (var gi = 0; gi < selectedGroups.length; gi++) {
+		      mmooc.api.getGroupMembers(selectedGroups[gi].value, function(members) {
+  		    groupsMembers.push(members);
+			    $(".progress-info").html("Laster gruppe " + (groupIndex + 1) + " av " + selectedGroups.length);
 			    $("#bar").width('0%');
+			    submitted = [];
 			    // Get submissions for users in group and push to array if workflow_state is submitted or graded
-				for (var i = 0; i < members.length; i++) {
-					mmooc.api.getSingleSubmissionForUser(courseID, assignmentID, members[i].id, function(submission) {
-						if (submission.workflow_state == "submitted" || submission.workflow_state == "graded") {
-							submitted.push(submission);
-						}
-						asyncsDone++;
-						var width = (100 / members.length) * asyncsDone + "%";
-						$("#bar").width(width);
-						if (asyncsDone == members.length) {
-							_renderList();
-						}
-					});
-				}
+  				for (var i = 0; i < members.length; i++) {
+  					mmooc.api.getSingleSubmissionForUser(courseID, assignmentID, members[i].id, function(submission) {
+  						if (submission.workflow_state == "submitted" || submission.workflow_state == "graded") {
+  							submitted.push(submission);
+  						}
+  						asyncsDone++;
+  						var width = (100 / members.length) * asyncsDone + "%";
+  						$("#bar").width(width);
+  						if (asyncsDone == members.length) {
+    						asyncsDone = 0;
+  							_renderList();
+  							groupIndex++;
+  						}
+  					});
+				  }
 				function _renderList() {
+  				peerReveiwsInGroup = [];
+  				inArray = false;
+  				count = 0;
+  				html = "<h3>" + selectedGroups[groupIndex].text + "</h3><ul>";
 					// Traverse all peer reviews and group members	  	
 			    	for (var i = 0; i < peerReviews.length; i++) {
 				    	for (var j = 0; j < members.length; j++) {
@@ -141,6 +157,7 @@ this.mmooc.powerFunctions = function() {
 				    		inArray = false;
 				    	}
 				    }
+				    console.log(peerReveiwsInGroup);
 				    inArray = false;			    			    			    
 			    	for (var i = 0; i < members.length; i++) {
 				    	count = 0;
@@ -149,7 +166,7 @@ this.mmooc.powerFunctions = function() {
 					    	for (j = 0; j < submitted.length; j++) {
 						    	// Check if user has submission
 						    	if (submitted[j].user_id == members[i].id) {
-							    	html = html + "<li>" + members[i].name + "</li><ul>";
+							    	html = html + "<li><a href='" + "/courses/" + courseID + "/assignments/" + assignmentID + "/submissions/" + members[i].id + "' target='_blank'>" + members[i].name + "</a></li><ul>";
 							    	inArray = true;
 							    	break;
 						    	}
@@ -164,9 +181,9 @@ this.mmooc.powerFunctions = function() {
 					    	if(members[i].id == peerReveiwsInGroup[k].assessor_id) {
 						    	// List user name and tag peer review as completed/not completed
 						    	if(peerReveiwsInGroup[k].workflow_state == "completed") {
-						    		html = html + "<li>" + peerReveiwsInGroup[k].user.display_name  + " <span style='color:green;'>Fullført</span></li>";
+						    		html = html + "<li><a href='" + "/courses/" + courseID + "/assignments/" + assignmentID + "/submissions/" + peerReveiwsInGroup[k].user.id + "' target='_blank'>" + peerReveiwsInGroup[k].user.display_name  + " </a><span style='color:green;'>Fullført</span></li>";
 						    	}else {
-							    	html = html + "<li>" + peerReveiwsInGroup[k].user.display_name  + " <span style='color:red;'>Ikke fullført</span></li>";
+							    	html = html + "<li><a href='" + "/courses/" + courseID + "/assignments/" + assignmentID + "/submissions/" + peerReveiwsInGroup[k].user.id + "' target='_blank'>" + peerReveiwsInGroup[k].user.display_name  + " </a><span style='color:red;'>Ikke fullført</span></li>";
 						    	}
 						    	count++;
 					    	}
@@ -178,58 +195,90 @@ this.mmooc.powerFunctions = function() {
 				    	inArray = false;	    			    	
 				    }
 				    $("#progress").hide();
-				    $(".peer-review-list").html(html + "</ul>");
+				    $(".peer-review-list").append(html + "</ul>");
+				    $(".progress-info").html("");
 				    $('.input-wrapper').show();
-					$('.btn-create-pr').click(function () {
+					$('.btn-create-pr').unbind().click(function () {
 						var numOfReviews = $('.number-of-reviews').val();
-						// Create peer reviews for group after valitadion
+						// Create peer reviews for group after validation
 						if (!_isNormalInteger(numOfReviews) || numOfReviews < 1) {
 							alert("Antall gjennomganger må være et positivt heltall");
-						}else if (numOfReviews > (submitted.length - 1)) {
-							alert("For mange gjennomganger i forhold til antall besvarelser");
-						}else {
+						}
+						else {
 							$('.input-wrapper').hide();
-							_createPeerReviewsForGroup(courseID, assignmentID, numOfReviews, submitted);
-						}	
+              _createPeerReviewsForGroups(courseID, assignmentID, numOfReviews, submitted, groupsMembers, selectedGroups);
+						}
 					});	
 				}			        			    
-		    });       
-		});	
+		    });
+		  }       
+		});
     }
     
-	function _createPeerReviewsForGroup(courseID, assignmentID, numOfReviews, submitted) {
-		$(".peer-review-list").html("<p>Tildeler hverandrevurderinger...</p>");
+	function _createPeerReviewsForGroups(courseID, assignmentID, numOfReviews, allSubmitted, groupsMembers, selectedGroups) {
+		$(".peer-review-list").html("");
 		$("#progress").show();
-		$("#bar").width('0%');
-		asyncsDone = 0;
+		var asyncsDone = 0;
 		var assigned = [];
 		var assesorIndex;
-		for (var j = 0; j < numOfReviews; j++) {
-			for (var i = 0; i < submitted.length; i++) {				
-				assesorIndex = (i + 1) + j;
-				// Check if index exceeds array length
-				if (assesorIndex >= submitted.length) {
-					assesorIndex = assesorIndex - submitted.length;	
+		var submitted = [];
+		var groupsDone = 0;
+		var skipped = 0;
+		for (var m = 0; m < groupsMembers.length; m++) {
+  		$("#bar").width('0%');
+      submitted = [];
+      $(".progress-info").html("Tildeler hverandrevurderinger for gruppe " + (groupsDone + 1) + " av " + groupsMembers.length);
+      // Get submissions for group
+  		for (var k = 0; k < allSubmitted.length; k++) {
+    		for (var l = 0; l < groupsMembers[m].length; l++) {
+      		if (allSubmitted[k].user_id == groupsMembers[m][l].id) {
+        		submitted.push(allSubmitted[k]);
+      		}
+    		}
+  		}
+  		// Continue if number of reviews exeeds number of groups members
+  		if (numOfReviews > (submitted.length - 1)) {
+    		skipped = skipped + submitted.length;
+    		groupsDone++;
+    		alert("For mange gjennomganger i forhold til antall besvarelser for gruppe " + selectedGroups[m].text);
+				if (groupsDone == groupsMembers.length) {
+  				_listPeerReviewsForGroup(selectedGroups, assignmentID);
+  				return;
 				}
-				userID = submitted[assesorIndex].user_id;					
-				mmooc.api.createPeerReview(courseID, assignmentID, submitted[i].id, userID, function(result) {					
-					asyncsDone++;
-					var width = (100 / (numOfReviews * submitted.length)) * asyncsDone + "%";
-					$("#bar").width(width);
-					if (asyncsDone == (submitted.length * numOfReviews)) {
-						_listPeerReviewsForGroup();
-					}
-				});		
-			}
-		}			
+    		continue;
+  		}
+  		for (var j = 0; j < numOfReviews; j++) {
+  			for (var i = 0; i < submitted.length; i++) {
+  				assesorIndex = (i + 1) + j;
+  				// Check if index exceeds array length
+  				if (assesorIndex >= submitted.length) {
+  					assesorIndex = assesorIndex - submitted.length;	
+  				}
+  				userID = submitted[assesorIndex].user_id;
+  				mmooc.api.createPeerReview(courseID, assignmentID, submitted[i].id, userID, function(result) {					
+  					asyncsDone++;
+  					var width = (100 / (numOfReviews * allSubmitted.length)) * asyncsDone + "%";
+  					$("#bar").width(width);
+  					if (asyncsDone == (allSubmitted.length - skipped) * numOfReviews) {
+    					groupsDone++;
+              asyncsDone = 0;
+  					}
+  					if (groupsDone == groupsMembers.length) {
+    					_listPeerReviewsForGroup(selectedGroups, assignmentID);
+    					return;
+  					}
+  				});
+  			}
+  		}
+		}
 	}
-    
+
     function _isNormalInteger(str) {
     	return /^\+?(0|[1-9]\d*)$/.test(str);
 	}
     
     function _showInput() {
-	    $(".peer-review-create").html("<div class='input-wrapper'><input type='text' value='1' style='width:25px;' class='number-of-reviews'> gjennomganger per bruker<br><input type='button' value='Tildel hverandrevurderinger' class='button btn-create-pr'></div>");
+	    $(".peer-review-create").html("<div class='input-wrapper'><input type='text' value='" + mmooc.settings.defaultNumberOfReviews + "' style='width:25px;' class='number-of-reviews'> gjennomganger per bruker<br><input type='button' value='Tildel hverandrevurderinger' class='button btn-create-pr'></div>");
     }
 
     return {
