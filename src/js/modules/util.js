@@ -97,8 +97,13 @@ this.mmooc.util = function () {
             return roles != null
                 && (roles.indexOf('teacher') != -1
                     || roles.indexOf('admin') != -1);
-        }
+        },
 
+        setGlobalPeerReviewButtonState: function () {
+            if(mmooc.settings.disablePeerReviewButton == true) {
+                $(".assignments #right-side :submit").prop("disabled",true);
+            }
+        }
     };
 }();
 

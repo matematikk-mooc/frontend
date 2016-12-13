@@ -120,6 +120,7 @@ jQuery(function($) {
     // example route: /courses/54/assignments/369 - assignment which may be a peer review (hverandrevurdering)
     mmooc.routes.addRouteForPath(/\/courses\/\d+\/assignments\/\d+/, function() {
         mmooc.pages.redesignAssignmentPage();
+        mmooc.util.setGlobalPeerReviewButtonState();
     });
 
     // Assignment submission which might be your own or someone else's: Peer review (hverandrevurdering)
