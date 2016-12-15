@@ -160,6 +160,7 @@ this.mmooc.menu = function() {
                     if (mmooc.menu.checkReadStateFor(activities[i])) {
                         unreadNotifications++;
                     }
+                    activities[i].created_at = mmooc.util.formattedDate(activities[i].created_at);
                 }
 
                 var badge = $("#mmooc-notification-count");
