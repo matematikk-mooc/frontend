@@ -1,5 +1,6 @@
 .discussion-collections {
     background: none !important;
+    border:none;
 
     .discussion {
         box-shadow: 0 1px 2px 0 rgba(0,0,0,0.35);
@@ -7,6 +8,15 @@
         border-radius: 0;
         padding: 20px 35px;
         margin-bottom: 12px;
+    }
+
+    .discussion-list {
+        border:none;
+        padding:0;
+    }
+
+    .discussion.no-content {
+        margin:0;
     }
 }
 
@@ -39,10 +49,60 @@
         }
     }
 }
+.discussion_entry>.discussion-entry-reply-area {
+    border:none;
+}
+
+.topic .entry-content {
+    border:none;
+}
 
 .publication-date {
     font-size:14px;
     margin-bottom:5px;
+}
+
+.discussion-read-state-btn {
+    display:none;
+}
+
+.discussion-entries .entry {
+    margin:0;
+}
+
+.read-unread-button {
+    font-size:13px;
+    width:110px;
+    height:25px;
+    text-align:center;
+    line-height:25px;
+    color:black;
+    cursor:pointer;
+    position:absolute;
+    z-index:1000;
+    right:75px;
+    top:38px;
+    left:inherit;
+    text-decoration:none !important;
+    border:1px solid black;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+}
+
+.read-unread-button.read {
+    background:#0096db;
+    color:white;
+    border:1px solid #0096db;
+}
+
+.entry.collapsed .read-unread-button {
+    right:130px;
+    top:36px;
+}
+
+.collapse-discussion {
+    outline:0;
 }
 
 .new-and-total-badge {
@@ -77,6 +137,7 @@
 
     &.toolbarView .headerBar {
         background: none;
+        border:none;
     }
 
     &.toolbarView .headerBar.sticky {
