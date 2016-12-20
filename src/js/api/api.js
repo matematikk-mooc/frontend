@@ -48,6 +48,12 @@ this.mmooc.api = function() {
                     if("student_id" in params) {
                         response = response.map(function(el){el.student_id = params.student_id; return el});
                     }
+                    if(uri.indexOf("/groups/") !== -1 && uri.indexOf("/users") !== -1) {
+                      var groupId = uri.split("/groups/");
+                      groupId = groupId[1].split("/users");
+                      groupId = parseInt(groupId[0]);
+                      response = response.map(function(el){el.group_id = groupId; return el});
+                    }
                     callback(response);
                 },
                 error: function(XMLHttpRequest, textStatus, errorThrown) {

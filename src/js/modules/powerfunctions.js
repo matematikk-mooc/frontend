@@ -100,119 +100,140 @@ this.mmooc.powerFunctions = function() {
 
     function _listPeerReviewsForGroup(selectedGroups, assignmentID) {
       $(".peer-review-list").html("");
-	    $("#progress").show();
-	    $("#bar").width('0%');
+      $(".progress-info").html("<p>Laster hverandrevurderinger...</p>");
 	    var courseID = $('#mmpf-course-select option:selected').val();
 	    var html = "";
 	    var peerReveiwsInGroup = [];
-	    var submitted = [];
 	    var count = 0;
 	    var asyncsDone = 0;
 	    var inArray = false;
 	    var groupIndex = 0;
 	    var groupsMembers = [];
+	    var allSubmitted = [];
       mmooc.api.getPeerReviewsForAssignment(courseID, assignmentID, function(peerReviews) {
-        $("#progress").show();
 		    for (var gi = 0; gi < selectedGroups.length; gi++) {
 		      mmooc.api.getGroupMembers(selectedGroups[gi].value, function(members) {
-  		    groupsMembers.push(members);
-			    $(".progress-info").html("Laster gruppe " + (groupIndex + 1) + " av " + selectedGroups.length);
-			    $("#bar").width('0%');
-			    submitted = [];
-			    // Get submissions for users in group and push to array if workflow_state is submitted or graded
-  				for (var i = 0; i < members.length; i++) {
-  					mmooc.api.getSingleSubmissionForUser(courseID, assignmentID, members[i].id, function(submission) {
-  						if (submission.workflow_state == "submitted" || submission.workflow_state == "graded") {
-  							submitted.push(submission);
-  						}
-  						asyncsDone++;
-  						var width = (100 / members.length) * asyncsDone + "%";
-  						$("#bar").width(width);
-  						if (asyncsDone == members.length) {
-    						asyncsDone = 0;
-  							_renderList();
-  							groupIndex++;
-  						}
-  					});
+    		    groupsMembers.push(members);
+    		    asyncsDone++;
+  			    $(".progress-info").html("Laster grupper");
+  			    $("#progress").show();
+  			    var width = (100 / selectedGroups.length) * asyncsDone + "%";
+  			    $("#bar").width(width);
+  			    if (asyncsDone == selectedGroups.length) {
+    			    _findSubmissionsForGroups(groupsMembers);
+  			    }			        			    
+		      });
+		    }
+        function _findSubmissionsForGroups(groupsMembers) {
+		      var totalMembers = 0;
+		      asyncsDone = 0;
+		      // Find total members
+		      for (var j = 0; j < groupsMembers.length; j++) {
+  		      for (var i = 0; i < groupsMembers[j].length; i++) {
+    		      totalMembers++;
+  		      }
+		      }
+		      for (var j = 0; j < groupsMembers.length; j++) {
+  		      // Get submissions for users in group and push to array if workflow_state is submitted or graded
+    				for (var i = 0; i < groupsMembers[j].length; i++) {
+    					mmooc.api.getSingleSubmissionForUser(courseID, assignmentID, groupsMembers[j][i].id, function(submission) {
+      					$(".progress-info").html("Laster besvarelser");
+    						if (submission.workflow_state == "submitted" || submission.workflow_state == "graded") {
+    							allSubmitted.push(submission);
+    						}
+    						asyncsDone++;
+    						width = (100 / totalMembers) * asyncsDone + "%";
+    						$("#bar").width(width);
+    						// Print groups when all requests are done
+    						if (asyncsDone == totalMembers) {
+      						for (var i = 0; i < groupsMembers.length; i++) {
+    							  _printSingleGroup(groupsMembers[i], allSubmitted);
+    							}
+    						}
+    					});
+  				  }
 				  }
-				function _renderList() {
+				}
+  			function _printSingleGroup(members, submitted) {
   				peerReveiwsInGroup = [];
   				inArray = false;
   				count = 0;
-  				html = "<h3>" + selectedGroups[groupIndex].text + "</h3><ul>";
-					// Traverse all peer reviews and group members	  	
-			    	for (var i = 0; i < peerReviews.length; i++) {
-				    	for (var j = 0; j < members.length; j++) {
-					    	// Check if object is already in array			    	
-					    	for (var k = 0; k < peerReveiwsInGroup.length; k++) {
-						    	if(peerReveiwsInGroup[k] === peerReviews[i]) {
-							    	inArray = true;
-						    	}
-						    }
-						    // Push object to array if assesor is member of group and object not already in array	    	
-				    		if (peerReviews.assessor_id == members.id && !inArray) {
-					    		peerReveiwsInGroup[count] = peerReviews[i];
-					    		count++;
-				    		}
-				    		inArray = false;
-				    	}
-				    }
-				    console.log(peerReveiwsInGroup);
-				    inArray = false;			    			    			    
-			    	for (var i = 0; i < members.length; i++) {
-				    	count = 0;
-				    	// List users and tag users without submissions
-				    	if(submitted) {
-					    	for (j = 0; j < submitted.length; j++) {
-						    	// Check if user has submission
-						    	if (submitted[j].user_id == members[i].id) {
-							    	html = html + "<li><a href='" + "/courses/" + courseID + "/assignments/" + assignmentID + "/submissions/" + members[i].id + "' target='_blank'>" + members[i].name + "</a></li><ul>";
-							    	inArray = true;
-							    	break;
-						    	}
-					    	}
-							if (!inArray) {
-							  	html = html + "<li>" + members[i].name + " <span class='no-submission'>Ikke levert besvarelse</span></li><ul>";
-							}
-				    	}else {
-					    	html = html + "<li>" + members[i].name + "</li><ul>";
-				    	}		    	
-				    	for (var k = 0; k < peerReveiwsInGroup.length; k++) {
-					    	if(members[i].id == peerReveiwsInGroup[k].assessor_id) {
-						    	// List user name and tag peer review as completed/not completed
-						    	if(peerReveiwsInGroup[k].workflow_state == "completed") {
-						    		html = html + "<li><a href='" + "/courses/" + courseID + "/assignments/" + assignmentID + "/submissions/" + peerReveiwsInGroup[k].user.id + "' target='_blank'>" + peerReveiwsInGroup[k].user.display_name  + " </a><span style='color:green;'>Fullført</span></li>";
-						    	}else {
-							    	html = html + "<li><a href='" + "/courses/" + courseID + "/assignments/" + assignmentID + "/submissions/" + peerReveiwsInGroup[k].user.id + "' target='_blank'>" + peerReveiwsInGroup[k].user.display_name  + " </a><span style='color:red;'>Ikke fullført</span></li>";
-						    	}
-						    	count++;
-					    	}
-				    	}
-				    	html = html + "</ul>";
-				    	if(count == 0) {
-					    	html = html + "<div>Ingen tildelt</div>";
-				    	}
-				    	inArray = false;	    			    	
-				    }
-				    $("#progress").hide();
-				    $(".peer-review-list").append(html + "</ul>");
-				    $(".progress-info").html("");
-				    $('.input-wrapper').show();
-					$('.btn-create-pr').unbind().click(function () {
-						var numOfReviews = $('.number-of-reviews').val();
-						// Create peer reviews for group after validation
-						if (!_isNormalInteger(numOfReviews) || numOfReviews < 1) {
-							alert("Antall gjennomganger må være et positivt heltall");
+					for (var i = 0; i < selectedGroups.length; i++) {
+						if (selectedGroups[i].value == members[0].group_id) {
+  						var groupName = selectedGroups[i].text;
 						}
-						else {
-							$('.input-wrapper').hide();
-              _createPeerReviewsForGroups(courseID, assignmentID, numOfReviews, submitted, groupsMembers, selectedGroups);
-						}
-					});	
-				}			        			    
-		    });
-		  }       
-		});
+					} 
+  				html = "<h3>" + groupName + "</h3><ul>";
+  				// Traverse all peer reviews and group members	  	
+  		    	for (var i = 0; i < peerReviews.length; i++) {
+  			    	for (var j = 0; j < members.length; j++) {
+  				    	// Check if object is already in array			    	
+  				    	for (var k = 0; k < peerReveiwsInGroup.length; k++) {
+  					    	if(peerReveiwsInGroup[k] === peerReviews[i]) {
+  						    	inArray = true;
+  					    	}
+  					    }
+  					    // Push object to array if assesor is member of group and object not already in array	    	
+  			    		if (peerReviews[i].assessor_id == members[j].id && !inArray) {
+  				    		peerReveiwsInGroup[count] = peerReviews[i];
+  				    		count++;
+  			    		}
+  			    		inArray = false;
+  			    	}
+  			    }
+  			    inArray = false;			    			    			    
+  		    	for (var i = 0; i < members.length; i++) {
+  			    	count = 0;
+  			    	// List users and tag users without submissions
+  			    	if(submitted) {
+  				    	for (j = 0; j < submitted.length; j++) {
+  					    	// Check if user has submission
+  					    	if (submitted[j].user_id == members[i].id) {
+  						    	html = html + "<li><a href='" + "/courses/" + courseID + "/assignments/" + assignmentID + "/submissions/" + members[i].id + "' target='_blank'>" + members[i].name + "</a></li><ul>";
+  						    	inArray = true;
+  						    	break;
+  					    	}
+  				    	}
+  						if (!inArray) {
+  						  	html = html + "<li>" + members[i].name + " <span class='no-submission'>Ikke levert besvarelse</span></li><ul>";
+  						}
+  			    	}else {
+  				    	html = html + "<li>" + members[i].name + "</li><ul>";
+  			    	}		    	
+  			    	for (var k = 0; k < peerReveiwsInGroup.length; k++) {
+  				    	if(members[i].id == peerReveiwsInGroup[k].assessor_id) {
+  					    	// List user name and tag peer review as completed/not completed
+  					    	if(peerReveiwsInGroup[k].workflow_state == "completed") {
+  					    		html = html + "<li><a href='" + "/courses/" + courseID + "/assignments/" + assignmentID + "/submissions/" + peerReveiwsInGroup[k].user.id + "' target='_blank'>" + peerReveiwsInGroup[k].user.display_name  + " </a><span style='color:green;'>Fullført</span></li>";
+  					    	}else {
+  						    	html = html + "<li><a href='" + "/courses/" + courseID + "/assignments/" + assignmentID + "/submissions/" + peerReveiwsInGroup[k].user.id + "' target='_blank'>" + peerReveiwsInGroup[k].user.display_name  + " </a><span style='color:red;'>Ikke fullført</span></li>";
+  					    	}
+  					    	count++;
+  				    	}
+  			    	}
+  			    	html = html + "</ul>";
+  			    	if(count == 0) {
+  				    	html = html + "<div>Ingen tildelt</div>";
+  			    	}
+  			    	inArray = false;	    			    	
+  			    }
+  			    $("#progress").hide();
+  			    $(".peer-review-list").append(html + "</ul>");
+  			    $(".progress-info").html("");
+  			    $('.input-wrapper').show();
+  				$('.btn-create-pr').unbind().click(function () {
+  					var numOfReviews = $('.number-of-reviews').val();
+  					// Create peer reviews for group after validation
+  					if (!_isNormalInteger(numOfReviews) || numOfReviews < 1) {
+  						alert("Antall gjennomganger må være et positivt heltall");
+  					}
+  					else {
+  						$('.input-wrapper').hide();
+              _createPeerReviewsForGroups(courseID, assignmentID, numOfReviews, allSubmitted, groupsMembers, selectedGroups);
+  					}
+  				});	
+  			}       
+		  });
     }
     
 	function _createPeerReviewsForGroups(courseID, assignmentID, numOfReviews, allSubmitted, groupsMembers, selectedGroups) {
