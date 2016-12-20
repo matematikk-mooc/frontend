@@ -29,7 +29,7 @@ this.mmooc.discussionTopics = function () {
         toggleReadUnreadButton: function(button) {
             $(".discussion-read-state-btn").each(function(index) {
                     var button = $(this).siblings(".entry-content").find(".read-unread-button");
-                    if($(this).attr('title') == "Mark as Read") {
+                    if($(this).parent().hasClass("unread")) {
                         button.text('Marker som lest');
                         button.addClass('read');
                     }
