@@ -10,6 +10,44 @@
             a {
                 padding: 0;
             }
+
+            .module-sequence-footer-button--previous, .module-sequence-footer-button--next {
+                border:1px solid #bbbbbb;
+                box-shadow:none;
+                width:70px;
+                line-height:30px;
+                margin-top:5px;
+                text-align:left;
+                position:absolute;
+
+                @media (max-width: 1000px) {
+                  margin:5px 20px 0 20px !important;
+                  float:left;
+                }
+
+                i {
+                    display:none;
+                }
+            }
+
+            .module-sequence-footer-button--previous {
+                left:240px;
+                background: url("../../vector_images/mmooc-icon-arrow-long-left.svg") no-repeat 10px center;
+                background-size:20px;
+                padding-left:40px;
+            }
+
+            .module-sequence-footer-button--next {
+                left:370px;
+                background: url("../../vector_images/mmooc-icon-arrow-long-right.svg") no-repeat 80px center;
+                background-size:20px;
+                padding-right:40px;
+                text-indent:40px;
+            }
+
+            #mark-as-done-checkbox {
+                float:left;
+            }
         }
         
 
@@ -24,6 +62,8 @@
         top: 60px;
         display: block;
         clear: both;
+        width:900px;
+        margin-left:0;
         
         .mmooc-license {
             text-align: left;
