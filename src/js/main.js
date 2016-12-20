@@ -118,6 +118,7 @@ jQuery(function($) {
         mmooc.menu.showLeftMenu();
         mmooc.menu.listModuleItems();
         mmooc.pages.modifyMarkAsDoneButton();
+        mmooc.pages.duplicateMarkedAsDoneButton();
         // mmooc.pages.changeTranslations();
     });
     
