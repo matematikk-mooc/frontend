@@ -92,12 +92,14 @@ jQuery(function($) {
         // For discussion pages we only want the title to be "<discussion>" instead of "Discussion: <discussion>"
         var title = mmooc.util.getPageTitleAfterColon();
 
+        var courseId = mmooc.api.getCurrentCourseId();
         if (!mmooc.util.isTeacherOrAdmin()) {
             mmooc.menu.hideRightMenu();
+            var contentId = mmooc.api.getCurrentTypeAndContentId().contentId;
+            mmooc.api.getDiscussionTopic(courseId, contentId, mmooc.discussionTopics.setDiscussionTopicPubDate);
         }
 
         // Announcements are some as type of discussions, must use a hack to determine if this is an announcement
-        var courseId = mmooc.api.getCurrentCourseId();
         if (mmooc.api.currentPageIsAnnouncement()) {
             mmooc.menu.showCourseMenu(courseId, 'Kunngjøringer', title);
             mmooc.menu.showBackButton("/courses/" + courseId + "/announcements", "Tilbake til kunngjøringer");

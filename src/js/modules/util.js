@@ -103,6 +103,13 @@ this.mmooc.util = function () {
             if(mmooc.settings.disablePeerReviewButton == true) {
                 $(".assignments #right-side :submit").prop("disabled",true);
             }
+        },
+
+        formattedDate: function (date) {
+            var date = new Date(date);
+            var month = ["Jan", "Feb", "Mar", "Apr", "Mai", "Jun",
+            "Jul", "Aug", "Sep", "Okt", "Nov", "Des"][date.getMonth()];
+            return date.getDate() + ' ' + month + ', ' + date.getFullYear() + ' - ' + date.getHours() + ':'+ date.getMinutes();
         }
     };
 }();
