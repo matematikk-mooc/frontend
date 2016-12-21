@@ -48,7 +48,10 @@ this.mmooc.discussionTopics = function () {
                 $(this).addClass('unread');
               }
             });
-          }, 800);
+          }, 800); 
+        },
+        insertSearchButton: function() {
+          $('.index_view_filter_form').append('<button class="btn btn-discussion-search">');
           
         }
     };
