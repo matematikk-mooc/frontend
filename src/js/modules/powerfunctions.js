@@ -100,7 +100,7 @@ this.mmooc.powerFunctions = function() {
 
     function _listPeerReviewsForGroup(selectedGroups, assignmentID) {
       $(".peer-review-list").html("");
-      $(".progress-info").html("<p>Laster hverandrevurderinger...</p>");
+      $(".progress-info").html("<p>Laster hverandrevurderinger... (Kan ta opptil 1 minutt)</p>");
 	    var courseID = $('#mmpf-course-select option:selected').val();
 	    var html = "";
 	    var peerReveiwsInGroup = [];
@@ -111,8 +111,8 @@ this.mmooc.powerFunctions = function() {
 	    var groupsMembers = [];
 	    var allSubmitted = [];
       mmooc.api.getPeerReviewsForAssignment(courseID, assignmentID, function(peerReviews) {
-		    for (var gi = 0; gi < selectedGroups.length; gi++) {
-		      mmooc.api.getGroupMembers(selectedGroups[gi].value, function(members) {
+		    for (var i = 0; i < selectedGroups.length; i++) {
+		      mmooc.api.getGroupMembers(selectedGroups[i].value, function(members) {
     		    groupsMembers.push(members);
     		    asyncsDone++;
   			    $(".progress-info").html("Laster grupper");
@@ -120,7 +120,17 @@ this.mmooc.powerFunctions = function() {
   			    var width = (100 / selectedGroups.length) * asyncsDone + "%";
   			    $("#bar").width(width);
   			    if (asyncsDone == selectedGroups.length) {
-    			    _findSubmissionsForGroups(groupsMembers);
+    			    //Sort groups array based on selected groups array
+    			    var groupsMembersSorted = [];
+    			    for (var i = 0; i < selectedGroups.length; i++) {
+      			    for (var j = 0; j < groupsMembers.length; j++) {
+        			    if (selectedGroups[i].value == groupsMembers[j][0].group_id) {
+          			    groupsMembersSorted.push(groupsMembers[j]);
+          			    break;
+        			    }
+      			    }
+    			    }
+    			    _findSubmissionsForGroups(groupsMembersSorted);
   			    }			        			    
 		      });
 		    }

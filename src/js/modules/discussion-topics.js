@@ -38,6 +38,18 @@ this.mmooc.discussionTopics = function () {
                         button.removeClass('read');
                     }
                 });
+        },
+        setDiscussionsListUnreadClass: function() {
+          var wait = setInterval(function() {
+            clearInterval(wait);
+            $("#open-discussions .ig-list .discussion").each(function() {
+              var unread = $(this).find('.new-items').text();
+              if(unread.indexOf('0') == -1) {
+                $(this).addClass('unread');
+              }
+            });
+          }, 800);
+          
         }
     };
 }();

@@ -50,6 +50,7 @@ jQuery(function($) {
     mmooc.routes.addRouteForPath(/\/courses\/\d+\/discussion_topics$/, function() {
         var courseId = mmooc.api.getCurrentCourseId();
         mmooc.menu.showCourseMenu(courseId, 'Diskusjoner', mmooc.util.getPageTitleBeforeColon());
+        mmooc.discussionTopics.setDiscussionsListUnreadClass();
     });
 
     mmooc.routes.addRouteForPath(/\/courses\/\d+\/groups$/, function() {
