@@ -109,7 +109,7 @@ this.mmooc.util = function () {
             var date = new Date(date);
             var month = ["Jan", "Feb", "Mar", "Apr", "Mai", "Jun",
             "Jul", "Aug", "Sep", "Okt", "Nov", "Des"][date.getMonth()];
-            return date.getDate() + ' ' + month + ', ' + date.getFullYear() + ' - ' + date.getHours() + ':'+ date.getMinutes();
+            return date.getDate() + ' ' + month + ', ' + date.getFullYear() + ' - ' + date.getHours() + ':'+ (date.getMinutes()<10?'0':'') + date.getMinutes() ;
         }
     };
 }();
