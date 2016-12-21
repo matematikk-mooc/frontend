@@ -79,6 +79,8 @@ jQuery(function($) {
 
     mmooc.routes.addRouteForPath([/\/groups\/\d+\/discussion_topics\/\d+$/, /\/groups\/\d+\/discussion_topics\/new$/], function() {
         mmooc.menu.showDiscussionGroupMenu();
+        //Alters the readystate dot to more link alike
+        mmooc.discussionTopics.alterDiscussionReadStateLook();
     });
 
     mmooc.routes.addRouteForPath([/\/groups\/\d+\/discussion_topics\/\d+$/], function() {
