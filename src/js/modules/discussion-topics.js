@@ -40,16 +40,20 @@ this.mmooc.discussionTopics = function () {
                 });
         },
         setDiscussionsListUnreadClass: function() {
-          var wait = setInterval(function() {
-            clearInterval(wait);
-            $("#open-discussions .ig-list .discussion").each(function() {
-              var unread = $(this).find('.new-items').text();
-              if(unread.indexOf('0') == -1) {
-                $(this).addClass('unread');
-              }
-            });
-          }, 800);
-          
+          var checkExist = setInterval(function() {
+            if ($("#open-discussions .ig-list .discussion").length) {
+              clearInterval(checkExist);
+              $("#open-discussions .ig-list .discussion").each(function() {
+                var unread = $(this).find('.new-items').text();
+                if(unread.indexOf('0') == -1) {
+                  $(this).addClass('unread');
+                }
+              });
+            }
+          }, 100); 
+        },
+        insertSearchButton: function() {
+          $('.index_view_filter_form').append('<button class="btn btn-discussion-search">'); 
         }
     };
 }();

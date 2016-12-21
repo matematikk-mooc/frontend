@@ -51,6 +51,7 @@ jQuery(function($) {
         var courseId = mmooc.api.getCurrentCourseId();
         mmooc.menu.showCourseMenu(courseId, 'Diskusjoner', mmooc.util.getPageTitleBeforeColon());
         mmooc.discussionTopics.setDiscussionsListUnreadClass();
+        mmooc.discussionTopics.insertSearchButton();
     });
 
     mmooc.routes.addRouteForPath(/\/courses\/\d+\/groups$/, function() {
