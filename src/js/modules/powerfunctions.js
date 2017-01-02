@@ -253,55 +253,50 @@ this.mmooc.powerFunctions = function() {
 		var assigned = [];
 		var assesorIndex;
 		var submitted = [];
-		var groupsDone = 0;
 		var skipped = 0;
+		var width = 0;
 		for (var m = 0; m < groupsMembers.length; m++) {
-  		$("#bar").width('0%');
-      submitted = [];
-      $(".progress-info").html("Tildeler hverandrevurderinger for gruppe " + (groupsDone + 1) + " av " + groupsMembers.length);
-      // Get submissions for group
-  		for (var k = 0; k < allSubmitted.length; k++) {
-    		for (var l = 0; l < groupsMembers[m].length; l++) {
-      		if (allSubmitted[k].user_id == groupsMembers[m][l].id) {
-        		submitted.push(allSubmitted[k]);
+      		$("#bar").width('0%');
+            submitted = [];
+            // Get submissions for group
+            $(".progress-info").html("Finner innleveringene for gruppe " + (m + 1) + " av " + groupsMembers.length);
+      		for (var k = 0; k < allSubmitted.length; k++) {
+        		for (var l = 0; l < groupsMembers[m].length; l++) {
+                    width = (100 / (allSubmitted.length)) * k + "%";
+                    $("#bar").width(width);
+              		if (allSubmitted[k].user_id == groupsMembers[m][l].id) {
+                		submitted.push(allSubmitted[k]);
+              		}
+        		}
       		}
-    		}
-  		}
-  		// Continue if number of reviews exeeds number of groups members
-  		if (numOfReviews > (submitted.length - 1)) {
-    		skipped = skipped + submitted.length;
-    		groupsDone++;
-    		alert("For mange gjennomganger i forhold til antall besvarelser for gruppe " + selectedGroups[m].text);
-				if (groupsDone == groupsMembers.length) {
-  				_listPeerReviewsForGroup(selectedGroups, assignmentID);
-  				return;
-				}
-    		continue;
-  		}
-  		for (var j = 0; j < numOfReviews; j++) {
-  			for (var i = 0; i < submitted.length; i++) {
-  				assesorIndex = (i + 1) + j;
-  				// Check if index exceeds array length
-  				if (assesorIndex >= submitted.length) {
-  					assesorIndex = assesorIndex - submitted.length;	
-  				}
-  				userID = submitted[assesorIndex].user_id;
-  				mmooc.api.createPeerReview(courseID, assignmentID, submitted[i].id, userID, function(result) {					
-  					asyncsDone++;
-  					var width = (100 / (numOfReviews * allSubmitted.length)) * asyncsDone + "%";
-  					$("#bar").width(width);
-  					if (asyncsDone == (allSubmitted.length - skipped) * numOfReviews) {
-    					groupsDone++;
-              asyncsDone = 0;
-  					}
-  					if (groupsDone == groupsMembers.length) {
-    					_listPeerReviewsForGroup(selectedGroups, assignmentID);
-    					return;
-  					}
-  				});
-  			}
-  		}
-		}
+      		// Continue if number of reviews exeeds number of groups members
+      		if (numOfReviews > (submitted.length - 1)) {
+        		skipped = skipped + submitted.length;   
+        		alert("For mange gjennomganger i forhold til antall besvarelser for gruppe " + selectedGroups[m].text);
+        		continue;
+      		}
+      		$(".progress-info").html("Tildeler hverandrevurderinger...");
+      		$("#bar").width(0);
+      		for (var j = 0; j < numOfReviews; j++) {
+      			for (var i = 0; i < submitted.length; i++) {
+      				assesorIndex = (i + 1) + j;
+      				// Check if index exceeds array length
+      				if (assesorIndex >= submitted.length) {
+      					assesorIndex = assesorIndex - submitted.length;	
+      				}
+      				userID = submitted[assesorIndex].user_id;
+      				mmooc.api.createPeerReview(courseID, assignmentID, submitted[i].id, userID, function(result) {					
+      					asyncsDone++;
+      					width = (100 / (numOfReviews * allSubmitted.length)) * asyncsDone + "%";
+      					$("#bar").width(width);
+      					if (asyncsDone == (allSubmitted.length - skipped) * numOfReviews) {
+          					$("#progress").hide();
+        					_listPeerReviewsForGroup(selectedGroups, assignmentID);
+      					}
+      				}); //end createPeerReview async call
+      			} //end for submitted.length
+      		} //end for numOfReviews (ferdig å tildele hverandrevurderinger for en gruppe)  
+		} //end for groupsMembers.length (ferdig å tildele hverandrevurderinger for alle grupper)
 	}
 
     function _isNormalInteger(str) {
