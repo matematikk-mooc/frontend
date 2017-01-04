@@ -443,6 +443,26 @@ this.mmooc.api = function() {
             });
         },
         
+        // /api/v1/courses/:course_id/groups
+        getGroupsInCourse: function(courseID, callback, error) {
+            this._get({
+                "callback": callback,
+                "error":    error,
+                "uri":      "/courses/" + courseID + "/groups",
+                "params":   { per_page: 999 }
+            });
+        },
+        
+        // /api/v1/group_categories/users/self/groups
+        getUserGroups: function(callback, error) {
+            this._get({
+                "callback": callback,
+                "error":    error,
+                "uri":      "/users/self/groups",
+                "params":   { per_page: 999 }
+            });
+        },        
+        
         // /api/v1/courses/:course_id/sections
         getSectionsForCourse: function(courseID, params, callback, error) {
             this._get({
@@ -451,7 +471,17 @@ this.mmooc.api = function() {
                 "uri":      "/courses/" + courseID + "/sections",
                 "params":   params
             });
-        },      
+        },
+        
+        // /api/v1/sections/:section_id
+        getSingleSection: function(sectionID, callback, error) {
+            this._get({
+                "callback": callback,
+                "error":    error,
+                "uri":      "/sections/" + sectionID,
+                "params":   {}
+            });
+        },     
                 
         // /api/v1/courses/54/assignments/369
         getSingleAssignment : function(courseId, assignmentId, callback, error) {
@@ -558,6 +588,22 @@ this.mmooc.api = function() {
                 "callback": callback,
                 "uri":      "/courses/" + courseId + "/discussion_topics/" + contentId,
                 "params":   { per_page: 999 }
+            });
+        },
+        
+        getGroupDiscussionTopics: function(contentId, callback) {
+            this._get({
+                "callback": callback,
+                "uri":      "/groups/" + contentId + "/discussion_topics/",
+                "params":   { per_page: 999 }
+            });
+        },
+
+        getEnrollmentsForCourse: function(courseId, params, callback) {
+            this._get({
+                "callback": callback,
+                "uri":      "/courses/" + courseId + "/enrollments",
+                "params":   params
             });
         },
         

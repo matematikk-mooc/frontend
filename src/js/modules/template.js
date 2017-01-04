@@ -194,6 +194,15 @@ Handlebars.registerHelper('urlForFirstNoneCompleteItem', function(items) {
     return null;
 });
 
+Handlebars.registerHelper('ifItemTypeDiscussion', function(type, options) {
+    if (type == 'Discussion') {
+      return options.fn(this);
+    }
+    else {
+      return options.inverse(this);
+    }
+});
+
 Handlebars.registerHelper('findRightUrlFor', function(activity) {
     return activity.type === 'Submission' ? '/courses/' + activity.course_id + '/grades' : activity.html_url;
 });

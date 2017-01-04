@@ -45,6 +45,9 @@ jQuery(function($) {
     mmooc.routes.addRouteForPath(/\/courses\/\d+\/announcements$/, function() {
         var courseId = mmooc.api.getCurrentCourseId();
         mmooc.menu.showCourseMenu(courseId, 'Kunngjøringer', mmooc.util.getPageTitleBeforeColon());
+        mmooc.api.getModulesForCurrentCourse(function(modules) {
+            mmooc.discussionTopics.printDiscussionUnreadCount(modules);
+        });
     });
 
     mmooc.routes.addRouteForPath(/\/courses\/\d+\/discussion_topics$/, function() {
@@ -58,6 +61,9 @@ jQuery(function($) {
         mmooc.groups.interceptLinksToGroupPage();
         var courseId = mmooc.api.getCurrentCourseId();
         mmooc.menu.showCourseMenu(courseId, 'Grupper', mmooc.util.getPageTitleBeforeColon());
+        mmooc.api.getModulesForCurrentCourse(function(modules) {
+            mmooc.discussionTopics.printDiscussionUnreadCount(modules);
+        });
     });
 
     mmooc.routes.addRouteForPath(/\/courses\/\d+\/users$/, function() {

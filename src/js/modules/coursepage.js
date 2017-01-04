@@ -12,6 +12,8 @@ this.mmooc.coursePage = function() {
 
                 var modulesHTML = mmooc.util.renderTemplateWithData("modules", {navname: mmooc.i18n.GoToModule, coursemodules: mmooc.i18n.ModulePlural, modules: modules});
                 document.getElementById('course_home_content').insertAdjacentHTML('beforebegin', modulesHTML);
+                
+                mmooc.discussionTopics.printDiscussionUnreadCount(modules);
             });
         },
         hideCourseInvitationsForAllUsers: function() {
@@ -27,6 +29,5 @@ this.mmooc.coursePage = function() {
              $("ul#flash_message_holder li:contains('" + acceptanceFlashTextToSearchFor + "')")
                 .hide();
         }
-
     };
 }();
