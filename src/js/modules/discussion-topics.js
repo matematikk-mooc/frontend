@@ -224,10 +224,9 @@ this.mmooc.discussionTopics = function () {
                                         mmooc.discussionTopics.printUnreadCountInDiscussionsList(totalRootTopicUnreadCounts);
                                     }
                                 }); // end group discussions async call
+                                break;
                             }
-                            break;
-                        } // end for groupDiscussionTopics.length
-                        break;    
+                        } // end for groupDiscussionTopics.length   
                     } // end for groupDiscussionTopics.length
                 }); // end user groups async call
             }                   
