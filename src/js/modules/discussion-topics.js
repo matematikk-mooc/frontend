@@ -3,9 +3,11 @@ this.mmooc = this.mmooc || {};
 this.mmooc.discussionTopics = function () {
     return {
         setDiscussionTopicPubDate: function(discussionTopic) {
-            var formattedDate = mmooc.util.formattedDate(discussionTopic.posted_at);
-            var pubDate = $("<div class='publication-date'>" + formattedDate + "</div>");
-            $(pubDate).prependTo('#discussion_topic .discussion-header-right');
+            if(discussionTopic.posted_at) {
+              var formattedDate = mmooc.util.formattedDate(discussionTopic.posted_at);
+              var pubDate = $("<div class='publication-date'>" + formattedDate + "</div>");
+              $(pubDate).prependTo('#discussion_topic .discussion-header-right');
+            }
         },
 
         alterDiscussionReadStateLook: function() {
@@ -20,7 +22,7 @@ this.mmooc.discussionTopics = function () {
                 if ($('.discussion-read-state-btn').length) {
                   clearInterval(checkExist);
                   var readUnreadButton = $("<div class='read-unread-button'>Marker som lest</div>");
-                  readUnreadButton.appendTo('.discussion_entry .entry-header');
+                  readUnreadButton.appendTo('.discussion_entry:not(.deleted-discussion-entry) .entry-header');
                   self.toggleReadUnreadButton($(this).closest(".discussion_entry").find("read-unread-button"));
                 }
             }, 100);
