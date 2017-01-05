@@ -55,6 +55,10 @@ jQuery(function($) {
         mmooc.menu.showCourseMenu(courseId, 'Diskusjoner', mmooc.util.getPageTitleBeforeColon());
         mmooc.discussionTopics.setDiscussionsListUnreadClass();
         mmooc.discussionTopics.insertSearchButton();
+        mmooc.discussionTopics.hideUnreadCountInDiscussionList();
+        mmooc.api.getModulesForCurrentCourse(function(modules) {
+            mmooc.discussionTopics.printDiscussionUnreadCount(modules, "discussionslist");
+        });        
     });
 
     mmooc.routes.addRouteForPath(/\/courses\/\d+\/groups$/, function() {
