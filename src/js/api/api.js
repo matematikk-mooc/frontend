@@ -598,6 +598,14 @@ this.mmooc.api = function() {
                 "params":   { per_page: 999 }
             });
         },
+        
+        getAnnouncementsForCourse: function(courseId, callback) {
+            this._get({
+                "callback": callback,
+                "uri":      "/courses/" + courseId + "/discussion_topics",
+                "params":   { only_announcements: true, per_page: 999 }
+            });
+        },
 
         getEnrollmentsForCourse: function(courseId, params, callback) {
             this._get({

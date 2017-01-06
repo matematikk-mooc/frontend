@@ -116,8 +116,42 @@ this.mmooc.announcements = function () {
                 }
             });
 
-        }
+        },
+        printAnnouncementsUnreadCount: function() {
+            var courseId = mmooc.api.getCurrentCourseId();
+            mmooc.api.getAnnouncementsForCourse(courseId, function(announcements) {
+                var totalUnread = 0;
+                for (var i = 0; i < announcements.length; i++) {
+                    if (announcements[i].read_state == "unread" || announcements[i].unread_count > 0) {
+                        totalUnread++;
+                    }
+                    
+                }
+                mmooc.announcements.printUnreadCountInTab(totalUnread);
+            });
 
+        },
+        printUnreadCountInTab: function(totalUnread) {
+            $(".mmooc-course-tab a").each(function() {
+                if ($(this).text() == "Kunngjøringer") {
+                    $(this).parent().append("<span class='discussion-unread-value discussion-unread-tab'>" + totalUnread + "</span>")
+                }
+            });           
+        },
+        setAnnouncementsListUnreadClass: function() {
+          var checkExist = setInterval(function() {
+            if ($("body.announcements .discussionTopicIndexList .discussion-topic").length) {
+              clearInterval(checkExist);
+              $("body.announcements .discussionTopicIndexList .discussion-topic").each(function() {
+                var unread = $(this).find('.new-items').attr("title");
+                if(unread.indexOf('Ingen uleste svar.') == -1) {
+                  $(this).addClass('unread');
+                  $(this).removeClass('read');
+                }
+              });
+            }
+          }, 100); 
+        }
     };
 }();
 

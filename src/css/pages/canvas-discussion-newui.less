@@ -38,11 +38,16 @@ body.discussions {
 .discussion-unread-value {
     border-radius: 50%;
     width: 20px;
+    height: 20px;
     text-align: center;
     font-size: 0.8em;
     background: #931B16;
     color: white;
-    position: absolute; 
+    position: absolute;
+    line-height: 22px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .discussion-unread-tag {
@@ -50,12 +55,10 @@ body.discussions {
     .discussion-unread-item {
         top: -27px;
         right: -12px;
-        padding: 4px 0;
     }
 }
 
 .discussion-unread-tab {
-    display: inline-block;
-    margin-top: -5px;
-    margin-left: 3px;
+    top: 4px;
+    right: 4px;
 }

@@ -43,9 +43,9 @@ this.mmooc.discussionTopics = function () {
         },
         setDiscussionsListUnreadClass: function() {
           var checkExist = setInterval(function() {
-            if ($("#open-discussions .ig-list .discussion").length) {
+            if ($("body.discussions #open-discussions .ig-list .discussion").length) {
               clearInterval(checkExist);
-              $("#open-discussions .ig-list .discussion").each(function() {
+              $("body.discussions #open-discussions .ig-list .discussion").each(function() {
                 var unread = $(this).find('.new-items').text();
                 if(unread.indexOf('0') == -1) {
                   $(this).addClass('unread');
@@ -248,7 +248,7 @@ this.mmooc.discussionTopics = function () {
         printUnreadCountInTab: function(totalUnread) {
             $(".mmooc-course-tab a").each(function() {
                 if ($(this).text() == "Diskusjoner") {
-                    $(this).parent().append("<span class='discussion-unread-value discussion-unread-tab'>" + totalUnread + "</span>")
+                    $(this).parent().append("<div class='discussion-unread-value discussion-unread-tab'>" + totalUnread + "</div>")
                 }
             });           
         },

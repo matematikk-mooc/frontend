@@ -39,6 +39,7 @@ jQuery(function($) {
         } else {
             mmooc.coursePage.listModulesAndShowProgressBar();
             mmooc.menu.showCourseMenu(courseId, mmooc.i18n.Course + 'forside', null);
+            mmooc.announcements.printAnnouncementsUnreadCount();
         }
     });
 
@@ -48,6 +49,8 @@ jQuery(function($) {
         mmooc.api.getModulesForCurrentCourse(function(modules) {
             mmooc.discussionTopics.printDiscussionUnreadCount(modules);
         });
+        mmooc.announcements.printAnnouncementsUnreadCount();
+        mmooc.announcements.setAnnouncementsListUnreadClass();
     });
 
     mmooc.routes.addRouteForPath(/\/courses\/\d+\/discussion_topics$/, function() {
@@ -58,7 +61,8 @@ jQuery(function($) {
         mmooc.discussionTopics.hideUnreadCountInDiscussionList();
         mmooc.api.getModulesForCurrentCourse(function(modules) {
             mmooc.discussionTopics.printDiscussionUnreadCount(modules, "discussionslist");
-        });        
+        });
+        mmooc.announcements.printAnnouncementsUnreadCount();        
     });
 
     mmooc.routes.addRouteForPath(/\/courses\/\d+\/groups$/, function() {
@@ -68,6 +72,7 @@ jQuery(function($) {
         mmooc.api.getModulesForCurrentCourse(function(modules) {
             mmooc.discussionTopics.printDiscussionUnreadCount(modules);
         });
+        mmooc.announcements.printAnnouncementsUnreadCount();
     });
 
     mmooc.routes.addRouteForPath(/\/courses\/\d+\/users$/, function() {
