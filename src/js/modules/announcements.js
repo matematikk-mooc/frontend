@@ -125,9 +125,10 @@ this.mmooc.announcements = function () {
                     if (announcements[i].read_state == "unread" || announcements[i].unread_count > 0) {
                         totalUnread++;
                     }
-                    
                 }
-                mmooc.announcements.printUnreadCountInTab(totalUnread);
+                if (totalUnread > 0) {
+                    mmooc.announcements.printUnreadCountInTab(totalUnread);
+                }
             });
 
         },
