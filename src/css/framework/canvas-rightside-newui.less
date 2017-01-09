@@ -4,6 +4,7 @@
         
         #right-side {
             padding-top: 70px;
+            width: @rightColLargeWidth !important;
             
             #course_show_secondary {
                 
@@ -25,7 +26,7 @@
     
     #right-side {
         box-sizing: border-box;
-        width: auto;
+        //width: auto;
         
         .events_list {
             
@@ -54,6 +55,79 @@
                         background-image: linear-gradient(-180deg,#70a6b8 0,#296073 100%)!important;
                         text-decoration: none;
                     }
+                }
+            }
+        }
+        .deadlines-container {
+            border-top: 4px solid #034961;
+            margin-top: 22px;
+            position: relative;
+            h2 {
+                background: #FFF;
+                font-size: 20px;
+                padding: 22px 12px;
+                margin: 0;
+                //border-bottom: 1px solid #868686;
+                
+            }
+            .deadlines-shadow-before {
+                position: absolute;
+                top: 68px;
+                width: 100%;
+                height: 50px;
+                background-image: linear-gradient(to top, #eaeaea, #fff);
+                pointer-events: none;
+                z-index: 5;
+            }
+            .deadlines-shadow-after {
+                position: absolute;
+                bottom: 0;
+                width: 100%;
+                height: 50px;
+                background-image: linear-gradient(to bottom, #eaeaea, #fff);
+                pointer-events: none;
+                z-index: 5;
+            }
+            .deadlines-list {
+                z-index: 10;
+                width: 100% ;
+                border: 1px solid #ccc;
+                position: relative;
+                max-height: 40px;
+                overflow: auto;
+                overflow-y: auto;
+                padding: 88px 0;
+                ul {
+                    text-decoration: none; 
+                    text-overflow: ellipsis; 
+                    display: block; 
+                    overflow: hidden; 
+                    white-space: nowrap;
+                    margin: 0;
+                    padding: 0;
+                    list-style: none;
+                    li {
+                        margin: 0;
+                        padding: 10px;
+                        border-bottom: 1px solid #ddd;
+                        &:last-child {
+                            border-bottom: none;
+                        }
+                        &.upcoming {
+                            background: @linkColor;
+                            color: #FFF;
+                            a {
+                                color: #FFF;
+                            }
+                        }
+                    }               
+                }
+                &::-webkit-scrollbar {
+                    -webkit-appearance: none;
+                    width: 5px;                
+                }
+                &::-webkit-scrollbar-thumb {
+                    background: #ccc;
                 }
             }
         }

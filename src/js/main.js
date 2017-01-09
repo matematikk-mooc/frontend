@@ -40,6 +40,8 @@ jQuery(function($) {
             mmooc.coursePage.listModulesAndShowProgressBar();
             mmooc.menu.showCourseMenu(courseId, mmooc.i18n.Course + 'forside', null);
             mmooc.announcements.printAnnouncementsUnreadCount();
+            mmooc.coursePage.replaceUpcomingInSidebar();
+            mmooc.coursePage.printDeadlinesForCourse();
         }
     });
 
