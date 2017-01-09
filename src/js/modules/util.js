@@ -107,9 +107,18 @@ this.mmooc.util = function () {
 
         formattedDate: function (date) {
             var date = new Date(date);
-            var month = ["Jan", "Feb", "Mar", "Apr", "Mai", "Jun",
-            "Jul", "Aug", "Sep", "Okt", "Nov", "Des"][date.getMonth()];
+            var month = mmooc.util.getMonthShortName(date);
             return date.getDate() + ' ' + month + ', ' + date.getFullYear() + ' - ' + date.getHours() + ':'+ (date.getMinutes()<10?'0':'') + date.getMinutes() ;
+        },
+
+        getWeekdayShortName: function (date) {
+            var weekdays = ["sø", "ma", "ti", "on", "to", "fr", "lø"];
+            return weekdays[date.getDay()];
+        },
+
+        getMonthShortName: function (date) {
+            var months = ["jan", "feb", "mar", "apr", "mai", "jun", "jul", "aug", "sep", "okt", "nov", "des"];
+            return months[date.getMonth()];
         }
     };
 }();
