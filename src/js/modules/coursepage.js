@@ -33,9 +33,9 @@ this.mmooc.coursePage = function() {
             $("body.home .coming_up").replaceWith(
                 "<div class='deadlines-container'>" +
                 "<h2>Frister</h2>" +
-                "<div class='deadlines-shadow-before'></div>" +
+                "<div class='deadlines-scroll-up'></div>" +
                 "<div class='deadlines-list'></div>" +
-                "<div class='deadlines-shadow-after'></div>" +
+                "<div class='deadlines-scroll-down'></div>" +
                 "</div>"
             );
         },
@@ -56,7 +56,6 @@ this.mmooc.coursePage = function() {
                 }
                 var params = { all_events: 1, type: "assignment", "context_codes": ["course_" + courseId] };
                 mmooc.api.getCaledarEvents(params, function(assignments) {
-                    console.log(assignments);
                     for (var i = 0; i < assignments.length; i++) {
                         if(assignments[i].all_day_date) {
                             var date = new Date(assignments[i].all_day_date);
@@ -73,22 +72,36 @@ this.mmooc.coursePage = function() {
                     });
                     var weekday = [];
                     var month = [];
-                    var html = "<ul>";
+                    var html = "<table>";
                     for (var i = 0; i < allDeadlines.length; i++) {
                         var weekdayName = mmooc.util.getWeekdayShortName(allDeadlines[i].date);
                         var monthName = mmooc.util.getMonthShortName(allDeadlines[i].date);
                         if ("url" in allDeadlines[i]) {
-                            html += "<li id='deadline-" + i + "'><a href='" + allDeadlines[i].url + "'>" + weekdayName + " " + allDeadlines[i].date.getDate() + " " + monthName + " " + allDeadlines[i].title + "</a></li>";
+                            html += "<tr id='deadline-" + i + "'><td class='deadline-date'>" + weekdayName + " " + allDeadlines[i].date.getDate() + " " + monthName + "</td><td><a href='" + allDeadlines[i].url + "' title='" + allDeadlines[i].title + "'>" + allDeadlines[i].title + "</a></td></tr>";
                         }
                         else {
-                            html += "<li id='deadline-" + i + "'>" + weekdayName + " " + allDeadlines[i].date.getDate() + " " + monthName + " " + allDeadlines[i].title + "</li>";
+                            html += "<tr id='deadline-" + i + "'><td class='deadline-date'>" + weekdayName + " " + allDeadlines[i].date.getDate() + " " + monthName + "</td><td>" + allDeadlines[i].title + "</td></tr>";
                         }
                     }
-                    html += "</ul>";
+                    html += "</table>";
                     $("body.home .deadlines-list").html(html);
                     var upcoming = mmooc.coursePage.findUpcomingDate(allDeadlines);
                     $("#deadline-" + upcoming).addClass("upcoming");
-                    $("body.home .deadlines-list").scrollTop($("body.home .deadlines-list").scrollTop() + $("#deadline-" + upcoming).position().top - 87);
+                    var parent = $("body.home .deadlines-list");
+                    var row = $("#deadline-" + upcoming);
+                    parent.scrollTop(parent.scrollTop() + (row.position().top - parent.position().top) - (parent.height()/2) + (row.height()/2));
+                    $(".deadlines-scroll-up").click(function() {
+                        var scroll = parent.scrollTop() - 50;
+                        $(parent).animate({
+                            scrollTop: scroll
+                        }, 200);
+                    });
+                    $(".deadlines-scroll-down").click(function() {
+                        var scroll = parent.scrollTop() + 50;
+                        $(parent).animate({
+                            scrollTop: scroll
+                        }, 200);
+                    });
                 });
             });
         },
@@ -108,7 +121,7 @@ this.mmooc.coursePage = function() {
                 return dates.length - 1;
             }
             else {
-                return nearestDate;
+                return 5;
             }            
         }       
     };

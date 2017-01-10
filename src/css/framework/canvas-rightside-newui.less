@@ -62,54 +62,63 @@
             border-top: 4px solid #034961;
             margin-top: 22px;
             position: relative;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
             h2 {
                 background: #FFF;
                 font-size: 20px;
                 padding: 22px 12px;
                 margin: 0;
-                //border-bottom: 1px solid #868686;
-                
+                border-bottom: 1px solid #868686;
             }
-            .deadlines-shadow-before {
+            .deadlines-scroll-up {
                 position: absolute;
-                top: 68px;
+                top: 69px;
                 width: 100%;
-                height: 50px;
-                background-image: linear-gradient(to top, #eaeaea, #fff);
-                pointer-events: none;
-                z-index: 5;
+                height: 30px;
+                background: url("https://server/vector_images/mmooc-icon-up.svg") no-repeat center center #FFF;
+                background-size: 20px;
+                z-index: 100;
+                cursor: pointer;
+                border-bottom: 1px solid #868686;
             }
-            .deadlines-shadow-after {
+            .deadlines-scroll-down {
                 position: absolute;
                 bottom: 0;
                 width: 100%;
-                height: 50px;
-                background-image: linear-gradient(to bottom, #eaeaea, #fff);
-                pointer-events: none;
-                z-index: 5;
+                height: 30px;
+                background: url("https://server/vector_images/mmooc-icon-down.svg") no-repeat center center #FFF;
+                background-size: 20px;
+                z-index: 100;
+                cursor: pointer;
+                border-top: 1px solid #868686;
+                border-bottom: 1px solid #868686;
             }
             .deadlines-list {
                 z-index: 10;
-                width: 100% ;
+                width: 100%;
+                height: 100%;
                 border: 1px solid #ccc;
                 position: relative;
-                max-height: 40px;
-                overflow: auto;
-                overflow-y: auto;
-                padding: 88px 0;
-                ul {
+                max-height: 80px;
+                overflow-y: scroll;
+                padding: 100px 0;
+                padding-right: 17px;
+                table {
                     text-decoration: none; 
-                    text-overflow: ellipsis; 
                     display: block; 
-                    overflow: hidden; 
-                    white-space: nowrap;
+                    overflow: hidden;
                     margin: 0;
                     padding: 0;
                     list-style: none;
-                    li {
+                    tr {
                         margin: 0;
                         padding: 10px;
                         border-bottom: 1px solid #ddd;
+                        td {
+                            padding: 5px;
+                        }
                         &:last-child {
                             border-bottom: none;
                         }
@@ -119,6 +128,10 @@
                             a {
                                 color: #FFF;
                             }
+                        }
+                        .deadline-date {
+                            min-width: 65px;
+                            padding-left: 10px;
                         }
                     }               
                 }
