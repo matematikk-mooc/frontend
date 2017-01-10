@@ -74,13 +74,12 @@ this.mmooc.coursePage = function() {
                     var month = [];
                     var html = "<table>";
                     for (var i = 0; i < allDeadlines.length; i++) {
-                        var weekdayName = mmooc.util.getWeekdayShortName(allDeadlines[i].date);
                         var monthName = mmooc.util.getMonthShortName(allDeadlines[i].date);
                         if ("url" in allDeadlines[i]) {
-                            html += "<tr id='deadline-" + i + "'><td class='deadline-date'>" + weekdayName + " " + allDeadlines[i].date.getDate() + " " + monthName + "</td><td><a href='" + allDeadlines[i].url + "' title='" + allDeadlines[i].title + "'>" + allDeadlines[i].title + "</a></td></tr>";
+                            html += "<tr id='deadline-" + i + "'><div></div><td class='deadline-date'>" + allDeadlines[i].date.getDate() + ". " + monthName + "</td><td class='deadline-title'><a href='" + allDeadlines[i].url + "' title='" + allDeadlines[i].title + "'>" + allDeadlines[i].title + "</a></td></tr>";
                         }
                         else {
-                            html += "<tr id='deadline-" + i + "'><td class='deadline-date'>" + weekdayName + " " + allDeadlines[i].date.getDate() + " " + monthName + "</td><td>" + allDeadlines[i].title + "</td></tr>";
+                            html += "<tr id='deadline-" + i + "'><td class='deadline-date'>" + allDeadlines[i].date.getDate() + ". " + monthName + "</td><td class='deadline-title'>" + allDeadlines[i].title + "</td></tr>";
                         }
                     }
                     html += "</table>";
