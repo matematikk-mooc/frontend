@@ -121,7 +121,7 @@ this.mmooc.coursePage = function() {
                 return dates.length - 1;
             }
             else {
-                return 5;
+                return nearestDate;
             }            
         }       
     };
