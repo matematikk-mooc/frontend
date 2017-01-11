@@ -691,6 +691,14 @@ this.mmooc.api = function() {
             });
         },
         
+        getCaledarEvents: function(params, callback) {
+            this._get({
+                "callback": callback,
+                "uri":      "/calendar_events/",
+                "params":   params
+            });
+        },
+        
         //To be used later when displaying info about unread discussion comments.
         // getDiscussionTopics: function(courseId, callback) {
         //     this._get({

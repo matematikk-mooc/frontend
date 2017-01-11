@@ -40,6 +40,8 @@ jQuery(function($) {
             mmooc.coursePage.listModulesAndShowProgressBar();
             mmooc.menu.showCourseMenu(courseId, mmooc.i18n.Course + 'forside', null);
             mmooc.announcements.printAnnouncementsUnreadCount();
+            mmooc.coursePage.replaceUpcomingInSidebar();
+            mmooc.coursePage.printDeadlinesForCourse();
         }
     });
 
@@ -104,8 +106,6 @@ jQuery(function($) {
         if (!mmooc.util.isTeacherOrAdmin()) {
         	mmooc.menu.hideSectionTabsHeader();
         }
-        //Alters the readystate dot to more link alike
-        mmooc.discussionTopics.alterDiscussionReadStateLook();
     });
 
     mmooc.routes.addRouteForPath([/\/groups\/\d+\/discussion_topics\/\d+$/], function() {
@@ -125,8 +125,6 @@ jQuery(function($) {
             var contentId = mmooc.api.getCurrentTypeAndContentId().contentId;
             mmooc.api.getDiscussionTopic(courseId, contentId, mmooc.discussionTopics.setDiscussionTopicPubDate);
         }
-        //Alters the readystate dot to more link alike
-        mmooc.discussionTopics.alterDiscussionReadStateLook();
 
         // Announcements are some as type of discussions, must use a hack to determine if this is an announcement
         if (mmooc.api.currentPageIsAnnouncement()) {
