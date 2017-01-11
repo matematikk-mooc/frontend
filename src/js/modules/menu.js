@@ -76,6 +76,7 @@ this.mmooc.menu = function() {
 
     return {
         listModuleItems: function() {
+        
             mmooc.api.getCurrentModule(function(module) {
                 var courseId = mmooc.api.getCurrentCourseId();
                 var html = mmooc.util.renderTemplateWithData("moduleitems", {backToCoursePage: mmooc.i18n.BackToCoursePage, module: module, courseId: courseId});
@@ -133,6 +134,10 @@ this.mmooc.menu = function() {
             $("body").removeClass('with-right-side');
         },
 
+		hideSectionTabsHeader: function () {
+			$("#section-tabs-header-subtitle").hide();
+		},
+		
         showUserMenu: function() {
             var menu = document.getElementById('menu');
             if (menu !=  null) {
