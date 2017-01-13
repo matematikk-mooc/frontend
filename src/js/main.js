@@ -99,9 +99,9 @@ jQuery(function($) {
 
     //Path for showing a group discussion or creating a new discussion
     mmooc.routes.addRouteForPath([/\/groups\/\d+\/discussion_topics\/\d+$/, /\/groups\/\d+\/discussion_topics\/new$/], function() {
-        mmooc.menu.showDiscussionGroupMenu();
         mmooc.menu.showLeftMenu();
         mmooc.menu.listModuleItems();
+        mmooc.menu.showDiscussionGroupMenu();
                 
         if (!mmooc.util.isTeacherOrAdmin()) {
         	mmooc.menu.hideSectionTabsHeader();

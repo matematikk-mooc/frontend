@@ -221,15 +221,6 @@ this.mmooc.menu = function() {
 
         showDiscussionGroupMenu: function() {
 
-            function _addBodyClassForGroupDiscussionForStyling() {
-                var $body = $('body');
-                var bodyClassForGroupDiscussion = 'mmooc-group-discussion';
-                
-                if (!$body.hasClass(bodyClassForGroupDiscussion)) {
-                    $body.addClass(bodyClassForGroupDiscussion);
-                }
-            }
-
             function strLeft(sourceStr, keyStr){
                 return (sourceStr.indexOf(keyStr) == -1 | keyStr=='') ? '' : sourceStr.split(keyStr)[0];
             }
@@ -272,7 +263,7 @@ this.mmooc.menu = function() {
                 
                 // Get help from teacher by clicking a button
                 var getHelpButtonFromteacherButtonHTML = mmooc.util.renderTemplateWithData("groupdiscussionGetHelpFromTeacher", {});
-                document.getElementById('content-wrapper').insertAdjacentHTML('afterbegin', getHelpButtonFromteacherButtonHTML);
+                document.getElementById('content').insertAdjacentHTML('afterbegin', getHelpButtonFromteacherButtonHTML);
                 _addClickEventOnGetHelpFromTeacherButton();
             }
 
@@ -282,9 +273,7 @@ this.mmooc.menu = function() {
                     // For discussion pages we only want the title to be "<discussion>" instead of "Discussion: <discussion>"
                     var title = mmooc.util.getPageTitleAfterColon();
                     mmooc.menu.showCourseMenu(group.course_id, "Grupper", title, true); //Group menu in tabs including title - Use optional fourth parameter for hiding tabs
-                    _addBodyClassForGroupDiscussionForStyling(); 
                     _addGetHelpFromteacherButton(group);
-                    mmooc.menu.showBackButton("/courses/" + group.course_id, "Tilbake til " + mmooc.i18n.Course + "forsiden");
                 });
             }
         },
