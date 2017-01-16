@@ -32,7 +32,7 @@ this.mmooc.coursePage = function() {
         replaceUpcomingInSidebar: function() {
             $("body.home .coming_up").replaceWith(
                 "<div class='deadlines-container'>" +
-                "<h2>Frister</h2>" +
+                "<h2>" + mmooc.i18n.eventsAndDeadlinesTitle + "</h2>" +
                 "<div class='deadlines-scroll-up'></div>" +
                 "<div class='deadlines-list'></div>" +
                 "<div class='deadlines-scroll-down'></div>" +
