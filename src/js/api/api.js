@@ -262,17 +262,9 @@ this.mmooc.api = function() {
             });
         },
 
-        getCurrentModule: function(callback, error) {
-            var currentModuleItemId = this.getCurrentModuleItemId();
-            var currentTypeAndContentId = null;
-            //Quizzes and assignments does not have module item id in URL
-            if (currentModuleItemId == null) {
-                currentTypeAndContentId = this.getCurrentTypeAndContentId();
-                if (currentTypeAndContentId == null) {
-                    return;
-                }
-            }
 
+		//////
+        getCurrentModuleForItemOrTypeAndContentId: function(moduleItemId, typeAndContentId, callback, error) {
             this.getModulesForCurrentCourse(function(modules) {
                 for (var i = 0; i < modules.length; i++) {
                     var module = modules[i];
@@ -280,7 +272,7 @@ this.mmooc.api = function() {
                     for (var j = 0; j < items.length; j++) {
                         var item = items[j];
                         //Need to check type and id for quiz and assignment items
-                        var isCurrentModuleItem = item.id == currentModuleItemId || (currentTypeAndContentId != null && currentTypeAndContentId.contentId == item.content_id && currentTypeAndContentId.type == item.type);
+                        var isCurrentModuleItem = item.id == moduleItemId || (typeAndContentId != null && typeAndContentId.contentId == item.content_id && typeAndContentId.type == item.type);
                         if (isCurrentModuleItem) {
                             item.isCurrent = true;
                             callback(module);
@@ -290,6 +282,72 @@ this.mmooc.api = function() {
                 }
 
             }, error);
+        },
+
+		//To find which module a group discussion belongs to, we need to
+		//1. Get the group discussion
+		//2. Get the group category
+		//3. Get the root discussion
+		//4. Get the module
+	    //A group discussion has a location like this:
+	    //https://beta.matematikk.mooc.no/groups/361/discussion_topics/79006
+		getCurrentModuleItemForGroupDiscussion: function(callback, error) {
+            var regexp = /\/groups\/\d+\/discussion_topics\/\d+/;
+			var tmp;
+		    var groupId;
+		    var groupTopicId;
+
+			//Extract groupId and groupTopicId			
+            if (regexp.test("" + this._location.pathname)) {
+                tmp = this._location.pathname.split("/");
+                if (tmp.length >= 5) {
+                    groupTopicId = tmp[4];
+		            groupId = tmp[2];
+                }
+            }
+            
+            if(groupTopicId == null)
+            {
+            	return;
+            }
+            
+            //https://beta.matematikk.mooc.no/api/v1/groups/361/discussion_topics/79006
+		    //Need to keep track of this to access it inside the inline functions below.
+			var _this = this;
+			this.getSpecificGroupDiscussionTopic(groupId, groupTopicId, function(groupDiscussion) {
+				_this.getUserGroups(function(groups) {
+					for (var i = 0; i < groups.length; i++) {
+						if(groups[i].id == groupId)
+						{
+							var moduleItemId = null;
+		        			var currentTypeAndContentId = { contentId: groupDiscussion.root_topic_id, type: "Discussion"};
+		        			_this.getCurrentModuleForItemOrTypeAndContentId(moduleItemId, currentTypeAndContentId, callback, error);
+			        		break; //We found the correct group, no need to check the rest.
+			        	}
+		        	} //end for all the groups
+                }); //getUserGroups
+            }); //getSpecificGroupDiscussionTopic
+		}, 
+
+        getCurrentModule: function(callback, error) {
+            var currentModuleItemId = this.getCurrentModuleItemId();
+            var currentTypeAndContentId = null;
+            var bFound = true;
+            //Quizzes and assignments does not have module item id in URL
+            if (currentModuleItemId == null) {
+                currentTypeAndContentId = this.getCurrentTypeAndContentId();
+                
+                //If we haven't found what we want by now, it must be a group discussion
+                if (currentTypeAndContentId == null) {
+					bFound = false;                	
+					this.getCurrentModuleItemForGroupDiscussion(callback, error);
+                }
+            }
+            
+            if(bFound)
+            {
+				this.getCurrentModuleForItemOrTypeAndContentId(currentModuleItemId, currentTypeAndContentId, callback, error)
+            }
         },
 
         getRoles : function() {
@@ -432,7 +490,17 @@ this.mmooc.api = function() {
                 "params":   { per_page: 999 }
             });
         },
-        
+
+		// /api/v1/group_categories/:group_category_id
+        getGroupCategory: function(categoryID, callback, error) {
+            this._get({
+                "callback": callback,
+                "error":    error,
+                "uri":      "/group_categories/" + categoryID,
+                "params":   { }
+            });
+        },
+		        
         // /api/v1/group_categories/:group_category_id/groups
         getGroupsInCategory: function(categoryID, callback, error) {
             this._get({
@@ -587,6 +655,14 @@ this.mmooc.api = function() {
             this._get({
                 "callback": callback,
                 "uri":      "/courses/" + courseId + "/discussion_topics/" + contentId,
+                "params":   { per_page: 999 }
+            });
+        },
+
+        getSpecificGroupDiscussionTopic: function(groupId, contentId, callback) {
+            this._get({
+                "callback": callback,
+                "uri":      "/groups/" + groupId + "/discussion_topics/" +contentId,
                 "params":   { per_page: 999 }
             });
         },
