@@ -40,6 +40,7 @@ this.mmooc.i18n = {
     'SubmissionIsAssessedByAll' : 'Alle vurderinger er klare',
     'SubmissionAssessmentsAreReady' : 'vurderinger er klare',
     'ThisIsGroup' : 'Dette er gruppe',
+	'eventsAndDeadlinesTitle' : 'Viktige datoer',
     'WeHaveAQuestionToTeacherInTheDiscussion' : 'Vi har et spørsmål til veileder i diskusjonen',
     'NoTeacherFeedbackLink' : 'No teacher_feedback link. Does the help menu have a link to send feedback to the teacher?',
     'OutOf' : 'av',
