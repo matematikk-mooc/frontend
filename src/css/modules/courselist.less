@@ -1,3 +1,23 @@
+//Hide existing content
+#my_groups_table {
+  display: none;
+}
+
+#past_enrollments_table {
+  height: 0;
+  width: 0;
+  overflow: hidden;
+}
+
+#past_enrollments_table::before {
+  content: "";
+  width: 100%;
+  height: 330px;
+  position: absolute;
+  top: 90px;
+  background: @backgroundColor;
+}
+
 .mmooc-course-list {
 	h1 {
 		font-family:'Roboto Slab';
