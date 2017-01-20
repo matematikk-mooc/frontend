@@ -1,20 +1,20 @@
 //Hide existing content
-#my_groups_table {
+#my_groups_table, #past_enrollments_table {
   display: none;
 }
 
-#past_enrollments_table {
+#my_courses_table {
   height: 0;
   width: 0;
   overflow: hidden;
 }
 
-#past_enrollments_table::before {
+#my_courses_table::before {
   content: "";
   width: 100%;
-  height: 330px;
+  height: 600px;
   position: absolute;
-  top: 90px;
+  top: 0;
   background: @backgroundColor;
 }
 
