@@ -42,7 +42,7 @@ module.exports = function(grunt) {
 	            	'dist/badgesafe.css': ['src/addons/badges/css/all.less']
 	        	}
 	    	}
-		},
+		},    
 
 		concat: {
 	        js: {
@@ -56,7 +56,11 @@ module.exports = function(grunt) {
                         'src/js/i18n.js', 'src/js/settings.js'
                     ],
                 dest: 'tmp/badges-min.js'
-            }
+            },
+    		uia: {
+                src: ['src/js/i18nuia.js', 'src/js/settingsuia.js'],
+                dest: 'dist/uia.js'
+            },
 	    },
 
 		uglify: {

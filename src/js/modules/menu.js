@@ -24,6 +24,10 @@ this.mmooc.menu = function() {
             menuItems[menuItems.length] = {"title": "Grupper", url: "/courses/" + courseId + "/groups"};
             menuItems[menuItems.length] = {"title": "Diskusjoner", url: "/courses/" + courseId + "/discussion_topics"};
             
+            if (mmooc.util.isTeacherOrAdmin()) {
+                menuItems[menuItems.length] = {"title": "Faglærer", url: "/courses/?mmpf"};
+            }
+            
             var badgeSafe = mmooc.menu.extractBadgesLinkFromPage();
             if (badgeSafe.url) { //If the url of Badges is found then display this as an additional tab
                 menuItems[menuItems.length] = badgeSafe;
