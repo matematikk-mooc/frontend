@@ -13,7 +13,7 @@ this.mmooc.courseList = function() {
 					$('#' + parentId).html("<div>Laster " + mmooc.i18n.CoursePlural + "....</div>"); //overwrite the contents in parentID and display: 'Laster kurs....'
                     if (courses.length == 0) {
                       var html = "<h1>Mine studier</h1>" +
-                                  "<p>Du er ikke påmeldt noen kurs enda.</p>" +
+                                  "<p>" + mmooc.i18n.NoEnrollments + "</p>" +
                                   "<a class='btn' href='/search/all_courses'>Se tilgjengelige studier</a>";
                     }
                     else {
