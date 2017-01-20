@@ -44,6 +44,11 @@ jQuery(function($) {
             mmooc.coursePage.printDeadlinesForCourse();
         }
     });
+    
+    mmooc.routes.addRouteForPath(/\/search\/all_courses$/, function() {
+        mmooc.enroll.printAllCoursesContainer();
+        mmooc.enroll.printAllCourses();
+    });
 
     mmooc.routes.addRouteForPath(/\/courses\/\d+\/announcements$/, function() {
         var courseId = mmooc.api.getCurrentCourseId();
@@ -186,7 +191,7 @@ jQuery(function($) {
 
 
     mmooc.routes.addRouteForQueryString(/enrolled=1/, function() {
-        mmooc.enroll.changeButtonText();
+        mmooc.enroll.changeButtonTextAndHref();
     });
 
     try {

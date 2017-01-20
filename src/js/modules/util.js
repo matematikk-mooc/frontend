@@ -119,6 +119,14 @@ this.mmooc.util = function () {
         getMonthShortName: function (date) {
             var months = ["jan", "feb", "mar", "apr", "mai", "jun", "jul", "aug", "sep", "okt", "nov", "des"];
             return months[date.getMonth()];
+        },
+        
+        getCourseCategory: function (courseCode) {
+            var category = "Andre";
+            if (courseCode.indexOf("::") > -1) {
+                category = courseCode.substring(0, courseCode.indexOf("::"));
+            }
+            return category;            
         }
     };
 }();

@@ -1,0 +1,65 @@
+.mmooc-modal-overlay {
+    display: none;
+    position: fixed;
+    z-index: 100;
+    background: rgba(51,51,51,0.75);
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    padding-bottom: 76px;
+}
+
+.mmooc-modal {
+    display: none;
+    position: absolute;
+    width: 500px;
+    z-index: 999;
+    top: 30%;
+    left: ~"calc(50% - 250px)";
+    min-height: 300px;
+    box-shadow: 0 1px 4px 1px rgba(51,51,51,0.95);
+    .modal-header {
+        background: #FFF;
+        height: 30px;
+        padding: 10px;
+        .modal-back {
+            transition: opacity 0.2s;
+            background: url("https://server/vector_images/mmooc-icon-close.svg") no-repeat center center;
+            background-size: 10px;
+            opacity: 0.6;
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+            float: right;
+            margin-top: 5px;
+        }
+    }
+    .modal-description {
+        background: @backgroundColor;
+        padding: 20px;
+        height: 200px;
+        overflow: auto;
+        h3 {
+            margin-bottom: 10px;
+        }
+    }
+    .modal-footer {
+        background: #FFF;
+        padding: 10px;
+        height: 35px;
+        .modal-back {
+            float: left;
+            background: url("https://server/vector_images/mmooc-icon-arrow-left.svg") no-repeat left center;
+            background-size: 15px;
+            padding-left: 30px;
+            margin-top: 5px;
+            margin-left: 10px;
+        }
+        .modal-enroll {
+            float: right;
+            padding: 8px 20px;
+            margin-right: 20px;
+        }  
+    }
+}
