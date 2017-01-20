@@ -73,7 +73,7 @@ this.mmooc.courseList = function() {
             var $button = $('#start_new_course');
             if ($button.length) {
                 $('#content').append($button);
-				$button.html(mmooc.i18n.AddACourse);
+                $button.html(mmooc.i18n.AddACourse);
             }
         },
         showFilter : function(sortedCourses) {
@@ -88,31 +88,28 @@ this.mmooc.courseList = function() {
 	        	}	        
         	});
         	filterOptions.push("Andre");
-        	var selectList = "<select id='filter'></select>";
-        	$('.mmooc-course-list h1').after(selectList);
-        	
-        	var option = '';
-			for(var i=0; i<filterOptions.length; i++) {
-				option += '<option value="' + filterOptions[i] + '">' + filterOptions[i] + '</option>';
-			}
-			$('#filter').append(option);                       
-        },
-        applyFilter : function(sortedCourses) {
-			if($("#filter").val() == 'Alle') {
-				$(sortedCourses).each(function() {
-					$("#course_" + this.id).show();
-				});
-			}				
-			else if($("#filter").val() == 'Andre') {
-				$(sortedCourses).each(function() {
-					if(this.course_code.indexOf("::") >= 0) {
-						$("#course_" + this.id).hide();
-					}
-					else {
-						$("#course_" + this.id).show();
-					}						
-				});
-			}				
+        	var options = '';
+    			for(var i=0; i<filterOptions.length; i++) {
+    				options += '<option value="' + filterOptions[i] + '">' + filterOptions[i] + '</option>';
+    			}
+    			$('#filter').append(options);                       
+            },
+            applyFilter : function(sortedCourses) {
+    			if($("#filter").val() == 'Alle') {
+    				$(sortedCourses).each(function() {
+    					$("#course_" + this.id).show();
+    				});
+    			}				
+    			else if($("#filter").val() == 'Andre') {
+    				$(sortedCourses).each(function() {
+    					if(this.course_code.indexOf("::") >= 0) {
+    						$("#course_" + this.id).hide();
+    					}
+    					else {
+    						$("#course_" + this.id).show();
+    					}						
+    				});
+    			}				
 			else {			
 				$(sortedCourses).each(function() {
 					var courseCode = this.course_code.split('::')[0];
