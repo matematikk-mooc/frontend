@@ -69,62 +69,44 @@
         }
     }
 
+
     #header.ic-app-header {
         height: 75px;
         width: 100%;
         border-bottom: 5px solid #47899f;
         position: relative;
         z-index: 100;
-        
-        .ic-app-header__layout {
-            max-width: 1200px;
-            margin: 0 auto;
-            
-            @media screen and (max-width: 1240px) {
-                margin: 0 10px;
-            }
-            
-            
-            .ic-app-header__primary {
-                display: block;
-                width: 100%;
-                overflow-y: inherit;
-                background-color: transparent;
-                
-                .ic-app-header__secondary-navigation {
-                    display: none;
-                }
-                
+
+       .ic-app-header__secondary-navigation {
+            display: none;
+        }
+
                 .ic-app-header__logomark-container {
                     width: 240px;
                     float: left;
                     padding: 0;
                     background-color: transparent;
-                    
-                    .ic-app-header__logomark {
-                        background-image: url("https://server/bitmaps/mmooc-logo.png");
-                        width: 240px;
-                        background-size: contain;
-                        -webkit-transform: scale3d(1, 1, 1);
-                        transform: scale3d(1, 1, 1);
-                        margin: 0;
-                        
-                        // bottom: 17px;
-                        
-                        @media screen and (max-width: 1050px) {
-                            top: -23px;
-                            position: relative;
-                        }
-                        
-                        @media (min--moz-device-pixel-ratio: 1.5), (-o-min-device-pixel-ratio: 3/2), (-webkit-min-device-pixel-ratio: 1.5), (min-device-pixel-ratio: 1.5), (min-resolution: 1.5dppx) {
-                            background-image: url("https://server/bitmaps/mmooc-logo@2x.png");
-                        }
-                    }
-                }
+
+        .ic-app-header__logomark {
+            background-image: url("https://server/bitmaps/mmooc-logo.png");
+            width: 240px;
+            background-size: contain;
+            -webkit-transform: scale3d(1, 1, 1);
+            transform: scale3d(1, 1, 1);
+            margin: 0;
+        
+            // bottom: 17px;
+        
+            @media screen and (max-width: 1050px) {
+                top: -23px;
+                position: relative;
             }
-            
+        
+            @media (min--moz-device-pixel-ratio: 1.5), (-o-min-device-pixel-ratio: 3/2), (-webkit-min-device-pixel-ratio: 1.5), (min-device-pixel-ratio: 1.5), (min-resolution: 1.5dppx) {
+                background-image: url("https://server/bitmaps/mmooc-logo@2x.png");
+            }
+        }
         }
     }
-
     
 }
