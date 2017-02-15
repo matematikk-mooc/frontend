@@ -438,6 +438,15 @@ this.mmooc.api = function() {
                 "params":   { per_page: 999 }
             });
         },
+        
+        getAllCourses: function(callback, error) {
+            this._get({
+                "callback": callback,
+                "error":    error,
+                "uri":      "/search/all_courses",
+                "params":   { per_page: 999 }
+            });
+        },        
 
         getGroupCategoriesForAccount: function(account, callback, error) {
             this._get({

@@ -1,0 +1,23 @@
+<h2>{{title}}</h2>
+<ul>
+    {{#each courses}}
+        <li class="{{#if enrolled}}enrolled{{/if}}">{{#unless enrolled}}<a class="all-courses-show-modal" href="#">{{/unless}}{{name}}{{#unless enrolled}}</a>{{/unless}}</li>
+        {{#unless enrolled}}
+          <div class="all-courses-modal modal-course-{{id}}">
+              <div class="modal-content">
+                  <div class="modal-header">
+                      <div class="modal-close modal-back"></div>
+                  </div>
+                  <div class="modal-description">
+                      <h3>{{name}}</h3>
+                      <div>{{public_description}}</div>
+                  </div>
+                  <div class="modal-footer">
+                      <a class="modal-back" href="#">Tilbake til studieoversikten</a>
+                      {{#if self_enrollment_code}}<a class="btn modal-enroll" href="/enroll/{{self_enrollment_code}}">Med deg på kurset</a>{{/if}}
+                  </div>
+              </div>
+          </div>
+        {{/unless}}
+    {{/each}}
+</ul>

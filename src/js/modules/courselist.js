@@ -11,12 +11,17 @@ this.mmooc.courseList = function() {
 					$oldContent.appendTo("#right-side-wrapper #right-side");
 					
 					$('#' + parentId).html("<div>Laster " + mmooc.i18n.CoursePlural + "....</div>"); //overwrite the contents in parentID and display: 'Laster kurs....'
-					
-                    var sortedCourses = mmooc.util.arraySorted(courses, "course_code");
-                    html = mmooc.util.renderTemplateWithData("courselist", {courses: sortedCourses});
+                    if (courses.length == 0) {
+                      var html = "<h1>Mine studier</h1>" +
+                                  "<p>" + mmooc.i18n.NoEnrollments + "</p>" +
+                                  "<a class='btn' href='/search/all_courses'>Se tilgjengelige studier</a>";
+                    }
+                    else {
+                      var sortedCourses = mmooc.util.arraySorted(courses, "course_code");
+                      var html = mmooc.util.renderTemplateWithData("courselist", {courses: sortedCourses});
+                    }
                     document.title = "Studier";
                     document.getElementById(parentId).innerHTML = html; 
-					
 //Additional check if course if completed. Not in use since course_progress(check implemented in template) seems to be working as expected. (Not able to reproduce errors).
 /*
                     var createCallBackForId = function(id) {
@@ -73,7 +78,7 @@ this.mmooc.courseList = function() {
             var $button = $('#start_new_course');
             if ($button.length) {
                 $('#content').append($button);
-				$button.html(mmooc.i18n.AddACourse);
+                $button.html(mmooc.i18n.AddACourse);
             }
         },
         showFilter : function(sortedCourses) {
@@ -88,31 +93,28 @@ this.mmooc.courseList = function() {
 	        	}	        
         	});
         	filterOptions.push("Andre");
-        	var selectList = "<select id='filter'></select>";
-        	$('.mmooc-course-list h1').after(selectList);
-        	
-        	var option = '';
-			for(var i=0; i<filterOptions.length; i++) {
-				option += '<option value="' + filterOptions[i] + '">' + filterOptions[i] + '</option>';
-			}
-			$('#filter').append(option);                       
-        },
-        applyFilter : function(sortedCourses) {
-			if($("#filter").val() == 'Alle') {
-				$(sortedCourses).each(function() {
-					$("#course_" + this.id).show();
-				});
-			}				
-			else if($("#filter").val() == 'Andre') {
-				$(sortedCourses).each(function() {
-					if(this.course_code.indexOf("::") >= 0) {
-						$("#course_" + this.id).hide();
-					}
-					else {
-						$("#course_" + this.id).show();
-					}						
-				});
-			}				
+        	var options = '';
+    			for(var i=0; i<filterOptions.length; i++) {
+    				options += '<option value="' + filterOptions[i] + '">' + filterOptions[i] + '</option>';
+    			}
+    			$('#filter').append(options);                       
+            },
+            applyFilter : function(sortedCourses) {
+    			if($("#filter").val() == 'Alle') {
+    				$(sortedCourses).each(function() {
+    					$("#course_" + this.id).show();
+    				});
+    			}				
+    			else if($("#filter").val() == 'Andre') {
+    				$(sortedCourses).each(function() {
+    					if(this.course_code.indexOf("::") >= 0) {
+    						$("#course_" + this.id).hide();
+    					}
+    					else {
+    						$("#course_" + this.id).show();
+    					}						
+    				});
+    			}				
 			else {			
 				$(sortedCourses).each(function() {
 					var courseCode = this.course_code.split('::')[0];

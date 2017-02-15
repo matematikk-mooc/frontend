@@ -1,9 +1,35 @@
+//Hide existing content
+#my_groups_table, #past_enrollments_table {
+  display: none;
+}
+
+#my_courses_table {
+  height: 0;
+  width: 0;
+  overflow: hidden;
+}
+
+#my_courses_table::before {
+  content: "";
+  width: 100%;
+  height: 600px;
+  position: absolute;
+  top: 0;
+  background: @backgroundColor;
+}
+
 .mmooc-course-list {
 	h1 {
 		font-family:'Roboto Slab';
 		display: inline-block;
 		width: 200px;
 		margin-bottom: 10px;
+	}
+	
+	.btn-more-courses {
+  	float: right;
+  	margin-top: -10px;
+  	margin-left: 20px;
 	}
 	
 	#filter {
@@ -14,6 +40,7 @@
 	.mmooc-row {
 		margin-left: -20px;
 		margin-right: -20px;
+		margin-top: 20px;
 	}
 
 	[class*='mmooc-size'] {
