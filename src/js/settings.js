@@ -6,6 +6,6 @@ this.mmooc.settings = {
     'useCanvaBadge' : true,
     'defaultNumberOfReviews' : 2, // Default number of peer reviews per student in power function
     'disablePeerReviewButton' : false,
-    'removeGlobalGradesLink' : true,
+    'removeGlobalGradesLink' : false,
     'removeGroupsLink' : true
 };
