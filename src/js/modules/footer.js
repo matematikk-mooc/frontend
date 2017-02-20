@@ -15,7 +15,7 @@ this.mmooc.footer = function() {
            var relativeUrl = window.location.pathname;
            var hideCustomFooterLicence = false; //License should not be displayed on the '/courses' or '/' page or the login or logout page.
                       
-           if ((relativeUrl == '/courses') || (relativeUrl == '/courses/') || (relativeUrl == '/') || (relativeUrl == '/login/canvas') || (relativeUrl == '/logout')) {
+           if ((relativeUrl == '/courses') || (relativeUrl == '/courses/') || (relativeUrl == '/') || (relativeUrl == '/login/canvas') ||  (relativeUrl.indexOf("enroll") !== -1) || (relativeUrl == '/logout')) {
                hideCustomFooterLicence = true;
            }
            

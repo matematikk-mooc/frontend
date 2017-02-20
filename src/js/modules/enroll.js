@@ -84,18 +84,26 @@ this.mmooc.enroll = function() {
             $("body").append("<div class='mmooc-modal-overlay'></div>");
             $("body").append("<div class='mmooc-modal'></div>");
         },
+        handleEnrollClick: function(e, html) {
+            $(".mmooc-modal").html(html);
+            $(".mmooc-modal-overlay").show();
+            $(".mmooc-modal").show();
+            $(".mmooc-modal .modal-back").click(function(e) {
+                e.preventDefault();
+                $(".mmooc-modal-overlay").hide();
+                $(".mmooc-modal").hide();
+            });
+        },
         setClickHandlers: function() {
+            $(".notenrolled").click(function(e) {
+                e.preventDefault();
+                var html = $(this).next().html();
+                mmooc.enroll.handleEnrollClick(e, html);
+            });
             $(".all-courses-show-modal").click(function(e) {
                 e.preventDefault();
                 var html = $(this).parent().next().html();
-                $(".mmooc-modal").html(html);
-                $(".mmooc-modal-overlay").show();
-                $(".mmooc-modal").show();
-                $(".mmooc-modal .modal-back").click(function(e) {
-                    e.preventDefault();
-                    $(".mmooc-modal-overlay").hide();
-                    $(".mmooc-modal").hide();
-                });
+                mmooc.enroll.handleEnrollClick(e, html);
             });
             $(".mmooc-modal-overlay").click(function(e) {
                 e.preventDefault();
