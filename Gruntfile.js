@@ -73,7 +73,7 @@ module.exports = function(grunt) {
 				dest: 'dist/mmooc-min.css',
 				replacements: [{
 					from: 'https://server',
-					to: 'https://matematikk-mooc.github.io/frontend'
+					to: 'https://kurs.iktsenteret.no/custom'
 				}]
 			},
 			development: {
