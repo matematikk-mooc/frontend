@@ -1,7 +1,7 @@
 <h2>{{title}}</h2>
 <ul>
     {{#each courses}}
-        <li class="{{#if enrolled}}enrolled{{/if}}">{{#unless enrolled}}<a class="all-courses-show-modal" href="#">{{/unless}}{{name}}{{#unless enrolled}}</a>{{/unless}}</li>
+        <li class="{{#if enrolled}}enrolled{{else}}notenrolled{{/if}}">{{#unless enrolled}}<a class="all-courses-show-modal" href="#">{{/unless}}{{name}}{{#unless enrolled}}</a>{{/unless}}</li>
         {{#unless enrolled}}
           <div class="all-courses-modal modal-course-{{id}}">
               <div class="modal-content">
