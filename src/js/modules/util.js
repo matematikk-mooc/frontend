@@ -97,8 +97,37 @@ this.mmooc.util = function () {
             return roles != null
                 && (roles.indexOf('teacher') != -1
                     || roles.indexOf('admin') != -1);
-        }
+        },
 
+        setGlobalPeerReviewButtonState: function () {
+            if(mmooc.settings.disablePeerReviewButton == true) {
+                $(".assignments #right-side :submit").prop("disabled",true);
+            }
+        },
+
+        formattedDate: function (date) {
+            var date = new Date(date);
+            var month = mmooc.util.getMonthShortName(date);
+            return date.getDate() + ' ' + month + ', ' + date.getFullYear() + ' - ' + date.getHours() + ':'+ (date.getMinutes()<10?'0':'') + date.getMinutes() ;
+        },
+
+        getWeekdayShortName: function (date) {
+            var weekdays = ["sø", "ma", "ti", "on", "to", "fr", "lø"];
+            return weekdays[date.getDay()];
+        },
+
+        getMonthShortName: function (date) {
+            var months = ["jan", "feb", "mar", "apr", "mai", "jun", "jul", "aug", "sep", "okt", "nov", "des"];
+            return months[date.getMonth()];
+        },
+        
+        getCourseCategory: function (courseCode) {
+            var category = "Andre";
+            if (courseCode.indexOf("::") > -1) {
+                category = courseCode.substring(0, courseCode.indexOf("::"));
+            }
+            return category;            
+        }
     };
 }();
 

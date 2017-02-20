@@ -24,6 +24,10 @@ this.mmooc.menu = function() {
             menuItems[menuItems.length] = {"title": "Grupper", url: "/courses/" + courseId + "/groups"};
             menuItems[menuItems.length] = {"title": "Diskusjoner", url: "/courses/" + courseId + "/discussion_topics"};
             
+            if (mmooc.util.isTeacherOrAdmin()) {
+                menuItems[menuItems.length] = {"title": "Faglærer", url: "/courses/?mmpf"};
+            }
+            
             var badgeSafe = mmooc.menu.extractBadgesLinkFromPage();
             if (badgeSafe.url) { //If the url of Badges is found then display this as an additional tab
                 menuItems[menuItems.length] = badgeSafe;
@@ -76,6 +80,7 @@ this.mmooc.menu = function() {
 
     return {
         listModuleItems: function() {
+        
             mmooc.api.getCurrentModule(function(module) {
                 var courseId = mmooc.api.getCurrentCourseId();
                 var html = mmooc.util.renderTemplateWithData("moduleitems", {backToCoursePage: mmooc.i18n.BackToCoursePage, module: module, courseId: courseId});
@@ -94,8 +99,12 @@ this.mmooc.menu = function() {
             
             // The entire menu is rebuilt because of unwanted popup in the new ui menu
             insertCustomMenuElementInTopMenu("Kalender", "/calendar");
-            insertCustomMenuElementInTopMenu("Karakterer", "/grades");
-            insertCustomMenuElementInTopMenu("Grupper", "/groups");
+            if(mmooc.settings.removeGlobalGradesLink == false) {
+                insertCustomMenuElementInTopMenu("Karakterer", "/grades");
+            }
+            if(mmooc.settings.removeGroupsLink == false) {
+                insertCustomMenuElementInTopMenu("Grupper", "/groups");
+            }
             insertCustomMenuElementInTopMenu(mmooc.i18n.Studies, "/courses"); 
             
             if (mmooc.util.isTeacherOrAdmin()) {
@@ -129,6 +138,10 @@ this.mmooc.menu = function() {
             $("body").removeClass('with-right-side');
         },
 
+		hideSectionTabsHeader: function () {
+			$("#section-tabs-header-subtitle").hide();
+		},
+		
         showUserMenu: function() {
             var menu = document.getElementById('menu');
             if (menu !=  null) {
@@ -156,6 +169,7 @@ this.mmooc.menu = function() {
                     if (mmooc.menu.checkReadStateFor(activities[i])) {
                         unreadNotifications++;
                     }
+                    activities[i].created_at = mmooc.util.formattedDate(activities[i].created_at);
                 }
 
                 var badge = $("#mmooc-notification-count");
@@ -211,15 +225,6 @@ this.mmooc.menu = function() {
 
         showDiscussionGroupMenu: function() {
 
-            function _addBodyClassForGroupDiscussionForStyling() {
-                var $body = $('body');
-                var bodyClassForGroupDiscussion = 'mmooc-group-discussion';
-                
-                if (!$body.hasClass(bodyClassForGroupDiscussion)) {
-                    $body.addClass(bodyClassForGroupDiscussion);
-                }
-            }
-
             function strLeft(sourceStr, keyStr){
                 return (sourceStr.indexOf(keyStr) == -1 | keyStr=='') ? '' : sourceStr.split(keyStr)[0];
             }
@@ -262,7 +267,7 @@ this.mmooc.menu = function() {
                 
                 // Get help from teacher by clicking a button
                 var getHelpButtonFromteacherButtonHTML = mmooc.util.renderTemplateWithData("groupdiscussionGetHelpFromTeacher", {});
-                document.getElementById('content-wrapper').insertAdjacentHTML('afterbegin', getHelpButtonFromteacherButtonHTML);
+                document.getElementById('content').insertAdjacentHTML('afterbegin', getHelpButtonFromteacherButtonHTML);
                 _addClickEventOnGetHelpFromTeacherButton();
             }
 
@@ -272,9 +277,7 @@ this.mmooc.menu = function() {
                     // For discussion pages we only want the title to be "<discussion>" instead of "Discussion: <discussion>"
                     var title = mmooc.util.getPageTitleAfterColon();
                     mmooc.menu.showCourseMenu(group.course_id, "Grupper", title, true); //Group menu in tabs including title - Use optional fourth parameter for hiding tabs
-                    _addBodyClassForGroupDiscussionForStyling(); 
                     _addGetHelpFromteacherButton(group);
-                    mmooc.menu.showBackButton("/courses/" + group.course_id, "Tilbake til " + mmooc.i18n.Course + "forsiden");
                 });
             }
         },

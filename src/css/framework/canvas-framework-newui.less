@@ -2,9 +2,8 @@ body.with-left-side:not(.useFullWidth) {
     #application.ic-app {
         
         #main {
-            /* Main is 100% as a default */
-            max-width: 100%;
-            width: 100%;
+            width:900px;
+            min-width:auto;
         }
     }
 }
@@ -28,7 +27,7 @@ body.with-left-side:not(.useFullWidth) {
         #left-side {
             width: 238px;
             border: none!important;
-            padding-top: 25px;
+            padding-top: 15px;
             position: static;
             float: left;
             padding-right: 50px;
@@ -123,7 +122,7 @@ body.with-left-side {
             // max-width: 962px; //1200-238 on the left side
             // padding-left: 50px;
             width: ~"calc(100% - 238px)"; //need to escape the value for less not to interpret the value
-            min-width: ~"calc(100% - 238px)";
+            //min-width: ~"calc(100% - 238px)";
             
             #content-wrapper {
                 float: left;

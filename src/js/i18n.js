@@ -40,8 +40,10 @@ if (typeof this.mmooc.i18n === 'undefined') {
 		'SubmissionIsAssessedByAll' : 'Alle vurderinger er klare',
 		'SubmissionAssessmentsAreReady' : 'vurderinger er klare',
 		'ThisIsGroup' : 'Dette er gruppe',
+		'eventsAndDeadlinesTitle' : 'Viktige datoer',
 		'WeHaveAQuestionToTeacherInTheDiscussion' : 'Vi har et spørsmål til veileder i diskusjonen',
 		'NoTeacherFeedbackLink' : 'No teacher_feedback link. Does the help menu have a link to send feedback to the teacher?',
+		'NoEnrollments' : 'Du er ikke påmeldt noen kurs enda.',
 		'OutOf' : 'av',
 		'Months' : ["januar", "februar", "mars", "april", "mai", "juni", "juli", "august", "september", "Oktober", "november", "december"]
 	};

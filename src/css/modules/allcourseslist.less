@@ -1,0 +1,70 @@
+// Hide existing content on /search/all_courses
+#course_filter, #catalog_content {
+  height: 0;
+  width: 0;
+  overflow: hidden;
+}
+
+#course_filter::before {
+  content: "";
+  width: 170px;
+  height: 50px;
+  position: absolute;
+  top: 80px;
+  background: @backgroundColor;
+}
+
+.mmooc-all-courses {
+  h1 {
+    float: left;
+  }
+  .btn {
+    float: right;
+    margin-left: 20px;
+  }
+  #filter {
+    float: right;
+  }
+}
+
+.mmooc-all-courses-list {
+    clear: right;
+    position: relative;
+    top: 20px;
+    background: #FFF;
+    padding: 40px;
+    -webkit-column-count: 3;
+    -moz-column-count: 3;
+    column-count: 3;
+    box-shadow: 0 1px 2px 0 rgba(0,0,0,0.35);
+    &.filter-active {
+        -webkit-column-count: 1;
+        -moz-column-count: 1;
+        column-count: 1;
+    }
+    h2 {
+        font-size: 20px;
+        margin-bottom: 10px;
+    }
+    ul {
+        list-style: none;
+        margin: 0;
+        margin-bottom: 20px;
+        li {
+          background: url("https://server/vector_images/mmooc-icon-plus.svg") no-repeat left center;
+          background-size: 15px;
+          padding-left: 20px;
+          margin-bottom: 10px;
+          a {
+            text-decoration: underline;
+          }
+        }
+        .enrolled {
+          background: url("https://server/vector_images/mmooc-icon-success.svg") no-repeat left center;
+          background-size: 15px;
+        }
+    }
+    .all-courses-modal {
+        display: none;
+    }
+}

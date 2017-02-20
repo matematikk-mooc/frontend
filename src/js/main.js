@@ -1,7 +1,7 @@
 jQuery(function($) {
 	
-    $('.header-bar, .ic-Action-header').show(); //To avoid displaying the old contents while the javascript is loading. Selectors are set to display:none in CSS.
-    
+    $('.header-bar').show(); //To avoid displaying the old contents while the javascript is loading. Selectors are set to display:none in CSS.
+
     mmooc.routes.addRouteForPath(/\/$/, function() {
         mmooc.menu.hideRightMenu();
         var parentId = 'content'
@@ -39,23 +39,47 @@ jQuery(function($) {
         } else {
             mmooc.coursePage.listModulesAndShowProgressBar();
             mmooc.menu.showCourseMenu(courseId, mmooc.i18n.Course + 'forside', null);
+            mmooc.announcements.printAnnouncementsUnreadCount();
+            mmooc.coursePage.replaceUpcomingInSidebar();
+            mmooc.coursePage.printDeadlinesForCourse();
         }
+    });
+    
+    mmooc.routes.addRouteForPath(/\/search\/all_courses$/, function() {
+        mmooc.enroll.printAllCoursesContainer();
+        mmooc.enroll.printAllCourses();
     });
 
     mmooc.routes.addRouteForPath(/\/courses\/\d+\/announcements$/, function() {
         var courseId = mmooc.api.getCurrentCourseId();
         mmooc.menu.showCourseMenu(courseId, 'Kunngjøringer', mmooc.util.getPageTitleBeforeColon());
+        mmooc.api.getModulesForCurrentCourse(function(modules) {
+            mmooc.discussionTopics.printDiscussionUnreadCount(modules);
+        });
+        mmooc.announcements.printAnnouncementsUnreadCount();
+        mmooc.announcements.setAnnouncementsListUnreadClass();
     });
 
     mmooc.routes.addRouteForPath(/\/courses\/\d+\/discussion_topics$/, function() {
         var courseId = mmooc.api.getCurrentCourseId();
         mmooc.menu.showCourseMenu(courseId, 'Diskusjoner', mmooc.util.getPageTitleBeforeColon());
+        mmooc.discussionTopics.setDiscussionsListUnreadClass();
+        mmooc.discussionTopics.insertSearchButton();
+        mmooc.discussionTopics.hideUnreadCountInDiscussionList();
+        mmooc.api.getModulesForCurrentCourse(function(modules) {
+            mmooc.discussionTopics.printDiscussionUnreadCount(modules, "discussionslist");
+        });
+        mmooc.announcements.printAnnouncementsUnreadCount();        
     });
 
     mmooc.routes.addRouteForPath(/\/courses\/\d+\/groups$/, function() {
         mmooc.groups.interceptLinksToGroupPage();
         var courseId = mmooc.api.getCurrentCourseId();
         mmooc.menu.showCourseMenu(courseId, 'Grupper', mmooc.util.getPageTitleBeforeColon());
+        mmooc.api.getModulesForCurrentCourse(function(modules) {
+            mmooc.discussionTopics.printDiscussionUnreadCount(modules);
+        });
+        mmooc.announcements.printAnnouncementsUnreadCount();
     });
 
     mmooc.routes.addRouteForPath(/\/courses\/\d+\/users$/, function() {
@@ -68,6 +92,7 @@ jQuery(function($) {
         mmooc.menu.showCourseMenu(courseId, 'Grupper', mmooc.util.getPageTitleBeforeColon());
     });
 
+    //Path for showing all dicussions, i.e. the discussion tab on the course front page.
     mmooc.routes.addRouteForPath(/\/groups\/\d+\/discussion_topics$/, function() {
         var courseId = mmooc.api.getCurrentCourseId();
         mmooc.menu.showCourseMenu(courseId, 'Grupper', mmooc.util.getPageTitleAfterColon());
@@ -77,8 +102,15 @@ jQuery(function($) {
         mmooc.groups.showGroupHeader();
     });
 
+    //Path for showing a group discussion or creating a new discussion
     mmooc.routes.addRouteForPath([/\/groups\/\d+\/discussion_topics\/\d+$/, /\/groups\/\d+\/discussion_topics\/new$/], function() {
+        mmooc.menu.showLeftMenu();
+        mmooc.menu.listModuleItems();
         mmooc.menu.showDiscussionGroupMenu();
+                
+        if (!mmooc.util.isTeacherOrAdmin()) {
+        	mmooc.menu.hideSectionTabsHeader();
+        }
     });
 
     mmooc.routes.addRouteForPath([/\/groups\/\d+\/discussion_topics\/\d+$/], function() {
@@ -92,12 +124,14 @@ jQuery(function($) {
         // For discussion pages we only want the title to be "<discussion>" instead of "Discussion: <discussion>"
         var title = mmooc.util.getPageTitleAfterColon();
 
+        var courseId = mmooc.api.getCurrentCourseId();
         if (!mmooc.util.isTeacherOrAdmin()) {
             mmooc.menu.hideRightMenu();
+            var contentId = mmooc.api.getCurrentTypeAndContentId().contentId;
+            mmooc.api.getDiscussionTopic(courseId, contentId, mmooc.discussionTopics.setDiscussionTopicPubDate);
         }
 
         // Announcements are some as type of discussions, must use a hack to determine if this is an announcement
-        var courseId = mmooc.api.getCurrentCourseId();
         if (mmooc.api.currentPageIsAnnouncement()) {
             mmooc.menu.showCourseMenu(courseId, 'Kunngjøringer', title);
             mmooc.menu.showBackButton("/courses/" + courseId + "/announcements", "Tilbake til kunngjøringer");
@@ -114,12 +148,14 @@ jQuery(function($) {
         mmooc.menu.showLeftMenu();
         mmooc.menu.listModuleItems();
         mmooc.pages.modifyMarkAsDoneButton();
+        mmooc.pages.duplicateMarkedAsDoneButton();
         // mmooc.pages.changeTranslations();
     });
     
     // example route: /courses/54/assignments/369 - assignment which may be a peer review (hverandrevurdering)
     mmooc.routes.addRouteForPath(/\/courses\/\d+\/assignments\/\d+/, function() {
         mmooc.pages.redesignAssignmentPage();
+        mmooc.util.setGlobalPeerReviewButtonState();
     });
 
     // Assignment submission which might be your own or someone else's: Peer review (hverandrevurdering)
@@ -155,7 +191,7 @@ jQuery(function($) {
 
 
     mmooc.routes.addRouteForQueryString(/enrolled=1/, function() {
-        mmooc.enroll.changeButtonText();
+        mmooc.enroll.changeButtonTextAndHref();
     });
 
     try {

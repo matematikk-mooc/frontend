@@ -10,6 +10,13 @@
         .discussion-topic {
             margin-left: 0;
             margin-right: 0;
+            &.unread::before {
+              display: none;
+            }
+            &.unread {
+              border-left: 8px solid @linkColor;
+              padding-left: 27px;              
+            }
         }
         
         .discussion-column {

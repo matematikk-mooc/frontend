@@ -43,6 +43,28 @@ this.mmooc.pages = function() {
           })
         },
 
+        duplicateMarkedAsDoneButton: function() {
+            var checkExist = setInterval(function() {
+                if($('.module-sequence-footer-content').length) {
+                  clearInterval(checkExist);
+                  $("#mark-as-done-checkbox").clone().prependTo(".module-sequence-footer-content");
+                  $(document).on("click","#mark-as-done-checkbox", function() {
+                    var self = $(this);
+                    setTimeout(function(){ 
+                        if(self.parent().attr("class") == "module-sequence-footer-content") {
+                        $(".header-bar-right #mark-as-done-checkbox").remove();
+                        self.clone().prependTo(".header-bar-right");
+                    }
+                    else {
+                        $(".module-sequence-footer-content #mark-as-done-checkbox").remove();
+                        self.clone().prependTo(".module-sequence-footer-content");
+                    }
+                    }, 800);
+                  });
+                }
+            }, 100);
+        },
+
         // changeTranslations : function() {
         //     $("a.submit_assignment_link").text('Lever besvarelse');
         // },
