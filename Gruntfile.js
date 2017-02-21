@@ -77,7 +77,7 @@ module.exports = function(grunt) {
 				dest: 'dist/mmooc-min.css',
 				replacements: [{
 					from: 'https://server',
-					to: 'https://kurs.iktsenteret.no/custom'
+					to: '/custom'
 				}]
 			},
 			development: {

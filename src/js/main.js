@@ -189,6 +189,10 @@ jQuery(function($) {
         mmooc.pages.showBackLinkIfNecessary();
     });
 
+    mmooc.routes.addRouteForPath([/\/login\/canvas/], function() {
+        mmooc.pages.replaceCreateAccountLink();
+    });
+
 
     mmooc.routes.addRouteForQueryString(/enrolled=1/, function() {
         mmooc.enroll.changeButtonTextAndHref();

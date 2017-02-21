@@ -2,6 +2,8 @@ this.mmooc=this.mmooc||{};
 
 if (typeof this.mmooc.i18n === 'undefined') {
 	this.mmooc.i18n = {
+	    'CreateAccountTitle' : 'Har du ikke konto?',
+	    'CreateAccountSubtitle' : 'Klikk her for å lage en',
 		'Course' : 'Kurs',
 		'CoursePlural' : 'Kurs',
 		'CourseProgressionTitle' : 'Din kursprogresjon:',
