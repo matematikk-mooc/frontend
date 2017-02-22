@@ -75,9 +75,16 @@ module.exports = function(grunt) {
 			production: {
 				src: ['tmp/mmooc-min.css'],
 				dest: 'dist/mmooc-min.css',
-				replacements: [{
+				replacements: 
+				[{
+					from: 'https://server/bitmaps/mmooc-logo.png',
+					to: '/custom/bitmaps/mmooc-logo.png'
+				}, {
+					from: 'https://server/bitmaps/mmooc-logo@2x.png',
+					to: '/custom/bitmaps/mmooc-logo@2x.png'
+				},{
 					from: 'https://server',
-					to: '/custom'
+					to: 'https://matematikk-mooc.github.io/frontend'
 				}]
 			},
 			development: {
