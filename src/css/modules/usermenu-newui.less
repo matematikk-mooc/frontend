@@ -70,10 +70,13 @@
 }
 
 //Added the CSS here since it is connected to the user menu (help button)
-ul#help-dialog-options {
-    li {
-        &:nth-of-type(2), &:nth-of-type(3) { //hide the second and third help dialog menu element
-            display: none;
+#help_tray {
+    margin-top: 100px;
+    ul.ic-NavMenu__link-list {
+        li {
+            &:nth-of-type(2), &:nth-of-type(3) { //hide the second and third help dialog menu element
+                display: none;
+            }
         }
     }
 }

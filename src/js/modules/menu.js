@@ -66,11 +66,11 @@ this.mmooc.menu = function() {
     
     function openHelpDialog(event) {
         event.preventDefault();
-        $("a.help_dialog_trigger").click(); //Do the same as when you are clicking on the original help button (which display the help dialog)
+        $("#global_nav_help_link").click(); //Do the same as when you are clicking on the original help button (which display the help dialog)
     }
     
     function hideHelpMenuElementIfNotActivated() {
-        $canvasHelpButton = $("a.help_dialog_trigger")
+        $canvasHelpButton = $("#global_nav_help_link")
         if ($canvasHelpButton.length == 0) {
             $("li.helpMenu").hide();
         }
