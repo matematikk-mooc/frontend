@@ -77,12 +77,6 @@ module.exports = function(grunt) {
 				dest: 'dist/mmooc-min.css',
 				replacements: 
 				[{
-					from: 'https://server/bitmaps/mmooc-logo.png',
-					to: '/custom/bitmaps/mmooc-logo.png'
-				}, {
-					from: 'https://server/bitmaps/mmooc-logo@2x.png',
-					to: '/custom/bitmaps/mmooc-logo@2x.png'
-				},{
 					from: 'https://server',
 					to: 'https://matematikk-mooc.github.io/frontend'
 				}]
