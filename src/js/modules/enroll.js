@@ -6,7 +6,7 @@ this.mmooc.enroll = function() {
     return {
         changeButtonTextAndHref: function() {
             var enrollForm = $("#enroll_form");
-            enrollForm.find(".btn").text("Gå til Mine " + mmooc.i18n.CoursePlural);
+            enrollForm.find(".btn").text("Gå til mine " + mmooc.i18n.CoursePlural);
             enrollForm.find(".btn").attr("href", "/courses");
             enrollForm.find(".btn-primary").hide();
         },
@@ -16,6 +16,8 @@ this.mmooc.enroll = function() {
             document.getElementById("content").innerHTML = html;       
         },
         printAllCourses: function() {
+            html = "<span class='loading-gif'></span>";
+            $(".mmooc-all-courses-list").append(html);
             mmooc.api.getAllCourses(function(allCourses) {
                 mmooc.api.getEnrolledCourses(function(enrolledCourses) {
                     var allCoursesWithStatus = mmooc.enroll.setCourseEnrolledStatus(allCourses, enrolledCourses);
@@ -58,6 +60,9 @@ this.mmooc.enroll = function() {
                         }
                         coursesCategorized.push(categoryObj);
                     }
+        
+                    $(".loading-gif").remove();
+                    
                     for (var i = 0; i < coursesCategorized.length; i++) {
                         html = mmooc.util.renderTemplateWithData("allcourseslist", {title: coursesCategorized[i].title, courses: coursesCategorized[i].courses, courseLabel: mmooc.i18n.Course.toLowerCase()});
                         $(".mmooc-all-courses-list").append(html);
