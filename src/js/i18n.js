@@ -14,7 +14,6 @@ if (typeof this.mmooc.i18n === 'undefined') {
 		'Module' : 'Modul',
 		'ModulePlural' : 'Moduler',
 		'CourseModules' : 'Kursmoduler',
-		'Studies' : 'Studier',
 		'Assignment' : 'Oppgave',
 		'Discussion' : 'Diskusjon',
 		'Quiz' : 'Prøve',
