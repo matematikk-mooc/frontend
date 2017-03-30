@@ -221,11 +221,6 @@ jQuery(function($) {
         mmooc.menu.alterCourseLink();
         
         mmooc.footer.addLicenseInFooter();
-
-        $('#announcementbug').click(function() {
-            mmooc.announcements.clearAnnouncements();
-        });
-
     } catch(e) {
       console.log(e);
     }
