@@ -10,17 +10,21 @@ this.mmooc.courseList = function() {
 					var $oldContent = $('#' + parentId).children(); //After an update the 'Add course button' is in #content including a popupform. So we need to move this to another place in the DOM so we don't overwrite it.
 					$oldContent.appendTo("#right-side-wrapper #right-side");
 					
-					$('#' + parentId).html("<div>Laster " + mmooc.i18n.CoursePlural + "....</div>"); //overwrite the contents in parentID and display: 'Laster kurs....'
+					$('#' + parentId).html("<div>Laster " + mmooc.i18n.CoursePlural.toLowerCase() + "....</div>"); //overwrite the contents in parentID and display: 'Laster kurs....'
                     if (courses.length == 0) {
-                      var html = "<h1>Mine studier</h1>" +
+                      var html = "<h1>Mine " + 
+                                  mmooc.i18n.CoursePlural.toLowerCase() +
+                                  "</h1>" +
                                   "<p>" + mmooc.i18n.NoEnrollments + "</p>" +
-                                  "<a class='btn' href='/search/all_courses'>Se tilgjengelige studier</a>";
+                                  "<a class='btn' href='/search/all_courses'>Se tilgjengelige " +
+                                  mmooc.i18n.CoursePlural.toLowerCase() +
+                                  "</a>";
                     }
                     else {
                       var sortedCourses = mmooc.util.arraySorted(courses, "course_code");
-                      var html = mmooc.util.renderTemplateWithData("courselist", {courses: sortedCourses});
+                      var html = mmooc.util.renderTemplateWithData("courselist", {courses: sortedCourses, coursesLabel: mmooc.i18n.CoursePlural.toLowerCase()});
                     }
-                    document.title = "Studier";
+                    document.title = mmooc.i18n.CoursePlural;
                     document.getElementById(parentId).innerHTML = html; 
 //Additional check if course if completed. Not in use since course_progress(check implemented in template) seems to be working as expected. (Not able to reproduce errors).
 /*

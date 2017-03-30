@@ -105,7 +105,7 @@ this.mmooc.menu = function() {
             if(mmooc.settings.removeGroupsLink == false) {
                 insertCustomMenuElementInTopMenu("Grupper", "/groups");
             }
-            insertCustomMenuElementInTopMenu(mmooc.i18n.Studies, "/courses"); 
+            insertCustomMenuElementInTopMenu(mmooc.i18n.CoursePlural, "/courses"); 
             
             if (mmooc.util.isTeacherOrAdmin()) {
                 this.showLeftMenu();

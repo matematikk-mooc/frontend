@@ -11,8 +11,8 @@ this.mmooc.enroll = function() {
             enrollForm.find(".btn-primary").hide();
         },
         printAllCoursesContainer: function() {
-            html = mmooc.util.renderTemplateWithData("allcoursescontainer");
-            document.title = "Tilgjengelige studier";
+            html = mmooc.util.renderTemplateWithData("allcoursescontainer", {courseLabel: mmooc.i18n.Course.toLowerCase()});
+            document.title = "Tilgjengelige " + mmooc.i18n.CoursePlural.toLowerCase();
             document.getElementById("content").innerHTML = html;       
         },
         printAllCourses: function() {
@@ -59,7 +59,7 @@ this.mmooc.enroll = function() {
                         coursesCategorized.push(categoryObj);
                     }
                     for (var i = 0; i < coursesCategorized.length; i++) {
-                        html = mmooc.util.renderTemplateWithData("allcourseslist", {title: coursesCategorized[i].title, courses: coursesCategorized[i].courses});
+                        html = mmooc.util.renderTemplateWithData("allcourseslist", {title: coursesCategorized[i].title, courses: coursesCategorized[i].courses, courseLabel: mmooc.i18n.Course.toLowerCase()});
                         $(".mmooc-all-courses-list").append(html);
                     }
                     mmooc.enroll.insertModalAndOverlay(); 
@@ -118,7 +118,7 @@ this.mmooc.enroll = function() {
             }); 
         },
         populateFilter: function(categorys) {
-            var options = '<option value="Alle">Alle tilgjengelige studier</option>';
+            var options = '<option value="Alle">Alle tilgjengelige ' + mmooc.i18n.CoursePlural.toLowerCase() + '</option>';
             for(var i = 0; i < categorys.length; i++) {
                 options += '<option value="' + categorys[i] + '">' + categorys[i] + '</option>';
             }

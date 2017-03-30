@@ -12,7 +12,6 @@ this.mmooc.i18n = {
 	'Module' : 'Emne',
 	'ModulePlural' : 'Emner',
 	'CourseModules' : 'Emner',
-	'Studies' : 'Studier',
     'Assignment' : 'Oppgave',
     'Discussion' : 'Diskusjon',
     'Quiz' : 'Prøve',

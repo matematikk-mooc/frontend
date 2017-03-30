@@ -81,18 +81,18 @@ module.exports = function(grunt) {
 					to: 'https://matematikk-mooc.github.io/frontend'
 				}]
 			},
-			productionkursiktsenteretno: {
+			productioncustom: {
 				src: ['tmp/mmooc-min.css'],
-				dest: 'dist/mmooc-min-kurs-iktsenteret-no.css',
+				dest: 'dist/mmooc-min-custom.css',
 				replacements: 
 				[
 				{
 					from: 'https://server/bitmaps/mmooc-logo.png',
-					to: 'https://kurs.iktsenteret.no/custom/bitmaps/mmooc-logo.png'
+					to: '/custom/bitmaps/mmooc-logo.png'
 				},
 				{
 					from: 'https://server/bitmaps/mmooc-logo@2x.png',
-					to: 'https://kurs.iktsenteret.no/custom/bitmaps/mmooc-logo@2x.png'
+					to: '/custom/bitmaps/mmooc-logo@2x.png'
 				},
 				{
 					from: 'https://server',
@@ -185,7 +185,7 @@ module.exports = function(grunt) {
 		'less',
 		'copy',
 		'replace:production',
-		'replace:productionkursiktsenteretno',
+		'replace:productioncustom',
 		'replace:development',
 		'replace:production_badge',
 		'replace:development_badge'
