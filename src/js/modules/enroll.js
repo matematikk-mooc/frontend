@@ -4,11 +4,58 @@ this.mmooc=this.mmooc||{};
 this.mmooc.enroll = function() {
 
     return {
-        changeButtonTextAndHref: function() {
+        changeEnrollConfirmationButton: function() {
             var enrollForm = $("#enroll_form");
             enrollForm.find(".btn").text("Gå til mine " + mmooc.i18n.CoursePlural);
             enrollForm.find(".btn").attr("href", "/courses");
             enrollForm.find(".btn-primary").hide();
+        },
+        changeEnrollTitle: function(s) {
+            var headline = $(".ic-Login-confirmation__headline");
+            headline.text(s);
+        },
+        getEnrollInformationElement: function() {
+            var enrollForm = $("#enroll_form");
+            var confirmEnrollmentElement = enrollForm.find("p");
+            return confirmEnrollmentElement;
+        },
+        changeEnrollInformation: function(from, to) {
+            var confirmEnrollmentElement = this.getEnrollInformationElement();
+            confirmEnrollmentElement.text(confirmEnrollmentElement.text().replace(from, to));
+        },
+        hideEnrollInformationPolicy: function() {
+            var informationPolicy = $(".ic-Self-enrollment-footer__Secondary");
+            informationPolicy.hide();
+        },
+        changeEnrollButton: function() {
+            var enrollForm = $("#enroll_form");
+            var confirmButton = enrollForm.find(".btn");
+            confirmButton.text("Ja takk, jeg vil registrere meg!");
+        },
+        changeEnrollConfirmationPage: function() {
+            this.changeEnrollTitle("Bekreftelse");
+            this.changeEnrollInformation("Du har en vellykket registrering i ", "Du er nå registrert på ");
+            this.changeEnrollConfirmationButton();
+        },
+        isAlreadyEnrolled: function() {
+            confirmEnrollmentElement = this.getEnrollInformationElement();
+            var i = confirmEnrollmentElement.text().indexOf("Du er allerede registrert i");
+            if(i == -1) {
+                return false;
+            }
+            return true;   
+        },
+        changeEnrollPage: function() {
+            this.changeEnrollTitle("Påmelding");
+            if(this.isAlreadyEnrolled()) {
+                this.changeEnrollConfirmationButton();
+            }
+            else
+            {
+                this.changeEnrollInformation("Du registrere deg på ", "Vennligst bekreft at du vil registre deg på ");
+                this.hideEnrollInformationPolicy();
+                this.changeEnrollButton();            
+            }
         },
         printAllCoursesContainer: function() {
             html = mmooc.util.renderTemplateWithData("allcoursescontainer", {courseLabel: mmooc.i18n.Course.toLowerCase()});

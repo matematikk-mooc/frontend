@@ -195,7 +195,11 @@ jQuery(function($) {
 
 
     mmooc.routes.addRouteForQueryString(/enrolled=1/, function() {
-        mmooc.enroll.changeButtonTextAndHref();
+        mmooc.enroll.changeEnrollConfirmationPage();
+    });
+
+    mmooc.routes.addRouteForPath(/enroll/, function() {
+        mmooc.enroll.changeEnrollPage();
     });
 
     try {
