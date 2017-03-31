@@ -9,7 +9,7 @@
 }
 
 #header-logo, #header.no-user #header-logo {
-    background-image: url("https://server/bitmaps/mmooc-logo.png");
+    background-image: url(@logo-image);
     width: 240px;
     background-size: 240px 25px !important;
     bottom: 17px;
@@ -17,7 +17,7 @@
 
 @media (min--moz-device-pixel-ratio: 1.5), (-o-min-device-pixel-ratio: 3/2), (-webkit-min-device-pixel-ratio: 1.5), (min-device-pixel-ratio: 1.5), (min-resolution: 1.5dppx) {
     #header-logo, #header.no-user #header-logo {
-        background-image: url("https://server/bitmaps/mmooc-logo@2x.png");
+        background-image: url(@logo-image2x);
     }
 }
 
@@ -35,10 +35,6 @@
 #user-menu {
     float: right;
     padding-top: 27px;
-}
-
-#menu {
-    margin: 0 0 0 275px;
 }
 
 @media screen and (max-width: 1024px) {
