@@ -6,7 +6,7 @@ this.mmooc.enroll = function() {
     return {
         changeEnrollConfirmationButton: function() {
             var enrollForm = $("#enroll_form");
-            enrollForm.find(".btn").text("Gå til mine " + mmooc.i18n.CoursePlural).toLowerCase();
+            enrollForm.find(".btn").text("Gå til mine " + mmooc.i18n.CoursePlural.toLowerCase());
             enrollForm.find(".btn").attr("href", "/courses");
             enrollForm.find(".btn-primary").hide();
         },
