@@ -34,7 +34,7 @@ this.mmooc.enroll = function() {
         },
         changeEnrollConfirmationPage: function() {
             this.changeEnrollTitle("Bekreftelse");
-            this.changeEnrollInformation("Du har en vellykket registrering i ", "Du er nå registrert på ");
+            this.changeEnrollInformation("Du har en vellykket registrering i ", "Du er nå registrert på " + mmooc.i18n.CourseDefinite.toLowerCase() + " ");
             this.changeEnrollConfirmationButton();
         },
         isAlreadyEnrolled: function() {
@@ -52,7 +52,7 @@ this.mmooc.enroll = function() {
             }
             else
             {
-                this.changeEnrollInformation("Du registrere deg på ", "Vennligst bekreft at du vil registre deg på ");
+                this.changeEnrollInformation("Du registrere deg på ", "Vennligst bekreft at du vil registre deg på " + mmooc.i18n.CourseDefinite.toLowerCase() + " ");
                 this.hideEnrollInformationPolicy();
                 this.changeEnrollButton();            
             }

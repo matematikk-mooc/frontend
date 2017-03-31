@@ -3,6 +3,7 @@ this.mmooc=this.mmooc||{};
 
 this.mmooc.i18n = {
 	'Course' : 'Modul',
+	'CourseDefinite' : 'Modulen',
 	'CoursePlural' : 'Moduler',
 	'CourseProgressionTitle' : 'Din modulprogresjon:',
 	'GoToCourse' : 'Gå til modul',

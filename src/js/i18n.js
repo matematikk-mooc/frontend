@@ -5,6 +5,7 @@ if (typeof this.mmooc.i18n === 'undefined') {
 	    'CreateAccountTitle' : 'Har du ikke konto?',
 	    'CreateAccountSubtitle' : 'Klikk her for å lage en',
 		'Course' : 'Kurs',
+		'CourseDefinite' : 'Kurset',
 		'CoursePlural' : 'Kurs',
 		'CourseProgressionTitle' : 'Din kursprogresjon:',
 		'GoToCourse' : 'Gå til kursside',
