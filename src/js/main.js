@@ -1,7 +1,8 @@
 jQuery(function($) {
 	
     $('.header-bar').show(); //To avoid displaying the old contents while the javascript is loading. Selectors are set to display:none in CSS.
-
+    $(".ic-Layout-contentMain").show(); //Same as above.
+    
     mmooc.routes.addRouteForPath(/\/$/, function() {
         mmooc.menu.hideRightMenu();
         var parentId = 'content'
