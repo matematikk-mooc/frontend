@@ -8,5 +8,5 @@ this.mmooc.settings = {
     'disablePeerReviewButton' : false,
     'removeGlobalGradesLink' : true,
     'removeGroupsLink' : true,
-    'selfRegisterCourseCode' : "MY4TAK"
+    'selfRegisterCourseCode' : "6DM3WF"
 };

@@ -1,8 +1,12 @@
 #application.ic-app {
+                .ic-app-header__menu-list {
+                    margin-bottom: 6px;
+                }
 
     #menu {
         @media screen and (max-width: 1050px) {
             margin-left: -258px;
+
         }
         
         li {
@@ -22,6 +26,7 @@
                 &#global_nav_dashboard_link, &#global_nav_conversations_link {
                     display: none;
                 }
+
                 
                 .menu-item-icon-container { //Not display icon used in new UI
                     display: none;
@@ -74,17 +79,19 @@
     #header.ic-app-header {
         height: 75px;
         width: 100%;
-        max-width: 1250px;
         border-bottom: 5px solid #47899f;
         position: relative;
         overflow-y: visible;
-
+        -webkit-flex-direction: row;
+        flex-direction: row; 
+    
        .ic-app-header__secondary-navigation {
             display: none;
         }
 
        .ic-app-header__main-navigation {
-       padding-left: 50px;
+        margin: 0 auto;
+        max-width: @maxWidth;
         .ic-app-header__logomark-container {
                     width: 240px;
                     float: left;
@@ -92,17 +99,14 @@
                     background-color: transparent;
 
             .ic-app-header__logomark {
-                background-image: url(@logo-image);
+                background-image: url(@logo-image2x);
                 width: 240px;
                 background-size: @logo-background-size;
                 -webkit-transform: scale3d(1, 1, 1);
                 transform: scale3d(1, 1, 1);
                 margin: 0;
         
-                // bottom: 17px;
-        
                 @media screen and (max-width: 1050px) {
-                    top: -23px;
                     position: relative;
                 }
         

@@ -6,11 +6,11 @@ body.ic-Login-Body, .body--login-confirmation {
             background-color: @darkTealColor;
         }
         .ic-Login-header__logo {
-            background-image: url("https://server/bitmaps/mmooc-logo.png") !important;
+            background-image: url(@logo-image2x) !important;
             background-size: contain;
             background-repeat: no-repeat;
             width: 240px;
-            height: 25px;
+            height: @logo-height;
             
             img {
                 display: none;
@@ -35,7 +35,7 @@ body.ic-Login-Body, .body--login-confirmation {
             
         }
         .ic-Login-confirmation__header {
-            background: @darkTealColor url("https://server/bitmaps/mmooc-logo.png") 18px no-repeat !important;
+            background: @darkTealColor url(@logo-image) 18px no-repeat !important;
             padding: 30px;
             img {
                 display: none;

@@ -71,6 +71,7 @@ body.no-headers #content, body.embedded #content {
     background: @backgroundColor;
     border: none !important;
     max-width: 1200px;
+    margin: 0 auto;
 }
 
 
@@ -86,7 +87,8 @@ body.no-headers #content, body.embedded #content {
 }
 
 #mmooc-course-tabs-container-inner {
-    padding-left: 50px;
+    max-width: @maxWidth;
+    margin: 0 auto;
 }
 
 @media screen and (max-width: 1240px) {
