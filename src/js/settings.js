@@ -8,5 +8,6 @@ this.mmooc.settings = {
     'disablePeerReviewButton' : false,
     'removeGlobalGradesLink' : true,
     'removeGroupsLink' : true,
-    'selfRegisterCourseCode' : "6DM3WF"
+    'displaySelfRegisterLink' : true,
+    'selfRegisterCourseCode' : "6DM3WF" //Default course code used if displaySelfRegisterLink is set to true.
 };

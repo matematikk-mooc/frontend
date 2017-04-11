@@ -44,10 +44,17 @@ this.mmooc.pages = function() {
         },
         
         replaceCreateAccountLink: function() {
-          var url = "/enroll/" + mmooc.settings.selfRegisterCourseCode;
-          $("#register_link").attr("href", url);
-          $("#register_link div.ic-Login__banner-title").html(mmooc.i18n.CreateAccountTitle);
-          $("#register_link div.ic-Login__banner-subtitle").html(mmooc.i18n.CreateAccountSubtitle);
+          if(mmooc.settings.displaySelfRegisterLink)
+          {
+              var url = "/enroll/" + mmooc.settings.selfRegisterCourseCode;
+              $("#register_link").attr("href", url);
+              $("#register_link div.ic-Login__banner-title").html(mmooc.i18n.CreateAccountTitle);
+            $("#register_link div.ic-Login__banner-subtitle").html(mmooc.i18n.CreateAccountSubtitle);
+          }
+          else
+          {
+              $("#register_link").hide();
+          }
         },
 
         duplicateMarkedAsDoneButton: function() {
