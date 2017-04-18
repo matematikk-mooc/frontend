@@ -15,9 +15,9 @@ this.mmooc.enroll = function() {
             headline.text(s);
         },
         getEnrollInformationElement: function() {
-            var enrollForm = $("#enroll_form");
-            var confirmEnrollmentElement = enrollForm.find("p");
-            return confirmEnrollmentElement;
+            //There might be several p elements, depending on which self registration screen we are on.
+            //Only return the first one.
+            return $("#enroll_form > p:first");
         },
         changeEnrollInformation: function(from, to) {
             var confirmEnrollmentElement = this.getEnrollInformationElement();
@@ -52,7 +52,16 @@ this.mmooc.enroll = function() {
             }
             else
             {
-                this.changeEnrollInformation("Du registrere deg på ", "Vennligst bekreft at du vil registre deg på " + mmooc.i18n.CourseDefinite.toLowerCase() + " ");
+                var i = this.getEnrollInformationElement().text().indexOf("Du registrerer deg i");
+                if(i != -1) {
+                    //When self enrolling, give the user the impression of registering on the platform, and not on the course
+                    //we use to make self enrollment possible. See settings.js/selfRegisterCourseCode
+                    this.getEnrollInformationElement().text("");
+                }
+                else
+                {
+                    this.changeEnrollInformation("Du registrere deg på ", "Vennligst bekreft at du vil registre deg på " + mmooc.i18n.CourseDefinite.toLowerCase() + " ");
+                }
                 this.hideEnrollInformationPolicy();
                 this.changeEnrollButton();            
             }

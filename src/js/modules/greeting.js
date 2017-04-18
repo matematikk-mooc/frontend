@@ -76,7 +76,7 @@ mmooc.greeting = function () {
                                         break;
                                     default:
                                         $('#info').addClass('error');
-                                        $('#info').html("En feil oppstod. Ta kontakt med matematikkmooc@iktsenteret.no for &aring; f&aring; hjelp.");
+                                        $('#info').html("En feil oppstod. Ta kontakt med kursansvarlig for &aring; f&aring; hjelp.");
                                 }
                             }
                         }); //End Google callback
