@@ -10,4 +10,6 @@ this.mmooc.settings = {
     'removeGroupsLink' : true,
     'displaySelfRegisterLink' : true,
     'selfRegisterCourseCode' : "6DM3WF" //Default course code used if displaySelfRegisterLink is set to true.
+    'privacyPolicyLink' : 'https://kurs-iktsenteret.github.io/privacypolicy.html',
+    'platformName' : 'kurs.iktsenteret.no'
 };

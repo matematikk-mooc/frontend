@@ -45,6 +45,21 @@ this.mmooc.enroll = function() {
             }
             return true;   
         },
+        selectRegisterUserCheckbox: function () {
+            //The checkbox is hidden by canvas-enroll.less, but we need to check it to get the right fields to display.
+            $("#selfEnrollmentAuthRegCreate").click();
+        },
+        updatePrivacyPolicyLinks: function () {
+            html = mmooc.util.renderTemplateWithData("enrollprivacypolicy", {privacypolicylink: mmooc.settings.privacyPolicyLink});
+            $("label[for='selfEnrollmentAuthRegLoginAgreeTerms']").html(html);
+        },
+        isSelfEnrollmentPage: function () {
+            var i = this.getEnrollInformationElement().text().indexOf("Du registrerer deg i");
+            if(i == -1) {
+                return false;
+            }
+            return true;
+        },
         changeEnrollPage: function() {
             this.changeEnrollTitle("Påmelding");
             if(this.isAlreadyEnrolled()) {
@@ -52,11 +67,13 @@ this.mmooc.enroll = function() {
             }
             else
             {
-                var i = this.getEnrollInformationElement().text().indexOf("Du registrerer deg i");
-                if(i != -1) {
+                if(this.isSelfEnrollmentPage()) {
                     //When self enrolling, give the user the impression of registering on the platform, and not on the course
                     //we use to make self enrollment possible. See settings.js/selfRegisterCourseCode
                     this.getEnrollInformationElement().text("");
+                    $("#enroll_form > p:nth-child(2)").text("Vennligst fyll inn informasjonen nedenfor for å registrere deg " + mmooc.settings.platformName);
+                    this.selectRegisterUserCheckbox();
+                    this.updatePrivacyPolicyLinks();
                 }
                 else
                 {
