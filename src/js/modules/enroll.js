@@ -47,7 +47,7 @@ this.mmooc.enroll = function() {
         },
         selectRegisterUserCheckbox: function () {
             //The checkbox is hidden by canvas-enroll.less, but we need to check it to get the right fields to display.
-            $("#selfEnrollmentAuthRegCreate").click();
+            $("#selfEnrollmentAuthRegCreate").trigger("change");
         },
         updatePrivacyPolicyLinks: function () {
             html = mmooc.util.renderTemplateWithData("enrollprivacypolicy", {privacypolicylink: mmooc.settings.privacyPolicyLink});
