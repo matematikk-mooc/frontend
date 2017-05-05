@@ -45,7 +45,7 @@ if (typeof this.mmooc.i18n === 'undefined') {
 		'eventsAndDeadlinesTitle' : 'Viktige datoer',
 		'WeHaveAQuestionToTeacherInTheDiscussion' : 'Vi har et spørsmål til veileder i diskusjonen',
 		'NoTeacherFeedbackLink' : 'No teacher_feedback link. Does the help menu have a link to send feedback to the teacher?',
-		'NoEnrollments' : 'Du er ikke påmeldt noen kurs enda.',
+		'NoEnrollments' : 'Velkommen til vår kursplattform. Du er ikke påmeldt noen kurs enda. Klikk på knappen nedenfor for å se tilgjengelige kurs.',
 		'OutOf' : 'av',
 		'Months' : ["januar", "februar", "mars", "april", "mai", "juni", "juli", "august", "september", "Oktober", "november", "december"]
 	};

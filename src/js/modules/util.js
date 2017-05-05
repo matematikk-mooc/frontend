@@ -33,6 +33,13 @@ this.mmooc.util = function () {
             return title;
         },
 
+        filterCourse: function(course) {
+            return course.name != mmooc.settings.selfRegisterCourseName;
+        },
+        filterSearchAllCourse: function(course) {
+            return course.course.name != mmooc.settings.selfRegisterCourseName;
+        },
+
         arraySorted: function (array, elementToSort) {
             if (Object.prototype.toString.call(array) === '[object Array]' && elementToSort) {
                 return array.sort(function (a, b) {

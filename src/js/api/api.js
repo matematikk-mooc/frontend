@@ -156,10 +156,24 @@ this.mmooc.api = function() {
             return null;
         },
 
-
+        getAllCourses: function(callback, error) {
+            this._get({
+                "callback": function(courses) {
+                    var filteredCourses = courses.filter(mmooc.util.filterSearchAllCourse);
+                    callback(filteredCourses);
+                },
+                "error":    error,
+                "uri":      "/search/all_courses",
+                "params":   { per_page: 999 }
+            });
+        },        
+        
         getEnrolledCourses: function(callback, error) {
             this._get({
-                "callback": callback,
+                "callback": function(courses) {
+                    var filteredCourses = courses.filter(mmooc.util.filterCourse);
+                    callback(filteredCourses);
+                },
                 "error":    error,
                 "uri":      "/courses",
                 "params":   { "include": ["syllabus_body"], "per_page": "100" }
@@ -168,7 +182,10 @@ this.mmooc.api = function() {
         
         getEnrolledCoursesProgress: function(callback, error) {
             this._get({
-                "callback": callback,
+                "callback": function(courses) {
+                    var filteredCourses = courses.filter(mmooc.util.filterCourse);
+                    callback(filteredCourses);
+                },
                 "error":    error,
                 "uri":      "/courses",
                 "params":   { "include": ["course_progress"], "per_page": "100" }
@@ -439,15 +456,6 @@ this.mmooc.api = function() {
             });
         },
         
-        getAllCourses: function(callback, error) {
-            this._get({
-                "callback": callback,
-                "error":    error,
-                "uri":      "/search/all_courses",
-                "params":   { per_page: 999 }
-            });
-        },        
-
         getGroupCategoriesForAccount: function(account, callback, error) {
             this._get({
                 "callback": callback,
