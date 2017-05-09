@@ -1,6 +1,6 @@
 this.mmooc.settings = {
     'CanvaBadgeProtocolAndHost' : 'https://canvabadges-beta-iktsenteret.bibsys.no',
-    'useCanvaBadge' : true,
+    'useCanvaBadge' : false,
     'defaultNumberOfReviews' : 2, // Default number of peer reviews per student in power function
     'disablePeerReviewButton' : false,
     'removeGlobalGradesLink' : true,

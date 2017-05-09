@@ -1,6 +1,9 @@
 jQuery(function($) {
-    $('.header-bar').show(); //To avoid displaying the old contents while the javascript is loading. Selectors are set to display:none in CSS.
-    $(".ic-Layout-contentMain").show(); //Same as above.
+//    $('.header-bar').show(); //To avoid displaying the old contents while the javascript is loading. Selectors are set to display:none in CSS.
+//    $(".ic-Layout-contentMain").show(); //Same as above.
+	
+//	$('.header-bar').css("visibility", "visible");
+//	$(".ic-Layout-contentMain").css("visibility", "visible");
 	
     mmooc.routes.addRouteForPath(/\/$/, function() {
         mmooc.menu.hideRightMenu();
@@ -37,8 +40,8 @@ jQuery(function($) {
             var canvabadgesForCurrentCourse = '<iframe allowfullscreen="true" height="680" id="tool_content" mozallowfullscreen="true" name="tool_content" src="' + mmooc.settings.CanvaBadgeProtocolAndHost + '/badges/course/' + courseId + '" tabindex="0" webkitallowfullscreen="true" width="100%"></iframe>';
             $("#content").append(canvabadgesForCurrentCourse);
         } else {
-            mmooc.coursePage.listModulesAndShowProgressBar();
             mmooc.menu.showCourseMenu(courseId, mmooc.i18n.Course + 'forside', null);
+            mmooc.coursePage.listModulesAndShowProgressBar();
             mmooc.announcements.printAnnouncementsUnreadCount();
             mmooc.coursePage.replaceUpcomingInSidebar();
             mmooc.coursePage.printDeadlinesForCourse();
@@ -187,6 +190,7 @@ jQuery(function($) {
     
     mmooc.routes.addRouteForPath([/\/pages/], function() {
         mmooc.pages.showBackLinkIfNecessary();
+        mmooc.greeting.enableGreetingButtonIfNecessary();
     });
 
     mmooc.routes.addRouteForPath([/\/login\/canvas/], function() {
@@ -197,7 +201,9 @@ jQuery(function($) {
     mmooc.routes.addRouteForQueryString(/enrolled=1/, function() {
       if (document.referrer.indexOf(mmooc.settings.selfRegisterCourseCode !== -1))
       {
-        $(".ic-Layout-contentMain").hide(); //Same as above.
+        //Just send the user to the course overview page instead of requiring another click.
+//        $(".ic-Layout-contentMain").css("visibility", "hidden");
+        $(".ic-Layout-contentMain").hide();
         window.location.href = "/courses";
       }
       else
@@ -233,6 +239,7 @@ jQuery(function($) {
         mmooc.menu.alterCourseLink();
         
         mmooc.footer.addLicenseInFooter();
+
     } catch(e) {
       console.log(e);
     }

@@ -32,15 +32,17 @@ this.mmooc.menu = function() {
             if (badgeSafe.url) { //If the url of Badges is found then display this as an additional tab
                 menuItems[menuItems.length] = badgeSafe;
                 _insertCourseMenuHtml(course, selectedMenuItem, title, menuItems);
-            } else {
-                if (mmooc.settings.useCanvaBadge) {
-                    mmooc.menu.setCanvaBadgesLink(course, function(canvaBadgeObject) { //Second parameter is a callback function
-                        if (canvaBadgeObject.url) {
-                            menuItems[menuItems.length] = canvaBadgeObject; //check if canva badges is used for the current domain and if it is and the user has any badges then display this additional tab 
-                        }
-                        _insertCourseMenuHtml(course, selectedMenuItem, title, menuItems);
-                    });
-                }
+            } else if (mmooc.settings.useCanvaBadge) {
+                mmooc.menu.setCanvaBadgesLink(course, function(canvaBadgeObject) { //Second parameter is a callback function
+                    if (canvaBadgeObject.url) {
+                        menuItems[menuItems.length] = canvaBadgeObject; //check if canva badges is used for the current domain and if it is and the user has any badges then display this additional tab 
+                    }
+                    _insertCourseMenuHtml(course, selectedMenuItem, title, menuItems);
+                });
+            }
+            else
+            {
+                _insertCourseMenuHtml(course, selectedMenuItem, title, menuItems);
             }
         }
     }

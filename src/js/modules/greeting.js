@@ -30,8 +30,8 @@ mmooc.greeting = function () {
     }
 
     return {
-        enableGreetingButtonIfNecessary: function ($content) {
-            // Erlends diploma
+        enableGreetingButtonIfNecessary: function () {
+            var $content = $("#content");
             var $diplomaButton = $content.find(".sikt-diploma-button");
             var $formIdDiv = $content.find(".sikt-diploma-formId");
             var $nameEntryIdDiv = $content.find(".sikt-diploma-nameEntryId");

@@ -305,8 +305,6 @@ function uobAddComponents() {
 			};
 		}
 
-        mmooc.greeting.enableGreetingButtonIfNecessary($content);
-
 		// Initialise reveal buttons.
 		var $revealButton = $content.find(".uob-reveal-button");
 
