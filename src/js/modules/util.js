@@ -39,6 +39,15 @@ this.mmooc.util = function () {
         filterSearchAllCourse: function(course) {
             return course.course.name != mmooc.settings.selfRegisterCourseName;
         },
+        callWhenElementIsPresent: function(classId, callback) {
+            var checkExist = setInterval(function() {
+                var checkClassId = classId;
+                if($(checkClassId).length) {
+                  clearInterval(checkExist);
+                  callback();
+                }
+            }, 100);
+        },
 
         arraySorted: function (array, elementToSort) {
             if (Object.prototype.toString.call(array) === '[object Array]' && elementToSort) {

@@ -152,6 +152,7 @@ jQuery(function($) {
         mmooc.menu.listModuleItems();
         mmooc.pages.modifyMarkAsDoneButton();
         mmooc.pages.duplicateMarkedAsDoneButton();
+        mmooc.util.callWhenElementIsPresent(".sikt-diploma-button", mmooc.greeting.enableGreetingButtonIfNecessary);
         // mmooc.pages.changeTranslations();
     });
     
@@ -187,10 +188,10 @@ jQuery(function($) {
         mmooc.menu.showLeftMenu();
         mmooc.menu.listModuleItems();
     });
-    
+
     mmooc.routes.addRouteForPath([/\/pages/], function() {
         mmooc.pages.showBackLinkIfNecessary();
-        mmooc.greeting.enableGreetingButtonIfNecessary();
+        mmooc.util.callWhenElementIsPresent(".sikt-diploma-button", mmooc.greeting.enableGreetingButtonIfNecessary);
     });
 
     mmooc.routes.addRouteForPath([/\/login\/canvas/], function() {

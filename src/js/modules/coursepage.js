@@ -39,6 +39,42 @@ this.mmooc.coursePage = function() {
                 "</div>"
             );
         },
+        _displayDeadlines: function(allDeadlines) {
+            allDeadlines.sort(function(a,b){
+                return a.date - b.date;
+            });
+            var weekday = [];
+            var month = [];
+            var html = "<table>";
+            for (var i = 0; i < allDeadlines.length; i++) {
+                var monthName = mmooc.util.getMonthShortName(allDeadlines[i].date);
+                if ("url" in allDeadlines[i]) {
+                    html += "<tr id='deadline-" + i + "'><div></div><td class='deadline-date'>" + allDeadlines[i].date.getDate() + ". " + monthName + "</td><td class='deadline-title'><a href='" + allDeadlines[i].url + "' title='" + allDeadlines[i].title + "'>" + allDeadlines[i].title + "</a></td></tr>";
+                }
+                else {
+                    html += "<tr id='deadline-" + i + "'><td class='deadline-date'>" + allDeadlines[i].date.getDate() + ". " + monthName + "</td><td class='deadline-title'>" + allDeadlines[i].title + "</td></tr>";
+                }
+            }
+            html += "</table>";
+            $("body.home .deadlines-list").html(html);
+            var upcoming = mmooc.coursePage.findUpcomingDate(allDeadlines);
+            $("#deadline-" + upcoming).addClass("upcoming");
+            var parent = $("body.home .deadlines-list");
+            var row = $("#deadline-" + upcoming);
+            parent.scrollTop(parent.scrollTop() + (row.position().top - parent.position().top) - (parent.height()/2) + (row.height()/2));
+            $(".deadlines-scroll-up").click(function() {
+                var scroll = parent.scrollTop() - 50;
+                $(parent).animate({
+                    scrollTop: scroll
+                }, 200);
+            });
+            $(".deadlines-scroll-down").click(function() {
+                var scroll = parent.scrollTop() + 50;
+                $(parent).animate({
+                    scrollTop: scroll
+                }, 200);
+            });
+        },
         printDeadlinesForCourse: function() {
             var courseId = mmooc.api.getCurrentCourseId();
             var allDeadlines = [];
@@ -67,40 +103,10 @@ this.mmooc.coursePage = function() {
                             allDeadlines.push(deadlineObj);
                         }
                     }
-                    allDeadlines.sort(function(a,b){
-                        return a.date - b.date;
-                    });
-                    var weekday = [];
-                    var month = [];
-                    var html = "<table>";
-                    for (var i = 0; i < allDeadlines.length; i++) {
-                        var monthName = mmooc.util.getMonthShortName(allDeadlines[i].date);
-                        if ("url" in allDeadlines[i]) {
-                            html += "<tr id='deadline-" + i + "'><div></div><td class='deadline-date'>" + allDeadlines[i].date.getDate() + ". " + monthName + "</td><td class='deadline-title'><a href='" + allDeadlines[i].url + "' title='" + allDeadlines[i].title + "'>" + allDeadlines[i].title + "</a></td></tr>";
-                        }
-                        else {
-                            html += "<tr id='deadline-" + i + "'><td class='deadline-date'>" + allDeadlines[i].date.getDate() + ". " + monthName + "</td><td class='deadline-title'>" + allDeadlines[i].title + "</td></tr>";
-                        }
+                    if(allDeadlines.length)
+                    {
+                        mmooc.coursePage._displayDeadlines(allDeadlines);
                     }
-                    html += "</table>";
-                    $("body.home .deadlines-list").html(html);
-                    var upcoming = mmooc.coursePage.findUpcomingDate(allDeadlines);
-                    $("#deadline-" + upcoming).addClass("upcoming");
-                    var parent = $("body.home .deadlines-list");
-                    var row = $("#deadline-" + upcoming);
-                    parent.scrollTop(parent.scrollTop() + (row.position().top - parent.position().top) - (parent.height()/2) + (row.height()/2));
-                    $(".deadlines-scroll-up").click(function() {
-                        var scroll = parent.scrollTop() - 50;
-                        $(parent).animate({
-                            scrollTop: scroll
-                        }, 200);
-                    });
-                    $(".deadlines-scroll-down").click(function() {
-                        var scroll = parent.scrollTop() + 50;
-                        $(parent).animate({
-                            scrollTop: scroll
-                        }, 200);
-                    });
                 });
             });
         },
