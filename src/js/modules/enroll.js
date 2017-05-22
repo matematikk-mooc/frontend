@@ -97,46 +97,19 @@ this.mmooc.enroll = function() {
             mmooc.api.getAllCourses(function(allCourses) {
                 mmooc.api.getEnrolledCourses(function(enrolledCourses) {
                     var allCoursesWithStatus = mmooc.enroll.setCourseEnrolledStatus(allCourses, enrolledCourses);
-                    var categorys = [];
-                    var hasOther = false;
-                    for (var i = 0; i < allCoursesWithStatus.length; i++) {
-                        var category = mmooc.util.getCourseCategory(allCoursesWithStatus[i].course_code);
-                        if (categorys.indexOf(category) == -1) {
-                            if (category == "Andre") {
-                              hasOther = true;
-                            }
-                            else { 
-                              categorys.push(category);
-                            }
-                        }
-                    }
-                    categorys.sort();
-                    if (hasOther) {
-                        categorys.push("Andre");
-                    }           
+
+                    var categorys = mmooc.util.getCourseCategories(allCoursesWithStatus);
+
+/* If the amount of courses is large, the filter select box and corresponding javascript code in allcoursescontainer.hbs should be enabled
+
                     mmooc.enroll.populateFilter(categorys);
+
   	                $("#filter").change(function() {
   		                  mmooc.enroll.applyFilter();
   	                });
-                    var coursesCategorized = [];
-                    for (var i = 0; i < categorys.length; i++) {
-                        var categoryCourses = [];
-                        for (var j = 0; j < allCoursesWithStatus.length; j++) {
-                            var category = mmooc.util.getCourseCategory(allCoursesWithStatus[j].course_code);
-                            if (categorys[i] == category) {
-                                categoryCourses.push(allCoursesWithStatus[j]);
-                            }
-                        }
-                        categoryCourses.sort(function(a,b){
-                            return a.name > b.name;
-                        });
-                        var categoryObj = {
-                            title: categorys[i],
-                            courses: categoryCourses
-                        }
-                        coursesCategorized.push(categoryObj);
-                    }
-        
+*/                    
+                    var coursesCategorized = mmooc.util.getCoursesCategorized(allCoursesWithStatus, categorys);
+                    
                     $(".loading-gif").remove();
                     
                     for (var i = 0; i < coursesCategorized.length; i++) {

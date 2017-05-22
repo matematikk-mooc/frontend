@@ -11,21 +11,35 @@ this.mmooc.courseList = function() {
 					$oldContent.appendTo("#right-side-wrapper #right-side");
 					
 					$('#' + parentId).html("<div>Laster " + mmooc.i18n.CoursePlural.toLowerCase() + "....</div>"); //overwrite the contents in parentID and display: 'Laster kurs....'
+					
+					var html = "";
+					
                     if (courses.length == 0) {
-                      var html = "<h1>Mine " + 
+                      html = "<h1>Mine " + 
                                   mmooc.i18n.CoursePlural.toLowerCase() +
                                   "</h1>" +
                                   "<p>" + mmooc.i18n.NoEnrollments + "</p>" +
                                   "<a class='btn' href='/search/all_courses'>Se tilgjengelige " +
                                   mmooc.i18n.CoursePlural.toLowerCase() +
                                   "</a>";
+                      $('#' + parentId).html(html);            
                     }
                     else {
+                      html =  mmooc.util.renderTemplateWithData("courselistcontainer", {courseLabel: mmooc.i18n.CoursePlural.toLowerCase()});
+                      $('#' + parentId).html(html); 
+                      
                       var sortedCourses = mmooc.util.arraySorted(courses, "course_code");
-                      var html = mmooc.util.renderTemplateWithData("courselist", {courses: sortedCourses, coursesLabel: mmooc.i18n.CoursePlural.toLowerCase()});
+                      
+                      var categorys = mmooc.util.getCourseCategories(sortedCourses);
+                      
+                      var coursesCategorized = mmooc.util.getCoursesCategorized(sortedCourses, categorys);
+
+                      for (var i = 0; i < coursesCategorized.length; i++) {
+                          html = mmooc.util.renderTemplateWithData("courselist", {title: coursesCategorized[i].title, courses: coursesCategorized[i].courses, courseLabel: mmooc.i18n.Course.toLowerCase()});
+                           $('.mmooc-course-list-container').append(html);
+                      }
                     }
                     document.title = mmooc.i18n.CoursePlural;
-                    document.getElementById(parentId).innerHTML = html; 
 //Additional check if course if completed. Not in use since course_progress(check implemented in template) seems to be working as expected. (Not able to reproduce errors).
 /*
                     var createCallBackForId = function(id) {
@@ -50,13 +64,14 @@ this.mmooc.courseList = function() {
                     });
 */
 	                
-	                	                
+
+/* If the amount of courses is large, the filter select box and corresponding template code in courselist.hbs should be enabled               	                
 	                mmooc.courseList.showFilter(sortedCourses);
 	                
 	                $("#filter").change(function() {
 		                mmooc.courseList.applyFilter(sortedCourses);
 	                });
-					
+*/					
 					if ($.isFunction(callback)) {
 	                    callback();
 	                }

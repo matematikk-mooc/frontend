@@ -235,7 +235,7 @@ jQuery(function($) {
         mmooc.groups.changeGroupListURLs(document.location.href);
 
         mmooc.pages.updateSidebarWhenMarkedAsDone();
-
+        mmooc.pages.updateSidebarWhenContributedToDiscussion();
         mmooc.menu.alterHomeLink();
         mmooc.menu.alterCourseLink();
         

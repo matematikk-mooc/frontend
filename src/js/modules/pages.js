@@ -43,6 +43,16 @@ this.mmooc.pages = function() {
           })
         },
         
+        updateSidebarWhenContributedToDiscussion: function() {
+            $("#discussion_container").on("click", ".btn-primary", function() {
+                var icon = $("ul.mmooc-module-items .active span:last-child");
+
+                if (!icon.hasClass("done")) {
+                  icon.addClass("done");
+                } 
+            })
+        },
+        
         replaceCreateAccountLink: function() {
           if(mmooc.settings.displaySelfRegisterLink)
           {

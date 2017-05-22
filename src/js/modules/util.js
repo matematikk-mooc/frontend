@@ -136,10 +136,50 @@ this.mmooc.util = function () {
             var months = ["jan", "feb", "mar", "apr", "mai", "jun", "jul", "aug", "sep", "okt", "nov", "des"];
             return months[date.getMonth()];
         },
-        
+        getCourseCategories: function (courses) {
+            var categorys = [];
+            var hasOther = false;
+            for (var i = 0; i < courses.length; i++) {
+                var category = mmooc.util.getCourseCategory(courses[i].course_code);
+                if (categorys.indexOf(category) == -1) {
+                    if (category == "Andre") {
+                      hasOther = true;
+                    }
+                    else { 
+                      categorys.push(category);
+                    }
+                }
+            }
+            categorys.sort();
+            if (hasOther) {
+                categorys.push("Andre");
+            }
+            return categorys;           
+        },
+        getCoursesCategorized: function(courses, categorys) {
+            var coursesCategorized = [];
+            for (var i = 0; i < categorys.length; i++) {
+                var categoryCourses = [];
+                for (var j = 0; j < courses.length; j++) {
+                    var category = mmooc.util.getCourseCategory(courses[j].course_code);
+                    if (categorys[i] == category) {
+                        categoryCourses.push(courses[j]);
+                    }
+                }
+                categoryCourses.sort(function(a,b){
+                    return a.name > b.name;
+                });
+                var categoryObj = {
+                    title: categorys[i],
+                    courses: categoryCourses
+                }
+                coursesCategorized.push(categoryObj);
+            }
+            return coursesCategorized;
+        },
         getCourseCategory: function (courseCode) {
             var category = "Andre";
-            if (courseCode.indexOf("::") > -1) {
+            if (courseCode && courseCode.indexOf("::") > -1) {
                 category = courseCode.substring(0, courseCode.indexOf("::"));
             }
             return category;            
