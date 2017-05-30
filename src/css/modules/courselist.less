@@ -23,7 +23,7 @@
 		font-family:'Roboto Slab';
 		display: inline-block;
 		width: 200px;
-		margin-bottom: 50px;
+		margin-bottom: 25px;
 	}
 	
 	.btn-more-courses {
@@ -37,6 +37,22 @@
 
 }
 .mmooc-course-list {
+    //Horizontal line after title, ref. http://stackoverflow.com/questions/20935191/create-line-after-text-with-css
+    h2.mmooc-course-category-title {
+    position: relative;
+    overflow: hidden; //Clip the horizontal lines outside the container
+    }
+
+    h2.mmooc-course-category-title:after {
+        content:"";
+        position: absolute;
+        top: 50%;
+        height: 0.5em;
+        border-top: 1px solid black;
+        width: 100%;
+        margin-left:10px;
+    }
+
 
 	.mmooc-row {
 		margin-left: -20px;
