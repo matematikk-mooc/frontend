@@ -29,6 +29,40 @@ this.mmooc.coursePage = function() {
              $("ul#flash_message_holder li:contains('" + acceptanceFlashTextToSearchFor + "')")
                 .hide();
         },
+        
+        //Until Canvas has corrected the translation of drop course to something else than "slipp emnet", we override the functionality.
+        replaceBadTranslations: function() {
+            var selfUnenrollmentButton = $(".self_unenrollment_link");
+            var selfUnenrollmentDialog = $("#self_unenrollment_dialog");
+            if(selfUnenrollmentButton.length)
+            {
+                selfUnenrollmentButton.text(selfUnenrollmentButton.text().replace("Slipp dette emnet", mmooc.i18n.DropCourse));
+                selfUnenrollmentButton.unbind("click"); //Prevent default presentation of the dialog with incorrect translation.
+                selfUnenrollmentButton.click(function(e) {
+                    selfUnenrollmentDialog.toggle();
+                    selfUnenrollmentDialog.find(".dialog_closer").click(function(e) {
+                        selfUnenrollmentDialog.hide();
+                    });
+                });
+            }
+            if(selfUnenrollmentDialog.length)
+            {
+                selfUnenrollmentDialog.find("h2").hide();
+                selfUnenrollmentDialog.find(".button-container a span").text("OK");
+                selfUnenrollmentDialog.find(".button-container a i").hide(); //Hide x at beginning of OK button
+                
+                //Hide default dialog text
+                $('#self_unenrollment_dialog').contents().filter(function() {
+                     return this.nodeType == 3
+                }).each(function(){
+                    this.textContent = "";
+                });
+                //Add our dialog text
+                $('#self_unenrollment_dialog').prepend("<div/><p/><p>" + mmooc.i18n.DropCourseDialogText + "<span class='unenroll_dialog_sad'></span><p>" + 
+                mmooc.i18n.JoinCourseDialogText + "<span class='unenroll_dialog_happy'></span></p>");
+            }
+        },
+
         replaceUpcomingInSidebar: function() {
             $("body.home .coming_up").replaceWith(
                 "<div class='deadlines-container'>" +

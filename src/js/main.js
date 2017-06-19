@@ -39,11 +39,17 @@ jQuery(function($) {
             //Should be refactored to use json api instead 
             var canvabadgesForCurrentCourse = '<iframe allowfullscreen="true" height="680" id="tool_content" mozallowfullscreen="true" name="tool_content" src="' + mmooc.settings.CanvaBadgeProtocolAndHost + '/badges/course/' + courseId + '" tabindex="0" webkitallowfullscreen="true" width="100%"></iframe>';
             $("#content").append(canvabadgesForCurrentCourse);
-        } else {
+        } 
+        else if(!(mmooc.util.isTeacherOrAdmin()) && $(".self_enrollment_link").length) //Route to list of all courses if student and not enrolled in course.
+        {
+            window.location.href = "/search/all_courses";
+        }
+        else {
             mmooc.menu.showCourseMenu(courseId, mmooc.i18n.Course + 'forside', null);
             mmooc.coursePage.listModulesAndShowProgressBar();
             mmooc.announcements.printAnnouncementsUnreadCount();
             mmooc.coursePage.replaceUpcomingInSidebar();
+            mmooc.coursePage.replaceBadTranslations();
             mmooc.coursePage.printDeadlinesForCourse();
         }
     });
@@ -198,23 +204,15 @@ jQuery(function($) {
         mmooc.pages.replaceCreateAccountLink();
     });
 
-
     mmooc.routes.addRouteForQueryString(/enrolled=1/, function() {
-      if (document.referrer.indexOf(mmooc.settings.selfRegisterCourseCode !== -1))
-      {
-        //Just send the user to the course overview page instead of requiring another click.
-//        $(".ic-Layout-contentMain").css("visibility", "hidden");
-        $(".ic-Layout-contentMain").hide();
         window.location.href = "/courses";
-      }
-      else
-      {          
-        mmooc.enroll.changeEnrollConfirmationPage();
-      }
     });
 
-    mmooc.routes.addRouteForPath(/enroll/, function() {
-        mmooc.enroll.changeEnrollPage();
+    mmooc.routes.addRouteForPath(/enroll\/[0-9A-Z]+$/, function() {
+        if(document.location.search == "")
+        {
+            mmooc.enroll.changeEnrollPage();
+        }
     });
 
     try {

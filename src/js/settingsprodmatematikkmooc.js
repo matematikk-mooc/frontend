@@ -1,6 +1,3 @@
-this.mmooc=this.mmooc||{};
-
-
 this.mmooc.settings = {
     'CanvaBadgeProtocolAndHost' : 'https://canvabadges-beta-iktsenteret.bibsys.no',
     'useCanvaBadge' : false,
@@ -9,7 +6,7 @@ this.mmooc.settings = {
     'removeGlobalGradesLink' : true,
     'removeGroupsLink' : true,
     'displaySelfRegisterLink' : true,
-    'selfRegisterCourseCode' : "JAFGH3", //Default course code used if displaySelfRegisterLink is set to true.
+    'selfRegisterCourseCode' : "LN7L9K", //Default course code used if displaySelfRegisterLink is set to true.
     'privacyPolicyLink' : 'http://matematikk-mooc.github.io/privacypolicy.html',
     'selfRegisterCourseName' : "Velkommen",
     'platformName' : 'MatematikkMOOC'

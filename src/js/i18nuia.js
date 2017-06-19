@@ -2,6 +2,9 @@ this.mmooc=this.mmooc||{};
 
 
 this.mmooc.i18n = {
+    'DropCourseDialogText' : 'Trykk OK for å melde deg av modulen ',
+    'JoinCourseDialogText' : 'Du kan melde deg på modulen igjen senere om du vil ',
+    'DropCourse' : 'Meld deg av modulen',
 	'Course' : 'Modul',
 	'CourseDefinite' : 'Modulen',
 	'CoursePlural' : 'Moduler',

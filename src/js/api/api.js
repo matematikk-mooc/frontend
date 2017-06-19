@@ -632,6 +632,12 @@ this.mmooc.api = function() {
             });
         },
         
+        //https://kurs.iktsenteret.no/api/v1/courses/41/enrollments?enrollment%5Bself_enrollment_code%5D=WJTLML&enrollment%5Buser_id%5D=self
+        enrollUser: function(enrollAction, callback) {
+            var jqxhr = $.post( enrollAction, function(data) {
+                callback(data)
+            });
+        },
         createGroup: function(params, callback, error) {
             this._post({
                 "callback": callback,

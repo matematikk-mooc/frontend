@@ -19,6 +19,9 @@ this.mmooc.enroll = function() {
             //Only return the first one.
             return $("#enroll_form > p:first");
         },
+        getEnrollAction: function() {
+            return $("#enroll_form").attr("action");
+        },
         changeEnrollInformation: function(from, to) {
             var confirmEnrollmentElement = this.getEnrollInformationElement();
             confirmEnrollmentElement.text(confirmEnrollmentElement.text().replace(from, to));
@@ -32,10 +35,10 @@ this.mmooc.enroll = function() {
             var confirmButton = enrollForm.find(".btn");
             confirmButton.text("Ja takk, jeg vil registrere meg!");
         },
-        changeEnrollConfirmationPage: function() {
-            this.changeEnrollTitle("Bekreftelse");
-            this.changeEnrollInformation("Du har en vellykket registrering i ", "Du er nå registrert på " + mmooc.i18n.CourseDefinite.toLowerCase() + " ");
-            this.changeEnrollConfirmationButton();
+        hideEnrollButton: function() {
+            var enrollForm = $("#enroll_form");
+            var confirmButton = enrollForm.find(".btn");
+            confirmButton.hide();
         },
         isAlreadyEnrolled: function() {
             confirmEnrollmentElement = this.getEnrollInformationElement();
@@ -77,13 +80,21 @@ this.mmooc.enroll = function() {
                     $("#enroll_form > p:nth-child(2)").text("Vennligst fyll inn informasjonen nedenfor for å registrere deg " + mmooc.settings.platformName);
                     this.selectRegisterUserCheckbox();
                     this.updatePrivacyPolicyLinks();
+                    this.changeEnrollButton();            
                 }
                 else
                 {
-                    this.changeEnrollInformation("Du registrere deg på ", "Vennligst bekreft at du vil registre deg på " + mmooc.i18n.CourseDefinite.toLowerCase() + " ");
+                    this.hideEnrollButton();   
+                    this.changeEnrollInformation("Du registrere deg på ", "Vi registrerer deg på " + mmooc.i18n.CourseDefinite.toLowerCase() + " ");
+                    var enrollInformationElement = this.getEnrollInformationElement();         
+                    enrollInformationElement.html(" <span class='loading-gif'></span>");
+                    var enrollAction = this.getEnrollAction();
+                    mmooc.api.enrollUser(enrollAction, function(data) {
+                        $(".loading-gif").remove();
+                        window.location.href = "/search/all_courses";
+                    });
                 }
                 this.hideEnrollInformationPolicy();
-                this.changeEnrollButton();            
             }
         },
         printAllCoursesContainer: function() {

@@ -2,6 +2,9 @@ this.mmooc=this.mmooc||{};
 
 if (typeof this.mmooc.i18n === 'undefined') {
 	this.mmooc.i18n = {
+	    'DropCourseDialogText' : 'Trykk OK for å melde deg av kurset ',
+	    'JoinCourseDialogText' : 'Du kan melde deg på kurset igjen senere om du vil ',
+	    'DropCourse' : 'Meld deg av kurset',
 	    'CreateAccountTitle' : 'Har du ikke konto?',
 	    'CreateAccountSubtitle' : 'Klikk her for å lage en',
 		'Course' : 'Kurs',
