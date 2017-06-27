@@ -1,6 +1,3 @@
-this.mmooc=this.mmooc||{};
-
-
 this.mmooc.settings = {
     'CanvaBadgeProtocolAndHost' : 'https://canvabadges-beta-iktsenteret.bibsys.no',
     'useCanvaBadge' : false,
@@ -9,8 +6,8 @@ this.mmooc.settings = {
     'removeGlobalGradesLink' : true,
     'removeGroupsLink' : true,
     'displaySelfRegisterLink' : true,
-    'selfRegisterCourseCode' : "6DM3WF", //Default course code used if displaySelfRegisterLink is set to true.
-    'privacyPolicyLink' : 'https://kurs-iktsenteret.github.io/privacypolicy.html',
+    'selfRegisterCourseCode' : "LN7L9K", //Default course code used if displaySelfRegisterLink is set to true.
+    'privacyPolicyLink' : 'http://matematikk-mooc.github.io/privacypolicy.html',
     'selfRegisterCourseName' : "Velkommen",
-    'platformName' : 'kurs.iktsenteret.no'
+    'platformName' : 'MatematikkMOOC'
 };

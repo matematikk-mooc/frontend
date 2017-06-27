@@ -31,18 +31,17 @@ this.mmooc.coursePage = function() {
         },
         
         //Until Canvas has corrected the translation of drop course to something else than "slipp emnet", we override the functionality.
-        replaceBadTranslations: function() {
+        overrideUnregisterDialog : function() {
             var selfUnenrollmentButton = $(".self_unenrollment_link");
             var selfUnenrollmentDialog = $("#self_unenrollment_dialog");
             if(selfUnenrollmentButton.length)
             {
                 selfUnenrollmentButton.text(selfUnenrollmentButton.text().replace("Slipp dette emnet", mmooc.i18n.DropCourse));
-                selfUnenrollmentButton.unbind("click"); //Prevent default presentation of the dialog with incorrect translation.
-                selfUnenrollmentButton.click(function(e) {
-                    selfUnenrollmentDialog.toggle();
-                    selfUnenrollmentDialog.find(".dialog_closer").click(function(e) {
-                        selfUnenrollmentDialog.hide();
-                    });
+//                selfUnenrollmentButton.off(); //Prevent default presentation of the dialog with incorrect translation.
+                selfUnenrollmentButton.on("click",function(e) {
+                	setTimeout(function() {
+                        $("#ui-id-1").html(mmooc.i18n.DropCourse); 
+                	}, 200);
                 });
             }
             if(selfUnenrollmentDialog.length)
@@ -95,7 +94,7 @@ this.mmooc.coursePage = function() {
             $("#deadline-" + upcoming).addClass("upcoming");
             var parent = $("body.home .deadlines-list");
             var row = $("#deadline-" + upcoming);
-            parent.scrollTop(parent.scrollTop() + (row.position().top - parent.position().top) - (parent.height()/2) + (row.height()/2));
+            parent.scrollTop(parent.scrollTop() + row.position().top  - (parent.height()/2) + (row.height()/2));
             $(".deadlines-scroll-up").click(function() {
                 var scroll = parent.scrollTop() - 50;
                 $(parent).animate({
