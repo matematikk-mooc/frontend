@@ -113,7 +113,11 @@ this.mmooc.menu = function() {
                 this.showLeftMenu();
 
                 $("#section-tabs-header").show();
+                
+                //Canvas changed the aria-label as shown in the two lines below. Keep both lines for backward compatibility.
                 $("nav[aria-label='context']").show();
+                $("nav[aria-label='Emner-navigasjonsmeny']").show();
+                
                 $("#edit_discussions_settings").show();
                 $("#availability_options").show();
                 $("#group_category_options").show();
