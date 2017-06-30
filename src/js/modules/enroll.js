@@ -73,11 +73,12 @@ this.mmooc.enroll = function() {
             }
             else
             {
+                this.hideEnrollInformationPolicy();
                 if(this.isSelfEnrollmentPage()) {
                     //When self enrolling, give the user the impression of registering on the platform, and not on the course
                     //we use to make self enrollment possible. See settings.js/selfRegisterCourseCode
                     this.getEnrollInformationElement().text("");
-                    $("#enroll_form > p:nth-child(2)").text("Vennligst fyll inn informasjonen nedenfor for å registrere deg " + mmooc.settings.platformName);
+                    $("#enroll_form > p:nth-child(2)").text("Vennligst fyll inn informasjonen nedenfor for å registrere deg på " + mmooc.settings.platformName);
                     this.selectRegisterUserCheckbox();
                     this.updatePrivacyPolicyLinks();
                     this.changeEnrollButton();            
@@ -94,7 +95,6 @@ this.mmooc.enroll = function() {
                         window.location.href = "/search/all_courses";
                     });
                 }
-                this.hideEnrollInformationPolicy();
             }
         },
         printAllCoursesContainer: function() {

@@ -156,6 +156,16 @@ this.mmooc.api = function() {
             return null;
         },
 
+        getSelfRegisterCourse: function(callback, error) {
+            this._get({
+                "callback": callback,
+                "error":    error,
+                "uri":      "/search/all_courses",
+                "params":   { "search": "SELFREGISTER" }
+            });
+        },        
+
+
         getAllCourses: function(callback, error) {
             this._get({
                 "callback": function(courses) {
