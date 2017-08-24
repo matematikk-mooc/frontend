@@ -49,7 +49,8 @@ jQuery(function($) {
             mmooc.coursePage.listModulesAndShowProgressBar();
             mmooc.announcements.printAnnouncementsUnreadCount();
             mmooc.coursePage.replaceUpcomingInSidebar();
-            mmooc.coursePage.replaceBadTranslations();
+            mmooc.coursePage.overrideUnregisterDialog();
+            
             mmooc.coursePage.printDeadlinesForCourse();
         }
     });

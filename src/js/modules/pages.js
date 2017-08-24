@@ -54,17 +54,19 @@ this.mmooc.pages = function() {
         },
         
         replaceCreateAccountLink: function() {
-          if(mmooc.settings.displaySelfRegisterLink)
-          {
-              var url = "/enroll/" + mmooc.settings.selfRegisterCourseCode;
-              $("#register_link").attr("href", url);
-              $("#register_link div.ic-Login__banner-title").html(mmooc.i18n.CreateAccountTitle);
-            $("#register_link div.ic-Login__banner-subtitle").html(mmooc.i18n.CreateAccountSubtitle);
-          }
-          else
-          {
-              $("#register_link").hide();
-          }
+          mmooc.api.getSelfRegisterCourse(function(selfRegisterCourse) {
+              var createAccountTitle = "";
+              var createAccountSubtitle = "";
+              if(selfRegisterCourse[0])
+              {
+                  var url = "/enroll/" + selfRegisterCourse[0].course.self_enrollment_code;
+                  $("#register_link").attr("href", url);
+                  createAccountTitle = mmooc.i18n.CreateAccountTitle;
+                  createAccountSubtitle = mmooc.i18n.CreateAccountSubtitle;
+              }
+              $("#register_link div.ic-Login__banner-title").html(createAccountTitle);
+              $("#register_link div.ic-Login__banner-subtitle").html(createAccountSubtitle);
+          });
         },
 
         duplicateMarkedAsDoneButton: function() {

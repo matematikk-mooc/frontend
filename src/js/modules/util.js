@@ -34,10 +34,10 @@ this.mmooc.util = function () {
         },
 
         filterCourse: function(course) {
-            return course.name != mmooc.settings.selfRegisterCourseName;
+            return course.name != "SELFREGISTER";
         },
         filterSearchAllCourse: function(course) {
-            return course.course.name != mmooc.settings.selfRegisterCourseName;
+            return course.course.name != "SELFREGISTER";
         },
         callWhenElementIsPresent: function(classId, callback) {
             var checkExist = setInterval(function() {
