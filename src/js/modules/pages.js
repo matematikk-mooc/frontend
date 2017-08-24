@@ -284,7 +284,7 @@ this.mmooc.pages = function() {
 
             function _isPeerReview() {
                 var returnValue = false;
-                var peerReviewText = mmooc.i18n.PeerReview;
+                var peerReviewText = mmooc.i18n.PeerReviewer;
                 var originalSubmissionHeader = "body.assignments #application.ic-app #content .submission_details h2.submission_header";
                 if ($(originalSubmissionHeader + ":contains('" + peerReviewText + "')").length) {
                     returnValue = true;

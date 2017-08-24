@@ -29,7 +29,7 @@ jQuery(function($) {
     
     mmooc.routes.addRouteForPath(/\/courses\/\d+$/, function() {
         mmooc.groups.interceptLinksToGroupPage();
-        mmooc.coursePage.hideCourseInvitationsForAllUsers();
+//        mmooc.coursePage.hideCourseInvitationsForAllUsers();
         
         var courseId = mmooc.api.getCurrentCourseId();
         var queryString = document.location.search; 

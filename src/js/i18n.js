@@ -36,7 +36,7 @@ if (typeof this.mmooc.i18n === 'undefined') {
 		'LinkBack': 'Tilbake til forrige side',
 		'Badgesafe': 'Utmerkelser',
 		'PeerReview' : 'Hverandrevurdering',
-		'PeerReviewer' : 'Hverandrevurderer',
+		'PeerReviewer' : 'Fagfellevurdering',
 		'Delivery' : 'Innlevering',
 		'DetailsAboutYourDelivery' : 'Detaljer om din innlevering',
 		'DetailsAboutDelivery' : 'Detaljer om innlevering',
