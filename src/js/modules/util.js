@@ -167,7 +167,7 @@ this.mmooc.util = function () {
                     }
                 }
                 categoryCourses.sort(function(a,b){
-                    return a.name > b.name;
+                    return a.course_code > b.course_code;
                 });
                 var categoryObj = {
                     title: categorys[i],

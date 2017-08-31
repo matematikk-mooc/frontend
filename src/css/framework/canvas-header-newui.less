@@ -11,6 +11,10 @@
         
         li {
             float: left;
+
+            &#context_external_tool_1_menu_item { /* External tools hidden as default. They should be accessed from the course page instead. */
+                display: none;
+            }
             
             a {
                 padding-left: 18px;
@@ -63,9 +67,10 @@
                     display: none;
                 }
                 
-                &#global_nav_help_link { /* Calendar link hidden as default, since we replace it with our own calendar link. */
+                &#global_nav_help_link { /* Help link hidden as default, since we replace it with our own calendar link. */
                     display: none;
                 }
+                
                 
                 .menu-item__text {
                     font-size: 15px;
