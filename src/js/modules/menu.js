@@ -239,7 +239,7 @@ this.mmooc.menu = function() {
                 
                 function _selectCourseAndPrefillMessageInDialogBox() {
                 
-                    var $teacherFeedbackBody = $("#teacher-feedback-body");
+                    var $teacherFeedbackBody = $("#help_tray textarea");
                     var courseId = mmooc.api.getCurrentCourseId();
 
                     mmooc.api.getCourse(courseId, function(course) {
@@ -248,26 +248,30 @@ this.mmooc.menu = function() {
                         var discussionAndGroupTitle = $(".discussion-title").text();
                         var discussionTitle = strLeft(discussionAndGroupTitle, " - ");
                         var newLine = "\n";
-                        $('#teacher-feedback-recipients option:contains("' + courseName + '")').prop('selected', true);
+                        //Canvas now uses React for their help dialog, so we need to set the selected value slightly different.
+                        var selectValue = $('#help_tray form fieldset label select option:contains("' + courseName + '")').prop('value');
+                        $('#help_tray form fieldset label select').prop('value', selectValue);
                         var teacherFeedbackBodyHtml = mmooc.i18n.ThisIsGroup + ' "' + group.name + '".' + newLine + newLine + mmooc.i18n.WeHaveAQuestionToTeacherInTheDiscussion + ' "' + discussionTitle + '":' + newLine + discussionUrl;
                         $teacherFeedbackBody.val(teacherFeedbackBodyHtml);
                     });
                 }
 
                 function _openTeacherFeedbackLink() {
-                    var $teacherFeedbackLink = $("#help-dialog a[href='#teacher_feedback']");
+                    var $teacherFeedbackLink = $("#help_tray a[href='#teacher_feedback']");
                     if (!$teacherFeedbackLink.length) {
                         console.log(mmooc.i18n.NoTeacherFeedbackLink);
                         return false;
                     }
-                    $teacherFeedbackLink.click();
-                    _selectCourseAndPrefillMessageInDialogBox();
+                    //Ref. https://stackoverflow.com/questions/7999806/jquery-how-to-trigger-click-event-on-href-element
+                    $teacherFeedbackLink[0].click();
+                    setTimeout(_selectCourseAndPrefillMessageInDialogBox, 600); //Need to wait for the get teacher help contents to be loaded
+                    
                 }
 
                 function _addClickEventOnGetHelpFromTeacherButton() {
                     $(document).on("click", "#mmooc-get-teachers-help", function(event) {
-                        $('.help_dialog_trigger').click();
-                        setTimeout(_openTeacherFeedbackLink, 600); //Need to wait for the dialog contents to be loaded
+                        $('#global_nav_help_link').click();
+                        setTimeout(_openTeacherFeedbackLink, 600); //Need to wait for the help dialog contents to be loaded
                     });
                 }
                 
