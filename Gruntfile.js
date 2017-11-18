@@ -61,6 +61,14 @@ module.exports = function(grunt) {
                 src: ['src/js/i18nuia.js', 'src/js/settingsuia.js'],
                 dest: 'dist/uia.js'
             },
+    		mittdesign: {
+                src: ['src/js/api/*.js', 'src/js/mittdesign.js'],
+                dest: 'dist/mittdesign.js'
+            },
+    		mittdesign2: {
+                src: ['src/js/api/*.js', 'src/js/mittdesign2.js'],
+                dest: 'dist/mittdesign2.js'
+            },
 	    },
 
 		uglify: {
