@@ -209,13 +209,13 @@ jQuery(function($) {
         window.location.href = "/courses";
     });
 
-    mmooc.routes.addRouteForPath(/enroll\/[0-9A-Z]+$/, function() {
+/*    mmooc.routes.addRouteForPath(/enroll\/[0-9A-Z]+$/, function() {
         if(document.location.search == "")
         {
             mmooc.enroll.changeEnrollPage();
         }
     });
-
+*/
     try {
         mmooc.menu.renderLeftHeaderMenu();
         mmooc.menu.showUserMenu();
