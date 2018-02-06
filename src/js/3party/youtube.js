@@ -1,7 +1,7 @@
 this.mmooc=this.mmooc||{};
 
+//https://medium.com/@pointbmusic/youtube-api-checklist-c195e9abaff1
 this.mmooc.youtube = function() {
-	var tag = document.createElement('script');
 	//Array of captions in video
 	var captions
 	var captionsLoaded = false;
@@ -11,12 +11,11 @@ this.mmooc.youtube = function() {
 
 	//Keep track of which captions we are showing
 	var currentCaptionIndex = 0;
-	var previousCaptionIndex = 0;
+	var nextCaptionIndex = 0;
 
-	var href="https://video.google.com/timedtext?lang=no&v=YnGbp_ml9sI";
+	var hrefPrefix="https://video.google.com/timedtext?lang=no&v=";
 
-	var player;
-	
+	var playersArr = [];
 
 	function findCaptionIndexFromTimestamp(timeStamp)
 	{
@@ -34,7 +33,7 @@ this.mmooc.youtube = function() {
 			}
 	
 			//Check if the timestamp is in the interval of this caption.
-			if((timeStamp > start) && (timeStamp < (start + duration)))
+			if((timeStamp >= start) && (timeStamp < (start + duration)))
 			{
 				break;
 			}        
@@ -49,71 +48,65 @@ this.mmooc.youtube = function() {
 		return "t" + strTimestamp;
 	}
 
-	function clearHighlighting(timestampId)
+	function clearCurrentHighlighting()
 	{
-		$("#"+timestampId).css('background-color', '');
+		var timeStampId = getTimeIdFromTimestampIndex(currentCaptionIndex);
+		console.log("clearCurrentHighlighting " + timeStampId);
+		$("#"+timeStampId).css('background-color', '');
 	}
 
-	function highlight(timestampId)
+	function highlightNextCaption()
 	{
+		console.log("highlightNextCaption");
+		var timestampId = getTimeIdFromTimestampIndex(nextCaptionIndex);
 		$("#"+timestampId).css('background-color', 'yellow');
 	}
 
-	function highlightCurrentCaptionIndex()
+	function calculateTimeout(currentTime)
 	{
-		var previousTimestampId = getTimeIdFromTimestampIndex(previousCaptionIndex);
-		clearHighlighting(previousTimestampId);
+		var startTime = Number(getStartTimeFromCaption(currentCaptionIndex));
+		var duration = Number(getDurationFromCaption(currentCaptionIndex));
+		var timeoutValue = startTime - currentTime + duration;
+		return timeoutValue;
+	}
 
-		var timestampId = getTimeIdFromTimestampIndex(currentCaptionIndex);
-		highlight(timestampId);
+	function setCaptionTimeout(timeoutValue)
+	{
+		clearTimeout(captionTimeout);
+		
+		captionTimeout = setTimeout(function() {
+			highlightCaptionAndPrepareForNext();
+		}, timeoutValue*1000)
 	}
 
 	//This function highlights the next caption in the list and
 	//sets a timeout for the next one after that.
 	function highlightCaptionAndPrepareForNext()
 	{
-		highlightCurrentCaptionIndex();
-		console.log("highlightCaptionAndPrepareForNext currentCaptionIndex:"+currentCaptionIndex);
+		console.log("highlightCaptionAndPrepareForNext");
+		clearCurrentHighlighting();
+		highlightNextCaption();
+		currentCaptionIndex = nextCaptionIndex;
+		nextCaptionIndex++;
 
-		var startTime = Number(getStartTimeFromCaption(currentCaptionIndex));
-		var duration = Number(getDurationFromCaption(currentCaptionIndex));
-
-		previousCaptionIndex = currentCaptionIndex;
-		currentCaptionIndex++;
-
-		var currentTime = player.getCurrentTime();
-		var timeoutValue = startTime - currentTime + duration;
-
-		console.log("startTime:" + startTime + " Current time:" + currentTime + " Duration:" + duration + " Timeoutvalue:" + timeoutValue);
-		captionTimeout = setTimeout(function() {
-			highlightCaptionAndPrepareForNext();
-		}, timeoutValue*1000)
+		currentTime = player.getCurrentTime();
+		var timeoutValue = calculateTimeout(currentTime);
+		
+		setCaptionTimeout(timeoutValue);
 	}
 
-	//This function highlights the current caption if any 
-	//and sets a timeout for the next one after that.
+	//Called if the user has dragged the slider to somewhere in the video.
 	function highlightCaptionFromTimestamp(timeStamp)
 	{
 		console.log("highlightCaptionFromTimestamp timeStamp:" + timeStamp);
-		currentCaptionIndex = findCaptionIndexFromTimestamp(timeStamp);
-		var startTime = Number(getStartTimeFromCaption(currentCaptionIndex));
-		var duration = Number(getDurationFromCaption(currentCaptionIndex));
-		console.log("Starttime: " + startTime + " Duration: " + duration);
+		clearCurrentHighlighting();
+		nextCaptionIndex = findCaptionIndexFromTimestamp(timeStamp);
+		highlightNextCaption();
+		currentCaptionIndex = nextCaptionIndex;
 
-		var timeoutValue = startTime - timeStamp;
+		var timeoutValue = calculateTimeout(timeStamp);
 
-		//Should the caption be displayed now?
-		if(timeStamp >= startTime)
-		{
-			highlightCurrentCaptionIndex();
-	
-			timeoutValue += duration;
-		}
-		console.log("timeoutValue:" + timeoutValue);
-
-		captionTimeout = setTimeout(function() {
-			highlightCaptionAndPrepareForNext();
-		}, timeoutValue*1000)
+		setCaptionTimeout(timeoutValue);
 	}   
 
 	function getStartTimeFromCaption(i)
@@ -125,7 +118,7 @@ this.mmooc.youtube = function() {
 		return captions[i].getAttribute('dur');
 	}
 
-	function transcriptLoaded (transcript, transcriptId) {
+	function transcriptLoaded (transcript, videoId) {
 		var start = 0;
 		var temp;
 		captions = transcript.getElementsByTagName('text');
@@ -139,13 +132,14 @@ this.mmooc.youtube = function() {
 			srt_output += "<span class='btnSeek' data-seek='" + start + "' id='" + timestampId + "'>" + captionText + "</span> ";
 		};
 
-		$("#"+ transcriptId).html(srt_output);
+		$("#videoTranscript" + videoId).append(srt_output);
 		captionsLoaded = true;
 
 	}
 
-	function getTranscript(href, callback)
+	function getTranscript(videoId, callback)
 	{
+		var href = hrefPrefix + videoId;
 		$.ajax({
 			url: href,
 			type: 'GET',
@@ -158,10 +152,19 @@ this.mmooc.youtube = function() {
 			}
 		});           
 	}
+	function createPlayer(videoId) { 
+	   return player = new YT.Player(videoId, {
+		  videoId: videoId,
+		  events: {
+			'onReady': onPlayerReady,
+			'onStateChange': onPlayerStateChange
+		  }
+	   });	
+	};
+	
 	$(function() {
 		$(document).on('click', '.btnSeek', function() {
 			console.log("=============");
-			clearTimeout(captionTimeout);
 			var seekToTime = $(this).data('seek');
 			console.log("Seekto: " + seekToTime);
 			player.seekTo(seekToTime, true);
@@ -171,8 +174,13 @@ this.mmooc.youtube = function() {
 	return {
 		addTranscriptToYoutubeVideos : function()
 		{
-			getTranscript(href, function(transcript) {
-				transcriptLoaded (transcript, "videoTranscript");
+			$(".mmooc-yt-player" ).each(function( i ) {
+				var videoId = this.id;
+				var newPlayer = createPlayer(videoId);    
+				playersArr.push(newPlayer);
+				getTranscript(videoId, function(transcript) {
+					transcriptLoaded (transcript, videoId);
+				});
 			});
 		},
 		playerPlaying : function()
@@ -195,26 +203,19 @@ this.mmooc.youtube = function() {
 		},
 		APIReady : function ()
 		{
-			player = new YT.Player('player', {
-			  height: '390',
-			  width: '640',
-			  videoId: 'YnGbp_ml9sI',
-			  events: {
-				'onReady': onPlayerReady,
-				'onStateChange': onPlayerStateChange
-			  }
-			});
+			this.addTranscriptToYoutubeVideos();
 		},
 		init : function ()
 		{
-			this.addTranscriptToYoutubeVideos();
-			mmooc.util.mmoocLoadScript("https://www.youtube.com/iframe_api");		
+			onYouTubePlayerAPIReady();		
 		}		
 	}
 }();
-//    This function creates an <iframe> (and YouTube player)
-//    after the API code downloads.
-function onYouTubeIframeAPIReady() {
+
+
+  
+function onYouTubePlayerAPIReady() {
+	console.log("onYouTubePlayerAPIReady.");
 	this.mmooc.youtube.APIReady();
 }
 
