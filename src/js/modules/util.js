@@ -3,6 +3,14 @@ this.mmooc = this.mmooc || {};
 
 this.mmooc.util = function () {
     return {
+		mmoocLoadScript : function (mmoocScript)
+		{
+			var mmoocScriptElement = document.createElement('script');
+			mmoocScriptElement.setAttribute('charset', 'UTF-8');
+			mmoocScriptElement.setAttribute('src', mmoocScript);
+			document.body.appendChild(mmoocScriptElement);
+		},
+
         renderTemplateWithData: function (template, data) {
             var html = "";
             try {
