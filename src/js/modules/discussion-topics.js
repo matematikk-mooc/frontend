@@ -69,7 +69,7 @@ this.mmooc.discussionTopics = function () {
         printGroupDiscussionUnreadCount: function(courseId, groupDiscussionTopics, totalUnread, context) {
             // if teacher or admin
             if (mmooc.util.isTeacherOrAdmin()) {
-                var params = { user_id: "self" };
+                var params = { user_id: "self", per_page: 999 };
                 var asyncsDone = 0;
                 var sectionNames = [];
                 // get enrollments and sections for current user
