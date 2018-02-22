@@ -219,6 +219,10 @@ jQuery(function($) {
     try {
         mmooc.menu.renderLeftHeaderMenu();
         mmooc.menu.showUserMenu();
+        if(mmooc.util.isObserver())
+        {
+        	mmooc.pages.showObserverInformationPane();
+        }
     } catch (e) {
         console.log(e);
     }
