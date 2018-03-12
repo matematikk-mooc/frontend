@@ -122,11 +122,6 @@ this.mmooc.util = function () {
                 && (roles.indexOf('teacher') != -1
                     || roles.indexOf('admin') != -1);
         },
-        isObserver: function() {
-            var roles = mmooc.api.getRoles();
-            return roles != null
-                && (roles.indexOf('observer') != -1);
-        },
 
         setGlobalPeerReviewButtonState: function () {
             if(mmooc.settings.disablePeerReviewButton == true) {

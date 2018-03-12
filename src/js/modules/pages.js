@@ -90,12 +90,6 @@ this.mmooc.pages = function() {
                 }
             }, 100);
         },
-        
-        showObserverInformationPane : function()
-        {
-			var paneHTML = mmooc.util.renderTemplateWithData("observer", {});
-			document.getElementById('wrapper').insertAdjacentHTML('afterend', paneHTML);
-		},
 
         // changeTranslations : function() {
         //     $("a.submit_assignment_link").text('Lever besvarelse');
