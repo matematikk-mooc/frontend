@@ -89,6 +89,7 @@ this.mmooc.courseList = function() {
 
             	});
             	
+            	
             }
                    
         },

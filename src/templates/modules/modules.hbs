@@ -2,8 +2,7 @@
     <h2 class="h3">{{coursemodules}}</h2>
     {{#each modules}}
         <div class="mmooc-module">
-            <h2 class="light">{{name}}</h2>
-            <a href="{{urlForFirstNoneCompleteItem items}}" class="btn rounded {{#ifAllItemsCompleted items}} btn-done {{/ifAllItemsCompleted}}">{{../navname}}</a>
+            <h2 class="light"><a href="{{urlForFirstNoneCompleteItem items}}">{{name}}</a></h2>
             {{#if items}}
                 <ul class="mmooc-module-items-icons">
                     {{#each items}}

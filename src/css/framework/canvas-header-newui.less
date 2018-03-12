@@ -1,6 +1,6 @@
 #application.ic-app {
                 .ic-app-header__menu-list {
-                    margin-bottom: 6px;
+                    margin-bottom: 15px;
                 }
 
     #menu {
@@ -73,9 +73,10 @@
                 
                 
                 .menu-item__text {
-                    font-size: 15px;
-                    margin-top: 9px;
+                    font-size: @menuItemFontSize;
+                    margin-top: 14px;
                     color: white;
+                    font-weight: @menuItemFontWeight;
                 }
              }
         }
@@ -83,7 +84,7 @@
 
 
     #header.ic-app-header {
-        height: 75px;
+        height: 80px;
         width: 100%;
         border-bottom: 5px solid #47899f;
         position: relative;
@@ -99,14 +100,14 @@
         margin: 0 auto;
         max-width: @maxWidth;
         .ic-app-header__logomark-container {
-                    width: 240px;
+                    width: @logo-width;
                     float: left;
-                    padding: 0;
+                    padding: @logo-padding;
                     background-color: transparent;
 
             .ic-app-header__logomark {
                 background-image: url(@logo-image2x);
-                width: 240px;
+                width: @logo-width;
                 background-size: @logo-background-size;
                 -webkit-transform: scale3d(1, 1, 1);
                 transform: scale3d(1, 1, 1);

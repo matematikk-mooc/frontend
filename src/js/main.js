@@ -60,6 +60,11 @@ jQuery(function($) {
         mmooc.enroll.printAllCourses();
     });
 
+    mmooc.routes.addRouteForPath(/\/profile\/settings$/, function() {
+		var notificationButtonHTML = mmooc.util.renderTemplateWithData("notifications", {});
+		document.getElementById('confirm_email_channel').insertAdjacentHTML('beforebegin', notificationButtonHTML);
+    });
+
     mmooc.routes.addRouteForPath(/\/courses\/\d+\/announcements$/, function() {
         var courseId = mmooc.api.getCurrentCourseId();
         mmooc.menu.showCourseMenu(courseId, 'Kunngjøringer', mmooc.util.getPageTitleBeforeColon());
