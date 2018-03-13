@@ -38,60 +38,15 @@ this.mmooc.courseList = function() {
                           html = mmooc.util.renderTemplateWithData("courselist", {title: coursesCategorized[i].title, courses: coursesCategorized[i].courses, courseLabel: mmooc.i18n.Course.toLowerCase()});
                            $('.mmooc-course-list-container').append(html);
                       }
+
                     }
                     document.title = mmooc.i18n.CoursePlural;
-//Additional check if course if completed. Not in use since course_progress(check implemented in template) seems to be working as expected. (Not able to reproduce errors).
-/*
-                    var createCallBackForId = function(id) {
-                        return function(modules) {
-                            if (mmooc.courseList.isCourseCompleted(modules)) {
-                                var $course = $("#course_" + id);
-                                $course.find('.mmooc-course-list-button .btn').addClass('btn-done');
-                                $course.find('.mmooc-progress-bar').addClass('mmooc-progress-bar-done');
-                            }
-                        };
-                    };
 
-
-                    var error = function(error) {
-                        console.error("error calling api, skip over this course", error);
-                    };
-
-
-                    $(sortedCourses).each(function() {
-                        var success =  createCallBackForId(this.id);
-                        mmooc.api.getModulesForCourseId(success, error, this.id);
-                    });
-*/
-	                
-
-/* If the amount of courses is large, the filter select box and corresponding template code in courselist.hbs should be enabled               	                
-	                mmooc.courseList.showFilter(sortedCourses);
-	                
-	                $("#filter").change(function() {
-		                mmooc.courseList.applyFilter(sortedCourses);
-	                });
-*/					
 					if ($.isFunction(callback)) {
 	                    callback();
 	                }
-	                	                
             	});
-				mmooc.api.getEnrolledCoursesProgress(function (courses) {
-	                
-                    var sortedCourses = mmooc.util.arraySorted(courses, "course_code");
-                    
-                    $(sortedCourses).each(function() {
-                        var $course = $("#course_" + this.id + " .mmooc-course-list-description");
-						html = mmooc.util.renderTemplateWithData("courselistprogress", {navname: mmooc.i18n.GoToCourse, course: this});
-                        $course.after(html);          
-                    });					
-
-            	});
-            	
-            	
             }
-                   
         },
         showAddCourseButton : function() {
             // Move canvas Start new course button, since we hide its original location

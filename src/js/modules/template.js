@@ -21,6 +21,16 @@ Handlebars.registerHelper('ifEquals', function(var1, var2, options) {
     }
 });
 
+Handlebars.registerHelper('ifHasRole', function(enrollments, role, options) {
+	for (var i = 0; i < enrollments.length; i++) {
+    	if (enrollments[i].role == role) {
+	        return options.fn(this);
+	    }
+    }
+});
+
+
+
 
 Handlebars.registerHelper('ifGreaterThan', function(value1, value2, options) {
     if (value1 > value2) {
@@ -209,4 +219,17 @@ Handlebars.registerHelper('findRightUrlFor', function(activity) {
 
 Handlebars.registerHelper('checkReadStateFor', function(activity) {
     return mmooc.menu.checkReadStateFor(activity) ? "unread" : "";
+});
+
+
+Handlebars.registerHelper("debug", function(optionalValue) {
+  console.log("Current Context");
+  console.log("====================");
+  console.log(this);
+ 
+  if (optionalValue) {
+    console.log("Value");
+    console.log("====================");
+    console.log(optionalValue);
+  }
 });

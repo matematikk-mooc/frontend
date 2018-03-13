@@ -116,6 +116,25 @@ this.mmooc.util = function () {
             document.getElementsByClassName(containerId)[0].style.height = scrollHeight + "px";
         },
 
+		isEnrolledAsStudent: function(enrollments) {
+            for (var i = 0; i < enrollments.length; i++) {
+                if(enrollments[i].role == "StudentEnrollment")
+                {
+                	return true;
+                }
+            }
+            return false;
+		},
+		isEnrolledAsObserver: function(enrollments) {
+            for (var i = 0; i < enrollments.length; i++) {
+                if(enrollments[i].role == "ObserverEnrollment")
+                {
+                	return true;
+                }
+            }
+            return false;
+		},
+		
         isTeacherOrAdmin: function() {
             var roles = mmooc.api.getRoles();
             return roles != null

@@ -186,10 +186,11 @@ this.mmooc.api = function() {
                 },
                 "error":    error,
                 "uri":      "/courses",
-                "params":   { "include": ["syllabus_body"], "per_page": "100" }
+                "params":   { "include": ["syllabus_body", "course_progress"], "per_page": "100" }
             });
         },
         
+/* 12032018 Erlend Thune: Refactor this out by adding course progress parameter to getEnrolledCourses.
         getEnrolledCoursesProgress: function(callback, error) {
             this._get({
                 "callback": function(courses) {
@@ -201,7 +202,7 @@ this.mmooc.api = function() {
                 "params":   { "include": ["course_progress"], "per_page": "100" }
             });
         },
-
+*/
         /* FIXME Regarding include items: This parameter suggests that
          * Canvas return module items directly in the Module object
          * JSON, to avoid having to make separate API requests for
