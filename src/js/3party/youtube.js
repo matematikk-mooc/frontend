@@ -273,7 +273,7 @@ this.mmooc.youtube = function() {
 	}
 
 	return {
-		getTranscriptFromTranscriptId(transcriptId)
+		getTranscriptFromTranscriptId : function(transcriptId)
 		{
 			for (index = 0; index < transcriptArr.length; ++index) {
 				if(transcriptArr[index].getTranscriptId() == transcriptId)
@@ -283,7 +283,7 @@ this.mmooc.youtube = function() {
 			}
 			return null;
 		},
-	    getTranscriptFromVideoId(videoId)
+	    getTranscriptFromVideoId : function(videoId)
 	    {
 			for (index = 0; index < transcriptArr.length; ++index) {
 				if(transcriptArr[index].getVideoId() == videoId)
