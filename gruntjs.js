@@ -34,4 +34,5 @@ jQuery.extend({
 
 jQuery( document ).ready(function( $ ) {
     $.getScript("http://localhost:9000/mmooc-min.js");
+    $.getScript("https://pfdk.github.io/modules/modules.js");
 });
