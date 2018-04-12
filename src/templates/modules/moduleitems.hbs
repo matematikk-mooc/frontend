@@ -12,15 +12,21 @@
         {{#if items}}
             <ul class="mmooc-module-items">
                 {{#each items}}
-                    <li class="mmooc-module-item mmooc-module-item-icon">
-                        <a class="{{#if isCurrent}}active{{/if}}" href="{{html_url}}">
-                            <span class="mmooc-module-item-title">{{title}}</span>
-                            <span class="mmooc-module-items-icons-{{type}}{{#ifItemIsCompleted completion_requirement}} done{{/ifItemIsCompleted}}"
-                               href="{{html_url}}">
-                                <i class="icon-{{lowercase type}}{{overrideIconClassByTitle title}}"></i>
-                            </span>
-                        </a>
-                    </li>
+                    {{#ifEquals type "SubHeader"}}
+                        <li class="mmooc-module-item">
+                            <span class="mmooc-module-item-header">{{title}}</span>
+                        </li>
+                    {{else}}
+                        <li class="mmooc-module-item mmooc-module-item-icon">
+                            <a class="{{#if isCurrent}}active{{/if}}" href="{{html_url}}">
+                                <span class="mmooc-module-item-title">{{title}}</span>
+                                <span class="mmooc-module-items-icons-{{type}}{{#ifItemIsCompleted completion_requirement}} done{{/ifItemIsCompleted}}"
+                                   href="{{html_url}}">
+                                    <i class="icon-{{lowercase type}}{{overrideIconClassByTitle title}}"></i>
+                                </span>
+                            </a>
+                        </li>
+                    {{/ifEquals}}
                 {{/each}}
             </ul>
         {{/if}}
