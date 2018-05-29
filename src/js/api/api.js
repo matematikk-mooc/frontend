@@ -379,6 +379,10 @@ this.mmooc.api = function() {
             }
         },
 
+        getLocale : function() {
+            return this._env.LOCALE;
+        },
+        
         getRoles : function() {
             return this._env.current_user_roles;
         },
