@@ -62,6 +62,7 @@ jQuery(function($) {
 
     mmooc.routes.addRouteForPath(/\/profile\/settings$/, function() {
 		var notificationButtonHTML = mmooc.util.renderTemplateWithData("notifications", {});
+        mmooc.menu.showLeftMenu();
 		document.getElementById('confirm_email_channel').insertAdjacentHTML('beforebegin', notificationButtonHTML);
     });
 

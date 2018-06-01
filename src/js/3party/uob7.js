@@ -450,10 +450,10 @@ function uobAddComponents() {
 		// Boxes
 		//
 		// Create boxes from all tables with the codes: uob-tip, uob-info, uob-warning,
-		// uob-header,pfdk-info, pfdk-important and uob-question.
+		// uob-header,pfdk-info, pfdk-important, pfdk-tid, pfdk-verktoy and uob-question.
 		// --------------------------------------------------------------------------------
 
-		aBoxTags = ["uob-tip", "uob-read", "uob-info", "uob-warning", "uob-header", "uob-question", "uob-quote", "uob-box", "pfdk-info", "pfdk-important"];
+		aBoxTags = ["uob-tip", "uob-read", "uob-info", "uob-warning", "uob-header", "uob-question", "uob-quote", "uob-box", "pfdk-info", "pfdk-important", "pfdk-tid", "pfdk-verktoy"];
 
 		for (var i = 0; i < aBoxTags.length; i++) {
 			var strTag = aBoxTags[i];
