@@ -167,7 +167,13 @@ jQuery(function($) {
         mmooc.pages.duplicateMarkedAsDoneButton();
         mmooc.util.callWhenElementIsPresent(".sikt-diploma-button", mmooc.greeting.enableGreetingButtonIfNecessary);
         // mmooc.pages.changeTranslations();
+        if(mmooc.util.isTeacherOrAdmin())
+        {
+            mmooc.pages.addGotoModuleButton();
+        }
     });
+
+
     
     // example route: /courses/54/assignments/369 - assignment which may be a peer review (hverandrevurdering)
     mmooc.routes.addRouteForPath(/\/courses\/\d+\/assignments\/\d+/, function() {
