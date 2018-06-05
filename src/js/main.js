@@ -160,7 +160,11 @@ jQuery(function($) {
         }
     });
 
-    mmooc.routes.addRouteForPathOrQueryString([/\/courses\/\d+\/assignments\/\d+/, /\/courses\/\d+\/quizzes\/\d+/], /module_item_id=/, function() {
+    mmooc.routes.addRouteForPathOrQueryString([
+        /\/courses\/\d+\/assignments\/\d+/,
+        /\/courses\/\d+\/pages\/.*$/, 
+        /\/courses\/\d+\/quizzes\/\d+/], 
+        /module_item_id=/, function() {
         mmooc.menu.showLeftMenu();
         mmooc.menu.listModuleItems();
         mmooc.pages.modifyMarkAsDoneButton();
