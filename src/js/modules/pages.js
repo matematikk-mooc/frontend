@@ -103,6 +103,20 @@ this.mmooc.pages = function() {
             } else {
               icon.addClass("done");
             }
+            
+            //Check if header title should/not be marked as done as well.
+            var activeHeader = $("#mmooc-module-item-active-header");
+            var activeListId = activeHeader.attr("href");
+            var activeList = $(activeListId);
+            var noOfItemsInActiveList = activeList.find("li").length;
+            var noOfItemsDoneInActiveList = activeList.find("li").find(".done").length;
+            var headerIcon = activeHeader.find("span:last-child");
+            if(noOfItemsDoneInActiveList < noOfItemsInActiveList)
+            {
+                headerIcon.removeClass("done");
+            } else {
+                headerIcon.addClass("done");
+            }
           })
         },
         

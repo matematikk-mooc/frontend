@@ -89,6 +89,31 @@ this.mmooc.menu = function() {
                 if (document.getElementById("left-side")) {
                     document.getElementById('left-side').insertAdjacentHTML('afterbegin', html);
                 }
+                $(".mmooc-reveal-trigger").click(function(event) {
+					var $trigger = $(this);
+					var body = $trigger.attr("href");
+                    var i = $trigger.find("i");
+
+                    //Hvis elementet vises så lukker vi det
+					if ($(body).css("display") != "none") {
+						$(body).slideUp(400);
+						//Hvis det inneholder det aktive elementet så må vi vise det.
+						if($trigger.attr("id") == "mmooc-module-item-active-header")
+						{
+						    $trigger.attr("class", "active mmooc-reveal-trigger");
+						}
+                        i.attr("class", "icon-mini-arrow-right");
+						
+					} else {
+						$(body).slideDown(400);
+						if($trigger.attr("id") == "mmooc-module-item-active-header")
+						{
+						    $trigger.attr("class", "mmooc-reveal-trigger");
+						}
+                        i.attr("class", "icon-mini-arrow-down");
+					}
+					return(false);
+				});                
             });
         },
         showLeftMenu: function() {

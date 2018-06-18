@@ -295,18 +295,64 @@ this.mmooc.api = function() {
 		//////
         getCurrentModuleForItemOrTypeAndContentId: function(moduleItemId, typeAndContentId, callback, error) {
             this.getModulesForCurrentCourse(function(modules) {
+                var bCurrentItemFound = false;
+                var currentHeaderItem = null;
                 for (var i = 0; i < modules.length; i++) {
                     var module = modules[i];
                     var items = module.items;
+                    var noOfItemsBelongingToThisHeaderDone = 0;
+                    var noOfItemsBelongingToThisHeader = 0;
                     for (var j = 0; j < items.length; j++) {
                         var item = items[j];
+                        
                         //Need to check type and id for quiz and assignment items
                         var isCurrentModuleItem = item.id == moduleItemId || (typeAndContentId != null && typeAndContentId.contentId == item.content_id && typeAndContentId.type == item.type);
                         if (isCurrentModuleItem) {
                             item.isCurrent = true;
-                            callback(module);
-                            return;
+                            bCurrentItemFound = true;
+                            if(currentHeaderItem)
+                            {
+                                currentHeaderItem.isCurrentHeader = true;
+                            }
                         }
+                        //Need to check for subheaders to support collapsible elements in the menu.
+                        if (item.type == "SubHeader")
+                        {
+                            //Need to know if headeritem icon should be green.
+                            if(currentHeaderItem && (noOfItemsBelongingToThisHeader == noOfItemsBelongingToThisHeaderDone))
+                            {
+                                currentHeaderItem.done = true;
+                            }
+                            currentHeaderItem = item;
+                            noOfItemsBelongingToThisHeaderDone = 0;
+                            noOfItemsBelongingToThisHeader = 0;
+                        }
+                        else
+                        {
+                            noOfItemsBelongingToThisHeader++;
+                        }
+
+
+                        //Keep track of number of items passed.
+                        if(item.completion_requirement) 
+                        {
+                            if(item.completion_requirement.completed) 
+                            {
+                                noOfItemsBelongingToThisHeaderDone++;
+                            }
+                        }
+                    }
+                    //Have to check if the last header item is passed.
+                    if(currentHeaderItem && (noOfItemsBelongingToThisHeader == noOfItemsBelongingToThisHeaderDone))
+                    {
+                        currentHeaderItem.passed = true;
+                    }
+                    
+                    //Callback and return when we've found the current item.
+                    if(bCurrentItemFound)
+                    {
+                        callback(module);
+                        return;
                     }
                 }
 
