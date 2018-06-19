@@ -252,7 +252,6 @@ function uobAddComponents() {
 
 		if ($accordion.length) {
 			$accordion.accordion({
-				icons: null,
 				heightStyle: "content",
 				header: "> h4",
 				collapsible: true,
