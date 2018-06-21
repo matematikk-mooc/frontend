@@ -157,20 +157,29 @@
             font-size: @fontSize;
         }
     }
-    
     .submission-details-container {
+/* Slå på denne CSS'en dersom kommentarfeltet skal komme under oppgaven.
         display: block;
         clear: left;
         width: 71.5%;
         float: left;
+*/
+/* Slå av forstyrrende boks rundt innleveringen. */
+        border: 0px;
         
-        .submission-details-comments { //hide comments on "Detaljer om din innlevering" and "Peer review"/Hverandrevurdering
-            display: none;
+/*      Hide comments on "Detaljer om din innlevering" and "Peer review"/Hverandrevurdering
+        Dersom det ikke er hverandrevurdering slår vi elementet på vha javascript.
+*/        
+        
+        .submission-details-comments { 
+            visibility: hidden;
         }
     }
     
+    /* Vi skuler denne fordi vi har redesignet hvordan hverandrevurdering med vurderingskriterier presenteres.*/
+    /* Dersom det er en oppgave uten vurderingskriterier så viser vi elementet vha. javascript. */
     .submission-details-header.submission_details {
-        display: none;
+        visibility: hidden;
     }
 }
 
@@ -178,6 +187,7 @@
 body.assignments {
     #application.ic-app {
 		
+		/* Kommentarfelt når man leverer inn oppgaven. Slås på i javascript dersom vurderingskriterier ikke brukes. */
         #submission_comment.submission_comment_textarea {
             display: none;
         }
@@ -226,6 +236,7 @@ body.assignments {
 		
         #right-side {
             
+            /* Skjul detailer om innlevering. De vil vises når hverandrevurdering er gjort. */
             .details {
                 display: none;
             }
@@ -295,7 +306,6 @@ body.assignments {
                     }
                     
                     .mmooc-assignment-details {
-                        background-color: @seperatorLightColor;
                         border-top: 1px solid @darkTealColor;
                         width: 100%;
                         line-height: 1.3;

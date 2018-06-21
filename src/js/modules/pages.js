@@ -192,23 +192,27 @@ this.mmooc.pages = function() {
 
             function _getPeerReviewArray() {
 
+                // 20062018 Erlend: Canvas har endret designet og jeg måtte endre litt denne testen.
                 function _getWorkFlowState(peerReviewLinkClass) {
                     var _workflow_state = ""; // workflow_state either 'assigned' or 'completed'
-                    if (peerReviewLinkClass == "warning") {
+                    if (peerReviewLinkClass == "icon-warning") {
                         _workflow_state = 'assigned';
-                    } else if (peerReviewLinkClass == "pass") {
+                    } else if (peerReviewLinkClass == "icon-check") {
                         _workflow_state = 'completed';
                     }
                     return _workflow_state; 
                 }
 
+                // 20062018 Erlend: Canvas har endret designet og jeg måtte endre litt på selector.
+                //                  Årsaken til at vi må hente ut informasjon om peer review på denne måten 
+                //                  er at studenter ikke får denne informasjonen via api'et.
                 var $peerReviewLinks = $("#right-side .details .content > h4 + ul.unstyled_list a");
                 var _peerReview = []; //Peer review api is unfortunately not displaying the info we want (only info about the persons beeing peer reviewers for my submission), so we have to do this by using jquery
                 var workflow_state;
                 var peerReviewLinkClass;
 
                 $peerReviewLinks.each(function(i){
-                    peerReviewLinkClass = $(this).attr('class');
+                    peerReviewLinkClass = $(this).find("i").attr('class');
                     workflow_state = _getWorkFlowState(peerReviewLinkClass);
                     _peerReview[_peerReview.length] = {"workflow_state" : workflow_state, "assessor" : { "display_name" : $(this).text(), "mmooc_url": $(this).attr('href')}};
                 });
@@ -296,6 +300,14 @@ this.mmooc.pages = function() {
                 return returnValue;
             }
 
+            function _isRubric() {
+                var returnValue = false;
+                if ($('.assess_submission_link').length) {
+                    returnValue = true;
+                }
+                return returnValue;
+            }
+
             function _addClickEventOnOpenAssessmentButton() {
                 $(document).on("click", ".open-assessment-dialog-button", function(event) {
                     event.preventDefault();
@@ -374,7 +386,6 @@ this.mmooc.pages = function() {
             function _isOwnSubmission() {
                 var returnValue = false;
                 var deliveryText = mmooc.i18n.Delivery;
-                deliveryText = deliveryText.toLowerCase();
                 var originalSubmissionHeader = "body.assignments #application.ic-app #content .submission_details h2.submission_header";
                 if ($(originalSubmissionHeader + ":contains('" + deliveryText + "')").length) {
                     returnValue = true;
@@ -505,25 +516,34 @@ this.mmooc.pages = function() {
             }
             var courseId = mmooc.api.getCurrentCourseId();
             var assignmentId = mmooc.api.getCurrentTypeAndContentId().contentId;
+            var isRubric = _isRubric();
             var isPeerReview = _isPeerReview();
             var isOwnSubmission = _isOwnSubmission();
             var submission_user_id = ENV.SUBMISSION.user_id;
 
-            if (isPeerReview || isOwnSubmission) { 
-                mmooc.api.getSingleAssignment(courseId, assignmentId, function(assignment) {
-                    mmooc.api.getSingleSubmissionForUser(courseId, assignmentId, submission_user_id, function(submission) {
-                        var submission_id = submission.id;    
+            if(isRubric) //Spesial design dersom vi bruker vurderingskriterier.
+            {
+                if (isPeerReview || isOwnSubmission) { 
+                    mmooc.api.getSingleAssignment(courseId, assignmentId, function(assignment) {
+                        mmooc.api.getSingleSubmissionForUser(courseId, assignmentId, submission_user_id, function(submission) {
+                            var submission_id = submission.id;    
 
-                        mmooc.api.getPeerReviewsForSubmissionId(courseId, assignmentId, submission_id, function(peerReview) {
-                            _logDataToConsole(assignment, submission, peerReview);
-                            _appendSubmissionHtml(assignment, submission, peerReview);
-                            _addClickEventOnOpenAssessmentButton();
-//                            _addSaveRubricButtonIfItDoesNotExist(); //Enable this if the button 'Lagre kommentar' in the peer review dialog is not displaying
-//                          Update: This is a bug in Canvas: https://community.canvaslms.com/thread/12681-peer-review-issues
-                            $(document).on("click", "button.save_rubric_button", _updateDomAfterSaveRubricButtonClick);
-                        }); 
+                            mmooc.api.getPeerReviewsForSubmissionId(courseId, assignmentId, submission_id, function(peerReview) {
+                                _logDataToConsole(assignment, submission, peerReview);
+                                _appendSubmissionHtml(assignment, submission, peerReview);
+                                _addClickEventOnOpenAssessmentButton();
+    //                            _addSaveRubricButtonIfItDoesNotExist(); //Enable this if the button 'Lagre kommentar' in the peer review dialog is not displaying
+    //                          Update: This is a bug in Canvas: https://community.canvaslms.com/thread/12681-peer-review-issues
+                                $(document).on("click", "button.save_rubric_button", _updateDomAfterSaveRubricButtonClick);
+                            }); 
+                        });
                     });
-                });
+                }
+            }
+            else //Vis standard design.
+            {
+                $(".submission-details-header.submission_details").css("visibility","visible");
+                $(".submission-details-comments").css("visibility","visible");
             }
         }
     };
