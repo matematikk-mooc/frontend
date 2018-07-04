@@ -542,8 +542,8 @@ this.mmooc.pages = function() {
             }
             else //Vis standard design.
             {
-                $(".submission-details-header.submission_details").css("visibility","visible");
-                $(".submission-details-comments").css("visibility","visible");
+                $(".submission-details-header.submission_details").show();
+                $(".submission-details-comments").show();
             }
         }
     };

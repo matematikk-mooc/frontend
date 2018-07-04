@@ -120,15 +120,13 @@
     .mmooc-assignment-submission-answers {
         background-color: @darkTealColor;
         clear: both;
-        width: 71.5%;
+        width: 100%;
         border-radius: 5px 5px 0 0;
         
         &.isSubmissionDetaisPage {
-            position: relative;
             top: -79px;
             
             ~ .submission-details-container {
-                position: relative;
                 top: -79px;
             }
             
@@ -172,14 +170,14 @@
 */        
         
         .submission-details-comments { 
-            visibility: hidden;
+            display: none;
         }
     }
     
     /* Vi skuler denne fordi vi har redesignet hvordan hverandrevurdering med vurderingskriterier presenteres.*/
     /* Dersom det er en oppgave uten vurderingskriterier så viser vi elementet vha. javascript. */
     .submission-details-header.submission_details {
-        visibility: hidden;
+        display: none;
     }
 }
 
@@ -194,8 +192,10 @@ body.assignments {
         
 		.mmooc-peer-review-warning {
             background-color: @tequilaColor; //uses 'Name that color' 
-			padding: 20px;
-			margin-top: 25px;
+            float:left;
+            width:100%;
+			padding-top: 20px;
+			padding-bottom: 20px;
 			margin-bottom: 25px;
             border: 1px solid @westSideColor;
 			
@@ -214,9 +214,11 @@ body.assignments {
 		}
         
         .mmooc-peer-review-success {
+            float:left;
+            width:100%;
 			background-color: @taraColor; 
-			padding: 20px;
-			margin-top: 25px;
+			padding-top: 20px;
+			padding-bottom: 20px;
 			margin-bottom: 25px;
             border: 1px solid @mountainMeadowColor;
 			

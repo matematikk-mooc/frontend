@@ -38,8 +38,13 @@ if (typeof this.mmooc.i18n === 'undefined') {
              'LinkBack': 'Tilbake til førre side', 
              'Badgesafe': 'Utmerkingar', 
              'PeerReview' : 'Kvarandrevurdering', 
-             'PeerReviewer' : 'Fagfellevurdering', 
-             'Delivery' : 'Innleveringsdetaljar', 
+             
+             //Teksten nedenfor brukes til å gjenkjenne om man er på en hverandrevurderingsside.
+             'PeerReviewer' : 'hverandrevurdering', 
+
+             //Teksten nedenfor brukes til å undersøke om man viser sin egen innlevering
+             'Delivery' : 'innlevering', 
+
              'DetailsAboutYourDelivery' : 'Detaljar om innleveringa di', 
              'DetailsAboutDelivery' : 'Detaljar om innlevering', 
              'SubmissionIsNotAssessed' : 'Oppgåva er ikkje vurdert', 
@@ -103,8 +108,13 @@ if (typeof this.mmooc.i18n === 'undefined') {
             'LinkBack': 'Tilbake til forrige side',
             'Badgesafe': 'Utmerkelser',
             'PeerReview' : 'Hverandrevurdering',
-            'PeerReviewer' : 'Fagfellevurdering',
-            'Delivery' : 'Detaljer om innlevering',
+
+             //Teksten nedenfor brukes til å gjenkjenne om man er på en hverandrevurderingsside.
+            'PeerReviewer' : 'Hverandrevurdering',
+
+             //Teksten nedenfor brukes til å undersøke om man viser sin egen innlevering
+            'Delivery' : 'innlevering',
+
             'DetailsAboutYourDelivery' : 'Detaljer om din innlevering',
             'DetailsAboutDelivery' : 'Detaljer om innlevering',
             'SubmissionIsNotAssessed' : 'Oppgaven er ikke vurdert',

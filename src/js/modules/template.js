@@ -104,6 +104,16 @@ Handlebars.registerHelper('getSubmissionAssessmentText', function(peerReview) {
     return submissionAssessmentText; 
 });
 
+Handlebars.registerHelper('ifAtLeastOnePeerReviewIsComplete', function(peerReview, options) {
+    $.each(peerReview, function (index, singlePeerReview) {
+        if (singlePeerReview.workflow_state == 'completed') {
+            return options.fn(this); 
+        }
+    });
+    return options.inverse(this);
+});
+
+
 Handlebars.registerHelper('ifAllPeerReviewsAreComplete', function(peerReview, options) {
 
     var allPeerReviewsAreComplete = true;
