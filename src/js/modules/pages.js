@@ -256,6 +256,7 @@ this.mmooc.pages = function() {
                 });
             } else {
                 _displayRightColumnContents();
+                $("#submission_comment.submission_comment_textarea").show();
             }
         },
 
@@ -544,6 +545,7 @@ this.mmooc.pages = function() {
             {
                 $(".submission-details-header.submission_details").show();
                 $(".submission-details-comments").show();
+                $("#submission_comment.submission_comment_textarea").show();
             }
         }
     };
