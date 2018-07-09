@@ -60,7 +60,7 @@ function uobAddComponents() {
 
         // Tooltip
         var re = /\[(.*?)\]\((.*?)\)/g;
-        $content.html($content.html().replace(re, '<span class="tooltip">$1<span class="tooltiptext">$2</span></span>'));
+        $content.html($content.html().replace(re, '<span class="tooltip tooltip-underline">$1<span class="tooltiptext">$2</span></span>'));
 
 		// ================================================================================
 		// Show non-uob-component tables
