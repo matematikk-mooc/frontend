@@ -44,26 +44,24 @@ this.mmooc.pages = function() {
         return headerBarJson;
     }
 
-    function addButton(targetHref)
+    function addButton(buttonHtml)
     {
         var headerBarJson = getHeaderBarJson();
         if ( headerBarJson.headerBar.length )
         {
-            var html = "<a class='btn' href='" + targetHref + "'>Gå til modul</a>";
-
             if(headerBarJson.position == "after")
             {
-                headerBarJson.headerBar.append(html);
+                headerBarJson.headerBar.append(buttonHtml);
             }
             else
             {
-                headerBarJson.headerBar.before(html);
+                headerBarJson.headerBar.before(buttonHtml);
             }
         }
         else
         {
             setTimeout(function(){
-                addButton(targetHref);
+                addButton(buttonHtml);
             }, 500);
         }
     }
@@ -90,7 +88,15 @@ this.mmooc.pages = function() {
             var moduleItemId = mmooc.api.getCurrentModuleItemId();
             var courseId = mmooc.api.getCurrentCourseId();
             var targetHref = "/courses/" + courseId + "/modules#context_module_item_" + moduleItemId;
-            addButton(targetHref);
+            var buttonHtml = "<a class='btn' href='" + targetHref + "'>Gå til modul</a>";
+            addButton(buttonHtml);
+        },
+        addStudentViewButton: function() {
+            var courseId = mmooc.api.getCurrentCourseId();
+            var buttonHtml = '<a class="btn student_view_button" ';
+            buttonHtml += 'rel="nofollow" data-method="post" href="/courses/' + ENV.COURSE_ID + '/student_view">';
+            buttonHtml += '<i class="icon-student-view"></i>Studentvisning</a>';
+            addButton(buttonHtml);
         },
 
 

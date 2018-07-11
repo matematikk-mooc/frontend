@@ -178,6 +178,7 @@ jQuery(function($) {
         if(mmooc.util.isTeacherOrAdmin())
         {
             mmooc.pages.addGotoModuleButton();
+            mmooc.pages.addStudentViewButton();
         }
     });
 
