@@ -743,6 +743,14 @@ this.mmooc.api = function() {
                 "params":   { per_page: 999 }
             });
         },
+ 
+        getQuiz: function(courseId, contentId, callback) {
+            this._get({
+                "callback": callback,
+                "uri":      "/courses/" + courseId + "/quizzes/" + contentId,
+                "params":   { per_page: 999 }
+            });
+        },
 
         getSpecificGroupDiscussionTopic: function(groupId, contentId, callback) {
             this._get({

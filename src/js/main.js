@@ -60,6 +60,10 @@ jQuery(function($) {
         mmooc.enroll.printAllCourses();
     });
 
+    mmooc.routes.addRouteForPath(/\/courses\/\d+\/settings$/, function() {
+        mmooc.coursesettings.addSanityCheckButton();
+    });
+
     mmooc.routes.addRouteForPath(/\/profile\/settings$/, function() {
 		var notificationButtonHTML = mmooc.util.renderTemplateWithData("notifications", {});
         mmooc.menu.showLeftMenu();
