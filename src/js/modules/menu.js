@@ -77,6 +77,18 @@ this.mmooc.menu = function() {
             $("li.helpMenu").hide();
         }
     }
+    function handleMenuClick(menuSelectId, menuId)
+    {
+        if ($(menuId).css("display") != "none") {
+            $(menuId).slideUp(400);
+            $(menuSelectId).off("mouseleave");
+        } else {
+            $(menuId).slideDown(400);
+            $(menuSelectId).mouseleave(function() {
+                $(menuId).slideUp(400);
+            });
+        }
+    }
      
     var stylesheet = createStyleSheet();
 
@@ -178,7 +190,13 @@ this.mmooc.menu = function() {
             if (menu !=  null) {
                 var html = mmooc.util.renderTemplateWithData("usermenu", {user: mmooc.api.getUser()});
                 menu.insertAdjacentHTML('afterend', html);
-                
+
+                $("#mmooc-menu-item-varsler").click(function(event) {
+                    handleMenuClick("#mmooc-menu-item-varsler", "#mmooc-activity-stream");
+                });
+                $("#mmooc-menu-item-profile-settings").click(function(event) {
+                    handleMenuClick("#mmooc-menu-item-profile-settings", "#mmooc-profile-settings");
+                });
                 var msgBadge = $("#mmooc-unread-messages-count");
                 if (mmooc.api.getUnreadMessageSize() === 0) {
                   msgBadge.hide();
@@ -214,12 +232,6 @@ this.mmooc.menu = function() {
                 document.getElementById('mmooc-activity-stream').innerHTML = mmooc.util.renderTemplateWithData("activitystream", {activities: activities});
 
                 var notifications = $("#mmooc-notifications").find("li");
-                if (notifications.size() == 0) {
-                    $("#mmooc-notifications").hide();
-                } else {
-                    $("#mmooc-notifications").show();
-                }
-
                 var showAllItems = $("#mmooc-notifications-showall");
                 if (notifications.size() > 10) {
                     notifications.slice(10).addClass("hidden");
