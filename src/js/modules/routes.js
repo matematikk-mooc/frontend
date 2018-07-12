@@ -43,6 +43,7 @@ this.mmooc.routes = function() {
                     for (var j = 0; j < route.paths.length; j++) {
                         if (route.paths[j].test(path) && !route.isAlreadyHandled) {
                             route.isAlreadyHandled = true;
+                            console.log("Handle route: " + route.paths[j]);
                             route.handler();
                         }
                     }
@@ -52,6 +53,7 @@ this.mmooc.routes = function() {
                     for (var k = 0; k < route.queryStrings.length; k++) {
                         if (route.queryStrings[k].test(queryString) && !route.isAlreadyHandled) {
                             route.isAlreadyHandled = true;
+                            console.log("Handle query string: " + route.queryStrings[k]);
                             route.handler();
                             return;
                         }

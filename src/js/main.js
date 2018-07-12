@@ -25,6 +25,18 @@ jQuery(function($) {
         mmooc.menu.hideRightMenu();
         mmooc.courseList.listCourses('content', mmooc.courseList.showAddCourseButton);
     });
+
+    mmooc.routes.addRouteForPath(/\/courses\/\d+/, function() {
+        var courseId = mmooc.api.getCurrentCourseId();
+        mmooc.api.getCourse(courseId, function(course) {
+            if(mmooc.util.isObserver(course))
+            {
+                mmooc.pages.showObserverInformationPane();
+            }
+        },  function(error) {
+            console.error("error calling mmooc.api.getCourse(" + courseId + ")", error);
+        });
+    });
     
     mmooc.routes.addRouteForPath(/\/courses\/\d+$/, function() {
         mmooc.groups.interceptLinksToGroupPage();
@@ -39,10 +51,12 @@ jQuery(function($) {
             var canvabadgesForCurrentCourse = '<iframe allowfullscreen="true" height="680" id="tool_content" mozallowfullscreen="true" name="tool_content" src="' + mmooc.settings.CanvaBadgeProtocolAndHost + '/badges/course/' + courseId + '" tabindex="0" webkitallowfullscreen="true" width="100%"></iframe>';
             $("#content").append(canvabadgesForCurrentCourse);
         } 
+/*
         else if(!(mmooc.util.isTeacherOrAdmin()) && $(".self_enrollment_link").length) //Route to list of all courses if student and not enrolled in course.
         {
             window.location.href = "/search/all_courses";
         }
+*/        
         else {
             mmooc.menu.showCourseMenu(courseId, mmooc.i18n.Course + 'forside', null);
             mmooc.coursePage.listModulesAndShowProgressBar();

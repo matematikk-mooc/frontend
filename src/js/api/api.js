@@ -255,6 +255,7 @@ this.mmooc.api = function() {
             return null;
         },
 
+
         getCourse: function(courseId, callback, error) {
             this._get({
                 "callback": callback,

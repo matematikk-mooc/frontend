@@ -168,6 +168,7 @@ module.exports = function(grunt) {
 				files: [
 				'src/css/**/*.less',
 				'src/js/**/*.js',
+				'src/templates/**/*.hbs',
                 'src/addons/badges/js/*.js',
                 'src/addons/badges/css/*.less'
 				],

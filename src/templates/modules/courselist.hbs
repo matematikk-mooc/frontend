@@ -8,7 +8,20 @@
             <div id="course_{{id}}" class="mmooc-size-1of3">
                 <div class="mmooc-course-list-item">
                     <div class="mmooc-course-list-heading">
-                        <h2><a href="{{urlForCourseId id}}">{{name}}</a></h2>
+                        <h2
+                            {{#ifHasRole enrollments "ObserverEnrollment"}}
+                                class="tooltip"
+        					{{/ifHasRole}}
+                            ><a href="{{urlForCourseId id}}">
+                                {{name}}
+                                {{#ifHasRole enrollments "ObserverEnrollment"}}
+                                     - Observatør
+                                    <div class="tooltiptext">
+                                    Som observatør kan du se innholdet i emner der du ikke er registrert som student.
+                                    </div>
+                                {{/ifHasRole}}
+                            </a>					
+                        </h2>
                     </div>
 
                     <div class="mmooc-course-list-description">
@@ -20,8 +33,8 @@
                     </div>
 					{{debug}}
                     
+                    <div class="mmooc-course-list-progress">
 					{{#ifHasRole enrollments "StudentEnrollment"}}
-						<div class="mmooc-course-list-progress">
 							{{#with course_progress}}
 								{{#if requirement_count}}
 									<div class="mmooc-progress-bar{{#ifEquals requirement_completed_count requirement_count}} mmooc-progress-bar-done{{/ifEquals}}">
@@ -30,13 +43,8 @@
 									</div>
 								{{/if}}
 							{{/with}}
-						</div>
 					{{/ifHasRole}}
-					{{#ifHasRole enrollments "ObserverEnrollment"}}
-						<div class="mmooc-observer">
-							OBSERVATØR
-						</div>					
-					{{/ifHasRole}}
+                    </div>
                 </div>
             </div>
 		{{/each}}
