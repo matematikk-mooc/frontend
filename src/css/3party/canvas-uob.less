@@ -9,15 +9,18 @@
 
 .tooltip .tooltiptext {
     visibility: hidden;
-	background: #d9eef2;
-	border: 5px solid #c2e1f5;
+	background: #ffffff;
+	border: 1px solid #686868;
 	font-size: @fontSize;
     text-align: center;
-    border-radius: 20px;
+    border-radius: 00px;
+    box-shadow: 0 2px 10px 0 rgba(0,0,0,.2);
     padding: 5px 5px;
     width: 300px;
  
-   /* Position the tooltip */
+   /* Position the tooltip 
+      Note that margin-left is half the above width.
+   */
     position: absolute;
     z-index: 1;
     bottom: 150%;
@@ -37,15 +40,15 @@
 
 .tooltip .tooltiptext:after {
 	border-color: rgba(136, 183, 213, 0);
-	border-top-color: #d9eef2;
-	border-width: 15px;
-	margin-left: -15px;
+	border-top-color: #ffffff;
+	border-width: 6px;
+	margin-left: -6px;
 }
 .tooltip .tooltiptext:before {
 	border-color: rgba(194, 225, 245, 0);
-	border-top-color: #c2e1f5;
-	border-width: 22px;
-	margin-left: -22px;
+	border-top-color: #686868;
+	border-width: 8px;
+	margin-left: -8px;
 }
 
 .tooltip:hover .tooltiptext {
