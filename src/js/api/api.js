@@ -430,6 +430,10 @@ this.mmooc.api = function() {
             return this._env.LOCALE;
         },
         
+        usesFrontPage : function() {
+            return this._env.COURSE.default_view == "wiki";
+        }, 
+        
         getRoles : function() {
             return this._env.current_user_roles;
         },
