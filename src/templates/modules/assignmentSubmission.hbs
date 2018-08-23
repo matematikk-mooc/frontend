@@ -21,6 +21,21 @@
 				</li>
 			</ul>
 		</div>
+        {{#if isPeerReview}}
+            {{#if isPeerReviewFinished}}
+                <div class="mmooc-peer-review-success">
+                    <p class="mmooc-success singleLine">
+                        Du har fullført hverandrevurderingen.
+                    </p>
+                </div>
+            {{else}}
+                <div class="mmooc-peer-review-warning">
+                    <p class="mmooc-warning singleLine">
+                        Denne oppgaven er ikke ferdig før du har fylt ut vurderingsskjemaet.
+                    </p>
+                </div>
+            {{/if}}
+        {{/if}}		
 	</div>
 	<div class="mmooc-assignment-submission-rightside">
 		<div class="mmooc-assignment-submission-assessment">
@@ -57,21 +72,7 @@
 		</div>
 	</div>
 </div>
-{{#if isPeerReview}}
-    {{#if isPeerReviewFinished}}
-        <div class="mmooc-peer-review-success">
-            <p class="mmooc-success singleLine">
-                Du har fullført hverandrevurderingen.
-            </p>
-        </div>
-    {{else}}
-        <div class="mmooc-peer-review-warning">
-            <p class="mmooc-warning singleLine">
-                Denne oppgaven er ikke ferdig før du har fylt ut vurderingsskjemaet.
-            </p>
-        </div>
-    {{/if}}
-{{/if}}
+
 <div class="mmooc-assignment-submission-answers{{#if isPeerReview}} isPeerReviewPage{{else}} isSubmissionDetaisPage{{/if}}{{#if submission.grade}} withGradesText{{else}} withNoGradesText{{/if}}">
 	<h3>Besvarelser</h3>
 </div>
