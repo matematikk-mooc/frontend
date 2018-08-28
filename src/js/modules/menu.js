@@ -25,7 +25,7 @@ this.mmooc.menu = function() {
             menuItems[menuItems.length] = {"title": "Diskusjoner", url: "/courses/" + courseId + "/discussion_topics"};
             
             if (mmooc.util.isTeacherOrAdmin()) {
-                menuItems[menuItems.length] = {"title": "Faglærer", url: "/courses/?mmpf"};
+                menuItems[menuItems.length] = {"title": "Faglærer", url: "/courses/" + courseId + "/?mmpf"};
             }
             
             var badgeSafe = mmooc.menu.extractBadgesLinkFromPage();

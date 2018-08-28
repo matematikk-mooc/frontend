@@ -6,7 +6,7 @@ jQuery(function($) {
 //	$(".ic-Layout-contentMain").css("visibility", "visible");
 	
     mmooc.routes.addRouteForPath(/\/$/, function() {
-        var parentId = 'content'
+        var parentId = 'wrapper'
         if (document.location.search === "?mmpf") {
             mmooc.powerFunctions.show(parentId);
         } else {
