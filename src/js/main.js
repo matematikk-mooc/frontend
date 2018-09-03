@@ -92,6 +92,8 @@ jQuery(function($) {
 
     mmooc.routes.addRouteForPath(/\/courses\/\d+\/settings$/, function() {
         mmooc.coursesettings.addSanityCheckButton();
+        mmooc.coursesettings.addListSectionsButton();
+        mmooc.coursesettings.addListUsersButton();
     });
 
     mmooc.routes.addRouteForPath(/\/profile\/settings$/, function() {

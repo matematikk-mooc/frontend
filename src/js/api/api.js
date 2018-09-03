@@ -504,6 +504,17 @@ this.mmooc.api = function() {
                 "params":   { }
             });
         },
+        getUsersForCourse: function(courseId, etype, callback, error) {
+            this._get({
+                "callback": callback,
+                "error":    error,
+                "uri":      "/courses/" + courseId + "/users",
+                "params":   {
+                    'enrollment_type[]': etype,
+                    per_page: 999
+                }
+            });
+        },
 
         getCoursesForAccount: function(account, callback, error) {
             this._get({
@@ -726,6 +737,26 @@ this.mmooc.api = function() {
             var jqxhr = $.post( enrollAction, function(data) {
                 callback(data)
             });
+        },
+/*
+uri = sprintf("/api/v1/courses/%d/enrollments", cid)
+dbg(uri)
+$canvas.post(uri, {'enrollment[user_id]' => user_id, 'enrollment[type]' => etype,
+	'enrollment[enrollment_state]' => "active"})
+*/        
+        enrollUserIdInSection: function(userId, sectionId, etype, callback, error) {
+            this._post({
+                "callback": callback,
+                "error":    error,
+                "uri":      "/sections/" + sectionId + "/enrollments/",
+                "params":   {
+                    'enrollment[user_id]': userId,
+                    'enrollment[type]': etype,
+                    'enrollment[enrollment_state]': 'active',
+                    'enrollment[limit_privileges_to_course_section]': true
+                }
+            });
+            return true;
         },
         createGroup: function(params, callback, error) {
             this._post({
