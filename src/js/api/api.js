@@ -504,18 +504,6 @@ this.mmooc.api = function() {
                 "params":   { }
             });
         },
-        getUsersForCourse: function(courseId, etype, callback, error) {
-            this._get({
-                "callback": callback,
-                "error":    error,
-                "uri":      "/courses/" + courseId + "/users",
-                "params":   {
-                    'enrollment_type[]': etype,
-                    per_page: 999
-                }
-            });
-        },
-
         getCoursesForAccount: function(account, callback, error) {
             this._get({
                 "callback": callback,
@@ -845,6 +833,13 @@ $canvas.post(uri, {'enrollment[user_id]' => user_id, 'enrollment[type]' => etype
             this._get({
                 "callback": callback,
                 "uri":      "/courses/" + courseId + "/enrollments",
+                "params":   params
+            });
+        },
+        getEnrollmentsForSection: function(sectionId, params, callback) {
+            this._get({
+                "callback": callback,
+                "uri":      "/sections/" + sectionId + "/enrollments",
                 "params":   params
             });
         },
