@@ -758,16 +758,23 @@ $canvas.post(uri, {'enrollment[user_id]' => user_id, 'enrollment[type]' => etype
             });
             return true;
         },
-        createGroup: function(params, callback, error) {
+        createGroup: function(categoryId, groupName, callback, error) {
             this._post({
                 "callback": callback,
                 "error":    error,
-                "uri":      "/group_categories/" + params.category + "/groups",
+                "uri":      "/group_categories/" + categoryId + "/groups",
                 "params":   {
-                    name: params.name,
-                    description: params.description,
-                    is_public: false,
-                    join_level: 'invitation_only'
+                    name: groupName
+                }
+            });
+        },
+        createSection: function(courseId, sectionName, callback, error) {
+            this._post({
+                "callback": callback,
+                "error":    error,
+                "uri":      "/api/v1/courses/" + courseId + "/sections",
+                "params":   {
+                    'course_section[name]': sectionName
                 }
             });
         },

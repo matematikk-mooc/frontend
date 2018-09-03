@@ -94,6 +94,7 @@ jQuery(function($) {
         mmooc.coursesettings.addSanityCheckButton();
         mmooc.coursesettings.addListSectionsButton();
         mmooc.coursesettings.addListUsersButton();
+        mmooc.coursesettings.addListGroupsButton();
     });
 
     mmooc.routes.addRouteForPath(/\/profile\/settings$/, function() {
@@ -133,7 +134,6 @@ jQuery(function($) {
         });
         mmooc.announcements.printAnnouncementsUnreadCount();
     });
-
     mmooc.routes.addRouteForPath(/\/courses\/\d+\/users$/, function() {
         var courseId = mmooc.api.getCurrentCourseId();
         mmooc.menu.showCourseMenu(courseId, '', mmooc.util.getPageTitleBeforeColon());

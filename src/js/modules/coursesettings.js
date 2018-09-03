@@ -452,6 +452,11 @@ this.mmooc.coursesettings = function() {
             printGreenRowInOrphanTable(pageType, "Ingen", "", "");
         }
 	}
+	
+	function getGroupCategoryTableId(id)
+	{
+	    return "pfdkGroupCategory_" + id;
+	}
 
     return {
         addSanityCheckButton: function() {
@@ -546,6 +551,42 @@ this.mmooc.coursesettings = function() {
                     $("#resultarea").html(resultHtml);                    
                 });
             });
-        }
+        },
+        addListGroupsButton: function() {
+            $("#right-side table.summary").before("<a id='pfdklistgroups' class='Button Button--link Button--link--has-divider Button--course-settings' href='#'><i class='icon-student-view' />List groups</a>");
+
+            //Når man trykker på knappen så kjører koden nedenfor.
+            $('#pfdklistgroups').on('click', function() {
+                var contentarea = $('#content');
+                contentarea.html('<h1>Grupper</h1>\<div id="resultarea"></div>');
+
+                var courseId = mmooc.api.getCurrentCourseId();
+                mmooc.api.getGroupCategoriesForCourse(courseId, function(categories) {
+                    var tableHtml = "";
+                    for(var i = 0; i < categories.length; i++) {
+                        var category = categories[i];
+                        var tableId = getGroupCategoryTableId(category.id);
+                        tableHtml = "<h2>" + category.name + 
+                        "</h2>" + "<table class='table' id='" 
+                        + tableId 
+                        + "'>";
+                        tableHtml += "<thead><tr><th>Gruppenavn</th><th>Id</th></tr></thead><tbody></tbody></table>";
+                        $("#resultarea").append(tableHtml); 
+                        
+                        mmooc.api.getGroupsInCategory(category.id, function(groups) {
+                            for(var j = 0; j < groups.length; j++) {
+                                var group = groups[j];
+                                var tableId = getGroupCategoryTableId(group.group_category_id);
+                                var rowHtml = "<tr><td>" + group.name +
+                                "</td><td>" + 
+                                group.id +
+                                "</td></tr>";
+                                $("#" + tableId).append(rowHtml);
+                            }
+                        });
+                    }
+                }); //end getGroupCategoriesForCourse
+            }); //end pfdklistgroups button pressed
+        } //end addListGroupsButton
     }
 }();    
