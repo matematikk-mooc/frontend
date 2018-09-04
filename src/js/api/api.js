@@ -246,11 +246,19 @@ this.mmooc.api = function() {
             } else if ($("#discussion_container").size() > 0) {
                 // Group subpages contains course id only in a link
                 //#discussion_topic > div.entry-content > header > div > div.pull-left > span > a
-                var tmp = $("#discussion_topic div.entry-content header div div.pull-left span a").attr("href").split("/");
-                if (tmp.length == 3) {
-                    return parseInt(tmp[2], 10);
+                //20180904ETH Student self created group discussion does not have this element.
+                //            Add checking to avoid exception.
+                var tmp = $("#discussion_topic div.entry-content header div div.pull-left span a");
+                if(tmp.length) {
+                    var tmpHref = tmp.attr("href");
+                    if(tmpHref.length) {
+                        var tmpHrefArr = tmpHref.split("/");
+                        if (tmpHrefArr.length == 3) {
+                            return parseInt(tmpHrefArr[2], 10);
+                        }
+                    }
                 }
-            }
+            } 
 
             return null;
         },

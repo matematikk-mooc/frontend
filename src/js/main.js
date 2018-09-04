@@ -156,7 +156,7 @@ jQuery(function($) {
                 mmooc.api.getGroup(groupId,function(group) {
                     var courseId = group.course_id;
                     mmooc.menu.showCourseMenu(courseId, 'Grupper', mmooc.util.getPageTitleAfterColon());
-                    mmooc.groups.showGroupHeader(groupId, courseId);
+                    mmooc.groups.showGroupHeader(group.id, courseId);
                 });
             }
         }
@@ -190,6 +190,24 @@ jQuery(function($) {
     mmooc.routes.addRouteForPath([
     /\/groups\/\d+\/discussion_topics\/\d+$/,
     /\/groups\/\d+\/discussion_topics\/new$/], function() {
+        mmooc.menu.showDiscussionGroupMenu();
+        var courseId = mmooc.api.getCurrentCourseId();
+        
+        //If courseId was found, it is a group discussion created by a teacher.
+        if(courseId) {
+            mmooc.menu.showBackButton("/courses/" + courseId + "/discussion_topics", "Tilbake til diskusjoner");                
+        }
+        else {
+            var groupId = mmooc.api.getCurrentGroupId();
+            if(null != groupId)
+            {
+                mmooc.api.getGroup(groupId,function(group) {
+                    var courseId = group.course_id;
+                    mmooc.menu.showBackButton("/groups/" + group.id + "/discussion_topics", "Tilbake til gruppeside");                
+                });
+            }
+        }
+        
         if (!mmooc.util.isTeacherOrAdmin()) 
         {
             mmooc.menu.hideRightMenu();
@@ -217,7 +235,7 @@ jQuery(function($) {
         } else if (mmooc.api.getCurrentModuleItemId() == null) {
             // Only show course menu if this discussion is not a module item
             // Note detection if this is a module item is based on precense of query parameter
-            mmooc.menu.showCourseMenu(courseId, 'Diskusjoner', title);
+//            mmooc.menu.showCourseMenu(courseId, 'Diskusjoner', title);
             mmooc.menu.showBackButton("/courses/" + courseId + "/discussion_topics", "Tilbake til diskusjoner");
         }
     });
@@ -225,9 +243,7 @@ jQuery(function($) {
     mmooc.routes.addRouteForPathOrQueryString([
         /\/courses\/\d+\/assignments\/\d+/,
         /\/courses\/\d+\/pages\/.*$/, 
-        /\/courses\/\d+\/quizzes\/\d+/,
-        /\/groups\/\d+\/discussion_topics\/\d+$/,
-        /\/groups\/\d+\/discussion_topics\/new$/], 
+        /\/courses\/\d+\/quizzes\/\d+/], 
         /module_item_id=/, function() {
         mmooc.menu.showLeftMenu();
         mmooc.menu.listModuleItems();
