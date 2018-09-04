@@ -147,11 +147,24 @@ jQuery(function($) {
     //Path for showing all dicussions, i.e. the discussion tab on the course front page.
     mmooc.routes.addRouteForPath(/\/groups\/\d+\/discussion_topics$/, function() {
         var courseId = mmooc.api.getCurrentCourseId();
-        mmooc.menu.showCourseMenu(courseId, 'Grupper', mmooc.util.getPageTitleAfterColon());
-
-        //TODO: Check whether or not courseId is undefined or not valid, only insert the group header
-        //when it is.
-        mmooc.groups.showGroupHeader();
+        
+        if(null == courseId)
+        {
+            var groupId = mmooc.api.getCurrentGroupId();
+            if(null != groupId)
+            {
+                mmooc.api.getGroup(groupId,function(group) {
+                    var courseId = group.course_id;
+                    mmooc.menu.showCourseMenu(courseId, 'Grupper', mmooc.util.getPageTitleAfterColon());
+                    mmooc.groups.showGroupHeader(groupId, courseId);
+                });
+            }
+        }
+        else
+        {
+            mmooc.menu.showCourseMenu(courseId, 'Grupper', mmooc.util.getPageTitleAfterColon());
+            mmooc.groups.showGroupHeader(groupId, courseId);
+        }
     });
 
     //Path for showing a group discussion or creating a new discussion

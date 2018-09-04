@@ -22,16 +22,12 @@ this.mmooc.groups = function() {
             });
         },
 
-        showGroupHeader: function() {
-            var courseId = mmooc.api.getCurrentCourseId();
-            var groupId = mmooc.api.getCurrentGroupId();
-            if (groupId != null) {
-                mmooc.api.getGroupMembers(groupId, function(members) {
-                    var headerHTML = mmooc.util.renderTemplateWithData("groupheader", {groupId: groupId, courseId: courseId, members: members});
-                    document.getElementById('content-wrapper').insertAdjacentHTML('afterbegin', headerHTML);
-                    $("body").addClass("group-header");
-                });
-            }
+        showGroupHeader: function(groupId, courseId) {
+            mmooc.api.getGroupMembers(groupId, function(members) {
+                var headerHTML = mmooc.util.renderTemplateWithData("groupheader", {groupId: groupId, courseId: courseId, members: members});
+                document.getElementById('content-wrapper').insertAdjacentHTML('afterbegin', headerHTML);
+                $("body").addClass("group-header");
+            });
         },
 
         changeGroupListURLs: function(href) {
