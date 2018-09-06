@@ -148,6 +148,10 @@ jQuery(function($) {
     mmooc.routes.addRouteForPath(/\/groups\/\d+\/discussion_topics$/, function() {
         var courseId = mmooc.api.getCurrentCourseId();
         
+        if (mmooc.util.isTeacherOrAdmin()) {
+            mmooc.groups.interceptLinksToTeacherGroupPage();
+        }
+        
         if(null == courseId)
         {
             var groupId = mmooc.api.getCurrentGroupId();

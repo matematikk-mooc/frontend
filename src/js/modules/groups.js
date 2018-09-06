@@ -27,7 +27,13 @@ this.mmooc.groups = function() {
                 interceptLinkToGroupPageForHref(href, event);
             });            
         },
-
+        interceptLinksToTeacherGroupPage: function() {
+            //20180906ETH Vi ønsker diskusjonsvisning som default for lærere også.
+            $("#left-side").on('click', '.ui-menu-item a', function(event) {
+                var href= $(this).attr("href");
+                interceptLinkToGroupPageForHref(href, event);
+            });            
+        },
         showGroupHeader: function(groupId, courseId) {
             mmooc.api.getGroupMembers(groupId, function(members) {
                 var headerHTML = mmooc.util.renderTemplateWithData("groupheader", {groupId: groupId, courseId: courseId, members: members});
