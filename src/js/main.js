@@ -195,20 +195,25 @@ jQuery(function($) {
     /\/groups\/\d+\/discussion_topics\/\d+$/,
     /\/groups\/\d+\/discussion_topics\/new$/], function() {
         mmooc.menu.showDiscussionGroupMenu();
-        var courseId = mmooc.api.getCurrentCourseId();
         
-        //If courseId was found, it is a group discussion created by a teacher.
-        if(courseId) {
-            mmooc.menu.showBackButton("/courses/" + courseId + "/discussion_topics", "Tilbake til diskusjoner");                
-        }
-        else {
-            var groupId = mmooc.api.getCurrentGroupId();
-            if(null != groupId)
-            {
-                mmooc.api.getGroup(groupId,function(group) {
-                    var courseId = group.course_id;
-                    mmooc.menu.showBackButton("/groups/" + group.id + "/discussion_topics", "Tilbake til gruppeside");                
-                });
+        //20180911ETH Need to know if I got here from the discussion list or from the module
+        //            navigation.
+        if(!this.hasQueryString) {
+            var courseId = mmooc.api.getCurrentCourseId();
+        
+            //If courseId was found, it is a group discussion created by a teacher.
+            if(courseId) {
+                mmooc.menu.showBackButton("/courses/" + courseId + "/discussion_topics", "Tilbake til diskusjoner");                
+            }
+            else {
+                var groupId = mmooc.api.getCurrentGroupId();
+                if(null != groupId)
+                {
+                    mmooc.api.getGroup(groupId,function(group) {
+                        var courseId = group.course_id;
+                        mmooc.menu.showBackButton("/groups/" + group.id + "/discussion_topics", "Tilbake til gruppeside");                
+                    });
+                }
             }
         }
         
