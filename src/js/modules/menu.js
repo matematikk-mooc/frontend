@@ -203,7 +203,7 @@ this.mmooc.menu = function() {
                 });
                 mmooc.api.getUnreadMessageSize(function(conversations) {
                     var msgBadge = $("#mmooc-unread-messages-count");
-                    if(conversations.unread_count)
+                    if(conversations.unread_count != "0")
                     {
                       msgBadge.html(conversations.unread_count);
                       msgBadge.show();
