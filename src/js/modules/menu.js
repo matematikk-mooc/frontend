@@ -201,13 +201,18 @@ this.mmooc.menu = function() {
                 $("#mmooc-menu-item-profile-settings").click(function(event) {
                     handleMenuClick("#mmooc-menu-item-profile-settings", "#mmooc-profile-settings");
                 });
-                var msgBadge = $("#mmooc-unread-messages-count");
-                if (mmooc.api.getUnreadMessageSize() === 0) {
-                  msgBadge.hide();
-                } else {
-                  msgBadge.html(mmooc.api.getUnreadMessageSize());
-                  msgBadge.show();
-                }
+                mmooc.api.getUnreadMessageSize(function(conversations) {
+                    var msgBadge = $("#mmooc-unread-messages-count");
+                    if(conversations.unread_count)
+                    {
+                      msgBadge.html(conversations.unread_count);
+                      msgBadge.show();
+                    }
+                    else
+                    {
+                      msgBadge.hide();
+                    }
+                });
                 this.updateNotificationsForUser();
                 
                 $(document).on("click", ".helpMenu", openHelpDialog);

@@ -574,6 +574,48 @@ this.mmooc.coursesettings = function() {
                 }); //end getsectionsforcourse
             }); //end pfdklistuser click button
         },
+        addListAssignmentsButton: function() {
+            $("#right-side table.summary").before("<a id='pfdklistassignments' class='Button Button--link Button--link--has-divider Button--course-settings' href='#'><i class='icon-student-view' />List assignments</a>");
+
+            //Når man trykker på knappen så kjører koden nedenfor.
+            $('#pfdklistassignments').on('click', function() {
+                var contentarea = $('#content');
+                contentarea.html('<h1>Oppgaver</h1>\<div id="resultarea"></div>');
+
+                var courseId = mmooc.api.getCurrentCourseId();
+
+                var params = { per_page: 999 };
+                mmooc.api.getAssignmentsForCourse(courseId, function(assignments) {
+                    if(!assignments.length)
+                    {
+                        $("#resultarea").append("Ingen oppgaver");
+                    }
+                    else {
+                        var tableHtml = "<table class='table' id='pfdkassignmentstable'>";
+                        tableHtml += "<thead><tr><th>Oppgave id</th><th>Beskrivelse</th><th>Hverandrevurdering</th></tr></thead><tbody></tbody></table>";
+                        $("#resultarea").append(tableHtml); 
+                        for (var i = 0; i < assignments.length; i++) {
+                            var assignment = assignments[i];
+                            var peerReview = "NEI";
+                        
+                            if(assignment.peer_reviews) {
+                                peerReview = "JA";
+                            }
+
+                            var rowHtml = "<tr><td>" + assignment.id +
+                                    "</td><td><a href='" +
+                                    assignment.html_url + "' target='_blank'>"
+                                     + 
+                                    assignment.name +
+                                    "</a></td><td>" + peerReview +
+                                    "</td></tr>";
+                            $("#pfdkassignmentstable").append(rowHtml);
+                        } //end for all assignments
+                    } // endif any assignments
+                }); //end getAssignmentsForCourse
+            }); //end addListAssignmentsButton click button
+        },
+       
         addListGroupsButton: function() {
             $("#right-side table.summary").before("<a id='pfdklistgroups' class='Button Button--link Button--link--has-divider Button--course-settings' href='#'><i class='icon-student-view' />List groups</a>");
 

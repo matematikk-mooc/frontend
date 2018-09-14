@@ -95,6 +95,7 @@ jQuery(function($) {
         mmooc.coursesettings.addListSectionsButton();
         mmooc.coursesettings.addListUsersButton();
         mmooc.coursesettings.addListGroupsButton();
+        mmooc.coursesettings.addListAssignmentsButton();
     });
 
     mmooc.routes.addRouteForPath(/\/profile\/settings$/, function() {

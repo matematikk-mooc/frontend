@@ -458,7 +458,6 @@ this.mmooc.api = function() {
                 "params":   { }
             });
         },
-
         getActivityStreamForUser: function(callback, error) {
             this._get({
                 "callback": callback,
@@ -480,18 +479,15 @@ this.mmooc.api = function() {
             }
         },
 
-        getUnreadMessageSize: function() {
-            
-            var $oldUIUnreadMessages = $('.unread-messages-count');
-            var $newUIUnreadMessages = $('#global_nav_conversations_link .menu-item__badge');           
-            
-            if ($oldUIUnreadMessages.length) {
-                return parseInt($oldUIUnreadMessages.text()); //returns number of unread messages for old UI.
-            } else if ($newUIUnreadMessages.length) {
-                return parseInt($newUIUnreadMessages.text()); //returns number of unread messages for new UI.
-            } else {
-                return 0;
-            }
+        //20180914ETH Inbox unread count used the DOM, but Canvas updates the DOM asynchronously, causing
+        //            the value to be 0 if our code ran to early. Use the API instead.
+        getUnreadMessageSize: function(callback, error) {
+            this._get({
+                "callback": callback,
+                "error":    error,
+                "uri":      "/conversations/unread_count",
+                "params":   { }
+            });
         },
 
         getAccounts: function(callback, error) {
