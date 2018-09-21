@@ -491,7 +491,7 @@ this.mmooc.api = function() {
         },
 //api/v1/search/recipients?search=&per_page=20&permissions[]=send_messages_all&messageable_only=true&synthetic_contexts=true&context=course_1_sections
 //[{"id":"section_4","name":"Test 1","avatar_url":"http://localhost/images/messages/avatar-group-50.png","type":"context","user_count":2,"permissions":{"send_messages_all":true,"send_messages":true}}]
-        getSectionRecipient: function(courseId, callback, error) {
+        getSectionRecipients: function(courseId, callback, error) {
             var recipientsContext = "course_" + courseId + "_sections";
             this._get({
                 "callback": callback,
@@ -524,7 +524,7 @@ body: test
 */
 
 
-        postMessageToSection: function(courseId, sectionRecipient, callback, error) {
+        postMessageToConversation: function(courseId, recipient, subject, body, callback, error) {
             var courseContext = "course_" + courseId;
             this._post({
                 "callback": callback,
@@ -532,9 +532,9 @@ body: test
                 "uri":      "/conversations",
                 "params":   {
                     course: courseContext,
-                    recipients: [sectionRecipient],
-                    subject: "Testmessage",
-                    body: "Testbody"
+                    recipients: [recipient],
+                    subject: subject,
+                    body: body
                 }
             });
         },
@@ -658,7 +658,6 @@ body: test
             });
         },
         
-        // /api/v1/group_categories/users/self/groups
         getUserGroups: function(callback, error) {
             this._get({
                 "callback": callback,

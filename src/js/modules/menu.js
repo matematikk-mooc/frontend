@@ -313,11 +313,73 @@ this.mmooc.menu = function() {
                     setTimeout(_selectCourseAndPrefillMessageInDialogBox, 600); //Need to wait for the get teacher help contents to be loaded
                     
                 }
+                function _getSectionRecipientFromGroupName(sectionRecipients, groupName)
+                {
+                    for(var i = 0; i < sectionRecipients.length; i++) {
+                        var r = sectionRecipients[i];
+                        if(r.name == groupName)
+                        {
+                            return r.id;
+                        }
+                    }
+                    return null;
+                }
+
+                function _sendMessageToSectionTeachers() {
+                    mmooc.api.getUserGroups(function(groups) {
+                        if((groups.length == 0) || (groups.length > 1) ) {
+                            alert("Det er noe galt med gruppeoppsettet ditt.\nDu er medlem i " + groups.length + " grupper.");
+                        }
+                        else
+                        {
+                            var groupName = groups[0].name;
+                            var courseId = mmooc.api.getCurrentCourseId();
+                            mmooc.api.getSectionRecipients(courseId, (function(courseId) {
+                                return function(recipients) {
+                                    var sectionRecipient = _getSectionRecipientFromGroupName(recipients, groupName);
+                                    if(sectionRecipient == null)
+                                    {
+                                        alert("Det er noe galt med gruppeoppsettet ditt.\n Fant ikke seksjon for gruppe " + groupName);
+                                    }
+                                    else
+                                    {
+                                        var sectionRecipientTeachers = sectionRecipient + "_teachers";
+                                        var subject = mmooc.i18n.ThisIsGroup + " " + groupName;
+                                        var discussionUrl = window.location.href;
+                                        var discussionAndGroupTitle = $(".discussion-title").text();
+                                        var discussionTitle = strLeft(discussionAndGroupTitle, " - ");
+                                        var newLine = "\n";
+
+                                        var body = mmooc.i18n.WeHaveAQuestionToTeacherInTheDiscussion 
+                                            + ' "' + discussionTitle + '":' + newLine + discussionUrl;
+
+                                        $("#mmooc-get-teachers-help").html("Sender melding...");
+
+                                        mmooc.api.postMessageToConversation(courseId, sectionRecipientTeachers, subject, body, function(result) {
+                                            console.log(result);
+                                            $("#mmooc-get-teachers-help").addClass("btn-done");
+                                            $("#mmooc-get-teachers-help").html("Veileder tilkalt");
+                                        }, function(error) {
+                                            $("#mmooc-get-teachers-help").addClass("btn-failure");
+                                            $("#mmooc-get-teachers-help").html("Tilkall veileder feilet");
+                                            alert("Tilkall veileder feilet. Gruppen har ingen veileder.\n");
+                                            console.log(error);
+                                        });
+                                    }
+                                }
+                            }(courseId)));
+                        }
+                    });
+                }
 
                 function _addClickEventOnGetHelpFromTeacherButton() {
-                    $(document).on("click", "#mmooc-get-teachers-help", function(event) {
-                        $('#global_nav_help_link').click();
-                        setTimeout(_openTeacherFeedbackLink, 600); //Need to wait for the help dialog contents to be loaded
+                    $("#mmooc-get-teachers-help").click(function() {
+                        $("#mmooc-get-teachers-help").off("click");
+                        $("#mmooc-get-teachers-help").html("Finner veileder...");
+                        _sendMessageToSectionTeachers();
+//20180921ETH Slutter å bruke den globale hjelpeknappen. Bruker API Conversation i stedet.        
+//                        $('#global_nav_help_link').click();
+//                        setTimeout(_openTeacherFeedbackLink, 600); //Need to wait for the help dialog contents to be loaded
                     });
                 }
                 
