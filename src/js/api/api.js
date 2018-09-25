@@ -666,6 +666,21 @@ body: test
                 "params":   { per_page: 999 }
             });
         },        
+        getUserGroupsForCourse: function(courseId, callback, error) {
+            this.getUserGroups(function(courseId) {
+                return function(groups) {
+                    var usersGroups = [];
+                    for (var i = 0; i < groups.length; i++) {
+                        var group = groups[i];
+                        if(group.course_id == courseId)
+                        {
+                            usersGroups.push(group);
+                        }
+                    }
+                    callback(usersGroups);
+                }
+            }(courseId));
+        },        
         
         // /api/v1/courses/:course_id/sections
         getSectionsForCourse: function(courseID, params, callback, error) {
