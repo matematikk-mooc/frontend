@@ -326,7 +326,7 @@ this.mmooc.menu = function() {
                                     else
                                     {
                                         var sectionRecipientTeachers = sectionRecipient + "_teachers";
-                                        var subject = mmooc.i18n.ThisIsGroup + " " + groupName;
+                                        var subject = groupName + " " + mmooc.i18n.GroupGetInTouchSubject;
                                         var discussionUrl = window.location.href;
                                         var discussionAndGroupTitle = $(".discussion-title").text();
                                         var discussionTitle = strLeft(discussionAndGroupTitle, " - ");
