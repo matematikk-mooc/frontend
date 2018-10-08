@@ -501,7 +501,8 @@ this.mmooc.api = function() {
                     permissions: ["send_messages_all"],
                     messageable_only: true,
                     synthetic_contexts: true,
-                    context: recipientsContext
+                    context: recipientsContext,
+                    per_page: 999
                  }
             });
         },
