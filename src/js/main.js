@@ -60,11 +60,6 @@ jQuery(function($) {
         mmooc.enroll.printAllCourses();
     });
 
-    mmooc.routes.addRouteForPath(/\/profile\/settings$/, function() {
-		var notificationButtonHTML = mmooc.util.renderTemplateWithData("notifications", {});
-		document.getElementById('confirm_email_channel').insertAdjacentHTML('beforebegin', notificationButtonHTML);
-    });
-
     mmooc.routes.addRouteForPath(/\/courses\/\d+\/announcements$/, function() {
         var courseId = mmooc.api.getCurrentCourseId();
         mmooc.menu.showCourseMenu(courseId, 'Kunngjøringer', mmooc.util.getPageTitleBeforeColon());
@@ -214,13 +209,13 @@ jQuery(function($) {
         window.location.href = "/courses";
     });
 
-/*    mmooc.routes.addRouteForPath(/enroll\/[0-9A-Z]+$/, function() {
+    mmooc.routes.addRouteForPath(/enroll\/[0-9A-Z]+$/, function() {
         if(document.location.search == "")
         {
             mmooc.enroll.changeEnrollPage();
         }
     });
-*/
+
     try {
         mmooc.menu.renderLeftHeaderMenu();
         mmooc.menu.showUserMenu();
@@ -230,12 +225,6 @@ jQuery(function($) {
 
     try {
         mmooc.routes.performHandlerForUrl(document.location);
-    } catch (e) {
-        console.log(e);
-    }
-
-    try {
-		mmooc.nrk.init();
     } catch (e) {
         console.log(e);
     }
