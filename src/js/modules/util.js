@@ -213,6 +213,40 @@ this.mmooc.util = function () {
                 category = courseCode.substring(0, courseCode.indexOf("::"));
             }
             return category;            
+        },
+        getToolsInLeftMenu : function(path) {
+            var modulesFound = false;
+            var toolList = [];
+            var activeToolName = "Verktøy";
+            var activeToolPath = "";
+            
+            $("#section-tabs .section > a").each(function() {
+                var currentClass = $(this).attr("class");
+                if(modulesFound && (currentClass != "settings")) {
+                    var href = $(this).attr("href");
+                    var title = $(this).attr("title");
+                    var activeTool = false;
+                    if(href == path)
+                    {
+                        activeTool = true;
+                        activeToolName = title;
+                        activeToolPath = href;
+                    }
+                    toolList.push({
+                        activeTool: activeTool,
+                        href: href,
+                        title: title
+                    });
+                }
+                else if(currentClass == "modules") {
+                    modulesFound = true;
+                }
+            });
+            return {
+                activeToolName: activeToolName,
+                activeToolPath: activeToolPath,
+                toolList: toolList
+            };
         }
     };
 }();

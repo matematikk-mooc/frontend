@@ -30,4 +30,34 @@
         border-color: #DCDCDC;
         border-style: solid;
     }
+
+    .mmooc-course-tab-menu-item {
+        float: left;
+        margin: 0;
+        padding: 0;
+        display: block;
+        float: left;
+        position: relative;
+        margin-right: 10px;
+    }
+    .mmooc-course-tab-menu-item-drop {
+        display:none;
+        position: absolute;
+        left: 0;
+        z-index: 999;
+        background: #FFF;
+        ul {
+            li {
+                width: 100%;
+                padding: 0;
+                list-style: none outside none;
+
+                a {
+                    line-height: 15px;
+                    display: block;
+                    padding: 3px 0;
+                }
+            }
+        }
+    }
 }

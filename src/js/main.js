@@ -125,6 +125,10 @@ jQuery(function($) {
         });
         mmooc.announcements.printAnnouncementsUnreadCount();        
     });
+    mmooc.routes.addRouteForPath(/\/courses\/\d+\/external_tools/, function() {
+        var courseId = mmooc.api.getCurrentCourseId();
+        mmooc.menu.showCourseMenu(courseId, this.path, "Verktøy");
+    });
 
     mmooc.routes.addRouteForPath(/\/courses\/\d+\/groups$/, function() {
         mmooc.groups.interceptLinksToGroupPage();

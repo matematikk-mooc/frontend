@@ -24,6 +24,11 @@ this.mmooc.menu = function() {
             menuItems[menuItems.length] = {"title": "Grupper", url: "/courses/" + courseId + "/groups"};
             menuItems[menuItems.length] = {"title": "Diskusjoner", url: "/courses/" + courseId + "/discussion_topics"};
             
+            //SelectedMenuItem contains the path if we are called by the external path route.
+            var tools = mmooc.util.getToolsInLeftMenu(selectedMenuItem);            
+            
+            menuItems[menuItems.length] = {"title": tools.activeToolName, toolList: tools.toolList, url: tools.activeToolPath};
+            
             if (mmooc.util.isTeacherOrAdmin()) {
                 menuItems[menuItems.length] = {"title": "Faglærer", url: "/courses/" + courseId + "/?mmpf"};
             }
@@ -44,6 +49,10 @@ this.mmooc.menu = function() {
             {
                 _insertCourseMenuHtml(course, selectedMenuItem, title, menuItems);
             }
+            $("#mmooc-menu-item-verktoy").click(function(event) {
+                handleMenuClick("#mmooc-menu-item-verktoy", "#mmooc-verktoy-list");
+            });
+            
         }
     }
 

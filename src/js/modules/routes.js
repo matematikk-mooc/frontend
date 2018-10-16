@@ -44,6 +44,7 @@ this.mmooc.routes = function() {
                         if (route.paths[j].test(path) && !route.isAlreadyHandled) {
                             //20180911ETH Need to know if there is a query string to decide how to handle a discussion.
                             route.hasQueryString = queryString.length;
+                            route.path = path;
                             route.isAlreadyHandled = true;
                             console.log("Handle route: " + route.paths[j]);
                             route.handler();
