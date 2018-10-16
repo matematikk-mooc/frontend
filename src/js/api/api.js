@@ -416,18 +416,13 @@ this.mmooc.api = function() {
             }
         },
 
-        getUnreadMessageSize: function() {
-            
-            var $oldUIUnreadMessages = $('.unread-messages-count');
-            var $newUIUnreadMessages = $('#global_nav_conversations_link .menu-item__badge');           
-            
-            if ($oldUIUnreadMessages.length) {
-                return parseInt($oldUIUnreadMessages.text()); //returns number of unread messages for old UI.
-            } else if ($newUIUnreadMessages.length) {
-                return parseInt($newUIUnreadMessages.text()); //returns number of unread messages for new UI.
-            } else {
-                return 0;
-            }
+        getUnreadMessageSize: function(callback, error) {
+            this._get({
+                "callback": callback,
+                "error":    error,
+                "uri":      "/conversations/unread_count",
+                "params":   { }
+            });
         },
 
         getAccounts: function(callback, error) {
