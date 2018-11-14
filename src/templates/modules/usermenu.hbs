@@ -1,0 +1,24 @@
+<ul id="user-menu">
+    <li class="mmooc-menu-item" id="mmooc-menu-item-varsler">
+        <a href="#" class="mmooc-menu-item-title" >Varsler <i class="icon-mini-arrow-down"></i><span id="mmooc-notification-count"></span></a>
+        <div class="mmooc-menu-item-drop" id="mmooc-activity-stream">
+        </div>
+    </li>
+    <li class="mmooc-menu-item">
+        <a href="/conversations" class="mmooc-menu-item-title">Innboks <span id="mmooc-unread-messages-count"></span></a>
+    </li>
+    <li class="mmooc-menu-item profile-settings" id="mmooc-menu-item-profile-settings">
+        <a href="#" class="mmooc-menu-item-title">
+            <div class="ic-avatar" aria-hidden="true">
+                <img src="{{user.avatar_image_url}}" alt="{{user.display_name}}" />
+            </div>
+            <i class="icon-mini-arrow-down"></i>
+        </a>
+        <div class="mmooc-menu-item-drop" id="mmooc-profile-settings">
+            <ul>
+                <li><a href="/profile/settings">Innstillinger</a></li>
+                <li><a href="/logout">Logg ut</a></li>
+            </ul>
+        </div>
+    </li>
+</ul>

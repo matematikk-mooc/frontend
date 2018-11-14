@@ -1,0 +1,12 @@
+<ul id="mmooc-notifications">
+{{#each activities}}
+    <li class="{{checkReadStateFor this}}"><a href="{{findRightUrlFor this}}">{{title}}<br><span class="mmooc-notification-type">{{localize type}}</span><br><span class="notification-pubdate">{{ created_at }}</span></a></li>
+    {{#if @last}} 
+        <a href="#" id="mmooc-notifications-showall">Vis alle</a>
+    {{/if}}
+{{else}}
+    <li>Ingen varsler</li>
+{{/each}}
+
+</ul>
+

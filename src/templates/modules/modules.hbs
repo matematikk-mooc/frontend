@@ -1,0 +1,33 @@
+<div class="mmooc-modules">
+    <h2 class="h3">{{coursemodules}}</h2>
+    {{#each modules}}
+        <div class="mmooc-module">
+                <h2 class="light"><a href="{{urlForFirstNoneCompleteItem items}}">{{name}}</a>
+                </h2>
+            {{#if items}}
+                <ul class="mmooc-module-items-icons">
+                    {{#each items}}
+                      {{#ifEquals type "SubHeader"}}
+                          {{#unless @first}}
+                          {{/unless}}                            
+                      {{else}}
+                             <li class="mmooc-module-item-icon">
+                             <div class="tooltip">
+                             <a class="mmooc-module-items-icons-{{type}} 
+                                 {{#ifItemIsCompleted completion_requirement}}done{{/ifItemIsCompleted}}" 
+                                 href="{{html_url}}">
+                                 <i class="icon-{{lowercase type}}{{overrideIconClassByTitle title}}"></i>
+                                 {{#ifItemTypeDiscussion type}}
+                                    <div class="discussion-unread-tag discussion-id-{{this.content_id}}"></div>
+                                 {{/ifItemTypeDiscussion}}
+                            </a>
+                             <div class="tooltiptext">{{title}}</div>
+                             </div>
+                            </li>
+                      {{/ifEquals}}
+                    {{/each}}
+                </ul>
+            {{/if}}
+        </div>
+    {{/each}}
+</div> 

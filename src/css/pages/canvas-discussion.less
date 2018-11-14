@@ -1,0 +1,179 @@
+.discussion-collections {
+    background: none !important;
+    border:none;
+
+    .discussion {
+        box-shadow: 0 1px 2px 0 rgba(0,0,0,0.35);
+        border: none;
+        border-radius: 0;
+        padding: 20px 35px;
+        margin-bottom: 12px;
+    }
+
+    .discussion-list {
+        border:none;
+        padding:0;
+    }
+
+    .discussion.no-content {
+        margin:0;
+    }
+}
+
+.announcements {
+    .discussion-unread-container {
+     display: none;
+    }
+}
+
+.discussions {
+    #searchTerm {
+        width: 250px;
+    }
+
+    .discussion-unread-status {
+        width: 110px;
+    }
+
+    .discussion-date-available, .discussion-due-date {
+        width: auto;
+    }
+
+    .topic {
+        .discussion-entry-reply-area {
+            border: 0 none;
+            border-radius: 0 0 3px 3px;
+            margin: 0;
+            padding-bottom: 1px;
+            padding-top: 1px;
+        }
+    }
+}
+.discussion_entry>.discussion-entry-reply-area {
+    border:none;
+}
+
+.topic .entry-content {
+    border:none;
+}
+
+.publication-date {
+    font-size:14px;
+    margin-bottom:5px;
+}
+
+.discussion-entries .entry {
+    margin:0;
+    margin-bottom: 10px;
+}
+
+.collapse-discussion {
+    outline:0;
+}
+
+.new-and-total-badge {
+    .new-items  {
+        background: #004A5F;
+        margin-right: 8px;
+
+        &:after {
+            content: " uleste";
+        }
+    }
+
+    .total-items {
+        &:after {
+            content: " svar";
+        }
+    }
+}
+
+#discussionsFilter {
+    display: none;
+}
+
+#discussion-managebar {
+    .headerBar {
+        background:#EAEAEA;
+        border:none;
+    }
+} 
+
+#discussion-toolbar {
+    &.toolbarView .headerBar {
+        background: none;
+        border:none;
+    }
+
+    &.toolbarView .headerBar.sticky {
+        background: #FFF;
+        height: 65px !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+        max-width: none !important;
+    }
+
+}
+
+/*20180904ETH Studenter i PfDK Generell etterspurte muligheten til å redigere 
+              diskusjonstemaer de har laget.
+#discussion-managebar {
+    display: none;
+}
+*/
+
+#discussion-search {
+    margin-left: 14px;
+}
+
+#edit_discussions_settings {
+    display: none;
+}
+
+#availability_options {
+    display: none;
+}
+
+#editor_tabs {
+    display: none;
+}
+
+#discussion_topic {
+  .discussion-subtitle,
+  div.discussion-fyi,
+  .avatar {
+// 20180824ETH Avataren vises heller ikke når studenter oppretter diskusjoner. Slår på avatar inntil videre og så får vi finne en løsning før emnediskusjonene åpner.
+//    display: none;
+  }
+}
+
+.discussionTopicIndexList {
+    .discussion-topic {
+        box-shadow: 0 1px 2px 0 rgba(0,0,0,0.35);
+        border: none;
+        border-radius: 0;
+        padding: 20px 35px;
+        margin: 0 5px 12px 5px;
+        background-color: #fff !important;
+        position: relative;
+
+        &.unread:before {
+            font-size: 25px;
+            content:"\2022";
+            position: absolute;
+            color: @linkColor;
+            top: 35px;
+            left: 15px;
+        }
+
+        .discussion-title {
+            font-family: 'Roboto', 'Helvetica Neue', serif;
+        }
+
+        .discussion-author {
+            font-size: 12px;
+        }
+    }
+}
+
+

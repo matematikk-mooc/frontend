@@ -1,0 +1,35 @@
+.mmooc-row {
+    &:after {
+        content: "";
+        display: table;
+        clear: both;
+    }
+
+}
+
+[class*='mmooc-size'] {
+    float: left;
+    .border-box;
+    width: 100%;
+}
+
+
+
+@media screen and (min-width: 1100px) {
+    .mmooc-size-1of3 {
+        width: 33.3%;
+    }
+}
+
+@media screen and (min-width: 768px) and (max-width: 1099px) {
+    .mmooc-size-1of3 {
+        width: 50%;
+    }
+
+}
+
+@media screen and (max-width: 767px)  {
+    .mmooc-size-1of3 {
+        width: 100%;
+    }
+}

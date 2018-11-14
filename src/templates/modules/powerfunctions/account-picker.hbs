@@ -1,0 +1,10 @@
+<div>
+  <form>
+    <select name="account">
+      <option value="">Choose the account...</option>
+      {{#accounts}}
+      <option value="{{id}}">{{name}}</option>
+      {{/accounts}}
+    </select>
+  </form>
+</div>

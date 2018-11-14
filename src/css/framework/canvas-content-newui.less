@@ -1,0 +1,93 @@
+#application.ic-app {
+    
+    .icon-page {
+        background-image: url("https://server/vector_images/mmooc-icon-page.svg");
+        background-size: 16px 16px;
+        position: relative;
+        left: 0;
+        width: @iconWidth;
+        &:before {
+            content: '';
+        }   
+    }
+    
+    .icon-file {
+        background-image: url("https://server/vector_images/mmooc-icon-file.svg");
+        background-size: 16px 16px;
+        position: relative;
+        width: @iconWidth;
+        left: 0;
+        
+        &:before {
+            content: '';
+        }
+    }
+
+    .mmooc-icon-badge {
+        background-image: url("https://server/vector_images/mmooc-icon-badge.svg");
+        background-size: 16px 16px;
+        position: relative;
+        top: 0;
+        left: 0;
+        width: @iconWidth;
+        
+        &:before {
+            content: '';
+        }
+    }
+        
+    .mmooc-icon-video {
+        background-image: url("https://server/vector_images/mmooc-icon-video.svg");
+        background-size: 16px 16px;
+        position: relative;
+        left: 0;
+        width: @iconWidth;
+        
+        &:before {
+            content: '';
+        }
+    }
+    
+    .mmooc-icon-interactive {
+        background-image: url("https://server/vector_images/mmooc-icon-interactive.svg");
+        background-size: 16px 16px;
+        position: relative;
+        left: 0;
+        width: @iconWidth;
+        
+        &:before {
+            content: '';
+        }
+    }
+    
+    li.mmooc-module-item-icon {
+     
+        .mmooc-icon-badge, .mmooc-icon-video, .icon-page, .icon-file {
+            top: 0;
+        }
+        .mmooc-icon-interactive {
+            top: -1px;
+        }
+        
+        span[class*=mmooc-module-items-icons] {
+            .icon-page, .mmooc-icon-badge, .mmooc-icon-video, .icon-file {
+                top: 0;
+            }
+            .mmooc-icon-interactive {
+                top: -1px;
+            }
+        }
+        
+        span[class*=mmooc-module-items-icons] i[class*=icon-]:before {
+            top: 1px;
+        }
+    }
+    
+    .border.border-b {
+        padding-bottom: 6px;
+    }
+    
+    li.mmooc-module-item-icon i.icon-discussion:before {
+       top: 0;
+    }
+}

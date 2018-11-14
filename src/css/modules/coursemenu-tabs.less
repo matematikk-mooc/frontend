@@ -1,0 +1,64 @@
+
+.mmooc-course-tabs {
+    margin: 40px 0 -3px 0;
+
+    clear: both;
+
+
+    &:after {
+        content: " ";
+        display: block;
+        height: 0;
+        clear: both;
+    }
+
+    li {
+        list-style: outside none none;
+        float: left;
+        margin-right: 20px;
+        padding: 10px 40px;
+
+        a {
+            color: @textColor;
+        }
+    }
+
+    li.selected {
+        background: @backgroundColor;
+        border-radius: 5px 5px 0 0;
+        border-width: 3px 1px 0 1px;
+        border-color: #DCDCDC;
+        border-style: solid;
+    }
+
+    .mmooc-course-tab-menu-item {
+        float: left;
+        margin: 0;
+        padding: 0;
+        display: block;
+        float: left;
+        position: relative;
+        margin-right: 10px;
+    }
+    .mmooc-course-tab-menu-item-drop {
+        display:none;
+        position: absolute;
+        left: 0;
+        z-index: 999;
+        width: 200%;
+        background: #FFF;
+        ul {
+            li {
+                width: 100%;
+                padding: 0;
+                list-style: none outside none;
+
+                a {
+                    line-height: 15px;
+                    display: block;
+                    padding: 3px 0;
+                }
+            }
+        }
+    }
+}

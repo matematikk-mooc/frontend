@@ -1,0 +1,202 @@
+body {
+    background-image: none !important;
+    background: @backgroundColor !important;
+    color: @textColor;
+    font-size: @fontSize;
+    line-height: @lineHeight;
+    font-family: 'Roboto';
+}
+
+a {
+    color: @linkColor;
+    text-decoration: none;
+
+    &:hover {
+        color: @linkColor;
+        text-decoration: underline;
+    }
+
+    &:active {
+        color: @linkColor;
+    }
+}
+
+/* Override fixed Canvas minimum width */
+.with-right-side, .with-left-side, .with-right-side.with-left-side {
+    min-width: 800px !important;
+}
+
+#wrapper-container {
+    clear: both;
+    min-width: 800px !important;
+}
+
+body.no-headers #wrapper-container {
+    /* Used when Canvas uses iframes */
+    min-width: 300px !important;
+}
+
+#dashboard {
+    display:none;
+}
+
+#identity {
+    background-image: none;
+    box-shadow: none;
+    border: none;
+}
+
+#left-side {
+    width: @leftColIncludingIndicator;
+    border: none !important;
+    padding-top: 25px;
+}
+
+body.no-headers #content, body.embedded #content {
+    /* Used when Canvas uses iframes */
+    padding-top: 0 !important;
+}
+
+
+.with-course-menu #content {
+    padding: 10px 0 0 0 !important;
+}
+
+
+#main {
+    background: @backgroundColor;
+    border: none !important;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+
+#mmooc-course-tabs-container {
+    background: #FFF;
+    padding-top: 40px;
+    margin-bottom: 30px;
+
+    h1 {
+        margin: 0;
+    }
+    border-bottom: 3px solid #DCDCDC;
+}
+
+#mmooc-course-tabs-container-inner {
+    max-width: @maxWidth;
+    margin: 0 auto;
+}
+
+@media screen and (max-width: 1240px) {
+    #mmooc-course-tabs-container-inner {
+        margin: 0 @minimumSidePadding;
+    }
+}
+
+.with-right-side #main {
+    max-width: @maxWidth - @rightColWidth - @columnPadding;
+    margin-right: @rightColWidth + @columnPadding;
+}
+
+.with-left-side {
+    #main {
+        /* We hide left menu as default */
+        margin-left: 0;
+    }
+
+    #left-side {
+        /* Hide left menu as default */
+        display: none !important;
+    }
+
+    #wrapper {
+        margin-left: auto;
+    }
+}
+
+.home #main {
+    margin-left: 0;
+    max-width: @maxWidth - @rightColLargeWidth - @columnPadding;
+    margin-right: @rightColLargeWidth + @columnPadding;
+}
+
+/* Removed to cope with Canvas March version 2017
+.pages #main {
+    max-width: 680px;
+}
+*/
+
+#right-side {
+    padding-left: @columnPadding;
+    width: @rightColWidth;
+    padding-top: @contentTopMargin;
+}
+
+.home #right-side {
+    width: @rightColLargeWidth;
+}
+
+@media screen and (max-width: 1020px) {
+    .home #right-side {
+        width: @rightColWidth;
+    }
+
+    .home #main {
+        max-width: @maxWidth - @rightColWidth - @columnPadding;
+        margin-right: @rightColWidth + @columnPadding;
+    }
+}
+
+
+
+#wrapper {
+    max-width: 1200px;
+}
+
+.full-width #wrapper {
+    /* Canvas Inbox */
+    max-width: none;
+    margin: 0;
+}
+
+@media screen and (max-width: 1240px) {
+    #wrapper {
+        margin: @minimumSidePadding;
+    }
+
+    .with-left-side #wrapper {
+        margin-left: @minimumSidePadding;
+    }
+}
+
+.full-width.with-right-side #wrapper {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+
+
+#breadcrumbs {
+    display: none;
+}
+
+.pages.show .show-content {
+    padding: 0;
+    /* Må vise overflow i tilfelle tooltip til et ord går utenfor container.*/
+    overflow-x: visible;
+}
+
+.header-bar {
+    background: @backgroundColor;
+    border: none;
+}
+
+
+.with-right-side #breadcrumbs + #right-side-wrapper {
+    margin-top: 0;
+}
+
+#identity {
+    display: none;
+}
+

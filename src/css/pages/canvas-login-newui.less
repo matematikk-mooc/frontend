@@ -1,0 +1,46 @@
+body.ic-Login-Body, .body--login-confirmation {
+  
+    #application.ic-app {
+  
+        .ic-Login__container {
+            background-color: @darkTealColor;
+        }
+        .ic-Login-header__logo {
+            background-image: url(@logo-image2x) !important;
+            background-size: contain;
+            background-repeat: no-repeat;
+            width: @logo-width;
+            height: @logo-height;
+            
+            img {
+                display: none;
+            }
+        }
+
+        #main.ic-Layout-columns {
+//            background-color: @darkTealColor;
+        }
+        
+        .ic-Login__actions {
+            margin-top: 25px;
+            
+            .ic-Login__actions--right {
+                display: block;
+                margin-left: 25px;
+            }
+            
+            .Button--logout-link, .Button--logout-confirm, .Button--login {
+                .button;
+            }
+            
+        }
+        .ic-Login-confirmation__header {
+            background: @darkTealColor url(@logo-image) 18px no-repeat !important;
+            padding: 30px;
+            img {
+                display: none;
+            }
+        }
+
+    }
+}

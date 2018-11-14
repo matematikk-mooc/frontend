@@ -1,0 +1,59 @@
+.mmooc-progress-bar {
+    background-color: #D8D8D8;
+    border-radius: 5px;
+    border-bottom: 1px solid #EBEBEB;
+    box-shadow: inset 0 1px 1px 0 #A6A6A6;
+    .mmooc-progress-bar-inner {
+        border-radius: 5px;
+        height: 9px;
+        color: #fff;
+        background-color: @darkTealColor;
+        text-align: right;
+        border-bottom: 1px solid #7FA4AF;
+        margin-bottom: -1px;
+    }
+}
+
+.mmooc-progress-bar-done {
+
+    .mmooc-progress-bar-inner {
+        background-color: @doneColor;
+        border-bottom: 1px solid #F0FBF6;
+    }
+}
+
+
+.mmooc-course-progress {
+    display: table;
+    width: 100%;
+    margin-bottom: 40px;
+    height: 22px; /* Fixed height to justify right column */
+    > div {
+        display: table-row;
+
+        .mmooc-course-progress-label {
+            display: table-cell;
+            white-space: nowrap;
+        }
+
+        .mmooc-course-progress-bar {
+            padding-left: 1em;
+            display: table-cell;
+            width:100%;
+        }
+
+    }
+}
+
+.loading-gif {
+    width: 20px;
+    height: 20px;
+    background: url("https://server/bitmaps/loading.gif") no-repeat center center;
+    background-size: 70px;
+    display: inline-block;
+}
+
+.loading-unread {
+    float: left;
+    margin-right: 30px;
+}
