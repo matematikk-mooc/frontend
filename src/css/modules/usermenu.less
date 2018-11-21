@@ -1,94 +1,93 @@
 .mmooc-menu-item {
-    float: left;
-    margin: 0;
-    padding: 0;
-    display: block;
-    float: left;
-    position: relative;
-    margin-right: 10px;
-	font-size: @menuItemFontSize;
-	font-weight: @menuItemFontWeight;
+  float: left;
+  margin: 0;
+  padding: 0;
+  display: block;
+  float: left;
+  position: relative;
+  margin-right: 10px;
+  font-size: @menuItemFontSize;
+  font-weight: @menuItemFontWeight;
 
-    .mmooc-menu-item-title {
-        color: #FFF;
-        text-decoration: none;
-        padding: 10px 20px 10px 20px;
+  .mmooc-menu-item-title {
+    color: #fff;
+    text-decoration: none;
+    padding: 10px 20px 10px 20px;
 
-        &:hover {
-            color: #FFF;
-        }
+    &:hover {
+      color: #fff;
     }
+  }
 
-    .mmooc-menu-item-drop {
-        display:none;
-        position: absolute;
-        left: 0;
-        right: 0;
-        background: @darkTealColor;
-        ul {
-            margin: 25px 15px 10px 35px;
+  .mmooc-menu-item-drop {
+    display: none;
+    position: absolute;
+    left: 0;
+    right: 0;
+    background: @darkTealColor;
+    ul {
+      margin: 25px 15px 10px 35px;
 
-            li {
-                padding: 0;
-                color: #09f6ff;
-                list-style: none outside none;
+      li {
+        padding: 0;
+        color: #09f6ff;
+        list-style: none outside none;
 
-                a {
-                    color: #FFF;
-                    line-height: 15px;
-                    display: block;
-                    padding: 3px 0;
-                }
-
-                .notification-pubdate {
-                    font-size:11px;
-                }
-
-                .mmooc-notification-type {
-                    font-size: 12px;
-                    font-style: italic;
-                    color: #cecece;
-                }
-
-                border-top: 1px solid #105569;
-                border-bottom: 1px solid #3F7687;
-
-                &:first-of-type {
-                    border-top: none;
-                }
-
-                &:last-of-type {
-                    border-bottom: none;
-                }
-
-                &.unread {
-                    list-style: disc outside;
-                }
-
-            }
+        a {
+          color: #fff;
+          line-height: 15px;
+          display: block;
+          padding: 3px 0;
         }
+
+        .notification-pubdate {
+          font-size: 11px;
+        }
+
+        .mmooc-notification-type {
+          font-size: 12px;
+          font-style: italic;
+          color: #cecece;
+        }
+
+        border-top: 1px solid #105569;
+        border-bottom: 1px solid #3f7687;
+
+        &:first-of-type {
+          border-top: none;
+        }
+
+        &:last-of-type {
+          border-bottom: none;
+        }
+
+        &.unread {
+          list-style: disc outside;
+        }
+      }
     }
+  }
 }
 
 #mmooc-activity-stream {
-    width: 380px;
-    right: auto;
+  width: 380px;
+  right: auto;
 }
 
 #mmooc-notification-count,
 #mmooc-unread-messages-count {
-    display: none;
-    color: @darkTealColor;
-    background: #09f6ff;
-    border-radius: 8px;
-    font-size: 12px;
-    line-height: 12px;
-    min-width: 12px;
-    padding: 2px;
-    position: absolute;
-    text-align: center;
-    font-weight: bold;
-    top: -8px;
+  display: none;
+  color: @darkTealColor;
+  background: #09f6ff;
+  border-radius: 8px;
+  font-size: 12px;
+  line-height: 12px;
+  min-width: 12px;
+  padding: 2px;
+  position: absolute;
+  text-align: center;
+  font-weight: bold;
+  top: -8px;
 }
 
 #mmooc-unread-messages-count {
@@ -96,10 +95,9 @@
 }
 
 #mmooc-notifications-showall {
-    color: #09f6ff;
-    display: block;
-    margin-bottom: 10px;
-    text-align: center;
-    text-decoration: underline;
-
+  color: #09f6ff;
+  display: block;
+  margin-bottom: 10px;
+  text-align: center;
+  text-decoration: underline;
 }

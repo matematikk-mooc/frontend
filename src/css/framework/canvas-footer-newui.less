@@ -1,101 +1,99 @@
-
 #application.ic-app {
+  .module-sequence-footer {
+    .module-sequence-footer-content {
+      height: 55px;
+      padding-top: 0px;
 
-    .module-sequence-footer {
-        
-        .module-sequence-footer-content {
-            height: 55px;
-            padding-top: 0px;
-            
-            a {
-                padding: 0;
-            }
+      a {
+        padding: 0;
+      }
 
-            .module-sequence-footer-button--previous, .module-sequence-footer-button--next a {
-                border:1px solid #bbbbbb;
-                box-shadow:none;
-                width:70px;
-                line-height:30px;
-                margin-top:5px;
-                text-align:left;
-                position:absolute;
-                font-weight:400;
+      .module-sequence-footer-button--previous,
+      .module-sequence-footer-button--next a {
+        border: 1px solid #bbbbbb;
+        box-shadow: none;
+        width: 70px;
+        line-height: 30px;
+        margin-top: 5px;
+        text-align: left;
+        position: absolute;
+        font-weight: 400;
 
-                @media (max-width: 1000px) {
-                  margin:5px 20px 0 20px !important;
-                  float:left;
-                }
-
-                i {
-                    display:none;
-                }
-            }
-
-            .module-sequence-footer-button--previous {
-                left:240px;
-                background: #f6f6f6 url("https://server/vector_images/mmooc-icon-arrow-left.svg") no-repeat 10px center;
-                background-size:20px;
-                padding-left:40px;
-                margin-right:10px;
-            }
-
-            .module-sequence-footer-button--next a {
-                left:370px;
-                background: #f6f6f6 url("https://server/vector_images/mmooc-icon-arrow-right.svg") no-repeat 80px center;
-                background-size:20px;
-                padding-right:40px;
-                text-indent:30px;
-            }
-
-            #mark-as-done-checkbox {
-                float:left;
-            }
+        @media (max-width: 1000px) {
+          margin: 5px 20px 0 20px !important;
+          float: left;
         }
-        
 
-    }
-
-    
-    footer#footer {
-        display: none;
-    }
-    
-    footer#mmooc-footer {
-        position: relative;
-        top: 60px;
-        display: block;
-        clear: both;
-//        width:900px;
-        margin-left:0;
-        
-        .mmooc-license {
-            text-align: left;
-            width: 100%;
-            
-            p.public-license-text {
-                font-size: 12px;
-                padding-left: 0;
-                text-align: center;
-            }
+        i {
+          display: none;
         }
-        
+      }
+
+      .module-sequence-footer-button--previous {
+        left: 240px;
+        background: #f6f6f6
+          url('https://server/vector_images/mmooc-icon-arrow-left.svg')
+          no-repeat 10px center;
+        background-size: 20px;
+        padding-left: 40px;
+        margin-right: 10px;
+      }
+
+      .module-sequence-footer-button--next a {
+        left: 370px;
+        background: #f6f6f6
+          url('https://server/vector_images/mmooc-icon-arrow-right.svg')
+          no-repeat 80px center;
+        background-size: 20px;
+        padding-right: 40px;
+        text-indent: 30px;
+      }
+
+      #mark-as-done-checkbox {
+        float: left;
+      }
     }
+  }
+
+  footer#footer {
+    display: none;
+  }
+
+  footer#mmooc-footer {
+    position: relative;
+    top: 60px;
+    display: block;
+    clear: both;
+    //        width:900px;
+    margin-left: 0;
+
+    .mmooc-license {
+      text-align: left;
+      width: 100%;
+
+      p.public-license-text {
+        font-size: 12px;
+        padding-left: 0;
+        text-align: center;
+      }
+    }
+  }
 }
 
 //Submission iframe - do no want double footer
 body.is-inside-submission-frame {
-    background-color: #fff !important;
-    
-    #application.ic-app {
-        footer#mmooc-footer {
-            display: none;
-        }
-        
-        #submission_preview.paper {
-            margin: -27px auto 0 0;
-            position: relative;
-            top: 27px;
-            padding-left: 10px;
-        }
+  background-color: #fff !important;
+
+  #application.ic-app {
+    footer#mmooc-footer {
+      display: none;
     }
+
+    #submission_preview.paper {
+      margin: -27px auto 0 0;
+      position: relative;
+      top: 27px;
+      padding-left: 10px;
+    }
+  }
 }

@@ -1,54 +1,65 @@
 #header {
-    background-image: none;
-    background-color: @darkTealColor;
-    border-bottom: 5px solid @lightTealColor
+  background-image: none;
+  background-color: @darkTealColor;
+  border-bottom: 5px solid @lightTealColor;
 }
 
 #header-logo {
-    left: 0 !important;
+  left: 0 !important;
 }
 
-#header-logo, #header.no-user #header-logo {
-    background-image: url(@logo-image);
-    width: @logo-width;
-    bottom: 17px;
+#header-logo,
+#header.no-user #header-logo {
+  background-image: url(@logo-image);
+  width: @logo-width;
+  bottom: 17px;
 }
 
-@media (min--moz-device-pixel-ratio: 1.5), (-o-min-device-pixel-ratio: 3/2), (-webkit-min-device-pixel-ratio: 1.5), (min-device-pixel-ratio: 1.5), (min-resolution: 1.5dppx) {
-    #header-logo, #header.no-user #header-logo {
-        background-image: url(@logo-image2x);
-    }
+@media (min--moz-device-pixel-ratio: 1.5),
+  (-o-min-device-pixel-ratio: 3/2),
+  (-webkit-min-device-pixel-ratio: 1.5),
+  (min-device-pixel-ratio: 1.5),
+  (min-resolution: 1.5dppx) {
+  #header-logo,
+  #header.no-user #header-logo {
+    background-image: url(@logo-image2x);
+  }
 }
 
-#header-inner, .with-left-side #header-inner, .with-right-side #header-inner, .with-right-side.with-left-side #header-inner {
-    max-width: 1200px;
+#header-inner,
+.with-left-side #header-inner,
+.with-right-side #header-inner,
+.with-right-side.with-left-side #header-inner {
+  max-width: 1200px;
 }
 
 @media screen and (max-width: 1240px) {
-    #header-inner, .with-left-side #header-inner, .with-right-side #header-inner, .with-right-side.with-left-side #header-inner {
-        margin: 0 @minimumSidePadding;
-    }
+  #header-inner,
+  .with-left-side #header-inner,
+  .with-right-side #header-inner,
+  .with-right-side.with-left-side #header-inner {
+    margin: 0 @minimumSidePadding;
+  }
 }
 
-
 #user-menu {
-    float: right;
-    padding-top: 27px;
+  float: right;
+  padding-top: 27px;
 }
 
 @media screen and (max-width: 1024px) {
-    #header-logo, #header.no-user #header-logo {
-        margin-left: 17px;
-        bottom: 40px;
-    }
+  #header-logo,
+  #header.no-user #header-logo {
+    margin-left: 17px;
+    bottom: 40px;
+  }
 
-    #menu {
-        margin: 0;
-    }
+  #menu {
+    margin: 0;
+  }
 }
-
 
 /* Courses and Groups menu hidden as default, since we replace it with our own Courses link */
 #courses_menu_item {
-    display: none;
+  display: none;
 }

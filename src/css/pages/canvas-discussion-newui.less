@@ -1,45 +1,41 @@
 #application.ic-app {
-    #discussion-toolbar {
- 
-        &.toolbarView {
-            background-color: transparent;
-        }
-        
-        label[for=showDeleted], #showDeleted {
-            display: none;
-        }
+  #discussion-toolbar {
+    &.toolbarView {
+      background-color: transparent;
     }
+
+    label[for='showDeleted'],
+    #showDeleted {
+      display: none;
+    }
+  }
 }
 
 body.mmooc-group-discussion {
-    #application.ic-app #main {
-        
-        #content {
-            position:relative;
-        }
-
-
-        #module_sequence_footer {
-            margin-bottom:0;
-            position: absolute;
-            display: inline-block;
-            left: 350px;
-
-            .Button {
-                position:static;
-                float:none;
-            }
-        }
-
-        #discussion_container {
-            
-        }
-
+  #application.ic-app #main {
+    #content {
+      position: relative;
     }
+
+    #module_sequence_footer {
+      margin-bottom: 0;
+      position: absolute;
+      display: inline-block;
+      left: 350px;
+
+      .Button {
+        position: static;
+        float: none;
+      }
+    }
+
+    #discussion_container {
+    }
+  }
 }
 
 .getTeachersHelpContainer {
-     float: right;
+  float: right;
 }
 
 body.discussions {
@@ -53,34 +49,36 @@ body.discussions {
     padding: 18px;
     border-radius: 0 5px 5px 0;
     margin-left: -5px;
-    background: url("https://server/vector_images/mmooc-icon-search.svg") no-repeat center center, linear-gradient(-180deg,#327d96 0,#195063 100%) no-repeat!important;
+    background: url('https://server/vector_images/mmooc-icon-search.svg')
+        no-repeat center center,
+      linear-gradient(-180deg, #327d96 0, #195063 100%) no-repeat !important;
     background-size: 18px, 100% !important;
   }
 }
 
 .discussion-unread-value {
-    color: #ffffff;
-    background: #C73D15;
-    border-radius: 8px;
-    font-size: 12px;
-    line-height: 12px;
-    min-width: 12px;
-    padding: 2px;
-    position: absolute;
-    text-align: center;
-    font-weight: 700;
-    top: -8px;
+  color: #ffffff;
+  background: #c73d15;
+  border-radius: 8px;
+  font-size: 12px;
+  line-height: 12px;
+  min-width: 12px;
+  padding: 2px;
+  position: absolute;
+  text-align: center;
+  font-weight: 700;
+  top: -8px;
 }
 
 .discussion-unread-tag {
-    position: relative;
-    .discussion-unread-item {
-        top: -27px;
-        right: -12px;
-    }
+  position: relative;
+  .discussion-unread-item {
+    top: -27px;
+    right: -12px;
+  }
 }
 
 .discussion-unread-tab {
-    top: 4px;
-    right: 4px;
+  top: 4px;
+  right: 4px;
 }

@@ -1,82 +1,76 @@
 #application.ic-app {
+  #user-menu {
+    bottom: 5px;
+    right: 5px;
+    margin: 0;
 
-    #user-menu {
-        bottom: 5px;
-        right: 5px;
-        margin: 0;
-        
-        .mmooc-menu-item {
-            
-            #mmooc-notification-count{
-                top: 3px;
-                right: 1px;
-            }
-            
-            #mmooc-unread-messages-count {
-                top: 3px;
-                right: -1px;
-            }
-            
-            &.profile-settings {
-                position: relative;
-                top: -4px;
-                
-                .mmooc-menu-item-drop {
-                    left: -70px;
-                    
-                    ul {
-                        
-                        li {
-                            
-                            a {
-                                padding: 5px 0;
-                            }
-                            
-                            &:first-of-type {
-                                border-bottom-width: 0;
-                                
-                                a {
-                                    padding-top: 3px;
-                                }
-                            }
-                            &:last-of-type {
-                                
-                                a {
-                                    padding-top: 8px;
-                                }
-                                
-                            }
-                            
-                            &#helpMenu {
-                                border-top-width: 0;
-                                
-                                a {
-                                    padding-bottom: 10px;
-                                }
-                                
-                            }
-                        }   
-                    }
-                    
+    .mmooc-menu-item {
+      #mmooc-notification-count {
+        top: 3px;
+        right: 1px;
+      }
+
+      #mmooc-unread-messages-count {
+        top: 3px;
+        right: -1px;
+      }
+
+      &.profile-settings {
+        position: relative;
+        top: -4px;
+
+        .mmooc-menu-item-drop {
+          left: -70px;
+
+          ul {
+            li {
+              a {
+                padding: 5px 0;
+              }
+
+              &:first-of-type {
+                border-bottom-width: 0;
+
+                a {
+                  padding-top: 3px;
                 }
-                
-                .ic-avatar {
-                    width: 32px;
-                    height: 32px;
+              }
+              &:last-of-type {
+                a {
+                  padding-top: 8px;
                 }
+              }
+
+              &#helpMenu {
+                border-top-width: 0;
+
+                a {
+                  padding-bottom: 10px;
+                }
+              }
             }
+          }
         }
+
+        .ic-avatar {
+          width: 32px;
+          height: 32px;
+        }
+      }
     }
+  }
 }
 
 //Added the CSS here since it is connected to the user menu (help button)
 #help_tray {
-    margin-top: 100px;
-    ul.ic-NavMenu__link-list {
-        li {
-            &:nth-of-type(2), &:nth-of-type(3) { //hide the second and third help dialog menu element
-                display: none;
-            }
-        }
+  margin-top: 100px;
+  ul.ic-NavMenu__link-list {
+    li {
+      &:nth-of-type(2),
+      &:nth-of-type(3) {
+        //hide the second and third help dialog menu element
+        display: none;
+      }
     }
+  }
 }
