@@ -1,50 +1,46 @@
 var routes = mmooc.routes;
 
-describe("routes", function() {
-    var callbacks;
+describe('routes', function() {
+  var callbacks;
 
-    beforeEach(function() {
-        callbacks = {
-            routeForPath : function() {
+  beforeEach(function() {
+    callbacks = {
+      routeForPath: function() {},
+      routeForQueryString: function() {}
+    };
 
-            },
-            routeForQueryString : function() {
+    spyOn(callbacks, 'routeForPath');
+    spyOn(callbacks, 'routeForQueryString');
+  });
 
-            }
+  describe('addRouteForPath', function() {
+    it('Is invoked for path', function() {
+      var location = {
+        pathname: '/courses/1',
+        search: null
+      };
 
-        };
+      routes.addRouteForPath(/\/courses\/\d$/, callbacks.routeForPath);
 
-        spyOn(callbacks, 'routeForPath');
-        spyOn(callbacks, 'routeForQueryString');
+      routes.performHandlerForUrl(location);
+      expect(callbacks.routeForPath).toHaveBeenCalled();
     });
+  });
 
-    describe("addRouteForPath", function() {
-        it("Is invoked for path", function() {
-            var location = {
-                pathname : '/courses/1',
-                search : null
-            };
+  describe('addRouteForQueryString', function() {
+    it('Is invoked for QueryString', function() {
+      var location = {
+        pathname: '',
+        search: '?module_item_id=1'
+      };
 
-            routes.addRouteForPath(/\/courses\/\d$/, callbacks.routeForPath);
+      routes.addRouteForQueryString(
+        /module_item_id=/,
+        callbacks.routeForQueryString
+      );
 
-
-            routes.performHandlerForUrl(location);
-            expect(callbacks.routeForPath).toHaveBeenCalled();
-        });
+      routes.performHandlerForUrl(location);
+      expect(callbacks.routeForQueryString).toHaveBeenCalled();
     });
-
-    describe("addRouteForQueryString", function() {
-        it("Is invoked for QueryString", function() {
-            var location = {
-                pathname : '',
-                search : '?module_item_id=1'
-            };
-
-            routes.addRouteForQueryString(/module_item_id=/, callbacks.routeForQueryString);
-
-
-            routes.performHandlerForUrl(location);
-            expect(callbacks.routeForQueryString).toHaveBeenCalled();
-        });
-    });
+  });
 });

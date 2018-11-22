@@ -47,7 +47,10 @@ body {
       }
       .selected {
         background-color: #dadada;
-        background-image: linear-gradient(rgb(200, 200, 200), rgb(219, 219, 219));
+        background-image: linear-gradient(
+          rgb(200, 200, 200),
+          rgb(219, 219, 219)
+        );
       }
     }
   }
@@ -62,11 +65,11 @@ body {
             color: @textColor;
           }
         }
-        a:hover, a:focus {
+        a:hover,
+        a:focus {
           text-decoration: none;
         }
       }
-
     }
 
     .badge-view {
@@ -97,7 +100,6 @@ body {
             height: @badge-image;
           }
         }
-
       }
 
       .kbadge.back {
@@ -136,11 +138,11 @@ body {
           left: (@badge-view-width - @button-width) / 2;
         }
 
-        a:hover, a:focus {
+        a:hover,
+        a:focus {
           text-decoration: none;
         }
       }
-
     }
 
     .badge-view:hover {
@@ -151,16 +153,11 @@ body {
       }
     }
   }
-
 }
-
-
 
 @media @medium {
   .responsive(960px, 546px, 0);
 }
-
-
 
 @media @small {
   .responsive(776px, 546px, 0);
@@ -183,7 +180,6 @@ body {
 */
 .responsive(@frame-width, @intro-text-width, @badge-filter-scale) {
   body {
-
     .badge-header {
       width: @frame-width;
       .intro-text {
@@ -192,7 +188,7 @@ body {
     }
 
     .badge-filter {
-      width: @frame-width - (@frame-width * @badge-filter-scale);;
+      width: @frame-width - (@frame-width * @badge-filter-scale);
       .btn-group {
         .btn {
           width: @frame-width * 0.173;
