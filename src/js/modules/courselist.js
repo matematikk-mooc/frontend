@@ -42,7 +42,7 @@ this.mmooc.courseList = (() => {
           }
           document.title = mmooc.i18n.CoursePlural;
 
-          if ($.isFunction(callback)) callback();
+          $.isFunction(callback) && callback();
         });
       }
     },
