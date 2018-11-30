@@ -149,7 +149,8 @@ this.mmooc.enroll = (function() {
             html = mmooc.util.renderTemplateWithData('allcourseslist', {
               title: coursesCategorized[i].title,
               courses: coursesCategorized[i].courses,
-              courseLabel: mmooc.i18n.Course.toLowerCase()
+              courseLabel: mmooc.i18n.Course.toLowerCase(),
+              index: i
             });
             $('.mmooc-all-courses-list').append(html);
           }
@@ -157,22 +158,64 @@ this.mmooc.enroll = (function() {
           mmooc.enroll.setClickHandlers();
 
           // TODO: move if there is a better place for this code - it handles course list UI
-
           // accordion UI
-          $('#mmooc-accordion-header').click(() => {
-            $('#mmooc-accordion-content').toggleClass(
-              'mmooc-accordion-content-closed'
+          $('.mmooc-accordion-header').click(event => {
+            let accordionIndex = event.target.getAttribute('index');
+            console.log(
+              'accordion clicked',
+              event.target.getAttribute('index')
             );
+
+            if (
+              $(`#mmooc-accordion-header-${accordionIndex}`).hasClass(
+                'mmooc-accordion-header-active'
+              )
+            ) {
+              $(`#mmooc-accordion-header-${accordionIndex}`).toggleClass(
+                'mmooc-accordion-header-active'
+              );
+
+              $(`#mmooc-accordion-content-${accordionIndex}`).toggleClass(
+                'mmooc-accordion-content-active'
+              );
+            } else {
+              $('.mmooc-accordion-header-active').removeClass(
+                'mmooc-accordion-header-active'
+              );
+
+              $('.mmooc-accordion-content-active').removeClass(
+                'mmooc-accordion-content-active'
+              );
+
+              $(`#mmooc-accordion-header-${accordionIndex}`).addClass(
+                'mmooc-accordion-header-active'
+              );
+
+              $(`#mmooc-accordion-content-${accordionIndex}`).addClass(
+                'mmooc-accordion-content-active'
+              );
+            }
+
+            // remove active tabs when new accordion element is clicked
+            $('.mmooc-tab-head').removeClass('mmooc-tab-head-active');
+            $('.mmooc-tab-content').removeClass('mmooc-tab-content-active');
+
+            // add active class to first tab when the accordion element is opened
+            $('.mmooc-tab-head-0').addClass('mmooc-tab-head-active');
+            $('.mmooc-tab-content-0').addClass('mmooc-tab-content-active');
           });
 
           // tabs
-          $('#tabContent-0').addClass('mmooc-tab-content-active');
-
           $('.mmooc-tab-head').click(event => {
             let tabIndex = event.target.getAttribute('index');
 
+            $('.mmooc-tab-head').removeClass('mmooc-tab-head-active');
+            $(`#mmooc-tab-head-${tabIndex}`).addClass('mmooc-tab-head-active');
+
             $('.mmooc-tab-content').removeClass('mmooc-tab-content-active');
-            $(`#tabContent-${tabIndex}`).addClass('mmooc-tab-content-active');
+            $(`#mmooc-tab-content-${tabIndex}`).addClass(
+              'mmooc-tab-content-active'
+            );
           });
         });
       });
