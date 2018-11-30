@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.5 (67469) - http://www.bohemiancoding.com/sketch -->
+    <title>atoms/icon/close</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="atoms/icon/close" transform="translate(-8.000000, -8.000000)">
+            <g>
+                <rect id="Background" x="0" y="0" width="32" height="32"></rect>
+                <polygon id="Path" fill-opacity="0.5" fill="#373737" points="24 9.61714286 22.3828571 8 16 14.3828571 9.61714286 8 8 9.61714286 14.3828571 16 8 22.3828571 9.61714286 24 16 17.6171429 22.3828571 24 24 22.3828571 17.6171429 16"></polygon>
+            </g>
+        </g>
+    </g>
+</svg>
