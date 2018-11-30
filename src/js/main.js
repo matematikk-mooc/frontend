@@ -1,4 +1,11 @@
 jQuery(function($) {
+  $(document).ready(() => {
+    $('.ic-app-header__menu-list li a ').each((index, element) => {
+      if(window.location.pathname.includes($(element).attr('href'))) {
+        $(element).addClass('active')
+      }
+    })
+  })
   //    $('.header-bar').show(); //To avoid displaying the old contents while the javascript is loading. Selectors are set to display:none in CSS.
   //    $(".ic-Layout-contentMain").show(); //Same as above.
 
@@ -227,12 +234,12 @@ jQuery(function($) {
         mmooc.menu.showLeftMenu();
         mmooc.menu.listModuleItems();
         mmooc.menu.showDiscussionGroupMenu();
-                
+
         if (!mmooc.util.isTeacherOrAdmin()) {
         	mmooc.menu.hideSectionTabsHeader();
         }
     });
-    
+
     mmooc.routes.addRouteForPath([/\/groups\/\d+\/discussion_topics\/\d+$/], function() {
         mmooc.groups.moveSequenceLinks();
         if (!mmooc.util.isTeacherOrAdmin()) {

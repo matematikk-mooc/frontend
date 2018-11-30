@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.5 (67469) - http://www.bohemiancoding.com/sketch -->
+    <title>atoms/icon/notification/alert</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="atoms/icon/notification/alert" transform="translate(-8.000000, 0.000000)">
+            <g>
+                <rect id="Background" x="0" y="0" width="32" height="32"></rect>
+                <path d="M23.3333333,18.6666667 C23.7015232,18.6666667 24,18.9651435 24,19.3333333 C24,19.7015232 23.7015232,20 23.3333333,20 L8.66666667,20 C8.29847683,20 8,19.7015232 8,19.3333333 C8,18.9651435 8.29847683,18.6666667 8.66666667,18.6666667 C9.73082289,18.5747089 10.5747089,17.7308229 10.6666667,16.6666667 L10.6666667,13.3333333 C10.6666667,10.3878147 13.0544813,8 16,8 C18.9455187,8 21.3333333,10.3878147 21.3333333,13.3333333 L21.3333333,16.6666667 C21.4252911,17.7308229 22.2691771,18.5747089 23.3333333,18.6666667 Z M16,24 C14.5272407,24 13.3333333,22.8060927 13.3333333,21.3333333 L18.6666667,21.3333333 C18.6666667,22.8060927 17.4727593,24 16,24 Z" id="Shape" fill="#FFFFFF"></path>
+                <circle id="indicator" fill="#C80000" fill-rule="nonzero" cx="28" cy="4" r="4"></circle>
+            </g>
+        </g>
+    </g>
+</svg>
