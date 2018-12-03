@@ -183,6 +183,12 @@ this.mmooc.enroll = (function() {
             // remove active tabs when new accordion element is clicked
             $('.mmooc-tab-head').removeClass('mmooc-tab-head-active');
             $('.mmooc-tab-content').removeClass('mmooc-tab-content-active');
+            $('.mmooc-tabs-mobile-header-active').removeClass(
+              'mmooc-tabs-mobile-header-active'
+            );
+            $('.mmooc-tabs-mobile-content-active').removeClass(
+              'mmooc-tabs-mobile-content-active'
+            );
 
             // add active class to first tab when the accordion element is opened
             $('.mmooc-tab-head-0').addClass('mmooc-tab-head-active');
@@ -200,6 +206,39 @@ this.mmooc.enroll = (function() {
             $(`#mmooc-tab-content-${tabIndex}`).addClass(
               'mmooc-tab-content-active'
             );
+          });
+
+          // tabs-mobile
+
+          $('.mmooc-tabs-mobile-header').click(event => {
+            let mobileTabIndex = event.target.getAttribute('index');
+
+            if (
+              $(`#mmooc-tabs-mobile-header-${mobileTabIndex}`).hasClass(
+                'mmooc-tabs-mobile-header-active'
+              )
+            ) {
+              $(`#mmooc-tabs-mobile-header-${mobileTabIndex}`).toggleClass(
+                'mmooc-tabs-mobile-header-active'
+              );
+              $(`#mmooc-tabs-mobile-content-${mobileTabIndex}`).toggleClass(
+                'mmooc-tabs-mobile-content-active'
+              );
+            } else {
+              $('.mmooc-tabs-mobile-header-active').removeClass(
+                'mmooc-tabs-mobile-header-active'
+              );
+              $('.mmooc-tabs-mobile-content-active').removeClass(
+                'mmooc-tabs-mobile-content-active'
+              );
+
+              $(`#mmooc-tabs-mobile-header-${mobileTabIndex}`).addClass(
+                'mmooc-tabs-mobile-header-active'
+              );
+              $(`#mmooc-tabs-mobile-content-${mobileTabIndex}`).addClass(
+                'mmooc-tabs-mobile-content-active'
+              );
+            }
           });
         });
       });

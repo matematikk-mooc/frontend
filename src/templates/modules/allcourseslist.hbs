@@ -69,6 +69,7 @@
             </div>
         </button>
         <article id="mmooc-accordion-content-{{index}}" class="mmooc-accordion-content">
+
             <div class="mmooc-tabs">
                 <div class="mmooc-tab-heads">
                     {{#each courses}}
@@ -87,6 +88,21 @@
                     {{/each}}
                 </div>
             </div>
+
+            <section class="mmooc-tabs-mobile">
+                {{#each courses}}
+                <button id="mmooc-tabs-mobile-header-{{id}}" class="mmooc-tabs-mobile-header" index={{id}}>
+                    {{name}}
+                </button>
+                <article id="mmooc-tabs-mobile-content-{{id}}" class="mmooc-tabs-mobile-content">
+                    <p>{{public_description}}</p>
+                    <div class="mmooc-button-ctr">
+                        <button class="mmooc-button mmooc-button-primary">Registrere med Feide</button>
+                        <button class="mmooc-button mmooc-button-secondary">Registrere</button>
+                    </div>
+                </article>
+                {{/each}}
+            </section>
         </article>
     </section>
 </div>
