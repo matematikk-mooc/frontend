@@ -161,10 +161,6 @@ this.mmooc.enroll = (function() {
           // accordion UI
           $('.mmooc-accordion-header').click(event => {
             let accordionIndex = event.target.getAttribute('index');
-            console.log(
-              'accordion clicked',
-              event.target.getAttribute('index')
-            );
 
             if (
               $(`#mmooc-accordion-header-${accordionIndex}`).hasClass(
@@ -174,25 +170,13 @@ this.mmooc.enroll = (function() {
               $(`#mmooc-accordion-header-${accordionIndex}`).toggleClass(
                 'mmooc-accordion-header-active'
               );
-
-              $(`#mmooc-accordion-content-${accordionIndex}`).toggleClass(
-                'mmooc-accordion-content-active'
-              );
             } else {
               $('.mmooc-accordion-header-active').removeClass(
                 'mmooc-accordion-header-active'
               );
 
-              $('.mmooc-accordion-content-active').removeClass(
-                'mmooc-accordion-content-active'
-              );
-
               $(`#mmooc-accordion-header-${accordionIndex}`).addClass(
                 'mmooc-accordion-header-active'
-              );
-
-              $(`#mmooc-accordion-content-${accordionIndex}`).addClass(
-                'mmooc-accordion-content-active'
               );
             }
 
