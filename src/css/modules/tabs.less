@@ -5,8 +5,13 @@
     height: 56px;
     border: none;
     background-color: @white;
+    border-left: 4px solid transparent;
     cursor: pointer;
     outline: none;
+    
+    svg {
+      margin-left: 8px;
+    }
   }
 
   .mmooc-tab-head-active,
@@ -45,6 +50,10 @@
 
     .mmooc-tab-head {
       width: 326px;
+      padding-left: 40px;
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
     }
   }
 
