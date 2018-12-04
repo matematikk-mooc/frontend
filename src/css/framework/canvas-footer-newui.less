@@ -11,7 +11,7 @@
                 padding: 0;
             }
 
-            .module-sequence-footer-button--previous, .module-sequence-footer-button--next a {
+            .module-sequence-footer-button--previous {
                 border:1px solid #bbbbbb;
                 box-shadow:none;
                 width:70px;
@@ -38,9 +38,30 @@
                 padding-left:40px;
                 margin-right:10px;
             }
-
-            .module-sequence-footer-button--next a {
+            .module-sequence-footer-button--next {
                 left:370px;
+
+                i {
+                    display:none;
+                }
+
+            }
+            .module-sequence-footer-button--next, .module-sequence-footer-button--next a {
+                margin-top:5px;
+                box-shadow:none;
+                width:70px;
+                line-height:30px;
+                text-align:left;
+                position:relative;
+                float:none;
+                font-weight:400;
+
+                @media (max-width: 1000px) {
+                  margin:5px 20px 0 20px !important;
+                  float:left;
+                }
+            }
+            .module-sequence-footer-button--next a {
                 background: #f6f6f6 url("https://server/vector_images/mmooc-icon-arrow-right.svg") no-repeat 80px center;
                 background-size:20px;
                 padding-right:40px;
