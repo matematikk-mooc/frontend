@@ -1,11 +1,21 @@
 jQuery(function($) {
+  // TODO: remove after the UDIR-73 is finalised
+  // NOTE: for Header testing purposes
+  mmooc.routes.addRouteForPath(/\/header$/, () => {
+    let html = mmooc.util.renderTemplateWithData('noLoggedInHeader');
+    document.getElementById('header').innerHTML = html;
+
+    mmooc.login.handleLoginButtonClick();
+  });
+  // end of: for header testing purposes
+
   $(document).ready(() => {
     $('.ic-app-header__menu-list li a ').each((index, element) => {
-      if(window.location.pathname.includes($(element).attr('href'))) {
-        $(element).addClass('active')
+      if (window.location.pathname.includes($(element).attr('href'))) {
+        $(element).addClass('active');
       }
-    })
-  })
+    });
+  });
   //    $('.header-bar').show(); //To avoid displaying the old contents while the javascript is loading. Selectors are set to display:none in CSS.
   //    $(".ic-Layout-contentMain").show(); //Same as above.
 
@@ -72,7 +82,7 @@ jQuery(function($) {
         '" tabindex="0" webkitallowfullscreen="true" width="100%"></iframe>';
       $('#content').append(canvabadgesForCurrentCourse);
     } else {
-    /*
+      /*
         else if(!(mmooc.util.isTeacherOrAdmin()) && $(".self_enrollment_link").length) //Route to list of all courses if student and not enrolled in course.
         {
             window.location.href = "/search/all_courses";

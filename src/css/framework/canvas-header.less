@@ -28,18 +28,6 @@
           -webkit-transform: scale3d(1, 1, 1);
           transform: scale3d(1, 1, 1);
           margin: 0;
-
-          @media screen and (max-width: 1050px) {
-            position: relative;
-          }
-
-          @media (min--moz-device-pixel-ratio: 1.5),
-            (-o-min-device-pixel-ratio: 3/2),
-            (-webkit-min-device-pixel-ratio: 1.5),
-            (min-device-pixel-ratio: 1.5),
-            (min-resolution: 1.5dppx) {
-            background-image: url(@logo-image2x);
-          }
         }
       }
     }
@@ -80,9 +68,10 @@
 
           &.ic-app-header__menu-list-link {
             border-bottom: 4px solid transparent;
-            &:hover, &:focus {
+            &:hover,
+            &:focus {
               background-color: inherit;
-              color: white
+              color: white;
             }
           }
 
