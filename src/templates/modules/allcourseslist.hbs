@@ -1,4 +1,5 @@
 <div class="mmooc-enroll-category">
+    <!-- TODO: remove when the work on new features is finalised - I left it as a point of reference while we work on new features
     <h2 class="mmooc-enroll-category-title">{{title}}</h2>
     <ul>
         {{#each courses}}
@@ -29,4 +30,44 @@
         </div>
         {{/unless}} {{/each}}
     </ul>
+    -->
+
+    <section class="mmooc-accordion">
+        <header id="mmooc-accordion-header">
+            <div class="mmooc-accordion-header-main">
+                <div>
+                    <h1>{{title}}</h1>
+                </div>
+                <div>
+                    <!-- TODO: variable with a number of courses shall be placed here -->
+                    <div>1 kurs</div>
+                    <!-- TODO: variable with a number of courses the user is subscribed to shall be placed here
+                         also, it should be visible only on the 'logged in screen' -->
+                    <div>du er registerd in 1 kurs</div>
+                </div>
+            </div>
+            <div>
+                <span>Lukke</span>
+                <span>v</span>
+            </div>
+        </header>
+        <article id="mmooc-accordion-content" class="mmooc-accordion-content">
+            <div class="mmooc-tabs">
+                <div class="mmooc-tab-heads">
+                    {{#each courses}}
+                    <button index={{@index}} class="mmooc-tab-head">{{name}}</button>
+                    {{/each}}
+                </div>
+                <div class="mmooc-tab-content-ctr">
+                    {{#each courses}}
+                    <div id="tabContent-{{@index}}" class="mmooc-tab-content">
+                        <p>{{public_description}}</p>
+                        <button>Registrere med Feide</button>
+                        <button>Registrere</button>
+                    </div>
+                    {{/each}}
+                </div>
+            </div>
+        </article>
+    </section>
 </div>

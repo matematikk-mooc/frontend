@@ -128,14 +128,15 @@ this.mmooc.enroll = (function() {
 
           var categorys = mmooc.util.getCourseCategories(allCoursesWithStatus);
 
-          /* If the amount of courses is large, the filter select box and corresponding javascript code in allcoursescontainer.hbs should be enabled
+          /* If the amount of courses is large, the filter select box and corresponding javascript code in allcoursescontainer.hbs should be enabled 
 
-                    mmooc.enroll.populateFilter(categorys);
+          mmooc.enroll.populateFilter(categorys);
 
-  	                $("#filter").change(function() {
-  		                  mmooc.enroll.applyFilter();
-  	                });
-*/
+          $("#filter").change(function () {
+            mmooc.enroll.applyFilter();
+          });
+
+          */
 
           var coursesCategorized = mmooc.util.getCoursesCategorized(
             allCoursesWithStatus,
@@ -154,6 +155,25 @@ this.mmooc.enroll = (function() {
           }
           mmooc.enroll.insertModalAndOverlay();
           mmooc.enroll.setClickHandlers();
+
+          // TODO: move if there is a better place for this code - it handles course list UI
+
+          // accordion UI
+          $('#mmooc-accordion-header').click(() => {
+            $('#mmooc-accordion-content').toggleClass(
+              'mmooc-accordion-content-closed'
+            );
+          });
+
+          // tabs
+          $('#tabContent-0').addClass('mmooc-tab-content-active');
+
+          $('.mmooc-tab-head').click(event => {
+            let tabIndex = event.target.getAttribute('index');
+
+            $('.mmooc-tab-content').removeClass('mmooc-tab-content-active');
+            $(`#tabContent-${tabIndex}`).addClass('mmooc-tab-content-active');
+          });
         });
       });
     },
