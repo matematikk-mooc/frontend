@@ -168,9 +168,9 @@ module.exports = function(grunt) {
     connect: {
       dist: {
         options: {
-          port: 9000,
+          port: 3000,
           base: 'dist',
-          hostname: 'localhost',
+          hostname: '*',
           open: true
         }
       },
