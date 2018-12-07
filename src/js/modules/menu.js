@@ -95,9 +95,8 @@ this.mmooc.menu = (function() {
         'afterbegin',
         '<li class="menu-item custom-item ic-app-header__menu-list-item"><a href="' +
           link +
-          '" class="menu-item-no-drop ic-app-header__menu-list-link"><div class="menu-item__text">' +
-          linkText +
-          '</div></a></li>'
+          '" class="menu-item-no-drop ic-app-header__menu-list-link">' +
+          linkText + '</a></li>'
       );
     }
   }
@@ -540,6 +539,8 @@ this.mmooc.menu = (function() {
     alterHomeLink: function() {
       $('#header-logo').attr('href', '/courses');
       $('a.ic-app-header__logomark').attr('href', '/courses'); //New UI
+      $('a.ic-app-header__logomark').attr('src', '../../bitmaps/logo.svg'); //New UI
+      $('.ic-app-header__logomark-container').detach().prependTo('#menu');
     },
 
     alterCourseLink: function() {

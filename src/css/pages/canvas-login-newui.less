@@ -5,7 +5,7 @@ body.ic-Login-Body,
       background-color: @darkTealColor;
     }
     .ic-Login-header__logo {
-      background-image: url(@logo-image2x) !important;
+      background-image: @logo-image !important;
       background-size: contain;
       background-repeat: no-repeat;
       width: @logo-width;
@@ -35,7 +35,7 @@ body.ic-Login-Body,
       }
     }
     .ic-Login-confirmation__header {
-      background: @darkTealColor url(@logo-image) 18px no-repeat !important;
+      background: @darkTealColor @logo-image 18px no-repeat !important;
       padding: 30px;
       img {
         display: none;
