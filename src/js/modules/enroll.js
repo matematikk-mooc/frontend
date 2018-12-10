@@ -146,9 +146,15 @@ this.mmooc.enroll = (function() {
           $('.loading-gif').remove();
 
           for (var i = 0; i < coursesCategorized.length; i++) {
+            const coursesCategory = coursesCategorized[i];
+            const coursesEnrolled = coursesCategory.courses.filter(c => c.enrolled === true ).length;
+
             html = mmooc.util.renderTemplateWithData('allcourseslist', {
-              title: coursesCategorized[i].title,
-              courses: coursesCategorized[i].courses,
+              title: coursesCategory.title,
+              isAuthenticated: mmooc.util.isAuthenticated(),
+              courses: coursesCategory.courses,
+              coursesEnrolled: coursesEnrolled,
+              coursesAmount: coursesCategory.courses && coursesCategory.courses.length,
               courseLabel: mmooc.i18n.Course.toLowerCase(),
               index: i
             });
