@@ -9,6 +9,14 @@
   font-size: @menuItemFontSize;
   font-weight: @menuItemFontWeight;
 
+  &-bell, &-envelope {
+    width: 30px;
+  }
+
+  &-envelope {
+    background-image: url('../../bitmaps/envelope.svg')
+  }
+
   .mmooc-menu-item-title {
     color: #fff;
     text-decoration: none;
@@ -16,6 +24,19 @@
 
     &:hover {
       color: #fff;
+    }
+
+    &.conversations {
+      background-image: url('../../bitmaps/envelope.svg');
+    }
+
+    &.notifications {
+      background-image: url('../../bitmaps/bell.svg')
+    }
+
+    &.conversations, &.notifications {
+      background-repeat: no-repeat;
+      background-position: center;
     }
   }
 
@@ -26,18 +47,27 @@
     right: 0;
     background: @darkTealColor;
     ul {
-      margin: 25px 15px 10px 35px;
-
+      display: flex;
+      width: 100%;
+      margin: 0;
+      height: 95%;
+      flex-direction: column;
+      justify-content: space-around;
+      padding: 2px 10px 5px 10px;
       li {
         padding: 0;
         color: #09f6ff;
         list-style: none outside none;
 
         a {
-          color: #fff;
+          color: #373737;
+          opacity: 0.5;
           line-height: 15px;
           display: block;
-          padding: 3px 0;
+          &:hover {
+            text-decoration: none;
+            opacity: 1;
+          }
         }
 
         .notification-pubdate {
@@ -47,7 +77,6 @@
         .mmooc-notification-type {
           font-size: 12px;
           font-style: italic;
-          color: #cecece;
         }
 
         border-top: 1px solid #105569;
@@ -72,6 +101,10 @@
 #mmooc-activity-stream {
   width: 380px;
   right: auto;
+  background: #FFFFFF;
+  box-shadow: 0 4px 8px 0 rgba(55,55,55,0.05);
+  border-radius: 4px;
+  top: 30px;
 }
 
 #mmooc-notification-count,

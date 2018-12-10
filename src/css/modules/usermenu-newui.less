@@ -1,7 +1,9 @@
 #application.ic-app {
   #user-menu {
+    position: absolute;
+    top: 0;
     bottom: 5px;
-    right: 5px;
+    right: -35px;
     margin: 0;
 
     .mmooc-menu-item {
@@ -18,21 +20,40 @@
       &.profile-settings {
         position: relative;
         top: -4px;
+        font-family: Roboto Regular;
 
         .mmooc-menu-item-drop {
-          left: -70px;
+          left: -40px;
+          font-size: 14px;
+          background: #FFFFFF;
+          box-shadow: 0 4px 8px 0 rgba(55,55,55,0.05);
+          border-radius: 4px;
+          width: 105px;
+          height: 70px;
 
           ul {
             li {
+              border: none;
               a {
                 padding: 5px 0;
+                opacity: 0.5;
+                font-family: Roboto-Regular;
+                font-size: 14px;
+                color: #373737;
+                letter-spacing: 0;
+                line-height: 24px;
+                font-weight: 400;
+                &:hover {
+                  opacity: 1;
+                }
               }
 
               &:first-of-type {
+                height: 26px;
                 border-bottom-width: 0;
 
                 a {
-                  padding-top: 3px;
+                  padding-top: 5px;
                 }
               }
               &:last-of-type {
@@ -55,6 +76,7 @@
         .ic-avatar {
           width: 32px;
           height: 32px;
+          border: none;
         }
       }
     }
