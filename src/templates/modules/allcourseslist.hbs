@@ -13,9 +13,9 @@
                     {{/if}}
                     <!-- TODO: variable with a number of courses the user is subscribed to shall be placed here
                         also, it should be visible only on the 'logged in screen' -->
-                    {{#if coursesEnrolled}}
+                    {{#if coursesEnrolledAmount}}
                         <div class="mmooc-tag mmooc-tag-green">
-                            <label>du er registerd in {{coursesEnrolled}} kurs</label>
+                            <label>du er registerd in {{coursesEnrolledAmount}} kurs</label>
                         </div>
                     {{/if}}
                 </div>
@@ -58,9 +58,13 @@
                         <p>{{public_description}}</p>
                         <div class="mmooc-button-ctr">
                             {{#unless ../isAuthenticated}}
-                                <a class="mmooc-button mmooc-button-primary" href="https://kompetanse.udir.no/login/saml?enroll_code={{self_enrollment_code}}">Registrere med Feide</a>
+                              <a class="mmooc-button mmooc-button-primary" href="https://kompetanse.udir.no/login/saml?enroll_code={{self_enrollment_code}}">{{../../courseRegisterFeide}}</a>
                             {{/unless}}
-                            <a class="mmooc-button mmooc-button-secondary" href="{{getCourseUrl}}">Registrere</a>
+                            {{#if enrolled}}
+                              <a class="mmooc-button mmooc-button-secondary" href="/courses/{{../id}}">{{../../courseContinue}}</a>
+                            {{else}}
+                              <a class="mmooc-button mmooc-button-secondary" href="/enroll/{{../self_enrollment_code}}">{{../../courseRegister}}</a>
+                            {{/if}}
                         </div>
                     </div>
                     {{/each}}
@@ -79,9 +83,13 @@
                     <p>{{public_description}}</p>
                     <div class="mmooc-button-ctr">
                         {{#unless ../isAuthenticated}}
-                            <a class="mmooc-button mmooc-button-primary" href="https://kompetanse.udir.no/login/saml?enroll_code={{self_enrollment_code}}">Registrere med Feide</a>
+                            <a class="mmooc-button mmooc-button-primary" href="https://kompetanse.udir.no/login/saml?enroll_code={{self_enrollment_code}}">{{../../courseRegisterFeide}}</a>
                         {{/unless}}
-                        <a class="mmooc-button mmooc-button-secondary" href="{{getCourseUrl}}">Registrere</a>
+                        {{#if enrolled}}
+                            <a class="mmooc-button mmooc-button-secondary" href="/courses/{{../id}}">{{../../courseContinue}}</a>
+                        {{else}}
+                            <a class="mmooc-button mmooc-button-secondary" href="/enroll/{{../self_enrollment_code}}">{{../../courseRegister}}</a>
+                        {{/if}}
                     </div>
                 </article>
                 {{/each}}
