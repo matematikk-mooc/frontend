@@ -193,6 +193,12 @@ this.mmooc.api = (function() {
     },
 
     getEnrolledCourses: function(callback, error) {
+      // returns empty set is user is not authenticated
+      if (!mmooc.util.isAuthenticated()) {
+        callback([]);
+        return false;
+      }
+
       this._get({
         callback: function(courses) {
           var filteredCourses = courses.filter(mmooc.util.filterCourse);
