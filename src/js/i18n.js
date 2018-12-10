@@ -4,6 +4,10 @@ if (typeof this.mmooc.i18n === 'undefined') {
   if (mmooc.api.getLocale() == 'nn') {
     this.mmooc.i18n = {
       DropCourseDialogText: 'Trykk OK for å melde deg av kurset ',
+      NoCoursesInfo: 'Det finst ingen emne du kan registrere deg på for augeblikket',
+      CourseContinue: 'Fortsette',
+      CourseRegister: 'Registrere',
+      CourseRegisterFeide: 'Registrere med Feide',
       JoinCourseDialogText:
         'Du kan melde deg på kurset igjen seinare om du vil ',
       DropCourse: 'Meld deg av emnet',
@@ -83,6 +87,10 @@ if (typeof this.mmooc.i18n === 'undefined') {
   } else {
     this.mmooc.i18n = {
       DropCourseDialogText: 'Trykk OK for å melde deg av kurset ',
+      NoCoursesInfo: 'Det er ingen emner du kan registrere deg på for øyeblikket',
+      CourseContinue: 'Fortsette',
+      CourseRegister: 'Registrere',
+      CourseRegisterFeide: 'Registrere med Feide',
       JoinCourseDialogText:
         'Du kan melde deg på kurset igjen senere om du vil ',
       DropCourse: 'Meld deg av kurset',
