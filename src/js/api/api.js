@@ -187,7 +187,10 @@ this.mmooc.api = (function() {
           callback(filteredCourses);
         },
         error: error,
-        uri: '/search/all_courses',
+        // if not authenticated, it displays only courses with Open Enrollment enabled
+        uri: mmooc.util.isAuthenticated()
+          ? '/search/all_courses'
+          : '/search/all_courses?public_only=true&open_enrollment_only=true',
         params: { per_page: 999 }
       });
     },
