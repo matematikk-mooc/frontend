@@ -21,6 +21,15 @@ Handlebars.registerHelper('ifEquals', function(var1, var2, options) {
   }
 });
 
+Handlebars.registerHelper('getCourseUrl', function() {
+  if (mmooc.util.isAuthenticated()) {
+    return '/courses/' + this.id;
+  } else {
+    return '/enroll/' + this.self_enrollment_code;
+  }
+});
+
+
 Handlebars.registerHelper('ifHasRole', function(enrollments, role, options) {
   for (var i = 0; i < enrollments.length; i++) {
     if (enrollments[i].role == role) {
