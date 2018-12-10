@@ -117,9 +117,9 @@ this.mmooc.enroll = (function() {
       document.getElementById('content').innerHTML = html;
     },
     printAllCourses: function() {
-      html = "<span class='loading-gif'></span>";
+      html = "<div class='mmooc-loader-wrapper'><span class='loading-gif'></span></div>";
       $('.mmooc-all-courses-list').append(html);
-      mmooc.api.getAllCourses(function(allCourses) {
+      mmooc.api.getAllPublicCourses(function(allCourses) {
         mmooc.api.getEnrolledCourses(function(enrolledCourses) {
           var allCoursesWithStatus = mmooc.enroll.setCourseEnrolledStatus(
             allCourses,
@@ -143,23 +143,37 @@ this.mmooc.enroll = (function() {
             categorys
           );
 
-          $('.loading-gif').remove();
+          $('.mmooc-loader-wrapper').remove();
 
           for (var i = 0; i < coursesCategorized.length; i++) {
             const coursesCategory = coursesCategorized[i];
-            const coursesEnrolled = coursesCategory.courses.filter(c => c.enrolled === true ).length;
+            const coursesEnrolledAmount = mmooc.util.filter(
+              coursesCategory.courses,
+              function(c) { 
+                return c.enrolled === true 
+            }).length;
 
             html = mmooc.util.renderTemplateWithData('allcourseslist', {
               title: coursesCategory.title,
               isAuthenticated: mmooc.util.isAuthenticated(),
               courses: coursesCategory.courses,
-              coursesEnrolled: coursesEnrolled,
+              coursesEnrolledAmount: coursesEnrolledAmount,
               coursesAmount: coursesCategory.courses && coursesCategory.courses.length,
               courseLabel: mmooc.i18n.Course.toLowerCase(),
+              courseContinue: mmooc.i18n.CourseContinue,
+              courseRegister: mmooc.i18n.CourseRegister,
+              courseRegisterFeide: mmooc.i18n.CourseRegisterFeide,
               index: i
             });
             $('.mmooc-all-courses-list').append(html);
           }
+
+          // Displays information, that there is no current courses available to enroll
+          if (coursesCategorized.length == 0) {
+            html = '<p class="text-center">' + mmooc.i18n.NoCoursesInfo + '</p>';
+            $('.mmooc-all-courses-list').append(html);
+          }
+          
           mmooc.enroll.insertModalAndOverlay();
           mmooc.enroll.setClickHandlers();
 
