@@ -1,36 +1,4 @@
 <div class="mmooc-enroll-category">
-    <!-- TODO: remove when the work on new features is finalised - I left it as a point of reference while we work on new features
-    <h2 class="mmooc-enroll-category-title">{{title}}</h2>
-    <ul>
-        {{#each courses}}
-        <li class="{{#if enrolled}}enrolled{{else}}notenrolled{{/if}}">
-            {{#if enrolled}}
-            <a href="{{urlForCourseId id}}">
-                {{else}}
-                <a class="all-courses-show-modal" href="#">
-                    {{/if}} {{name}}
-                </a>
-        </li>
-        {{#unless enrolled}}
-        <div class="all-courses-modal modal-course-{{id}}">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <div class="modal-close modal-back"></div>
-                </div>
-                <div class="modal-description">
-                    <h3>{{name}}</h3>
-                    <div>{{public_description}}</div>
-                </div>
-                <div class="modal-footer">
-                    <a class="modal-back" href="#">Tilbake til {{courseLabel}}oversikten</a>
-                    {{#if self_enrollment_code}}
-                    <a class="btn modal-enroll" href="/enroll/{{self_enrollment_code}}">Meld deg på</a>{{/if}}
-                </div>
-            </div>
-        </div>
-        {{/unless}} {{/each}}
-    </ul>
-    -->
     <section class="mmooc-accordion">
         <button id="mmooc-accordion-header-{{index}}" class="mmooc-accordion-header" index={{index}}>
             <div class="mmooc-accordion-header-main" index={{index}}>
@@ -38,15 +6,18 @@
                     <h1>{{title}}</h1>
                 </div>
                 <div>
-                    <!-- TODO: variable with a number of courses shall be placed here -->
-                    <div class="mmooc-tag mmooc-tag-teal">
-                        <label>1 kurs</label>
-                    </div>
+                    {{#if coursesAmount}}
+                        <div class="mmooc-tag mmooc-tag-teal">
+                            <label>{{coursesAmount}} kurs</label>
+                        </div>
+                    {{/if}}
                     <!-- TODO: variable with a number of courses the user is subscribed to shall be placed here
-                         also, it should be visible only on the 'logged in screen' -->
-                    <div class="mmooc-tag mmooc-tag-green">
-                        <label>du er registerd in 1 kurs</label>
-                    </div>
+                        also, it should be visible only on the 'logged in screen' -->
+                    {{#if coursesEnrolled}}
+                        <div class="mmooc-tag mmooc-tag-green">
+                            <label>du er registerd in {{coursesEnrolled}} kurs</label>
+                        </div>
+                    {{/if}}
                 </div>
             </div>
             <div class="mmooc-accordion-label-closed">
@@ -75,7 +46,9 @@
                     {{#each courses}}
                     <button id="mmooc-tab-head-{{id}}" class="mmooc-tab-head mmooc-tab-head-{{@index}}" index="{{id}}">
                         {{name}}
-                        <svg width="16" height="16" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><path d="M-4-4h24v24H-4z"/><path d="M8 0c4.416 0 8 3.584 8 8s-3.584 8-8 8-8-3.584-8-8 3.584-8 8-8zM6.4 12l6.43-6.43-1.127-1.137L6.4 9.736 3.528 6.872 2.4 8l4 4z" fill="#00AC18" fill-rule="nonzero"/></g></svg>
+                        {{#if enrolled}}
+                            <svg width="16" height="16" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><path d="M-4-4h24v24H-4z"/><path d="M8 0c4.416 0 8 3.584 8 8s-3.584 8-8 8-8-3.584-8-8 3.584-8 8-8zM6.4 12l6.43-6.43-1.127-1.137L6.4 9.736 3.528 6.872 2.4 8l4 4z" fill="#00AC18" fill-rule="nonzero"/></g></svg>
+                        {{/if}}
                     </button>
                     {{/each}}
                 </div>
@@ -84,8 +57,10 @@
                     <div id="mmooc-tab-content-{{id}}" class="mmooc-tab-content mmooc-tab-content-{{@index}}">
                         <p>{{public_description}}</p>
                         <div class="mmooc-button-ctr">
-                            <button class="mmooc-button mmooc-button-primary">Registrere med Feide</button>
-                            <button class="mmooc-button mmooc-button-secondary">Registrere</button>
+                            {{#unless ../isAuthenticated}}
+                                <a class="mmooc-button mmooc-button-primary" href="https://kompetanse.udir.no/login/saml?enroll_code={{self_enrollment_code}}">Registrere med Feide</a>
+                            {{/unless}}
+                            <a class="mmooc-button mmooc-button-secondary" href="{{getCourseUrl}}">Registrere</a>
                         </div>
                     </div>
                     {{/each}}
@@ -96,13 +71,17 @@
                 {{#each courses}}
                 <button id="mmooc-tabs-mobile-header-{{id}}" class="mmooc-tabs-mobile-header" index={{id}}>
                     {{name}}
-                    <svg width="16" height="16" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><path d="M-4-4h24v24H-4z"/><path d="M8 0c4.416 0 8 3.584 8 8s-3.584 8-8 8-8-3.584-8-8 3.584-8 8-8zM6.4 12l6.43-6.43-1.127-1.137L6.4 9.736 3.528 6.872 2.4 8l4 4z" fill="#00AC18" fill-rule="nonzero"/></g></svg>
+                    {{#if enrolled}}
+                        <svg width="16" height="16" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><path d="M-4-4h24v24H-4z"/><path d="M8 0c4.416 0 8 3.584 8 8s-3.584 8-8 8-8-3.584-8-8 3.584-8 8-8zM6.4 12l6.43-6.43-1.127-1.137L6.4 9.736 3.528 6.872 2.4 8l4 4z" fill="#00AC18" fill-rule="nonzero"/></g></svg>
+                    {{/if}}
                 </button>
                 <article id="mmooc-tabs-mobile-content-{{id}}" class="mmooc-tabs-mobile-content">
                     <p>{{public_description}}</p>
                     <div class="mmooc-button-ctr">
-                        <button class="mmooc-button mmooc-button-primary">Registrere med Feide</button>
-                        <button class="mmooc-button mmooc-button-secondary">Registrere</button>
+                        {{#unless ../isAuthenticated}}
+                            <a class="mmooc-button mmooc-button-primary" href="https://kompetanse.udir.no/login/saml?enroll_code={{self_enrollment_code}}">Registrere med Feide</a>
+                        {{/unless}}
+                        <a class="mmooc-button mmooc-button-secondary" href="{{getCourseUrl}}">Registrere</a>
                     </div>
                 </article>
                 {{/each}}
