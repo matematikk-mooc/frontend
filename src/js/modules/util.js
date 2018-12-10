@@ -150,6 +150,10 @@ this.mmooc.util = (function() {
       return course.enrollments[0].type == 'observer';
     },
 
+    isAuthenticated: function() {
+      return mmooc.api.getRoles() !== null;
+    },
+
     setGlobalPeerReviewButtonState: function() {
       if (mmooc.settings.disablePeerReviewButton == true) {
         $('.assignments #right-side :submit').prop('disabled', true);
