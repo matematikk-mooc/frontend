@@ -149,8 +149,8 @@ this.mmooc.enroll = (function() {
             const coursesCategory = coursesCategorized[i];
             const coursesEnrolledAmount = mmooc.util.filter(
               coursesCategory.courses,
-              function(c) { 
-                return c.enrolled === true 
+              function(course) { 
+                return course.enrolled === true 
             }).length;
 
             html = mmooc.util.renderTemplateWithData('allcourseslist', {
