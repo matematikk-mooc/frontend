@@ -2,6 +2,12 @@
   "name": "mooc",
   "version": "0.1.0",
   "description": "",
+  "jest": {
+    "setupFiles": [
+      "<rootDir>/test-env-setup.js"
+    ],
+    "setupTestFrameworkScriptFile": "<rootDir>/jest-setup.js"
+  },
   "dependencies": {},
   "devDependencies": {
     "grunt": "~0.4.5",
@@ -17,6 +23,9 @@
     "grunt-karma": "^0.10.1",
     "grunt-text-replace": "^0.4.0",
     "jasmine-node": "~1.14.5",
+    "jest": "^23.6.0",
+    "jest-cli": "^23.6.0",
+    "jest-image-snapshot": "^2.7.0",
     "karma": "^0.12.31",
     "karma-chrome-launcher": "^0.1.7",
     "karma-firefox-launcher": "~0.1",
@@ -24,7 +33,8 @@
     "karma-script-launcher": "0.1.0",
     "less-plugin-autoprefix": "^1.5.1",
     "load-grunt-tasks": "1.0.0",
-    "prettier": "1.15.2"
+    "prettier": "1.15.2",
+    "puppeteer": "^1.10.0"
   },
   "repository": {
     "type": "git",
