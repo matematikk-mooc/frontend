@@ -240,7 +240,7 @@ this.mmooc.menu = (function() {
 
     showUserMenu: function() {
       var menu = document.getElementById('menu');
-      if (menu != null) {
+      if (menu != null && mmooc.util.isAuthenticated()) {
         var html = mmooc.util.renderTemplateWithData('usermenu', {
           user: mmooc.api.getUser()
         });

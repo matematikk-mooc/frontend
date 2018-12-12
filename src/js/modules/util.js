@@ -150,6 +150,10 @@ this.mmooc.util = (function() {
       return course.enrollments[0].type == 'observer';
     },
 
+    isAuthenticated: function() {
+      return mmooc.api.getRoles() !== null;
+    },
+
     setGlobalPeerReviewButtonState: function() {
       if (mmooc.settings.disablePeerReviewButton == true) {
         $('.assignments #right-side :submit').prop('disabled', true);
@@ -273,6 +277,23 @@ this.mmooc.util = (function() {
         activeToolPath: activeToolPath,
         toolList: toolList
       };
+    },
+    filter: function(arr, fun) {
+      var len = arr.length;
+      if (typeof fun != "function")
+        throw new TypeError();
+
+      var res = new Array();
+      var thisp = arguments[1];
+      for (var i = 0; i < len; i++) {
+        if (i in arr) {
+          var val = arr[i];
+          if (fun.call(thisp, val, i, arr))
+            res.push(val);
+        }
+      }
+
+      return res;
     }
   };
 })();

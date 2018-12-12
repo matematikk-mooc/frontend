@@ -192,7 +192,28 @@ this.mmooc.api = (function() {
       });
     },
 
+    getAllPublicCourses: function(callback, error) {
+      this._get({
+        callback: function(courses) {
+          var filteredCourses = courses.filter(
+            mmooc.util.filterSearchAllCourse
+          );
+          callback(filteredCourses);
+        },
+        error: error,
+        // if not authenticated, it displays only courses with Open Enrollment enabled
+        uri: '/search/all_courses?public_only=true&open_enrollment_only=true',
+        params: { per_page: 999 }
+      });
+    },
+
     getEnrolledCourses: function(callback, error) {
+      // returns empty set if a user is not authenticated
+      if (!mmooc.util.isAuthenticated()) {
+        callback([]);
+        return false;
+      }
+
       this._get({
         callback: function(courses) {
           var filteredCourses = courses.filter(mmooc.util.filterCourse);

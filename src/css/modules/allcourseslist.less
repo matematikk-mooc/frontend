@@ -38,6 +38,37 @@
   color: @white;
   outline: none;
   text-align: center;
+  cursor: pointer;
+
+  span {
+    text-decoration: none;
+
+    &:last-child {
+      display: none;
+    }
+  }
+
+  &:hover,
+  &:focus,
+  &:active {
+    color: @white !important;
+    text-decoration: none;
+
+    span {
+      text-decoration: none !important;
+
+      &:last-child {
+        display: none;
+      }
+    }
+  }
+}
+
+.mmooc-loader-wrapper {
+  span {
+    display: block;
+    margin: 20px auto;
+  }
 }
 
 .mmooc-button-primary {

@@ -7,6 +7,7 @@ body.ic-Login-Body,
     .ic-Login-header__logo {
       background-image: @logo-image !important;
       background-size: contain;
+      background-position: center;
       background-repeat: no-repeat;
       width: @logo-width;
       height: @logo-height;
@@ -32,7 +33,7 @@ body.ic-Login-Body,
     }
 
     .ic-Login-confirmation__header {
-      background: @darkTealColor @logo-image 18px no-repeat !important;
+      background: @darkTealColor @logo-image 18px / ~"160px auto" no-repeat !important;
       padding: 30px;
       img {
         display: none;
