@@ -177,43 +177,46 @@ this.mmooc.menu = (function() {
     },
 
     renderLeftHeaderMenu: function() {
-      // The entire menu is rebuilt because of unwanted popup in the new ui menu
-      insertCustomMenuElementInTopMenu('Kalender', '/calendar');
-      if (mmooc.settings.removeGlobalGradesLink == false) {
-        insertCustomMenuElementInTopMenu('Karakterer', '/grades');
-      }
-      if (mmooc.settings.removeGroupsLink == false) {
-        insertCustomMenuElementInTopMenu('Grupper', '/groups');
-      }
-      insertCustomMenuElementInTopMenu(mmooc.i18n.CoursePlural, '/courses');
-
-      if (mmooc.util.isTeacherOrAdmin()) {
-        this.showLeftMenu();
-
-        $('#section-tabs-header').show();
-
-        //Canvas changed the aria-label as shown in the two lines below. Keep both lines for backward compatibility.
-        $("nav[aria-label='context']").show();
-        $("nav[aria-label='Emner-navigasjonsmeny']").show();
-
-        //20180821ETH Venstremenyen heter noe annet for grupper.
-        //20180906ETH Men vi ønsker ikke vise den.
-        //                $("nav[aria-label='Navigasjonsmeny for grupper ']").show();
-
-        $('#edit_discussions_settings').show();
-        $('#availability_options').show();
-        $('#group_category_options').show();
-        $('#editor_tabs').show();
-
-        // Done via CSS since content is loaded using AJAX
-        stylesheet.insertRule(
-          'body.pages .header-bar-outer-container { display: block }',
-          stylesheet.cssRules.length
-        );
-        stylesheet.insertRule(
-          '#discussion-managebar { display: block }',
-          stylesheet.cssRules.length
-        );
+      // render left header menu only for autheticated users
+      if (mmooc.util.isAuthenticated()){
+        // The entire menu is rebuilt because of unwanted popup in the new ui menu
+        insertCustomMenuElementInTopMenu('Kalender', '/calendar');
+        if (mmooc.settings.removeGlobalGradesLink == false) {
+          insertCustomMenuElementInTopMenu('Karakterer', '/grades');
+        }
+        if (mmooc.settings.removeGroupsLink == false) {
+          insertCustomMenuElementInTopMenu('Grupper', '/groups');
+        }
+        insertCustomMenuElementInTopMenu(mmooc.i18n.CoursePlural, '/courses');
+  
+        if (mmooc.util.isTeacherOrAdmin()) {
+          this.showLeftMenu();
+  
+          $('#section-tabs-header').show();
+  
+          //Canvas changed the aria-label as shown in the two lines below. Keep both lines for backward compatibility.
+          $("nav[aria-label='context']").show();
+          $("nav[aria-label='Emner-navigasjonsmeny']").show();
+  
+          //20180821ETH Venstremenyen heter noe annet for grupper.
+          //20180906ETH Men vi ønsker ikke vise den.
+          //                $("nav[aria-label='Navigasjonsmeny for grupper ']").show();
+  
+          $('#edit_discussions_settings').show();
+          $('#availability_options').show();
+          $('#group_category_options').show();
+          $('#editor_tabs').show();
+  
+          // Done via CSS since content is loaded using AJAX
+          stylesheet.insertRule(
+            'body.pages .header-bar-outer-container { display: block }',
+            stylesheet.cssRules.length
+          );
+          stylesheet.insertRule(
+            '#discussion-managebar { display: block }',
+            stylesheet.cssRules.length
+          );
+        }
       }
 
       var roles = mmooc.api.getRoles();
@@ -540,7 +543,7 @@ this.mmooc.menu = (function() {
       $('#header-logo').attr('href', '/courses');
       $('a.ic-app-header__logomark').attr('href', '/courses'); //New UI
       $('a.ic-app-header__logomark').attr('src', '../../bitmaps/logo.svg'); //New UI
-      $('.ic-app-header__logomark-container').detach().prependTo('#menu');
+      $('.ic-app-header__logomark-container').detach().prependTo('.ic-app-header__main-navigation');
     },
 
     alterCourseLink: function() {
