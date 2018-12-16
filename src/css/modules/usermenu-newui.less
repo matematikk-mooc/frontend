@@ -1,11 +1,5 @@
 #application.ic-app {
   #user-menu {
-    position: absolute;
-    top: 0;
-    bottom: 5px;
-    right: -35px;
-    margin: 0;
-
     .mmooc-menu-item {
       #mmooc-notification-count {
         top: 3px;
@@ -20,7 +14,11 @@
       &.profile-settings {
         position: relative;
         top: -4px;
-        font-family: Roboto Regular;
+        font-family: Roboto;
+
+        .mmooc-menu-item-title {
+          padding-right: 0;
+        }
 
         .mmooc-menu-item-drop {
           left: -40px;
@@ -37,7 +35,7 @@
               a {
                 padding: 5px 0;
                 opacity: 0.5;
-                font-family: Roboto-Regular;
+                font-family: Roboto;
                 font-size: 14px;
                 color: #373737;
                 letter-spacing: 0;
