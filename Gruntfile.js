@@ -14,7 +14,9 @@ module.exports = function (grunt) {
             src: ['dist', 'tmp']
           }
         ]
-      }
+      },
+      // remove Javascript sourcemaps from production bundle
+      release: ['dist/*.js.map'],
     },
 
     handlebars: {
@@ -248,7 +250,7 @@ module.exports = function (grunt) {
 
   grunt.registerTask('test', ['clean', 'make', 'runTest']);
 
-  grunt.registerTask('build', ['make', 'runTest']);
+  grunt.registerTask('build', ['make', 'clean:release', 'runTest' ]);
 
   grunt.registerTask('serve', ['clean', 'make', 'connect', 'watch']);
 
