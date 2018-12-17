@@ -43,5 +43,10 @@
   "repository": {
     "type": "git",
     "url": "http://github.com/matematikk-mooc/frontend.git"
+  },
+  "scripts": {
+    "build": "grunt build",
+    "test": "grunt test",
+    "start": "grunt serve"
   }
 }
