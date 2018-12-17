@@ -1,6 +1,6 @@
 'use strict';
 
-module.exports = function(grunt) {
+module.exports = function (grunt) {
   // Helper function to load pre-defined grunt tasks
   require('load-grunt-tasks')(grunt);
 
@@ -14,14 +14,16 @@ module.exports = function(grunt) {
             src: ['dist', 'tmp']
           }
         ]
-      }
+      },
+      // remove Javascript sourcemaps from production bundle
+      release: ['dist/*.js.map'],
     },
 
     handlebars: {
       compile: {
         options: {
           namespace: 'mmooc.templates',
-          processName: function(filePath) {
+          processName: function (filePath) {
             return filePath
               .replace('src/templates/modules/', '')
               .replace('src/addons/badges/templates/', '')
@@ -48,6 +50,9 @@ module.exports = function(grunt) {
     },
 
     concat: {
+      options: {
+        sourceMap: true,
+      },
       js: {
         src: [
           'src/js/3party/*.js',
@@ -59,7 +64,7 @@ module.exports = function(grunt) {
           'src/js/main.js',
           'src/addons/canva_badges/js/*.js'
         ],
-        dest: 'dist/mmooc-min.js'
+        dest: 'tmp/mmooc.js'
       },
       extras: {
         src: [
@@ -87,10 +92,29 @@ module.exports = function(grunt) {
       }
     },
 
-    uglify: {
+    babel: {
+      options: {
+        sourceType: "script",
+        presets: ['@babel/preset-env'],
+        sourceMap: true,
+      },
       dist: {
         files: {
-          'dist/mmooc-min.js': ['tmp/mmooc.js']
+          'tmp/mmooc-babel.js': 'tmp/mmooc.js'
+        }
+      }
+    },
+
+    uglify: {
+      options: {
+        sourceMap: {
+          includeSources: true
+        },
+        sourceMapIn: 'tmp/mmooc-babel.js.map', // input sourcemap from a previous compilation
+      },
+      dist: {
+        files: {
+          'dist/mmooc-min.js': ['tmp/mmooc-babel.js']
         }
       }
     },
@@ -211,7 +235,8 @@ module.exports = function(grunt) {
   grunt.registerTask('make', [
     'handlebars',
     'concat',
-    //'uglify',
+    'babel',
+    'uglify',
     'less',
     'copy',
     'replace:production',
@@ -225,7 +250,7 @@ module.exports = function(grunt) {
 
   grunt.registerTask('test', ['clean', 'make', 'runTest']);
 
-  grunt.registerTask('build', ['make', 'runTest']);
+  grunt.registerTask('build', ['make', 'clean:release', 'runTest' ]);
 
   grunt.registerTask('serve', ['clean', 'make', 'connect', 'watch']);
 
