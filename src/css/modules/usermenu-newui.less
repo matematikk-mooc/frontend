@@ -11,6 +11,23 @@
         right: -1px;
       }
 
+      &#mmooc-menu-item-varsler {
+        .mmooc-menu-item-drop {
+          ul {
+            li {
+              border: none;
+              opacity: 1;
+              font-family: Roboto;
+              font-size: 14px;
+              color: #373737;
+              letter-spacing: 0;
+              line-height: 24px;
+              font-weight: 400;
+            }
+          }
+        }
+      }
+
       &.profile-settings {
         position: relative;
         top: -4px;
@@ -32,9 +49,11 @@
           ul {
             li {
               border: none;
+              color: #373737;
+
               a {
                 padding: 5px 0;
-                opacity: 0.5;
+                opacity: 1;
                 font-family: Roboto;
                 font-size: 14px;
                 color: #373737;
@@ -42,7 +61,8 @@
                 line-height: 24px;
                 font-weight: 400;
                 &:hover {
-                  opacity: 1;
+                  text-decoration: none;
+                  opacity: 0.7;
                 }
               }
 

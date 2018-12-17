@@ -1,32 +1,18 @@
 .mmooc-header {
   display: flex;
   justify-content: space-between;
-  width: 1146px;
-  max-width: 1146px;
+  width: 1156px;
+  max-width: 1156px;
+  padding: 0 20px;
   margin: 0 auto;
   display: flex;
   justify-content: space-between;
   align-items: center;
 
-  @media screen and (max-width: 1200px) {
-    width: 80%;
-  }
-
   @media screen and (max-width: 720px) {
-    width: 80vw;
-    margin: 0 8%;
-  }
-
-  @media screen and (max-width: 650px) {
-    justify-content: space-around;
-  }
-
-  @media screen and (max-width: 560px) {
     flex-direction: column;
     height: 130px;
-    width: 100vw;
-    margin: 0;
-    background: @darkTealColor;
+    justify-content: space-around;
   }
 
   &__logo {
@@ -35,11 +21,6 @@
     height: 40px;
     background-size: @logo-background-size;
     background-repeat: no-repeat;
-
-    @media screen and (max-width: 560px) {
-      width: 200px;
-      height: 30px;
-    }
 
     &--link {
       display: block;

@@ -232,6 +232,14 @@ this.mmooc.menu = (function() {
       }
     },
 
+    renderUnauthenticatedMenu: function() {
+      if (!mmooc.util.isAuthenticated()) {
+        let html = mmooc.util.renderTemplateWithData('noLoggedInHeader');
+        document.getElementById('header').innerHTML = html;
+        mmooc.login.handleLoginButtonClick();
+      }
+    },
+
     hideRightMenu: function() {
       $('#right-side').hide();
       $('body').removeClass('with-right-side');
@@ -273,6 +281,15 @@ this.mmooc.menu = (function() {
         //                $(document).on("click", ".helpMenu", openHelpDialog);
         //                hideHelpMenuElementIfNotActivated();
       }
+    },
+
+    setMenuActiveLink: function() {
+      var menuItems = $('.ic-app-header__menu-list li a ');
+      menuItems.each((_, element) => {
+        if (window.location.pathname.includes($(element).attr('href'))) {
+          $(element).addClass('active');
+        }
+      });
     },
 
     updateNotificationsForUser: function() {
