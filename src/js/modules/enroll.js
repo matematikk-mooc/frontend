@@ -152,17 +152,23 @@ this.mmooc.enroll = (function() {
               function(course) { 
                 return course.enrolled === true 
             }).length;
+            const coursesAmount = coursesCategory.courses && coursesCategory.courses.length;
 
             html = mmooc.util.renderTemplateWithData('allcourseslist', {
               title: coursesCategory.title,
               isAuthenticated: mmooc.util.isAuthenticated(),
               courses: coursesCategory.courses,
               coursesEnrolledAmount: coursesEnrolledAmount,
-              coursesAmount: coursesCategory.courses && coursesCategory.courses.length,
+              coursesAmount: coursesAmount,
+              coursesAmountText: mmooc.i18n.CoursesAmount(coursesAmount),
               courseLabel: mmooc.i18n.Course.toLowerCase(),
               courseContinue: mmooc.i18n.CourseContinue,
               courseRegister: mmooc.i18n.CourseRegister,
               courseRegisterFeide: mmooc.i18n.CourseRegisterFeide,
+              openCoursesGroupText: mmooc.i18n.OpenCoursesGroup,
+              closeCoursesGroupText: mmooc.i18n.CloseCoursesGroup,
+              courseRegisterFeide: mmooc.i18n.CourseRegisterFeide,
+              YouAreRegisteredToXCoursesText: mmooc.i18n.YouAreRegisteredToXCourses(coursesEnrolledAmount),
               index: i
             });
             $('.mmooc-all-courses-list').append(html);

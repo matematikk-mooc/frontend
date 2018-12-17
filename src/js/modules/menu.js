@@ -234,7 +234,9 @@ this.mmooc.menu = (function() {
 
     renderUnauthenticatedMenu: function() {
       if (!mmooc.util.isAuthenticated()) {
-        let html = mmooc.util.renderTemplateWithData('noLoggedInHeader');
+        let html = mmooc.util.renderTemplateWithData('noLoggedInHeader', {
+          logInText: mmooc.i18n.LogIn
+        });
         document.getElementById('header').innerHTML = html;
         mmooc.login.handleLoginButtonClick();
       }
