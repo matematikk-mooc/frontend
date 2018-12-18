@@ -16,7 +16,7 @@
   position: absolute;
   width: 460px;
   height: 184px;
-  background: #FFFFFF;
+  background: @white;
   box-shadow: 0 4px 8px 0 rgba(55,55,55,0.05);
   border-radius: 4px;
   top: 50%;
@@ -33,9 +33,9 @@
   }
 
   &__text {
-    font-family: Roboto-Regular;
+    font-family: Roboto;
     font-size: 20px;
-    color: #373737;
+    color: @textColor;
     letter-spacing: 0;
     line-height: 24px;
     margin: 0;
@@ -63,19 +63,19 @@
   &__feide {
     width: 172px;
     height: 48px;
-    background: #004F73;
+    background: @darkerTealColor;
   }
   &__canvas {
     width: 184px;
     height: 48px;
-    background: #24A1B3;
+    background: @lightTealColor;
   }
   &__canvas, &__feide {
     display: flex;
     justify-content: center;
     align-items: center;
-    color: #fff;
-    font-family: Roboto-Bold;
+    color: @white;
+    font-family: Roboto Bold;
     font-size: 14px;
     letter-spacing: 0;
     line-height: 24px;
@@ -92,7 +92,7 @@
       opacity: 0.6;
     }
     &:hover, &:focus {
-      color: #fff;
+      color: @white;
       text-decoration: none;
     }
   }

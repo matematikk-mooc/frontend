@@ -1,29 +1,7 @@
 jQuery(function($) {
-  // TODO: remove after the UDIR-73 is finalised
-  // NOTE: for Header testing purposes
-  mmooc.routes.addRouteForPath(/\/header$/, () => {
-    let html = mmooc.util.renderTemplateWithData('noLoggedInHeader');
-    document.getElementById('header').innerHTML = html;
-
-    mmooc.login.handleLoginButtonClick();
-  });
-  // end of: for header testing purposes
-
-  $(document).ready(() => {
-    $('.ic-app-header__menu-list li a ').each((index, element) => {
-      if (window.location.pathname.includes($(element).attr('href'))) {
-        $(element).addClass('active');
-      }
-    });
-  });
-  //    $('.header-bar').show(); //To avoid displaying the old contents while the javascript is loading. Selectors are set to display:none in CSS.
-  //    $(".ic-Layout-contentMain").show(); //Same as above.
-
-  //	$('.header-bar').css("visibility", "visible");
-  //	$(".ic-Layout-contentMain").css("visibility", "visible");
-
   mmooc.routes.addRouteForPath(/\/$/, function() {
     var parentId = 'wrapper';
+
     if (document.location.search === '?mmpf') {
       mmooc.powerFunctions.show(parentId);
     } else {
@@ -441,6 +419,8 @@ jQuery(function($) {
   try {
     mmooc.menu.renderLeftHeaderMenu();
     mmooc.menu.showUserMenu();
+    mmooc.menu.renderUnauthenticatedMenu();
+    mmooc.menu.setMenuActiveLink();
   } catch (e) {
     console.log(e);
   }

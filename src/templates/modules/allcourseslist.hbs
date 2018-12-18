@@ -8,20 +8,20 @@
                 <div>
                     {{#if coursesAmount}}
                         <div class="mmooc-tag mmooc-tag-teal">
-                            <label>{{coursesAmount}} kurs</label>
+                            <label>{{coursesAmountText}}</label>
                         </div>
                     {{/if}}
                     <!-- TODO: variable with a number of courses the user is subscribed to shall be placed here
                         also, it should be visible only on the 'logged in screen' -->
                     {{#if coursesEnrolledAmount}}
                         <div class="mmooc-tag mmooc-tag-green">
-                            <label>du er registerd in {{coursesEnrolledAmount}} kurs</label>
+                            <label>{{YouAreRegisteredToXCoursesText}}</label>
                         </div>
                     {{/if}}
                 </div>
             </div>
             <div class="mmooc-accordion-label-closed">
-                <label class="mmooc-accordion-header-label">Utsikt</label>
+                <label class="mmooc-accordion-header-label">{{openCoursesGroupText}}</label>
                 <svg width="16" height="9" xmlns="http://www.w3.org/2000/svg">
                     <g fill="none" fill-rule="evenodd">
                         <path d="M-8-12h32v32H-8z" />
@@ -30,7 +30,7 @@
                 </svg>
             </div>
             <div class="mmooc-accordion-label-open">
-                <label class="mmooc-accordion-header-label">Lukke</label>
+                <label class="mmooc-accordion-header-label">{{closeCoursesGroupText}}</label>
                 <svg width="16" height="9" xmlns="http://www.w3.org/2000/svg">
                     <g fill="none" fill-rule="evenodd">
                         <path d="M-8 21h32v-32H-8z" />
@@ -58,7 +58,7 @@
                         <p>{{public_description}}</p>
                         <div class="mmooc-button-ctr">
                             {{#unless ../isAuthenticated}}
-                              <a class="mmooc-button mmooc-button-primary" href="https://kompetanse.udir.no/login/saml?enroll_code={{self_enrollment_code}}">{{../../courseRegisterFeide}}</a>
+                              <a class="mmooc-button mmooc-button-primary" href="/login/saml?enroll_code={{self_enrollment_code}}">{{../../courseRegisterFeide}}</a>
                             {{/unless}}
                             {{#if enrolled}}
                               <a class="mmooc-button mmooc-button-secondary" href="/courses/{{../id}}">{{../../courseContinue}}</a>
@@ -83,7 +83,7 @@
                     <p>{{public_description}}</p>
                     <div class="mmooc-button-ctr">
                         {{#unless ../isAuthenticated}}
-                            <a class="mmooc-button mmooc-button-primary" href="https://kompetanse.udir.no/login/saml?enroll_code={{self_enrollment_code}}">{{../../courseRegisterFeide}}</a>
+                            <a class="mmooc-button mmooc-button-primary" href="/login/saml?enroll_code={{self_enrollment_code}}">{{../../courseRegisterFeide}}</a>
                         {{/unless}}
                         {{#if enrolled}}
                             <a class="mmooc-button mmooc-button-secondary" href="/courses/{{../id}}">{{../../courseContinue}}</a>
