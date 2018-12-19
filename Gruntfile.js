@@ -190,11 +190,19 @@ module.exports = function (grunt) {
     },
 
     connect: {
-      dist: {
+      staging: { //setup fo staging
         options: {
           port: 3000,
           base: 'dist',
           hostname: '*',
+          open: true
+        }
+      },
+      dev: { //setup fo local development
+        options: {
+          port: 9000,
+          base: 'dist',
+          hostname: 'localhost',
           open: true
         }
       },
@@ -252,7 +260,9 @@ module.exports = function (grunt) {
 
   grunt.registerTask('build', ['make', 'clean:release', 'runTest' ]);
 
-  grunt.registerTask('serve', ['clean', 'make', 'connect', 'watch']);
+  grunt.registerTask('serve', ['clean', 'make', 'connect:dev', 'watch']);
+  
+  grunt.registerTask('serveStaging', ['clean', 'make', 'connect:staging', 'watch']);
 
   grunt.registerTask('default', ['clean', 'make']);
 };
