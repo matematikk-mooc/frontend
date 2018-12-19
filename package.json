@@ -47,6 +47,10 @@
   "scripts": {
     "build": "grunt build",
     "test": "grunt test",
-    "start": "grunt serve"
+    "start": "grunt serve",
+    "test:regression": "jest --runInBand",
+    "test:regression:update": "jest -u --runInBand",
+    "test:regression:course": "jest courses.test.js course.test.js coursePart2.test.js appUnauthenticated.test.js --runInBand",
+    "test:regression:user": "jest account.test.js accountPart2.test.js --runInBand"
   }
 }

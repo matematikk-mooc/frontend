@@ -6,3 +6,4 @@
 *.iml
 .eslintrc
 .vscode/
+test-env-setup.js

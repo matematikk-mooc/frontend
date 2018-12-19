@@ -28,7 +28,13 @@ git clone https://github.com/matematikk-mooc/frontend.git
 
 ## Install Grunt and build dependencies (Node packages)
 
-Switch to the directory where the frontend is located and install the dependencies using [NPM](https://www.npmjs.com/):
+Switch to the directory where the frontend is located and install the dependencies using [yarn](https://yarnpkg.com/lang/en/docs/install/#mac-stable) or [NPM](https://www.npmjs.com/).
+
+```
+yarn
+```
+
+or
 
 ```
 npm install
@@ -66,6 +72,99 @@ All changes in LESS (CSS) and JavaScript will automatically be compiled and are 
 ```
 grunt test
 ```
+
+## Visual regression tests
+
+### Visual regression tests stack
+
+- [Puppeteer](https://github.com/GoogleChrome/puppeteer)
+- [Jest](https://github.com/facebook/jest)
+- [Jest Image Snapshot](https://github.com/americanexpress/jest-image-snapshot#readme)
+
+those modules are automatically installed when you install the application, please refer to the 'Getting started' section
+
+### File structure
+
+| Directories                       | Description                                                                |
+| --------------------------------- | -------------------------------------------------------------------------- |
+| puppeteer                         | main directory with test files, and folders with image snapshots and diffs |
+| puppeteer/\_\_image_snapshots\_\_ | directory with snapshots                                                   |
+|                                   |                                                                            |
+
+| Files             | Description                                                                                 |
+| ----------------- | ------------------------------------------------------------------------------------------- |
+| test-env-setup.js | stores login credentials and test environment configuration, as well as consts used in test |
+| jest-setup.js     | stores jest setup                                                                           |
+|                   |                                                                                             |
+
+### Configuration of the test environment
+
+It is necessary to add login credentials to the test-env-setup.js file. Initially, the file should look like this:
+
+```javascript
+global.EMAIL = 'udir-team@netguru.co';
+global.PASSWORD = '';
+
+global.IS_HEADLESS = true;
+global.URL = 'http://udir.staging.devguru.co';
+
+global.VIEWPORT_SIZE = {
+  width: 1440,
+  height: 900
+};
+
+global.SELECTORS = {
+  USERNAME_SELECTOR: '#pseudonym_session_unique_id',
+  PASSWORD_SELECTOR: '#pseudonym_session_password',
+  CHECKBOX_SELECTOR: '#pseudonym_session_remember_me',
+  BUTTON_SELECTOR: '.Button--login'
+};
+
+global.JEST_IMAGE_CONFIG = {
+  failureThreshold: '0.05',
+  failureThresholdType: 'percent'
+};
+```
+
+Add the values to the EMAIL and PASSWORD variables. Here is the example:
+
+```javascript
+global.EMAIL = 'john.smith@gmail.com';
+global.PASSWORD = 'password123';
+```
+
+If you would like to test the app on a different address, please modify this line: `global.URL = 'http://udir.staging.devguru.co';`
+
+### Good practices
+
+#### Keeping the stable testing environment
+
+The visual regression tests will notice minor differences between the image snapshot reference and the tested screen. Thus eg editing a single module, or editing a course syllabus will cause certain tests to fail. Therefore it is suggested to keep one course, and one user account purely for testing.
+
+It does not mean you are not allowed to edit this course or account preferences. It just means you will have to update the image snapshot references after introducing any changes. The procedure is described below.
+
+### Running visual regression tests
+
+- in order to run the tests use the script `yarn test:regression` (or `npm run test:regression` if you use npm)
+- if the tests run for the first time, the snapshots will be created in the `puppeteer/__image_snapshots__` directory
+- if any of the tests fail. you can check the difference in the `puppeteer/__image_snapshots__/__diff_output__` folder
+- if the difference is unwanted, you shall attempt to remove the issue, and run the tests again `yarn test:regression`
+- if the difference is a result of a willful modification (eg adding a new element or changing the style), then you shall accept the changes by running `yarn test:regression:update` (or `npm run test:regression:update` if you use npm)
+
+#### Additional scripts
+
+there is quite a lot of screens in the app, thus additional scripts have been created to test only some parts of the app:
+
+- `yarn test:regression:course` tests screens associated with courses
+- `yarn test:regression:user` tests user account screens
+
+### Known issues
+
+- sometimes page loads slower, or freezes, what causes timeuot errors - then the test shall be run again
+- it might also happen that the test fails due to the difference caused by the fact that not all elements loaded before the image snapshot was taken - then the test shall be run again
+- if you add too many assertions to one test suite, you might encounter a timeout issue - while adding new tests keep that in mind
+- the test script is set to run tests sequentially in order to avoid timeout issues `"test:regression": "jest --runInBand"` thus if you prefer to use jest cli commands instead of the script itself, make sure you use such command: `yarn jest --runInBand`
+- references made in headless mode differ from the ones made in headless mode switched off - if you change the mode it is a good idea to update the references as well. you can change the mode in the test-env-setup.js file in this line of code `global.IS_HEADLESS = true;`
 
 # Project structure
 

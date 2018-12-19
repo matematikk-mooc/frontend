@@ -2,24 +2,32 @@ const puppeteer = require('puppeteer');
 
 describe('login', () => {
   it('matches the snapshot', async () => {
-    let browser;
+    let loginBrowser;
 
-    browser = await puppeteer.launch({
-      headless: true,
+    loginBrowser = await puppeteer.launch({
+      headless: IS_HEADLESS,
       ignoreHTTPSErrors: true
     });
 
-    const page = await browser.newPage();
-    await page.setViewport({
-      width: 1440,
-      height: 900
+    const page = await loginBrowser.newPage();
+    await page.setViewport(VIEWPORT_SIZE);
+
+    await page.goto(URL);
+
+    await page.waitForSelector('.ic-app-main-content', {
+      visible: true,
+      timeout: PUPPETEER_TIMEOUT
+    });
+    await page.evaluate(() => {
+      document.querySelector('#flash_message_holder').style.display = 'none';
     });
 
-    await page.goto('http://127.0.0.1');
     const login = await page.screenshot();
 
-    expect(login).toMatchImageSnapshot();
+    expect(login).toMatchImageSnapshot({
+      ...JEST_IMAGE_CONFIG
+    });
 
-    await browser.close();
+    await loginBrowser.close();
   });
 });
