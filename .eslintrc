@@ -1,0 +1,14 @@
+{
+  "plugins": ["prettier"],
+  "extends": ["prettier"],
+  "rules": {
+    "semi": ["error", "always"],
+    "padded-blocks": ["error", { "classes": "always" }],
+    "prettier/prettier": [
+      "error",
+      {
+        "singleQuote": true
+      }
+    ]
+  }
+}

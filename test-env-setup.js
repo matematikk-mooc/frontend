@@ -1,0 +1,2 @@
+global.EMAIL = '';
+global.PASSWORD = '';

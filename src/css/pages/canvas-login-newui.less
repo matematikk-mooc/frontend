@@ -5,8 +5,9 @@ body.ic-Login-Body,
       background-color: @darkTealColor;
     }
     .ic-Login-header__logo {
-      background-image: url(@logo-image2x) !important;
+      background-image: @logo-image !important;
       background-size: contain;
+      background-position: center;
       background-repeat: no-repeat;
       width: @logo-width;
       height: @logo-height;
@@ -14,10 +15,6 @@ body.ic-Login-Body,
       img {
         display: none;
       }
-    }
-
-    #main.ic-Layout-columns {
-      //            background-color: @darkTealColor;
     }
 
     .ic-Login__actions {
@@ -34,12 +31,17 @@ body.ic-Login-Body,
         .button;
       }
     }
+
     .ic-Login-confirmation__header {
-      background: @darkTealColor url(@logo-image) 18px no-repeat !important;
+      background: @darkTealColor @logo-image 18px / ~"160px auto" no-repeat !important;
       padding: 30px;
       img {
         display: none;
       }
+    }
+
+    .ic-Login-footer {
+      visibility: hidden;
     }
   }
 }

@@ -4,6 +4,17 @@ if (typeof this.mmooc.i18n === 'undefined') {
   if (mmooc.api.getLocale() == 'nn') {
     this.mmooc.i18n = {
       DropCourseDialogText: 'Trykk OK for å melde deg av kurset ',
+      NoCoursesInfo: 'Det finst ingen emne du kan registrere deg på for augeblikket',
+      CourseContinue: 'Fortsette',
+      CourseRegister: 'Registrere',
+      CourseRegisterFeide: 'Registrere med Feide',
+      YouAreRegisteredToXCourses: amount => `du er registerd in ${amount} kurs`,
+      CoursesAmount: amount => `${amount} kurs`,
+      OpenCoursesGroup: 'Utsikt',
+      CloseCoursesGroup: 'Lukke',
+      LogIn: 'Logg inn',
+      LogInFeide: 'Logg inn med Feide',
+      LogInCanvas: 'Logg inn med Canvas',
       JoinCourseDialogText:
         'Du kan melde deg på kurset igjen seinare om du vil ',
       DropCourse: 'Meld deg av emnet',
@@ -83,6 +94,17 @@ if (typeof this.mmooc.i18n === 'undefined') {
   } else {
     this.mmooc.i18n = {
       DropCourseDialogText: 'Trykk OK for å melde deg av kurset ',
+      NoCoursesInfo: 'Det er ingen emner du kan registrere deg på for øyeblikket',
+      CourseContinue: 'Fortsette',
+      CourseRegister: 'Registrere',
+      CourseRegisterFeide: 'Registrere med Feide',
+      YouAreRegisteredToXCourses: amount => `du er registerd in ${amount} kurs`,
+      CoursesAmount: amount => `${amount} kurs`,
+      OpenCoursesGroup: 'Utsikt',
+      CloseCoursesGroup: 'Lukke',
+      LogIn: 'Logg inn',
+      LogInFeide: 'Logg inn med Feide',
+      LogInCanvas: 'Logg inn med Canvas',
       JoinCourseDialogText:
         'Du kan melde deg på kurset igjen senere om du vil ',
       DropCourse: 'Meld deg av kurset',

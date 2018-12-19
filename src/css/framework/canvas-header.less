@@ -1,65 +1,171 @@
-#header {
-  background-image: none;
-  background-color: @darkTealColor;
-  border-bottom: 5px solid @lightTealColor;
-}
+#application.ic-app {
+  #header.ic-app-header {
+    min-height: 80px;
+    width: 100%;
+    background-color: @darkTealColor;
+    position: relative;
+    overflow-y: visible;
+    -webkit-flex-direction: row;
+    flex-direction: row;
 
-#header-logo {
-  left: 0 !important;
-}
+    .ic-app-header__main-navigation {
+      position: relative;
+      display: flex;
+      width: 100%;
+      justify-content: space-between;
+      margin: 0 auto;
+      max-width: 1196px;
+      padding: 0 20px;
 
-#header-logo,
-#header.no-user #header-logo {
-  background-image: url(@logo-image);
-  width: @logo-width;
-  bottom: 17px;
-}
+      @media screen and (max-width: 1050px) {
+        flex-flow: wrap;
+      }
 
-@media (min--moz-device-pixel-ratio: 1.5),
-  (-o-min-device-pixel-ratio: 3/2),
-  (-webkit-min-device-pixel-ratio: 1.5),
-  (min-device-pixel-ratio: 1.5),
-  (min-resolution: 1.5dppx) {
-  #header-logo,
-  #header.no-user #header-logo {
-    background-image: url(@logo-image2x);
+      .ic-app-header__logomark-container {
+        width: @logo-width;
+        margin: 0 80px 0 0;
+        padding: 0;
+        background-color: transparent;
+        // IE11 fallback for Flex bug
+        min-width: @logo-width;
+      
+      @media screen and (max-width: 1050px) {
+        flex-basis: 100%;
+        margin: 0;
+      }
+
+        .ic-app-header__logomark {
+          background-image: @logo-image;
+          width: 274px;
+          height: 40px;
+          background-repeat: no-repeat;
+          background-size: @logo-background-size;
+          -webkit-transform: scale3d(1, 1, 1);
+          transform: scale3d(1, 1, 1);
+          transition: none;
+          margin: 20px 0;
+
+          @media screen and (max-width: 1050px) {
+            flex-basis: 100%;
+            margin: 20px auto;
+          }
+        }
+      }
+    }
+
+    .ic-app-header__secondary-navigation {
+      display: none;
+    }
+
+    #menu {
+      height: 80px;
+      display: flex;
+      align-items: center;
+      flex-basis: 100%;
+
+      @media screen and (max-width: 1050px) {
+        flex-basis: 50%;
+      }
+
+      li {
+        float: left;
+        height: 100%;
+
+        &#context_external_tool_1_menu_item {
+          // external tools hidden as default - they should be accessed from the course page instead
+          display: none;
+        }
+
+        a {
+          padding-left: 18px;
+          padding-right: 18px;
+          box-sizing: border-box;
+          padding-top: 8px;
+          padding-bottom: 0;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          height: 100%;
+
+          &.ic-app-header__menu-list-link {
+            border-bottom: 4px solid transparent;
+            &:hover,
+            &:focus {
+              background-color: inherit;
+              color: @white;
+            }
+          }
+
+          &.active {
+            font-weight: @menuItemFontWeight;
+            border-bottom: 4px solid @white;
+            padding-top: 8px;
+          }
+
+          &#global_nav_dashboard_link,
+          &#global_nav_conversations_link {
+            display: none;
+          }
+
+          .menu-item-icon-container {
+            // hides icon used in new UI
+            display: none;
+          }
+
+          &#global_nav_profile_link {
+            display: none;
+
+            .menu-item-icon-container {
+              // hides icon used in new UI
+              display: block;
+            }
+
+            .menu-item__text {
+              display: none;
+            }
+          }
+
+          &#global_nav_courses_link {
+            // courses and Groups menu hidden as default, since we replace it with our own Courses link
+            display: none;
+          }
+
+          &#global_nav_accounts_link {
+            // admin link hidden as default, since we replace it with our own admin link
+            display: none;
+          }
+
+          &#global_nav_groups_link {
+            // groups link hidden as default, since we replace it with our own groups link
+            display: none;
+          }
+
+          &#global_nav_calendar_link {
+            // calendar link hidden as default, since we replace it with our own calendar link
+            display: none;
+          }
+
+          &#global_nav_help_link {
+            // help link hidden as default, since we replace it with our own calendar link
+            display: none;
+          }
+
+          .menu-item__text {
+            font-size: @menuItemFontSize;
+            margin-top: 14px;
+            color: @white;
+            font-weight: @menuItemFontWeight;
+          }
+        }
+      }
+    }
+
+    #user-menu {
+      display: flex;
+      padding-top: 27px;
+      min-width: 195px;
+      margin-right: -20px;
+    }
+    
   }
-}
-
-#header-inner,
-.with-left-side #header-inner,
-.with-right-side #header-inner,
-.with-right-side.with-left-side #header-inner {
-  max-width: 1200px;
-}
-
-@media screen and (max-width: 1240px) {
-  #header-inner,
-  .with-left-side #header-inner,
-  .with-right-side #header-inner,
-  .with-right-side.with-left-side #header-inner {
-    margin: 0 @minimumSidePadding;
-  }
-}
-
-#user-menu {
-  float: right;
-  padding-top: 27px;
-}
-
-@media screen and (max-width: 1024px) {
-  #header-logo,
-  #header.no-user #header-logo {
-    margin-left: 17px;
-    bottom: 40px;
-  }
-
-  #menu {
-    margin: 0;
-  }
-}
-
-/* Courses and Groups menu hidden as default, since we replace it with our own Courses link */
-#courses_menu_item {
-  display: none;
 }

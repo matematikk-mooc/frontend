@@ -1,12 +1,7 @@
 jQuery(function($) {
-  //    $('.header-bar').show(); //To avoid displaying the old contents while the javascript is loading. Selectors are set to display:none in CSS.
-  //    $(".ic-Layout-contentMain").show(); //Same as above.
-
-  //	$('.header-bar').css("visibility", "visible");
-  //	$(".ic-Layout-contentMain").css("visibility", "visible");
-
   mmooc.routes.addRouteForPath(/\/$/, function() {
     var parentId = 'wrapper';
+
     if (document.location.search === '?mmpf') {
       mmooc.powerFunctions.show(parentId);
     } else {
@@ -65,7 +60,7 @@ jQuery(function($) {
         '" tabindex="0" webkitallowfullscreen="true" width="100%"></iframe>';
       $('#content').append(canvabadgesForCurrentCourse);
     } else {
-    /*
+      /*
         else if(!(mmooc.util.isTeacherOrAdmin()) && $(".self_enrollment_link").length) //Route to list of all courses if student and not enrolled in course.
         {
             window.location.href = "/search/all_courses";
@@ -227,12 +222,12 @@ jQuery(function($) {
         mmooc.menu.showLeftMenu();
         mmooc.menu.listModuleItems();
         mmooc.menu.showDiscussionGroupMenu();
-                
+
         if (!mmooc.util.isTeacherOrAdmin()) {
         	mmooc.menu.hideSectionTabsHeader();
         }
     });
-    
+
     mmooc.routes.addRouteForPath([/\/groups\/\d+\/discussion_topics\/\d+$/], function() {
         mmooc.groups.moveSequenceLinks();
         if (!mmooc.util.isTeacherOrAdmin()) {
@@ -424,6 +419,8 @@ jQuery(function($) {
   try {
     mmooc.menu.renderLeftHeaderMenu();
     mmooc.menu.showUserMenu();
+    mmooc.menu.renderUnauthenticatedMenu();
+    mmooc.menu.setMenuActiveLink();
   } catch (e) {
     console.log(e);
   }
