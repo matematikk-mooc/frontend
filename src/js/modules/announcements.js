@@ -1,29 +1,25 @@
 this.mmooc = this.mmooc || {};
 
-this.mmooc.announcements = (function() {
-  function hideMarkAsReadButton() {
+this.mmooc.announcements = (() => {
+  const hideMarkAsReadButton = () => {
     $('#markAllAsReadButton').hide();
     mmooc.menu.updateNotificationsForUser();
-  }
+  };
 
   return {
-    addMarkAsReadButton: function() {
-      var contentId = mmooc.api.getCurrentTypeAndContentId().contentId;
-      var courseId = mmooc.api.getCurrentCourseId();
-
-      mmooc.api.getDiscussionTopic(courseId, contentId, function(
-        discussionTopic
-      ) {
+    addMarkAsReadButton() {
+      const contentId = mmooc.api.getCurrentTypeAndContentId().contentId;
+      const courseId = mmooc.api.getCurrentCourseId();
+      mmooc.api.getDiscussionTopic(courseId, contentId, discussionTopic => {
         if (discussionTopic.read_state !== 'read') {
-          var buttonHTML = mmooc.util.renderTemplateWithData('actionbutton', {
+          const buttonHTML = mmooc.util.renderTemplateWithData('actionbutton', {
             id: 'markAllAsReadButton',
             title: 'Marker som lest'
           });
           document
             .getElementById('content-wrapper')
             .insertAdjacentHTML('afterbegin', buttonHTML);
-
-          $('#markAllAsReadButton').click(function() {
+          $('#markAllAsReadButton').click(() => {
             mmooc.api.markDiscussionTopicAsRead(
               courseId,
               contentId,
@@ -33,38 +29,33 @@ this.mmooc.announcements = (function() {
         }
       });
     },
-    printAnnouncementsUnreadCount: function() {
-      var courseId = mmooc.api.getCurrentCourseId();
-      mmooc.api.getAnnouncementsForCourse(courseId, function(announcements) {
-        var totalUnread = 0;
-        for (var i = 0; i < announcements.length; i++) {
+    printAnnouncementsUnreadCount() {
+      const courseId = mmooc.api.getCurrentCourseId();
+      mmooc.api.getAnnouncementsForCourse(courseId, announcements => {
+        let totalUnread = 0;
+        announcements.forEach(announcement => {
           if (
-            announcements[i].read_state == 'unread' ||
-            announcements[i].unread_count > 0
-          ) {
+            announcement.read_state == 'unread' ||
+            announcement.unread_count > 0
+          )
             totalUnread++;
-          }
-        }
-        if (totalUnread > 0) {
+        });
+        totalUnread > 0 &&
           mmooc.announcements.printUnreadCountInTab(totalUnread);
-        }
       });
     },
-    printUnreadCountInTab: function(totalUnread) {
-      $('.mmooc-course-tab a').each(function() {
-        if ($(this).text() == 'Kunngjøringer') {
+    printUnreadCountInTab(totalUnread) {
+      $('.mmooc-course-tab a').each(() => {
+        $(this).text() == 'Kunngjøringer' &&
           $(this)
             .parent()
             .append(
-              "<span class='discussion-unread-value discussion-unread-tab'>" +
-                totalUnread +
-                '</span>'
+              `<span class='discussion-unread-value discussion-unread-tab'>${totalUnread}</span>`
             );
-        }
       });
     },
-    setAnnouncementsListUnreadClass: function() {
-      var checkExist = setInterval(function() {
+    setAnnouncementsListUnreadClass() {
+      const checkExist = setInterval(() => {
         if (
           $('body.announcements .discussionTopicIndexList .discussion-topic')
             .length
@@ -72,8 +63,8 @@ this.mmooc.announcements = (function() {
           clearInterval(checkExist);
           $(
             'body.announcements .discussionTopicIndexList .discussion-topic'
-          ).each(function() {
-            var unread = $(this)
+          ).each(() => {
+            const unread = $(this)
               .find('.new-items')
               .attr('title');
             if (unread.indexOf('Ingen uleste svar.') == -1) {

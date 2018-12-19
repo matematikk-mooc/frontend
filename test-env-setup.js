@@ -1,5 +1,5 @@
 global.EMAIL = 'udir-team@netguru.co';
-global.PASSWORD = '0Senhanova9';
+global.PASSWORD = '';
 
 global.IS_HEADLESS = true;
 global.URL = 'http://udir.staging.devguru.co';

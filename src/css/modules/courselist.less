@@ -1,4 +1,4 @@
-//Hide existing content
+// hides existing content
 #my_groups_table,
 #past_enrollments_table {
   display: none;
@@ -36,11 +36,12 @@
     margin-top: -10px;
   }
 }
+
 .mmooc-course-list {
-  //Horizontal line after title, ref. http://stackoverflow.com/questions/20935191/create-line-after-text-with-css
+  // horizontal line after title, ref. http://stackoverflow.com/questions/20935191/create-line-after-text-with-css
   h2.mmooc-course-category-title {
     position: relative;
-    overflow: hidden; //Clip the horizontal lines outside the container
+    overflow: hidden; // clips the horizontal lines outside the container
   }
 
   h2.mmooc-course-category-title:after {
@@ -67,7 +68,7 @@
   .mmooc-course-list-item {
     background: #fff;
     margin-bottom: 40px;
-    padding: 2px 22px 22px 22px; /* Less padding on top since heading will add padding when only one line */
+    padding: 2px 22px 22px 22px; // there is less padding on top since heading will add padding when only one line
     box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.35);
 
     .border-box;
@@ -106,7 +107,7 @@
     }
 
     .mmooc-course-list-progress {
-      height: 10px; /* Fixed height since all courses might not have progress bar */
+      height: 10px; // there is fixed height since all courses might not have progress bar
     }
   }
 }
