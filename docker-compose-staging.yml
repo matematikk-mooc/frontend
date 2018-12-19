@@ -4,7 +4,7 @@ services:
     build:
       context: .
       dockerfile: docker/Dockerfile.staging
-    command: grunt serve
+    command: grunt serveStaging
     hostname: "netguru.udir.staging.css"
     labels:
       - "netguru.appname=udir"
