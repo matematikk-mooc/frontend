@@ -96,7 +96,8 @@ this.mmooc.menu = (function() {
         '<li class="menu-item custom-item ic-app-header__menu-list-item"><a href="' +
           link +
           '" class="menu-item-no-drop ic-app-header__menu-list-link">' +
-          linkText + '</a></li>'
+          linkText +
+          '</a></li>'
       );
     }
   }
@@ -178,7 +179,7 @@ this.mmooc.menu = (function() {
 
     renderLeftHeaderMenu: function() {
       // render left header menu only for autheticated users
-      if (mmooc.util.isAuthenticated()){
+      if (mmooc.util.isAuthenticated()) {
         // The entire menu is rebuilt because of unwanted popup in the new ui menu
         insertCustomMenuElementInTopMenu('Kalender', '/calendar');
         if (mmooc.settings.removeGlobalGradesLink == false) {
@@ -188,25 +189,25 @@ this.mmooc.menu = (function() {
           insertCustomMenuElementInTopMenu('Grupper', '/groups');
         }
         insertCustomMenuElementInTopMenu(mmooc.i18n.CoursePlural, '/courses');
-  
+
         if (mmooc.util.isTeacherOrAdmin()) {
           this.showLeftMenu();
-  
+
           $('#section-tabs-header').show();
-  
+
           //Canvas changed the aria-label as shown in the two lines below. Keep both lines for backward compatibility.
           $("nav[aria-label='context']").show();
           $("nav[aria-label='Emner-navigasjonsmeny']").show();
-  
+
           //20180821ETH Venstremenyen heter noe annet for grupper.
           //20180906ETH Men vi ønsker ikke vise den.
           //                $("nav[aria-label='Navigasjonsmeny for grupper ']").show();
-  
+
           $('#edit_discussions_settings').show();
           $('#availability_options').show();
           $('#group_category_options').show();
           $('#editor_tabs').show();
-  
+
           // Done via CSS since content is loaded using AJAX
           stylesheet.insertRule(
             'body.pages .header-bar-outer-container { display: block }',
@@ -237,7 +238,7 @@ this.mmooc.menu = (function() {
         let html = mmooc.util.renderTemplateWithData('noLoggedInHeader', {
           logInText: mmooc.i18n.LogIn
         });
-        document.getElementById('header').innerHTML = html;
+        $('#header').html(html);
         mmooc.login.handleLoginButtonClick();
       }
     },
@@ -562,7 +563,9 @@ this.mmooc.menu = (function() {
       $('#header-logo').attr('href', '/courses');
       $('a.ic-app-header__logomark').attr('href', '/courses'); //New UI
       $('a.ic-app-header__logomark').attr('src', '../../bitmaps/logo.svg'); //New UI
-      $('.ic-app-header__logomark-container').detach().prependTo('.ic-app-header__main-navigation');
+      $('.ic-app-header__logomark-container')
+        .detach()
+        .prependTo('.ic-app-header__main-navigation');
     },
 
     alterCourseLink: function() {
