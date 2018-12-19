@@ -1,0 +1,14 @@
+FROM node:8.11.3
+RUN apt-get update && apt-get install -y git
+# SET WORKDIR
+WORKDIR /app
+
+# FOR DEPENDENCIES CACHE
+COPY package.json  ./
+ADD . ./
+RUN npm install && npm install -g grunt-cli
+ENV VIRTUAL_HOST udir-front.staging.devguru.co
+ENV LETSENCRYPT_HOST udir-front.staging.devguru.co
+ENV LETSENCRYPT_EMAIL devops-team@netguru.co
+EXPOSE 3000
+
