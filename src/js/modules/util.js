@@ -295,25 +295,47 @@ this.mmooc.util = (function() {
 
       return res;
     },
+    urlParamsToObject: () => {
+      // conver url params string "?abc=foo&def=%5Basf%5D&xyz=5&foo=b%3Dar"
+      // to {abc: "foo", def: "[asf]", xyz: "5", foo: "b=ar"}
+
+      if (document.location.search === '') return {};
+
+      const search = location.search.substring(1);
+      return JSON.parse(
+        '{"' + search.replace(/&/g, '","').replace(/=/g, '":"') + '"}',
+        (key, value) => key === "" ? value : decodeURIComponent(value)
+      );
+    },
+    redirectFeideAuthIfEnrollReferrer: () => {
+      // Checks if we hit the /canvas/login from Feide Enroll pages
+      // If we go from permitted refferer, we redirect to Feide auth
+      // when page user is unauthenticated and does not provide `?normalLogin` param
+      const permittedReferrers = mmooc.settings.feideEnrollRefferers;
+      const hasPermittedRefferer = permittedReferrers.some(ref => document.referrer.endsWith(ref));
+
+      if( document.location.search !== "?normalLogin" &&
+          !mmooc.util.isAuthenticated() &&
+          hasPermittedRefferer
+      ) {
+        window.location.href = '/login/saml';
+      }
+    },
     redirectToEnrollIfCodeParamPassed: () => {
       // if user wanted to enroll a course using Feide auth,
       // then was returned from SAML login view, we redirect to proper enrollment page
       if (document.location.search !== '') {
 
         // fetch the string '?param1=x&param2=y'
-        //creates final array [['param1', 'x'], ['param2','y']]
-        const urlParamsArray = document.location.search
-          .replace('?', '') // removes ?
-          .split('&') // splits by array items like 'param1=x'
-          .map(param => param.split('='));
+        // to obj { param1: 'x', param2: 'y'}
+        const urlParamsObj = mmooc.util.urlParamsToObject();
 
-        // get item with first item equal 'enroll_code' 
-        // array = ['enroll_code', '8A34DS1']
-        const enrollCodeParamArray = urlParamsArray && urlParamsArray.find(param => param[0] === 'enroll_code');
+        // get the value of  'enroll_code' 
+        const enrollCode = urlParamsObj && urlParamsObj['enroll_code'];
 
         // if enroll_code param was passed
-        if (enrollCodeParamArray !== undefined && enrollCodeParamArray[1]) {
-          window.location.href = `/enroll/${enrollCodeParamArray[1]}`;
+        if (enrollCode !== undefined) {
+          window.location.href = `/enroll/${enrollCode}`;
         }
       }
     },
