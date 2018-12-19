@@ -1,16 +1,3 @@
-// Hides existing content before js replaces it.
-.header-bar {
-  //	display: none;
-  //  visibility: hidden;
-}
-.ic-Layout-contentMain {
-  //	display: none;
-  //  visibility: hidden;
-}
-.ic-Layout-wrapper {
-  min-height: 50vh;
-}
-
 @import 'setup/variables.less';
 @import 'setup/mixins.less';
 @import 'setup/font-roboto.less';
@@ -23,7 +10,6 @@
 @import 'framework/canvas-rightside.less';
 @import 'framework/canvas-leftside.less';
 
-@import 'pages/canvas-enroll.less';
 @import 'pages/canvas-assignment.less';
 @import 'pages/canvas-course.less';
 @import 'pages/canvas-discussion.less';
@@ -32,7 +18,6 @@
 @import 'pages/canvas-people.less';
 @import 'pages/canvas-quiz.less';
 @import 'pages/canvas-settings.less';
-@import 'pages/canvas-login.less';
 
 @import 'modules/buttons.less';
 @import 'modules/courselist.less';
@@ -58,13 +43,12 @@
 @import 'modules/tabs.less';
 @import 'modules/allcoursescontainer.less';
 
-
 // New ui starts here. Depends on the old UI so do not remove the old ui.
 // 3rd party
 @import '3party/canvas-uob.less';
 @import '3party/youtube.less';
 
-// Framework
+// framework
 @import 'framework/canvas-framework-newui.less';
 @import 'framework/canvas-alert-newui.less';
 @import 'framework/canvas-button-newui.less';
@@ -74,14 +58,14 @@
 @import 'framework/canvas-leftside-newui.less';
 @import 'framework/tag.less';
 
-// Pages
+// pages
 @import 'pages/canvas-announcements-newui.less';
 @import 'pages/canvas-discussion-newui.less';
 @import 'pages/canvas-groups-newui.less';
 @import 'pages/canvas-assignment-newui.less';
-@import 'pages/canvas-login-newui.less';
+@import 'pages/canvas-login.less';
 
-// Modules
+// modules
 @import 'modules/coursemenu-tabs-newui.less';
 @import 'modules/modules-newui.less';
 @import 'modules/moduleitems-newui.less';
