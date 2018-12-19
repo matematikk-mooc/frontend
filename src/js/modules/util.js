@@ -294,6 +294,28 @@ this.mmooc.util = (function() {
       }
 
       return res;
-    }
+    },
+    redirectToEnrollIfCodeParamPassed: () => {
+      // if user wanted to enroll a course using Feide auth,
+      // then was returned from SAML login view, we redirect to proper enrollment page
+      if (document.location.search !== '') {
+
+        // fetch the string '?param1=x&param2=y'
+        //creates final array [['param1', 'x'], ['param2','y']]
+        const urlParamsArray = document.location.search
+          .replace('?', '') // removes ?
+          .split('&') // splits by array items like 'param1=x'
+          .map(param => param.split('='));
+
+        // get item with first item equal 'enroll_code' 
+        // array = ['enroll_code', '8A34DS1']
+        const enrollCodeParamArray = urlParamsArray && urlParamsArray.find(param => param[0] === 'enroll_code');
+
+        // if enroll_code param was passed
+        if (enrollCodeParamArray !== undefined && enrollCodeParamArray[1]) {
+          window.location.href = `/enroll/${enrollCodeParamArray[1]}`;
+        }
+      }
+    },
   };
 })();

@@ -16,6 +16,11 @@ jQuery(function($) {
   });
 
   mmooc.routes.addRouteForPath(/\/courses$/, function() {
+
+    // if user wanted to enroll a course using Feide auth,
+    // then was returned from SAML login view, we redirect to proper enrollment page
+    mmooc.util.redirectToEnrollIfCodeParamPassed();
+
     mmooc.menu.hideRightMenu();
     mmooc.courseList.listCourses(
       'content',
@@ -401,7 +406,11 @@ jQuery(function($) {
     );
   });
 
-  mmooc.routes.addRouteForPath([/\/login\/canvas/], function() {
+  mmooc.routes.addRouteForPath([/\/login\/canvas/], function () {
+    if (document.location.search != "?normalLogin") {
+      window.location.href = '/login/saml';
+    }
+
     mmooc.pages.replaceCreateAccountLink();
   });
 
