@@ -99,7 +99,7 @@ this.mmooc.api = (function() {
       $.getJSON(href, modules => {
         const noOfModules = modules.length;
         let asyncsDone = 0;
-        modules.forEach(module => {
+        modules.forEach((module, index) => {
           const href = `/api/v1/courses/${cid}/modules/${
             module.id
           }/items?per_page=100`;
@@ -112,7 +112,7 @@ this.mmooc.api = (function() {
 
                 asyncsDone === noOfModules && callback(modules);
               };
-            })(i) // calling the function with the current value
+            })(index) // calling the function with the current value
           );
         });
       });
