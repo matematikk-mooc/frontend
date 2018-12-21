@@ -162,12 +162,11 @@ this.mmooc.enroll = (function() {
               coursesAmount: coursesAmount,
               coursesAmountText: mmooc.i18n.CoursesAmount(coursesAmount),
               courseLabel: mmooc.i18n.Course.toLowerCase(),
-              courseContinue: mmooc.i18n.CourseContinue,
+              goToCourse: mmooc.i18n.GoToCourse,
               courseRegister: mmooc.i18n.CourseRegister,
               courseRegisterFeide: mmooc.i18n.CourseRegisterFeide,
               openCoursesGroupText: mmooc.i18n.OpenCoursesGroup,
               closeCoursesGroupText: mmooc.i18n.CloseCoursesGroup,
-              courseRegisterFeide: mmooc.i18n.CourseRegisterFeide,
               YouAreRegisteredToXCoursesText: mmooc.i18n.YouAreRegisteredToXCourses(coursesEnrolledAmount),
               index: i
             });

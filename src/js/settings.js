@@ -8,5 +8,8 @@ this.mmooc.settings = {
   removeGlobalGradesLink: true,
   removeGroupsLink: true,
   privacyPolicyLink: 'http://matematikk-mooc.github.io/privacypolicy.html',
-  platformName: 'matematikk.mooc.no'
+  platformName: 'matematikk.mooc.no',
+  feideEnrollRefferers: [
+    '/search/all_courses'
+  ],
 };

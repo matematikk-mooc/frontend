@@ -16,6 +16,11 @@ jQuery(function($) {
   });
 
   mmooc.routes.addRouteForPath(/\/courses$/, function() {
+
+    // if user wants to enroll a course using Feide auth,
+    // then was returned from SAML login view, we redirect to proper enrollment page
+    mmooc.util.redirectToEnrollIfCodeParamPassed();
+
     mmooc.menu.hideRightMenu();
     mmooc.courseList.listCourses(
       'content',
@@ -401,7 +406,12 @@ jQuery(function($) {
     );
   });
 
-  mmooc.routes.addRouteForPath([/\/login\/canvas/], function() {
+  mmooc.routes.addRouteForPath([/\/login\/canvas/], function () {
+    // Checks if we hit the /canvas/login from Feide Enroll pages
+    // If we go from permitted refferer, we redirect to Feide auth
+    // when page user is unauthenticated and does not provide `?normalLogin` param
+    mmooc.util.redirectFeideAuthIfEnrollReferrer();
+
     mmooc.pages.replaceCreateAccountLink();
   });
 
