@@ -139,12 +139,13 @@ If you would like to test the app on a different address, please modify this lin
 
 #### Keeping the stable testing environment
 
-The visual regression tests will notice minor differences between the image snapshot reference and the tested screen. Thus eg editing a single module, or editing a course syllabus will cause certain tests to fail. Therefore it is suggested to keep one course, and one user account purely for testing.
+The visual regression tests will detect minor differences between the image snapshot reference and the tested screen. Thus, editing a single module or a course syllabus will cause certain tests to fail. Therefore, it is suggested to keep one course and one user account purely for testing.
 
 It does not mean you are not allowed to edit this course or account preferences. It just means you will have to update the image snapshot references after introducing any changes. The procedure is described below.
 
 ### Running visual regression tests
 
+- when you run the tests for the first time, please make sure you add the login credentials to the test-env-setup.js file, which you can find in the root directory, make sure the EMAIL, PASSWORD and URL variables have correct values
 - in order to run the tests use the script `yarn test:regression` (or `npm run test:regression` if you use npm)
 - if the tests run for the first time, the snapshots will be created in the `puppeteer/__image_snapshots__` directory
 - if any of the tests fail. you can check the difference in the `puppeteer/__image_snapshots__/__diff_output__` folder
@@ -160,7 +161,7 @@ there is quite a lot of screens in the app, thus additional scripts have been cr
 
 ### Known issues
 
-- sometimes page loads slower, or freezes, what causes timeuot errors - then the test shall be run again
+- sometimes page loads slower or freezes, what causes timeout errors - then the test shall be run again
 - it might also happen that the test fails due to the difference caused by the fact that not all elements loaded before the image snapshot was taken - then the test shall be run again
 - if you add too many assertions to one test suite, you might encounter a timeout issue - while adding new tests keep that in mind
 - the test script is set to run tests sequentially in order to avoid timeout issues `"test:regression": "jest --runInBand"` thus if you prefer to use jest cli commands instead of the script itself, make sure you use such command: `yarn jest --runInBand`
