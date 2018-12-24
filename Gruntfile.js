@@ -223,7 +223,7 @@ module.exports = function (grunt) {
           'src/addons/badges/js/*.js',
           'src/addons/badges/css/*.less'
         ],
-        tasks: ['clean', 'build']
+        tasks: ['rebuildServe']
       }
     },
 
@@ -259,6 +259,8 @@ module.exports = function (grunt) {
   grunt.registerTask('test', ['clean', 'make', 'runTest']);
 
   grunt.registerTask('build', ['make', 'clean:release', 'runTest' ]);
+
+  grunt.registerTask('rebuildServe', ['clean:dist', 'make']);
 
   grunt.registerTask('serve', ['clean', 'make', 'connect:dev', 'watch']);
   
