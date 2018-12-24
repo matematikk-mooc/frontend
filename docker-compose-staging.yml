@@ -1,0 +1,24 @@
+version: '3.2'
+services:
+  css:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.staging
+    command: grunt serveStaging
+    hostname: "netguru.udir.staging.css"
+    labels:
+      - "netguru.appname=udir"
+      - "netguru.stage=staging"
+    environment:
+      - NODE_ENV=staging
+      - VIRTUAL_HOST=udir-front.staging.devguru.co
+      - LETSENCRYPT_HOST=udir-front.staging.devguru.co
+      - LETSENCRYPT_EMAIL=devops-team@netguru.co
+    networks:
+      - frontend
+       
+
+networks:
+  frontend:
+    external:
+      name: frontend

@@ -1,123 +1,123 @@
 body {
-    background-image: none !important;
-    background: @backgroundColor !important;
-    color: @textColor;
-    font-size: @fontSize;
-    line-height: @lineHeight;
-    font-family: 'Roboto';
+  background-image: none !important;
+  background: @backgroundColor !important;
+  color: @textColor;
+  font-size: @fontSize;
+  line-height: @lineHeight;
+  font-family: 'Roboto';
 }
 
 a {
+  color: @linkColor;
+  text-decoration: none;
+
+  &:hover {
     color: @linkColor;
-    text-decoration: none;
+    text-decoration: underline;
+  }
 
-    &:hover {
-        color: @linkColor;
-        text-decoration: underline;
-    }
-
-    &:active {
-        color: @linkColor;
-    }
+  &:active {
+    color: @linkColor;
+  }
 }
 
 /* Override fixed Canvas minimum width */
-.with-right-side, .with-left-side, .with-right-side.with-left-side {
-    min-width: 800px !important;
+.with-right-side,
+.with-left-side,
+.with-right-side.with-left-side {
+  min-width: 800px !important;
 }
 
 #wrapper-container {
-    clear: both;
-    min-width: 800px !important;
+  clear: both;
+  min-width: 800px !important;
 }
 
 body.no-headers #wrapper-container {
-    /* Used when Canvas uses iframes */
-    min-width: 300px !important;
+  /* Used when Canvas uses iframes */
+  min-width: 300px !important;
 }
 
 #dashboard {
-    display:none;
+  display: none;
 }
 
 #identity {
-    background-image: none;
-    box-shadow: none;
-    border: none;
+  background-image: none;
+  box-shadow: none;
+  border: none;
 }
 
 #left-side {
-    width: @leftColIncludingIndicator;
-    border: none !important;
-    padding-top: 25px;
+  width: @leftColIncludingIndicator;
+  border: none !important;
+  padding-top: 25px;
 }
 
-body.no-headers #content, body.embedded #content {
-    /* Used when Canvas uses iframes */
-    padding-top: 0 !important;
+body.no-headers #content,
+body.embedded #content {
+  /* Used when Canvas uses iframes */
+  padding-top: 0 !important;
 }
-
 
 .with-course-menu #content {
-    padding: 10px 0 0 0 !important;
+  padding: 10px 0 0 0 !important;
 }
-
 
 #main {
-    background: @backgroundColor;
-    border: none !important;
-    max-width: 1200px;
-    margin: 0 auto;
+  background: @backgroundColor;
+  border: none !important;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
-
 #mmooc-course-tabs-container {
-    background: #FFF;
-    padding-top: 40px;
-    margin-bottom: 30px;
+  background: #fff;
+  padding-top: 40px;
+  margin-bottom: 30px;
 
-    h1 {
-        margin: 0;
-    }
-    border-bottom: 3px solid #DCDCDC;
+  h1 {
+    margin: 0;
+  }
+  border-bottom: 3px solid #dcdcdc;
 }
 
 #mmooc-course-tabs-container-inner {
-    max-width: @maxWidth;
-    margin: 0 auto;
+  max-width: @maxWidth;
+  margin: 0 auto;
 }
 
 @media screen and (max-width: 1240px) {
-    #mmooc-course-tabs-container-inner {
-        margin: 0 @minimumSidePadding;
-    }
+  #mmooc-course-tabs-container-inner {
+    margin: 0 @minimumSidePadding;
+  }
 }
 
 .with-right-side #main {
-    max-width: @maxWidth - @rightColWidth - @columnPadding;
-    margin-right: @rightColWidth + @columnPadding;
+  max-width: @maxWidth - @rightColWidth - @columnPadding;
+  margin-right: @rightColWidth + @columnPadding;
 }
 
 .with-left-side {
-    #main {
-        /* We hide left menu as default */
-        margin-left: 0;
-    }
+  #main {
+    /* We hide left menu as default */
+    margin-left: 0;
+  }
 
-    #left-side {
-        /* Hide left menu as default */
-        display: none !important;
-    }
+  #left-side {
+    /* Hide left menu as default */
+    display: none !important;
+  }
 
-    #wrapper {
-        margin-left: auto;
-    }
+  #wrapper {
+    margin-left: auto;
+  }
 }
 
 .home #main {
-    margin-left: 0;
-    max-width: @maxWidth - @rightColLargeWidth - @columnPadding;
-    margin-right: @rightColLargeWidth + @columnPadding;
+  margin-left: 0;
+  max-width: @maxWidth - @rightColLargeWidth - @columnPadding;
+  margin-right: @rightColLargeWidth + @columnPadding;
 }
 
 /* Removed to cope with Canvas March version 2017
@@ -127,74 +127,70 @@ body.no-headers #content, body.embedded #content {
 */
 
 #right-side {
-    padding-left: @columnPadding;
-    width: @rightColWidth;
-    padding-top: @contentTopMargin;
+  padding-left: @columnPadding;
+  width: @rightColWidth;
+  padding-top: @contentTopMargin;
 }
 
 .home #right-side {
-    width: @rightColLargeWidth;
+  width: @rightColLargeWidth;
 }
 
 @media screen and (max-width: 1020px) {
-    .home #right-side {
-        width: @rightColWidth;
-    }
+  .home #right-side {
+    width: @rightColWidth;
+  }
 
-    .home #main {
-        max-width: @maxWidth - @rightColWidth - @columnPadding;
-        margin-right: @rightColWidth + @columnPadding;
-    }
+  .home #main {
+    max-width: @maxWidth - @rightColWidth - @columnPadding;
+    margin-right: @rightColWidth + @columnPadding;
+  }
 }
 
-
-
 #wrapper {
-    max-width: 1200px;
+  max-width: 1200px;
 }
 
 .full-width #wrapper {
-    /* Canvas Inbox */
-    max-width: none;
-    margin: 0;
+  /* Canvas Inbox */
+  max-width: none;
+  margin: 0;
 }
 
 @media screen and (max-width: 1240px) {
-    #wrapper {
-        margin: @minimumSidePadding;
-    }
+  #wrapper {
+    margin: @minimumSidePadding;
+  }
 
-    .with-left-side #wrapper {
-        margin-left: @minimumSidePadding;
-    }
+  .with-left-side #wrapper {
+    margin-left: @minimumSidePadding;
+  }
 }
 
 .full-width.with-right-side #wrapper {
-    max-width: 1200px;
-    margin: 0 auto;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
-
-
 #breadcrumbs {
-    display: none;
+  display: none;
 }
 
 .pages.show .show-content {
-    padding: 0;
+  padding: 0;
+  /* Må vise overflow i tilfelle tooltip til et ord går utenfor container.*/
+  overflow-x: visible;
 }
 
 .header-bar {
-    background: @backgroundColor;
-    border: none;
+  background: @backgroundColor;
+  border: none;
 }
 
-
 .with-right-side #breadcrumbs + #right-side-wrapper {
-    margin-top: 0;
+  margin-top: 0;
 }
 
 #identity {
-    display: none;
+  display: none;
 }
-

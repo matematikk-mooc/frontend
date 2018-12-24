@@ -1,67 +1,79 @@
 .list-view {
-    background: @backgroundColor;
-    padding-right: 8px;
+  background: @backgroundColor;
+  padding-right: 8px;
 
-    header, .header, header,  #section-tabs-header, #section-tabs-header {
-        background: @darkTealColor !important;
-        border-top: none !important;
-        border-left: none !important;
-        border-right: none !important;
-        border-radius: 5px 5px 0 0;
-        padding: 14px 14px;
-        text-align: center;
-        border-bottom: 1px solid #D6E2E5;
-        color: #fff !important;
-        text-shadow: none !important;
-        margin-top: 15px;
-        font-size: 15px;
+  header,
+  .header,
+  header,
+  #section-tabs-header,
+  #section-tabs-header {
+    background: @darkTealColor !important;
+    border-top: none !important;
+    border-left: none !important;
+    border-right: none !important;
+    border-radius: 5px 5px 0 0;
+    padding: 14px 14px;
+    text-align: center;
+    border-bottom: 1px solid #d6e2e5;
+    color: #fff !important;
+    text-shadow: none !important;
+    margin-top: 15px;
+    font-size: @fontSize;
+  }
+
+  ul > li {
+    border-top: 1px solid #eef3f4 !important;
+    border-bottom: 1px solid #a9c1c9 !important;
+  }
+  ul > li {
+    padding: 0 !important;
+    background: #fff !important;
+
+    &:first-of-type {
+      border-top: none !important;
+    }
+    &:last-of-type {
+      border-top: none !important;
+    }
+    a {
+      background: #fff !important;
+      padding: 7px 21px 7px 12px !important;
+      border: none !important;
+      font-size: 13px !important;
+      color: @textColor !important;
     }
 
-    ul > li {
-        padding: 0 !important;
-        background: #fff !important;
-        border-top: 1px solid #EEF3F4 !important;
-        border-bottom: 1px solid #A9C1C9 !important;
-
-        &:first-of-type {
-            border-top: none !important;
-        }
-        &:last-of-type {
-            border-bottom: none !important;
-        }
-
-        &:hover {
-            background: red !important;
-        }
-
-        a {
-            background: #fff !important;
-            padding: 7px 21px 7px 12px!important;
-            border: none !important;
-            font-size: 13px !important;
-            color: @textColor !important;
-        }
-
-        a.active, a:active:hover {
-            background: #fff !important;
-            font-weight: bold;
-            font-style: italic;
-            margin-right: -8px;
-            border-right: 8px solid @orangeColor !important;
-        }
+    a.active,
+    a.active:hover {
+      background: #fff !important;
+      font-weight: bold;
+      font-style: italic;
+      margin-right: -8px;
+      border-right: 8px solid @orangeColor !important;
     }
+    div > span.mmooc-module-item-header-active-title > i {
+      color: @orangeColor;
+    }
+  }
 }
 
-body.home, body.pages, body.quizzes, body.assignments, body.files, body.discussions, body.announcements {
-    #section-tabs-header {
-        display: none;
-    }
-    nav[aria-label="context"] {
-         display: none;
-    }
-    
-    nav[aria-label="Emner-navigasjonsmeny"] {
-        display: none;
-    }
+body.home,
+body.pages,
+body.quizzes,
+body.assignments,
+body.files,
+body.discussions,
+body.announcements {
+  #section-tabs-header {
+    display: none;
+  }
+  nav[aria-label='context'] {
+    display: none;
+  }
 
+  nav[aria-label='Emner-navigasjonsmeny'],
+  nav[aria-label='Navigasjonsmeny for grupper '] {
+    display: none;
+    margin-top: 25px;
+  }
 }

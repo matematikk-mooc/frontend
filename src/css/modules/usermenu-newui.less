@@ -1,82 +1,116 @@
 #application.ic-app {
+  #user-menu {
+    .mmooc-menu-item {
+      #mmooc-notification-count {
+        top: 3px;
+        right: 1px;
+      }
 
-    #user-menu {
-        bottom: 5px;
-        right: 5px;
-        margin: 0;
-        
-        .mmooc-menu-item {
-            
-            #mmooc-notification-count{
-                top: 3px;
-                right: 1px;
+      #mmooc-unread-messages-count {
+        top: 3px;
+        right: -1px;
+      }
+
+      &#mmooc-menu-item-varsler {
+        .mmooc-menu-item-drop {
+          ul {
+            li {
+              border: none;
+              opacity: 1;
+              font-family: Roboto;
+              font-size: 14px;
+              color: @textColor;
+              letter-spacing: 0;
+              line-height: 24px;
+              font-weight: 400;
+              white-space: nowrap;
             }
-            
-            #mmooc-unread-messages-count {
-                top: 3px;
-                right: -1px;
-            }
-            
-            &.profile-settings {
-                position: relative;
-                top: -4px;
-                
-                .mmooc-menu-item-drop {
-                    left: -70px;
-                    
-                    ul {
-                        
-                        li {
-                            
-                            a {
-                                padding: 5px 0;
-                            }
-                            
-                            &:first-of-type {
-                                border-bottom-width: 0;
-                                
-                                a {
-                                    padding-top: 3px;
-                                }
-                            }
-                            &:last-of-type {
-                                
-                                a {
-                                    padding-top: 8px;
-                                }
-                                
-                            }
-                            
-                            &#helpMenu {
-                                border-top-width: 0;
-                                
-                                a {
-                                    padding-bottom: 10px;
-                                }
-                                
-                            }
-                        }   
-                    }
-                    
-                }
-                
-                .ic-avatar {
-                    width: 32px;
-                    height: 32px;
-                }
-            }
+          }
         }
+      }
+
+      &.profile-settings {
+        position: relative;
+        top: -4px;
+        font-family: Roboto;
+
+        .mmooc-menu-item-title {
+          padding-right: 0;
+        }
+
+        .mmooc-menu-item-drop {
+          left: -40px;
+          font-size: 14px;
+          background: @white;
+          box-shadow: 0 4px 8px 0 rgba(55,55,55,0.05);
+          border-radius: 4px;
+          width: 105px;
+
+          ul {
+            li {
+              border: none;
+              color: @textColor;
+
+              a {
+                padding: 5px 0;
+                opacity: 1;
+                font-family: Roboto;
+                font-size: 14px;
+                color: @textColor;
+                letter-spacing: 0;
+                line-height: 24px;
+                font-weight: 400;
+                &:hover {
+                  text-decoration: none;
+                  opacity: 0.7;
+                }
+              }
+
+              &:first-of-type {
+                height: 26px;
+                border-bottom-width: 0;
+
+                a {
+                  padding-top: 5px;
+                }
+              }
+              &:last-of-type {
+                a {
+                  padding-top: 8px;
+                }
+              }
+
+              &#helpMenu {
+                border-top-width: 0;
+
+                a {
+                  padding-bottom: 10px;
+                }
+              }
+            }
+          }
+        }
+
+        .ic-avatar {
+          width: 32px;
+          height: 32px;
+          border: none;
+        }
+      }
     }
+  }
 }
 
 //Added the CSS here since it is connected to the user menu (help button)
 #help_tray {
-    margin-top: 100px;
-    ul.ic-NavMenu__link-list {
-        li {
-            &:nth-of-type(2), &:nth-of-type(3) { //hide the second and third help dialog menu element
-                display: none;
-            }
-        }
+  margin-top: 100px;
+  ul.ic-NavMenu__link-list {
+    li {
+      &:nth-of-type(2),
+      &:nth-of-type(3) {
+        //hide the second and third help dialog menu element
+        display: none;
+      }
     }
+  }
 }
