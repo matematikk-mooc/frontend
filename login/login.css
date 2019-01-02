@@ -1,1 +1,357 @@
-.registration-dialog{margin:2em 0;font-size:1.1em}.registration-dialog .registration-dialog .spinner{width:100px}body.modal #footer{display:block !important;width:643px;margin:20px auto}body.modal #main{background-color:transparent;border:0 none;margin:0;padding:0;max-width:none}body.modal #modal-box,body.modal #login-box{box-shadow:0 4px 20px -2px #000;margin:75px auto 20px;position:relative}body.modal #modal-box .icon_url,body.modal #login-box .icon_url{width:72px;height:72px;float:left;margin-right:10px;margin-bottom:5px}body.modal #modal-box ul,body.modal #login-box ul{list-style-type:none}body.modal #modal-box .btn,body.modal #login-box .btn{float:right;padding:10px 36px;margin:2px 7px 0 0;font-size:15px}body.modal #modal-box .button_box,body.modal #login-box .button_box{text-align:right;margin-right:7px;width:100%}body.modal #modal-box .button_box .btn,body.modal #login-box .button_box .btn{float:none}body.modal #modal-box{border:1px solid #888;border-top-color:#ccc;width:583px;padding:40px;background-image:linear-gradient(to bottom, #f4f4f4, #e2e2e2)}body.modal #modal-box .bootstrap-form{margin:0 20px 20px}body.modal #modal-box .bootstrap-form p.instructions{font-weight:bold;text-align:center;margin:1.5em 0}body.modal #modal-box .bootstrap-form .btn-large{float:none;width:220px}body.modal #modal-box h2,body.modal #modal-box .h2{background:transparent url(/dist/images/canvas-dark-0570fdda52.png) right 6px no-repeat;margin:0 20px;padding:5px 230px 0 0;min-height:35px}body.modal #modal-box h2:after,body.modal #modal-box .h2:after{content:" ";display:block;margin:1em -250px 1em -20px;border-top:1px solid #ddd;border-bottom:1px solid #fff;height:0}body.modal #modal-box.login-box{background-color:#4b555d;background:url("/dist/images/Money_Noise_tm-756d579950.png"),radial-gradient(ellipse farthest-corner at 50% -100px, rgba(255,255,255,0.6) 0%, transparent 100%),linear-gradient(to bottom, #59656e, #3e464c);height:331px;width:623px;padding:20px;color:#b3b3b3;border:none}body.modal #modal-box.login-box h1,body.modal #modal-box.login-box .h1{height:107px;margin:0 0 30px;background-color:transparent;background-image:url("/dist/images/canvas-b616136b92.png");background-repeat:no-repeat;background-position:68px 46px;text-indent:-999em}@media (min--moz-device-pixel-ratio: 1.5), (-webkit-min-device-pixel-ratio: 1.5), (min-device-pixel-ratio: 1.5), (min-resolution: 1.5dppx){body.modal #modal-box.login-box h1,body.modal #modal-box.login-box .h1{background-image:url("/dist/images/canvas@2x-f749909de1.png");background-size:136px 33px}}body.modal #modal-box.login-box a{color:#64b9f9 !important}body.modal #modal-box.login-box a:hover{text-decoration:underline}body.modal #modal-box.login-box input.text{background:url(/dist/images/login-input-bg-66e0c560f6.png) no-repeat;border:0 none;font-size:13px;padding:19px 9px 18px 22px;width:204px;color:#303030;margin:0 6px 6px 0;transition:none}body.modal #modal-box.login-box .radio_spacer{width:25px;display:inline-block}body.webkit #modal-box.login-box input.text{background:#F6F6F6 none;border:6px solid rgba(255,255,255,0.25);border-radius:7px;padding:12px 9px 12px 17px;box-shadow:inset 2px 2px 5px rgba(0,0,0,0.4);background-clip:padding-box;width:197px}#login_form{margin:0 auto;width:487px}#login_form .login-options{float:left;line-height:1.75em}#login_form .login-options input{margin-left:0}body.modal #forgot_password_form{margin:0 auto;width:455px}body.modal #forgot_password_form .btn{margin:7px 0;float:none;padding:10px 24px}span.field-with-fancyplaceholder{display:block;display:inline-block;position:relative;vertical-align:top}span.field-with-fancyplaceholder label{display:none}span.field-with-fancyplaceholder label.placeholder{display:inline;color:#999;cursor:text;pointer-events:none}span.field-with-fancyplaceholder label.placeholder span{position:absolute;z-index:2;-webkit-user-select:none;padding:19px 22px 18px 24px}span.field-with-fancyplaceholder label.focus{color:#ccc}span.field-with-fancyplaceholder input:-webkit-autofill{background-color:transparent !important}span.field-with-fancyplaceholder input{outline:none}span.field-with-fancyplaceholder input.invalid{background:#ffffc5;color:#F30}span.field-with-fancyplaceholder input.editing{color:#000;background:none repeat scroll 0 0 transparent;overflow:hidden}.register_banner{position:absolute;display:block;background:url(/dist/images/fft_ribbon-c592c597a5.png) no-repeat;padding-top:10px;width:232px;height:52px;right:-13px;top:56px;text-align:center;font-size:1.1em;line-height:1.25}.register_banner i,.register_banner b{display:block}.register_banner i{color:#444;font-style:normal;text-shadow:0 1px 0 rgba(255,255,255,0.25)}.register_banner b{font-weight:normal;color:#fff}.register_banner:hover{background-position:0 -63px;text-decoration:none !important}#unauthorized_holder{box-shadow:0 4px 20px -2px #000;margin:30px auto 20px;width:663px}#unauthorized_holder #modal-box.login-box{margin:0;box-shadow:none}#unauthorized_holder #unauthorized_message{margin:0;width:auto;padding:15px 20px;line-height:1.2}#unauthorized_holder #unauthorized_message.ui-state-error:before{top:15px}#unauthorized_holder #unauthorized_message h2,#unauthorized_holder #unauthorized_message .h2{height:41px;margin:0 0 -5px 0;padding:0 0 0 60px;color:#000}#unauthorized_holder #unauthorized_message p{padding:0 0 0 60px;margin:0;font-size:1.25em;font-weight:normal}.ic-Login_sso{clear:both;text-align:center}.ic-Login_sso-divider{padding:10px 0;margin:0;line-height:normal;font-size:11px;color:#ccc;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-align-items:center;-ms-flex-align:center;align-items:center}.ic-Login_sso-divider:before{content:"";-webkit-flex:1;-ms-flex:1;flex:1;height:1px;margin:0 1em;background:linear-gradient(to left, #ccc, transparent)}.ic-Login_sso-divider:after{content:"";-webkit-flex:1;-ms-flex:1;flex:1;height:1px;margin:0 1em;background:linear-gradient(to right, #ccc, transparent)}.ic-Login_sso-list{padding:0;margin:0}.ic-Login_sso-list_item{list-style:none;display:inline-block}.Button.ic-Login_sso-button{padding:10px 24px 10px 24px;background:transparent;color:#fff;border:transparent;transition:all 0.5s}.Button.ic-Login_sso-button--has-text{display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-align-items:center;-ms-flex-align:center;align-items:center}.Button.ic-Login_sso-button:focus{color:#fff}.Button.ic-Login_sso-button:hover{background:#0096db;color:#fff}.Button.ic-Login_sso-button:hover.ui-state-hover{background:#0096db;color:#fff;border-color:#00628e}.ic-Login_icon-sso{padding-right:12px}.ic-Login_icon-sso--icon-only{padding-right:0}.ic-Login_sso-button_title{border-left:1px solid #fff;padding:0 12px}.ic-Login_sso-button_title-caps{text-transform:capitalize}
+.registration-dialog {
+  margin: 2em 0;
+  font-size: 1.1em;
+}
+.registration-dialog .registration-dialog .spinner {
+  width: 100px;
+}
+body.modal #footer {
+  display: block !important;
+  width: 643px;
+  margin: 20px auto;
+}
+body.modal #main {
+  background-color: transparent;
+  border: 0 none;
+  margin: 0;
+  padding: 0;
+  max-width: none;
+}
+body.modal #modal-box,
+body.modal #login-box {
+  box-shadow: 0 4px 20px -2px #000;
+  margin: 75px auto 20px;
+  position: relative;
+}
+body.modal #modal-box .icon_url,
+body.modal #login-box .icon_url {
+  width: 72px;
+  height: 72px;
+  float: left;
+  margin-right: 10px;
+  margin-bottom: 5px;
+}
+body.modal #modal-box ul,
+body.modal #login-box ul {
+  list-style-type: none;
+}
+body.modal #modal-box .btn,
+body.modal #login-box .btn {
+  float: right;
+  padding: 10px 36px;
+  margin: 2px 7px 0 0;
+  font-size: 15px;
+}
+body.modal #modal-box .button_box,
+body.modal #login-box .button_box {
+  text-align: right;
+  margin-right: 7px;
+  width: 100%;
+}
+body.modal #modal-box .button_box .btn,
+body.modal #login-box .button_box .btn {
+  float: none;
+}
+body.modal #modal-box {
+  border: 1px solid #888;
+  border-top-color: #ccc;
+  width: 583px;
+  padding: 40px;
+  background-image: linear-gradient(to bottom, #f4f4f4, #e2e2e2);
+}
+body.modal #modal-box .bootstrap-form {
+  margin: 0 20px 20px;
+}
+body.modal #modal-box .bootstrap-form p.instructions {
+  font-weight: bold;
+  text-align: center;
+  margin: 1.5em 0;
+}
+body.modal #modal-box .bootstrap-form .btn-large {
+  float: none;
+  width: 220px;
+}
+body.modal #modal-box h2,
+body.modal #modal-box .h2 {
+  background: transparent url(/dist/images/canvas-dark-0570fdda52.png) right 6px
+    no-repeat;
+  margin: 0 20px;
+  padding: 5px 230px 0 0;
+  min-height: 35px;
+}
+body.modal #modal-box h2:after,
+body.modal #modal-box .h2:after {
+  content: ' ';
+  display: block;
+  margin: 1em -250px 1em -20px;
+  border-top: 1px solid #ddd;
+  border-bottom: 1px solid #fff;
+  height: 0;
+}
+body.modal #modal-box.login-box {
+  background-color: #4b555d;
+  background: url('/dist/images/Money_Noise_tm-756d579950.png'),
+    radial-gradient(
+      ellipse farthest-corner at 50% -100px,
+      rgba(255, 255, 255, 0.6) 0%,
+      transparent 100%
+    ),
+    linear-gradient(to bottom, #59656e, #3e464c);
+  height: 331px;
+  width: 623px;
+  padding: 20px;
+  color: #b3b3b3;
+  border: none;
+}
+body.modal #modal-box.login-box h1,
+body.modal #modal-box.login-box .h1 {
+  height: 107px;
+  margin: 0 0 30px;
+  background-color: transparent;
+  background-image: url('/dist/images/canvas-b616136b92.png');
+  background-repeat: no-repeat;
+  background-position: 68px 46px;
+  text-indent: -999em;
+}
+@media (min--moz-device-pixel-ratio: 1.5),
+  (-webkit-min-device-pixel-ratio: 1.5),
+  (min-device-pixel-ratio: 1.5),
+  (min-resolution: 1.5dppx) {
+  body.modal #modal-box.login-box h1,
+  body.modal #modal-box.login-box .h1 {
+    background-image: url('/dist/images/canvas@2x-f749909de1.png');
+    background-size: 136px 33px;
+  }
+}
+body.modal #modal-box.login-box a {
+  color: #64b9f9 !important;
+}
+body.modal #modal-box.login-box a:hover {
+  text-decoration: underline;
+}
+body.modal #modal-box.login-box input.text {
+  background: url(/dist/images/login-input-bg-66e0c560f6.png) no-repeat;
+  border: 0 none;
+  font-size: 13px;
+  padding: 19px 9px 18px 22px;
+  width: 204px;
+  color: #303030;
+  margin: 0 6px 6px 0;
+  transition: none;
+}
+body.modal #modal-box.login-box .radio_spacer {
+  width: 25px;
+  display: inline-block;
+}
+body.webkit #modal-box.login-box input.text {
+  background: #f6f6f6 none;
+  border: 6px solid rgba(255, 255, 255, 0.25);
+  border-radius: 7px;
+  padding: 12px 9px 12px 17px;
+  box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.4);
+  background-clip: padding-box;
+  width: 197px;
+}
+#login_form {
+  margin: 0 auto;
+  width: 487px;
+}
+#login_form .login-options {
+  float: left;
+  line-height: 1.75em;
+}
+#login_form .login-options input {
+  margin-left: 0;
+}
+body.modal #forgot_password_form {
+  margin: 0 auto;
+  width: 455px;
+}
+body.modal #forgot_password_form .btn {
+  margin: 7px 0;
+  float: none;
+  padding: 10px 24px;
+}
+span.field-with-fancyplaceholder {
+  display: block;
+  display: inline-block;
+  position: relative;
+  vertical-align: top;
+}
+span.field-with-fancyplaceholder label {
+  display: none;
+}
+span.field-with-fancyplaceholder label.placeholder {
+  display: inline;
+  color: #999;
+  cursor: text;
+  pointer-events: none;
+}
+span.field-with-fancyplaceholder label.placeholder span {
+  position: absolute;
+  z-index: 2;
+  -webkit-user-select: none;
+  padding: 19px 22px 18px 24px;
+}
+span.field-with-fancyplaceholder label.focus {
+  color: #ccc;
+}
+span.field-with-fancyplaceholder input:-webkit-autofill {
+  background-color: transparent !important;
+}
+span.field-with-fancyplaceholder input {
+  outline: none;
+}
+span.field-with-fancyplaceholder input.invalid {
+  background: #ffffc5;
+  color: #f30;
+}
+span.field-with-fancyplaceholder input.editing {
+  color: #000;
+  background: none repeat scroll 0 0 transparent;
+  overflow: hidden;
+}
+.register_banner {
+  position: absolute;
+  display: block;
+  background: url(/dist/images/fft_ribbon-c592c597a5.png) no-repeat;
+  padding-top: 10px;
+  width: 232px;
+  height: 52px;
+  right: -13px;
+  top: 56px;
+  text-align: center;
+  font-size: 1.1em;
+  line-height: 1.25;
+}
+.register_banner i,
+.register_banner b {
+  display: block;
+}
+.register_banner i {
+  color: #444;
+  font-style: normal;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.25);
+}
+.register_banner b {
+  font-weight: normal;
+  color: #fff;
+}
+.register_banner:hover {
+  background-position: 0 -63px;
+  text-decoration: none !important;
+}
+#unauthorized_holder {
+  box-shadow: 0 4px 20px -2px #000;
+  margin: 30px auto 20px;
+  width: 663px;
+}
+#unauthorized_holder #modal-box.login-box {
+  margin: 0;
+  box-shadow: none;
+}
+#unauthorized_holder #unauthorized_message {
+  margin: 0;
+  width: auto;
+  padding: 15px 20px;
+  line-height: 1.2;
+}
+#unauthorized_holder #unauthorized_message.ui-state-error:before {
+  top: 15px;
+}
+#unauthorized_holder #unauthorized_message h2,
+#unauthorized_holder #unauthorized_message .h2 {
+  height: 41px;
+  margin: 0 0 -5px 0;
+  padding: 0 0 0 60px;
+  color: #000;
+}
+#unauthorized_holder #unauthorized_message p {
+  padding: 0 0 0 60px;
+  margin: 0;
+  font-size: 1.25em;
+  font-weight: normal;
+}
+.ic-Login_sso {
+  clear: both;
+  text-align: center;
+}
+.ic-Login_sso-divider {
+  padding: 10px 0;
+  margin: 0;
+  line-height: normal;
+  font-size: 11px;
+  color: #ccc;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+.ic-Login_sso-divider:before {
+  content: '';
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  height: 1px;
+  margin: 0 1em;
+  background: linear-gradient(to left, #ccc, transparent);
+}
+.ic-Login_sso-divider:after {
+  content: '';
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  height: 1px;
+  margin: 0 1em;
+  background: linear-gradient(to right, #ccc, transparent);
+}
+.ic-Login_sso-list {
+  padding: 0;
+  margin: 0;
+}
+.ic-Login_sso-list_item {
+  list-style: none;
+  display: inline-block;
+}
+.Button.ic-Login_sso-button {
+  padding: 10px 24px 10px 24px;
+  background: transparent;
+  color: #fff;
+  border: transparent;
+  transition: all 0.5s;
+}
+.Button.ic-Login_sso-button--has-text {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+.Button.ic-Login_sso-button:focus {
+  color: #fff;
+}
+.Button.ic-Login_sso-button:hover {
+  background: #0096db;
+  color: #fff;
+}
+.Button.ic-Login_sso-button:hover.ui-state-hover {
+  background: #0096db;
+  color: #fff;
+  border-color: #00628e;
+}
+.ic-Login_icon-sso {
+  padding-right: 12px;
+}
+.ic-Login_icon-sso--icon-only {
+  padding-right: 0;
+}
+.ic-Login_sso-button_title {
+  border-left: 1px solid #fff;
+  padding: 0 12px;
+}
+.ic-Login_sso-button_title-caps {
+  text-transform: capitalize;
+}

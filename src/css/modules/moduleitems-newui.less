@@ -1,16 +1,32 @@
 #application.ic-app {
-	.mmooc-module-items li.mmooc-module-item-icon {
+  .mmooc-module-items li.mmooc-module-item-icon {
+    span[class*='mmooc-module-items-icons-'],
+    span[class^='mmooc-module-items-icons-'] {
+      width: auto;
+      height: auto;
+      padding: 2px !important; //Do not want to override the old UI CSS code
+      box-sizing: border-box;
+      line-height: 1;
 
-		span[class*="mmooc-module-items-icons-"], span[class^="mmooc-module-items-icons-"] {
-			width: auto;
-			height: auto;
-			padding: 2px !important; //Do not want to override the old UI CSS code
-			box-sizing: border-box;
-			line-height: 1;
-			
-			i[class*="icon-"], i[class^="icon-"] {
-				line-height: 1;
-			}
-		}
-	}
+      i[class*='icon-'],
+      i[class^='icon-'] {
+        line-height: 1;
+      }
+    }
+  }
+  .mmooc-module-items-header li.mmooc-module-item-icon {
+    span[class*='mmooc-module-items-icons-'],
+    span[class^='mmooc-module-items-icons-'] {
+      width: auto;
+      height: auto;
+      padding: 2px !important; //Do not want to override the old UI CSS code
+      box-sizing: border-box;
+      line-height: 1;
+
+      i[class*='icon-'],
+      i[class^='icon-'] {
+        line-height: 1;
+      }
+    }
+  }
 }

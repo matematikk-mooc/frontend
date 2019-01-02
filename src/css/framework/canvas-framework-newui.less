@@ -1,179 +1,172 @@
 body.with-left-side:not(.useFullWidth) {
-    #application.ic-app {
-        
-        #main {
-            min-width:auto;
-            margin: 0 auto;
-            }
+  #application.ic-app {
+    #main {
+      min-width: auto;
+      margin: 0 auto;
     }
+  }
 }
 
+.ic-alert-masquerade-student-view {
+  background: #cc5378;
+}
 
 #application.ic-app {
+  #wrapper {
+    margin: 0 auto;
+    min-height: auto;
+    display: block;
+    // outline: 1px solid red;
 
-    #wrapper {
-            margin: 0 auto;
-        
-            display: block;
-            // outline: 1px solid red;
-            
-            // #main {
-            //     float: left;
-            // }
-        
-        #left-side {
-            width: 238px;
-            border: none!important;
-            padding-top: 15px;
-            position: static;
-            float: left;
-            padding-right: 50px;
-            padding-left: 0;
-            opacity: 1;
-            -webkit-transform: none; /* Safari and Chrome */
-            -moz-transform: none; /* Firefox */
-            -ms-transform: none; /* IE 9 */
-            -o-transform: none; /* Opera */
-            transform: none;
-            // outline: 1px solid red;
-        }
+    // #main {
+    //     float: left;
+    // }
+
+    #left-side {
+      width: 238px;
+      border: none !important;
+      padding-top: 15px;
+      position: static;
+      float: left;
+      padding-right: 50px;
+      padding-left: 0;
+      opacity: 1;
+      -webkit-transform: none; /* Safari and Chrome */
+      -moz-transform: none; /* Firefox */
+      -ms-transform: none; /* IE 9 */
+      -o-transform: none; /* Opera */
+      transform: none;
+      // outline: 1px solid red;
     }
+    #section-tabs-header-subtitle {
+      display: none;
+    }
+  }
 }
 
-body.with-right-side { //not left side
-    
-    #application.ic-app {
-        
-        #main {
-            max-width: 100%;
-            width: 100%;
-        
-            #content-wrapper {
-                float: left;
-                width: 76%;
-                min-width: 76%;
-                // outline: 1px solid purple;
-            }
-            
-            #right-side-wrapper {
-                float: left;
-                width: 24%;
-                min-width: 24%;
-                padding: 0;
-                // outline: 1px solid green;
-            }
-        }
+body.with-right-side {
+  //not left side
+
+  #application.ic-app {
+    #main {
+      max-width: 100%;
+      width: 100%;
+
+      #content-wrapper {
+        float: left;
+        width: 76%;
+        min-width: 76%;
+        // outline: 1px solid purple;
+      }
+
+      #right-side-wrapper {
+        float: left;
+        width: 24%;
+        min-width: 24%;
+        padding: 0;
+        // outline: 1px solid green;
+      }
     }
+  }
 }
 
 body.with-left-side {
-    
-    &.with-right-side {
-        
-        #application.ic-app {
-        
-            #main {
-            
-                #content-wrapper {
-                    float: left;
-                    width: 76%;
-                    min-width: 76%;
-                    // outline: 1px solid purple;
-                }
-                
-                #right-side-wrapper {
-                    float: left;
-                    width: 24%;
-                    min-width: 24%;
-                    padding: 0;
-                    // outline: 1px solid green;
-                }
-            }
-        }
-        
-        &.assignments {
-            #application.ic-app {
-                
-                #main {
-
-                    #content-wrapper {
-                        width: 71.5%;
-						min-width: 71.5%;
-                    }
-                    
-                    #right-side-wrapper {
-                        width: 28.5%;
-                        min-width: 28.5%;
-                    }
-                }
-            }
-        }
-    }
-    
+  &.with-right-side {
     #application.ic-app {
-        
-        #main {
-            float: left;
-            margin-left: 0px!important; //override inline style
-            margin-right: 0;
-            // max-width: 962px; //1200-238 on the left side
-            // padding-left: 50px;
-            width: 100%;
-            //width: ~"calc(100% - 238px)"; //need to escape the value for less not to interpret the value
-            //min-width: ~"calc(100% - 238px)";
-            
-            #content-wrapper {
-                float: left;
-                width: 100%;
-                min-width: 100%;
-                // outline: 1px solid purple;
-            }
-            
-            #right-side-wrapper {
-                padding: 0;
-            }
+      #main {
+        #content-wrapper {
+          float: left;
+          width: 76%;
+          min-width: 76%;
+          // outline: 1px solid purple;
         }
+
+        #right-side-wrapper {
+          float: left;
+          width: 24%;
+          min-width: 24%;
+          padding: 0;
+          // outline: 1px solid green;
+        }
+      }
     }
+
+    &.assignments {
+      #application.ic-app {
+        #main {
+          #content-wrapper {
+            width: 71.5%;
+            min-width: 71.5%;
+          }
+
+          #right-side-wrapper {
+            width: 28.5%;
+            min-width: 28.5%;
+          }
+        }
+      }
+    }
+  }
+
+  #application.ic-app {
+    #main {
+      float: left;
+      margin-left: 0px !important; //override inline style
+      margin-right: 0;
+      // max-width: 962px; //1200-238 on the left side
+      // padding-left: 50px;
+      width: 100%;
+      //width: ~"calc(100% - 238px)"; //need to escape the value for less not to interpret the value
+      //min-width: ~"calc(100% - 238px)";
+
+      #content-wrapper {
+        float: left;
+        width: 100%;
+        min-width: 100%;
+        // outline: 1px solid purple;
+      }
+
+      #right-side-wrapper {
+        padding: 0;
+      }
+    }
+  }
 }
 
 // body:not(.full-width) .ic-app-container {
-    /* max-width: 1366px; */
+/* max-width: 1366px; */
 // }
 
 body:not(.ic-no-flex-layout) {
-    
-    &.course-menu-expanded {
-        
-        #application.ic-app {
-
-            .ic-app-main-layout-horizontal {
-                margin-left: 0px;
-            }
-        }
-    }
-    
+  &.course-menu-expanded {
     #application.ic-app {
-        
-        .ic-app-main-layout-horizontal {
-            display: block;
-            
-            .ic-app-main-content {
-                display: block;
-                
-                @media only screen and (min-width: 992px) {
-                    display: block;
-                }
-            }
+      .ic-app-main-layout-horizontal {
+        margin-left: 0px;
+      }
+    }
+  }
+
+  #application.ic-app {
+    .ic-app-main-layout-horizontal {
+      display: block;
+
+      .ic-app-main-content {
+        display: block;
+
+        @media only screen and (min-width: 992px) {
+          display: block;
         }
-    }   
+      }
+    }
+  }
 }
 
 .home #right-side {
-    width: 100%;
+  width: 100%;
 }
 
 #application.ic-app {
-    #mmooc-course-tabs-container.no-tabs {
-        padding-bottom: 25px;
-    }
+  #mmooc-course-tabs-container.no-tabs {
+    padding-bottom: 25px;
+  }
 }
