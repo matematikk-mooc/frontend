@@ -1,5 +1,6 @@
-//Hide existing content
-#my_groups_table, #past_enrollments_table {
+// hides existing content
+#my_groups_table,
+#past_enrollments_table {
   display: none;
 }
 
@@ -10,7 +11,7 @@
 }
 
 #my_courses_table::before {
-  content: "";
+  content: '';
   width: 100%;
   height: 600px;
   position: absolute;
@@ -19,101 +20,94 @@
 }
 
 .mmooc-course-list-container {
-	h1 {
-		font-family:'Roboto Slab';
-		display: inline-block;
-		width: 200px;
-		margin-bottom: 25px;
-	}
-	
-	.btn-more-courses {
-  	float: right;
-	}
-	
-	#filter {
-		float: right;
-		margin-top: -10px;
-	}
+  h1 {
+    font-family: 'Roboto';
+    display: inline-block;
+    width: 200px;
+    margin-bottom: 25px;
+  }
 
+  .btn-more-courses {
+    float: right;
+  }
+
+  #filter {
+    float: right;
+    margin-top: -10px;
+  }
 }
+
 .mmooc-course-list {
-    //Horizontal line after title, ref. http://stackoverflow.com/questions/20935191/create-line-after-text-with-css
-    h2.mmooc-course-category-title {
+  // horizontal line after title, ref. http://stackoverflow.com/questions/20935191/create-line-after-text-with-css
+  h2.mmooc-course-category-title {
     position: relative;
-    overflow: hidden; //Clip the horizontal lines outside the container
+    overflow: hidden; // clips the horizontal lines outside the container
+  }
+
+  h2.mmooc-course-category-title:after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    height: 0.5em;
+    border-top: 1px solid black;
+    width: 100%;
+    margin-left: 10px;
+  }
+
+  .mmooc-row {
+    margin-left: -20px;
+    margin-right: -20px;
+    margin-top: 20px;
+  }
+
+  [class*='mmooc-size'] {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .mmooc-course-list-item {
+    background: #fff;
+    margin-bottom: 40px;
+    padding: 2px 22px 22px 22px; // there is less padding on top since heading will add padding when only one line
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.35);
+
+    .border-box;
+
+    .mmooc-course-list-heading {
+      .vertical-align-parent;
+      height: 50px;
+
+      h2 {
+        line-height: 24px;
+        font-size: 20px;
+        text-align: center;
+
+        .vertical-align;
+        a {
+          color: #000;
+        }
+      }
     }
 
-    h2.mmooc-course-category-title:after {
-        content:"";
-        position: absolute;
-        top: 50%;
-        height: 0.5em;
-        border-top: 1px solid black;
-        width: 100%;
-        margin-left:10px;
+    .mmooc-course-list-description {
+      height: 3 * @lineHeight;
+      overflow: hidden;
+      text-align: center;
     }
 
+    .mmooc-course-list-button {
+      margin: 24px 0;
+    }
 
-	.mmooc-row {
-		margin-left: -20px;
-		margin-right: -20px;
-		margin-top: 20px;
-	}
+    .mmooc-course-list-button {
+      text-align: center;
+      a {
+        padding: 8px 44px;
+      }
+    }
 
-	[class*='mmooc-size'] {
-		padding-left: 20px;
-		padding-right: 20px;
-	}
-
-
-	.mmooc-course-list-item {
-
-		background: #FFF;
-		margin-bottom: 40px;
-		padding: 2px 22px 22px 22px; /* Less padding on top since heading will add padding when only one line */
-		box-shadow: 0 1px 2px 0 rgba(0,0,0,0.35);
-
-		.border-box;
-
-		.mmooc-course-list-heading {
-			.vertical-align-parent;
-			height: 50px;
-
-			h2 {
-				line-height: 24px;
-				font-size: 20px;
-				text-align: center;
-
-
-				.vertical-align;
-				a {
-					color: #000;
-				}
-
-			}
-		}
-
-		.mmooc-course-list-description {
-			height: 3*@lineHeight;
-			overflow: hidden;
-			text-align: center;
-		}
-
-		.mmooc-course-list-button {
-			margin: 24px 0;
-		}
-
-		.mmooc-course-list-button {
-			text-align: center;
-			a {
-				padding: 8px 44px;
-			}
-
-		}
-
-		.mmooc-course-list-progress {
-			height: 10px; /* Fixed height since all courses might not have progress bar */
-		}
-	}
+    .mmooc-course-list-progress {
+      height: 10px; // there is fixed height since all courses might not have progress bar
+    }
+  }
 }
-

@@ -3,30 +3,32 @@
     <li class="step-1">
       <select id="mmpf-course-select">
         {{#unless courses}}
-          <option value="">No courses defined for account</option>
+        <option value="">No courses defined for account</option>
         {{else}}
-          <option value="">Choose a course</option>
-          {{#each courses}}
-            <option value="{{id}}">{{name}}</option>
-          {{/each}}
-        {{/unless}}
+        <option value="">Choose a course</option>
+        {{#each courses}}
+        <option value="{{id}}">{{name}}</option>
+        {{/each}} {{/unless}}
       </select>
-    <li class="step-2">
-      <select name="category"  onchange="$('.step-3').css('display', 'list-item')">
+      <li class="step-2">
+        <select name="category" onchange="$('.step-3').css('display', 'list-item')">
           <option value="">No group sets defined for course</option>
-      </select>
-    <li class="step-3"><input type="file" name="csv"  onchange="$('.step-4').css('display', 'list-item')">
-    <li class="step-4"><input type="submit"/>
+        </select>
+        <li class="step-3">
+          <input type="file" name="csv" onchange="$('.step-4').css('display', 'list-item')">
+          <li class="step-4">
+            <input type="submit" />
   </ol>
 </form>
 
 <div class="side-information">
   <h3>Decription of CSV format</h3>
-  <p>First line of the file must be the name of the columns. Column separators are commas. Fields optionally encloused by double quotes (").
-  <dl>
-    <dt>name [String]
-    <dd>The name of the group
-    <dt>description [String]
-    <dd>A description of the group
-  </dl>
+  <p>First line of the file must be the name of the columns. Column separators are commas. Fields optionally encloused by double
+    quotes (").
+    <dl>
+      <dt>name [String]
+        <dd>The name of the group
+          <dt>description [String]
+            <dd>A description of the group
+    </dl>
 </div>

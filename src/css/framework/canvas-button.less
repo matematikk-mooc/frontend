@@ -1,25 +1,39 @@
-.btn, #right-side .button-sidebar-wide {
-    .button;
+.btn,
+.Button,
+#right-side .button-sidebar-wide {
+  .button;
 }
 
 #right-side .button-sidebar-wide {
-    padding: 12px !important;
-    margin: 0 0 15px 0;
-    width: 100% !important;
-    .border-box;
-    &:last-of-type {
-        margin-bottom: 0;
-    }
+  padding: 12px !important;
+  margin: 0 0 15px 0;
+  width: 100% !important;
+  .border-box;
+  &:last-of-type {
+    margin-bottom: 0;
+  }
 }
 
-.btn-published, .btn-done, .btn-success {
-    background: @doneColor !important;
-    background-image: linear-gradient(-180deg, @doneGradientStart 0%, @doneGradientEnd 100%) !important;
-    border: 1px solid @doneGradientBorder !important;
-    box-shadow: inset 0 1px 0 0 @doneGradientBoxShadow !important;
+.btn-published,
+.btn-done,
+.btn-success {
+  background: @doneColor !important;
+  background-image: linear-gradient(
+    -180deg,
+    @doneGradientStart 0%,
+    @doneGradientEnd 100%
+  ) !important;
+  border: 1px solid @doneGradientBorder !important;
+  box-shadow: inset 0 1px 0 0 @doneGradientBoxShadow !important;
 
-    &:hover {
-        background-image: linear-gradient(-180deg, @doneHoverGradientStart 0%, @doneHoverGradientEnd 100%) !important;
-    }
-
+  &:hover {
+    background-image: linear-gradient(
+      -180deg,
+      @doneHoverGradientStart 0%,
+      @doneHoverGradientEnd 100%
+    ) !important;
+  }
+}
+.btn-failure {
+  background: @redWarningColor !important;
 }

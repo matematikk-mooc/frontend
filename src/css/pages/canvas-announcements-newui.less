@@ -1,28 +1,26 @@
 #application.ic-app {
+  ul.discussionTopicIndexList {
+    margin-left: 0;
 
-    ul.discussionTopicIndexList {
-        margin-left: 0;
-        
-        // .discussion-summary {
-        //     max-width: 500px;
-        // }
-        
-        .discussion-topic {
-            margin-left: 0;
-            margin-right: 0;
-            &.unread::before {
-              display: none;
-            }
-            &.unread {
-              border-left: 8px solid @linkColor;
-              padding-left: 27px;              
-            }
-        }
-        
-        .discussion-column {
-            display: block;
-            max-width: 100%;
-        }
+    // .discussion-summary {
+    //     max-width: 500px;
+    // }
+
+    .discussion-topic {
+      margin-left: 0;
+      margin-right: 0;
+      &.unread::before {
+        display: none;
+      }
+      &.unread {
+        border-left: 8px solid @linkColor;
+        padding-left: 27px;
+      }
     }
 
+    .discussion-column {
+      display: block;
+      max-width: 100%;
+    }
+  }
 }

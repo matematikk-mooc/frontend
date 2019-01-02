@@ -1,14 +1,30 @@
-<div id="mmooc-course-tabs-container"{{#unless menuItems.length}} class="no-tabs"{{subtitle}}{{/unless}}>
+<div id="mmooc-course-tabs-container" {{#unless menuItems.length}} class="no-tabs" {{subtitle}}{{/unless}}>
     <div id="mmooc-course-tabs-container-inner">
 
         <h1>{{title}}</h1>
-        {{#if subtitle}}<span class="h1-sub-heading">{{subtitle}}</span>{{/if}}
-        
-        {{#if menuItems.length}}
+        {{#if subtitle}}
+        <span class="h1-sub-heading">{{subtitle}}</span>{{/if}} {{#if menuItems.length}}
         <ul class="mmooc-course-tabs">
-            {{#each menuItems}}
-                <li class="mmooc-course-tab {{#ifEquals title ../selectedMenuItem}}selected{{/ifEquals}}"><a href="{{url}}">{{title}}</a></li>
-            {{/each}}
+            {{#each menuItems}} {{#if toolList.length}}
+            <li class="mmooc-course-tab {{#ifEquals url ../../selectedMenuItem}}selected{{/ifEquals}}" id="mmooc-menu-item-verktoy">
+                <a href="#">{{title}}
+                    <i class="icon-mini-arrow-down"></i>
+                </a>
+                <div class="mmooc-course-tab-menu-item-drop" id="mmooc-verktoy-list">
+                    <ul class="mmooc-course-tab-menu-item-list">
+                        {{#each toolList}}
+                        <li class="mmooc-course-tab-menu-item-list-item">
+                            <a href="{{href}}">{{title}}</a>
+                        </li>
+                        {{/each}}
+                    </ul>
+                </div>
+            </li>
+            {{else}}
+            <li class="mmooc-course-tab {{#ifEquals title ../../selectedMenuItem}}selected{{/ifEquals}}">
+                <a href="{{url}}">{{title}}</a>
+            </li>
+            {{/if}} {{/each}}
         </ul>
         {{/if}}
     </div>
