@@ -1,5 +1,9 @@
 this.mmooc = this.mmooc || {};
 
+// Course ID for selected course, which frontend page
+// will be swapped with All Courses list
+const allCoursesFrontpageCourseID = 14;
+
 this.mmooc.settings = {
   CanvaBadgeProtocolAndHost: 'https://canvabadges-beta-iktsenteret.bibsys.no',
   useCanvaBadge: false,
@@ -9,7 +13,9 @@ this.mmooc.settings = {
   removeGroupsLink: true,
   privacyPolicyLink: 'http://matematikk-mooc.github.io/privacypolicy.html',
   platformName: 'matematikk.mooc.no',
+  allCoursesFrontpageCourseID,
   feideEnrollRefferers: [
-    '/search/all_courses'
+    '/search/all_courses',
+    `/courses/${allCoursesFrontpageCourseID}`,
   ],
 };

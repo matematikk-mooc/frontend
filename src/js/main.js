@@ -33,7 +33,7 @@ jQuery(function($) {
     mmooc.api.getCourse(
       courseId,
       function(course) {
-        if (mmooc.util.isObserver(course)) {
+        if (mmooc.util.isAuthenticated() && mmooc.util.isObserver(course)) {
           mmooc.pages.showObserverInformationPane();
         }
       },
@@ -48,6 +48,18 @@ jQuery(function($) {
 
   mmooc.routes.addRouteForPath(/\/courses\/\d+$/, function() {
     mmooc.groups.interceptLinksToGroupPage();
+
+    // override default view and display all courses list instead
+    if (mmooc.util.isCourseFrontpageForAllCoursesList()) {
+      mmooc.menu.hideRightMenu();
+      mmooc.enroll.printAllCoursesContainer();
+      mmooc.enroll.printAllCourses();
+      $('body').removeClass('home');
+
+      // skips the rest of this function
+      return null;
+    }
+
     //        mmooc.coursePage.hideCourseInvitationsForAllUsers();
 
     var courseId = mmooc.api.getCurrentCourseId();

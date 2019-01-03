@@ -339,5 +339,20 @@ this.mmooc.util = (function() {
         }
       }
     },
+    isCourseFrontpageForAllCoursesList: () => {
+      const allCoursesFrontpageCourseID = mmooc.settings.allCoursesFrontpageCourseID;
+      const queryString = document.location.search;
+      const currentCourseID = mmooc.api.getCurrentCourseId();
+
+      const isOverridenCourse = currentCourseID === allCoursesFrontpageCourseID;
+      const isNotTeacherOrAdmin = !mmooc.util.isTeacherOrAdmin();
+      const isOverridenAnyCourse = queryString === '?coursesList';
+      const isDisabledOverridenCourse = queryString !== '?skipCoursesList';
+
+      return (
+          (isOverridenCourse && isNotTeacherOrAdmin)
+          || isOverridenAnyCourse
+        ) && isDisabledOverridenCourse
+    }
   };
 })();
