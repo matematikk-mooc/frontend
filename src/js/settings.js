@@ -13,7 +13,7 @@ this.mmooc.settings = {
   removeGroupsLink: true,
   privacyPolicyLink: 'http://matematikk-mooc.github.io/privacypolicy.html',
   platformName: 'matematikk.mooc.no',
-  allCoursesFrontpageCourseID,
+  allCoursesFrontpageCourseID: 234,
   feideEnrollRefferers: [
     '/search/all_courses',
     `/courses/${allCoursesFrontpageCourseID}`,

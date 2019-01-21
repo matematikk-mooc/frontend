@@ -562,7 +562,7 @@ this.mmooc.menu = (function() {
     alterHomeLink: function() {
       $('#header-logo').attr('href', '/courses');
       $('a.ic-app-header__logomark').attr('href', '/courses'); //New UI
-      $('a.ic-app-header__logomark').attr('src', '../../bitmaps/logo.svg'); //New UI
+      $('a.ic-app-header__logomark').attr('src', 'https://kompetanse.udir.no/custom/logo/Ny-Udir-Logo-RGB-Neg.png'); //New UI
       $('.ic-app-header__logomark-container')
         .detach()
         .prependTo('.ic-app-header__main-navigation');
