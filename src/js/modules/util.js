@@ -309,49 +309,10 @@ this.mmooc.util = (function() {
         (key, value) => key === "" ? value : decodeURIComponent(value)
       );
     },
-    redirectFeideAuthIfEnrollReferrer: () => {
-      // Checks if we hit the /canvas/login from Feide Enroll pages
-      // If we go from permitted refferer, we redirect to Feide auth
-      // when page user is unauthenticated and does not provide `?normalLogin` param
-      const permittedReferrers = mmooc.settings.feideEnrollRefferers;
-      const hasPermittedRefferer = permittedReferrers.some(ref => document.referrer.endsWith(ref));
-
-      if( document.location.search !== "?normalLogin" &&
-          !mmooc.util.isAuthenticated() &&
-          hasPermittedRefferer
-      ) {
-        window.location.href = '/login/saml';
-      }
-    },
-    redirectToEnrollIfCodeParamPassed: () => {
-      // if user wanted to enroll a course using Feide auth,
-      // then was returned from SAML login view, we redirect to proper enrollment page
-      if (document.location.search !== '') {
-
-        // fetch the string '?param1=x&param2=y'
-        // to obj { param1: 'x', param2: 'y'}
-        const urlParamsObj = mmooc.util.urlParamsToObject();
-
-        // get the value of  'enroll_code' 
-        const enrollCode = urlParamsObj && urlParamsObj['enroll_code'];
-
-        // if enroll_code param was passed
-        if (enrollCode !== undefined) {
-          window.location.href = `/enroll/${enrollCode}`;
-        }
-      }
-    },
-    getLinkToMyCourses: () => {
-        var linkToMyCourses = "/courses";
-        if (mmooc.settings.allCoursesFrontpageCourseID > 0) {
-            linkToMyCourses = "/courses/" + mmooc.settings.allCoursesFrontpageCourseID + "?myCourses=1";
-        }
-        return linkToMyCourses;
-    },
     getLinkToAvailableCourses: () => {
         var linkToAvailableCourses = "/courses/search_all";
-        if (mmooc.settings.allCoursesFrontpageCourseID > 0) {
-            linkToAvailableCourses = "/courses/" + mmooc.settings.allCoursesFrontpageCourseID + "?coursesList=1";
+        if (mmooc.settingsRoot.allCoursesFrontpageCourseID > 0) {
+            linkToAvailableCourses = "/courses/" + mmooc.settingsRoot.allCoursesFrontpageCourseID + "?coursesList=1";
         }
         return linkToAvailableCourses;
     },
@@ -368,18 +329,18 @@ this.mmooc.util = (function() {
       const isDisabledOverridenCourse = urlParamsObj &&  !urlParamsObj['skipCoursesList'];
       const isMyCourses = urlParamsObj &&  urlParamsObj['myCourses'];
 
-      var returnCode = mmooc.settings.courseListEnum.normalCourse;
+      var returnCode = mmooc.settingsRoot.courseListEnum.normalCourse;
       if (isOverridenCourse && isNotTeacherOrAdmin && isDisabledOverridenCourse)
       {
-        returnCode = mmooc.settings.courseListEnum.allCoursesList;
+        returnCode = mmooc.settingsRoot.courseListEnum.allCoursesList;
       }        
       if(isOverridenAnyCourse)
       {
-        returnCode = mmooc.settings.courseListEnum.allCoursesList;
+        returnCode = mmooc.settingsRoot.courseListEnum.allCoursesList;
       }
       if (isMyCourses)
       {
-        returnCode = mmooc.settings.courseListEnum.myCoursesList;
+        returnCode = mmooc.settingsRoot.courseListEnum.myCoursesList;
       }
       return returnCode;
     }

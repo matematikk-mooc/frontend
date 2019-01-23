@@ -10,16 +10,6 @@ this.mmooc.settings = {
   removeGlobalGradesLink: true,
   removeGroupsLink: true,
   privacyPolicyLink: 'http://matematikk-mooc.github.io/privacypolicy.html',
-  platformName: 'matematikk.mooc.no',
-  allCoursesFrontpageCourseID: 1,
-  feideEnrollRefferers: [
-    '/search/all_courses',
-    `/courses/${allCoursesFrontpageCourseID}`,
-  ],
+  platformName: 'matematikk.mooc.no'
 };
 
-this.mmooc.settings.courseListEnum = {
-    normalCourse : 1,
-    allCoursesList : 2,
-    myCoursesList : 3
-}

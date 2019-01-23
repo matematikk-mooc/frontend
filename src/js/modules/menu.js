@@ -188,7 +188,7 @@ this.mmooc.menu = (function() {
         if (mmooc.settings.removeGroupsLink == false) {
           insertCustomMenuElementInTopMenu('Grupper', '/groups');
         }
-        var linkToMyCourses = mmooc.util.getLinkToMyCourses();
+        var linkToMyCourses = mmooc.utilRoot.getLinkToMyCourses();
         insertCustomMenuElementInTopMenu(mmooc.i18n.CoursePlural, linkToMyCourses);
 
         if (mmooc.util.isTeacherOrAdmin()) {
@@ -561,7 +561,7 @@ this.mmooc.menu = (function() {
     },
 
     alterHomeLink: function() {
-      var linkToMyCourses = mmooc.util.getLinkToMyCourses();
+      var linkToMyCourses = mmooc.utilRoot.getLinkToMyCourses();
       $('#header-logo').attr('href', linkToMyCourses);
       $('a.ic-app-header__logomark').attr('href', linkToMyCourses); //New UI
 // 20180122ETH Uncommenting the line below to see if we can specify the logo in the theme editor instead.

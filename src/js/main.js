@@ -51,7 +51,7 @@ jQuery(function($) {
 
     // override default view and display all courses list instead
     var courseView = mmooc.util.isCourseFrontpageForAllCoursesList();
-    if (courseView == mmooc.settings.courseListEnum.allCoursesList) {
+    if (courseView == mmooc.settingsRoot.courseListEnum.allCoursesList) {
       mmooc.menu.hideRightMenu();
       mmooc.enroll.printAllCoursesContainer();
       mmooc.enroll.printAllCourses();
@@ -60,7 +60,7 @@ jQuery(function($) {
       // skips the rest of this function
       return null;
     }
-    else if (courseView == mmooc.settings.courseListEnum.myCoursesList) {
+    else if (courseView == mmooc.settingsRoot.courseListEnum.myCoursesList) {
         // if user wants to enroll a course using Feide auth,
         // then was returned from SAML login view, we redirect to proper enrollment page
         mmooc.util.redirectToEnrollIfCodeParamPassed();
