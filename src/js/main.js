@@ -16,11 +16,6 @@ jQuery(function($) {
   });
 
   mmooc.routes.addRouteForPath(/\/courses$/, function() {
-
-    // if user wants to enroll a course using Feide auth,
-    // then was returned from SAML login view, we redirect to proper enrollment page
-    mmooc.util.redirectToEnrollIfCodeParamPassed();
-
     mmooc.menu.hideRightMenu();
     mmooc.courseList.listCourses(
       'content',
@@ -61,10 +56,6 @@ jQuery(function($) {
       return null;
     }
     else if (courseView == mmooc.settingsRoot.courseListEnum.myCoursesList) {
-        // if user wants to enroll a course using Feide auth,
-        // then was returned from SAML login view, we redirect to proper enrollment page
-        mmooc.util.redirectToEnrollIfCodeParamPassed();
-
         mmooc.menu.hideRightMenu();
         mmooc.courseList.listCourses(
           'content',
