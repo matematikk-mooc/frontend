@@ -50,7 +50,8 @@ jQuery(function($) {
     mmooc.groups.interceptLinksToGroupPage();
 
     // override default view and display all courses list instead
-    if (mmooc.util.isCourseFrontpageForAllCoursesList()) {
+    var courseView = mmooc.util.isCourseFrontpageForAllCoursesList();
+    if (courseView == mmooc.settings.courseListEnum.allCoursesList) {
       mmooc.menu.hideRightMenu();
       mmooc.enroll.printAllCoursesContainer();
       mmooc.enroll.printAllCourses();
@@ -58,6 +59,18 @@ jQuery(function($) {
 
       // skips the rest of this function
       return null;
+    }
+    else if (courseView == mmooc.settings.courseListEnum.myCoursesList) {
+        // if user wants to enroll a course using Feide auth,
+        // then was returned from SAML login view, we redirect to proper enrollment page
+        mmooc.util.redirectToEnrollIfCodeParamPassed();
+
+        mmooc.menu.hideRightMenu();
+        mmooc.courseList.listCourses(
+          'content',
+          mmooc.courseList.showAddCourseButton
+        );
+        return null;
     }
 
     //        mmooc.coursePage.hideCourseInvitationsForAllUsers();
@@ -428,7 +441,7 @@ jQuery(function($) {
   });
 
   mmooc.routes.addRouteForQueryString(/enrolled=1/, function() {
-    window.location.href = '/courses';
+//    window.location.href = '/courses';
   });
 
   /*    mmooc.routes.addRouteForPath(/enroll\/[0-9A-Z]+$/, function() {

@@ -188,7 +188,8 @@ this.mmooc.menu = (function() {
         if (mmooc.settings.removeGroupsLink == false) {
           insertCustomMenuElementInTopMenu('Grupper', '/groups');
         }
-        insertCustomMenuElementInTopMenu(mmooc.i18n.CoursePlural, '/courses');
+        var linkToMyCourses = mmooc.util.getLinkToMyCourses();
+        insertCustomMenuElementInTopMenu(mmooc.i18n.CoursePlural, linkToMyCourses);
 
         if (mmooc.util.isTeacherOrAdmin()) {
           this.showLeftMenu();
@@ -560,9 +561,12 @@ this.mmooc.menu = (function() {
     },
 
     alterHomeLink: function() {
-      $('#header-logo').attr('href', '/courses');
-      $('a.ic-app-header__logomark').attr('href', '/courses'); //New UI
-      $('a.ic-app-header__logomark').attr('src', 'https://kompetanse.udir.no/custom/logo/Ny-Udir-Logo-RGB-Neg.png'); //New UI
+      var linkToMyCourses = mmooc.util.getLinkToMyCourses();
+      $('#header-logo').attr('href', linkToMyCourses);
+      $('a.ic-app-header__logomark').attr('href', linkToMyCourses); //New UI
+// 20180122ETH Uncommenting the line below to see if we can specify the logo in the theme editor instead.
+//             In any case the logo should not be hardcoded but taken from the variables file instead.      
+//      $('a.ic-app-header__logomark').attr('src', 'https://kompetanse.udir.no/custom/logo/Ny-Udir-Logo-RGB-Neg.png'); //New UI
       $('.ic-app-header__logomark-container')
         .detach()
         .prependTo('.ic-app-header__main-navigation');

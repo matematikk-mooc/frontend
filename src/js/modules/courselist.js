@@ -11,10 +11,11 @@ this.mmooc.courseList = (() => {
             `<div>Laster ${mmooc.i18n.CoursePlural.toLowerCase()}....</div>`
           ); //overwrite the contents in parentID and display: 'Laster kurs....'
           let html = '';
+          let linkToAvailableCourses = mmooc.util.getLinkToAvailableCourses(); 
           if (courses.length == 0) {
             html = `<h1>Mine ${mmooc.i18n.CoursePlural.toLowerCase()}</h1><p>${
               mmooc.i18n.NoEnrollments
-            }</p><a class='btn' href='/search/all_courses'>Se tilgjengelige ${mmooc.i18n.CoursePlural.toLowerCase()}</a>`;
+            }</p><a class='btn' href='${linkToAvailableCourses}'>Se tilgjengelige ${mmooc.i18n.CoursePlural.toLowerCase()}</a>`;
             $(`#${parentId}`).html(html);
           } else {
             html = mmooc.util.renderTemplateWithData('courselistcontainer', {
