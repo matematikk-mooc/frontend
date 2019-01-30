@@ -422,15 +422,6 @@ jQuery(function($) {
     );
   });
 
-  mmooc.routes.addRouteForPath([/\/login\/canvas/], function () {
-    // Checks if we hit the /canvas/login from Feide Enroll pages
-    // If we go from permitted refferer, we redirect to Feide auth
-    // when page user is unauthenticated and does not provide `?normalLogin` param
-    mmooc.util.redirectFeideAuthIfEnrollReferrer();
-
-    mmooc.pages.replaceCreateAccountLink();
-  });
-
   mmooc.routes.addRouteForQueryString(/enrolled=1/, function() {
 //    window.location.href = '/courses';
   });
@@ -469,7 +460,7 @@ jQuery(function($) {
 
     mmooc.pages.updateSidebarWhenMarkedAsDone();
     mmooc.pages.updateSidebarWhenContributedToDiscussion();
-    mmooc.menu.alterHomeLink();
+//    mmooc.menu.alterHomeLink();
     mmooc.menu.alterCourseLink();
 
     mmooc.footer.addLicenseInFooter();

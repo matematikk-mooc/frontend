@@ -236,10 +236,16 @@ this.mmooc.menu = (function() {
 
     renderUnauthenticatedMenu: function() {
       if (!mmooc.util.isAuthenticated()) {
+        //Hide standard canvas login button
+        $("#global_nav_login_link").hide();
+
+        var linkToAvailableCourses = mmooc.util.getLinkToAvailableCourses();
+        this.alterHomeLink(linkToAvailableCourses);
+        
         let html = mmooc.util.renderTemplateWithData('noLoggedInHeader', {
           logInText: mmooc.i18n.LogIn
         });
-        $('#header').html(html);
+        $('#menu').append(html);
         mmooc.login.handleLoginButtonClick();
       }
     },
@@ -270,6 +276,10 @@ this.mmooc.menu = (function() {
             '#mmooc-profile-settings'
           );
         });
+
+        var linkToMyCourses = mmooc.utilRoot.getLinkToMyCourses();
+        this.alterHomeLink(linkToMyCourses);
+
         mmooc.api.getUnreadMessageSize(function(conversations) {
           var msgBadge = $('#mmooc-unread-messages-count');
           if (conversations.unread_count != '0') {
@@ -280,6 +290,7 @@ this.mmooc.menu = (function() {
           }
         });
         this.updateNotificationsForUser();
+        
 
         //20180921ETH Vi bruker ikke hjelpemenyen lenger.
         //                $(document).on("click", ".helpMenu", openHelpDialog);
@@ -560,8 +571,7 @@ this.mmooc.menu = (function() {
       );
     },
 
-    alterHomeLink: function() {
-      var linkToMyCourses = mmooc.utilRoot.getLinkToMyCourses();
+    alterHomeLink: function(linkToMyCourses) {
       $('#header-logo').attr('href', linkToMyCourses);
       $('a.ic-app-header__logomark').attr('href', linkToMyCourses); //New UI
 // 20180122ETH Uncommenting the line below to see if we can specify the logo in the theme editor instead.

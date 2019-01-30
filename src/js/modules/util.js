@@ -39,10 +39,10 @@ this.mmooc.util = (function() {
     },
 
     filterCourse: function(course) {
-      return course.name != 'SELFREGISTER';
+      return course.account_id == filterCoursesOnAccountId;
     },
     filterSearchAllCourse: function(course) {
-      return course.course.name != 'SELFREGISTER';
+      return course.course.account_id == filterCoursesOnAccountId;
     },
     callWhenElementIsPresent: function(classId, callback) {
       var checkExist = setInterval(function() {
@@ -311,13 +311,12 @@ this.mmooc.util = (function() {
     },
     getLinkToAvailableCourses: () => {
         var linkToAvailableCourses = "/courses/search_all";
-        if (mmooc.settingsRoot.allCoursesFrontpageCourseID > 0) {
-            linkToAvailableCourses = "/courses/" + mmooc.settingsRoot.allCoursesFrontpageCourseID + "?coursesList=1";
+        if (allCoursesFrontpageCourseID > 0) {
+            linkToAvailableCourses = "/courses/" + allCoursesFrontpageCourseID + "?coursesList=1";
         }
         return linkToAvailableCourses;
     },
     isCourseFrontpageForAllCoursesList: () => {
-      const allCoursesFrontpageCourseID = mmooc.settings.allCoursesFrontpageCourseID;
       const queryString = document.location.search;
       const currentCourseID = mmooc.api.getCurrentCourseId();
 

@@ -130,24 +130,6 @@ this.mmooc.pages = (function() {
       });
     },
 
-    replaceCreateAccountLink: function() {
-      mmooc.api.getSelfRegisterCourse(function(selfRegisterCourse) {
-        var createAccountTitle = '';
-        var createAccountSubtitle = '';
-        if (selfRegisterCourse[0]) {
-          var url =
-            '/enroll/' + selfRegisterCourse[0].course.self_enrollment_code;
-          $('#register_link').attr('href', url);
-          createAccountTitle = mmooc.i18n.CreateAccountTitle;
-          createAccountSubtitle = mmooc.i18n.CreateAccountSubtitle;
-        }
-        $('#register_link div.ic-Login__banner-title').html(createAccountTitle);
-        $('#register_link div.ic-Login__banner-subtitle').html(
-          createAccountSubtitle
-        );
-      });
-    },
-
     duplicateMarkedAsDoneButton: function() {
       var checkExist = setInterval(function() {
         if ($('.module-sequence-footer-content').length) {

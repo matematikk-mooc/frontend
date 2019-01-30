@@ -1,12 +1,12 @@
 this.mmooc = this.mmooc || {};
 
+//const filterCoursesOnAccountId = 99;
+//const allCoursesFrontpageCourseID = 234;
+const filterCoursesOnAccountId = 4;
 const allCoursesFrontpageCourseID = 1;
 
 this.mmooc.settingsRoot = {
   feideEnrollRefferers: [
-//    Uncomment the line below if our available courselist design runs on the root account.
-//    '/search/all_courses',
-    `/courses/${allCoursesFrontpageCourseID}`,
     `/courses/${allCoursesFrontpageCourseID}?coursesList=1`
   ]
 };

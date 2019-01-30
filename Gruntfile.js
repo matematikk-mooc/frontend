@@ -66,6 +66,21 @@ module.exports = function (grunt) {
         ],
         dest: 'tmp/mmooc.js'
       },
+      jsnorootscript: {
+        src: [
+          'src/js/3party/*.js',
+          'tmp/templates.js',
+          'src/js/api/*.js',
+          'src/js/modules/*.js',
+          'src/js/settings.js',
+          'src/js/i18n.js',
+          'src/js/main.js',
+          'src/addons/canva_badges/js/*.js',
+          'src/js/settingsRoot.js', 
+          'src/js/utilRoot.js'
+        ],
+        dest: 'dist/mmoocnorootscript.js'
+      },
       extras: {
         src: [
           'node_modules/grunt-contrib-handlebars/node_modules/handlebars/dist/handlebars.min.js', // we need to embed handlebars here because it is not included in the iframe
