@@ -21,13 +21,22 @@ this.mmooc.menu = function() {
         if (!hideTabs) { 
             menuItems[menuItems.length] = {"title": mmooc.i18n.Course + "forside", url: "/courses/" + courseId};
             menuItems[menuItems.length] = {"title": "Kunngjøringer", url: "/courses/" + courseId + "/announcements"};
-            menuItems[menuItems.length] = {"title": "Grupper", url: "/courses/" + courseId + "/groups"};
-            menuItems[menuItems.length] = {"title": "Diskusjoner", url: "/courses/" + courseId + "/discussion_topics"};
+            if(mmooc.settings.displayGroupsTab)
+            {
+                menuItems[menuItems.length] = {"title": "Grupper", url: "/courses/" + courseId + "/groups"};
+            }
+            if(mmooc.settings.displayDiscussionsTab)
+            {
+                menuItems[menuItems.length] = {"title": "Diskusjoner", url: "/courses/" + courseId + "/discussion_topics"};
+            }
             
             //SelectedMenuItem contains the path if we are called by the external path route.
             var tools = mmooc.util.getToolsInLeftMenu(selectedMenuItem);            
             
-            menuItems[menuItems.length] = {"title": tools.activeToolName, toolList: tools.toolList, url: tools.activeToolPath};
+            if(tools.length)
+            {
+                menuItems[menuItems.length] = {"title": tools.activeToolName, toolList: tools.toolList, url: tools.activeToolPath};
+            }
             
             if (mmooc.util.isTeacherOrAdmin()) {
                 menuItems[menuItems.length] = {"title": "Faglærer", url: "/courses/" + courseId + "/?mmpf"};
@@ -201,7 +210,7 @@ this.mmooc.menu = function() {
         showUserMenu: function() {
             var menu = document.getElementById('menu');
             if (menu !=  null) {
-                var html = mmooc.util.renderTemplateWithData("usermenu", {user: mmooc.api.getUser()});
+                var html = mmooc.util.renderTemplateWithData("usermenu", {user: mmooc.api.getUser(), help: mmooc.settings.help});
                 menu.insertAdjacentHTML('afterend', html);
 
                 $("#mmooc-menu-item-varsler").click(function(event) {
@@ -225,8 +234,11 @@ this.mmooc.menu = function() {
                 this.updateNotificationsForUser();
                 
                 //20180921ETH Vi bruker ikke hjelpemenyen lenger.
-//                $(document).on("click", ".helpMenu", openHelpDialog);
-//                hideHelpMenuElementIfNotActivated();
+                //20190131ETH Men UiA bruker den, så vi gjør den konfigurerbar.
+                if(mmooc.settings.help) {
+                    $(document).on("click", ".helpMenu", openHelpDialog);
+                    hideHelpMenuElementIfNotActivated();
+                }
             }
         },
 

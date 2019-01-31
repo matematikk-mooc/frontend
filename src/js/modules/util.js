@@ -142,7 +142,7 @@ this.mmooc.util = function () {
                     || roles.indexOf('admin') != -1);
         },
         isObserver: function(course) {
-            return course.enrollments[0].type == "observer";
+            return course.enrollments[0] && course.enrollments[0].type == "observer";
         },
         
         setGlobalPeerReviewButtonState: function () {
