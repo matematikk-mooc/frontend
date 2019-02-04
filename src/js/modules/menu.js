@@ -302,20 +302,25 @@ this.mmooc.menu = function() {
             function strLeft(sourceStr, keyStr){
                 return (sourceStr.indexOf(keyStr) == -1 | keyStr=='') ? '' : sourceStr.split(keyStr)[0];
             }
+            function strRight(sourceStr, keyStr){
+                return (sourceStr.indexOf(keyStr) == -1 | keyStr=='') ? '' : sourceStr.split(keyStr)[1];
+            }
 
             function _addGetHelpFromteacherButton(group) {
                 
                 //Match gruppenavn mot seksjon i seksjonsliste.
-                function _getSectionRecipientFromGroupName(sectionRecipients, groupName)
+                function _getSectionTeacherRecipients(courseId, enrollments)
                 {
-                    for(var i = 0; i < sectionRecipients.length; i++) {
-                        var r = sectionRecipients[i];
-                        if(r.name == groupName)
+                    var sectionRecipients = [];
+                    for(var i = 0; i < enrollments.length; i++) {
+                        var e = enrollments[i];
+                        if(e.course_id == courseId)
                         {
-                            return r.id;
+                            var r = "section_" + e.course_section_id + "_teachers";
+                            sectionRecipients.push(r);
                         }
                     }
-                    return null;
+                    return sectionRecipients;
                 }
 
                 function _tilkallVeilederFeilet()
@@ -325,51 +330,36 @@ this.mmooc.menu = function() {
                 }
 
                 function _sendMessageToSectionTeachers() {
-                    var courseId = mmooc.api.getCurrentCourseId();
-                    mmooc.api.getUserGroupsForCourse(courseId, function(groups) {
-                        if((groups.length == 0) || (groups.length > 1) ) {
+                    mmooc.api.getEnrollmentsForSelf(function(enrollments) {
+                        var courseId = mmooc.api.getCurrentCourseId();
+                        var sectionRecipientTeachers = _getSectionTeacherRecipients(courseId, enrollments);
+                        if(sectionRecipientTeachers.length == 0)
+                        {
                             _tilkallVeilederFeilet();
-                            alert("Det er noe galt med gruppeoppsettet ditt.\nDu er medlem i " + groups.length + " grupper.");
+                            alert("Fant ingen lærere å tilkalle.");
                         }
                         else
                         {
-                            var group = groups[0]; 
-                            var groupName = group.name;
-                            var groupCourseId = group.course_id;
-                            mmooc.api.getSectionRecipients(groupCourseId, (function(courseId) {
-                                return function(recipients) {
-                                    var sectionRecipient = _getSectionRecipientFromGroupName(recipients, groupName);
-                                    if(sectionRecipient == null)
-                                    {
-                                        _tilkallVeilederFeilet();
-                                        alert("Det er noe galt med gruppeoppsettet ditt.\nFant ikke seksjonen til " + groupName);
-                                    }
-                                    else
-                                    {
-                                        var sectionRecipientTeachers = sectionRecipient + "_teachers";
-                                        var subject = groupName + " " + mmooc.i18n.GroupGetInTouchSubject;
-                                        var discussionUrl = window.location.href;
-                                        var discussionAndGroupTitle = $(".discussion-title").text();
-                                        var discussionTitle = strLeft(discussionAndGroupTitle, " - ");
-                                        var newLine = "\n";
+                            var discussionAndGroupTitle = $(".discussion-title").text();
+                            var subject = strRight(discussionAndGroupTitle, " - ") + " " + mmooc.i18n.GroupGetInTouchSubject;
+                            var discussionTitle = strLeft(discussionAndGroupTitle, " - ");
+                            var discussionUrl = window.location.href;
+                            var newLine = "\n";
 
-                                        var body = mmooc.i18n.WeHaveAQuestionToTeacherInTheDiscussion 
-                                            + ' "' + discussionTitle + '":' + newLine + discussionUrl;
+                            var body = mmooc.i18n.WeHaveAQuestionToTeacherInTheDiscussion 
+                                + ' "' + discussionTitle + '":' + newLine + discussionUrl;
 
-                                        $("#mmooc-get-teachers-help").html("Sender melding...");
+                            $("#mmooc-get-teachers-help").html("Sender melding...");
 
-                                        mmooc.api.postMessageToConversation(courseId, sectionRecipientTeachers, subject, body, function(result) {
-                                            console.log(result);
-                                            $("#mmooc-get-teachers-help").addClass("btn-done");
-                                            $("#mmooc-get-teachers-help").html("Veileder tilkalt");
-                                        }, function(error) {
-                                            _tilkallVeilederFeilet();
-                                            alert("Tilkall veileder feilet. Gruppen har ingen veileder.");
-                                            console.log(error);
-                                        });
-                                    }
-                                }
-                            }(groupCourseId)));
+                            mmooc.api.postMessageToConversation(courseId, sectionRecipientTeachers, subject, body, function(result) {
+                                console.log(result);
+                                $("#mmooc-get-teachers-help").addClass("btn-done");
+                                $("#mmooc-get-teachers-help").html("Veileder tilkalt");
+                            }, function(error) {
+                                _tilkallVeilederFeilet();
+                                alert("Kunne ikke sende meldingen.");
+                                console.log(error);
+                            });
                         }
                     });
                 }

@@ -527,13 +527,15 @@ body: test
 
         postMessageToConversation: function(courseId, recipient, subject, body, callback, error) {
             var courseContext = "course_" + courseId;
+            var recipientJSON = JSON.parse(JSON.stringify(recipient))
             this._post({
                 "callback": callback,
                 "error":    error,
                 "uri":      "/conversations",
                 "params":   {
                     course: courseContext,
-                    recipients: [recipient],
+                    recipients: recipientJSON,
+                    group_conversation : true,
                     subject: subject,
                     body: body
                 }
@@ -896,6 +898,14 @@ $canvas.post(uri, {'enrollment[user_id]' => user_id, 'enrollment[type]' => etype
                 "callback": callback,
                 "uri":      "/courses/" + courseId + "/discussion_topics",
                 "params":   { only_announcements: true, per_page: 999 }
+            });
+        },
+
+        getEnrollmentsForSelf: function(callback) {
+            this._get({
+                "callback": callback,
+                "uri":      "/users/self/enrollments",
+                "params":   {}
             });
         },
 
