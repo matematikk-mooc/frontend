@@ -340,7 +340,7 @@ this.mmooc.menu = function() {
                         }
                         else
                         {
-                            var discussionAndGroupTitle = $(".discussion-title").text();
+                            var discussionAndGroupTitle = $(".discussion-title").html();
                             var subject = strRight(discussionAndGroupTitle, " - ") + " " + mmooc.i18n.GroupGetInTouchSubject;
                             var discussionTitle = strLeft(discussionAndGroupTitle, " - ");
                             var discussionUrl = window.location.href;
