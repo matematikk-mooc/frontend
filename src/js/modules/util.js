@@ -39,10 +39,10 @@ this.mmooc.util = (function() {
     },
 
     filterCourse: function(course) {
-      return course.account_id == filterCoursesOnAccountId;
+      return filterCoursesOnAccountId.includes(course.account_id);
     },
     filterSearchAllCourse: function(course) {
-      return course.course.account_id == filterCoursesOnAccountId;
+      return filterCoursesOnAccountId.includes(course.course.account_id);
     },
     callWhenElementIsPresent: function(classId, callback) {
       var checkExist = setInterval(function() {

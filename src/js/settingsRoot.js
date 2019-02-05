@@ -1,9 +1,9 @@
 this.mmooc = this.mmooc || {};
 
-//const filterCoursesOnAccountId = 99;
-//const allCoursesFrontpageCourseID = 234;
-const filterCoursesOnAccountId = 4;
-const allCoursesFrontpageCourseID = 1;
+const allCoursesFrontpageCourseID = 234;
+//const allCoursesFrontpageCourseID = 1;
+const filterCoursesOnAccountId = [99, 100, 102, 103];
+//const filterCoursesOnAccountId = [4, 5];
 
 this.mmooc.settingsRoot = {
   feideEnrollRefferers: [
