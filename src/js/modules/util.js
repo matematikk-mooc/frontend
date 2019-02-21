@@ -2,6 +2,11 @@ this.mmooc = this.mmooc || {};
 
 this.mmooc.util = (function() {
   return {
+    courseListEnum: {
+        normalCourse : 1,
+        allCoursesList : 2,
+        myCoursesList : 3
+    },
     mmoocLoadScript: function(mmoocScript) {
       var mmoocScriptElement = document.createElement('script');
       mmoocScriptElement.setAttribute('charset', 'UTF-8');
@@ -39,10 +44,10 @@ this.mmooc.util = (function() {
     },
 
     filterCourse: function(course) {
-      return filterCoursesOnAccountId.includes(course.account_id);
+      return this.mmooc.settings.filterCoursesOnAccountId.includes(course.account_id);
     },
     filterSearchAllCourse: function(course) {
-      return filterCoursesOnAccountId.includes(course.course.account_id);
+      return this.mmooc.settings.filterCoursesOnAccountId.includes(course.course.account_id);
     },
     callWhenElementIsPresent: function(classId, callback) {
       var checkExist = setInterval(function() {
@@ -311,8 +316,8 @@ this.mmooc.util = (function() {
     },
     getLinkToAvailableCourses: () => {
         var linkToAvailableCourses = "/courses/search_all";
-        if (allCoursesFrontpageCourseID > 0) {
-            linkToAvailableCourses = "/courses/" + allCoursesFrontpageCourseID + "?coursesList=1";
+        if (this.mmooc.allCoursesFrontpageCourseID > 0) {
+            linkToAvailableCourses = "/courses/" + this.mmooc.allCoursesFrontpageCourseID + "?coursesList=1";
         }
         return linkToAvailableCourses;
     },
@@ -320,7 +325,7 @@ this.mmooc.util = (function() {
       const queryString = document.location.search;
       const currentCourseID = mmooc.api.getCurrentCourseId();
 
-      const isOverridenCourse = currentCourseID === allCoursesFrontpageCourseID;
+      const isOverridenCourse = currentCourseID === this.mmooc.allCoursesFrontpageCourseID;
       const isNotTeacherOrAdmin = !mmooc.util.isTeacherOrAdmin();
       
       const urlParamsObj = mmooc.util.urlParamsToObject();      
@@ -328,18 +333,18 @@ this.mmooc.util = (function() {
       const isDisabledOverridenCourse = urlParamsObj &&  !urlParamsObj['skipCoursesList'];
       const isMyCourses = urlParamsObj &&  urlParamsObj['myCourses'];
 
-      var returnCode = mmooc.settingsRoot.courseListEnum.normalCourse;
+      var returnCode = mmooc.util.courseListEnum.normalCourse;
       if (isOverridenCourse && isNotTeacherOrAdmin && isDisabledOverridenCourse)
       {
-        returnCode = mmooc.settingsRoot.courseListEnum.allCoursesList;
+        returnCode = mmooc.util.courseListEnum.allCoursesList;
       }        
       if(isOverridenAnyCourse)
       {
-        returnCode = mmooc.settingsRoot.courseListEnum.allCoursesList;
+        returnCode = mmooc.util.courseListEnum.allCoursesList;
       }
       if (isMyCourses)
       {
-        returnCode = mmooc.settingsRoot.courseListEnum.myCoursesList;
+        returnCode = mmooc.util.courseListEnum.myCoursesList;
       }
       return returnCode;
     }

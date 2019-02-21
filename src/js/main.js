@@ -46,7 +46,7 @@ jQuery(function($) {
 
     // override default view and display all courses list instead
     var courseView = mmooc.util.isCourseFrontpageForAllCoursesList();
-    if (courseView == mmooc.settingsRoot.courseListEnum.allCoursesList) {
+    if (courseView == mmooc.util.courseListEnum.allCoursesList) {
       mmooc.menu.hideRightMenu();
       mmooc.enroll.printAllCoursesContainer();
       mmooc.enroll.printAllCourses();
@@ -55,7 +55,7 @@ jQuery(function($) {
       // skips the rest of this function
       return null;
     }
-    else if (courseView == mmooc.settingsRoot.courseListEnum.myCoursesList) {
+    else if (courseView == mmooc.util.courseListEnum.myCoursesList) {
         mmooc.menu.hideRightMenu();
         mmooc.courseList.listCourses(
           'content',

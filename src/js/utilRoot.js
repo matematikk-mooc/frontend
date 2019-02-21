@@ -11,8 +11,8 @@ this.mmooc.utilRoot = (function() {
     },
     getLinkToMyCourses: () => {
         var linkToMyCourses = "/courses";
-        if (allCoursesFrontpageCourseID > 0) {
-            linkToMyCourses = "/courses/" + allCoursesFrontpageCourseID + "?myCourses=1";
+        if (this.mmooc.allCoursesFrontpageCourseID > 0) {
+            linkToMyCourses = "/courses/" + this.mmooc.allCoursesFrontpageCourseID + "?myCourses=1";
         }
         return linkToMyCourses;
     },
