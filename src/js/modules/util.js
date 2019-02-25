@@ -5,7 +5,8 @@ this.mmooc.util = (function() {
     courseListEnum: {
         normalCourse : 1,
         allCoursesList : 2,
-        myCoursesList : 3
+        myCoursesList : 3,
+        dataportenCallback : 4
     },
     mmoocLoadScript: function(mmoocScript) {
       var mmoocScriptElement = document.createElement('script');
@@ -332,6 +333,7 @@ this.mmooc.util = (function() {
       const isOverridenAnyCourse = urlParamsObj && urlParamsObj['coursesList'];
       const isDisabledOverridenCourse = urlParamsObj &&  !urlParamsObj['skipCoursesList'];
       const isMyCourses = urlParamsObj &&  urlParamsObj['myCourses'];
+      const isDataportenCallback = urlParamsObj &&  urlParamsObj['dataportenCallback'];
 
       var returnCode = mmooc.util.courseListEnum.normalCourse;
       if (isOverridenCourse && isNotTeacherOrAdmin && isDisabledOverridenCourse)
@@ -345,6 +347,10 @@ this.mmooc.util = (function() {
       if (isMyCourses)
       {
         returnCode = mmooc.util.courseListEnum.myCoursesList;
+      }
+      if (isDataportenCallback)
+      {
+        returnCode = mmooc.util.courseListEnum.dataportenCallback;
       }
       return returnCode;
     }
