@@ -64,11 +64,11 @@ jQuery(function($) {
         return null;
     }
     else if (courseView == mmooc.util.courseListEnum.dataportenCallback) {
-        $("#content").html('Du er nå logget inn i dataporten.<button id="dataportenLoggedIn">OK</button>"');
+        $("#application").html('Du er nå logget inn i dataporten.<button id="dataportenLoggedIn">OK</button>');
         window.opener.popupCompleted();
         $(document).on("click","#dataportenLoggedIn",function(e) {
 			window.close();
-		}
+		});
 		return null;
     }
     //        mmooc.coursePage.hideCourseInvitationsForAllUsers();
@@ -193,7 +193,9 @@ jQuery(function($) {
       mmooc.discussionTopics.printDiscussionUnreadCount(modules);
     });
     mmooc.announcements.printAnnouncementsUnreadCount();
-    mmooc.dataporten.display();
+    if (document.location.search != '?override') {
+        mmooc.dataporten.display();
+    }
   });
   mmooc.routes.addRouteForPath(/\/courses\/\d+\/users$/, function() {
     var courseId = mmooc.api.getCurrentCourseId();
