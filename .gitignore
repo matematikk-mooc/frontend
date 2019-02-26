@@ -7,3 +7,4 @@
 .eslintrc
 .vscode/
 test-env-setup.js
+_site/
