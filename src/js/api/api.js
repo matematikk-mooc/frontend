@@ -967,6 +967,26 @@ $canvas.post(uri, {'enrollment[user_id]' => user_id, 'enrollment[type]' => etype
         params: params
       });
     },
+    getUsersEnrollmentsForCourse(courseId, callback) {
+      this._get({
+        callback: courses => {
+          const filteredCourses = courses.filter(
+            course => course.course_id == courseId
+          );
+          callback(filteredCourses);
+        },
+        uri: `/users/self/enrollments`,
+        params: {}
+      });
+    },
+    getEnrollmentsForSection(sectionId, params, callback) {
+      this._get({
+        callback: callback,
+        uri: `/sections/${sectionId}/enrollments`,
+        params: params
+      });
+    },
+
 
     getCaledarEvents(params, callback) {
       this._get({

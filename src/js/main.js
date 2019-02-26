@@ -193,7 +193,7 @@ jQuery(function($) {
       mmooc.discussionTopics.printDiscussionUnreadCount(modules);
     });
     mmooc.announcements.printAnnouncementsUnreadCount();
-    if (document.location.search != '?override') {
+    if (mmooc.settings.useDataportenGroups && (document.location.search != '?override')) {
         mmooc.dataporten.display();
     }
   });
