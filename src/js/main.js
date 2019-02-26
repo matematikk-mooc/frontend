@@ -315,8 +315,24 @@ jQuery(function($) {
       /\/courses\/\d+\/discussion_topics\/new/
     ],
     function() {
-      // For discussion pages we only want the title to be "<discussion>" instead of "Discussion: <discussion>"
-      var title = mmooc.util.getPageTitleAfterColon();
+        // For discussion pages we only want the title to be "<discussion>" instead of "Discussion: <discussion>"
+        var title = mmooc.util.getPageTitleAfterColon();
+
+        //If this is a group discussion we do not allow the user to access it because
+        //he is apparantly not a member of a group. 
+        if (!mmooc.util.isTeacherOrAdmin()) {
+            var courseId = mmooc.api.getCurrentCourseId();
+            var contentId = mmooc.api.getCurrentTypeAndContentId().contentId;
+            mmooc.api.isGroupDiscussion(courseId, contentId, function(result) {
+                if(result) {
+                    $("#content").html('<div class="uob-warning"> \
+                    Dette er en gruppediskusjon men du er ikke medlem i noen gruppe og kan derfor ikke delta.\
+                     Gå til ' + mmooc.i18n.Course + 'forsiden og velg Grupper for å se hvilke grupper \
+                     du kan melde deg inn i.</div>');
+                }
+            });        
+        }
+
 
       var courseId = mmooc.api.getCurrentCourseId();
       if (!mmooc.util.isTeacherOrAdmin()) {

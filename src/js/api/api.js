@@ -270,6 +270,16 @@ this.mmooc.api = (function() {
         params: {}
       });
     },
+    //Note that in newer versions of Canvas, worked on 8.2.2019.
+    //we can use ENV to check this.
+    isGroupDiscussion: function(courseId, contentId, callback) {
+        if (typeof ENV.DISCUSSION.IS_GROUP !== 'undefined') callback(ENV.DISCUSSION.IS_GROUP);
+
+        //Fallback for older versions.            
+        this.getDiscussionTopic(courseId, contentId, function(discussion) {
+            callback(discussion.group_category_id ? true : false);
+        });
+    },
 
     getCurrentGroupId() {
       const currentUrl = '' + this._location.pathname;

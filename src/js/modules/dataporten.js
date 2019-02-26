@@ -59,6 +59,7 @@ this.mmooc.dataporten = function() {
         validToken: function() {
 //            mmooc.dataporten.printLoginOptions();
             mmooc.dataporten.printGroups();
+            mmooc.dataporten.printLogoutOptions();
         },
         
         //If we want to require that the account used to connect to dataporten is the same as the one used
@@ -80,13 +81,18 @@ this.mmooc.dataporten = function() {
 */            
         },
         printLogoutOptions : function() {
-            $(document).on("click","#dataportenWipeToken",function(e){mmooc.dataporten.wipeToken()});
+            $("#content").append("<div><button id='dataportenWipeToken'>Logg ut av dataporten</button></div>");
+            $(document).on("click","#dataportenWipeToken",function(e){
+                mmooc.dataporten.wipeToken();
+                mmooc.dataporten.display();
+            });
         },
         printLoginOptions : function() {
             var dataportenHtml = mmooc.util.renderTemplateWithData("dataporten", {});
             $("#content").html(dataportenHtml);
 //            $(document).on("click","#dataportenLogin",function(e) {mmooc.dataporten.kpasLoginWithoutPrompt()});
-            $(document).on("click","#dataportenPopupLogin",function(e) {mmooc.dataporten.authorizePopup()});
+            $(document).off('click', "#dataportenPopupLogin");
+            $(document).on ("click", "#dataportenPopupLogin",function(e) {mmooc.dataporten.authorizePopup()});
 //            $(document).on("click","#dataportenHiddenIframeLogin",function(e) {mmooc.dataporten.hiddenIframeLogin()});
         },
         _get : function(url, callback) {
@@ -180,6 +186,7 @@ this.mmooc.dataporten = function() {
                                         var dataportenGroupHtml = mmooc.util.renderTemplateWithData("dataportenGroups", {member: member, id:id, dataportenGroup:dataportenGroup});
                                         $("#content").append(dataportenGroupHtml);
                                         (function(j, k) {
+                                            $(document).off('click', "#"+id);
                                             $(document).on("click","#"+id,function(e) {
                                                 mmooc.dataporten.addUserToGroup(j,k);
                                             });
