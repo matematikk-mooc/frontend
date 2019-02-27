@@ -3,10 +3,19 @@ this.mmooc=this.mmooc||{};
 
 this.mmooc.dataporten = function() {
     var token = null;
-    let request = ['email','longterm', 'openid', 'profile', 'userid-feide', 'groups', 'gk_kpas'];
-    let dataportenCallback = 'https://bibsys.instructure.com/courses/234?dataportenCallback=1';
-//    let dataportenCallback = 'https://localhost/courses/1?dataportenCallback=1';
-    let dataportenClientId = '823e54e4-9cb7-438f-b551-d1af9de0c2cd';
+
+//Production
+//    let request = ['email','longterm', 'openid', 'profile', 'userid-feide', 'groups', 'gk_kpas'];
+//    let dataportenCallback = 'https://bibsys.instructure.com/courses/234?dataportenCallback=1';
+//    let dataportenClientId = '823e54e4-9cb7-438f-b551-d1af9de0c2cd';
+//    let kpasapiurl = "https://kpas.dataporten-api.no";    
+
+//Localhost testing:
+    let request = ['email','longterm', 'openid', 'profile', 'userid-feide', 'groups', 'gk_kpasbeta'];
+    let dataportenCallback = 'https://localhost/courses/1?dataportenCallback=1';
+    let dataportenClientId = 'fb2f6378-2d35-4354-8ae8-2e82e2af2a8f';
+    let kpasapiurl = "https://kpasbeta.dataporten-api.no";    
+        
     var client = new jso.JSO({
                 providerID: "Dataporten",
                 client_id: dataportenClientId,
@@ -18,15 +27,24 @@ this.mmooc.dataporten = function() {
         getClient : function() {
             return client;
         },
-        displayWaitIcon: function() {
-            var html = "<span class='loading-gif'></span>";
-            $("#content").html(html);
+        updateStatus : function(s) {
+            $("#dataportenStatus").html(s);
+            $("#dataportenStatus").append("<span class='loading-gif'></span>");
         },
-        removeWaitIcon: function() {
-            $(".loading-gif").remove();
+        clearStatus : function() {
+            $("#dataportenStatus").html("");
+        },
+        updateContent : function(s) {
+            $("#dataportenContent").html(s);
+        },
+        appendContent : function(s){
+            $("#dataportenContent").append(s);
+        },
+        clearContent : function() {
+            $("#dataportenContent").html("");
         },
         display: function() {
-            $("#content").html("");
+            $("#content").html("<div id='dataportenStatus'/><div id='dataportenContent'/>");
             let dataporten_opts = {
                 scopes: {request: request},
                 request: {prompt: "none"},
@@ -34,6 +52,7 @@ this.mmooc.dataporten = function() {
                 redirect_uri: dataportenCallback
             };
 
+            mmooc.dataporten.updateStatus("Sjekker forbindelse til dataporten...");
             this.token = client.checkToken(dataporten_opts);
             if(this.token) {
                 console.log(this.token.access_token);
@@ -43,23 +62,14 @@ this.mmooc.dataporten = function() {
                     } else {
                         mmooc.dataporten.printLoginOptions();
                     }
-                });               
-            } else if (document.location.href.indexOf("access_token") > 0) {
-                client.callback();
-                token = client.checkToken(dataporten_opts);
-                console.log(token.access_token);
-                this.validToken();
-            } else if (document.location.href.indexOf("error") > 0) {
-                $("#content").html("Logg inn på dataporten<button id='dataportenLoginWithPrompt'>Login dataporten</button>");
-                $("#dataportenLoginWithPrompt").click(function(event) {mmooc.dataporten.authorizePopup()});
+                });  
             } else {
+                mmooc.dataporten.clearStatus();
                 this.printLoginOptions();
             }
         },
         validToken: function() {
-//            mmooc.dataporten.printLoginOptions();
-            mmooc.dataporten.printGroups();
-            mmooc.dataporten.printLogoutOptions();
+            mmooc.dataporten.displayGroups();
         },
         
         //If we want to require that the account used to connect to dataporten is the same as the one used
@@ -81,7 +91,7 @@ this.mmooc.dataporten = function() {
 */            
         },
         printLogoutOptions : function() {
-            $("#content").append("<div><button id='dataportenWipeToken'>Logg ut av dataporten</button></div>");
+            mmooc.dataporten.appendContent("<div><button class='button' id='dataportenWipeToken'>Logg ut av dataporten</button></div>");
             $(document).on("click","#dataportenWipeToken",function(e){
                 mmooc.dataporten.wipeToken();
                 mmooc.dataporten.display();
@@ -89,11 +99,9 @@ this.mmooc.dataporten = function() {
         },
         printLoginOptions : function() {
             var dataportenHtml = mmooc.util.renderTemplateWithData("dataporten", {});
-            $("#content").html(dataportenHtml);
-//            $(document).on("click","#dataportenLogin",function(e) {mmooc.dataporten.kpasLoginWithoutPrompt()});
+            mmooc.dataporten.updateContent(dataportenHtml);
             $(document).off('click', "#dataportenPopupLogin");
             $(document).on ("click", "#dataportenPopupLogin",function(e) {mmooc.dataporten.authorizePopup()});
-//            $(document).on("click","#dataportenHiddenIframeLogin",function(e) {mmooc.dataporten.hiddenIframeLogin()});
         },
         _get : function(url, callback) {
             var self = this;
@@ -104,7 +112,9 @@ this.mmooc.dataporten = function() {
                     }, success: function(data){
                         callback(data)
                     }, error: function(XMLHttpRequest, textStatus, errorThrown) {
-                    console.log("Error during ajax call");
+                        let errMsg = 'Det oppstod en feil:' + errorThrown;
+                        alert(errMsg);
+                        console.log(errMsg);
                 }});
         },
         _post : function(url, data, callback) {
@@ -118,6 +128,11 @@ this.mmooc.dataporten = function() {
                 data: data,
                 success: function(result) {
                     callback(result)
+                },
+                error(XMLHttpRequest, textStatus, errorThrown) {
+                    let errMsg = 'Det oppstod en feil:' + errorThrown;
+                    alert(errMsg);
+                    console.log(errMsg);
                 }
             });
         },
@@ -126,7 +141,7 @@ this.mmooc.dataporten = function() {
             this._get(url, callback);
         },
         getGroupCategoriesForCourse : function(courseId, callback) {
-            let url = "https://kpas.dataporten-api.no/group_categories.php?course_id=" + courseId;
+            let url = kpasapiurl + "/group_categories.php?course_id=" + courseId;
             this._get(url, callback);
         },
         isMemberOf : function(dataportenGroup, groupCategory, canvasGroups)
@@ -143,22 +158,48 @@ this.mmooc.dataporten = function() {
             return found;
         },
         addUserToGroup : function(group, unenrollmentIds) {
-            this.displayWaitIcon();
-            let url = "https://kpas.dataporten-api.no/addusertogroup.php";
+            let url = kpasapiurl + "/addusertogroup.php";
             var data = "group=" + JSON.stringify(group) + "&unenrollFrom=" + JSON.stringify(unenrollmentIds);
             this._post(url, data, function(result) {
-                mmooc.dataporten.printGroups();;
+                mmooc.dataporten.displayGroups();
             });
         },
-        printGroups: function() {
-            this.displayWaitIcon();
+        displayOneGroup : function(courseID, unenrollmentIds, dataportenGroup, groupCategory, canvasGroups) {
+            var member = mmooc.dataporten.isMemberOf(dataportenGroup, groupCategory, canvasGroups);
+            var group = {
+                name: dataportenGroup.displayName,
+                description: dataportenGroup.id,
+                membership: dataportenGroup.membership.basic,
+                group_category_id: groupCategory.id,
+                course_id: courseID                            
+            };
+
+            var id = "" + dataportenGroup.id;
+            id = id.replace(/[-&\/\\#,+()$~%.'":*?<>{}]/g,'_');
+            var dataportenGroupHtml = mmooc.util.renderTemplateWithData("dataportenGroups", {member: member, id:id, dataportenGroup:dataportenGroup});
+            mmooc.dataporten.appendContent(dataportenGroupHtml);
+            (function(j, k) {
+                $(document).off('click', "#"+id);
+                $(document).on("click","#"+id,function(e) {
+                    mmooc.dataporten.clearContent();
+                    mmooc.dataporten.updateStatus("Melder deg inn i gruppe...");
+                    mmooc.dataporten.addUserToGroup(j,k);
+                });
+            })(group, unenrollmentIds);
+        },        
+        displayGroups: function() {
+            mmooc.dataporten.clearContent();
             let url = 'https://groups-api.dataporten.no/groups/me/groups';
+            mmooc.dataporten.updateStatus("Henter grupper fra dataporten...");
             this._get(url, function(dataportenGroups) {
+                mmooc.dataporten.updateStatus("Henter grupper fra Canvas...");
                 mmooc.api.getUserGroups(function(canvasGroups) {
                   let courseID = mmooc.api.getCurrentCourseId();
+                  mmooc.dataporten.updateStatus("Henter gruppekategorier fra Canvas...");
                   mmooc.dataporten.getGroupCategoriesForCourse(courseID, function(result) {
                     var categories = result.data;
                     
+                    mmooc.dataporten.updateStatus("Sjekker din gruppetilhørighet i Canvas...");
                     mmooc.api.getUsersEnrollmentsForCourse(courseID, 
                         (function(courseID, categories) {
                             return function(enrollments) {
@@ -168,98 +209,27 @@ this.mmooc.dataporten = function() {
                                 }
                                 for(var g = 0; g < categories.length; g++) {
                                     let groupCategory = categories[g];
-                                    $("#content").append("<h1>" + groupCategory.name + "</h1>");
+                                    mmooc.dataporten.appendContent("<h1>" + groupCategory.name + "</h1>");
                         
                                     for(var i = 0; i < dataportenGroups.length; i++) {
                                         var dataportenGroup = dataportenGroups[i];
-                                        var member = mmooc.dataporten.isMemberOf(dataportenGroup, groupCategory, canvasGroups);
-                                        var group = {
-                                            name: dataportenGroup.displayName,
-                                            description: dataportenGroup.id,
-                                            membership: dataportenGroup.membership.basic,
-                                            group_category_id: groupCategory.id,
-                                            course_id: courseID                            
-                                        };
-                            
-                                        var id = "" + dataportenGroup.id;
-                                        id = id.replace(/[-&\/\\#,+()$~%.'":*?<>{}]/g,'_');
-                                        var dataportenGroupHtml = mmooc.util.renderTemplateWithData("dataportenGroups", {member: member, id:id, dataportenGroup:dataportenGroup});
-                                        $("#content").append(dataportenGroupHtml);
-                                        (function(j, k) {
-                                            $(document).off('click', "#"+id);
-                                            $(document).on("click","#"+id,function(e) {
-                                                mmooc.dataporten.addUserToGroup(j,k);
-                                            });
-                                        })(group, unenrollmentIds);
+                                        mmooc.dataporten.displayOneGroup(courseID, unenrollmentIds, dataportenGroup, groupCategory, canvasGroups);
                                     }
                                 }
+                                mmooc.dataporten.clearStatus();
+                                mmooc.dataporten.printLogoutOptions();
                             } //end function courses
                         })(courseID, categories)
                     );
-                    mmooc.dataporten.removeWaitIcon();
-                })
-              });
-            });
+                }) //end fetched Canvas group categories
+              }); //end fetched Canvas groups
+            }); //end fetched dataporten Groups
         },
         
-        kpasLogin: function()  {
-            let opts = {
-                scopes: {
-                    request: request
-                },
-                response_type: 'id_token token'
-            }
-
-            let token = client.getToken(opts);
-
-            if (token !== null) {
-                console.log("I got the token: " + token);
-            }
-        },
-        kpasLoginWithoutPrompt: function()  {
-
-            let opts = {
-                scopes: {
-                    request: request
-                },
-                request: {
-                    prompt: "none"
-                },
-                response_type: 'id_token token'
-            }
-
-            token = client.getToken(opts);
-
-            if (token !== null) {
-                console.log("I got the token: " + token);
-            }
-        },
-
-
         wipeToken: function()  {
             client.wipeTokens()
         },
-        hiddenIframeLogin: function()
-        {
-            let opts = {
-                scopes: {
-                    request: this.request
-                },
-                request: {
-                    prompt: "none"
-                },
-                response_type: 'id_token token',
-                redirect_uri: this.dataportenCallback
-            }
-            client.setLoader(jso.IFramePassive)
-            client.getToken(opts)
-                .then((token) => {
-                    console.log("I got the token")
-                })
-                .catch((err) => {
-                    console.err("Error from passive loader", err)
-                })
-        },
+
         authorizePopup: function()  {
             var self = this;
             let opts = {
@@ -277,7 +247,7 @@ this.mmooc.dataporten = function() {
                     self.validToken();
                 })
                 .catch((err) => {
-                    console.error("Error from passive loader", err)
+                    console.error("Error from popup loader", err)
                 })
         }        
     }
