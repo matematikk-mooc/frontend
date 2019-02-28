@@ -320,7 +320,8 @@ jQuery(function($) {
 
         //If this is a group discussion we do not allow the user to access it because
         //he is apparantly not a member of a group. 
-        if (!mmooc.util.isTeacherOrAdmin()) {
+        var courseId = mmooc.api.getCurrentCourseId();
+        mmooc.util.isStudent(courseId, function() {
             var courseId = mmooc.api.getCurrentCourseId();
             var contentId = mmooc.api.getCurrentTypeAndContentId().contentId;
             mmooc.api.isGroupDiscussion(courseId, contentId, function(result) {
@@ -331,7 +332,7 @@ jQuery(function($) {
                      du kan melde deg inn i.</div>');
                 }
             });        
-        }
+        });
 
 
       var courseId = mmooc.api.getCurrentCourseId();
