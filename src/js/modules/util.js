@@ -144,7 +144,20 @@ this.mmooc.util = (function() {
       }
       return false;
     },
-
+    isStudentInCourse : function(courseId, callback) {
+        return function(callback) {
+            mmooc.api.getUsersEnrollmentsForCourse(courseId, function(enrollments) {
+                for(i = 0; i < enrollments.length; i++) {
+                    let enrollment = enrollments[i];
+                    if(enrollment["role"] == "StudentEnrollment")
+                    {
+                        callback();
+                        break;
+                    }
+                }
+            });
+        }(callback)
+    },
     isTeacherOrAdmin: function() {
       var roles = mmooc.api.getRoles();
       return (
