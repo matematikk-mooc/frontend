@@ -29,9 +29,11 @@ this.mmooc.dataporten = function() {
         getClient : function() {
             return client;
         },
-        updateStatus : function(s) {
+        updateStatus : function(s, waitIcon = true) {
             $("#dataportenStatus").html(s);
-            $("#dataportenStatus").append("<span class='loading-gif'></span>");
+            if(waitIcon) {
+                $("#dataportenStatus").append("<span class='loading-gif'></span>");
+            }
         },
         clearStatus : function() {
             $("#dataportenStatus").html("");
@@ -58,11 +60,14 @@ this.mmooc.dataporten = function() {
             this.token = client.checkToken(dataporten_opts);
             if(this.token) {
                 console.log(this.token.access_token);
-                this.tokenBelongsToLoggedInUser(function(belongs) {
+                this.tokenBelongsToLoggedInUser(function(belongs, canvasUserId, dataportenUserId) {
                     if(belongs) {
                         mmooc.dataporten.validToken();
                     } else {
-                        mmooc.dataporten.printLoginOptions();
+                        let waitIcon = false;
+                        mmooc.dataporten.updateStatus("Du er logget inn med " + canvasUserId + " i Canvas og " + dataportenUserId + " i dataporten. Du må være logget inn med samme bruker i de to systemene.", waitIcon);
+
+                        mmooc.dataporten.printLogoutOptions();
                     }
                 });  
             } else {
@@ -73,24 +78,28 @@ this.mmooc.dataporten = function() {
         validToken: function() {
             mmooc.dataporten.displayGroups();
         },
-        
+        getFeideIdFromDataportenUserInfo(userIdSec)
+        {
+            let start = userIdSec.indexOf(":") + 1;
+            let feideid = userIdSec.substr(start);
+            return feideid;
+        },
         //If we want to require that the account used to connect to dataporten is the same as the one used
         //to login to Canvas, we could uncomment the code below and perform some checks. The code is not
         //complete.
         tokenBelongsToLoggedInUser: function(callback) {
-            callback(true);
-/*
-            this.getUserInfo(token, function(userInfo) {
+            this.getUserInfo(function(userInfo) {
                 mmooc.api.getUserProfile(function(userProfile) {
                     var belongs = false;
                     //Must do some proper checking here.
-                    if(userProfile.login_id == userInfo.user.userid_sec[0]) {
+                    let userIdSec = userInfo.user.userid_sec[0];
+                    let dataportenId = mmooc.dataporten.getFeideIdFromDataportenUserInfo(userIdSec);
+                    if(userProfile.login_id == dataportenId) {
                         belongs = true;
                     }
-                    callback(belongs, token);
+                    callback(belongs, userProfile.login_id, dataportenId);
                 });
             });
-*/            
         },
         printLogoutOptions : function() {
             mmooc.dataporten.appendContent("<div><button class='button' id='dataportenWipeToken'>Logg ut av dataporten</button></div>");
@@ -161,7 +170,7 @@ this.mmooc.dataporten = function() {
         },
         addUserToGroup : function(group, unenrollmentIds) {
             let url = kpasapiurl + "/addusertogroup.php";
-            var data = "group=" + JSON.stringify(group) + "&unenrollFrom=" + JSON.stringify(unenrollmentIds);
+            var data = "group=" + JSON.stringify(group) + "&unenrollFrom={" + JSON.stringify(unenrollmentIds) + "}";
             this._post(url, data, function(result) {
                 mmooc.dataporten.displayGroups();
             });
