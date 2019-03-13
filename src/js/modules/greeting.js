@@ -86,6 +86,72 @@ mmooc.greeting = function () {
             } //End if valid diploma fields
 
             fixLinkToModules($content);
+        },
+        enableNewGreetingButtonIfNecessary: function () {
+            var $content = $("#content");
+            var $newDiplomaButton = $content.find(".new-sikt-diploma-button");
+            var $scriptUrlDiv = $content.find(".new-sikt-diploma-scriptId");
+
+            if ($newDiplomaButton.length && $scriptUrlDiv.length) {
+                $newDiplomaButton.button().click(function () {
+                    if ($newDiplomaButton.hasClass('btn-done')) {
+                        return;
+                    }
+
+                    $('#info').html(mmooc.util.renderTemplateWithData("waitIcon", {}));
+
+                    var scriptUrl = $scriptUrlDiv.text();
+
+                    mmooc.api.getUserProfile(function (profile) {
+                        var values = {};
+                        values["Navn"] = profile.name;
+                        values["Epost"] = profile.primary_email;
+
+						$.ajax({
+							url: scriptUrl,
+							data: values,
+                            type: "POST",
+                            dataType: "json",
+							beforeSend: function () {
+								console.log("Loading");
+							},
+
+							error: function (jqXHR, textStatus, errorThrown) {
+								console.log(jqXHR);
+								console.log(textStatus);
+								console.log(errorThrown);
+								var s = "Diplom ble ikke sendt. Følgende gikk galt: " + jqXHR + textStatus + errorThrown;
+								$('#info').html(s);
+								$newDiplomaButton.addClass('btn-done');
+							},
+
+							success: function (result) {
+								console.log(result);
+								if(result.result == "success")
+								{
+									var s = "Diplom ble sendt til " + profile.name + " med denne eposten: " + profile.primary_email;
+									$('#info').html(s);
+								}
+								else
+								{
+									var s = "Diplom kunne ikke sendes fordi: " + result.result;
+									$('#info').html(s);
+								}
+								$newDiplomaButton.addClass('btn-done');
+							},
+
+							complete: function () {
+								console.log('Finished all tasks');
+							}
+						});
+
+                    }); //End Canvas user profile callback
+                }); //End diploma button clicked
+                redesignPage();
+            } //End if valid diploma fields
+
+            fixLinkToModules($content);
         }
+        
     }
 }();
