@@ -32,6 +32,8 @@ jQuery(function($) {
             if(mmooc.util.isObserver(course))
             {
                 mmooc.pages.showObserverInformationPane();
+            } else if(mmooc.util.isBlendedCourse(course)) {
+              mmooc.pages.showBlendedCourseInformationPane();
             }
         },  function(error) {
             console.error("error calling mmooc.api.getCourse(" + courseId + ")", error);

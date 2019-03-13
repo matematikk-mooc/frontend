@@ -439,7 +439,7 @@ this.mmooc.api = function() {
         },
         
         usesFrontPage : function() {
-            return this._env.COURSE.default_view == "wiki";
+            return this._env.COURSE && this._env.COURSE.default_view == "wiki";
         }, 
         
         getRoles : function() {

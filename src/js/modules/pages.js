@@ -135,6 +135,13 @@ this.mmooc.pages = function() {
                 } 
             })
         },
+        showBlendedCourseInformationPane: function() {
+          var paneHTML = mmooc.util.renderTemplateWithData('blendedcourse', {});
+          document
+            .getElementById('wrapper')
+            .insertAdjacentHTML('afterend', paneHTML);
+        },
+
         
         replaceCreateAccountLink: function() {
           mmooc.api.getSelfRegisterCourse(function(selfRegisterCourse) {

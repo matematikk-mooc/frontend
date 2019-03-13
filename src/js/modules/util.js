@@ -134,6 +134,9 @@ this.mmooc.util = function () {
             }
             return false;
 		},
+        isBlendedCourse: function(course) {
+          return(course && (course.course_format == "blended"));
+        },
 		
         isTeacherOrAdmin: function() {
             var roles = mmooc.api.getRoles();
