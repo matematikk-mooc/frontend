@@ -321,7 +321,7 @@ jQuery(function($) {
         //If this is a group discussion we do not allow the user to access it because
         //he is apparantly not a member of a group. 
         var courseId = mmooc.api.getCurrentCourseId();
-        mmooc.util.isStudent(courseId, function() {
+        mmooc.util.isStudentInCourse(courseId, function() {
             var courseId = mmooc.api.getCurrentCourseId();
             var contentId = mmooc.api.getCurrentTypeAndContentId().contentId;
             mmooc.api.isGroupDiscussion(courseId, contentId, function(result) {

@@ -1,6 +1,6 @@
 this.mmooc = this.mmooc || {};
 
-this.mmooc.allCoursesFrontpageCourseID = 1 ,
+this.mmooc.allCoursesFrontpageCourseID = 234 ,
 
 this.mmooc.settingsRoot = {
     feideEnrollRefferers: [
