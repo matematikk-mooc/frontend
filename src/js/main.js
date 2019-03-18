@@ -269,8 +269,6 @@ jQuery(function($) {
         mmooc.menu.listModuleItems();
         mmooc.pages.modifyMarkAsDoneButton();
         mmooc.pages.duplicateMarkedAsDoneButton();
-        mmooc.util.callWhenElementIsPresent(".sikt-diploma-button", mmooc.greeting.enableGreetingButtonIfNecessary);
-        mmooc.util.callWhenElementIsPresent(".new-sikt-diploma-button", mmooc.greeting.enableNewGreetingButtonIfNecessary);
 //20180911ETH showDiscussionGroupMenu is handled by group discussion path above.
 //        mmooc.menu.showDiscussionGroupMenu();
         mmooc.groups.moveSequenceLinks();
