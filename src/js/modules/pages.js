@@ -199,13 +199,8 @@ this.mmooc.pages = function() {
 
         redesignAssignmentPage: function() {
 
-            function _isAssignmentWithPeerReview() {
-                var returnValue = false;
-                var peerReviewer = mmooc.i18n.PeerReviewer;
-                if ($("#right-side .details .content > h4:contains('" + peerReviewer.toLowerCase() + "')").length) {
-                    returnValue = true;
-                }
-                return returnValue;
+            function _isAssignmentWithPeerReview(assignment) {
+                return assignment.peer_reviews;
             }
 
             function _getPeerReviewArray() {
@@ -261,21 +256,23 @@ this.mmooc.pages = function() {
 
             var courseId = mmooc.api.getCurrentCourseId();
             var assignmentId = mmooc.api.getCurrentTypeAndContentId().contentId;
-            var user_id = mmooc.api.getUser().id;
 
-            if (_isAssignmentWithPeerReview()) {
-                // console.log('user_id:' + user_id);
-                mmooc.api.getSingleSubmissionForUser(courseId, assignmentId, user_id, function(submission) {
-                    console.log('submission');
-                    console.log(submission);
-                    var peerReview = _getPeerReviewArray();
-                    _appendPeerReviewHtmlOnRightSide(submission, peerReview);
-                    _appendPeerReviewWarningInContentsColumn(submission, peerReview);
-                });
-            } else {
-                _displayRightColumnContents();
-                $("#submission_comment.submission_comment_textarea").show();
-            }
+            mmooc.api.getSingleAssignment(courseId, assignmentId, function(assignment) {
+                if (_isAssignmentWithPeerReview(assignment)) {
+                    var user_id = mmooc.api.getUser().id;
+                    // console.log('user_id:' + user_id);
+                    mmooc.api.getSingleSubmissionForUser(courseId, assignmentId, user_id, function(submission) {
+                        console.log('submission');
+                        console.log(submission);
+                        var peerReview = _getPeerReviewArray();
+                        _appendPeerReviewHtmlOnRightSide(submission, peerReview);
+                        _appendPeerReviewWarningInContentsColumn(submission, peerReview);
+                    });
+                } else {
+                    _displayRightColumnContents();
+                    $("#submission_comment.submission_comment_textarea").show();
+                }
+            });
         },
 
         redesignPeerReviewAndOwnSubmissionDetailsPage: function() {
