@@ -4,19 +4,20 @@ this.mmooc=this.mmooc||{};
 this.mmooc.dataporten = function() {
     var token = null;
 
+/*
 //Production
     let request = ['email','longterm', 'openid', 'profile', 'userid-feide', 'groups', 'gk_kpas', 'userinfo-entitlement', 'userinfo-extra'];
     let dataportenCallback = 'https://bibsys.instructure.com/courses/234?dataportenCallback=1';
     let dataportenClientId = '823e54e4-9cb7-438f-b551-d1af9de0c2cd';
     let kpasapiurl = "https://kpas.dataporten-api.no";    
 
-/*
+*/
+
 //Localhost testing:
     let request = ['email','longterm', 'openid', 'profile', 'userid-feide', 'groups', 'gk_kpasbeta'];
     let dataportenCallback = 'https://localhost/courses/1?dataportenCallback=1';
     let dataportenClientId = 'fb2f6378-2d35-4354-8ae8-2e82e2af2a8f';
     let kpasapiurl = "https://kpasbeta.dataporten-api.no";    
-*/
         
     var client = new jso.JSO({
                 providerID: "Dataporten",
