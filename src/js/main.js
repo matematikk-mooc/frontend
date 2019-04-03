@@ -40,7 +40,8 @@ jQuery(function($) {
       }
     );
   });
-
+  
+  //The logic below should be refactored and cleaned up.
   mmooc.routes.addRouteForPath(/\/courses\/\d+$/, function() {
     mmooc.groups.interceptLinksToGroupPage();
 
@@ -64,11 +65,14 @@ jQuery(function($) {
         return null;
     }
     else if (courseView == mmooc.util.courseListEnum.dataportenCallback) {
-        $("#application").html('Du er nå logget inn i dataporten.<button id="dataportenLoggedIn">OK</button>');
-        window.opener.popupCompleted();
-        $(document).on("click","#dataportenLoggedIn",function(e) {
-			window.close();
-		});
+        if(window.opener) {
+            $("#application").html('Du er nå logget inn i dataporten.<button id="dataportenLoggedIn">OK</button>');
+            window.opener.popupCompleted();
+            $(document).on("click","#dataportenLoggedIn",function(e) {
+                window.close();
+            });
+        }
+        console.log(document.location.href);
 		return null;
     }
     //        mmooc.coursePage.hideCourseInvitationsForAllUsers();
@@ -88,33 +92,37 @@ jQuery(function($) {
         '" tabindex="0" webkitallowfullscreen="true" width="100%"></iframe>';
       $('#content').append(canvabadgesForCurrentCourse);
     } else {
-      /*
-        else if(!(mmooc.util.isTeacherOrAdmin()) && $(".self_enrollment_link").length) //Route to list of all courses if student and not enrolled in course.
-        {
-            window.location.href = "/search/all_courses";
-        }
-*/
-      mmooc.menu.showCourseMenu(courseId, mmooc.i18n.Course + 'forside', null);
+        var queryString = document.location.search;
+        if ((queryString === '?dataportengroups=1') && mmooc.settings.useDataportenGroups) {
+            mmooc.menu.showCourseMenu(
+              courseId,
+              'Grupper',
+              mmooc.util.getPageTitleBeforeColon()
+            );
+            mmooc.dataporten.display();
+        } else {
+          mmooc.menu.showCourseMenu(courseId, mmooc.i18n.Course + 'forside', null);
 
-      //20180822ETH Dersom man har valgt å bruke en wiki page som forside og man er lærer,
-      //            så viser vi wiki page. Hvis ikke
-      if (mmooc.api.usesFrontPage()) {
-        if (!mmooc.util.isTeacherOrAdmin()) {
-          var frontPage = $('#wiki_page_show');
-          if (frontPage.length) {
-            frontPage.hide();
+          //20180822ETH If the user has chosen to use a wikipage as front page and the logged in user is teacher, we display that page.
+          //            Otherwise we list the modules.
+          if (mmooc.api.usesFrontPage()) {
+            if (!mmooc.util.isTeacherOrAdmin()) {
+              var frontPage = $('#wiki_page_show');
+              if (frontPage.length) {
+                frontPage.hide();
+              }
+              mmooc.coursePage.listModulesAndShowProgressBar();
+            }
+          } //Hvis det ikke er wiki som forside så lister vi ut modulene på vanlig måte.
+          else {
+            mmooc.coursePage.listModulesAndShowProgressBar();
           }
-          mmooc.coursePage.listModulesAndShowProgressBar();
         }
-      } //Hvis det ikke er wiki som forside så lister vi ut modulene på vanlig måte.
-      else {
-        mmooc.coursePage.listModulesAndShowProgressBar();
-      }
-      mmooc.announcements.printAnnouncementsUnreadCount();
-      mmooc.coursePage.replaceUpcomingInSidebar();
-      mmooc.coursePage.overrideUnregisterDialog();
-      mmooc.coursePage.printDeadlinesForCourse();
     }
+    mmooc.announcements.printAnnouncementsUnreadCount();
+    mmooc.coursePage.replaceUpcomingInSidebar();
+    mmooc.coursePage.overrideUnregisterDialog();
+    mmooc.coursePage.printDeadlinesForCourse();
   });
 
   mmooc.routes.addRouteForPath(/\/search\/all_courses$/, function() {
@@ -193,9 +201,6 @@ jQuery(function($) {
       mmooc.discussionTopics.printDiscussionUnreadCount(modules);
     });
     mmooc.announcements.printAnnouncementsUnreadCount();
-    if (mmooc.settings.useDataportenGroups && (document.location.search != '?override')) {
-        mmooc.dataporten.display();
-    }
   });
   mmooc.routes.addRouteForPath(/\/courses\/\d+\/users$/, function() {
     var courseId = mmooc.api.getCurrentCourseId();

@@ -30,9 +30,14 @@ this.mmooc.menu = (function() {
         title: 'Kunngjøringer',
         url: '/courses/' + courseId + '/announcements'
       };
+      var groupsUrl = '/courses/' + courseId + '/groups';
+      if(mmooc.settings.useDataportenGroups)
+      {
+        groupsUrl = '/courses/' + courseId + '?dataportengroups=1'
+      }
       menuItems[menuItems.length] = {
         title: 'Grupper',
-        url: '/courses/' + courseId + '/groups'
+        url: groupsUrl
       };
       menuItems[menuItems.length] = {
         title: 'Diskusjoner',

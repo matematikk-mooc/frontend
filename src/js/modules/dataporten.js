@@ -4,20 +4,26 @@ this.mmooc=this.mmooc||{};
 this.mmooc.dataporten = function() {
     var token = null;
 
-/*
 //Production
     let request = ['email','longterm', 'openid', 'profile', 'userid-feide', 'groups', 'gk_kpas', 'userinfo-entitlement', 'userinfo-extra'];
     let dataportenCallback = 'https://bibsys.instructure.com/courses/234?dataportenCallback=1';
     let dataportenClientId = '823e54e4-9cb7-438f-b551-d1af9de0c2cd';
     let kpasapiurl = "https://kpas.dataporten-api.no";    
-
-*/
+/*
 
 //Localhost testing:
-    let request = ['email','longterm', 'openid', 'profile', 'userid-feide', 'groups', 'gk_kpasbeta'];
+    let request = ['email', 'openid', 'profile', 'userid-feide', 'groups', 'gk_kpasbeta'];
     let dataportenCallback = 'https://localhost/courses/1?dataportenCallback=1';
     let dataportenClientId = 'fb2f6378-2d35-4354-8ae8-2e82e2af2a8f';
     let kpasapiurl = "https://kpasbeta.dataporten-api.no";    
+*/
+    
+    var opts = {
+        scopes: {
+            request: request
+        },
+        response_type: 'id_token token'
+    }
         
     var client = new jso.JSO({
                 providerID: "Dataporten",
@@ -27,6 +33,11 @@ this.mmooc.dataporten = function() {
             });
 
     return {
+        getSilentOpts : function() {
+            var silent_opts = JSON.parse(JSON.stringify(opts));
+            silent_opts.request = {prompt: "none"};
+            return silent_opts;
+        },
         getClient : function() {
             return client;
         },
@@ -47,37 +58,46 @@ this.mmooc.dataporten = function() {
         },
         clearContent : function() {
             $("#dataportenContent").html("");
+            $("#dataportenUserInfo").html("");
         },
         display: function() {
-            $("#content").html("<div id='dataportenStatus'/><div id='dataportenContent'/>");
-            let dataporten_opts = {
-                scopes: {request: request},
-                request: {prompt: "none"},
-                response_type: 'id_token token',
-                redirect_uri: dataportenCallback
-            };
+            $("#course_home_content").prepend("<div id='dataportenStatus'/><div id='dataportenUserInfo'/><div id='dataportenContent'/><div id='dataportenLoginInfo'/>");
+            var silent_opts = this.getSilentOpts();
 
             mmooc.dataporten.updateStatus("Sjekker forbindelse til dataporten...");
-            this.token = client.checkToken(dataporten_opts);
+            this.token = client.checkToken(silent_opts);
             if(this.token) {
                 console.log(this.token.access_token);
-                this.tokenBelongsToLoggedInUser(function(belongs, canvasUserId, dataportenUserId) {
+                this.tokenBelongsToLoggedInUser(function(belongs, canvasUserId, dataportenUserInfo) {
                     if(belongs) {
                         mmooc.dataporten.validToken();
                     } else {
                         let waitIcon = false;
-                        mmooc.dataporten.updateStatus("Du er logget inn med " + canvasUserId + " i Canvas og " + dataportenUserId + " i dataporten. Du må være logget inn med samme bruker i de to systemene.", waitIcon);
+                        var html = "Du er logget inn med " + canvasUserId  + " i Canvas og " + dataportenUserInfo.user.userid;
+                        if(dataportenUserInfo.user.userid_sec.length)
+                        {
+                            html += "/" + dataportenUserInfo.user.userid_sec.length[0];
+                        }
+                        html += " i dataporten. Du må være logget inn med samme bruker i de to systemene.";
+                        mmooc.dataporten.updateStatus(html, waitIcon);
 
                         mmooc.dataporten.printLogoutOptions();
                     }
                 });  
-            } else {
-                mmooc.dataporten.clearStatus();
-                this.printLoginOptions();
+            } else { //Try and see if we can login silently.
+                this.hiddenIframeLogin();
             }
         },
+        displayUserInfo : function() {
+            mmooc.dataporten.getUserInfo(function(userInfo) {
+                var html = "Du er logget inn på dataporten som " + userInfo.user.name;
+                $("#dataportenUserInfo").html(html);
+            });
+        },
         validToken: function() {
+            mmooc.dataporten.displayUserInfo();
             mmooc.dataporten.displayGroups();
+            mmooc.dataporten.printLogoutOptions();
         },
         getFeideIdFromDataportenUserInfo(userIdSec)
         {
@@ -86,32 +106,38 @@ this.mmooc.dataporten = function() {
             return feideid;
         },
         //If we want to require that the account used to connect to dataporten is the same as the one used
-        //to login to Canvas, we could uncomment the code below and perform some checks. The code is not
-        //complete.
+        //to login to Canvas, we could call the code below and perform some checks. Right now the code
+        //compares the Canvas login id with the secondary open id, i.e. Feide id. 
         tokenBelongsToLoggedInUser: function(callback) {
             this.getUserInfo(function(userInfo) {
                 mmooc.api.getUserProfile(function(userProfile) {
                     var belongs = false;
-                    //Must do some proper checking here.
-                    let userIdSec = userInfo.user.userid_sec[0];
-                    let dataportenId = mmooc.dataporten.getFeideIdFromDataportenUserInfo(userIdSec);
-                    if(userProfile.login_id == dataportenId) {
+                    if(userProfile.login_id == userInfo.user.userid) {
                         belongs = true;
+                    } else if (userInfo.user.userid_sec.length) {
+                        let userIdSec = userInfo.user.userid_sec[0];
+                        let feideId = mmooc.dataporten.getFeideIdFromDataportenUserInfo(userIdSec);
+                        if(userProfile.login_id == feideId) {
+                            belongs = true;
+                        }
                     }
-                    callback(belongs, userProfile.login_id, dataportenId);
+                    callback(belongs, userProfile.login_id, userInfo);
                 });
             });
         },
         printLogoutOptions : function() {
-            mmooc.dataporten.appendContent("<div><button class='button' id='dataportenWipeToken'>Logg ut av dataporten</button></div>");
+            var html = "<div><button class='button' id='dataportenWipeToken'>Logg ut av dataporten</button></div>";
+            $("#dataportenLoginInfo").html(html);
             $(document).on("click","#dataportenWipeToken",function(e){
                 mmooc.dataporten.wipeToken();
-                mmooc.dataporten.display();
+                mmooc.dataporten.clearStatus();
+                mmooc.dataporten.clearContent();
+                mmooc.dataporten.printLoginOptions();
             });
         },
         printLoginOptions : function() {
             var dataportenHtml = mmooc.util.renderTemplateWithData("dataporten", {});
-            mmooc.dataporten.updateContent(dataportenHtml);
+            $("#dataportenLoginInfo").html(dataportenHtml);
             $(document).off('click', "#dataportenPopupLogin");
             $(document).on ("click", "#dataportenPopupLogin",function(e) {mmooc.dataporten.authorizePopup()});
         },
@@ -125,8 +151,10 @@ this.mmooc.dataporten = function() {
                         callback(data)
                     }, error: function(XMLHttpRequest, textStatus, errorThrown) {
                         let errMsg = 'Det oppstod en feil:' + errorThrown;
-                        alert(errMsg);
                         console.log(errMsg);
+                        mmooc.dataporten.clearStatus();
+                        self.wipeToken();
+                        self.printLoginOptions();
                 }});
         },
         _post : function(url, data, callback) {
@@ -229,7 +257,6 @@ this.mmooc.dataporten = function() {
                                     }
                                 }
                                 mmooc.dataporten.clearStatus();
-                                mmooc.dataporten.printLogoutOptions();
                             } //end function courses
                         })(courseID, categories)
                     );
@@ -261,6 +288,25 @@ this.mmooc.dataporten = function() {
                 .catch((err) => {
                     console.error("Error from popup loader", err)
                 })
-        }        
-    }
+        },        
+        hiddenIframeLogin : function()
+        {
+//            window.loginType = "iframeLogin";
+            var self = this;
+            var silent_opts = this.getSilentOpts();
+            client.setLoader(jso.IFramePassive)
+            client.getToken(silent_opts)
+                .then((token) => {
+                    console.log("I got the token: ", token)
+                    self.token = token;
+                    self.validToken();
+                })
+                .catch((err) => {
+                    console.log("Error from passive loader", err)
+                    mmooc.dataporten.clearStatus();
+                    self.printLoginOptions();
+
+//                    alert("iframe passive login only works if you are already logged in:" + err);
+                })
+        }    }
 }();
