@@ -98,7 +98,7 @@ this.mmooc.enroll = function() {
             }
         },
         printAllCoursesContainer: function() {
-            html = mmooc.util.renderTemplateWithData("allcoursescontainer", {courseLabel: mmooc.i18n.Course.toLowerCase()});
+            html = mmooc.util.renderTemplateWithData("allcoursescontainer", {courseLabel: mmooc.i18n.CoursePlural.toLowerCase()});
             document.title = "Tilgjengelige " + mmooc.i18n.CoursePlural.toLowerCase();
             document.getElementById("content").innerHTML = html;       
         },

@@ -60,7 +60,7 @@ jQuery(function($) {
         }
 */        
         else {
-            mmooc.menu.showCourseMenu(courseId, mmooc.i18n.Course + 'forside', null);
+            mmooc.menu.showCourseMenu(courseId, 'Forside', null);
             
             //20180822ETH Dersom man har valgt å bruke en wiki page som forside og man er lærer,
             //            så viser vi wiki page. Hvis ikke 

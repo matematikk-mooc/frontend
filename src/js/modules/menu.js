@@ -19,7 +19,7 @@ this.mmooc.menu = function() {
 
         var courseId = course.id;
         if (!hideTabs) { 
-            menuItems[menuItems.length] = {"title": mmooc.i18n.Course + "forside", url: "/courses/" + courseId};
+            menuItems[menuItems.length] = {"title": "Forside", url: "/courses/" + courseId};
             menuItems[menuItems.length] = {"title": "Kunngjøringer", url: "/courses/" + courseId + "/announcements"};
             if(mmooc.settings.displayGroupsTab)
             {
