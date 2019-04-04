@@ -76,7 +76,7 @@ this.mmooc.dataporten = function() {
                         var html = "Du er logget inn med " + canvasUserId  + " i Canvas og " + dataportenUserInfo.user.userid;
                         if(dataportenUserInfo.user.userid_sec.length)
                         {
-                            html += "/" + dataportenUserInfo.user.userid_sec.length[0];
+                            html += "/" + dataportenUserInfo.user.userid_sec[0];
                         }
                         html += " i dataporten. Du må være logget inn med samme bruker i de to systemene.";
                         mmooc.dataporten.updateStatus(html, waitIcon);
