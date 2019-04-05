@@ -5,7 +5,7 @@ jQuery(function($) {
     if (document.location.search === '?mmpf') {
       mmooc.powerFunctions.show(parentId);
     } else {
-      window.location.href = '/courses';
+      window.location.href = '/courses?design=udirDesign';
     }
   });
 
@@ -470,6 +470,8 @@ jQuery(function($) {
     mmooc.menu.showUserMenu();
     mmooc.menu.renderUnauthenticatedMenu();
     mmooc.menu.setMenuActiveLink();
+    mmooc.menu.updateMenuLinksWithCustomDesignParameter();
+    mmooc.menu.updateUserMenuLinksWithCustomDesignParameter();
   } catch (e) {
     console.log(e);
   }
@@ -499,4 +501,6 @@ jQuery(function($) {
   } catch (e) {
     console.log(e);
   }
+  
+  $("#application").show();
 });

@@ -106,7 +106,7 @@ this.mmooc.menu = (function() {
       );
     }
   }
-
+  
   function openHelpDialog(event) {
     event.preventDefault();
     $('#global_nav_help_link').click(); //Do the same as when you are clicking on the original help button (which display the help dialog)
@@ -181,17 +181,29 @@ this.mmooc.menu = (function() {
       );
       $('body').addClass('useFullWidth'); //Used to solve problems in making the design 100% width in the new UI. This is the simplest way to implement this.
     },
+    updateMenuLinksWithCustomDesignParameter : function() {
+        $("#menu > li > a").each(function(_idx, _item) {
+            var newHref = _item.attr("href") + "?design=udirDesign";
+            _item.attr("href", newHref);
+        });
+    },
+    updateUserMenuLinksWithCustomDesignParameter : function() {
+        $("#user-menu > li > a").each(function(_idx, _item) {
+            var newHref = _item.attr("href") + "?design=udirDesign";
+            _item.attr("href", newHref);
+        });
+    },
 
     renderLeftHeaderMenu: function() {
-      // render left header menu only for autheticated users
+      // render left header menu only for authenticated users
       if (mmooc.util.isAuthenticated()) {
         // The entire menu is rebuilt because of unwanted popup in the new ui menu
-        insertCustomMenuElementInTopMenu('Kalender', '/calendar');
+        insertCustomMenuElementInTopMenu('Kalender', '/calendar?design=udirDesign');
         if (mmooc.settings.removeGlobalGradesLink == false) {
-          insertCustomMenuElementInTopMenu('Karakterer', '/grades');
+          insertCustomMenuElementInTopMenu('Karakterer', '/grades?design=udirDesign');
         }
         if (mmooc.settings.removeGroupsLink == false) {
-          insertCustomMenuElementInTopMenu('Grupper', '/groups');
+          insertCustomMenuElementInTopMenu('Grupper', '/groups?design=udirDesign');
         }
         var linkToMyCourses = mmooc.utilRoot.getLinkToMyCourses();
         insertCustomMenuElementInTopMenu(mmooc.i18n.CoursePlural, linkToMyCourses);
@@ -230,7 +242,7 @@ this.mmooc.menu = (function() {
       if (roles != null && roles.indexOf('admin') != -1) {
         // Admin needs original canvas Course dropdown to access site admin settings
         //$("#courses_menu_item").show(); //Applies only for Old UI. This is the course menu item with a sub menu.
-        insertCustomMenuElementInTopMenu('Admin', '/accounts');
+        insertCustomMenuElementInTopMenu('Admin', '/accounts?design=udirDesign');
         // Admin needs more profile settings
         $('.add_access_token_link').show();
         $('body.profile_settings')
@@ -581,7 +593,7 @@ this.mmooc.menu = (function() {
       $('a.ic-app-header__logomark').attr('href', linkToMyCourses); //New UI
 // 20180122ETH Uncommenting the line below to see if we can specify the logo in the theme editor instead.
 //             In any case the logo should not be hardcoded but taken from the variables file instead.      
-//      $('a.ic-app-header__logomark').attr('src', 'https://kompetanse.udir.no/custom/logo/Ny-Udir-Logo-RGB-Neg.png'); //New UI
+      $('a.ic-app-header__logomark').attr('src', 'https://kompetanse.udir.no/custom/logo/Ny-Udir-Logo-RGB-Neg.png'); //New UI
       $('.ic-app-header__logomark-container')
         .detach()
         .prependTo('.ic-app-header__main-navigation');

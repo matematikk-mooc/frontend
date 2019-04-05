@@ -10,10 +10,12 @@ this.mmooc.utilRoot = (function() {
       return this.getRoles() !== null;
     },
     getLinkToMyCourses: () => {
-        var linkToMyCourses = "/courses";
+        var linkToMyCourses = "/courses?design=udirDesign";
+/*
         if (this.mmooc.allCoursesFrontpageCourseID > 0) {
             linkToMyCourses = "/courses/" + this.mmooc.allCoursesFrontpageCourseID + "?myCourses=1";
         }
+*/        
         return linkToMyCourses;
     },
 
@@ -39,7 +41,7 @@ this.mmooc.utilRoot = (function() {
             $("#content > div > div > div > div > div.ic-Login-header > div.ic-Login-header__links").hide();
         }
         else {
-           window.location.href = '/login/saml';
+           window.location.href = '/login/saml?design=udirDesign';
         }
       }
     },
@@ -51,7 +53,7 @@ this.mmooc.utilRoot = (function() {
         const enrollCode = urlParamsObj && urlParamsObj['enroll_code'];
         const login = urlParamsObj && urlParamsObj['login'];
         if (enrollCode !== undefined) {
-          window.location.href = `/enroll/${enrollCode}`;
+          window.location.href = `/enroll/${enrollCode}?design=udirDesign`;
         }
         else if (login !== undefined) {
           const linkToMyCourses = mmooc.utilRoot.getLinkToMyCourses();

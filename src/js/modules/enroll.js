@@ -104,7 +104,7 @@ this.mmooc.enroll = (function() {
           var enrollAction = this.getEnrollAction();
           mmooc.api.enrollUser(enrollAction, function(data) {
             $('.loading-gif').remove();
-            window.location.href = '/search/all_courses';
+            window.location.href = '/search/all_courses?design=udirDesign';
           });
         }
       }
