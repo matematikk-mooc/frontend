@@ -1,6 +1,6 @@
 <ul id="user-menu">
     <li class="mmooc-menu-item">
-        <a href="/conversations" class="mmooc-menu-item-title conversations">
+        <a href="/conversations{{queryString}}" class="mmooc-menu-item-title conversations">
             <span id="mmooc-unread-messages-count"></span>
         </a>
     </li>
@@ -21,10 +21,10 @@
         <div class="mmooc-menu-item-drop" id="mmooc-profile-settings">
             <ul>
                 <li>
-                    <a href="/profile/settings">Innstillinger</a>
+                    <a href="/profile/settings{{queryString}}">Innstillinger</a>
                 </li>
                 <li>
-                    <a href="/logout">Logg ut</a>
+                    <a href="/logout{{queryString}}">Logg ut</a>
                 </li>
             </ul>
         </div>

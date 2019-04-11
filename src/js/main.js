@@ -5,17 +5,23 @@ jQuery(function($) {
     if (document.location.search === '?mmpf') {
       mmooc.powerFunctions.show(parentId);
     } else {
-      window.location.href = '/courses?design=udirDesign';
+      window.location.href = '/courses';
     }
   });
 
   mmooc.routes.addRouteForQueryString(/invitation=/, function() {});
+
+
+  mmooc.routes.addRouteForPath(/\/login\/canvas$/, function() {
+    mmooc.utilRoot.redirectFeideAuthIfEnrollReferrer();
+  });
 
   mmooc.routes.addRouteForPath(/\/login$/, function() {
     $('#register_link').html('<i>Trenger du en konto?</i><b>Klikk her.</b>');
   });
 
   mmooc.routes.addRouteForPath(/\/courses$/, function() {
+    mmooc.utilRoot.redirectToEnrollIfCodeParamPassed();
     mmooc.menu.hideRightMenu();
     mmooc.courseList.listCourses(
       'content',
@@ -470,8 +476,6 @@ jQuery(function($) {
     mmooc.menu.showUserMenu();
     mmooc.menu.renderUnauthenticatedMenu();
     mmooc.menu.setMenuActiveLink();
-    mmooc.menu.updateMenuLinksWithCustomDesignParameter();
-    mmooc.menu.updateUserMenuLinksWithCustomDesignParameter();
   } catch (e) {
     console.log(e);
   }

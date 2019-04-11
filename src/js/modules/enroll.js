@@ -104,7 +104,7 @@ this.mmooc.enroll = (function() {
           var enrollAction = this.getEnrollAction();
           mmooc.api.enrollUser(enrollAction, function(data) {
             $('.loading-gif').remove();
-            window.location.href = '/search/all_courses?design=udirDesign';
+            window.location.href = '/search/all_courses' + mmooc.hrefQueryString;
           });
         }
       }
@@ -157,6 +157,7 @@ this.mmooc.enroll = (function() {
             const coursesAmount = coursesCategory.courses && coursesCategory.courses.length;
 
             html = mmooc.util.renderTemplateWithData('allcourseslist', {
+              queryString: mmooc.hrefQueryString,
               title: coursesCategory.title,
               isAuthenticated: mmooc.util.isAuthenticated(),
               courses: coursesCategory.courses,

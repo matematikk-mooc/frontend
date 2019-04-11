@@ -181,29 +181,16 @@ this.mmooc.menu = (function() {
       );
       $('body').addClass('useFullWidth'); //Used to solve problems in making the design 100% width in the new UI. This is the simplest way to implement this.
     },
-    updateMenuLinksWithCustomDesignParameter : function() {
-        $("#menu > li > a").each(function(_idx, _item) {
-            var newHref = _item.attr("href") + "?design=udirDesign";
-            _item.attr("href", newHref);
-        });
-    },
-    updateUserMenuLinksWithCustomDesignParameter : function() {
-        $("#user-menu > li > a").each(function(_idx, _item) {
-            var newHref = _item.attr("href") + "?design=udirDesign";
-            _item.attr("href", newHref);
-        });
-    },
-
     renderLeftHeaderMenu: function() {
       // render left header menu only for authenticated users
       if (mmooc.util.isAuthenticated()) {
         // The entire menu is rebuilt because of unwanted popup in the new ui menu
-        insertCustomMenuElementInTopMenu('Kalender', '/calendar?design=udirDesign');
+        insertCustomMenuElementInTopMenu('Kalender', '/calendar' + mmooc.hrefQueryString);
         if (mmooc.settings.removeGlobalGradesLink == false) {
-          insertCustomMenuElementInTopMenu('Karakterer', '/grades?design=udirDesign');
+          insertCustomMenuElementInTopMenu('Karakterer', '/grades' + mmooc.hrefQueryString);
         }
         if (mmooc.settings.removeGroupsLink == false) {
-          insertCustomMenuElementInTopMenu('Grupper', '/groups?design=udirDesign');
+          insertCustomMenuElementInTopMenu('Grupper', '/groups' + mmooc.hrefQueryString);
         }
         var linkToMyCourses = mmooc.utilRoot.getLinkToMyCourses();
         insertCustomMenuElementInTopMenu(mmooc.i18n.CoursePlural, linkToMyCourses);
@@ -242,7 +229,7 @@ this.mmooc.menu = (function() {
       if (roles != null && roles.indexOf('admin') != -1) {
         // Admin needs original canvas Course dropdown to access site admin settings
         //$("#courses_menu_item").show(); //Applies only for Old UI. This is the course menu item with a sub menu.
-        insertCustomMenuElementInTopMenu('Admin', '/accounts?design=udirDesign');
+        insertCustomMenuElementInTopMenu('Admin', '/accounts' + mmooc.hrefQueryString);
         // Admin needs more profile settings
         $('.add_access_token_link').show();
         $('body.profile_settings')
@@ -280,7 +267,7 @@ this.mmooc.menu = (function() {
       var menu = document.getElementById('menu');
       if (menu != null && mmooc.util.isAuthenticated()) {
         var html = mmooc.util.renderTemplateWithData('usermenu', {
-          user: mmooc.api.getUser()
+          user: mmooc.api.getUser(), queryString: mmooc.hrefQueryString
         });
         menu.insertAdjacentHTML('afterend', html);
 

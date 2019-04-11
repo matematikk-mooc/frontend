@@ -19,7 +19,8 @@ this.mmooc.courseList = (() => {
             $(`#${parentId}`).html(html);
           } else {
             html = mmooc.util.renderTemplateWithData('courselistcontainer', {
-              courseLabel: mmooc.i18n.CoursePlural.toLowerCase()
+              courseLabel: mmooc.i18n.CoursePlural.toLowerCase(),
+              queryString: mmooc.hrefQueryString
             });
             $(`#${parentId}`).html(html);
             const sortedCourses = mmooc.util.arraySorted(
