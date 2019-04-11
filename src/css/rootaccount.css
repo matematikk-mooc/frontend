@@ -1,0 +1,4 @@
+/* Hide the Canvas application. It will be displayed by javascript. */
+#application {
+    display: none;
+}
