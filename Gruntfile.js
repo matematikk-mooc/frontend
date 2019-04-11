@@ -58,6 +58,8 @@ module.exports = function (grunt) {
           'src/js/3party/*.js',
           'tmp/templates.js',
           'src/js/api/*.js',
+          'src/js/settingsRoot.js', 
+          'src/js/utilRoot.js',
           'src/js/modules/*.js',
           'src/js/settings.js',
           'src/js/i18n.js',
@@ -66,21 +68,10 @@ module.exports = function (grunt) {
         ],
         dest: 'tmp/mmooc.js'
       },
-      jsnorootscript: {
-        src: [
-          'src/js/3party/*.js',
-          'tmp/templates.js',
-          'src/js/api/*.js',
-          'src/js/modules/*.js',
-          'src/js/settings.js',
-          'src/js/i18n.js',
-          'src/js/main.js',
-          'src/addons/canva_badges/js/*.js',
-          'src/js/settingsRoot.js', 
-          'src/js/utilRoot.js'
-        ],
-        dest: 'dist/mmoocnorootscript.js'
-      },
+      rootaccount: {
+        src: ['src/js/settingsRoot.js', 'src/js/utilRoot.js', 'src/js/rootaccount.js'],
+        dest: 'tmp/rootaccount.js'
+      },      
       extras: {
         src: [
           'node_modules/grunt-contrib-handlebars/node_modules/handlebars/dist/handlebars.min.js', // we need to embed handlebars here because it is not included in the iframe
@@ -96,10 +87,6 @@ module.exports = function (grunt) {
       uia: {
         src: ['src/js/i18nuia.js', 'src/js/settingsuia.js'],
         dest: 'dist/uia.js'
-      },
-      rootaccount: {
-        src: ['src/js/settingsRoot.js', 'src/js/utilRoot.js', 'src/js/mmoocrootaccount.js'],
-        dest: 'dist/rootaccount.js'
       },
     },
 
@@ -132,40 +119,38 @@ module.exports = function (grunt) {
 
     replace: {
       production: {
-        src: ['tmp/mmooc-min.css'],
-        dest: 'dist/mmooc-min.css',
+        src: ['tmp/mmooc-min.css','tmp/mmooc-min.js', 'tmp/rootaccount.js'],
+        dest: 'dist/',
         replacements: [
           {
             from: 'https://server',
             to: 'https://matematikk-mooc.github.io/frontend'
-          }
-        ]
-      },
-      productioncustom: {
-        src: ['tmp/mmooc-min.css'],
-        dest: 'dist/mmooc-min-custom.css',
-        replacements: [
-          {
-            from: 'https://server/bitmaps/mmooc-logo.png',
-            to: '/custom/bitmaps/mmooc-logo.png'
           },
           {
-            from: 'https://server/bitmaps/mmooc-logo@2x.png',
-            to: '/custom/bitmaps/mmooc-logo@2x.png'
+            from: 'https://udirdesigncss',
+            to: 'https://kompetanseplattform.azurewebsites.net/mmooc-min.css'
           },
           {
-            from: 'https://server',
-            to: 'https://matematikk-mooc.github.io/frontend'
+            from: 'https://udirdesignjs',
+            to: 'https://kompetanseplattform.azurewebsites.net/mmooc-min.js'
           }
         ]
       },
       development: {
-        src: ['tmp/mmooc-min.css'],
-        dest: 'dist/mmooc-min-dev.css',
+        src: ['tmp/rootaccount.js'],
+        dest: 'dist/development/',
         replacements: [
           {
             from: 'https://server',
             to: 'http://localhost:9000'
+          },
+          {
+            from: 'https://udirdesigncss',
+            to: 'http://localhost:9000/mmooc-min.css'
+          },
+          {
+            from: 'https://udirdesignjs',
+            to: 'http://localhost:9000/mmooc-min.js'
           }
         ]
       },
@@ -194,6 +179,10 @@ module.exports = function (grunt) {
     copy: {
       main: {
         files: [
+          { expand: true, src: ['rootaccount*'], cwd: 'src/css/', dest: 'dist/' },
+          { expand: true, src: ['subaccount*'], cwd: 'src/css/', dest: 'dist/' },
+          { expand: true, src: ['rootaccount*'], cwd: 'src/css/', dest: 'dist/' },
+          { expand: true, src: ['subaccount*'], cwd: 'src/js/', dest: 'dist/' },
           { expand: true, src: ['bitmaps/*'], cwd: 'src/', dest: 'dist/' },
           { expand: true, src: ['vector_images/*'], cwd: 'src/', dest: 'dist/' }
         ]
@@ -232,7 +221,8 @@ module.exports = function (grunt) {
           'src/js/**/*.js',
           'src/templates/**/*.hbs',
           'src/addons/badges/js/*.js',
-          'src/addons/badges/css/*.less'
+          'src/addons/badges/css/*.less',
+          'Gruntfile.js'
         ],
         tasks: ['rebuildServe']
       }
@@ -259,7 +249,6 @@ module.exports = function (grunt) {
     'less',
     'copy',
     'replace:production',
-    'replace:productioncustom',
     'replace:development',
     'replace:production_badge',
     'replace:development_badge'
