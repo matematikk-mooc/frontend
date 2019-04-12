@@ -37,9 +37,17 @@ jQuery.extend({
 
 jQuery(function($) {
     if(document.location.pathname == "/login/canvas") {
-        mmooc.utilRoot.redirectFeideAuthIfEnrollReferrer();
+        if(mmooc.utilRoot.redirectFeideAuthIfEnrollReferrer())
+        {
+            return null;
+        }
     }
-
+    else if (document.location.pathname == "/courses") {
+        if(mmooc.utilRoot.redirectToEnrollIfCodeParamPassed())
+        {
+            return null;
+        }
+    }
     const urlParamsObj = mmooc.utilRoot.urlParamsToObject();
     const design = urlParamsObj && urlParamsObj['design'];
     if (design !== undefined && design=="udir") {

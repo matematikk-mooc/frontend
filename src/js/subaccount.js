@@ -36,6 +36,15 @@ jQuery.extend({
 });
 
 jQuery(document).ready(function($) {
+    const urlParamsObj = mmooc.utilRoot.urlParamsToObject();
+    var enrollCode = mmooc.utilRoot.isEnrollCodeParamPassed(urlParamsObj);
+    if (enrollCode) {
+      return null;
+    }
+    if (mmooc.utilRoot.isLoginParamPassed(urlParamsObj)) {
+      return null;
+    }
+
     if (this.udirDesignLoaded === undefined) {
         this.udirDesignLoaded = true;
         console.log("Subaccount: loading design.");

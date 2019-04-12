@@ -72,6 +72,10 @@ module.exports = function (grunt) {
         src: ['src/js/settingsRoot.js', 'src/js/utilRoot.js', 'src/js/rootaccount.js'],
         dest: 'tmp/rootaccount.js'
       },      
+      subaccount: {
+        src: ['src/js/settingsRoot.js', 'src/js/utilRoot.js', 'src/js/subaccount.js'],
+        dest: 'tmp/subaccount.js'
+      },      
       extras: {
         src: [
           'node_modules/grunt-contrib-handlebars/node_modules/handlebars/dist/handlebars.min.js', // we need to embed handlebars here because it is not included in the iframe
@@ -119,7 +123,7 @@ module.exports = function (grunt) {
 
     replace: {
       production: {
-        src: ['tmp/mmooc-min.css','tmp/mmooc-min.js', 'tmp/rootaccount.js'],
+        src: ['tmp/mmooc-min.css','tmp/mmooc-min.js', 'tmp/rootaccount.js', 'tmp/subaccount.js'],
         dest: 'dist/',
         replacements: [
           {
@@ -137,7 +141,7 @@ module.exports = function (grunt) {
         ]
       },
       development: {
-        src: ['tmp/rootaccount.js'],
+        src: ['tmp/rootaccount.js','tmp/subaccount.js'],
         dest: 'dist/development/',
         replacements: [
           {
@@ -181,8 +185,6 @@ module.exports = function (grunt) {
         files: [
           { expand: true, src: ['rootaccount*'], cwd: 'src/css/', dest: 'dist/' },
           { expand: true, src: ['subaccount*'], cwd: 'src/css/', dest: 'dist/' },
-          { expand: true, src: ['rootaccount*'], cwd: 'src/css/', dest: 'dist/' },
-          { expand: true, src: ['subaccount*'], cwd: 'src/js/', dest: 'dist/' },
           { expand: true, src: ['bitmaps/*'], cwd: 'src/', dest: 'dist/' },
           { expand: true, src: ['vector_images/*'], cwd: 'src/', dest: 'dist/' }
         ]

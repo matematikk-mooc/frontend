@@ -58,7 +58,7 @@
                         <p>{{public_description}}</p>
                         <div class="mmooc-button-ctr">
                             {{#unless ../isAuthenticated}}
-                              <a class="mmooc-button mmooc-button-primary" href="/courses?enroll_code={{self_enrollment_code}}">{{../../courseRegisterFeide}}</a>
+                              <a class="mmooc-button mmooc-button-primary" href="/courses{{../../queryString}}&enroll_code={{self_enrollment_code}}">{{../../courseRegisterFeide}}</a>
                             {{/unless}}
                             {{#if enrolled}}
                               <a class="mmooc-button mmooc-button-secondary" href="/courses/{{../id}}">{{../../goToCourse}}</a>

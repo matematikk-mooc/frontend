@@ -316,18 +316,6 @@ this.mmooc.util = (function() {
 
       return res;
     },
-    urlParamsToObject: () => {
-      // conver url params string "?abc=foo&def=%5Basf%5D&xyz=5&foo=b%3Dar"
-      // to {abc: "foo", def: "[asf]", xyz: "5", foo: "b=ar"}
-
-      if (document.location.search === '') return {};
-
-      const search = location.search.substring(1);
-      return JSON.parse(
-        '{"' + search.replace(/&/g, '","').replace(/=/g, '":"') + '"}',
-        (key, value) => key === "" ? value : decodeURIComponent(value)
-      );
-    },
     getLinkToAvailableCourses: () => {
         var linkToAvailableCourses = "/courses/search_all" + mmooc.hrefQueryString;
 //ETH20190409 By making sure the root account loads our design, we do not need a front page.
@@ -345,7 +333,7 @@ this.mmooc.util = (function() {
       const isOverridenCourse = currentCourseID === this.mmooc.allCoursesFrontpageCourseID;
       const isNotTeacherOrAdmin = !mmooc.util.isTeacherOrAdmin();
       
-      const urlParamsObj = mmooc.util.urlParamsToObject();      
+      const urlParamsObj = mmooc.utilRoot.urlParamsToObject();      
       const isOverridenAnyCourse = urlParamsObj && urlParamsObj['coursesList'];
       const isDisabledOverridenCourse = urlParamsObj &&  !urlParamsObj['skipCoursesList'];
       const isMyCourses = urlParamsObj &&  urlParamsObj['myCourses'];
