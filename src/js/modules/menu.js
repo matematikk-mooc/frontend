@@ -77,7 +77,7 @@ this.mmooc.menu = (function() {
         _insertCourseMenuHtml(course, selectedMenuItem, title, menuItems);
       }
       $('#mmooc-menu-item-verktoy').click(function(event) {
-        handleMenuClick('#mmooc-menu-item-verktoy', '#mmooc-verktoy-list');
+        handleMenuClick('#mmooc-menu-item-verktoy', '#mmooc-verktoy-list', 400);
       });
     }
   }
@@ -118,18 +118,30 @@ this.mmooc.menu = (function() {
       $('li.helpMenu').hide();
     }
   }
-  function handleMenuClick(menuSelectId, menuId) {
+  function handleMenuClick(menuSelectId, menuId, time) {
     if ($(menuId).css('display') != 'none') {
-      $(menuId).slideUp(400);
+      $(menuId).slideUp(time);
       $(menuSelectId).off('mouseleave');
     } else {
-      $(menuId).slideDown(400);
+      $(menuId).slideDown(time);
       $(menuSelectId).mouseleave(function() {
-        $(menuId).slideUp(400);
+        $(menuId).slideUp(time);
       });
     }
   }
 
+  function showHamburger() {
+    var header = document.querySelector(".ic-app-header__main-navigation");
+
+    if (header) {
+      header.insertAdjacentHTML(
+        'afterbegin',
+        '<div class="menu-mobile">☰</div>'
+      );
+    }
+  }
+
+  var hamburger = showHamburger();
   var stylesheet = createStyleSheet();
 
   return {
@@ -262,7 +274,11 @@ this.mmooc.menu = (function() {
     hideSectionTabsHeader: function() {
       $('#section-tabs-header-subtitle').hide();
     },
-
+    showMobileMenu: function() {
+      $('.menu-mobile').click(function(event) {
+        handleMenuClick('#menu', '#menu', 100);
+      });
+    },
     showUserMenu: function() {
       var menu = document.getElementById('menu');
       if (menu != null && mmooc.util.isAuthenticated()) {
@@ -272,12 +288,13 @@ this.mmooc.menu = (function() {
         menu.insertAdjacentHTML('afterend', html);
 
         $('#mmooc-menu-item-varsler').click(function(event) {
-          handleMenuClick('#mmooc-menu-item-varsler', '#mmooc-activity-stream');
+          handleMenuClick('#mmooc-menu-item-varsler', '#mmooc-activity-stream', 400);
         });
         $('#mmooc-menu-item-profile-settings').click(function(event) {
           handleMenuClick(
             '#mmooc-menu-item-profile-settings',
-            '#mmooc-profile-settings'
+            '#mmooc-profile-settings',
+            400
           );
         });
 
@@ -301,7 +318,6 @@ this.mmooc.menu = (function() {
         //                hideHelpMenuElementIfNotActivated();
       }
     },
-
     setMenuActiveLink: function() {
       var menuItems = $('.ic-app-header__menu-list li a ');
       menuItems.each((_, element) => {

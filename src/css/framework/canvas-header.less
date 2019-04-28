@@ -1,3 +1,27 @@
+.menu-mobile {
+  display: none;
+
+  &:hover {
+    cursor: pointer;
+  }
+  
+  @media screen and (max-width: 1050px)  {
+    display: block;
+    padding-top: 30px;
+    content: "☰";
+    color: #fff;
+    margin-right: auto;
+    padding-left: 10px;
+    font-size: 25px;
+    font-weight: bold;
+    flex-basis: 33%;
+  }
+  @media screen and (max-width: 768px) {
+    position: absolute;
+    top: 54px;
+  }
+}
+
 #application.ic-app {
   #header.ic-app-header {
     min-height: 80px;
@@ -17,9 +41,9 @@
       max-width: 1196px;
       padding: 0 20px;
 
-      @media screen and (max-width: 1050px) {
+      @media screen and (max-width: 768px) {
         flex-flow: wrap;
-      }
+     }
 
       .ic-app-header__logomark-container {
         width: @logo-width;
@@ -30,8 +54,13 @@
         min-width: @logo-width;
       
       @media screen and (max-width: 1050px) {
-        flex-basis: 100%;
+        flex-basis: 33%;
         margin: 0;
+        order: 1;
+      }
+
+      @media screen and (max-width: 768px) {
+        flex-basis: 100%;
       }
 
         .ic-app-header__logomark {
@@ -58,13 +87,29 @@
     }
 
     #menu {
-      height: 80px;
       display: flex;
       align-items: center;
       flex-basis: 100%;
 
+      @media screen and (max-width: 768px) {
+        flex-basis: 100%;
+        order: 3;
+      }
+
       @media screen and (max-width: 1050px) {
-        flex-basis: 50%;
+        flex-basis: 33%;
+        order: 0;
+        flex-direction: column;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        box-shadow: 0 4px 4px 0 rgba(70, 70, 70, 0.2);
+        border-bottom-right-radius: 5px;
+        padding: 10px 0;
+        background: @darkTealColor;
+        padding: 15px 0;
+        display: none;
+        min-width: 250px;
       }
 
       li {
@@ -74,6 +119,12 @@
         &#context_external_tool_1_menu_item {
           // external tools hidden as default - they should be accessed from the course page instead
           display: none;
+        }
+
+        @media screen and (max-width: 1050px) {
+          width: 100%;
+          float: none;
+          min-width: 250px;
         }
 
         a {
@@ -86,6 +137,16 @@
           align-items: center;
           justify-content: center;
           height: 100%;
+
+          @media screen and (max-width: 1050px) {
+            width: 100%;
+            justify-content: flex-start;
+            padding-left: 28px;
+
+            &:hover {
+              background: darken(@darkTealColor, 5%) !important;
+            }
+          }
 
           &.ic-app-header__menu-list-link {
             border-bottom: 4px solid transparent;
@@ -165,6 +226,15 @@
       padding-top: 27px;
       min-width: 195px;
       margin-right: -20px;
+
+
+      @media screen and (max-width: 1050px) {
+        margin-right: 0;
+      }
+
+      @media screen and (max-width: 768px) {
+        padding-top: 0;
+      }
     }
     
   }
