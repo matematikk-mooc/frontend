@@ -141,8 +141,48 @@ this.mmooc.menu = (function() {
     }
   }
 
+  function showTabsHamburger() {
+    setTimeout(function() {
+      var tab = document.querySelector(".selected");
+
+        tab.insertAdjacentHTML(
+          'beforeend',
+          '<div class="tabs-hamburger">☰</div>'
+        );
+
+
+
+      $('.tabs-hamburger').click(function(event) {
+        var selectedTab = $('.mmooc-course-tab').filter('.selected');
+
+        var notSelectedTabs = $('.mmooc-course-tabs li:not(".selected")');
+        var allTabs = $('.mmooc-course-tab');
+        var time = 100;
+
+
+
+        if ($(allTabs).css('display') != 'none') {
+          $(notSelectedTabs).slideUp(time);
+          selectedTab.insertBefore('.mmooc-course-tab:first-of-type');
+          $(notSelectedTabs).show();
+        } else {
+          // $(notSelectedTabs).slideDown(time);
+          $(notSelectedTabs).show();
+        }
+        
+        selectedTab.insertBefore('.mmooc-course-tab:first-of-type');
+
+      });
+    },600)
+  }
+
+
+  // SPROBUJ ODPALIC Z MAIN JS
+  
+
   var hamburger = showHamburger();
   var stylesheet = createStyleSheet();
+  var tabsHamburger = showTabsHamburger();
 
   return {
     listModuleItems: function() {
