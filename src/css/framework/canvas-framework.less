@@ -124,6 +124,10 @@ body.embedded #content {
   padding-left: @columnPadding;
   width: @rightColWidth;
   padding-top: @contentTopMargin;
+
+  @media screen and (max-width: 870px) {
+    padding-left: 0;
+  }
 }
 
 .home #right-side {

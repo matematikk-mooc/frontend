@@ -16,6 +16,7 @@ body.with-left-side:not(.useFullWidth) {
     margin: 0 auto;
     min-height: auto;
     display: block;
+    padding: 0 30px 0 15px;
     // outline: 1px solid red;
 
     // #main {
@@ -53,17 +54,19 @@ body.with-right-side {
       width: 100%;
 
       #content-wrapper {
-        float: left;
-        width: 76%;
-        min-width: 76%;
+        flex: 1;
+        // float: left;
+        // width: 76%;
+        // min-width: 76%;
         // outline: 1px solid purple;
       }
 
       #right-side-wrapper {
-        float: left;
-        width: 24%;
-        min-width: 24%;
-        padding: 0;
+        min-width: 370px;
+        // float: left;
+        // width: 24%;
+        // min-width: 24%;
+        // padding: 0;
         // outline: 1px solid green;
       }
     }
@@ -75,17 +78,17 @@ body.with-left-side {
     #application.ic-app {
       #main {
         #content-wrapper {
-          float: left;
-          width: 76%;
-          min-width: 76%;
+          // float: left;
+          // width: 76%;
+          // min-width: 76%;
           // outline: 1px solid purple;
         }
 
         #right-side-wrapper {
-          float: left;
-          width: 24%;
-          min-width: 24%;
-          padding: 0;
+          // float: left;
+          // width: 24%;
+          // min-width: 24%;
+          // padding: 0;
           // outline: 1px solid green;
         }
       }
@@ -120,9 +123,9 @@ body.with-left-side {
       //min-width: ~"calc(100% - 238px)";
 
       #content-wrapper {
-        float: left;
-        width: 100%;
-        min-width: 100%;
+        // float: left;
+        // width: 100%;
+        // min-width: 100%;
         // outline: 1px solid purple;
       }
 
@@ -158,6 +161,14 @@ body:not(.ic-no-flex-layout) {
         }
       }
     }
+  }
+}
+
+.ic-app-main-content {
+  display: flex !important;
+
+  @media screen and (max-width: 870px) {
+    flex-direction: column;
   }
 }
 
