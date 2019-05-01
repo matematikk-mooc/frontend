@@ -24,24 +24,39 @@ body.with-left-side:not(.useFullWidth) {
     // }
 
     #left-side {
-      width: 238px;
+      width: 188px;
       border: none !important;
       padding-top: 15px;
       position: static;
       float: left;
-      padding-right: 50px;
       padding-left: 0;
       opacity: 1;
-      -webkit-transform: none; /* Safari and Chrome */
-      -moz-transform: none; /* Firefox */
-      -ms-transform: none; /* IE 9 */
-      -o-transform: none; /* Opera */
+      -webkit-transform: none;
+      /* Safari and Chrome */
+      -moz-transform: none;
+      /* Firefox */
+      -ms-transform: none;
+      /* IE 9 */
+      -o-transform: none;
+      /* Opera */
       transform: none;
       // outline: 1px solid red;
+
+      @media screen and (max-width: 685px) {
+        float: none;
+        width: 100%;
+      }
     }
+
     #section-tabs-header-subtitle {
       display: none;
     }
+  }
+}
+
+.ic-Layout-contentMain {
+  @media screen and (max-width: 685px) {
+    padding: 0 10px 10px 10px;
   }
 }
 

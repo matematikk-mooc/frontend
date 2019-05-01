@@ -182,7 +182,7 @@ this.mmooc.menu = (function() {
 
   var hamburger = showHamburger();
   var stylesheet = createStyleSheet();
-  var tabsHamburger = showTabsHamburger();
+  // var tabsHamburger = showTabsHamburger();
 
   return {
     listModuleItems: function() {
