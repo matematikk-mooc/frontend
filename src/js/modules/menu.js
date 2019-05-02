@@ -129,7 +129,6 @@ this.mmooc.menu = (function() {
       });
     }
   }
-
   function showHamburger() {
     var header = document.querySelector(".ic-app-header__main-navigation");
 
@@ -140,49 +139,10 @@ this.mmooc.menu = (function() {
       );
     }
   }
-
-  function showTabsHamburger() {
-    setTimeout(function() {
-      var tab = document.querySelector(".selected");
-
-        tab.insertAdjacentHTML(
-          'beforeend',
-          '<div class="tabs-hamburger">☰</div>'
-        );
-
-
-
-      $('.tabs-hamburger').click(function(event) {
-        var selectedTab = $('.mmooc-course-tab').filter('.selected');
-
-        var notSelectedTabs = $('.mmooc-course-tabs li:not(".selected")');
-        var allTabs = $('.mmooc-course-tab');
-        var time = 100;
-
-
-
-        if ($(allTabs).css('display') != 'none') {
-          $(notSelectedTabs).slideUp(time);
-          selectedTab.insertBefore('.mmooc-course-tab:first-of-type');
-          $(notSelectedTabs).show();
-        } else {
-          // $(notSelectedTabs).slideDown(time);
-          $(notSelectedTabs).show();
-        }
-        
-        selectedTab.insertBefore('.mmooc-course-tab:first-of-type');
-
-      });
-    },600)
-  }
-
-
-  // SPROBUJ ODPALIC Z MAIN JS
   
-
   var hamburger = showHamburger();
   var stylesheet = createStyleSheet();
-  // var tabsHamburger = showTabsHamburger();
+
 
   return {
     listModuleItems: function() {
@@ -310,13 +270,81 @@ this.mmooc.menu = (function() {
       $('#right-side').hide();
       $('body').removeClass('with-right-side');
     },
+    showMobileTabs: function() {
+      setTimeout(function() {
+        var tab = document.querySelector(".selected");
+        var desktopViewport = window.matchMedia("(max-width: 1050px)");
+        
+          tab.insertAdjacentHTML(
+            'beforeend',
+            '<div class="tabs-hamburger">☰</div>'
+          );
+        
+        if(desktopViewport.matches) {
+          $('.tabs-hamburger').css("display", "block");
+        }else {
+          $('.tabs-hamburger').css("display", "none");
+        }
 
+        $(window).on('resize', function(e) {
+          var desktopViewport = window.matchMedia("(max-width: 1050px)");
+        
+          if(desktopViewport.matches) {
+            $('.tabs-hamburger').css("display", "block");
+          }else {
+            $('.tabs-hamburger').css("display", "none");
+          }
+      });
+
+        $('.tabs-hamburger').click(function(event) {
+          var selectedTab = $('.mmooc-course-tab').filter('.selected');
+          var notSelectedTabs = $('.mmooc-course-tabs li:not(".selected")');
+          var allTabs = $('.mmooc-course-tab');
+          var time = 100;
+  
+          if ($(allTabs).css('display') != 'none') {
+            $(notSelectedTabs).slideUp(time);
+            selectedTab.insertBefore('.mmooc-course-tab:first-of-type');
+            $(notSelectedTabs).show();
+          } else {
+            // $(notSelectedTabs).slideDown(time);
+            $(notSelectedTabs).show();
+          }
+          selectedTab.insertBefore('.mmooc-course-tab:first-of-type');
+        });
+      },600)
+
+      $(window).on('resize', function(e) {
+        var viewportSize = window.matchMedia("(min-width: 1051px)");
+        var tabsNotSelected = $('.mmooc-course-tabs li:not(".selected")');
+      
+        if (viewportSize.matches) {
+          tabsNotSelected.css("display", "flex");
+        }else {
+          tabsNotSelected.css("display", "none");
+        }
+    });
+    },
     hideSectionTabsHeader: function() {
       $('#section-tabs-header-subtitle').hide();
     },
     showMobileMenu: function() {
-      $('.menu-mobile').click(function(event) {
-        handleMenuClick('#menu', '#menu', 100);
+      var mobileViewport = window.matchMedia("(max-width: 1051px)")
+
+      if(mobileViewport) {
+        $('.menu-mobile').click(function(event) {
+          handleMenuClick('#menu', '#menu', 100);
+        });
+      }
+
+      $(window).on('resize', function(e) {
+          var desktopViewport = window.matchMedia("(min-width: 1051px)")
+        
+          if (desktopViewport.matches) {
+            $('#menu').css("display", "flex");
+          }else {
+            $('#menu').css("display", "none");
+          }
       });
     },
     showUserMenu: function() {

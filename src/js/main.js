@@ -477,6 +477,7 @@ jQuery(function($) {
     mmooc.menu.renderUnauthenticatedMenu();
     mmooc.menu.setMenuActiveLink();
     mmooc.menu.showMobileMenu();
+    mmooc.menu.showMobileTabs();
   } catch (e) {
     console.log(e);
   }

@@ -16,7 +16,11 @@ body.with-left-side:not(.useFullWidth) {
     margin: 0 auto;
     min-height: auto;
     display: block;
-    padding: 0 30px 0 15px;
+    padding: 0;
+
+    @media screen and (max-width: 1225px) {
+      padding: 0 30px 0 30px;
+    }
     // outline: 1px solid red;
 
     // #main {
@@ -24,12 +28,13 @@ body.with-left-side:not(.useFullWidth) {
     // }
 
     #left-side {
-      width: 188px;
+      width: 225px;
       border: none !important;
       padding-top: 15px;
+      padding-right: 35px;
+      padding-left: 0;
       position: static;
       float: left;
-      padding-left: 0;
       opacity: 1;
       -webkit-transform: none;
       /* Safari and Chrome */
@@ -42,9 +47,10 @@ body.with-left-side:not(.useFullWidth) {
       transform: none;
       // outline: 1px solid red;
 
-      @media screen and (max-width: 685px) {
+      @media screen and (max-width: 785px) {
         float: none;
         width: 100%;
+        padding-right: 0;
       }
     }
 
@@ -55,8 +61,10 @@ body.with-left-side:not(.useFullWidth) {
 }
 
 .ic-Layout-contentMain {
-  @media screen and (max-width: 685px) {
-    padding: 0 10px 10px 10px;
+  padding: 10px 24px 24px 0;
+
+  @media screen and (max-width: 1050px) {
+    padding: 10px 0 24px 0;
   }
 }
 

@@ -91,6 +91,12 @@
 
         &.unread {
           list-style: disc outside;
+
+          a {
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
+          }
         }
       }
     }
@@ -104,6 +110,9 @@
   box-shadow: 0 4px 8px 0 rgba(55,55,55,0.05);
   border-radius: 4px;
   top: 30px;
+  left: -166px;
+  max-width: 300px;
+  padding-right: 5px;
 }
 
 #mmooc-notification-count,
