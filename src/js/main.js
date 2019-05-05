@@ -328,11 +328,11 @@ jQuery(function($) {
     function() {
         // For discussion pages we only want the title to be "<discussion>" instead of "Discussion: <discussion>"
         var title = mmooc.util.getPageTitleAfterColon();
-
         //If this is a group discussion we do not allow the user to access it because
         //he is apparantly not a member of a group. 
         var courseId = mmooc.api.getCurrentCourseId();
         mmooc.util.isStudentInCourse(courseId, function() {
+            console.log("asdf")
             var courseId = mmooc.api.getCurrentCourseId();
             var contentId = mmooc.api.getCurrentTypeAndContentId().contentId;
             mmooc.api.isGroupDiscussion(courseId, contentId, function(result) {
@@ -477,7 +477,6 @@ jQuery(function($) {
     mmooc.menu.renderUnauthenticatedMenu();
     mmooc.menu.setMenuActiveLink();
     mmooc.menu.showMobileMenu();
-    mmooc.menu.showMobileTabs();
   } catch (e) {
     console.log(e);
   }
