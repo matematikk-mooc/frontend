@@ -332,7 +332,7 @@ this.mmooc.menu = (function() {
             mobileMenu.slideDown(time);
           }
         });
-
+ 
       $(window).on('resize', function(e) {
           var desktopViewport = window.matchMedia("(min-width: 1051px)");
                    
