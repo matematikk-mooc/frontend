@@ -29,6 +29,11 @@ Handlebars.registerHelper('getCourseUrl', function() {
   }
 });
 
+Handlebars.registerHelper('getCourseName', function() {
+  var name = this.name;  
+  var nameWithoutSpaces = name.replace(/\s/g,'');  
+  return nameWithoutSpaces;
+});
 
 Handlebars.registerHelper('ifHasRole', function(enrollments, role, options) {
   for (var i = 0; i < enrollments.length; i++) {

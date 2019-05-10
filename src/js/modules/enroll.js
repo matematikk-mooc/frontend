@@ -271,6 +271,46 @@ this.mmooc.enroll = (function() {
         });
       });
     },
+    createHashTags: function() {
+      setTimeout(function() {
+        $('span').click(function(e) {
+          if ($(this).filter("[data-name='course']")) {
+            var courseGroupId = $(this).closest('section').find('button[index=0]').attr('data-title');
+            var hashTag = courseGroupId + "::" + e.currentTarget.id;
+            window.location.hash = hashTag;
+          }
+        });
+
+        $("button[data-title]").click(function(e){
+          var categoryName = $(this).attr("data-title");
+          var firstCourseId = $(this).siblings().find('span').eq(0).attr('id');
+          var hashTag = categoryName + "::" + firstCourseId;
+          window.location.hash = hashTag;
+        })
+      },2000)
+    },
+    scrollToCourse: function () {
+      setTimeout(function() {
+        var currentHash = window.location.hash;
+        var courses = $('span').filter("[data-name='course']")
+
+        courses.each(function (i, el) {
+          var currentElementId = $(el).attr('id');
+          if (currentHash.includes(currentElementId)) {
+
+            var categoryElement = $(el).closest('section').find('button[index=0]');
+            categoryElement.trigger("click");
+
+            $([document.documentElement, document.body]).animate({
+              scrollTop: $("#" + currentElementId).offset().top
+            }, 500);
+
+            var courseTab = $(el).find('button');
+            courseTab.trigger("click");
+          }
+        })
+      },1500)
+    },
     setCourseEnrolledStatus: function(allCourses, enrolledCourses) {
       var allCoursesWithStatus = [];
       for (var i = 0; i < allCourses.length; i++) {
