@@ -119,6 +119,7 @@ this.mmooc.enroll = (function() {
       document.getElementById('content').innerHTML = html;
     },
     printAllCourses: function() {
+      var self = this;
       html = "<div class='mmooc-loader-wrapper'><span class='loading-gif'></span></div>";
       $('.mmooc-all-courses-list').append(html);
       mmooc.api.getAllPublicCourses(function(allCourses) {
@@ -146,7 +147,7 @@ this.mmooc.enroll = (function() {
           );
 
           $('.mmooc-loader-wrapper').remove();
-
+            
           for (var i = 0; i < coursesCategorized.length; i++) {
             const coursesCategory = coursesCategorized[i];
             const coursesEnrolledAmount = mmooc.util.filter(
@@ -174,6 +175,9 @@ this.mmooc.enroll = (function() {
               index: i
             });
             $('.mmooc-all-courses-list').append(html);
+            self.createHashTags();
+            self.scrollToCourse();
+            console.log("sdf")
           }
 
           // Displays information, that there is no current courses available to enroll
@@ -272,7 +276,6 @@ this.mmooc.enroll = (function() {
       });
     },
     createHashTags: function() {
-      setTimeout(function() {
         $('span').click(function(e) {
           if ($(this).filter("[data-name='course']")) {
             var courseGroupId = $(this).closest('section').find('button[index=0]').attr('data-title');
@@ -287,7 +290,6 @@ this.mmooc.enroll = (function() {
           var hashTag = categoryName + "::" + firstCourseId;
           window.location.hash = hashTag;
         })
-      },2000)
     },
     scrollToCourse: function () {
       setTimeout(function() {
@@ -309,7 +311,7 @@ this.mmooc.enroll = (function() {
             courseTab.trigger("click");
           }
         })
-      },1500)
+      },100)
     },
     setCourseEnrolledStatus: function(allCourses, enrolledCourses) {
       var allCoursesWithStatus = [];

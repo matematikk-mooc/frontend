@@ -134,8 +134,6 @@ jQuery(function($) {
   mmooc.routes.addRouteForPath(/\/search\/all_courses$/, function() {
     mmooc.enroll.printAllCoursesContainer();
     mmooc.enroll.printAllCourses();
-    mmooc.enroll.createHashTags();
-    mmooc.enroll.scrollToCourse();
   });
 
   mmooc.routes.addRouteForPath(/\/courses\/\d+\/settings$/, function() {
