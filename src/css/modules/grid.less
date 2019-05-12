@@ -1,5 +1,8 @@
 .mmooc-row {
-  &:after {
+  display: flex !important;
+  flex-wrap: wrap;
+
+  &::after {
     content: '';
     display: table;
     clear: both;
@@ -12,20 +15,31 @@
   width: 100%;
 }
 
-@media screen and (min-width: 1100px) {
-  .mmooc-size-1of3 {
-    width: 33.3%;
+.mmooc-size-1of3 {
+  min-width: 320px;
+  flex-basis: 33%;
+  flex-grow: 1;
+  flex-shrink: 1;
+
+  @media screen and (max-width: 500px) {
+    min-width: 300px;
   }
 }
 
-@media screen and (min-width: 768px) and (max-width: 1099px) {
-  .mmooc-size-1of3 {
-    width: 50%;
-  }
-}
+// @media screen and (min-width: 1100px) {
+//   .mmooc-size-1of3 {
+//     min-width: 33.3%;
+//   }
+// }
 
-@media screen and (max-width: 767px) {
-  .mmooc-size-1of3 {
-    width: 100%;
-  }
-}
+// @media screen and (min-width: 768px) and (max-width: 1099px) {
+//   .mmooc-size-1of3 {
+//     min-width: 50%;
+//   }
+// }
+
+// @media screen and (max-width: 767px) {
+//   .mmooc-size-1of3 {
+//     min-width: 100%;
+//   }
+// }
