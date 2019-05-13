@@ -177,7 +177,6 @@ this.mmooc.enroll = (function() {
             $('.mmooc-all-courses-list').append(html);
             self.createHashTags();
             self.scrollToCourse();
-            console.log("sdf")
           }
 
           // Displays information, that there is no current courses available to enroll
