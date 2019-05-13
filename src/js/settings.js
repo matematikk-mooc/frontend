@@ -8,7 +8,7 @@ this.mmooc.settings = {
   defaultNumberOfReviews: 1, // Default number of peer reviews per student in power function
   useDataportenGroups : true,
 //  filterCoursesOnAccountId : [99, 100, 102, 103],
-  filterCoursesOnAccountId: [1, 4, 5],
+  filterCoursesOnAccountId: [4, 5],
   disablePeerReviewButton: true,
   principalRoleType: "Skoleleder",
   removeGlobalGradesLink: true,

@@ -4,7 +4,7 @@
             <div class="mmooc-accordion-header-main" index={{index}}>
                 <div>
                     <h1>{{title}}</h1>
-                </div>
+                </div> 
                 <div>
                     {{#if coursesAmount}}
                         <div class="mmooc-tag mmooc-tag-teal">
@@ -44,7 +44,7 @@
             <div class="mmooc-tabs">
                 <div class="mmooc-tab-heads">
                     {{#each courses}}
-                    <span id="{{getCourseName}}" data-name="course">
+                    <span id="{{id}}" data-name="course">
                     <button id="mmooc-tab-head-{{id}}" class="mmooc-tab-head mmooc-tab-head-{{@index}}" index="{{id}}">
                         {{name}}
                         {{#if enrolled}}
