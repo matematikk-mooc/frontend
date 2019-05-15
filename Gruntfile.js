@@ -123,7 +123,7 @@ module.exports = function (grunt) {
 
     replace: {
       production: {
-        src: ['tmp/mmooc-min.css','tmp/mmooc-min.js', 'tmp/rootaccount.js', 'tmp/subaccount.js'],
+        src: ['tmp/mmooc-min.css','tmp/mmooc-min.js', 'tmp/rootaccount.js', 'tmp/subaccount.js', 'tmp/subaccount.js.map', 'tmp/rootaccount.js.map', 'tmp/badges-min.js.map'],
         dest: 'dist/',
         replacements: [
           {
