@@ -260,7 +260,7 @@ module.exports = function (grunt) {
 
   grunt.registerTask('test', ['clean', 'make', 'runTest']);
 
-  grunt.registerTask('build', ['make', 'clean:release', 'runTest' ]);
+  grunt.registerTask('build', ['clean', 'make', 'runTest' ]);
 
   grunt.registerTask('rebuildServe', ['clean:dist', 'make']);
 
