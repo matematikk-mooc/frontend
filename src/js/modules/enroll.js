@@ -292,13 +292,12 @@ this.mmooc.enroll = (function() {
     },
     scrollToCourse: function () {
       setTimeout(function() {
-        var currentHash = window.location.hash;
-        var courses = $('span').filter("[data-name='course']")
+        var currentHash = window.location.hash.split('::');
+        var courses = $('span').filter("[data-name='course']");
 
         courses.each(function (i, el) {
           var currentElementId = $(el).attr('id');
-          if (currentHash.includes(currentElementId)) {
-
+          if (currentHash[1] === currentElementId) {
             var categoryElement = $(el).closest('section').find('button[index=0]');
             categoryElement.trigger("click");
 
