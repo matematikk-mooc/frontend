@@ -180,9 +180,24 @@ body.embedded #content {
   overflow-x: visible;
 }
 
+.header-bar-container  {
+  @media screen and (max-width: 610px) {
+    min-width: 100% !important;
+  }
+}
+
 .header-bar {
   background: @backgroundColor;
   border: none;
+
+  @media screen and (max-width: 610px) {
+
+    .header-bar-right {
+      .publish-button, .btn {
+        margin-bottom: 5px;
+      }
+    }
+  }
 }
 
 .with-right-side #breadcrumbs + #right-side-wrapper {

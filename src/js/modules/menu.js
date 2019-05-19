@@ -130,18 +130,7 @@ this.mmooc.menu = (function() {
       });
     }
   }
-  function showHamburger() {
-    var header = document.querySelector(".ic-app-header__main-navigation");
 
-    if (header) {
-      header.insertAdjacentHTML(
-        'afterbegin',
-        '<div class="menu-mobile">☰</div>'
-      );
-    }
-  }
-  
-  var hamburger = showHamburger();
   var stylesheet = createStyleSheet();
 
 
@@ -262,11 +251,30 @@ this.mmooc.menu = (function() {
         let html = mmooc.util.renderTemplateWithData('noLoggedInHeader', {
           logInText: mmooc.i18n.LogIn
         });
+
         $('#menu').append(html);
-        mmooc.login.handleLoginButtonClick();
+        $('.ic-app-header__main-navigation').append(html);
+
+          this.unAuthenticatedMobileMenu();
+
+          $(window).on('resize', () => {
+            this.unAuthenticatedMobileMenu();
+          });
+        
+          mmooc.login.handleLoginButtonClick();
       }
     },
+    unAuthenticatedMobileMenu() {
+      var mobileViewport = window.matchMedia("(max-width: 768px)");
 
+      if(mobileViewport.matches) {
+        $('#header').addClass("ic-app-header--mobile");
+        $('.mmooc-header').addClass("mmooc-header--mobile")
+      }else {
+        $('.mmooc-header').removeClass("mmooc-header--mobile")
+        $('#header').removeClass("ic-app-header--mobile");
+      }
+    },
     hideRightMenu: function() {
       $('#right-side').hide();
       $('body').removeClass('with-right-side');
@@ -281,15 +289,7 @@ this.mmooc.menu = (function() {
           );
         }
 
-        $(window).on('resize', function(e) {
-          var desktopViewport = window.matchMedia("(max-width: 1050px)");
-        
-          if(desktopViewport.matches) {
-            $('.tabs-hamburger').css("display", "block");
-          }else {
-            $('.tabs-hamburger').css("display", "none");
-          }
-      });
+
 
         $('.tabs-hamburger').click(function(event) {
           var selectedTab = $('.mmooc-course-tab').filter('.selected');
@@ -307,21 +307,41 @@ this.mmooc.menu = (function() {
           selectedTab.insertBefore('.mmooc-course-tab:first-of-type');
         });
 
-      $(window).on('resize', function(e) {
-        var viewportSize = window.matchMedia("(min-width: 1051px)");
-        var tabsNotSelected = $('.mmooc-course-tabs li:not(".selected")');
+        $(window).on('resize', function(e) {
+          var desktopViewport = window.matchMedia("(max-width: 1050px)");
+          var tabsNotSelected = $('.mmooc-course-tabs li:not(".selected")');
+          var tabsHamburger = $('.tabs-hamburger');
+          
+          if(desktopViewport.matches) {
+            $(tabsHamburger).css("display", "block");
+          }else {
+            $(tabsHamburger).css("display", "none");
+          }
       
-        if (viewportSize.matches) {
-          tabsNotSelected.css("display", "flex");
-        }else {
-          tabsNotSelected.css("display", "none");
-        }
-    });
+          if (!desktopViewport.matches) {
+            tabsNotSelected.css("display", "flex");
+          }else {
+            tabsNotSelected.css("display", "none");
+          }
+      });
     },
     hideSectionTabsHeader: function() {
       $('#section-tabs-header-subtitle').hide();
     },
+    showHamburger: function() {
+      if(mmooc.util.isAuthenticated()) {
+        var header = document.querySelector(".ic-app-header__main-navigation");
+
+        if (header) {
+          header.insertAdjacentHTML(
+            'afterbegin',
+            '<div class="menu-mobile">☰</div>'
+          );
+        }
+      }
+    },
     showMobileMenu: function() {
+      if(mmooc.util.isAuthenticated) {
         $('.menu-mobile').click(function(event) {
           var mobileMenu = $('#menu');
           var time = 100;
@@ -342,6 +362,7 @@ this.mmooc.menu = (function() {
             $('#menu').css("display", "none");
           }
       });
+      }
     },
     showUserMenu: function() {
       var menu = document.getElementById('menu');

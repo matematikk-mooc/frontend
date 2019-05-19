@@ -155,7 +155,7 @@ body.with-left-side {
       //min-width: ~"calc(100% - 238px)";
 
       #content-wrapper {
-        width: 100%;
+        width: 100%
         // float: left;
         // width: 100%;
         // min-width: 100%;
@@ -166,6 +166,12 @@ body.with-left-side {
         padding: 0;
       }
     }
+  }
+}
+
+#not_right_side {
+  .ic-Layout-contentWrapper {
+    width: 100%;
   }
 }
 
@@ -199,7 +205,6 @@ body:not(.ic-no-flex-layout) {
 
 .ic-app-main-content {
   display: flex !important;
-  justify-content: center;
 
   @media screen and (max-width: 870px) {
     flex-direction: column;
