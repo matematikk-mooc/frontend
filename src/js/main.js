@@ -81,6 +81,17 @@ jQuery(function($) {
         console.log(document.location.href);
 		return null;
     }
+    else if (courseView == mmooc.util.courseListEnum.uidpCallback) {
+        if(window.opener) {
+            $("#application").html('Du er nå logget inn i UIDP.<button id="uidpLoggedIn">OK</button>');
+            window.opener.popupCompleted();
+            $(document).on("click","#uidpLoggedIn",function(e) {
+                window.close();
+            });
+        }
+        console.log(document.location.href);
+		return null;
+    }
     //        mmooc.coursePage.hideCourseInvitationsForAllUsers();
 
     var courseId = mmooc.api.getCurrentCourseId();

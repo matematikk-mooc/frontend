@@ -6,7 +6,8 @@ this.mmooc.util = (function() {
         normalCourse : 1,
         allCoursesList : 2,
         myCoursesList : 3,
-        dataportenCallback : 4
+        dataportenCallback : 4,
+        uidpCallback : 5
     },
     mmoocLoadScript: function(mmoocScript) {
       var mmoocScriptElement = document.createElement('script');
@@ -316,6 +317,16 @@ this.mmooc.util = (function() {
 
       return res;
     },
+    urlHashToObject: () => {
+      if (document.location.hash === '') return {};
+
+      const hash = location.hash.substring(1);
+      return JSON.parse(
+        '{"' + hash.replace(/&/g, '","').replace(/=/g, '":"') + '"}',
+        (key, value) => key === "" ? value : decodeURIComponent(value)
+      );
+    },
+    
     getLinkToAvailableCourses: () => {
         var linkToAvailableCourses = "/courses/search_all" + mmooc.hrefQueryString;
 //ETH20190409 By making sure the root account loads our design, we do not need a front page.
@@ -339,7 +350,11 @@ this.mmooc.util = (function() {
       const isMyCourses = urlParamsObj &&  urlParamsObj['myCourses'];
       const isDataportenCallback = urlParamsObj &&  urlParamsObj['dataportenCallback'];
 
+      const urlHashObj = mmooc.util.urlHashToObject();   
+      const isUidpCallback = urlHashObj &&  urlHashObj['id_token'];
+
       var returnCode = mmooc.util.courseListEnum.normalCourse;
+      
       if (isOverridenCourse && isNotTeacherOrAdmin && isDisabledOverridenCourse)
       {
         returnCode = mmooc.util.courseListEnum.allCoursesList;
@@ -355,6 +370,10 @@ this.mmooc.util = (function() {
       if (isDataportenCallback)
       {
         returnCode = mmooc.util.courseListEnum.dataportenCallback;
+      }
+      else if(isUidpCallback)
+      {
+        returnCode = mmooc.util.courseListEnum.uidpCallback;
       }
       return returnCode;
     }
