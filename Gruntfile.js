@@ -247,7 +247,10 @@ module.exports = function (grunt) {
           { expand: true, src: ['rootaccount*'], cwd: 'src/css/', dest: 'dist/' },
           { expand: true, src: ['subaccount*'], cwd: 'src/css/', dest: 'dist/' },
           { expand: true, src: ['bitmaps/*'], cwd: 'src/', dest: 'dist/' },
-          { expand: true, src: ['vector_images/*'], cwd: 'src/', dest: 'dist/' }
+          { expand: true, src: ['vector_images/*'], cwd: 'src/', dest: 'dist/' },
+          { expand: true, src: ['subaccount.js.map'], cwd: 'tmp/', dest: 'dist/' },
+          { expand: true, src: ['rootaccount.js.map'], cwd: 'tmp/', dest: 'dist/' },
+          { expand: true, src: ['badges-min.js.map'], cwd: 'tmp/', dest: 'dist/' }
         ]
       }
     },
@@ -338,7 +341,7 @@ module.exports = function (grunt) {
 
   grunt.registerTask('test', ['clean', 'make', 'runTest']);
 
-  grunt.registerTask('build', ['prod_dataporten', 'prod_settings', 'make', 'clean:release']);
+  grunt.registerTask('build', ['prod_dataporten', 'prod_settings', 'make']);
 
   grunt.registerTask('rebuildServe', ['clean:dist', 'dev_dataporten', 'dev_settings', 'make']);
 
