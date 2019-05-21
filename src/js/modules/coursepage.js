@@ -7,23 +7,12 @@ this.mmooc.coursePage = (function() {
         var enrollButton = $(".course_enrollment_link");
         var linkToSelectedCourse = window.location.href.split('/');
         var selectedCourseId = linkToSelectedCourse[linkToSelectedCourse.length - 1];
-        var categories;
-
-        mmooc.api.getAllPublicCourses(courses => {
-          courses.forEach(course => {
-            if (course.course.id != selectedCourseId) {
-              return;
-            } else {
-              categories = mmooc.util.getCourseCategories([course]);
-            }
-          })
-        });
 
         if (enrollButton) {
           enrollButton.text(mmooc.i18n.EnrollButton);
           enrollButton.click(function (e) {
             e.preventDefault();
-                  window.location.href = '/search/all_courses' + '#' + categories + '::' + selectedCourseId;
+                  window.location.href = '/search/all_courses' + mmooc.hrefQueryString + '#' + selectedCourseId;
           })
         }
       }

@@ -277,26 +277,24 @@ this.mmooc.enroll = (function() {
     createHashTags: function() {
         $('span').click(function(e) {
           if ($(this).filter("[data-name='course']")) {
-            var courseGroupId = $(this).closest('.mmooc-accordion').find('button[index=0]').attr('data-title');
-            var hashTag = courseGroupId + "::" + e.currentTarget.id;
+            var hashTag = $(e.currentTarget).attr("class")
             window.location.hash = hashTag;
           }
         });
 
         $("button[data-title]").click(function(e){
-          var categoryName = $(this).attr("data-title");
-          var firstCourseId = $(this).siblings().find('span').eq(0).attr('id');
-          var hashTag = categoryName + "::" + firstCourseId;
+          var firstCourseId = $(this).siblings().find('span').eq(0).attr('class');
+          var hashTag = firstCourseId;
           window.location.hash = hashTag;
         })
     },
     scrollToCourse: function () {
       setTimeout(function() {
-        var currentHash = window.location.hash.split('::');
+        var currentHash = window.location.hash.split('#');
         var courses = $('span').filter("[data-name='course']");
 
         courses.each(function (i, el) {
-          var currentElementId = $(el).attr('id');
+          var currentElementId = $(el).attr('class');
           if (currentHash[1] === currentElementId) {
             var categoryElement = $(el).closest('section').find('button[index=0]');
             categoryElement.trigger("click");
@@ -309,7 +307,7 @@ this.mmooc.enroll = (function() {
               }, 500);
             }else {
               $([document.documentElement, document.body]).animate({
-                scrollTop: $("#" + currentElementId).offset().top
+                scrollTop: $("." + currentElementId).offset().top
               }, 500);
             }
             var courseTab = $(el).find('button');

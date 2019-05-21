@@ -44,7 +44,7 @@
             <div class="mmooc-tabs">
                 <div class="mmooc-tab-heads">
                     {{#each courses}}
-                    <span id="{{id}}" data-name="course">
+                    <span class="{{id}}" data-name="course">
                     <button id="mmooc-tab-head-{{id}}" class="mmooc-tab-head mmooc-tab-head-{{@index}}" index="{{id}}">
                         {{name}}
                         {{#if enrolled}}
@@ -75,7 +75,7 @@
 
             <section class="mmooc-tabs-mobile">
                 {{#each courses}}
-                <span id="{{id}}" data-name="course">
+                <span class="{{id}}" data-name="course">
                 <button id="mmooc-tabs-mobile-header-{{id}}" class="mmooc-tabs-mobile-header" index={{id}}>
                     {{name}}
                     {{#if enrolled}}
