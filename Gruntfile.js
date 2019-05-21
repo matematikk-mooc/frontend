@@ -340,7 +340,7 @@ module.exports = function (grunt) {
 
   grunt.registerTask('build', ['prod_dataporten', 'prod_settings', 'make', 'clean:release']);
 
-  grunt.registerTask('rebuildServe', ['clean:dist', 'make']);
+  grunt.registerTask('rebuildServe', ['clean:dist', 'dev_dataporten', 'dev_settings', 'make']);
 
   grunt.registerTask('serve', ['clean', 'dev_dataporten', 'dev_settings', 'make', 'connect:dev', 'watch']);
   
