@@ -175,8 +175,6 @@ this.mmooc.enroll = (function() {
               index: i
             });
             $('.mmooc-all-courses-list').append(html);
-            self.createHashTags();
-            self.scrollToCourse();
           }
 
           // Displays information, that there is no current courses available to enroll
@@ -271,6 +269,9 @@ this.mmooc.enroll = (function() {
               );
             }
           });
+          
+          self.createHashTags();
+          self.scrollToCourse();
         });
       });
     },
@@ -289,14 +290,13 @@ this.mmooc.enroll = (function() {
         })
     },
     scrollToCourse: function () {
-      setTimeout(function() {
         var currentHash = window.location.hash.split('#');
         var courses = $('span').filter("[data-name='course']");
 
         courses.each(function (i, el) {
           var currentElementId = $(el).attr('class');
           if (currentHash[1] === currentElementId) {
-            var categoryElement = $(el).closest('section').find('button[index=0]');
+            var categoryElement = $(el).closest('section').find('button').eq(0);
             categoryElement.trigger("click");
 
             var mobileViewport = window.matchMedia("(max-width: 650px)");
@@ -314,7 +314,6 @@ this.mmooc.enroll = (function() {
             courseTab.trigger("click");
           }
         })
-      },100)
     },
     setCourseEnrolledStatus: function(allCourses, enrolledCourses) {
       var allCoursesWithStatus = [];
