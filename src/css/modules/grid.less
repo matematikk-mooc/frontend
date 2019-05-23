@@ -18,8 +18,11 @@
 .mmooc-size-1of3 {
   min-width: 320px;
   flex-basis: 33%;
-  flex-grow: 1;
   flex-shrink: 1;
+
+  @media screen and (max-width: 982px) {
+    flex-grow: 1;
+  }
 
   @media screen and (max-width: 500px) {
     min-width: 300px;
