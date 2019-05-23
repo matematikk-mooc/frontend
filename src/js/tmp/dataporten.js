@@ -5,10 +5,10 @@ this.mmooc.dataporten = function() {
     var token = null;
 
 // VARIABLES CHANGED BY GRUNT
-    let request = ['email','longterm', 'openid', 'profile', 'userid-feide', 'groups', 'gk_kpasbeta'];
-    let dataportenCallback = 'https://localhost/courses/1?dataportenCallback=1';
-    let dataportenClientId = 'fb2f6378-2d35-4354-8ae8-2e82e2af2a8f';
-    let kpasapiurl = 'https://kpasbeta.dataporten-api.no';    
+    let request = $REQUEST;
+    let dataportenCallback = '$DATAPORTENCALLBACK';
+    let dataportenClientId = '$DATAPORTENCLIENTID';
+    let kpasapiurl = '$KPASAPIURL';    
 
     
     var opts = {

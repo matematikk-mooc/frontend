@@ -159,6 +159,67 @@ module.exports = function (grunt) {
           }
         ]
       },
+      production_dataporten: {
+        src: ['src/js/tmp/dataporten.js'],
+        dest: 'src/js/modules/',
+        replacements: [
+          {
+            from: '$REQUEST',
+            to: "['email','longterm', 'openid', 'profile', 'userid-feide', 'groups', 'gk_kpas']"
+          },
+          {
+            from: '$DATAPORTENCALLBACK',
+            to: 'https://bibsys.instructure.com/courses/234?dataportenCallback=1'
+          },
+          {
+            from: '$DATAPORTENCLIENTID',
+            to: '823e54e4-9cb7-438f-b551-d1af9de0c2cd'
+          },
+          {
+            from: '$KPASAPIURL',
+            to: 'https://kpas.dataporten-api.no'
+          }
+        ]
+      },
+      development_dataporten: {
+        src: ['src/js/tmp/dataporten.js'],
+        dest: 'src/js/modules/',
+        replacements: [
+          {
+            from: '$REQUEST',
+            to: "['email','longterm', 'openid', 'profile', 'userid-feide', 'groups', 'gk_kpasbeta']"
+          },          {
+            from: '$DATAPORTENCALLBACK',
+            to: 'https://localhost/courses/1?dataportenCallback=1'
+          },          {
+            from: '$DATAPORTENCLIENTID',
+            to: 'fb2f6378-2d35-4354-8ae8-2e82e2af2a8f'
+          },          {
+            from: '$KPASAPIURL',
+            to: 'https://kpasbeta.dataporten-api.no'
+          }
+        ]
+      },
+      production_settings: {
+        src: ['src/js/tmp/settings.js'],
+        dest: 'src/js/',
+        replacements: [
+          {
+            from: '$ACCOUNTID',
+            to: '[99, 100, 102, 103]'
+          }
+        ]
+      },
+      development_settings: {
+        src: ['src/js/tmp/settings.js'],
+        dest: 'src/js/',
+        replacements: [
+          {
+            from: '$ACCOUNTID',
+            to: '[4, 5]'
+          }
+        ]
+      },
       production_badge: {
         src: ['tmp/badges-min.js'],
         dest: 'dist/badgesafe.js',
@@ -187,7 +248,10 @@ module.exports = function (grunt) {
           { expand: true, src: ['rootaccount*'], cwd: 'src/css/', dest: 'dist/' },
           { expand: true, src: ['subaccount*'], cwd: 'src/css/', dest: 'dist/' },
           { expand: true, src: ['bitmaps/*'], cwd: 'src/', dest: 'dist/' },
-          { expand: true, src: ['vector_images/*'], cwd: 'src/', dest: 'dist/' }
+          { expand: true, src: ['vector_images/*'], cwd: 'src/', dest: 'dist/' },
+          { expand: true, src: ['subaccount.js.map'], cwd: 'tmp/', dest: 'dist/' },
+          { expand: true, src: ['rootaccount.js.map'], cwd: 'tmp/', dest: 'dist/' },
+          { expand: true, src: ['badges-min.js.map'], cwd: 'tmp/', dest: 'dist/' }
         ]
       }
     },
@@ -257,15 +321,32 @@ module.exports = function (grunt) {
     'replace:development_badge'
   ]);
 
+  grunt.registerTask('dev_dataporten', [
+    'replace:development_dataporten'
+  ]);
+
+  grunt.registerTask('prod_dataporten', [
+    'replace:production_dataporten'
+  ]);
+
+  grunt.registerTask('dev_settings', [
+    'replace:development_settings'
+  ]);
+
+  grunt.registerTask('prod_settings', [
+    'replace:production_settings'
+  ]);
+
+
   grunt.registerTask('runTest', ['connect:test', 'karma:unitTest']);
 
   grunt.registerTask('test', ['clean', 'make', 'runTest']);
 
-  grunt.registerTask('build', ['make', 'clean:release', 'runTest' ]);
+  grunt.registerTask('build', ['prod_dataporten', 'prod_settings', 'make']);
 
-  grunt.registerTask('rebuildServe', ['clean:dist', 'make']);
+  grunt.registerTask('rebuildServe', ['clean:dist', 'dev_dataporten', 'dev_settings', 'make']);
 
-  grunt.registerTask('serve', ['clean', 'make', 'connect:dev', 'watch']);
+  grunt.registerTask('serve', ['clean', 'dev_dataporten', 'dev_settings', 'make', 'connect:dev', 'watch']);
   
   grunt.registerTask('serveStaging', ['clean', 'make', 'connect:staging', 'watch']);
 
