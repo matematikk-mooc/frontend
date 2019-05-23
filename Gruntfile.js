@@ -98,6 +98,7 @@ module.exports = function (grunt) {
       options: {
         sourceType: "script",
         presets: ['@babel/preset-env'],
+        compact: false,
         sourceMap: true,
       },
       dist: {
