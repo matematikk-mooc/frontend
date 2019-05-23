@@ -118,6 +118,12 @@ this.mmooc.enroll = (function() {
       document.title = 'Tilgjengelige ' + mmooc.i18n.CoursePlural.toLowerCase();
       document.getElementById('content').innerHTML = html;
     },
+    goToAllCourses() {
+        $('#mmooc-all-courses-btn').click(function() {
+          const linkToMyCourses = mmooc.utilRoot.getLinkToMyCourses();
+          window.location.href = linkToMyCourses;
+        })
+    }, 
     printAllCourses: function() {
       var self = this;
       html = "<div class='mmooc-loader-wrapper'><span class='loading-gif'></span></div>";
