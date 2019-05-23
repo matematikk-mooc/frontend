@@ -97,6 +97,7 @@ if (typeof this.mmooc.i18n === 'undefined') {
       AllAvailableCoursesIngress: "Oversikt over alle kompetansepakker du er meldt på og som du kan melde deg på.",
       DropCourseDialogText: 'Trykk OK for å melde deg av kompetansepakken ',
       NoCoursesInfo: 'Det er ingen kompetansepakker du kan registrere deg på for øyeblikket',
+      EnrollButton: 'Join this Course',
       CourseContinue: 'Fortsette',
       CourseRegister: 'Registrere',
       CourseRegisterFeide: 'Registrere med Feide',
