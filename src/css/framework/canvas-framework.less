@@ -5,6 +5,7 @@ body {
   font-size: @fontSize;
   line-height: @lineHeight;
   font-family: 'Roboto';
+  min-width: 200px !important;
 }
 
 a {
@@ -19,13 +20,6 @@ a {
   &:active {
     color: @linkColor;
   }
-}
-
-/* Override fixed Canvas minimum width */
-.with-right-side,
-.with-left-side,
-.with-right-side.with-left-side {
-  min-width: 800px !important;
 }
 
 #wrapper-container {
@@ -60,9 +54,9 @@ body.embedded #content {
   padding-top: 0 !important;
 }
 
-.with-course-menu #content {
-  padding: 10px 0 0 0 !important;
-}
+// .with-course-menu #content {
+//   padding: 10px 0 0 0 !important;
+// }
 
 #main {
   background: @backgroundColor;
@@ -75,11 +69,11 @@ body.embedded #content {
   background: #fff;
   padding-top: 40px;
   margin-bottom: 30px;
+  border-bottom: 3px solid #dcdcdc;
 
   h1 {
     margin: 0;
   }
-  border-bottom: 3px solid #dcdcdc;
 }
 
 #mmooc-course-tabs-container-inner {
@@ -130,6 +124,10 @@ body.embedded #content {
   padding-left: @columnPadding;
   width: @rightColWidth;
   padding-top: @contentTopMargin;
+
+  @media screen and (max-width: 870px) {
+    padding-left: 0;
+  }
 }
 
 .home #right-side {
@@ -182,9 +180,24 @@ body.embedded #content {
   overflow-x: visible;
 }
 
+.header-bar-container  {
+  @media screen and (max-width: 610px) {
+    min-width: 100% !important;
+  }
+}
+
 .header-bar {
   background: @backgroundColor;
   border: none;
+
+  @media screen and (max-width: 610px) {
+
+    .header-bar-right {
+      .publish-button, .btn {
+        margin-bottom: 5px;
+      }
+    }
+  }
 }
 
 .with-right-side #breadcrumbs + #right-side-wrapper {

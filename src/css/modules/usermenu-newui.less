@@ -1,5 +1,17 @@
 #application.ic-app {
   #user-menu {
+    @media screen and (max-width: 1050px) {
+      flex-basis: 33%;
+      justify-content: flex-end;
+      order: 2;
+    }
+
+    @media screen and (max-width: 768px) {
+      order: 2;
+      flex-basis: 50%;
+      flex: 1;
+    }
+
     .mmooc-menu-item {
       #mmooc-notification-count {
         top: 3px;
@@ -42,7 +54,7 @@
           left: -40px;
           font-size: 14px;
           background: @white;
-          box-shadow: 0 4px 8px 0 rgba(55,55,55,0.05);
+          box-shadow: 0 4px 8px 0 rgba(55, 55, 55, 0.05);
           border-radius: 4px;
           width: 105px;
 
@@ -60,6 +72,7 @@
                 letter-spacing: 0;
                 line-height: 24px;
                 font-weight: 400;
+
                 &:hover {
                   text-decoration: none;
                   opacity: 0.7;
@@ -74,6 +87,7 @@
                   padding-top: 5px;
                 }
               }
+
               &:last-of-type {
                 a {
                   padding-top: 8px;
@@ -104,6 +118,7 @@
 //Added the CSS here since it is connected to the user menu (help button)
 #help_tray {
   margin-top: 100px;
+
   ul.ic-NavMenu__link-list {
     li {
       &:nth-of-type(2),

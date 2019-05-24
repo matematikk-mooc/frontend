@@ -15,6 +15,14 @@
     background-image: url('https://server/vector_images/envelope.svg')
   }
 
+  #mmooc-notifications {
+    a {
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
+    }
+  }
+
   .mmooc-menu-item-title {
     color: @white;
     text-decoration: none;
@@ -46,8 +54,8 @@
     background: @darkTealColor;
     ul {
       display: flex;
-      width: 100%;
-      margin: 0;
+      width: 90%;
+      margin: 0 0 0 10px;
       height: 95%;
       flex-direction: column;
       justify-content: space-around;
@@ -104,6 +112,9 @@
   box-shadow: 0 4px 8px 0 rgba(55,55,55,0.05);
   border-radius: 4px;
   top: 30px;
+  left: -166px;
+  max-width: 300px;
+  padding-right: 5px;
 }
 
 #mmooc-notification-count,

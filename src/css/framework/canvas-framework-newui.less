@@ -16,6 +16,11 @@ body.with-left-side:not(.useFullWidth) {
     margin: 0 auto;
     min-height: auto;
     display: block;
+    padding: 0;
+
+    @media screen and (max-width: 1225px) {
+      padding: 0 30px 0 30px;
+    }
     // outline: 1px solid red;
 
     // #main {
@@ -23,25 +28,48 @@ body.with-left-side:not(.useFullWidth) {
     // }
 
     #left-side {
-      width: 238px;
+      width: 225px;
       border: none !important;
       padding-top: 15px;
+      padding-right: 35px;
+      padding-left: 0;
       position: static;
       float: left;
-      padding-right: 50px;
-      padding-left: 0;
       opacity: 1;
-      -webkit-transform: none; /* Safari and Chrome */
-      -moz-transform: none; /* Firefox */
-      -ms-transform: none; /* IE 9 */
-      -o-transform: none; /* Opera */
+      -webkit-transform: none;
+      /* Safari and Chrome */
+      -moz-transform: none;
+      /* Firefox */
+      -ms-transform: none;
+      /* IE 9 */
+      -o-transform: none;
+      /* Opera */
       transform: none;
       // outline: 1px solid red;
+
+      @media screen and (max-width: 785px) {
+        float: none;
+        width: 100%;
+        padding-right: 0;
+      }
     }
+
     #section-tabs-header-subtitle {
       display: none;
     }
   }
+}
+
+.ic-Layout-contentMain {
+  padding: 24px 24px 24px 0;
+
+  @media screen and (max-width: 1050px) {
+    padding: 24px 0 24px 0;
+  }
+}
+
+.mmooc-enroll-category {
+  padding: 0 5px 0 5px !important;
 }
 
 body.with-right-side {
@@ -53,17 +81,24 @@ body.with-right-side {
       width: 100%;
 
       #content-wrapper {
-        float: left;
-        width: 76%;
-        min-width: 76%;
+        flex: 1;
+        // float: left;
+        // width: 76%;
+        // min-width: 76%;
         // outline: 1px solid purple;
+
+        .student_view_button {
+          // margin: 6px;
+        }
       }
 
       #right-side-wrapper {
-        float: left;
-        width: 24%;
-        min-width: 24%;
-        padding: 0;
+        width: auto !important;
+        // min-width: 370px;
+        // float: left;
+        // width: 24%;
+        // min-width: 24%;
+        // padding: 0;
         // outline: 1px solid green;
       }
     }
@@ -75,17 +110,17 @@ body.with-left-side {
     #application.ic-app {
       #main {
         #content-wrapper {
-          float: left;
-          width: 76%;
-          min-width: 76%;
+          // float: left;
+          // width: 76%;
+          // min-width: 76%;
           // outline: 1px solid purple;
         }
 
         #right-side-wrapper {
-          float: left;
-          width: 24%;
-          min-width: 24%;
-          padding: 0;
+          // float: left;
+          // width: 24%;
+          // min-width: 24%;
+          // padding: 0;
           // outline: 1px solid green;
         }
       }
@@ -111,7 +146,7 @@ body.with-left-side {
   #application.ic-app {
     #main {
       float: left;
-      margin-left: 0px !important; //override inline style
+      margin-left: 0 !important; //override inline style
       margin-right: 0;
       // max-width: 962px; //1200-238 on the left side
       // padding-left: 50px;
@@ -120,9 +155,10 @@ body.with-left-side {
       //min-width: ~"calc(100% - 238px)";
 
       #content-wrapper {
-        float: left;
-        width: 100%;
-        min-width: 100%;
+        width: 100%
+        // float: left;
+        // width: 100%;
+        // min-width: 100%;
         // outline: 1px solid purple;
       }
 
@@ -130,6 +166,12 @@ body.with-left-side {
         padding: 0;
       }
     }
+  }
+}
+
+#not_right_side {
+  .ic-Layout-contentWrapper {
+    width: 100%;
   }
 }
 
@@ -158,6 +200,14 @@ body:not(.ic-no-flex-layout) {
         }
       }
     }
+  }
+}
+
+.ic-app-main-content {
+  display: flex !important;
+
+  @media screen and (max-width: 870px) {
+    flex-direction: column;
   }
 }
 

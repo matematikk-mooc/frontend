@@ -2,7 +2,8 @@
   .module-sequence-footer {
     .module-sequence-footer-content {
       height: 55px;
-      padding-top: 0px;
+      padding-top: 0;
+      display: flex;
 
       a {
         padding: 0;
@@ -19,11 +20,6 @@
         position: absolute;
         font-weight: 400;
 
-        @media (max-width: 1000px) {
-          margin: 5px 20px 0 20px !important;
-          float: left;
-        }
-
         i {
           display: none;
         }
@@ -35,6 +31,13 @@
         background-size: 20px;
         padding-left: 40px;
         margin-right: 10px;
+        right: 50%;
+      }
+
+      .module-sequence-footer-button--next {
+        float: none !important;
+        margin-left: 50%;
+        min-height: 40px;
       }
 
       .module-sequence-footer-button--next a {
