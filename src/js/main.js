@@ -50,7 +50,7 @@ jQuery(function($) {
   //The logic below should be refactored and cleaned up.
   mmooc.routes.addRouteForPath(/\/courses\/\d+$/, function() {
     mmooc.groups.interceptLinksToGroupPage();
-
+    mmooc.coursePage.showCourseInvitation();
     // override default view and display all courses list instead
     var courseView = mmooc.util.isCourseFrontpageForAllCoursesList();
     if (courseView == mmooc.util.courseListEnum.allCoursesList) {
@@ -133,7 +133,8 @@ jQuery(function($) {
 
   mmooc.routes.addRouteForPath(/\/search\/all_courses$/, function() {
     mmooc.enroll.printAllCoursesContainer();
-    mmooc.enroll.printAllCourses();
+    mmooc.enroll.printAllCourses(); 
+    mmooc.enroll.goToAllCourses();
   });
 
   mmooc.routes.addRouteForPath(/\/courses\/\d+\/settings$/, function() {
