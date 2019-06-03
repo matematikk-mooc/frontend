@@ -160,8 +160,8 @@ module.exports = function (grunt) {
         ]
       },
       production_dataporten: {
-        src: ['src/js/tmp/dataporten.js'],
-        dest: 'src/js/modules/',
+        overwrite: true,
+        src: ['tmp/mmooc.js'],
         replacements: [
           {
             from: '$REQUEST',
@@ -177,13 +177,13 @@ module.exports = function (grunt) {
           },
           {
             from: '$KPASAPIURL',
-            to: 'https://kpas.dataporten-api.no'
+            to: 'dupka'
           }
         ]
       },
       development_dataporten: {
-        src: ['src/js/tmp/dataporten.js'],
-        dest: 'src/js/modules/',
+        overwrite: true,
+        src: ['tmp/mmooc.js'],
         replacements: [
           {
             from: '$REQUEST',
@@ -201,8 +201,8 @@ module.exports = function (grunt) {
         ]
       },
       production_settings: {
-        src: ['src/js/tmp/settings.js'],
-        dest: 'src/js/',
+        overwrite: true,
+        src: ['tmp/mmooc.js'],
         replacements: [
           {
             from: '$ACCOUNTID',
@@ -211,8 +211,8 @@ module.exports = function (grunt) {
         ]
       },
       development_settings: {
-        src: ['src/js/tmp/settings.js'],
-        dest: 'src/js/',
+        overwrite: true,
+        src: ['tmp/mmooc.js'],
         replacements: [
           {
             from: '$ACCOUNTID',
@@ -308,47 +308,39 @@ module.exports = function (grunt) {
     }
   });
 
-  grunt.registerTask('make', [
+  grunt.registerTask('make_prod', [
     'handlebars',
     'concat',
+    'replace:production_dataporten',
+    'replace:production_settings',
     'babel',
     'uglify',
     'less',
-    'copy',
-    'replace:production',
-    'replace:development',
-    'replace:production_badge',
-    'replace:development_badge'
+    'copy'
   ]);
 
-  grunt.registerTask('dev_dataporten', [
-    'replace:development_dataporten'
+  grunt.registerTask('make_dev', [
+    'handlebars',
+    'concat',
+    'replace:development_dataporten',
+    'replace:development_settings',
+    'babel',
+    'uglify',
+    'less',
+    'copy'
   ]);
-
-  grunt.registerTask('prod_dataporten', [
-    'replace:production_dataporten'
-  ]);
-
-  grunt.registerTask('dev_settings', [
-    'replace:development_settings'
-  ]);
-
-  grunt.registerTask('prod_settings', [
-    'replace:production_settings'
-  ]);
-
 
   grunt.registerTask('runTest', ['connect:test', 'karma:unitTest']);
 
-  grunt.registerTask('test', ['clean', 'make', 'runTest']);
+  grunt.registerTask('test', ['clean', 'make_dev', 'runTest']);
 
-  grunt.registerTask('build', ['prod_dataporten', 'prod_settings', 'make']);
+  grunt.registerTask('build', ['make_prod']);
 
-  grunt.registerTask('rebuildServe', ['clean:dist', 'dev_dataporten', 'dev_settings', 'make']);
+  grunt.registerTask('rebuildServe', ['clean:dist', 'make_dev']);
 
-  grunt.registerTask('serve', ['clean', 'dev_dataporten', 'dev_settings', 'make', 'connect:dev', 'watch']);
+  grunt.registerTask('serve', ['clean', 'make_dev', 'connect:dev', 'watch']);
   
-  grunt.registerTask('serveStaging', ['clean', 'make', 'connect:staging', 'watch']);
+  grunt.registerTask('serveStaging', ['clean', 'make_prod', 'connect:staging', 'watch']);
 
-  grunt.registerTask('default', ['clean', 'make']);
+  grunt.registerTask('default', ['clean', 'make_dev']);
 };
