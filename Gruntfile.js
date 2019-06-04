@@ -177,7 +177,7 @@ module.exports = function (grunt) {
           },
           {
             from: '$KPASAPIURL',
-            to: 'dupka'
+            to: 'https://kpas.dataporten-api.no'
           }
         ]
       },
