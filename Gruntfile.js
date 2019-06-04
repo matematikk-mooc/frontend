@@ -316,7 +316,11 @@ module.exports = function (grunt) {
     'babel',
     'uglify',
     'less',
-    'copy'
+    'copy',
+    'replace:production',
+    'replace:development',
+    'replace:production_badge',
+    'replace:development_badge'
   ]);
 
   grunt.registerTask('make_dev', [
@@ -327,7 +331,11 @@ module.exports = function (grunt) {
     'babel',
     'uglify',
     'less',
-    'copy'
+    'copy',
+    'replace:production',
+    'replace:development',
+    'replace:production_badge',
+    'replace:development_badge'
   ]);
 
   grunt.registerTask('runTest', ['connect:test', 'karma:unitTest']);
