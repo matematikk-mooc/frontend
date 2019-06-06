@@ -33,12 +33,22 @@
     .mmooc-course-progress-label {
       display: table-cell;
       white-space: nowrap;
+
+      @media screen and (max-width: 550px) {
+        display: block;
+      }
     }
 
     .mmooc-course-progress-bar {
       padding-left: 1em;
       display: table-cell;
       width: 100%;
+
+      @media screen and (max-width: 550px) {
+        display: block;
+        padding-left: 0;
+        padding-top: 10px;
+      }
     }
   }
 }

@@ -8,6 +8,10 @@
     -webkit-flex-direction: row;
     flex-direction: row;
 
+    &--mobile {
+      min-height: 120px;
+    }
+
     .ic-app-header__main-navigation {
       position: relative;
       display: flex;
@@ -17,7 +21,7 @@
       max-width: 1196px;
       padding: 0 20px;
 
-      @media screen and (max-width: 1050px) {
+      @media screen and (max-width: 768px) {
         flex-flow: wrap;
       }
 
@@ -28,14 +32,19 @@
         background-color: transparent;
         // IE11 fallback for Flex bug
         min-width: @logo-width;
-      
-      @media screen and (max-width: 1050px) {
-        flex-basis: 100%;
-        margin: 0;
-      }
+
+        @media screen and (max-width: 1050px) {
+          flex-basis: 33%;
+          margin: 0;
+          order: 1;
+        }
+
+        @media screen and (max-width: 768px) {
+          flex-basis: 100%;
+        }
 
         .ic-app-header__logomark {
-          background-image: @logo-image;
+          background-image: url(@logo-image);
           width: 274px;
           height: 40px;
           background-position: 0%;
@@ -48,6 +57,7 @@
           @media screen and (max-width: 1050px) {
             flex-basis: 100%;
             margin: 20px auto;
+            background-position: center;
           }
         }
       }
@@ -58,13 +68,28 @@
     }
 
     #menu {
-      height: 80px;
       display: flex;
       align-items: center;
       flex-basis: 100%;
 
+      @media screen and (max-width: 768px) {
+        flex-basis: 100%;
+        order: 3;
+      }
+
       @media screen and (max-width: 1050px) {
-        flex-basis: 50%;
+        flex-basis: 33%;
+        order: 0;
+        flex-direction: column;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        box-shadow: 0 4px 4px 0 rgba(70, 70, 70, 0.2);
+        border-bottom-right-radius: 5px;
+        background: @darkTealColor;
+        padding: 15px 0;
+        display: none;
+        min-width: 250px;
       }
 
       li {
@@ -74,6 +99,12 @@
         &#context_external_tool_1_menu_item {
           // external tools hidden as default - they should be accessed from the course page instead
           display: none;
+        }
+
+        @media screen and (max-width: 1050px) {
+          width: 100%;
+          float: none;
+          min-width: 250px;
         }
 
         a {
@@ -87,8 +118,19 @@
           justify-content: center;
           height: 100%;
 
+          @media screen and (max-width: 1050px) {
+            width: 100%;
+            justify-content: flex-start;
+            padding-left: 28px;
+
+            &:hover {
+              background: darken(@darkTealColor, 5%) !important;
+            }
+          }
+
           &.ic-app-header__menu-list-link {
             border-bottom: 4px solid transparent;
+
             &:hover,
             &:focus {
               background-color: inherit;
@@ -165,7 +207,39 @@
       padding-top: 27px;
       min-width: 195px;
       margin-right: -20px;
+
+      @media screen and (max-width: 1050px) {
+        margin-right: 0;
+      }
+
+      @media screen and (max-width: 768px) {
+        padding-top: 0;
+      }
     }
-    
+  }
+
+  .menu-mobile {
+    display: none;
+
+    &:hover {
+      cursor: pointer;
+    }
+
+    @media screen and (max-width: 1050px) {
+      display: block;
+      padding-top: 30px;
+      padding-left: 10px;
+      content: "☰";
+      color: #fff;
+      margin-right: auto;
+      font-size: 25px;
+      font-weight: bold;
+      flex-basis: 33%;
+    }
+
+    @media screen and (max-width: 768px) {
+      position: absolute;
+      top: 54px;
+    }
   }
 }

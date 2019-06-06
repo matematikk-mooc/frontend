@@ -118,7 +118,14 @@ this.mmooc.enroll = (function() {
       document.title = 'Tilgjengelige ' + mmooc.i18n.CoursePlural.toLowerCase();
       document.getElementById('content').innerHTML = html;
     },
+    goToAllCourses() {
+        $('#mmooc-all-courses-btn').click(function() {
+          const linkToMyCourses = mmooc.utilRoot.getLinkToMyCourses();
+          window.location.href = linkToMyCourses;
+        })
+    }, 
     printAllCourses: function() {
+      var self = this;
       html = "<div class='mmooc-loader-wrapper'><span class='loading-gif'></span></div>";
       $('.mmooc-all-courses-list').append(html);
       mmooc.api.getAllPublicCourses(function(allCourses) {
@@ -146,7 +153,7 @@ this.mmooc.enroll = (function() {
           );
 
           $('.mmooc-loader-wrapper').remove();
-
+            
           for (var i = 0; i < coursesCategorized.length; i++) {
             const coursesCategory = coursesCategorized[i];
             const coursesEnrolledAmount = mmooc.util.filter(
@@ -268,8 +275,51 @@ this.mmooc.enroll = (function() {
               );
             }
           });
+          
+          self.createHashTags();
+          self.scrollToCourse();
         });
       });
+    },
+    createHashTags: function() {
+        $('span').click(function(e) {
+          if ($(this).filter("[data-name='course']")) {
+            var hashTag = $(e.currentTarget).attr("class")
+            window.location.hash = hashTag;
+          }
+        });
+
+        $("button[data-title]").click(function(e){
+          var firstCourseId = $(this).siblings().find('span').eq(0).attr('class');
+          var hashTag = firstCourseId;
+          window.location.hash = hashTag;
+        })
+    },
+    scrollToCourse: function () {
+        var currentHash = window.location.hash.split('#');
+        var courses = $('span').filter("[data-name='course']");
+
+        courses.each(function (i, el) {
+          var currentElementId = $(el).attr('class');
+          if (currentHash[1] === currentElementId) {
+            var categoryElement = $(el).closest('section').find('button').eq(0);
+            categoryElement.trigger("click");
+
+            var mobileViewport = window.matchMedia("(max-width: 650px)");
+
+            if(mobileViewport.matches) {
+              $([document.documentElement, document.body]).animate({
+                scrollTop: $(el).find('button').offset().top
+              }, 500);
+            }else {
+              $([document.documentElement, document.body]).animate({
+                scrollTop: $("." + currentElementId).offset().top
+              }, 500);
+            }
+            var courseTab = $(el).find('button');
+            courseTab.trigger("click");
+          }
+        })
     },
     setCourseEnrolledStatus: function(allCourses, enrolledCourses) {
       var allCoursesWithStatus = [];

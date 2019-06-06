@@ -29,7 +29,6 @@ Handlebars.registerHelper('getCourseUrl', function() {
   }
 });
 
-
 Handlebars.registerHelper('ifHasRole', function(enrollments, role, options) {
   for (var i = 0; i < enrollments.length; i++) {
     if (enrollments[i].role == role) {

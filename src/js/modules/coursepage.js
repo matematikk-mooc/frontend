@@ -2,6 +2,21 @@ this.mmooc = this.mmooc || {};
 
 this.mmooc.coursePage = (function() {
   return {
+    showCourseInvitation: function () {
+      if (!mmooc.util.isAuthenticated()) {
+        var enrollButton = $(".course_enrollment_link");
+        var linkToSelectedCourse = window.location.href.split('/');
+        var selectedCourseId = linkToSelectedCourse[linkToSelectedCourse.length - 1];
+
+        if (enrollButton) {
+          enrollButton.text(mmooc.i18n.EnrollButton);
+          enrollButton.click(function (e) {
+            e.preventDefault();
+                  window.location.href = '/search/all_courses' + mmooc.hrefQueryString + '#' + selectedCourseId;
+          })
+        }
+      }
+    },
     listModulesAndShowProgressBar: function() {
       mmooc.api.getModulesForCurrentCourse(function(modules) {
         var progressHTML = mmooc.util.renderTemplateWithData('courseprogress', {

@@ -2,7 +2,8 @@
   .module-sequence-footer {
     .module-sequence-footer-content {
       height: 55px;
-      padding-top: 0px;
+      padding-top: 0;
+      display: flex;
 
       a {
         padding: 0;
@@ -19,31 +20,27 @@
         position: absolute;
         font-weight: 400;
 
-        @media (max-width: 1000px) {
-          margin: 5px 20px 0 20px !important;
-          float: left;
-        }
-
         i {
           display: none;
         }
       }
 
       .module-sequence-footer-button--previous {
-        left: 240px;
-        background: #f6f6f6
-          url('https://server/vector_images/mmooc-icon-arrow-left.svg')
-          no-repeat 10px center;
+        background: rgba(36, 161, 179, 1) url('https://server/vector_images/mmooc-icon-arrow-left.svg') 10px center no-repeat !important;
         background-size: 20px;
         padding-left: 40px;
         margin-right: 10px;
+        right: 50%;
+      }
+
+      .module-sequence-footer-button--next {
+        float: none !important;
+        margin-left: 50%;
+        min-height: 40px;
       }
 
       .module-sequence-footer-button--next a {
-        left: 370px;
-        background: #f6f6f6
-          url('https://server/vector_images/mmooc-icon-arrow-right.svg')
-          no-repeat 80px center;
+        background: rgba(36, 161, 179, 1) url('https://server/vector_images/mmooc-icon-arrow-right.svg') no-repeat 80px center !important;
         background-size: 20px;
         padding-right: 40px;
         text-indent: 30px;

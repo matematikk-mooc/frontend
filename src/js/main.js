@@ -50,7 +50,7 @@ jQuery(function($) {
   //The logic below should be refactored and cleaned up.
   mmooc.routes.addRouteForPath(/\/courses\/\d+$/, function() {
     mmooc.groups.interceptLinksToGroupPage();
-
+    mmooc.coursePage.showCourseInvitation();
     // override default view and display all courses list instead
     var courseView = mmooc.util.isCourseFrontpageForAllCoursesList();
     if (courseView == mmooc.util.courseListEnum.allCoursesList) {
@@ -144,7 +144,8 @@ jQuery(function($) {
 
   mmooc.routes.addRouteForPath(/\/search\/all_courses$/, function() {
     mmooc.enroll.printAllCoursesContainer();
-    mmooc.enroll.printAllCourses();
+    mmooc.enroll.printAllCourses(); 
+    mmooc.enroll.goToAllCourses();
   });
 
   mmooc.routes.addRouteForPath(/\/courses\/\d+\/settings$/, function() {
@@ -339,11 +340,11 @@ jQuery(function($) {
     function() {
         // For discussion pages we only want the title to be "<discussion>" instead of "Discussion: <discussion>"
         var title = mmooc.util.getPageTitleAfterColon();
-
         //If this is a group discussion we do not allow the user to access it because
         //he is apparantly not a member of a group. 
         var courseId = mmooc.api.getCurrentCourseId();
         mmooc.util.isStudentInCourse(courseId, function() {
+            console.log("asdf")
             var courseId = mmooc.api.getCurrentCourseId();
             var contentId = mmooc.api.getCurrentTypeAndContentId().contentId;
             mmooc.api.isGroupDiscussion(courseId, contentId, function(result) {
@@ -487,6 +488,8 @@ jQuery(function($) {
     mmooc.menu.showUserMenu();
     mmooc.menu.renderUnauthenticatedMenu();
     mmooc.menu.setMenuActiveLink();
+    mmooc.menu.showHamburger();
+    mmooc.menu.showMobileMenu();
   } catch (e) {
     console.log(e);
   }

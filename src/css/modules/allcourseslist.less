@@ -10,13 +10,29 @@
   max-width: 1146px;
   margin-top: 55px;
 
-  h1 {
+  .mmooc-all-courses-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
     margin-bottom: 24px;
+
+    @media screen and (max-width: 680px) {
+      h1 {
+        padding-bottom: 10px;
+      }
+
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  }
+
+  h1 {
     font-family: Roboto;
     font-size: 32px;
     color: @textColor;
   }
-  
+
   p {
     margin-bottom: 80px;
     font-family: Roboto;

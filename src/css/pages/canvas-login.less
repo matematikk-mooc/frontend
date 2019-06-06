@@ -1,6 +1,7 @@
 #content .login-box {
   background-color: @darkTealColor !important;
   background-image: none !important;
+
   h1 {
     background-image: @logo-image !important;
   }
@@ -12,19 +13,18 @@ body.ic-Login-Body,
     .ic-Login__container {
       background-color: @darkTealColor;
     }
+
     .ic-Login-header__logo {
-      background-image: @logo-image !important;
+      background-image: url(@logo-image) !important;
       background-size: contain;
-      background-position: center;
+      background-position: 18px 0;
       background-repeat: no-repeat;
       width: @logo-width;
       height: @logo-height;
 
-/*
       img {
         display: none;
       }
-*/      
     }
 
     .ic-Login__actions {
@@ -43,8 +43,9 @@ body.ic-Login-Body,
     }
 
     .ic-Login-confirmation__header {
-      background: @darkTealColor @logo-image 18px / ~'160px auto' no-repeat !important;
+      background: @darkTealColor @logo-image 18px / ~'160px auto'no-repeat !important;
       padding: 30px;
+
       img {
         display: none;
       }
