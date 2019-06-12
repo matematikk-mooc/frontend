@@ -187,7 +187,7 @@ module.exports = function (grunt) {
         replacements: [
           {
             from: '$REQUEST',
-            to: "['email','longterm', 'openid', 'profile', 'userid-feide', 'groups', 'gk_kpasbeta']"
+            to: "['email','longterm', 'openid', 'profile', 'userid-feide', 'groups', 'gk_netgurukpasapi']"
           },          {
             from: '$DATAPORTENCALLBACK',
             to: 'https://localhost/courses/1?dataportenCallback=1'
@@ -196,7 +196,7 @@ module.exports = function (grunt) {
             to: 'fb2f6378-2d35-4354-8ae8-2e82e2af2a8f'
           },          {
             from: '$KPASAPIURL',
-            to: 'https://kpasbeta.dataporten-api.no'
+            to: 'https://netgurukpasapi.dataporten-api.no'
           }
         ]
       },
