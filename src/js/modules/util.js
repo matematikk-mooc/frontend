@@ -342,7 +342,7 @@ this.mmooc.util = (function() {
     },
     
     getLinkToAvailableCourses: () => {
-        var linkToAvailableCourses = "/courses/search_all" + mmooc.hrefQueryString;
+        var linkToAvailableCourses = "/search/all_courses" + mmooc.hrefQueryString;
 //ETH20190409 By making sure the root account loads our design, we do not need a front page.
 /*
         if (this.mmooc.allCoursesFrontpageCourseID > 0) {

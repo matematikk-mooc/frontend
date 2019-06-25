@@ -206,7 +206,7 @@ module.exports = function (grunt) {
         replacements: [
           {
             from: '$ACCOUNTID',
-            to: '[99, 100, 102, 103]'
+            to: '[99, 100, 102, 103, 137, 138, 139]'
           }
         ]
       },
@@ -315,10 +315,6 @@ module.exports = function (grunt) {
     'uglify',
     'less',
     'copy',
-    'replace:production',
-    'replace:development',
-    'replace:production_badge',
-    'replace:development_badge'
   ]);
 
   grunt.registerTask('dev_dataporten', [
@@ -330,11 +326,15 @@ module.exports = function (grunt) {
   ]);
 
   grunt.registerTask('dev_settings', [
-    'replace:development_settings'
+    'replace:development_settings',
+    'replace:development',
+    'replace:development_badge',
   ]);
 
   grunt.registerTask('prod_settings', [
-    'replace:production_settings'
+    'replace:production_settings',
+    'replace:production',
+    'replace:production_badge',
   ]);
 
 

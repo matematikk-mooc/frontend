@@ -2,7 +2,9 @@
     <!-- TODO: use translation feature -->
     <div class="mmooc-all-courses-header">
     <h1>Tilpasset sideoverskrift</h1>
-    <button id="mmooc-all-courses-btn" class="btn">Til mine kompetansepakker</button>
+    {{#if isAuthenticated}}
+      <button id="mmooc-all-courses-btn" class="btn">Til mine kompetansepakker</button>
+    {{/if}}
     </div>
     <p>Det er et velkjent faktum at lesere distraheres av lesbart innhold på en side når man ser på dens layout. Poenget med
         å bruke Lorem Ipsum er at det har en mer eller mindre normal fordeling av bokstaver i ord, i motsetning til 'Innhold
