@@ -5,12 +5,9 @@ this.mmooc.settings = {
     'CanvaBadgeProtocolAndHost' : 'https://canvabadges-beta-iktsenteret.bibsys.no',
     'useCanvaBadge' : false,
     'defaultNumberOfReviews' : 2, // Default number of peer reviews per student in power function
-    'disablePeerReviewButton' : true,
+    'disablePeerReviewButton' : false,
     'removeGlobalGradesLink' : true,
-    'displayDiscussionsTab' : false,
-    'displayGroupsTab' : false,
-    'help' : true,
     'removeGroupsLink' : true,
-    'privacyPolicyLink' : 'http://matematikk-mooc.github.io/privacypolicy.html',
-    'platformName' : 'matematikk.mooc.no'
+    'privacyPolicyLink' : 'https://kurs-iktsenteret.github.io/privacypolicy.html',
+    'platformName' : 'kurs.iktsenteret.no'
 };

@@ -38,7 +38,7 @@ mmooc.greeting = function () {
             var $emailEntryIdDiv = $content.find(".sikt-diploma-emailEntryId");
 
             if ($diplomaButton.length && $formIdDiv.length && $nameEntryIdDiv.length && $emailEntryIdDiv.length) {
-                $diplomaButton.button().click(function () {
+              $('body').on('click', '.sikt-diploma-button', function () {
                     if ($diplomaButton.hasClass('btn-done')) {
                         return;
                     }
@@ -72,7 +72,7 @@ mmooc.greeting = function () {
                                         str1 = "Diplom ble sendt til denne eposten:";
                                         var s = str1.concat(profile.primary_email);
                                         $('#info').html(s);
-                                        $diplomaButton.addClass('btn-done');
+                                        $(".sikt-diploma-button").addClass('btn-done');
                                         break;
                                     default:
                                         $('#info').addClass('error');
@@ -93,7 +93,7 @@ mmooc.greeting = function () {
             var $scriptUrlDiv = $content.find(".new-sikt-diploma-scriptId");
 
             if ($newDiplomaButton.length && $scriptUrlDiv.length) {
-                $newDiplomaButton.button().click(function () {
+                $('body').on('click', '.new-sikt-diploma-button', function () {
                     if ($newDiplomaButton.hasClass('btn-done')) {
                         return;
                     }
@@ -122,7 +122,7 @@ mmooc.greeting = function () {
 								console.log(errorThrown);
 								var s = "Diplom ble ikke sendt. Følgende gikk galt: " + jqXHR + textStatus + errorThrown;
 								$('#info').html(s);
-								$newDiplomaButton.addClass('btn-done');
+								$(".new-sikt-diploma-button").addClass('btn-done');
 							},
 
 							success: function (result) {
@@ -137,7 +137,7 @@ mmooc.greeting = function () {
 									var s = "Diplom kunne ikke sendes fordi: " + result.result;
 									$('#info').html(s);
 								}
-								$newDiplomaButton.addClass('btn-done');
+								$(".new-sikt-diploma-button").addClass('btn-done');
 							},
 
 							complete: function () {
