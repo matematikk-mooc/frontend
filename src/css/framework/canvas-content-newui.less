@@ -59,6 +59,32 @@
     }
   }
 
+  .mmooc-icon-principal-tag {
+    height: 14px;
+    left: -10px;
+    position: relative;
+    top: -5px;
+    background-color: red;
+    /* opacity: 0.3; */
+    border-radius: 10px;
+    background-repeat: no-repeat;
+    padding: 2px;
+    width: 16;
+
+    .mmooc-icon-principal-symbol {
+      background-image: url(https://server/vector_images/user-tie-solid.svg);
+      height: inherit;
+      background-repeat: no-repeat;
+    }
+    &.done {
+      background: @doneColor;
+    }
+    &.not_done {
+      background: @redWarningColor;
+    }
+  }
+
+
   li.mmooc-module-item-icon {
     .mmooc-icon-badge,
     .mmooc-icon-video,

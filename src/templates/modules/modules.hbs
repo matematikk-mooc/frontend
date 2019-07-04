@@ -16,6 +16,17 @@
                         {{#ifItemTypeDiscussion type}}
                         <div class="discussion-unread-tag discussion-id-{{this.content_id}}"></div>
                         {{/ifItemTypeDiscussion}}
+                        {{#ifIsIndented}}
+                            <div class="mmooc-icon-principal-tag
+                                {{#ifItemIsCompleted completion_requirement}}
+                                    done
+                                {{else}}
+                                    not_done
+                                {{/ifItemIsCompleted}}
+                            ">
+                                <div class="mmooc-icon-principal-symbol"></div>
+                            </div> 
+                        {{/ifIsIndented}}                    
                     </a>
                     <div class="tooltiptext">{{title}}</div>
                 </div>

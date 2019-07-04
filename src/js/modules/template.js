@@ -58,6 +58,15 @@ Handlebars.registerHelper('overrideIconClassByTitle', function(title) {
   }
 });
 
+Handlebars.registerHelper('ifIsIndented', function(options) {
+  if(this.indent) {
+    return options.fn(this);
+  } else {
+    return options.inverse(this);
+  }
+});
+
+
 Handlebars.registerHelper('getPeerReviewWorkflowIconClass', function(
   workflow_state
 ) {

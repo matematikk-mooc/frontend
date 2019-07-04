@@ -104,6 +104,16 @@ this.mmooc.pages = (function() {
           icon.addClass('done');
         }
 
+        //Mark principal sybmol as done as well.
+        var principal = icon.find(".mmooc-icon-principal-tag")
+        if(principal && principal.hasClass('done')) {
+          principal.removeClass('done');
+          principal.addClass('not_done');
+        } else {
+          principal.removeClass('not_done');
+          principal.addClass('done');
+        }
+
         //Check if header title should/not be marked as done as well.
         var activeHeader = $('#mmooc-module-item-active-header');
         var activeListId = activeHeader.attr('href');

@@ -38,7 +38,19 @@
             <a class="{{#if isCurrent}}active{{/if}}" href="{{html_url}}">
                 <span class="mmooc-module-item-title">{{title}}</span>
                 <span class="mmooc-module-items-icons-{{type}}{{#ifItemIsCompleted completion_requirement}} done{{/ifItemIsCompleted}}" href="{{html_url}}">
-                    <i class="icon-{{lowercase type}}{{overrideIconClassByTitle title}}"></i>
+                    <i class="icon-{{lowercase type}}{{overrideIconClassByTitle title}}">
+                        {{#ifIsIndented}}
+                            <div class="mmooc-icon-principal-tag
+                                {{#ifItemIsCompleted completion_requirement}} 
+                                    done
+                                {{else}}
+                                    not_done
+                                {{/ifItemIsCompleted}}
+                            ">
+                                <div class="mmooc-icon-principal-symbol"></div>
+                            </div> 
+                        {{/ifIsIndented}}
+                    </i>
                 </span>
             </a>
         </li>

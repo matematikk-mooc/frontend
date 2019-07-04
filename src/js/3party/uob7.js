@@ -558,7 +558,8 @@ function uobAddComponents() {
         'pfdk-important',
         'pfdk-viktig',
         'pfdk-tid',
-        'pfdk-verktoy'
+        'pfdk-verktoy',
+        'udir-skoleleder'
       ];
 
       for (var i = 0; i < aBoxTags.length; i++) {
