@@ -138,11 +138,25 @@ this.mmooc.menu = (function() {
     listModuleItems: function() {
       mmooc.api.getCurrentModule(function(module) {
         var courseId = mmooc.api.getCurrentCourseId();
-        var html = mmooc.util.renderTemplateWithData('moduleitems', {
-          backToCoursePage: mmooc.i18n.BackToCoursePage,
-          module: module,
-          courseId: courseId
-        });
+        var html = "";
+        if(mmooc.util.isPrincipal())
+        {
+          html = mmooc.util.renderTemplateWithData('moduleitemsprincipal', {
+            backToCoursePage: mmooc.i18n.BackToCoursePage,
+            module: module,
+            courseId: courseId,
+            course: mmooc.util.course
+          });
+        }
+        else
+        {
+          html = mmooc.util.renderTemplateWithData('moduleitems', {
+            backToCoursePage: mmooc.i18n.BackToCoursePage,
+            module: module,
+            courseId: courseId,
+            course: mmooc.util.course
+          });
+        }
         if (document.getElementById('left-side')) {
           document
             .getElementById('left-side')

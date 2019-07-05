@@ -1,0 +1,62 @@
+<div class="mmooc-module-items-back-to-course-button mmooc-back-button">
+    <a href="{{urlForCourseId courseId}}">{{backToCoursePage}}</a>
+</div>
+
+{{#with module}}
+<div class="header">
+    {{name}}
+</div>
+{{#if items}}
+    <nav aria-label="content" role="navigation">
+        <ul class="mmooc-module-items">
+            {{#each items}} 
+                {{#ifEquals type "SubHeader"}}
+                    </ul>
+                    <ul class="mmooc-module-items 
+                                        {{#if @first}} mmooc-module-items-header-first
+                                        {{else}}{{#if @last}} mmooc-module-items-header-last
+                                        {{else}} mmooc-module-items-header
+                                            {{/if}}
+                                        {{/if}}
+                                        " />
+                        <li class="mmooc-module-item-reveal">
+                            <a class="mmooc-reveal-trigger" {{#if isCurrentHeader}} id="mmooc-module-item-active-header" {{/if}} href="#mmooc-reveal-{{id}}">
+                                <span class="mmooc-module-items-icons-page {{#if done}}done{{/if}}">
+                                    {{#if isCurrentHeader}}
+                                    <i class="icon-mini-arrow-down">
+                                        {{else}}
+                                        <i class="icon-mini-arrow-right">
+                                            {{/if}}
+                                        </i>
+                                </span>
+                                <span class="mmooc-module-item-title mmooc-module-item-header-title">{{title}}</span>
+                            </a>
+                        </li>
+                    </ul>
+                    <ul {{#unless isCurrentHeader}}style="display:none" {{/unless}} id="mmooc-reveal-{{id}}" class="mmooc-module-items">
+                {{else}}
+                    <li class="mmooc-module-item mmooc-module-item-icon">
+                        <a class="{{#if isCurrent}}active{{/if}}" href="{{html_url}}">
+                            <span class="mmooc-module-item-title">{{title}}</span>
+                            <span class="mmooc-module-items-icons-{{type}}{{#ifItemIsCompleted completion_requirement}} done{{/ifItemIsCompleted}}" href="{{html_url}}">
+                                <i class="icon-{{lowercase type}}{{overrideIconClassByTitle title}}">
+                                    {{#ifIsIndented}}
+                                        <div class="mmooc-icon-principal-tag
+                                            {{#ifItemIsCompleted completion_requirement}} 
+                                                done
+                                            {{else}}
+                                                not_done
+                                            {{/ifItemIsCompleted}}
+                                        ">
+                                            <div class="mmooc-icon-principal-symbol"></div>
+                                        </div> 
+                                    {{/ifIsIndented}}
+                                </i>
+                            </span>
+                        </a>
+                    </li>
+                {{/ifEquals}} 
+            {{/each}}
+        </ul>
+    </nav>
+{{/if}} {{/with}}

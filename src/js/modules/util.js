@@ -171,7 +171,19 @@ this.mmooc.util = (function() {
         return this.isEnrolledAsObserver(course.enrollments);
       }
     },
-
+    isEnrolledWithRole(course, role) {
+      if(course && course.enrollments) {
+        for (var i = 0; i < course.enrollments.length; i++) {
+          if (course.enrollments[i].role == role) {
+            return true;
+          }
+        }
+      }
+      return false;
+    },
+    isPrincipal() {
+      return (this.isTeacherOrAdmin() || this.isEnrolledWithRole(mmooc.util.course, mmooc.settings.principalRoleType));
+    },
     isAuthenticated: function() {
       return mmooc.api.getRoles() !== null;
     },

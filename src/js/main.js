@@ -29,11 +29,13 @@ jQuery(function($) {
     );
   });
 
+  //This course path should be called before the other course paths such that the course object is available to them.
   mmooc.routes.addRouteForPath(/\/courses\/\d+/, function() {
     var courseId = mmooc.api.getCurrentCourseId();
     mmooc.api.getCourse(
       courseId,
       function(course) {
+        mmooc.util.course = course;
         if (mmooc.util.isAuthenticated() && mmooc.util.isObserver(course)) {
           mmooc.pages.showObserverInformationPane();
         }
@@ -119,6 +121,7 @@ jQuery(function($) {
             mmooc.dataporten.display();
         } else {
           mmooc.menu.showCourseMenu(courseId, mmooc.i18n.Course + 'forside', null);
+
 
           //20180822ETH If the user has chosen to use a wikipage as front page and the logged in user is teacher, we display that page.
           //            Otherwise we list the modules.

@@ -142,7 +142,7 @@ module.exports = function (grunt) {
         ]
       },
       development: {
-        src: ['tmp/rootaccount.js','tmp/subaccount.js'],
+        src: ['tmp/mmooc-min.css','tmp/mmooc-min.js', 'tmp/rootaccount.js','tmp/subaccount.js'],
         dest: 'dist/development/',
         replacements: [
           {
@@ -151,7 +151,7 @@ module.exports = function (grunt) {
           },
           {
             from: 'https://udirdesigncss',
-            to: 'http://localhost:9000/mmooc-min.css'
+            to: 'http://localhost:9000/development/mmooc-min.css'
           },
           {
             from: 'https://udirdesignjs',
