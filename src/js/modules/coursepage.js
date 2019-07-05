@@ -27,11 +27,24 @@ this.mmooc.coursePage = (function() {
           .getElementById('course_home_content')
           .insertAdjacentHTML('beforebegin', progressHTML);
 
-        var modulesHTML = mmooc.util.renderTemplateWithData('modules', {
-          navname: mmooc.i18n.GoToModule,
-          coursemodules: mmooc.i18n.ModulePlural,
-          modules: modules
-        });
+        var modulesHTML = "";
+        if(mmooc.util.isPrincipal())
+        {
+          modulesHTML = mmooc.util.renderTemplateWithData('modulesprincipal', {
+            navname: mmooc.i18n.GoToModule,
+            coursemodules: mmooc.i18n.ModulePlural,
+            modules: modules,
+            course: mmooc.util.course
+          });
+        }
+        else {
+          modulesHTML = mmooc.util.renderTemplateWithData('modules', {
+            navname: mmooc.i18n.GoToModule,
+            coursemodules: mmooc.i18n.ModulePlural,
+            modules: modules,
+            course: mmooc.util.course
+          });
+        }
         document
           .getElementById('course_home_content')
           .insertAdjacentHTML('beforebegin', modulesHTML);

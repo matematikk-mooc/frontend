@@ -58,6 +58,19 @@ Handlebars.registerHelper('overrideIconClassByTitle', function(title) {
   }
 });
 
+Handlebars.registerHelper('ifIsPrincipal', function(enrollments, options) {
+  if(mmooc.util.isTeacherOrAdmin())
+  {
+    return options.fn(this);
+  }
+  for (var i = 0; i < enrollments.length; i++) {
+    if (enrollments[i].role == mmooc.settings.principalRoleType) {
+      return options.fn(this);
+    }
+  }
+});
+
+
 Handlebars.registerHelper('ifIsIndented', function(options) {
   if(this.indent) {
     return options.fn(this);
