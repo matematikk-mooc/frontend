@@ -330,6 +330,9 @@ module.exports = function (grunt) {
     'replace:development',
     'replace:development_badge',
   ]);
+  grunt.registerTask('dev_development', [
+    'replace:development',
+  ]);
 
   grunt.registerTask('prod_settings', [
     'replace:production_settings',
@@ -346,7 +349,7 @@ module.exports = function (grunt) {
 
   grunt.registerTask('rebuildServe', ['clean:dist', 'dev_dataporten', 'dev_settings', 'make']);
 
-  grunt.registerTask('serve', ['clean', 'dev_dataporten', 'dev_settings', 'make', 'connect:dev', 'watch']);
+  grunt.registerTask('serve', ['clean', 'dev_dataporten', 'dev_settings',  'make',  'dev_development','connect:dev', 'watch']);
   
   grunt.registerTask('serveStaging', ['clean', 'make', 'connect:staging', 'watch']);
 

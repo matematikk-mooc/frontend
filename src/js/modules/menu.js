@@ -139,7 +139,8 @@ this.mmooc.menu = (function() {
       mmooc.api.getCurrentModule(function(module) {
         var courseId = mmooc.api.getCurrentCourseId();
         var html = "";
-        if(mmooc.util.isPrincipal())
+        var isPrincipal = mmooc.util.isPrincipal();
+        if(isPrincipal)
         {
           html = mmooc.util.renderTemplateWithData('moduleitemsprincipal', {
             backToCoursePage: mmooc.i18n.BackToCoursePage,
@@ -156,7 +157,10 @@ this.mmooc.menu = (function() {
             courseId: courseId,
             course: mmooc.util.course
           });
+          mmooc.menu.updatePrevAndNextButtons(module);
         }
+        
+        
         if (document.getElementById('left-side')) {
           document
             .getElementById('left-side')
@@ -185,6 +189,37 @@ this.mmooc.menu = (function() {
           return false;
         });
       });
+    },
+    //
+    updatePrevAndNextButtons : function(module) {
+      var prevButton = $(".module-sequence-footer-button--previous");
+      var nextButton = $(".module-sequence-footer-button--next");
+      
+      var prevLink = "";
+      var nextLink = "";
+      var prevSet = false;
+      for(var i = 0; i < module.items.length; i++) {
+        var item = module.items[i];
+        if(item.isCurrent) {
+          prevSet = true;
+        } else if (!item.indent) {
+          if(!prevSet) {
+            prevLink = item.html_url;
+          } else {
+            nextLink = item.html_url;
+          }
+        }
+      }
+      if(prevLink) {
+        prevButton.attr("href", prevLink);
+      } else {
+        prevButton.hide();
+      }
+      if(nextLink) {
+        nextButton.attr("href", nextLink);
+      } else {
+        nextButton.hide();
+      }
     },
     showLeftMenu: function() {
       stylesheet.insertRule(
