@@ -203,7 +203,19 @@ this.mmooc.menu = (function() {
         });
       });
     },
-    //
+    handleNextModuleItem : function(courseId, moduleItemSequence) {
+      if(moduleItemSequence && moduleItemSequence.items[0].next) {
+        var nextItem = moduleItemSequence.items[0].next;
+        if(nextItem.indent) {
+          id = nextItem.id; 
+          mmooc.api.getModuleItemSequence(courseId, id, mmooc.menu.handleNextModuleItem);
+        } else {
+          var nextButton = $(".module-sequence-footer-button--next a");
+          nextButton.attr("href", nextItem.html_url);
+          nextButton.show();
+        }
+      }
+    },
     updatePrevAndNextButtons : function(courseId, module) {
       var prevButton = $(".module-sequence-footer-button--previous");
       var nextButton = $(".module-sequence-footer-button--next a");
@@ -230,13 +242,8 @@ this.mmooc.menu = (function() {
       if(!nextSet) {
           nextButton.hide();
           var lastItem = module.items[module.items.length-1];
-          mmooc.api.getModuleItemSequence(courseId, lastItem.id, function(moduleItemSequence) {
-            if(moduleItemSequence) {
-              var nextItem = moduleItemSequence.items[0].next;
-              nextButton.attr("href", nextItem.html_url);
-              nextButton.show();
-            }
-          });
+          var id = lastItem.id;
+          mmooc.api.getModuleItemSequence(courseId, id, mmooc.menu.handleNextModuleItem);
       }
       else {
         if(prevSet) {

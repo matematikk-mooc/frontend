@@ -262,7 +262,7 @@ this.mmooc.api = (function() {
     },
     getModuleItemSequence(courseId, moduleItemId, callback, error) {
       this._get({
-        callback: callback,
+        callback: function(moduleItemSequence) {callback(courseId, moduleItemSequence)},
         error: error,
         uri: `/courses/${courseId}/module_item_sequence`,
         params: { asset_id: moduleItemId, asset_type: "ModuleItem" }
