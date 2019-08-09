@@ -117,7 +117,6 @@ this.mmooc.api = (function() {
         });
       });
     },
-
     getCurrentModuleItemId() {
       let moduleId;
       const relativeUrl = location.pathname;
@@ -260,6 +259,14 @@ this.mmooc.api = (function() {
         }
       }
       return null;
+    },
+    getModuleItemSequence(courseId, moduleItemId, callback, error) {
+      this._get({
+        callback: callback,
+        error: error,
+        uri: `/courses/${courseId}/module_item_sequence`,
+        params: { asset_id: moduleItemId, asset_type: "ModuleItem" }
+      });
     },
 
     getCourse(courseId, callback, error) {

@@ -170,7 +170,7 @@ this.mmooc.menu = (function() {
             courseId: courseId,
             course: mmooc.util.course
           });
-          mmooc.menu.updatePrevAndNextButtons(module);
+          mmooc.menu.updatePrevAndNextButtons(courseId, module);
         }
         
         
@@ -204,13 +204,14 @@ this.mmooc.menu = (function() {
       });
     },
     //
-    updatePrevAndNextButtons : function(module) {
+    updatePrevAndNextButtons : function(courseId, module) {
       var prevButton = $(".module-sequence-footer-button--previous");
-      var nextButton = $(".module-sequence-footer-button--next");
+      var nextButton = $(".module-sequence-footer-button--next a");
       
       var prevLink = "";
       var nextLink = "";
       var prevSet = false;
+      var nextSet = false;
       for(var i = 0; i < module.items.length; i++) {
         var item = module.items[i];
         if(item.isCurrent) {
@@ -220,20 +221,34 @@ this.mmooc.menu = (function() {
             prevLink = item.html_url;
           } else {
             nextLink = item.html_url;
+            nextSet = true;
             break;
           }
         }
       }
       
-      if(prevLink) {
-        prevButton.attr("href", prevLink);
-      } else {
-        prevButton.hide();
+      if(!nextSet) {
+          nextButton.hide();
+          var lastItem = module.items[module.items.length-1];
+          mmooc.api.getModuleItemSequence(courseId, lastItem.id, function(moduleItemSequence) {
+            if(moduleItemSequence) {
+              var nextItem = moduleItemSequence.items[0].next;
+              nextButton.attr("href", nextItem.html_url);
+              nextButton.show();
+            }
+          });
       }
-      if(nextLink) {
-        nextButton.attr("href", nextLink);
-      } else {
-        nextButton.hide();
+      else {
+        if(prevSet) {
+          prevButton.attr("href", prevLink);
+        } else {
+          prevButton.hide();
+        }
+        if(nextSet) {
+          nextButton.attr("href", nextLink);
+        } else {
+          nextButton.hide();
+        }
       }
     },
     showLeftMenu: function() {
