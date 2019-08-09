@@ -203,8 +203,21 @@ this.mmooc.menu = (function() {
         });
       });
     },
+    handlePrevModuleItem : function(courseId, moduleItemSequence) {
+      if(moduleItemSequence && moduleItemSequence.items.length && moduleItemSequence.items[0].prev) {
+        var prevItem = moduleItemSequence.items[0].prev;
+        if(prevItem.indent) {
+          id = prevItem.id; 
+          mmooc.api.getModuleItemSequence(courseId, id, mmooc.menu.handlePrevModuleItem);
+        } else {
+          var prevButton = $(".module-sequence-footer-button--previous");
+          prevButton.attr("href", prevItem.html_url);
+          prevButton.show();
+        }
+      }
+    },
     handleNextModuleItem : function(courseId, moduleItemSequence) {
-      if(moduleItemSequence && moduleItemSequence.items[0].next) {
+      if(moduleItemSequence && moduleItemSequence.items.length && moduleItemSequence.items[0].next) {
         var nextItem = moduleItemSequence.items[0].next;
         if(nextItem.indent) {
           id = nextItem.id; 
@@ -222,16 +235,23 @@ this.mmooc.menu = (function() {
       
       var prevLink = "";
       var nextLink = "";
+      var firstValidItem = null;
+      var lastValidItem = null;
       var prevSet = false;
       var nextSet = false;
+      var currentFound = false;
       for(var i = 0; i < module.items.length; i++) {
         var item = module.items[i];
-        if(item.isCurrent) {
-          prevSet = true;
-        } else if (!item.indent) {
-          if(!prevSet) {
+        if(!item.indent && (item.type != "SubHeader")) {
+          if(!firstValidItem) {firstValidItem = item;}
+          lastValidItem = item;
+          
+          if(item.isCurrent) {
+            currentFound = true;
+          } else if(!currentFound) {
             prevLink = item.html_url;
-          } else {
+            prevSet = true;
+          } else if(!nextSet){
             nextLink = item.html_url;
             nextSet = true;
             break;
@@ -239,10 +259,15 @@ this.mmooc.menu = (function() {
         }
       }
       
+      if(!prevSet) {
+          prevButton.hide();
+          var id = firstValidItem.id;
+          mmooc.api.getModuleItemSequence(courseId, id, mmooc.menu.handlePrevModuleItem);
+      }
+      
       if(!nextSet) {
           nextButton.hide();
-          var lastItem = module.items[module.items.length-1];
-          var id = lastItem.id;
+          var id = lastValidItem.id;
           mmooc.api.getModuleItemSequence(courseId, id, mmooc.menu.handleNextModuleItem);
       }
       else {
