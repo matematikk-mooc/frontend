@@ -35,7 +35,7 @@ this.mmooc.coursePage = (function() {
           });
         }
         else {
-          progressHTML = mmooc.util.renderTemplateWithData('courseprogress', {
+          progressHTML = mmooc.util.renderTemplateWithData('courseprogressforstudent', {
             title: mmooc.i18n.CourseProgressionTitle,
             modules: modules
           });

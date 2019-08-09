@@ -242,6 +242,26 @@ Handlebars.registerHelper('percentageForModules', function(modules) {
   return Math.round((completed * 100) / total);
 });
 
+Handlebars.registerHelper('percentageForStudentModules', function(modules) {
+  var total = 0;
+  var completed = 0;
+
+  for (var i = 0; i < modules.length; i++) {
+    var module = modules[i];
+    for (var j = 0; j < module.items.length; j++) {
+      var item = module.items[j];
+      if (!item.indent && item.completion_requirement) {
+        total++;
+        if (item.completion_requirement.completed) {
+          completed++;
+        }
+      }
+    }
+  }
+
+  return Math.round((completed * 100) / total);
+});
+
 Handlebars.registerHelper('urlForFirstNoneCompleteItem', function(items) {
   if (items != null && items != undefined && items.length > 0) {
     for (var i = 0; i < items.length; i++) {
