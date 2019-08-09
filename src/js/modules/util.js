@@ -353,7 +353,7 @@ this.mmooc.util = (function() {
       );
     },
     
-    getLinkToAvailableCourses: () => {
+    getLinkToAvailableCourses: function() {
         var linkToAvailableCourses = "/search/all_courses" + mmooc.hrefQueryString;
 //ETH20190409 By making sure the root account loads our design, we do not need a front page.
 /*
@@ -363,7 +363,9 @@ this.mmooc.util = (function() {
 */        
         return linkToAvailableCourses;
     },
-    isCourseFrontpageForAllCoursesList: () => {
+    //This function can probably be deleted now that we use ?udirDesign
+    isCourseFrontpageForAllCoursesList: function() {
+      return false;
       const queryString = document.location.search;
       const currentCourseID = mmooc.api.getCurrentCourseId();
 

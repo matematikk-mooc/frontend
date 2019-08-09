@@ -120,7 +120,7 @@ jQuery(function($) {
             );
             mmooc.dataporten.display();
         } else {
-          mmooc.menu.showCourseMenu(courseId, mmooc.i18n.Course + 'forside', null);
+          mmooc.menu.showCourseMenu(courseId, 'Forside', null);
 
 
           //20180822ETH If the user has chosen to use a wikipage as front page and the logged in user is teacher, we display that page.

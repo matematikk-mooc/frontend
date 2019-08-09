@@ -23,7 +23,7 @@ this.mmooc.menu = (function() {
     var courseId = course.id;
     if (!hideTabs) {
       menuItems[menuItems.length] = {
-        title: mmooc.i18n.Course + 'forside',
+        title: 'Forside',
         url: '/courses/' + courseId
       };
       menuItems[menuItems.length] = {
