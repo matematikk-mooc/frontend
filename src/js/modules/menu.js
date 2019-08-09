@@ -47,11 +47,21 @@ this.mmooc.menu = (function() {
       //SelectedMenuItem contains the path if we are called by the external path route.
       var tools = mmooc.util.getToolsInLeftMenu(selectedMenuItem);
 
-      menuItems[menuItems.length] = {
-        title: tools.activeToolName,
-        toolList: tools.toolList,
-        url: tools.activeToolPath
-      };
+      //If only one tool in list, make it the active one.
+      if(tools.toolList.length == 1)
+      {
+        var tool = tools.toolList[0];
+        menuItems[menuItems.length] = {
+          title: tool.title,
+          url: tool.href
+        };
+      } else {
+        menuItems[menuItems.length] = {
+          title: tools.activeToolName,
+          toolList: tools.toolList,
+          url: tools.activeToolPath
+        };
+      }
 
       if (mmooc.util.isTeacherOrAdmin()) {
         menuItems[menuItems.length] = {
