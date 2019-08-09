@@ -51,6 +51,7 @@ this.mmooc.menu = (function() {
       if(tools.toolList.length == 1)
       {
         var tool = tools.toolList[0];
+        selectedMenuItem = tool.title;
         menuItems[menuItems.length] = {
           title: tool.title,
           url: tool.href
@@ -217,9 +218,11 @@ this.mmooc.menu = (function() {
             prevLink = item.html_url;
           } else {
             nextLink = item.html_url;
+            break;
           }
         }
       }
+      
       if(prevLink) {
         prevButton.attr("href", prevLink);
       } else {
