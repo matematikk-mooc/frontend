@@ -341,6 +341,9 @@ this.mmooc.coursesettings = (function() {
     if (item.type == 'SubHeader') {
       return;
     }
+    if (!item.url) {
+      return;
+    }
     var url = item.url;
 
     var key = getCommonUrlKey(url);
