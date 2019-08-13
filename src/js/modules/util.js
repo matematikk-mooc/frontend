@@ -46,9 +46,15 @@ this.mmooc.util = (function() {
     },
 
     filterCourse: function(course) {
+      if(!this.mmooc.settings.filterCourses) {
+        return true;
+      }
       return this.mmooc.settings.filterCoursesOnAccountId.includes(course.account_id);
     },
     filterSearchAllCourse: function(course) {
+      if(!this.mmooc.settings.filterCourses) {
+        return true;
+      }
       return this.mmooc.settings.filterCoursesOnAccountId.includes(course.course.account_id);
     },
     callWhenElementIsPresent: function(classId, callback) {
@@ -183,6 +189,12 @@ this.mmooc.util = (function() {
     },
     isPrincipal() {
       return (this.isTeacherOrAdmin() || this.isEnrolledWithRole(mmooc.util.course, mmooc.settings.principalRoleType));
+    },
+    isRoleBasedCourse() {
+      if (mmooc.util.course && mmooc.util.course.course_code.indexOf('::Role::') > -1) {
+        return true;
+      }
+      return false;
     },
     isAuthenticated: function() {
       return mmooc.api.getRoles() !== null;

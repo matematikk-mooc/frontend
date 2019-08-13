@@ -21,7 +21,7 @@ this.mmooc.coursePage = (function() {
       mmooc.api.getModulesForCurrentCourse(function(modules) {
         var progressHTML = "";
         var modulesHTML = "";
-        if(mmooc.util.isPrincipal())
+        if(mmooc.util.isRoleBasedCourse() && mmooc.util.isPrincipal())
         {
           progressHTML = mmooc.util.renderTemplateWithData('courseprogress', {
             title: mmooc.i18n.CourseProgressionTitle,

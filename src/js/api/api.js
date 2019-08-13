@@ -156,7 +156,7 @@ this.mmooc.api = (function() {
 
     getAllCourses(callback, error) {
       this._get({
-        callback: courses => {
+        callback: function(courses) {
           const filteredCourses = courses.filter(
             mmooc.util.filterSearchAllCourse
           );
@@ -191,9 +191,13 @@ this.mmooc.api = (function() {
       }
 
       this._get({
-        callback: courses => {
-          const filteredCourses = courses.filter(mmooc.util.filterCourse);
-          callback(filteredCourses);
+        callback: function(courses) {
+          if(mmooc.settings.filterCourses) { 
+            const filteredCourses = courses.filter(mmooc.util.filterCourse);
+            callback(filteredCourses);
+          } else {
+            callback(courses);
+          }
         },
         error: error,
         uri: '/courses',

@@ -7,7 +7,8 @@ this.mmooc.settings = {
   useCanvaBadge: false,
   defaultNumberOfReviews: 1, // Default number of peer reviews per student in power function
   useDataportenGroups : false,
-  filterCoursesOnAccountId: [99, 100, 102, 103, 137, 138, 139],
+  filterCourses: false,
+  filterCoursesOnAccountId: [4, 5],
   disablePeerReviewButton: true,
   principalRoleType: "Skoleleder",
   removeGlobalGradesLink: true,

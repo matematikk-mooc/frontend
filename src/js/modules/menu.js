@@ -152,8 +152,7 @@ this.mmooc.menu = (function() {
       mmooc.api.getCurrentModule(function(module) {
         var courseId = mmooc.api.getCurrentCourseId();
         var html = "";
-        var isPrincipal = mmooc.util.isPrincipal();
-        if(isPrincipal)
+        if(mmooc.util.isRoleBasedCourse() && mmooc.util.isPrincipal())
         {
           html = mmooc.util.renderTemplateWithData('moduleitemsprincipal', {
             backToCoursePage: mmooc.i18n.BackToCoursePage,
@@ -170,7 +169,9 @@ this.mmooc.menu = (function() {
             courseId: courseId,
             course: mmooc.util.course
           });
-          mmooc.menu.updatePrevAndNextButtons(courseId, module);
+          if(mmooc.util.isRoleBasedCourse()) {
+            mmooc.menu.updatePrevAndNextButtons(courseId, module);
+          }
         }
         
         
