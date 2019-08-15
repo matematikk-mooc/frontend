@@ -7,6 +7,9 @@ this.mmooc.settings = {
     'defaultNumberOfReviews' : 2, // Default number of peer reviews per student in power function
     'disablePeerReviewButton' : false,
     'removeGlobalGradesLink' : true,
+    'displayDiscussionsTab' : false,
+    'displayGroupsTab' : false,
+    'help' : true,
     'removeGroupsLink' : true,
     'privacyPolicyLink' : 'https://kurs-iktsenteret.github.io/privacypolicy.html',
     'platformName' : 'kurs.iktsenteret.no'
