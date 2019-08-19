@@ -230,13 +230,43 @@ Her er fargene Lisbeth foreslår
   background-image: url('https://s3.amazonaws.com/SSL_Assets/bham/images/box_warning.png');
 }
 
-.uob-accordion .ui-accordion-content {
-  margin-top: 0px;
-  margin-bottom: 3px;
-  padding: 0.5em 0.9em 0.9em 0.9em;
-  top: 0px;
+.uob-accordion {
+  background-color: #E2E3F1;
+  cursor: pointer;
+  padding: 18px;
+  width: 100%;
+  text-align: left;
+  font-weight: bold;
 }
 
+.uob-arrow-down {
+  float: right;
+  border: solid black;
+  border-width: 0 3px 3px 0;
+  display: inline-block;
+  padding: 3px;
+  transform: rotate(45deg);
+  -webkit-transform: rotate(45deg);
+}
+
+.uob-arrow-down:after {
+}
+
+.uob-arrow-down.active {
+  transform: rotate(-135deg);
+  -webkit-transform: rotate(-135deg);
+}
+
+.uob-accordion-panel.active {
+  display: block;
+  padding: 18px 18px;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.2s ease-out;
+}
+.uob-accordion-panel {
+  display: none;
+}
 /* UoB reveal */
 .uob-reveal-button .ui-button-icon-secondary {
   float: left;

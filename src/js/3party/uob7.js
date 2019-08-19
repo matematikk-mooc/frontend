@@ -103,12 +103,12 @@ function uobAddComponents() {
         if ($table.length != 1) break;
 
         // Convert table into HTML for an accordian.
-        $table.before("<div class='uob-accordion'></div>");
+        $table.before("<div class='uob-accordions'></div>");
 
         $table.find('tbody:first > tr:gt(0) > td').each(function(_idx, _item) {
           if ((_idx + 1) % 2) {
             // Add heading 4 for accordion bar.
-            $table.prev().append('<h4></h4>');
+            $table.prev().append('<button class="uob-accordion"><i class="uob-arrow-down"></i></button>');
             $table
               .prev()
               .children()
@@ -122,7 +122,7 @@ function uobAddComponents() {
 
           if (_idx % 2) {
             // Add div for accordion content.
-            $table.prev().append('<div></div>');
+            $table.prev().append('<div class="uob-accordion-panel"></div>');
             $table
               .prev()
               .children()
@@ -330,6 +330,7 @@ function uobAddComponents() {
       // --------------------------------------------------------------------------------
 
       // Initialise accordions
+      /*
       var $accordion = $content.find('.uob-accordion');
 
       if ($accordion.length) {
@@ -343,7 +344,24 @@ function uobAddComponents() {
           }
         });
       }
+      */
+      
+      var acc = document.getElementsByClassName("uob-accordion");
+      var i;
 
+      for (i = 0; i < acc.length; i++) {
+        acc[i].addEventListener("click", function() {
+          this.classList.toggle("active");
+          this.firstElementChild.classList.toggle("active");
+          var panel = this.nextElementSibling;
+          panel.classList.toggle("active");
+          if (panel.style.maxHeight){
+            panel.style.maxHeight = null;
+          } else {
+            panel.style.maxHeight = panel.scrollHeight + "px";
+          } 
+        });
+      }
       // ================================================================================
       // Tabs (Part 2/2)
       //
