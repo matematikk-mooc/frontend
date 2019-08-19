@@ -29,7 +29,7 @@ this.mmooc.footer = (function() {
         $publicLicense.length == 0 &&
         !hideCustomFooterLicence
       ) {
-        var html = mmooc.util.renderTemplateWithData('footer-license', {});
+        var html = mmooc.util.renderTemplateWithData('footer-license', {privacyPolicyLink: mmooc.settings.privacyPolicyLink, contactPoint: mmooc.settings.contactPoint});
         $parentElementOfOldFooter.append(html);
       }
     }

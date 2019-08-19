@@ -1,17 +1,24 @@
 <div class="mmooc-all-courses">
     <!-- TODO: use translation feature -->
     <div class="mmooc-all-courses-header">
-    <h1>Tilpasset sideoverskrift</h1>
+    <h1>Velkommen til Utdanningsdirektoratets kompetanseportal</h1>
     {{#if isAuthenticated}}
       <button id="mmooc-all-courses-btn" class="btn">Til mine kompetansepakker</button>
     {{/if}}
     </div>
-    <p>Det er et velkjent faktum at lesere distraheres av lesbart innhold på en side når man ser på dens layout. Poenget med
-        å bruke Lorem Ipsum er at det har en mer eller mindre normal fordeling av bokstaver i ord, i motsetning til 'Innhold
-        her, innhold her', og gir inntrykk av å være lesbar tekst.</p>
+    <p>
+    Her finner du en oversikt over alle tilgjengelige kompetansepakker som du kan melde deg på. 
+    {{#if isAuthenticated}}
+      Tjenesten er gratis og du kan logge på med Feide eller opprette en egen bruker. 
+    {{else}}
+    {{/if}}    
+        </p>
     <!--If the amount of courses is large, the filter select box and corresponding javascript code in enroll.js should be enabled
     <select id='filter'></select>
     -->
-    <h3>Alle tilgjengelige {{courseLabel}}</h3>
+    <br>
+<!--    <h3>Alle tilgjengelige {{courseLabel}}</h3>-->
+    <h3>&nbsp;</h3>
+
     <div class="mmooc-all-courses-list"></div>
 </div>

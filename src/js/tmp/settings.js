@@ -14,6 +14,7 @@ this.mmooc.settings = {
   removeGlobalGradesLink: true,
   removeGroupsLink: true,
   privacyPolicyLink: 'https://kurs-iktsenteret.github.io/privacypolicy.html',
+  contactPoint: 'kompetansesupport@udir.no',
   platformName: 'UNIT - kompetanseplattform'
 };
 
