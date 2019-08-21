@@ -190,16 +190,60 @@ this.mmooc.util = (function() {
     isPrincipal() {
       return (this.isTeacherOrAdmin() || this.isEnrolledWithRole(mmooc.util.course, mmooc.settings.principalRoleType));
     },
-    isRoleBasedCourse() {
-      if (mmooc.util.course && mmooc.util.course.course_code.indexOf('::Role::') > -1) {
+    isRoleBasedCourse(course) {
+      if (course && course.course_code.indexOf('::Role::') > -1) {
         return true;
       }
       return false;
     },
+    isActiveCourseRoleBased() {
+      return mmooc.util.isRoleBasedCourse(mmooc.util.course);
+    },
     isAuthenticated: function() {
       return mmooc.api.getRoles() !== null;
     },
+    percentageProgress: function(modules, bIncludeIndentedItems) {
+      var total = 0;
+      var completed = 0;
 
+      for (var i = 0; i < modules.length; i++) {
+        var module = modules[i];
+        for (var j = 0; j < module.items.length; j++) {
+          var item = module.items[j];
+          if (!(item.indent && !bIncludeIndentedItems)) {
+            if (item.completion_requirement) {
+              total++;
+              if (item.completion_requirement.completed) {
+                completed++;
+              }
+            }
+          }
+        }
+      }
+      return Math.round((completed * 100) / total);
+    },
+    updateProgressForRoleBasedCourses: function (courses) {
+      const error = error => console.error('error calling api', error);
+      for(var i = 0; i < courses.length; i++) {
+        var course = courses[i];
+        if(mmooc.util.isRoleBasedCourse(course) && !mmooc.util.isEnrolledWithRole(course, mmooc.settings.principalRoleType)) {
+          mmooc.api.listModulesForCourse( 
+          (function(courseId){ 
+            return function(modules) {
+              var bIncludeIndentedItems = false;
+              var p = mmooc.util.percentageProgress(modules, bIncludeIndentedItems);
+              var divId = "#course_" + courseId + "> div > div.mmooc-course-list-progress > div ";
+              $(divId + " > div").attr("style", "width:" + p + "%; -webkit-transition: width 2s; transition: width 2s;");
+              if(p == 100)
+              {
+                $(divId).addClass("mmooc-progress-bar-done");
+              }
+            };
+          })(course.id)
+          ,error, course.id);
+        }
+      }
+    },
     setGlobalPeerReviewButtonState: function() {
       if (mmooc.settings.disablePeerReviewButton == true) {
         $('.assignments #right-side :submit').prop('disabled', true);

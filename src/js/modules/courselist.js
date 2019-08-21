@@ -41,6 +41,7 @@ this.mmooc.courseList = (() => {
               });
               $('.mmooc-course-list-container').append(html);
             });
+            mmooc.util.updateProgressForRoleBasedCourses(courses);
           }
           document.title = mmooc.i18n.CoursePlural;
 

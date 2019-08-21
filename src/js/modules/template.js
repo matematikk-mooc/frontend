@@ -222,44 +222,24 @@ Handlebars.registerHelper('ifAllModulesCompleted', function(modules, options) {
   return options.inverse(this);
 });
 
-Handlebars.registerHelper('percentageForModules', function(modules) {
-  var total = 0;
-  var completed = 0;
-
-  for (var i = 0; i < modules.length; i++) {
-    var module = modules[i];
-    for (var j = 0; j < module.items.length; j++) {
-      var item = module.items[j];
-      if (item.completion_requirement) {
-        total++;
-        if (item.completion_requirement.completed) {
-          completed++;
-        }
-      }
-    }
+Handlebars.registerHelper('ifAllStudentModulesCompleted', function(modules, options) {
+  var bIncludeIndentedItems = false;
+  if (mmooc.util.percentageProgress(modules, bIncludeIndentedItems) == 100)
+  {
+    return options.fn(this);
   }
+  return options.inverse(this);
+});
 
-  return Math.round((completed * 100) / total);
+
+Handlebars.registerHelper('percentageForModules', function(modules) {
+  var bIncludeIndentedItems = true;
+  return mmooc.util.percentageProgress(modules, bIncludeIndentedItems);
 });
 
 Handlebars.registerHelper('percentageForStudentModules', function(modules) {
-  var total = 0;
-  var completed = 0;
-
-  for (var i = 0; i < modules.length; i++) {
-    var module = modules[i];
-    for (var j = 0; j < module.items.length; j++) {
-      var item = module.items[j];
-      if (!item.indent && item.completion_requirement) {
-        total++;
-        if (item.completion_requirement.completed) {
-          completed++;
-        }
-      }
-    }
-  }
-
-  return Math.round((completed * 100) / total);
+  var bIncludeIndentedItems = false;
+  return mmooc.util.percentageProgress(modules, bIncludeIndentedItems);
 });
 
 Handlebars.registerHelper('urlForFirstNoneCompleteItem', function(items) {
