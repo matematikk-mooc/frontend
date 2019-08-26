@@ -142,8 +142,8 @@ module.exports = function (grunt) {
         ]
       },
       development: {
-        src: ['tmp/mmooc-min.css','tmp/mmooc-min.js', 'tmp/rootaccount.js','tmp/subaccount.js'],
-        dest: 'dist/development/',
+        src: ['tmp/mmooc-min.css','dist/mmooc-min.js', 'tmp/rootaccount.js','tmp/subaccount.js'],
+        dest: 'dist/',
         replacements: [
           {
             from: 'https://server',
@@ -151,7 +151,7 @@ module.exports = function (grunt) {
           },
           {
             from: 'https://udirdesigncss',
-            to: 'http://localhost:9000/development/mmooc-min.css'
+            to: 'http://localhost:9000/mmooc-min.css'
           },
           {
             from: 'https://udirdesignjs',
@@ -347,7 +347,7 @@ module.exports = function (grunt) {
 
   grunt.registerTask('build', ['prod_dataporten', 'prod_settings', 'make']);
 
-  grunt.registerTask('rebuildServe', ['clean:dist', 'dev_dataporten', 'dev_settings', 'make']);
+  grunt.registerTask('rebuildServe', ['clean:dist', 'dev_dataporten', 'dev_settings', 'make', 'dev_development']);
 
   grunt.registerTask('serve', ['clean', 'dev_dataporten', 'dev_settings',  'make',  'dev_development','connect:dev', 'watch']);
   

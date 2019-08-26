@@ -42,12 +42,6 @@ this.mmooc.utilRoot = function() {
 
       const search = location.search.substring(1);
       return mmooc.utilRoot.parse_query_string(search);
-/*      
-      return JSON.parse(
-        '{"' + search.replace(/&/g, '","').replace(/=/g, '":"') + '"}',
-        (key, value) => key === "" ? value : decodeURIComponent(value)
-      );
-*/      
     },
     checkReferrer:function(ref) {
        return document.referrer.endsWith(ref);
@@ -55,7 +49,7 @@ this.mmooc.utilRoot = function() {
 
     isEnrollReferrer: function() {
       const permittedReferrers = mmooc.settingsRoot.feideEnrollRefferers;
-      const hasPermittedRefferer = permittedReferrers.some(checkReferrer);
+      const hasPermittedRefferer = permittedReferrers.some(mmooc.utilRoot.checkReferrer);
 
       if( !mmooc.utilRoot.isAuthenticated() && hasPermittedRefferer) {
         return true;
@@ -67,7 +61,7 @@ this.mmooc.utilRoot = function() {
       // If we go from permitted refferer, we redirect to Feide auth
       // when page user is unauthenticated and does not provide `?normalLogin` param
       if(mmooc.utilRoot.isEnrollReferrer()) {
-        if(document.location.search == "?normalLogin=1") {
+        if(document.location.search.includes("normalLogin=1")) {
             $("#content > div > div > div > div > div.ic-Login-header > div.ic-Login-header__links").hide();
         }
         else {

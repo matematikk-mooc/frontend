@@ -38,7 +38,6 @@
     font-family: Roboto;
     font-size: 16px;
     color: @textColor;
-    opacity: 0.5;
     letter-spacing: 0;
     line-height: 24px;
     float: left;
@@ -68,7 +67,6 @@
   &:hover,
   &:focus,
   &:active {
-    color: @white !important;
     text-decoration: none;
 
     span {
@@ -89,9 +87,14 @@
 }
 
 .mmooc-button-primary {
-  background-color: @darkerTealColor;
+  background-color: @darkTealColor;
+  width:100px;
 }
 
 .mmooc-button-secondary {
-  background-color: @darkTealColor;
+  border-color: @darkTealColor;
+  border-style: solid;
+  border-width: 1px;
+  color: @darkTealColor;
+  padding-top: 17px;
 }
