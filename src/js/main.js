@@ -468,7 +468,7 @@ jQuery(function($) {
   );
 
   mmooc.routes.addRouteForPath([/\/pages/], function() {
-    mmooc.pages.showBackLinkIfNecessary();
+//    mmooc.pages.showBackLinkIfNecessary();
     mmooc.util.callWhenElementIsPresent(
       '.sikt-diploma-button',
       mmooc.greeting.enableGreetingButtonIfNecessary

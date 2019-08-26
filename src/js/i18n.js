@@ -14,8 +14,8 @@ if (typeof this.mmooc.i18n === 'undefined') {
       OpenCoursesGroup: 'Åpne',
       CloseCoursesGroup: 'Lukk',
       LogIn: 'Logg inn',
-      LogInPopup: 'Logg inn på kopmetanseportalen',
-      LogInFeide: 'https://server/bitmaps/feidehoristontalwhite.png',
+      LogInPopup: 'Logg inn på kompetanseportalen',
+      LogInFeide: 'https://server/vector_images/Horisontal-hvit_Feide.svg',
       LogInCanvas: 'Har ikke Feide',
       JoinCourseDialogText:
         'Du kan melde deg på kompetansepakken igjen seinare om du vil ',
@@ -106,9 +106,9 @@ if (typeof this.mmooc.i18n === 'undefined') {
       CoursesAmount: amount => `${amount} kompetansepakker`,
       OpenCoursesGroup: 'Åpne',
       CloseCoursesGroup: 'Lukk',
-      LogInPopup: 'Logg inn på kopmetanseportalen',
+      LogInPopup: 'Logg inn på kompetanseportalen',
       LogIn: 'Logg inn',
-      LogInFeide: 'https://server/bitmaps/feidehoristontalwhite.png',
+      LogInFeide: 'https://server/vector_images/Horisontal-hvit_Feide.svg',
       LogInCanvas: 'Har ikke Feide',
       JoinCourseDialogText:
         'Du kan melde deg på kompetansepakken igjen senere om du vil ',

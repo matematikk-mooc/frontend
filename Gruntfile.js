@@ -124,7 +124,7 @@ module.exports = function (grunt) {
 
     replace: {
       production: {
-        src: ['tmp/mmooc-min.css','tmp/mmooc-min.js', 'tmp/rootaccount.js', 'tmp/subaccount.js'],
+        src: ['tmp/mmooc-min.css','dist/mmooc-min.js', 'tmp/rootaccount.js', 'tmp/subaccount.js'],
         dest: 'dist/',
         replacements: [
           {
@@ -333,10 +333,12 @@ module.exports = function (grunt) {
   grunt.registerTask('dev_development', [
     'replace:development',
   ]);
+  grunt.registerTask('prod_production', [
+    'replace:production',
+  ]);
 
   grunt.registerTask('prod_settings', [
     'replace:production_settings',
-    'replace:production',
     'replace:production_badge',
   ]);
 
@@ -345,7 +347,7 @@ module.exports = function (grunt) {
 
   grunt.registerTask('test', ['clean', 'make', 'runTest']);
 
-  grunt.registerTask('build', ['prod_dataporten', 'prod_settings', 'make']);
+  grunt.registerTask('build', ['prod_dataporten', 'prod_settings', 'make', 'prod_production']);
 
   grunt.registerTask('rebuildServe', ['clean:dist', 'dev_dataporten', 'dev_settings', 'make', 'dev_development']);
 
