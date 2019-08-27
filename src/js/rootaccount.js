@@ -38,7 +38,7 @@ jQuery.extend({
 jQuery(function($) {
     if(document.location.pathname == "/login/canvas") {
         if (document.referrer.endsWith("/logout" + mmooc.hrefQueryString)) {
-           window.location.href = '/search/all_courses?design=udir';
+           window.location.href = '/search/all_courses' + mmooc.hrefQueryString;
         } else if(mmooc.utilRoot.redirectFeideAuthIfEnrollReferrer())
         {
             return null;
