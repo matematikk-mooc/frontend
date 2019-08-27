@@ -475,8 +475,9 @@ jQuery(function($) {
     );
   });
 
+  //Change "Gå til dashboard" button.
   mmooc.routes.addRouteForQueryString(/enrolled=1/, function() {
-//    window.location.href = '/courses';
+    $(".ic-Self-enrollment-footer__Primary > a").attr("href", "/courses" + mmooc.hrefQueryString);
   });
 
   /*    mmooc.routes.addRouteForPath(/enroll\/[0-9A-Z]+$/, function() {
