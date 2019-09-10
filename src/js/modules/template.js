@@ -242,23 +242,17 @@ Handlebars.registerHelper('percentageForStudentModules', function(modules) {
   return mmooc.util.percentageProgress(modules, bIncludeIndentedItems);
 });
 
-Handlebars.registerHelper('urlForFirstNoneCompleteItem', function(items) {
-  if (items != null && items != undefined && items.length > 0) {
-    for (var i = 0; i < items.length; i++) {
-      var item = items[i];
-      if (
-        item.completion_requirement &&
-        !item.completion_requirement.completed
-      ) {
-        return item.html_url;
-      }
-    }
 
-    return items[0].html_url;
-  }
-
-  return null;
+Handlebars.registerHelper('urlForFirstNoneCompletePrincipalItem', function(items) {
+  var bIncludeIndentedItems = true;
+  return mmooc.util.firstIncompleteItemHtmlUrl(items, bIncludeIndentedItems);
 });
+
+Handlebars.registerHelper('urlForFirstNoneCompleteItem', function(items) {
+  var bIncludeIndentedItems = false;
+  return mmooc.util.firstIncompleteItemHtmlUrl(items, bIncludeIndentedItems);
+});
+
 
 Handlebars.registerHelper('ifItemTypeDiscussion', function(type, options) {
   if (type == 'Discussion') {

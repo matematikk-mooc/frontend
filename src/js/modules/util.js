@@ -202,6 +202,27 @@ this.mmooc.util = (function() {
     isAuthenticated: function() {
       return mmooc.api.getRoles() !== null;
     },
+
+    firstIncompleteItemHtmlUrl: function(items, bIncludeIndentedItems) {
+      var firstItem = null;
+      if (items != null && items != undefined && items.length > 0) {
+        for (var i = 0; i < items.length; i++) {
+          var item = items[i];
+          if (item.completion_requirement && !(item.indent && !bIncludeIndentedItems)) {
+            if(!firstItem) {
+              firstItem = item;
+            }
+            if (!item.completion_requirement.completed) {
+              console.log("First incomplete item: " + item.html_url);
+              return item.html_url;
+            }
+          }
+        }
+      }
+      console.log("First item: " + item.html_url);
+      return firstItem.html_url;
+    },
+
     percentageProgress: function(modules, bIncludeIndentedItems) {
       var total = 0;
       var completed = 0;
