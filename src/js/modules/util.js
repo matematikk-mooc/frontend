@@ -204,23 +204,28 @@ this.mmooc.util = (function() {
     },
 
     firstIncompleteItemHtmlUrl: function(items, bIncludeIndentedItems) {
+      var firstHtmlUrl = null;
       var firstItem = null;
       if (items != null && items != undefined && items.length > 0) {
         for (var i = 0; i < items.length; i++) {
           var item = items[i];
+          if(!firstHtmlUrl && item.html_url) {
+            firstHtmlUrl = item.html_url;
+          }
           if (item.completion_requirement && !(item.indent && !bIncludeIndentedItems)) {
             if(!firstItem) {
               firstItem = item;
             }
             if (!item.completion_requirement.completed) {
-              console.log("First incomplete item: " + item.html_url);
               return item.html_url;
             }
           }
         }
       }
-      console.log("First item: " + item.html_url);
-      return firstItem.html_url;
+      if(firstItem) {
+        return firstItem.html_url;
+      }
+      return firstHtmlUrl;
     },
 
     percentageProgress: function(modules, bIncludeIndentedItems) {
