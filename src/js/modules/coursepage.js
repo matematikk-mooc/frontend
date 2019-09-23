@@ -123,7 +123,11 @@ this.mmooc.coursePage = (function() {
     },
 
     replaceUpcomingInSidebar: function() {
-      $('body.home .coming_up').replaceWith(
+      var coming_up = $('body.home .coming_up');
+      if (!coming_up.length) {
+        return false;
+      }
+      coming_up.replaceWith(
         "<div class='deadlines-container'>" +
           '<h2>' +
           mmooc.i18n.eventsAndDeadlinesTitle +
@@ -133,6 +137,7 @@ this.mmooc.coursePage = (function() {
           "<div class='deadlines-scroll-down'></div>" +
           '</div>'
       );
+      return true;
     },
     _displayDeadlines: function(allDeadlines) {
       allDeadlines.sort(function(a, b) {

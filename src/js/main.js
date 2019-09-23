@@ -140,9 +140,10 @@ jQuery(function($) {
         }
     }
     mmooc.announcements.printAnnouncementsUnreadCount();
-    mmooc.coursePage.replaceUpcomingInSidebar();
+    if(mmooc.coursePage.replaceUpcomingInSidebar()) {
+      mmooc.coursePage.printDeadlinesForCourse();
+    }
     mmooc.coursePage.overrideUnregisterDialog();
-    mmooc.coursePage.printDeadlinesForCourse();
   });
 
   mmooc.routes.addRouteForPath(/\/search\/all_courses$/, function() {
@@ -445,10 +446,13 @@ jQuery(function($) {
 
         var badgesafeUrl = mmooc.menu.extractBadgesLinkFromPage().url;
 
-        return (
-          extractPluginNumber(badgesafeUrl) ===
-          extractPluginNumber(window.location.pathname)
-        );
+        if(badgesafeUrl) {
+          return (
+            extractPluginNumber(badgesafeUrl) ===
+            extractPluginNumber(window.location.pathname)
+          );
+        }
+        return false;
       }
 
       if (isBadgesafePage()) {

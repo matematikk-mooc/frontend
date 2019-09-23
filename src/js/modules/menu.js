@@ -742,9 +742,16 @@ this.mmooc.menu = (function() {
     },
 
     extractBadgesLinkFromPage: function() {
-      var href = $('li.section:contains("BadgeSafe")')
-        .find('a')
-        .attr('href');
+      var href = null;
+      var a = null;
+      var badgeSafe = $('li.section:contains("BadgeSafe")')
+
+      if(badgeSafe) {
+        a = badgeSafe.find('a');
+      }
+      if(a) {
+        href = a.attr('href');
+      }
       return { title: mmooc.i18n.Badgesafe, url: href };
     },
     setCanvaBadgesLink: function(course, callback) {
