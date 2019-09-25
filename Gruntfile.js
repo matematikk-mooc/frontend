@@ -129,15 +129,15 @@ module.exports = function (grunt) {
         replacements: [
           {
             from: 'https://server',
-            to: 'https://matematikk-mooc.github.io/frontend'
+            to: 'https://kompetanseudirno.azureedge.net/udirdesign'
           },
           {
             from: 'https://udirdesigncss',
-            to: 'https://kompetanseplattform.azurewebsites.net/mmooc-min.css'
+            to: 'https://kompetanseudirno.azureedge.net/udirdesign/mmooc-min.css'
           },
           {
             from: 'https://udirdesignjs',
-            to: 'https://kompetanseplattform.azurewebsites.net/mmooc-min.js'
+            to: 'https://kompetanseudirno.azureedge.net/udirdesign/mmooc-min.js'
           }
         ]
       },

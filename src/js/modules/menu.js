@@ -805,7 +805,7 @@ this.mmooc.menu = (function() {
       $('a.ic-app-header__logomark').attr('href', linkToMyCourses); //New UI
 // 20180122ETH Uncommenting the line below to see if we can specify the logo in the theme editor instead.
 //             In any case the logo should not be hardcoded but taken from the variables file instead.      
-      $('a.ic-app-header__logomark').attr('src', 'https://kompetanse.udir.no/custom/logo/Ny-Udir-Logo-RGB-Neg.png'); //New UI
+      $('a.ic-app-header__logomark').attr('src', 'https://server/Ny-Udir-Logo-RGB-Neg.png'); //New UI
       $('.ic-app-header__logomark-container')
         .detach()
         .prependTo('.ic-app-header__main-navigation');

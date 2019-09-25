@@ -13,8 +13,8 @@ this.mmooc.settings = {
   principalRoleType: "Skoleleder",
   removeGlobalGradesLink: true,
   removeGroupsLink: true,
-  privacyPolicyLink: 'https://kurs-iktsenteret.github.io/privacypolicy.html',
+  privacyPolicyLink: 'https://kompetanseudirno.azureedge.net/udirdesign/privacypolicy.html',
   contactPoint: 'kompetansesupport@udir.no',
-  platformName: 'UNIT - kompetanseplattform'
+  platformName: 'UDIR - kompetanseplattform'
 };
 

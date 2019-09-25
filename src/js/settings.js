@@ -8,13 +8,13 @@ this.mmooc.settings = {
   defaultNumberOfReviews: 1, // Default number of peer reviews per student in power function
   useDataportenGroups : false,
   filterCourses: true,
-  filterCoursesOnAccountId: [4, 5],
+  filterCoursesOnAccountId: [99, 100, 102, 103, 137, 138, 139, 145],
   disablePeerReviewButton: false,
   principalRoleType: "Skoleleder",
   removeGlobalGradesLink: true,
   removeGroupsLink: true,
-  privacyPolicyLink: 'https://kurs-iktsenteret.github.io/privacypolicy.html',
+  privacyPolicyLink: 'https://kompetanseudirno.azureedge.net/udirdesign/privacypolicy.html',
   contactPoint: 'kompetansesupport@udir.no',
-  platformName: 'UNIT - kompetanseplattform'
+  platformName: 'UDIR - kompetanseplattform'
 };
 

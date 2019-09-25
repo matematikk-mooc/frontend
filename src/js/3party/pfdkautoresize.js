@@ -1,5 +1,5 @@
-window.addEventListener('message', receiveMessage, false);
 
+window.addEventListener('message', receiveMessage, false);
 function receiveMessage(evt) {
   return; //Unused code?  
   obj = JSON.parse(evt.data);

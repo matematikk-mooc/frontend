@@ -84,7 +84,7 @@ this.mmooc.coursesettings = (function() {
     $('#' + tableId).append(
       "<tr id='" +
         getWaitIconRowId(tableId) +
-        "'>td><img src='https://matematikk-mooc.github.io/frontend/bitmaps/loading.gif'/>"
+        "'>td><img src='https://server/bitmaps/loading.gif'/>"
     );
   }
   function clearWaitIcon(tableId) {
