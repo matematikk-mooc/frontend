@@ -6,25 +6,19 @@
       <button id="mmooc-all-courses-btn" class="btn">Til mine kompetansepakker</button>
     {{/if}}
     </div>
-    <p>
     Her finner du en oversikt over alle tilgjengelige kompetansepakker som du kan melde deg på. 
     {{#if isAuthenticated}}
       Tjenesten er gratis og du kan logge på med Feide eller opprette en egen bruker. 
     {{else}}
     {{/if}}    
-        </p>
     <!--If the amount of courses is large, the filter select box and corresponding javascript code in enroll.js should be enabled
     <select id='filter'></select>
     -->
-    <br>
-<!--    <h3>Alle tilgjengelige {{courseLabel}}</h3>-->
-    <h3>&nbsp;</h3>
-
-    <div class="mmooc-all-courses-list"></div>
     <div class="pfdk-info">
     Den 1. oktober flyttet vi kompetansepakkene våre til en ny teknisk løsning.
     Dersom du har innhold på den utgåtte løsningen som du trenger tilgang til, kan du logge deg på her: 
     <a href="https://utgaatt.kompetanse.udir.no">utgaatt.kompetanse.udir.no</a>
-    
     </div>
+<!--    <h3>Alle tilgjengelige {{courseLabel}}</h3>-->
+    <div class="mmooc-all-courses-list"></div>
 </div>
