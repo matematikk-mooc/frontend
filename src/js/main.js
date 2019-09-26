@@ -519,8 +519,6 @@ jQuery(function($) {
     mmooc.pages.updateSidebarWhenContributedToDiscussion();
 //    mmooc.menu.alterHomeLink();
     mmooc.menu.alterCourseLink();
-
-    mmooc.footer.addLicenseInFooter();
   } catch (e) {
     console.log(e);
   }

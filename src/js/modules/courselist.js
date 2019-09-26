@@ -23,10 +23,13 @@ this.mmooc.courseList = (() => {
               queryString: mmooc.hrefQueryString
             });
             $(`#${parentId}`).html(html);
+            /*
             const sortedCourses = mmooc.util.arraySorted(
               courses,
               'course_code'
             );
+            */
+            const sortedCourses = mmooc.util.sortCourses(courses);
             const categorys = mmooc.util.getCourseCategories(sortedCourses);
             const coursesCategorized = mmooc.util.getCoursesCategorized(
               sortedCourses,

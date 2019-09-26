@@ -136,7 +136,8 @@ this.mmooc.enroll = (function() {
             enrolledCourses
           );
 
-          var categorys = mmooc.util.getCourseCategories(allCoursesWithStatus);
+          allCoursesWithStatusSorted = mmooc.util.sortCourses(allCoursesWithStatus);
+          var categorys = mmooc.util.getCourseCategories(allCoursesWithStatusSorted);
 
           /* If the amount of courses is large, the filter select box and corresponding javascript code in allcoursescontainer.hbs should be enabled 
 
@@ -149,7 +150,7 @@ this.mmooc.enroll = (function() {
           */
 
           var coursesCategorized = mmooc.util.getCoursesCategorized(
-            allCoursesWithStatus,
+            allCoursesWithStatusSorted,
             categorys
           );
 

@@ -196,6 +196,12 @@ this.mmooc.util = (function() {
       }
       return false;
     },
+    isMMOOCLicense() {
+      if(mmooc.util.course && mmooc.util.course.course_code.indexOf('::MMOOCLICENSE::') > -1) {
+        return true;
+      }
+      return false;
+    },
     isActiveCourseRoleBased() {
       return mmooc.util.isRoleBasedCourse(mmooc.util.course);
     },
@@ -328,11 +334,22 @@ this.mmooc.util = (function() {
           }
         }
       }
-      categorys.sort();
+//      categorys.sort();
       if (hasOther) {
         categorys.push('Andre');
       }
       return categorys;
+    },
+    sortCourses: function(courses) {
+      return courses.sort(function(a,b) {
+        var aParams = a.course_code.split("::");
+        var aCourseCode = aParams[aParams.length-1];
+
+        var bParams = b.course_code.split("::");
+        var bCourseCode = bParams[aParams.length-1];
+
+        return aCourseCode < bCourseCode ? -1 : 1;
+      });
     },
     getCoursesCategorized: function(courses, categorys) {
       var coursesCategorized = [];
@@ -344,9 +361,10 @@ this.mmooc.util = (function() {
             categoryCourses.push(courses[j]);
           }
         }
-        categoryCourses.sort(function(a, b) {
+/*        categoryCourses.sort(function(a, b) {
           return a.course_code > b.course_code;
         });
+*/        
         var categoryObj = {
           title: categorys[i],
           courses: categoryCourses

@@ -46,6 +46,10 @@ this.mmooc.coursePage = (function() {
             course: mmooc.util.course
           });
         }
+        if(mmooc.util.isMMOOCLicense()) {
+          mmooc.footer.addLicenseInFooter();
+        }
+
         document
           .getElementById('course_home_content')
           .insertAdjacentHTML('beforebegin', progressHTML);
