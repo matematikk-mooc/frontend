@@ -35,14 +35,20 @@ this.mmooc.menu = (function() {
       {
         groupsUrl = '/courses/' + courseId + '?dataportengroups=1'
       }
-      menuItems[menuItems.length] = {
-        title: 'Grupper',
-        url: groupsUrl
-      };
-      menuItems[menuItems.length] = {
-        title: 'Diskusjoner',
-        url: '/courses/' + courseId + '/discussion_topics'
-      };
+      if(mmooc.settings.displayGroupsTab)
+      {
+        menuItems[menuItems.length] = {
+          title: 'Grupper',
+          url: groupsUrl
+        };
+      }
+      if(mmooc.settings.displayDiscussionsTab)
+      {
+        menuItems[menuItems.length] = {
+          title: 'Diskusjoner',
+          url: '/courses/' + courseId + '/discussion_topics'
+        };
+      }
 
       //SelectedMenuItem contains the path if we are called by the external path route.
       var tools = mmooc.util.getToolsInLeftMenu(selectedMenuItem);
