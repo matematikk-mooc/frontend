@@ -13,7 +13,9 @@ this.mmooc.settings = {
   principalRoleType: "Skoleleder",
   removeGlobalGradesLink: true,
   removeGroupsLink: true,
-  privacyPolicyLink: 'https://kompetanseudirno.azureedge.net/udirdesign/privacypolicy.html',
+  displayGroupsTab: false,
+  displayDiscussionsTab : false,
+privacyPolicyLink: 'https://kompetanseudirno.azureedge.net/udirdesign/privacypolicy.html',
   contactPoint: 'kompetansesupport@udir.no',
   platformName: 'UDIR - kompetanseplattform'
 };

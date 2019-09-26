@@ -348,15 +348,13 @@ jQuery(function($) {
         //he is apparantly not a member of a group. 
         var courseId = mmooc.api.getCurrentCourseId();
         mmooc.util.isStudentInCourse(courseId, function() {
-            console.log("asdf")
             var courseId = mmooc.api.getCurrentCourseId();
             var contentId = mmooc.api.getCurrentTypeAndContentId().contentId;
             mmooc.api.isGroupDiscussion(courseId, contentId, function(result) {
                 if(result) {
                     $("#content").html('<div class="uob-warning"> \
                     Dette er en gruppediskusjon men du er ikke medlem i noen gruppe og kan derfor ikke delta.\
-                     Gå til ' + mmooc.i18n.Course + 'forsiden og velg Grupper for å se hvilke grupper \
-                     du kan melde deg inn i.</div>');
+                     Gå til ' + mmooc.i18n.Course + 'forsiden og velg rolle-/gruppeverktøyet for å melde deg inn i grupper.</div>');
                 }
             });        
         });
@@ -405,10 +403,6 @@ jQuery(function($) {
       mmooc.menu.listModuleItems();
       mmooc.pages.modifyMarkAsDoneButton();
       mmooc.pages.duplicateMarkedAsDoneButton();
-      mmooc.util.callWhenElementIsPresent(
-        '.sikt-diploma-button',
-        mmooc.greeting.enableGreetingButtonIfNecessary
-      );
       //20180911ETH showDiscussionGroupMenu is handled by group discussion path above.
       //        mmooc.menu.showDiscussionGroupMenu();
       mmooc.groups.moveSequenceLinks();
@@ -477,6 +471,9 @@ jQuery(function($) {
       '.sikt-diploma-button',
       mmooc.greeting.enableGreetingButtonIfNecessary
     );
+    mmooc.util.callWhenElementIsPresent(
+      ".new-sikt-diploma-button", 
+      mmooc.greeting.enableNewGreetingButtonIfNecessary);
   });
 
   //Change "Gå til dashboard" button.
