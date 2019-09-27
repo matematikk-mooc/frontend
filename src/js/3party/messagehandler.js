@@ -18,7 +18,8 @@ $(document).ready(function() {
             } else if(message.subject == "kpas-lti.3pcookiesupported") {
                 console.log("Din nettleser støtter cookies fra tredjeparter, noe som trengs for å bruke KPAS");
             } else if(message.subject == "kpas-lti.3pcookienotsupported") {
-                var kpasCheckElement = $("#kpas-lti-cookie-check").html("En automatisk sjekk har funnet at \
+                var kpasCheckElement = $("#kpas-lti-cookie-check");
+                kpasCheckElement.html("En automatisk sjekk har funnet at \
                 du har slått av informasjonskapsler fra tredjepartsnettsteder. \
                 Du vil ikke kunne velge hvilken rolle eller hvilke grupper du skal delta i.\
                 <p>Kontakt din IT-avdeling eller les om hvordan du\
