@@ -15,9 +15,20 @@ $(document).ready(function() {
                     var sendMsg = JSON.stringify(usergroupsmsg);
                     e.source.postMessage(sendMsg, e.origin);
                 }, error);
+            } else if(message.subject == "kpas-lti.3pcookiesupported") {
+                console.log("Din nettleser støtter cookies fra tredjeparter, noe som trengs for å bruke KPAS");
+            } else if(message.subject == "kpas-lti.3pcookienotsupported") {
+                var kpasCheckElement = $("#kpas-lti-cookie-check").html("En automatisk sjekk har funnet at \
+                du har slått av informasjonskapsler fra tredjepartsnettsteder. \
+                Du vil ikke kunne velge hvilken rolle eller hvilke grupper du skal delta i.\
+                <p>Kontakt din IT-avdeling eller les om hvordan du\
+                 <a class='alert-link' target='_blank' href='https://nettvett.no/slik-administrer-du-informasjonskapsler/'>\
+                aktiverer informasjonskapsler fra tredjeparter.</a>");
+                kpasCheckElement.show();
+                console.error("Din nettleser støtter IKKE cookies fra tredjeparter. Rolle og gruppeverktøyet krever cookies fra tredjepart.");
             }
         } catch(err) {
-            (console.error || console.log).call(console, 'Error handling message in parent:' + err);
+            console.log.call(console, 'Error handeling message in parent:' + err);
         }
     }, false);
     try {
@@ -32,6 +43,6 @@ $(document).ready(function() {
             }
         });
     } catch(err) {
-        (console.error || console.log).call(console, 'No LTI tool active.' + err);
+        console.log.call(console, 'No LTI tool active.' + err);
     }
 });
