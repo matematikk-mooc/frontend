@@ -6,10 +6,11 @@
       <button id="mmooc-all-courses-btn" class="btn">Til mine kompetansepakker</button>
     {{/if}}
     </div>
-    Her finner du en oversikt over alle tilgjengelige kompetansepakker som du kan melde deg på. 
     {{#if isAuthenticated}}
-      Tjenesten er gratis og du kan logge på med Feide eller opprette en egen bruker. 
+      Her finner du en oversikt over alle tilgjengelige kompetansepakker som du kan melde deg på. 
     {{else}}
+      Tjenesten er laget for ansatte i skole og barnehage. Den er gratis og du kan logge på med Feide eller 
+      opprette en egen bruker. 
     {{/if}}    
     <!--If the amount of courses is large, the filter select box and corresponding javascript code in enroll.js should be enabled
     <select id='filter'></select>

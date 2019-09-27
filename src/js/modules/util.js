@@ -343,10 +343,17 @@ this.mmooc.util = (function() {
     sortCourses: function(courses) {
       return courses.sort(function(a,b) {
         var aParams = a.course_code.split("::");
+        if(aParams.length < 2) {
+          return 1;
+        }
+
         var aCourseCode = aParams[aParams.length-1];
 
         var bParams = b.course_code.split("::");
-        var bCourseCode = bParams[aParams.length-1];
+        if(bParams.length < 2) {
+          return -1;
+        }
+        var bCourseCode = bParams[bParams.length-1];
 
         return aCourseCode < bCourseCode ? -1 : 1;
       });
