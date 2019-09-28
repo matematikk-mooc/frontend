@@ -1,0 +1,20 @@
+<footer role="contentinfo" id="mmooc-footer" class="ic-app-footer">
+    <div class="mmooc-license">
+        <p id="mmoocLicense" class="public-license-text"></p>
+        <p class="public-license-text">
+            {{#if homeOrganization}}
+             <a  target="_blank" class="external_link"  href="https://{{homeOrganization}}">{{homeOrganization}}</a>
+            {{/if}} 
+            {{#if privacyPolicyLink}}
+            | <a  target="_blank" class="external_link" href="{{privacyPolicyLink}}">Personvernvilkår</a>
+            {{/if}} 
+            {{#if contactPoint}}
+             | Kontakt oss: <a  target="_blank" class="external_link"  href="mailto:{{contactPoint}}">{{contactPoint}}</a>
+            {{/if}} 
+            {{#if about}}
+             | <a  target="_blank" class="external_link"  href="{{about}}">Om denne plattformen</a>
+            {{/if}} 
+            </div>
+        </p>
+    </div>
+</footer>

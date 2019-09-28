@@ -489,6 +489,7 @@ jQuery(function($) {
     });
 */
   try {
+    mmooc.footer.changeFooter();
     mmooc.menu.renderLeftHeaderMenu();
     mmooc.menu.showUserMenu();
     mmooc.menu.renderUnauthenticatedMenu();

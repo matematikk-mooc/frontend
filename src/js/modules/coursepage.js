@@ -48,9 +48,8 @@ this.mmooc.coursePage = (function() {
         }
         var mmoocLicense = false;
         if(mmooc.util.isMMOOCLicense()) {
-          mmoocLicense = true;
+          mmooc.footer.addLicenseInFooter();
         }
-        mmooc.footer.addLicenseInFooter(mmoocLicense);
 
         document
           .getElementById('course_home_content')
