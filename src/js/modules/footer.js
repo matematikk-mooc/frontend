@@ -2,7 +2,7 @@ this.mmooc = this.mmooc || {};
 
 this.mmooc.footer = (function() {
   return {
-    addLicenseInFooter: function() {
+    addLicenseInFooter: function(mmoocLicense) {
       //Previous existing footer is hidden by css ('footer#footer')and is also removed in New UI after March 2016 because of a bug fix.
       var $publicLicense = $('#content .public-license'); //License that is displayed on the course front page
       var $parentElementOfOldFooter = $('#application.ic-app #wrapper');
@@ -11,9 +11,9 @@ this.mmooc.footer = (function() {
       var displayPrivateLicence = false; 
   
       var onCoursePage = /\/courses\/\d+/;
-      displayPrivateLicense = (onCoursePage.test(relativeUrl) && ($publicLicense.length == 0));
+      displayPrivateLicense = (onCoursePage.test(relativeUrl) && ($publicLicense.length == 0) && mmoocLicense);
 
-      var html = mmooc.util.renderTemplateWithData('footer-license', {privateLicense: displayPrivateLicense, privacyPolicyLink: mmooc.settings.privacyPolicyLink, contactPoint: mmooc.settings.contactPoint});
+      var html = mmooc.util.renderTemplateWithData('footer-license', {privateLicense: displayPrivateLicense, privacyPolicyLink: mmooc.settings.privacyPolicyLink, contactPoint: mmooc.settings.contactPoint, about: mmooc.settings.aboutThePlatform});
       $parentElementOfOldFooter.append(html);
     }
   };

@@ -17,6 +17,7 @@ this.mmooc.settings = {
   displayDiscussionsTab : false,
 privacyPolicyLink: 'https://kompetanseudirno.azureedge.net/udirdesign/privacypolicy.html',
   contactPoint: 'kompetansesupport@udir.no',
-  platformName: 'UDIR - kompetanseplattform'
+  platformName: 'UDIR - kompetanseplattform',
+  aboutThePlatform: 'https://kompetanseudirno.azureedge.net/udirdesign/omkompetanseudirno.html'
 };
 
