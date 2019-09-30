@@ -496,6 +496,17 @@ jQuery(function($) {
     mmooc.menu.setMenuActiveLink();
     mmooc.menu.showHamburger();
     mmooc.menu.showMobileMenu();
+
+    if ($("#kpas-lti-info").length) {
+      const error = error => console.error('error calling api', error);
+      mmooc.api.getUserGroups(function(groups) {
+        if(groups.length) {
+          $("#kpas-lti-info").html("Du har registrert rolle og grupper. Flott!");
+          $("#kpas-lti-info").show();
+          $("#kpas-lti-warning").hide();
+        }  
+      }, error);
+    }
   } catch (e) {
     console.log(e);
   }

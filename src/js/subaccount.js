@@ -45,7 +45,8 @@ jQuery(document).ready(function($) {
       return null;
     }
 
-    if (this.udirDesignLoaded === undefined) {
+    if (window.udirDesignLoaded == undefined && this.udirDesignLoaded === undefined) {
+        window.udirDesignLoaded = true;
         this.udirDesignLoaded = true;
         console.log("Subaccount: loading design.");
         $.getScript('https://udirdesignjs');
