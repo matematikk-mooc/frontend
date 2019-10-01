@@ -38,6 +38,8 @@ jQuery(function($) {
         mmooc.util.course = course;
         if (mmooc.util.isAuthenticated() && mmooc.util.isObserver(course)) {
           mmooc.pages.showObserverInformationPane();
+        } else if(mmooc.util.isBlendedCourse(course)) {
+          mmooc.pages.showBlendedCourseInformationPane();
         }
       },
       function(error) {

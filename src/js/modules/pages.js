@@ -176,7 +176,13 @@ this.mmooc.pages = (function() {
     // changeTranslations : function() {
     //     $("a.submit_assignment_link").text('Lever besvarelse');
     // },
-
+    showBlendedCourseInformationPane: function() {
+      var paneHTML = mmooc.util.renderTemplateWithData('blendedcourse', {});
+      document
+        .getElementById('wrapper')
+        .insertAdjacentHTML('afterend', paneHTML);
+    },
+    
     showBackLinkIfNecessary: function() {
       if ($('#left-side').is(':hidden')) {
         var linkBack = mmooc.util.renderTemplateWithData(

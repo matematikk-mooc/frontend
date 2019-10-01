@@ -187,6 +187,9 @@ this.mmooc.util = (function() {
       }
       return false;
     },
+    isBlendedCourse: function(course) {
+        return(course && (course.course_format == "blended"));
+    },
     isPrincipal() {
       return (this.isTeacherOrAdmin() || this.isEnrolledWithRole(mmooc.util.course, mmooc.settings.principalRoleType));
     },
