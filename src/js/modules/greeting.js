@@ -115,8 +115,9 @@ mmooc.greeting = (function() {
             $.ajax({
               url: scriptUrl,
               data: values,
-                            type: "POST",
-                            dataType: "json",
+              type: "POST",
+              contentType: "application/javascript",
+              dataType: 'jsonp',
               beforeSend: function () {
                 console.log("Loading");
               },
