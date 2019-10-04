@@ -34,6 +34,10 @@ mmooc.greeting = (function() {
       var $formIdDiv = $content.find('.sikt-diploma-formId');
       var $nameEntryIdDiv = $content.find('.sikt-diploma-nameEntryId');
       var $emailEntryIdDiv = $content.find('.sikt-diploma-emailEntryId');
+      if ($diplomaButton.length) {
+        $diplomaButton.replaceWith("<div class='uob-warning'>Vi har dessverre problemer med diplommekanismen. Vi jobber med saken.</div>");
+        return;
+      }
 
       if (
         $diplomaButton.length &&
@@ -97,7 +101,14 @@ mmooc.greeting = (function() {
       var $newDiplomaButton = $content.find(".new-sikt-diploma-button");
       var $scriptUrlDiv = $content.find(".new-sikt-diploma-scriptId");
 
+/*      if ($newDiplomaButton.length) {
+        $newDiplomaButton.replaceWith("<div class='uob-warning'>Vi har dessverre problemer med diplommekanismen. Vi jobber med saken.</div>");
+        return;
+      }
+*/      
+
       if ($newDiplomaButton.length && $scriptUrlDiv.length) {
+
         $('body').on('click', '.new-sikt-diploma-button', function () {
           if ($newDiplomaButton.hasClass('btn-done')) {
               return;
@@ -108,19 +119,14 @@ mmooc.greeting = (function() {
           var scriptUrl = $scriptUrlDiv.text();
 
           mmooc.api.getUserProfile(function (profile) {
-              var values = {};
-              values["Navn"] = profile.name;
-              values["Epost"] = profile.primary_email;
-
-            $.ajax({
-              url: scriptUrl,
-              data: values,
-              type: "POST",
-              contentType: "application/javascript",
-              dataType: 'jsonp',
-              beforeSend: function () {
-                console.log("Loading");
-              },
+              var scriptUrlWithParameter = scriptUrl + "?" + "Navn=" + encodeURIComponent(profile.name)+ "&Epost=" + encodeURIComponent(profile.primary_email);
+              $.ajax({
+                url: scriptUrlWithParameter,
+                method: "GET",
+                dataType: 'jsonp',
+                beforeSend: function () {
+                  console.log("Loading");
+                },
 
               error: function (jqXHR, textStatus, errorThrown) {
                 console.log(jqXHR);

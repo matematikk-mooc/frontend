@@ -774,6 +774,7 @@ this.mmooc.menu = (function() {
         '.json';
       $.ajax({
         type: 'GET',
+        crossDomain: true,
         dataType: 'jsonp',
         url: urlToCanvaBadgesApi,
         timeout: 5000,
