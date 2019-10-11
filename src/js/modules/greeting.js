@@ -34,18 +34,19 @@ mmooc.greeting = (function() {
       var $formIdDiv = $content.find('.sikt-diploma-formId');
       var $nameEntryIdDiv = $content.find('.sikt-diploma-nameEntryId');
       var $emailEntryIdDiv = $content.find('.sikt-diploma-emailEntryId');
+/*
       if ($diplomaButton.length) {
         $diplomaButton.replaceWith("<div class='uob-warning'>Vi har dessverre problemer med diplommekanismen. Vi jobber med saken.</div>");
         return;
       }
-
+*/
       if (
         $diplomaButton.length &&
         $formIdDiv.length &&
         $nameEntryIdDiv.length &&
         $emailEntryIdDiv.length
       ) {
-        $diplomaButton.button().click(function() {
+          $('body').on('click', '.sikt-diploma-button', function () {
           if ($diplomaButton.hasClass('btn-done')) {
             return;
           }
@@ -119,14 +120,18 @@ mmooc.greeting = (function() {
           var scriptUrl = $scriptUrlDiv.text();
 
           mmooc.api.getUserProfile(function (profile) {
-              var scriptUrlWithParameter = scriptUrl + "?" + "Navn=" + encodeURIComponent(profile.name)+ "&Epost=" + encodeURIComponent(profile.primary_email);
-              $.ajax({
-                url: scriptUrlWithParameter,
-                method: "GET",
-                dataType: 'jsonp',
-                beforeSend: function () {
-                  console.log("Loading");
-                },
+            var values = {};
+            values["Navn"] = profile.name;
+            values["Epost"] = profile.primary_email;
+
+            $.ajax({
+              url: scriptUrl,
+              data: values,
+                            type: "POST",
+                            dataType: "json",
+              beforeSend: function () {
+                console.log("Loading");
+              },
 
               error: function (jqXHR, textStatus, errorThrown) {
                 console.log(jqXHR);

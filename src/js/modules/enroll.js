@@ -181,7 +181,6 @@ this.mmooc.enroll = (function() {
               courseLabel: mmooc.i18n.Course.toLowerCase(),
               goToCourse: mmooc.i18n.GoToCourse,
               courseRegister: courseRegisterText,
-              courseRegisterFeide: mmooc.i18n.CourseRegisterFeide,
               openCoursesGroupText: mmooc.i18n.OpenCoursesGroup,
               closeCoursesGroupText: mmooc.i18n.CloseCoursesGroup,
               YouAreRegisteredToXCoursesText: mmooc.i18n.YouAreRegisteredToXCourses(coursesEnrolledAmount),

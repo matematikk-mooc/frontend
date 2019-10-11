@@ -7,7 +7,6 @@ this.mmooc.login = (() => {
         if(!$('.login-box').length) {
           let html = mmooc.util.renderTemplateWithData('loginPopup', {
             logInText: mmooc.i18n.LogInPopup,
-            logInFeideText: mmooc.i18n.LogInFeide,
             logInCanvasText: mmooc.i18n.LogInCanvas,
           });
             document.getElementById('wrapper').insertAdjacentHTML('afterend', html);
