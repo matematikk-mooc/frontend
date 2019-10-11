@@ -492,7 +492,11 @@ jQuery(function($) {
 
   //Change "Gå til dashboard" button.
   mmooc.routes.addRouteForQueryString(/enrolled=1/, function() {
-    $(".ic-Self-enrollment-footer__Primary > a").attr("href", "/courses" + mmooc.hrefQueryString);
+    $(".ic-Self-enrollment-footer__Primary > a").each(function() {
+      var $this = $(this);       
+      var _href = $this.attr("href"); 
+      $this.attr("href", _href + mmooc.hrefQueryString);
+   });
   });
 
   /*    mmooc.routes.addRouteForPath(/enroll\/[0-9A-Z]+$/, function() {
