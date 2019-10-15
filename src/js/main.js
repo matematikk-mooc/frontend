@@ -350,7 +350,9 @@ jQuery(function($) {
       //he is apparantly not a member of a group. 
       var courseId = mmooc.api.getCurrentCourseId();
 
-      if(!mmooc.util.isTeacherOrAdmin()) {
+      mmooc.util.hasRoleInCourse(courseId, "TeacherEnrollment", function(isTeacher) {
+        if(!isTeacher) {
+          var courseId = mmooc.api.getCurrentCourseId();
           var contentId = mmooc.api.getCurrentTypeAndContentId().contentId;
           mmooc.api.isGroupDiscussion(courseId, contentId, function(result) {
             if(result) {
@@ -359,7 +361,8 @@ jQuery(function($) {
                   Gå tilbake til forsiden og velg fanen "Rolle og grupper".</div>');
             }
           });        
-      }
+        }
+      });
 
       if (!mmooc.util.isTeacherOrAdmin()) {
         mmooc.menu.hideRightMenu();

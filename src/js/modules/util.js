@@ -151,19 +151,22 @@ this.mmooc.util = (function() {
       }
       return false;
     },
-    isStudentInCourse : function(courseId, callback) {
-        return function(callback) {
-            mmooc.api.getUsersEnrollmentsForCourse(courseId, function(enrollments) {
-                for(i = 0; i < enrollments.length; i++) {
-                    let enrollment = enrollments[i];
-                    if(enrollment["role"] == "StudentEnrollment")
-                    {
-                        callback();
-                        break;
-                    }
-                }
-            });
-        }(callback)
+    enrollmentsHasRoleInCourse : function(enrollments, role) {
+      for(i = 0; i < enrollments.length; i++) {
+        let enrollment = enrollments[i];
+        if(enrollment["role"] == role)
+        {
+            return true;
+        }
+      }
+      return false;
+    },
+    hasRoleInCourse : function(courseId, role, callback) {
+      return function(callback, role) {
+          mmooc.api.getUsersEnrollmentsForCourse(courseId, function(enrollments) {
+            callback(mmooc.util.enrollmentsHasRoleInCourse(enrollments, role));
+          });
+      }(callback, role)
     },
     isTeacherOrAdmin: function() {
       var roles = mmooc.api.getRoles();
