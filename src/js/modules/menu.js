@@ -738,7 +738,9 @@ this.mmooc.menu = (function() {
           // For discussion pages we only want the title to be "<discussion>" instead of "Discussion: <discussion>"
           var title = mmooc.util.getPageTitleAfterColon();
           mmooc.menu.showCourseMenu(group.course_id, 'Grupper', title, true); //Group menu in tabs including title - Use optional fourth parameter for hiding tabs
-          _addGetHelpFromteacherButton(group);
+          if(mmooc.settings.displayCallForAssistanceButtonInGroupDisccussions) {
+            _addGetHelpFromteacherButton(group);
+          }
         });
       }
     },
