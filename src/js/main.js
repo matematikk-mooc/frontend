@@ -31,24 +31,14 @@ jQuery(function($) {
 
   //This course path should be called before the other course paths such that the course object is available to them.
   mmooc.routes.addRouteForPath(/\/courses\/\d+/, function() {
-    var courseId = mmooc.api.getCurrentCourseId();
-    mmooc.api.getCourse(
-      courseId,
-      function(course) {
-        mmooc.util.course = course;
-        if (mmooc.util.isAuthenticated() && mmooc.util.isObserver(course)) {
-          mmooc.pages.showObserverInformationPane();
-        } else if(mmooc.util.isBlendedCourse(course)) {
-          mmooc.pages.showBlendedCourseInformationPane();
-        }
-      },
-      function(error) {
-        console.error(
-          'error calling mmooc.api.getCourse(' + courseId + ')',
-          error
-        );
-      }
-    );
+    course = mmooc.util.course;
+    if (mmooc.util.isAuthenticated() && mmooc.util.isObserver(course)) {
+      mmooc.pages.showObserverInformationPane();
+    } else if(mmooc.util.isBlendedCourse(course)) {
+      mmooc.pages.showBlendedCourseInformationPane();
+    } else if(mmooc.util.isUnmaintained(course)) {
+      mmooc.pages.showUnmaintainedCourseInformationPane();
+    }
   });
   
   //The logic below should be refactored and cleaned up.
@@ -519,11 +509,36 @@ jQuery(function($) {
     console.log(e);
   }
 
+  //Try to get course information and store it such that routes can use it. 
+  //Otherwise just handle the route.
   try {
-    mmooc.routes.performHandlerForUrl(document.location);
+    if(mmooc.util.isAuthenticated()) {
+      var courseId = mmooc.api.getCurrentCourseId();
+      if(courseId) {
+        mmooc.api.getCourse(
+          courseId,
+          function(course) {
+            mmooc.util.course = course;
+            mmooc.routes.performHandlerForUrl(document.location);
+          },
+          function(error) {
+            console.error(
+              'error calling mmooc.api.getCourse(' + courseId + ')',
+              error
+            );
+          }
+        );
+      } else {
+        mmooc.routes.performHandlerForUrl(document.location);
+      }
+    } else {
+      mmooc.routes.performHandlerForUrl(document.location);
+    }
   } catch (e) {
     console.log(e);
   }
+
+
 
   try {
     mmooc.nrk.init();

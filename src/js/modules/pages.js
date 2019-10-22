@@ -182,6 +182,12 @@ this.mmooc.pages = (function() {
         .getElementById('wrapper')
         .insertAdjacentHTML('afterend', paneHTML);
     },
+    showUnmaintainedCourseInformationPane: function() {
+      var paneHTML = mmooc.util.renderTemplateWithData('unmaintainedcourse', {});
+      document
+        .getElementById('wrapper')
+        .insertAdjacentHTML('afterend', paneHTML);
+    },
     
     showBackLinkIfNecessary: function() {
       if ($('#left-side').is(':hidden')) {

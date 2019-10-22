@@ -208,6 +208,12 @@ this.mmooc.util = (function() {
       }
       return false;
     },
+    isUnmaintained() {
+      if(mmooc.util.course && mmooc.util.course.course_code.indexOf('::UNMAINTAINED::') > -1) {
+        return true;
+      }
+      return false;
+    },
     isActiveCourseRoleBased() {
       return mmooc.util.isRoleBasedCourse(mmooc.util.course);
     },
