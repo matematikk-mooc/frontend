@@ -167,28 +167,13 @@ this.mmooc.pages = (function() {
       }, 100);
     },
 
-    showObserverInformationPane: function() {
-      var paneHTML = mmooc.util.renderTemplateWithData('observer', {});
+    showInformationPane: function(observer, pfdk, unmaintainedSince) {
+      var paneHTML = mmooc.util.renderTemplateWithData('informationpane', {observer:observer, pfdk:pfdk, unmaintainedSince:unmaintainedSince});
       document
         .getElementById('wrapper')
         .insertAdjacentHTML('afterend', paneHTML);
     },
-    // changeTranslations : function() {
-    //     $("a.submit_assignment_link").text('Lever besvarelse');
-    // },
-    showBlendedCourseInformationPane: function() {
-      var paneHTML = mmooc.util.renderTemplateWithData('blendedcourse', {});
-      document
-        .getElementById('wrapper')
-        .insertAdjacentHTML('afterend', paneHTML);
-    },
-    showUnmaintainedCourseInformationPane: function() {
-      var paneHTML = mmooc.util.renderTemplateWithData('unmaintainedcourse', {});
-      document
-        .getElementById('wrapper')
-        .insertAdjacentHTML('afterend', paneHTML);
-    },
-    
+
     showBackLinkIfNecessary: function() {
       if ($('#left-side').is(':hidden')) {
         var linkBack = mmooc.util.renderTemplateWithData(

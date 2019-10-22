@@ -3,15 +3,25 @@
       <div class="ic-alert-masquerade-student-view-module ic-alert-masquerade-student-view-module--header">
         <div class="ic-image-text-combo">
           <i class="icon-student-view"></i>
-          <div class="ic-image-text-combo__text">
+           <div class="ic-image-text-combo__text">
+           {{#if observer}}
+Du er inne i dette emnet som observatør. Du vil ikke kunne levere inn oppgaver, bidra i diskusjoner eller se hva andre har bidratt med.
+           <br/>
+           {{/if}} 
+           {{#if pfdk}}
 PfDK-MOOC er opprinnelig en lukket videreutdanning for lærere. Dette er den åpne versjonen. Du ser alt det faglige innhold, men kan ikke levere oppgaver, diskutere i forum eller få veiledning.
 Ønsker du mer informasjon om videreutdanningen, se 
         <a class="icon-link" style="color:white" href="https://www.hvl.no/studier/studieprogram/pfdk/" target="_blank">hvl.no</a>
         eller 
         <a class="icon-link" style="color:white" href="(https://www.usn.no/studier/finn-studier/larer-lektor-og-pedagogikk/videreutdanning-i-profesjonsfaglig-digital-kompetanse-for-larere/"
         target="_blank">usn.no</a>
+           <br/>
+           {{/if}} 
+           {{#if unmaintainedSince}}
+NB! Denne kompetansepakken ble sist vedlikeholdt {{unmaintainedSince}}
+           {{/if}} 
+           </div>
           </div>
-        </div>
       </div>
     </div>
 </div>

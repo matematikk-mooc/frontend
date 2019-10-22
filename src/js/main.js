@@ -32,13 +32,10 @@ jQuery(function($) {
   //This course path should be called before the other course paths such that the course object is available to them.
   mmooc.routes.addRouteForPath(/\/courses\/\d+/, function() {
     course = mmooc.util.course;
-    if (mmooc.util.isAuthenticated() && mmooc.util.isObserver(course)) {
-      mmooc.pages.showObserverInformationPane();
-    } else if(mmooc.util.isBlendedCourse(course)) {
-      mmooc.pages.showBlendedCourseInformationPane();
-    } else if(mmooc.util.isUnmaintained(course)) {
-      mmooc.pages.showUnmaintainedCourseInformationPane();
-    }
+    var observer = (mmooc.util.isAuthenticated() && mmooc.util.isObserver(course));
+    var pfdk = mmooc.util.isPfDKCourse(course);
+    var unmaintainedSince = mmooc.util.isUnmaintained(course);
+    mmooc.pages.showInformationPane(observer, pfdk, unmaintainedSince);
   });
   
   //The logic below should be refactored and cleaned up.

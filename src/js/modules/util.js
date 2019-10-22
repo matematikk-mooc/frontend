@@ -190,8 +190,11 @@ this.mmooc.util = (function() {
       }
       return false;
     },
-    isBlendedCourse: function(course) {
-        return(course && (course.course_format == "blended"));
+    isPfDKCourse: function(course) {
+      if(course && course.course_code.indexOf('::PfDK::') > -1) {
+        return true;
+      }
+      return false;
     },
     isPrincipal() {
       return (this.isTeacherOrAdmin() || this.isEnrolledWithRole(mmooc.util.course, mmooc.settings.principalRoleType));
@@ -208,11 +211,16 @@ this.mmooc.util = (function() {
       }
       return false;
     },
-    isUnmaintained() {
-      if(mmooc.util.course && mmooc.util.course.course_code.indexOf('::UNMAINTAINED::') > -1) {
-        return true;
+    isUnmaintained(course) {
+      if(course) {
+        var arr = course.course_code.split("::");
+        for(var i = 0; i < arr.length; i++) {
+          if(arr[i] == "UNMAINTAINED") {
+            return arr[i + 1];
+          }
+        }
       }
-      return false;
+      return "";
     },
     isActiveCourseRoleBased() {
       return mmooc.util.isRoleBasedCourse(mmooc.util.course);
