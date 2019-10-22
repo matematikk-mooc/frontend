@@ -997,7 +997,7 @@ $canvas.post(uri, {'enrollment[user_id]' => user_id, 'enrollment[type]' => etype
           callback(filteredCourses);
         },
         uri: `/users/self/enrollments`,
-        params: {}
+        params: {per_page: 999}
       });
     },
     getEnrollmentsForSection(sectionId, params, callback) {
