@@ -241,8 +241,10 @@ this.mmooc.menu = (function() {
     },
     updateButtonTooltip : function(el, item) {
         var tooltip = el.attr("data-html-tooltip-title");
-        var newTooltip = tooltip.replace(/<\/i>.*$/, "</i>" + item.title )
-        el.attr("data-html-tooltip-title", newTooltip);
+        if(tooltip) {
+          var newTooltip = tooltip.replace(/<\/i>.*$/, "</i>" + item.title )
+          el.attr("data-html-tooltip-title", newTooltip);
+        }
     },
     updatePrevAndNextButtons : function(courseId, module) {
       var prevItem = "";

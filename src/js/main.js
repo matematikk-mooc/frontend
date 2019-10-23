@@ -343,7 +343,10 @@ jQuery(function($) {
           var contentId = mmooc.api.getCurrentTypeAndContentId().contentId;
           mmooc.api.isGroupDiscussion(courseId, contentId, function(result) {
             if(result) {
-                $("#content").html('<div class="uob-warning"> \
+                $(".discussion-section").hide();
+                $("#discussion-toolbar").hide();
+                $(".discussion-entry-reply-area").hide();
+                $("#discussion-managebar").html('<div class="uob-warning"> \
                 Dette er en gruppediskusjon, men du er ikke medlem i noen gruppe og kan derfor ikke delta.\
                   Gå tilbake til forsiden og velg fanen "Rolle og grupper".</div>');
             }
