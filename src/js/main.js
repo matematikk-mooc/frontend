@@ -35,7 +35,9 @@ jQuery(function($) {
     var observer = (mmooc.util.isAuthenticated() && mmooc.util.isObserver(course));
     var pfdk = mmooc.util.isPfDKCourse(course);
     var unmaintainedSince = mmooc.util.isUnmaintained(course);
-    mmooc.pages.showInformationPane(observer, pfdk, unmaintainedSince);
+    if(observer || pfdk || unmaintainedSince) {
+      mmooc.pages.showInformationPane(observer, pfdk, unmaintainedSince);
+    }
   });
   
   //The logic below should be refactored and cleaned up.
