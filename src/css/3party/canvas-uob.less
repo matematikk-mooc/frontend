@@ -1,140 +1,148 @@
 .tooltip_below {
-    position: relative;
-}
-
-.tooltip_below .tooltiptext {
-    visibility: hidden;
+	position: relative;
+  }
+  
+  .tooltip_below .tooltiptext {
+	visibility: hidden;
 	background: #ffffff;
 	border: 1px solid #686868;
 	font-size: @fontSize;
-    text-align: center;
-    border-radius: 00px;
-    box-shadow: 0 2px 10px 0 rgba(0,0,0,.2);
-    padding: 5px 5px;
-    width: 300px;
- 
-   /* Position the tooltip 
-   */
-    position: absolute;
-    z-index: 1;
-    left: -150%;
-    margin-top: 10px;
-    
-}
-.tooltip_below .tooltiptext:after, .tooltip_below .tooltiptext:before {
+	text-align: center;
+	border-radius: 00px;
+	box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.2);
+	padding: 5px 5px;
+	width: 300px;
+  
+	/* Position the tooltip 
+	 */
+	position: absolute;
+	z-index: 1;
+	left: -150%;
+	margin-top: 10px;
+  }
+  .tooltip_below .tooltiptext:after,
+  .tooltip_below .tooltiptext:before {
 	bottom: 100%;
 	left: 80%;
 	border: solid transparent;
-	content: " ";
+	content: ' ';
 	height: 0;
 	width: 0;
 	position: absolute;
 	pointer-events: none;
-}
-
-.tooltip_below .tooltiptext:after {
+  }
+  
+  .tooltip_below .tooltiptext:after {
 	border-color: rgba(136, 183, 213, 0);
 	border-bottom-color: #ffffff;
 	border-width: 6px;
 	margin-left: -6px;
-}
-.tooltip_below .tooltiptext:before {
+  }
+  .tooltip_below .tooltiptext:before {
 	border-color: rgba(194, 225, 245, 0);
 	border-bottom-color: #686868;
 	border-width: 8px;
 	margin-left: -8px;
-}
-
-.tooltip_below:hover .tooltiptext {
-    visibility: visible;
-}
-
-
-.tooltip {
-    position: relative;
-}
-
-.tooltip-underline
-{
-    border-bottom: 1px dotted black;
-}
-
-.tooltip .tooltiptext {
-    visibility: hidden;
+  }
+  
+  .tooltip_below:hover .tooltiptext {
+	visibility: visible;
+  }
+  
+  .tooltip {
+	position: relative;
+  }
+  
+  .tooltip-underline {
+	border-bottom: 1px dotted black;
+  }
+  
+  .tooltip .tooltiptext {
+	visibility: hidden;
 	background: #ffffff;
 	border: 1px solid #686868;
 	font-size: @fontSize;
-    text-align: center;
-    border-radius: 00px;
-    box-shadow: 0 2px 10px 0 rgba(0,0,0,.2);
-    padding: 5px 5px;
-    width: 300px;
- 
-   /* Position the tooltip 
-      Note that margin-left is half the above width.
-   */
-    position: absolute;
-    z-index: 1;
-    bottom: 150%;
-    left: 50%;
-    margin-left:-150px;
-}
-.tooltip .tooltiptext:after, .tooltip .tooltiptext:before {
+	text-align: center;
+	border-radius: 00px;
+	box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.2);
+	padding: 5px 5px;
+	width: 300px;
+  
+	/* Position the tooltip 
+		Note that margin-left is half the above width.
+	 */
+	position: absolute;
+	z-index: 1;
+	bottom: 150%;
+	left: 50%;
+	margin-left: -150px;
+  }
+  .tooltip .tooltiptext:after,
+  .tooltip .tooltiptext:before {
 	top: 100%;
 	left: 50%;
 	border: solid transparent;
-	content: " ";
+	content: ' ';
 	height: 0;
 	width: 0;
 	position: absolute;
 	pointer-events: none;
-}
-
-.tooltip .tooltiptext:after {
+  }
+  
+  .tooltip .tooltiptext:after {
 	border-color: rgba(136, 183, 213, 0);
 	border-top-color: #ffffff;
 	border-width: 6px;
 	margin-left: -6px;
-}
-.tooltip .tooltiptext:before {
+  }
+  .tooltip .tooltiptext:before {
 	border-color: rgba(194, 225, 245, 0);
 	border-top-color: #686868;
 	border-width: 8px;
 	margin-left: -8px;
-}
-
-.tooltip:hover .tooltiptext {
-    visibility: visible;
-}
-
-/* UoB tip, info, warning and question boxes */
-/*
-Her er fargene Lisbeth foreslår
-#ffeed5
-#fcdecd
-#fce3e6
-#e5d4e9
-#c7d3e1
-#d9eef2
-#ecf0d7
-#e3e2e3
-#ededed
-*/
-
-.uob-tip, .pfdk-tips, 
-.uob-warning, .pfdk-advarsel, 
-.uob-question, .pfdk-spsm, 
-.uob-quote, .pfdk-sitat, 
-.uob-box, .pfdk-boks, 
-.uob-read, .pfdk-les, 
-.pfdk-maal, 
-.uob-info, .pfdk-info, 
-.pfdk-important, .pfdk-viktig,
-.pfdk-tid, 
-.pfdk-verktoy {
+  }
+  
+  .tooltip:hover .tooltiptext {
+	visibility: visible;
+  }
+  
+  /* UoB tip, info, warning and question boxes */
+  /*
+  Her er fargene Lisbeth foreslår
+  #ffeed5
+  #fcdecd
+  #fce3e6
+  #e5d4e9
+  #c7d3e1
+  #d9eef2
+  #ecf0d7
+  #e3e2e3
+  #ededed
+  */
+  
+  .uob-tip,
+  .pfdk-tips,
+  .uob-warning,
+  .pfdk-advarsel,
+  .uob-question,
+  .pfdk-spsm,
+  .uob-quote,
+  .pfdk-sitat,
+  .uob-box,
+  .pfdk-boks,
+  .uob-read,
+  .pfdk-les,
+  .pfdk-maal,
+  .uob-info,
+  .pfdk-info,
+  .pfdk-important,
+  .pfdk-viktig,
+  .pfdk-tid,
+  .pfdk-verktoy,
+  .udir-skoleleder {
 	margin-top: 1em;
 	margin-bottom: 1em;
-	padding: .5em .5em .5em 62px;
+	padding: 0.5em 0.5em 0.5em 62px;
 	border-radius: 4px;
 	border-color: silver;
 	border-style: solid;
@@ -142,122 +150,134 @@ Her er fargene Lisbeth foreslår
 	background-repeat: no-repeat;
 	background-position: 4px 4px;
 	min-height: 50px;
-}
-.uob-box {
-	background-color: #FFFFFF;
-	padding: .5em .5em .5em .5em;
-}
-
-.uob-tip {
-	background-color: #FAFAC8;	/* See http://www.w3.org/WAI/RD/2012/text-customization/r11 */
-	background-image: url("https://s3.amazonaws.com/SSL_Assets/bham/images/box_tip.png");
-	color: black;
-}
-
-.uob-info {
-	background-color: #DDEEFF;
-	background-image: url("https://s3.amazonaws.com/SSL_Assets/bham/images/box_info.png");
-}
-
-.uob-read {
-	background-color: #DDFFDD;
-	background-image: url("https://matematikk-mooc.github.io/frontend/bitmaps/uia_read.png");
-}
-
-.uob-warning {
-	background-color: #FFEEEE;
-	background-image: url("https://s3.amazonaws.com/SSL_Assets/bham/images/box_warning.png");
-}
-
-.uob-question {
-	background-color: #EBDDFF;
-	background-image: url("https://s3.amazonaws.com/SSL_Assets/bham/images/box_question.png");
-}
-
-.uob-quote {
-	background-color: #EFEFEF;
-	background-image: url("https://s3.amazonaws.com/SSL_Assets/bham/images/box_quote66.png");
-	padding: .5em 62px .5em 62px;
-	position: relative;
-	top: 0px;
-	left: 0px;
-}
-.pfdk-verktoy {
+  }
+  .pfdk-verktoy {
 	background-color: #ffeed5;
-	background-image: url("https://pfdk.github.io/frontend/bitmaps/pfdk_gear.png");
-    background-size: 40px;
-    background-position-y: 10px;
-    background-position-x: 10px;
-}
-.pfdk-tid {
+	background-image: url('https://server/bitmaps/pfdk_gear.png');
+	background-size: 40px;
+	background-position-y: 10px;
+	background-position-x: 10px;
+  }
+  .udir-skoleleder {
+	background-color: #E2E3F1;
+	background-image: url('https://server/vector_images/mmooc-icon-principal.svg');
+	background-size: 40px;
+	background-position-y: 10px;
+	background-position-x: 10px;
+  }
+  .pfdk-tid {
 	background-color: #fcdecd;
-	background-image: url("https://pfdk.github.io/frontend/bitmaps/pfdk_time.png");
-    background-size: 40px;
-    background-position-x: 10px;
-}
-.pfdk-maal {
+	background-image: url('https://server/bitmaps/pfdk_time.png');
+	background-size: 40px;
+	background-position-x: 10px;
+  }
+  .pfdk-maal {
 	background-color: #fce3e6;
-	background-image: url("https://pfdk.github.io/frontend/bitmaps/pfdk_info.png");
-    background-size: 53px;
-}
-.pfdk-important, .pfdk-viktig {
+	background-image: url('https://server/bitmaps/pfdk_info.png');
+	background-size: 53px;
+  }
+  .pfdk-important,
+  .pfdk-viktig {
 	background-color: #e5d4e9;
-	background-image: url("https://pfdk.github.io/frontend/bitmaps/pfdk_important.png");
-    background-size: 53px;
-}
-.pfdk-info {
+	background-image: url('https://server/bitmaps/pfdk_important.png');
+	background-size: 53px;
+  }
+  .uob-info,
+  .pfdk-info {
 	background-color: #c7d3e1;
-	background-image: url("https://s3.amazonaws.com/SSL_Assets/bham/images/box_info.png");
-}
-.pfdk-tips {
-	background-color: #d9eef2;	/* See http://www.w3.org/WAI/RD/2012/text-customization/r11 */
-	background-image: url("https://s3.amazonaws.com/SSL_Assets/bham/images/box_tip.png");
+	background-image: url('https://s3.amazonaws.com/SSL_Assets/bham/images/box_info.png');
+  }
+  .uob-tip {
+	background-color:#FAFAC8;
+	background-image: url('https://s3.amazonaws.com/SSL_Assets/bham/images/box_tip.png');
 	color: black;
-}
-.pfdk-les {
+  }
+  .pfdk-tips {
+	background-color: #d9eef2; /* See http://www.w3.org/WAI/RD/2012/text-customization/r11 */
+	background-image: url('https://s3.amazonaws.com/SSL_Assets/bham/images/box_tip.png');
+	color: black;
+  }
+  .uob-read,
+  .pfdk-les {
 	background-color: #ecf0d7;
-	background-image: url("https://matematikk-mooc.github.io/frontend/bitmaps/uia_read.png");
-}
-.pfdk-boks {
+	background-image: url('https://server/bitmaps/uia_read.png');
+  }
+  .uob-box {
+	background-color: #ffffff;
+	padding: 0.5em 0.5em 0.5em 0.5em;
+  }
+  .pfdk-boks {
 	background-color: #e3e2e3;
-	padding: .5em .5em .5em .5em;
-}
-.pfdk-spsm {
+	padding: 0.5em 0.5em 0.5em 0.5em;
+  }
+  .uob-question,
+  .pfdk-spsm {
 	background-color: #ededed;
-	background-image: url("https://s3.amazonaws.com/SSL_Assets/bham/images/box_question.png");
-}
-.pfdk-sitat {
-	background-color: #EFEFEF;
-	background-image: url("https://s3.amazonaws.com/SSL_Assets/bham/images/box_quote66.png");
-	padding: .5em 62px .5em 62px;
+	background-image: url('https://s3.amazonaws.com/SSL_Assets/bham/images/box_question.png');
+  }
+  .uob-quote,
+  .pfdk-sitat {
+	background-color: #efefef;
+	background-image: url('https://s3.amazonaws.com/SSL_Assets/bham/images/box_quote66.png');
+	padding: 0.5em 62px 0.5em 62px;
 	position: relative;
 	top: 0px;
 	left: 0px;
-}
-.pfdk-advarsel {
-	background-color: #FFEEEE;
-	background-image: url("https://s3.amazonaws.com/SSL_Assets/bham/images/box_warning.png");
-}
-
-.uob-accordion .ui-accordion-content {
-	margin-top: 0px;
-	margin-bottom: 3px;
-	padding: .5em .9em .9em .9em;
-	top: 0px;
-}
-
-/* UoB reveal */
-.uob-reveal-button .ui-button-icon-secondary {
+  }
+  .uob-warning,
+  .pfdk-advarsel {
+	background-color: #ffeeee;
+	background-image: url('https://s3.amazonaws.com/SSL_Assets/bham/images/box_warning.png');
+  }
+  
+  .uob-accordion {
+	background-color: #E2E3F1;
+	cursor: pointer;
+	padding: 18px;
+	width: 100%;
+	text-align: left;
+	font-weight: bold;
+  }
+  
+  .uob-arrow-down {
+	float: right;
+	border: solid black;
+	border-width: 0 3px 3px 0;
+	display: inline-block;
+	padding: 3px;
+	transform: rotate(45deg);
+	-webkit-transform: rotate(45deg);
+  }
+  
+  .uob-arrow-down:after {
+  }
+  
+  .uob-arrow-down.active {
+	transform: rotate(-135deg);
+	-webkit-transform: rotate(-135deg);
+  }
+  
+  .uob-accordion-panel.active {
+	display: block;
+	padding: 18px 18px;
+	max-height: 0;
+	overflow: hidden;
+	transition: max-height 0.2s ease-out;
+  }
+  .uob-accordion-panel {
+	display: none;
+  }
+  /* UoB reveal */
+  .uob-reveal-button .ui-button-icon-secondary {
 	float: left;
-}
-
-.uob-reveal-content {
+  }
+  
+  .uob-reveal-content {
 	display: none;
 	margin-bottom: 10px;
 	border-radius: 4px;
 	border-color: silver;
 	border-style: solid;
 	border-width: 1px;
-	padding: .5em .5em .5em .5em;
-}
-
+	padding: 0.5em 0.5em 0.5em 0.5em;
+  }
