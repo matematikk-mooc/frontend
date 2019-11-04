@@ -294,6 +294,10 @@ jQuery(function($) {
     mmooc.routes.addRouteForPath(/\/courses\/\d+\/assignments\/\d+\/submissions\/\d+/, function() {
         mmooc.pages.redesignPeerReviewAndOwnSubmissionDetailsPage();
     });
+
+    mmooc.routes.addRouteForPath(/\/courses\/\d+\/assignments\/\d+\/anonymous_submissions\/\S+/, function() {
+        mmooc.pages.redesignPeerReviewAndOwnSubmissionDetailsPage();
+    });
     
     mmooc.routes.addRouteForPath(/\/courses\/\d+\/external_tools\/\d+$/, function() {
         function isBadgesafePage() {
