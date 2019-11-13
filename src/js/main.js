@@ -475,7 +475,6 @@ jQuery(function($) {
       const error = error => console.error('error calling api', error);
       mmooc.api.getUserGroupsForCourse(courseId, function(groups) {
         if(groups.length) {
-          $("#kpas-lti-info").html("Du har registrert rolle og grupper. Flott!");
           $("#kpas-lti-info").show();
           $("#kpas-lti-warning").hide();
         }  
