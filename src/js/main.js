@@ -35,8 +35,9 @@ jQuery(function($) {
     var observer = (mmooc.util.isAuthenticated() && mmooc.util.isObserver(course));
     var pfdk = mmooc.util.isPfDKCourse(course);
     var unmaintainedSince = mmooc.util.isUnmaintained(course);
-    if(observer || pfdk || unmaintainedSince) {
-      mmooc.pages.showInformationPane(observer, pfdk, unmaintainedSince);
+    var alertMsg = mmooc.util.isAlertMsg(course);
+    if(observer || pfdk || unmaintainedSince || alertMsg) {
+      mmooc.pages.showInformationPane(observer, pfdk, unmaintainedSince, alertMsg);
     }
   });
   

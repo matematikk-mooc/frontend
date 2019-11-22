@@ -211,6 +211,12 @@ this.mmooc.util = (function() {
       }
       return false;
     },
+    isAlertMsg() {
+      if(mmooc.util.course && mmooc.util.course.course_code.indexOf('::ALERTMSG::') > -1) {
+        return true;
+      }
+      return false;
+    },
     isUnmaintained(course) {
       if(course) {
         var arr = course.course_code.split("::");
