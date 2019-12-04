@@ -2,112 +2,12 @@ this.mmooc = this.mmooc || {};
 
 this.mmooc.enroll = (function() {
   return {
-    changeEnrollConfirmationButton: function() {
-      var enrollForm = $('#enroll_form');
-      enrollForm
-        .find('.btn')
-        .text('Gå til mine ' + mmooc.i18n.CoursePlural.toLowerCase());
-      enrollForm.find('.btn').attr('href', '/courses');
-      enrollForm.find('.btn-primary').hide();
-    },
-    changeEnrollTitle: function(s) {
-      var headline = $('.ic-Login-confirmation__headline');
-      headline.text(s);
-    },
-    getEnrollInformationElement: function() {
-      //There might be several p elements, depending on which self registration screen we are on.
-      //Only return the first one.
-      return $('#enroll_form > p:first');
-    },
-    getEnrollAction: function() {
-      return $('#enroll_form').attr('action');
-    },
-    changeEnrollInformation: function(from, to) {
-      var confirmEnrollmentElement = this.getEnrollInformationElement();
-      confirmEnrollmentElement.text(
-        confirmEnrollmentElement.text().replace(from, to)
-      );
-    },
-    hideEnrollInformationPolicy: function() {
-      var informationPolicy = $('.ic-Self-enrollment-footer__Secondary');
-      informationPolicy.hide();
-    },
-    changeEnrollButton: function() {
-      var enrollForm = $('#enroll_form');
-      var confirmButton = enrollForm.find('.btn');
-      confirmButton.text('Ja takk, jeg vil registrere meg!');
-    },
-    hideEnrollButton: function() {
-      var enrollForm = $('#enroll_form');
-      var confirmButton = enrollForm.find('.btn');
-      confirmButton.hide();
-    },
-    isAlreadyEnrolled: function() {
-      confirmEnrollmentElement = this.getEnrollInformationElement();
-      var i = confirmEnrollmentElement
-        .text()
-        .indexOf('Du er allerede registrert i');
-      if (i == -1) {
-        return false;
-      }
-      return true;
-    },
-    selectRegisterUserCheckbox: function() {
-      //The checkbox is hidden by canvas-enroll.less, but we need to check it to get the right fields to display.
-      setTimeout(function() {
-        var createNewUserRadioButton = $('#selfEnrollmentAuthRegCreate');
-        createNewUserRadioButton.click();
-      }, 1000); // set timeout in ms
-    },
-    updatePrivacyPolicyLinks: function() {
-      html = mmooc.util.renderTemplateWithData('enrollprivacypolicy', {
-        privacypolicylink: mmooc.settings.privacyPolicyLink
-      });
-      $("label[for='selfEnrollmentAuthRegLoginAgreeTerms']").html(html);
-    },
-    isSelfEnrollmentPage: function() {
-      var i = this.getEnrollInformationElement()
-        .text()
-        .indexOf('Du registrerer deg i');
-      if (i == -1) {
-        return false;
-      }
-      return true;
+    changeEnrollInformationPolicyLink: function() {
+      var informationPolicy = $('.ic-Self-enrollment-footer__Secondary > a');
+      informationPolicy.attr("href", mmooc.settings.privacyPolicyLink);
     },
     changeEnrollPage: function() {
-      this.changeEnrollTitle('Påmelding');
-      if (this.isAlreadyEnrolled()) {
-        this.changeEnrollConfirmationButton();
-      } else {
-        this.hideEnrollInformationPolicy();
-        if (this.isSelfEnrollmentPage()) {
-          //When self enrolling, give the user the impression of registering on the platform, and not on the course
-          //we use to make self enrollment possible. See settings.js/selfRegisterCourseCode
-          this.getEnrollInformationElement().text('');
-          $('#enroll_form > p:nth-child(2)').text(
-            'Vennligst fyll inn informasjonen nedenfor for å registrere deg på ' +
-              mmooc.settings.platformName
-          );
-          this.selectRegisterUserCheckbox();
-          this.updatePrivacyPolicyLinks();
-          this.changeEnrollButton();
-        } else {
-          this.hideEnrollButton();
-          this.changeEnrollInformation(
-            'Du registrere deg på ',
-            'Vi registrerer deg på ' +
-              mmooc.i18n.CourseDefinite.toLowerCase() +
-              ' '
-          );
-          var enrollInformationElement = this.getEnrollInformationElement();
-          enrollInformationElement.html(" <span class='loading-gif'></span>");
-          var enrollAction = this.getEnrollAction();
-          mmooc.api.enrollUser(enrollAction, function(data) {
-            $('.loading-gif').remove();
-            window.location.href = '/search/all_courses' + mmooc.hrefQueryString;
-          });
-        }
-      }
+      this.changeEnrollInformationPolicyLink();
     },
     printAllCoursesContainer: function() {
       html = mmooc.util.renderTemplateWithData('allcoursescontainer', {

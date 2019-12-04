@@ -492,13 +492,10 @@ jQuery(function($) {
    });
   });
 
-  /*    mmooc.routes.addRouteForPath(/enroll\/[0-9A-Z]+$/, function() {
-        if(document.location.search == "")
-        {
-            mmooc.enroll.changeEnrollPage();
-        }
-    });
-*/
+  mmooc.routes.addRouteForPath(/enroll\/[0-9A-Z]+/, function() {
+    mmooc.enroll.changeEnrollPage();
+  });
+
   try {
     mmooc.footer.changeFooter();
     mmooc.menu.renderLeftHeaderMenu();
