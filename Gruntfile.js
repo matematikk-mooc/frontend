@@ -44,7 +44,8 @@ module.exports = function (grunt) {
         },
         files: {
           'tmp/mmooc-min.css': ['src/css/all.less'],
-          'dist/badgesafe.css': ['src/addons/badges/css/all.less']
+          'dist/badgesafe.css': ['src/addons/badges/css/all.less'],
+          'tmp/rootaccount.css': ['src/css/allrootaccount.less']
         }
       }
     },
@@ -124,7 +125,7 @@ module.exports = function (grunt) {
 
     replace: {
       production: {
-        src: ['tmp/mmooc-min.css','dist/mmooc-min.js', 'tmp/rootaccount.js', 'tmp/subaccount.js'],
+        src: ['tmp/mmooc-min.css','tmp/rootaccount.css', 'dist/mmooc-min.js', 'tmp/rootaccount.js', 'tmp/subaccount.js'],
         dest: 'dist/',
         replacements: [
           {
@@ -142,7 +143,7 @@ module.exports = function (grunt) {
         ]
       },
       development: {
-        src: ['tmp/mmooc-min.css','dist/mmooc-min.js', 'tmp/rootaccount.js','tmp/subaccount.js'],
+        src: ['tmp/mmooc-min.css','tmp/rootaccount.css', 'dist/mmooc-min.js', 'tmp/rootaccount.js','tmp/subaccount.js'],
         dest: 'dist/',
         replacements: [
           {

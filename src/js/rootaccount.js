@@ -36,11 +36,22 @@ function getScript(url, callback) {
 //Redirect if necessary
 var redirected = false;
 if(document.location.pathname == "/login/canvas") {
-    if (document.referrer.endsWith("/logout" + mmooc.hrefQueryString)) {
-       window.location.href = '/search/all_courses' + mmooc.hrefQueryString;
-       redirected = true;
-    } else {
-      redirected = mmooc.utilRoot.redirectFeideAuthIfEnrollReferrer();
+    $(".ic-Login").hide();
+    redirected = mmooc.utilRoot.redirectFeideAuthIfEnrollReferrer();
+    if(!redirected) {
+      if(!document.location.search.includes("normalLogin=1")) {
+        let html = '<div class="login-box"><div class="login-box__upper"><p class="login-box__text">Logg inn på kompetanseportalen</p>\
+        <div class="login-box__close"></div></div><div class="login-box__lower">\
+        <a class="mmooc-button mmooc-button-primary" onclick="window.location.href=\'/login/saml\'">&nbsp;\
+        </a><a class="mmooc-button mmooc-button-secondary" onclick="$(\'.login-box, .overlay\').remove(); $(\'.ic-Login\').show()">Har ikke Feide</a></div></div>';
+        
+        document.getElementById('wrapper').insertAdjacentHTML('afterend', html);
+        $(".login-box__close").hide();
+        $('#application').before(`<div class="overlay"></div>`);
+      }
+      else {
+        $(".ic-Login").show();
+      }
     }
 }
 else if (document.location.pathname == "/courses") {
@@ -67,6 +78,6 @@ if(!redirected) {
           console.log("Root account:Udir design already loaded.");
       }
   } else {
-      console.log("Root account:Not loading any special design, display application.");
+      console.log("Root account:Not loading any special design.");
   }
 }

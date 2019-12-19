@@ -101,6 +101,12 @@ mmooc.greeting = (function() {
       var $content = $("#content");
       var $newDiplomaButton = $content.find(".new-sikt-diploma-button");
       var $scriptUrlDiv = $content.find(".new-sikt-diploma-scriptId");
+      var $diplomaIdDiv = $content.find(".new-sikt-diploma-id");
+      var $diplomaId = "";
+
+      if($diplomaIdDiv) {
+        $diplomaId = $diplomaIdDiv.text()
+      }
 
 /*      if ($newDiplomaButton.length) {
         $newDiplomaButton.replaceWith("<div class='uob-warning'>Vi har dessverre problemer med diplommekanismen. Vi jobber med saken.</div>");
@@ -123,6 +129,7 @@ mmooc.greeting = (function() {
             var values = {};
             values["Navn"] = profile.name;
             values["Epost"] = profile.primary_email;
+            values["DiplomaId"] = $diplomaId;
 
             $.ajax({
               url: scriptUrl,
