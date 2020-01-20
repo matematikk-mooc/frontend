@@ -15,6 +15,8 @@ $(document).ready(function() {
                     var sendMsg = JSON.stringify(usergroupsmsg);
                     e.source.postMessage(sendMsg, e.origin);
                 }, error);
+            } else if(message.subject == "kpas-lti.update") {
+                mmooc.util.updateInformationPane();
             } else if(message.subject == "kpas-lti.3pcookiesupported") {
                 console.log("Din nettleser støtter cookies fra tredjeparter, noe som trengs for å bruke KPAS");
             } else if(message.subject == "kpas-lti.3pcookienotsupported") {

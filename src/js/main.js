@@ -29,16 +29,8 @@ jQuery(function($) {
     );
   });
 
-  //This course path should be called before the other course paths such that the course object is available to them.
   mmooc.routes.addRouteForPath(/\/courses\/\d+/, function() {
-    course = mmooc.util.course;
-    var observer = (mmooc.util.isAuthenticated() && mmooc.util.isObserver(course));
-    var pfdk = mmooc.util.isPfDKCourse(course);
-    var unmaintainedSince = mmooc.util.isUnmaintained(course);
-    var alertMsg = mmooc.util.isAlertMsg(course);
-    if(observer || pfdk || unmaintainedSince || alertMsg) {
-      mmooc.pages.showInformationPane(observer, pfdk, unmaintainedSince, alertMsg);
-    }
+    mmooc.util.updateInformationPane();
   });
   
   //The logic below should be refactored and cleaned up.
@@ -536,8 +528,6 @@ jQuery(function($) {
   } catch (e) {
     console.log(e);
   }
-
-
 
   try {
     mmooc.nrk.init();

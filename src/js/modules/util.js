@@ -211,6 +211,37 @@ this.mmooc.util = (function() {
       }
       return false;
     },
+    postModuleProcessing() {
+      try {
+          let html = '<div class="login-box" style="position: fixed">Laster diskusjonen</div>';    
+          $("#wrapper").append(html);
+          setInterval(function() {
+            console.log("postModuleProcessing intervall timer called")
+            $(".login-box").append(".");
+          } , 1000);
+      } catch (e) {
+        console.log(e);
+      }
+    },
+    postModuleCoursePageProcessing() {
+      try {
+        $(".mmooc-module-items-icons-Discussion").click(function(){
+            mmooc.util.postModuleProcessing()
+        }); 
+      } catch (e) {
+        console.log(e);
+      }
+    },
+    postModuleMenuProcessing() {
+      try {
+        $(".mmooc-module-items-icons-Discussion").parent().click(function(){
+            mmooc.util.postModuleProcessing()
+        }); 
+      } catch (e) {
+        console.log(e);
+      }
+    },
+    
     isAlertMsg() {
       if(mmooc.util.course && mmooc.util.course.course_code.indexOf('::ALERTMSG::') > -1) {
         return true;
@@ -227,6 +258,47 @@ this.mmooc.util = (function() {
         }
       }
       return "";
+    },
+    //description":"courseId:360:community:1902:940101808"
+    getCountyOrCommunityNumber(groupDescription) {
+      var arr = groupDescription.split(":");
+      for(var i = 0; i < arr.length; i++) {
+        if((arr[i] == "community") || (arr[i] ==  "county")) {
+          return parseInt(arr[i + 1], 10);
+        }
+      }
+      return 0;
+    },
+    updateInformationPane() {
+      mmooc.util.isMemberOfExpiredCommunity(mmooc.util.course, function(isMemberOfExpiredCommunity) {
+        var observer = (mmooc.util.isAuthenticated() && mmooc.util.isObserver(mmooc.util.course));
+        var pfdk = mmooc.util.isPfDKCourse(mmooc.util.course);
+        var unmaintainedSince = mmooc.util.isUnmaintained(mmooc.util.course);
+        var alertMsg = mmooc.util.isAlertMsg(mmooc.util.course);
+        if(observer || pfdk || unmaintainedSince || alertMsg || isMemberOfExpiredCommunity) {
+          mmooc.pages.showInformationPane(observer, pfdk, unmaintainedSince, alertMsg, isMemberOfExpiredCommunity);
+        } else {
+          mmooc.pages.hideInformationPane();
+        }
+      });
+    },
+    isMemberOfExpiredCommunity(course, callback) {
+      mmooc.api.getUserGroupsForCourse(course.id, function(groups) {
+        var memberOfUtgaattKommune = false;
+        if(groups.length) {
+          for(var i = 0; i < groups.length; i++) {
+            var group = groups[i];
+            var countyOrCommunityNumber = mmooc.util.getCountyOrCommunityNumber(group.description);
+            if(countyOrCommunityNumber) {
+              if(utgaatteKommuneNr.indexOf(countyOrCommunityNumber) > -1) {
+                memberOfUtgaattKommune = true;
+                break;
+              }
+            }
+          }
+        }
+        callback(memberOfUtgaattKommune);
+      });
     },
     isActiveCourseRoleBased() {
       return mmooc.util.isRoleBasedCourse(mmooc.util.course);

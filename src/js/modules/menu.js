@@ -186,6 +186,10 @@ this.mmooc.menu = (function() {
             .getElementById('left-side')
             .insertAdjacentHTML('afterbegin', html);
         }
+        //Canvas case: Slow loading for group discussions when large number of groups Case # 05035288 
+        //Display popup box when loading
+        mmooc.util.postModuleMenuProcessing();
+
         $('.mmooc-reveal-trigger').click(function(event) {
           var $trigger = $(this);
           var body = $trigger.attr('href');
