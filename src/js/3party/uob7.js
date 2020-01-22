@@ -577,7 +577,8 @@ function uobAddComponents() {
         'pfdk-viktig',
         'pfdk-tid',
         'pfdk-verktoy',
-        'udir-skoleleder'
+        'udir-skoleleder',
+        'udir-kommentar'
       ];
 
       for (var i = 0; i < aBoxTags.length; i++) {
