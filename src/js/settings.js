@@ -15,6 +15,7 @@ this.mmooc.settings = {
   removeGroupsLink: true,
   displayGroupsTab: false,
   displayDiscussionsTab : false,
+  displayAlertsMenuItem : false,
   displayCallForAssistanceButtonInGroupDisccussions : false,
   privacyPolicyLink: 'https://kompetanseudirno.azureedge.net/udirdesign/privacypolicy.html',
   contactPoint: 'kompetansesupport@udir.no',

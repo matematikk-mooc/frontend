@@ -496,13 +496,15 @@ this.mmooc.menu = (function() {
       var menu = document.getElementById('menu');
       if (menu != null && mmooc.util.isAuthenticated()) {
         var html = mmooc.util.renderTemplateWithData('usermenu', {
-          user: mmooc.api.getUser(), queryString: mmooc.hrefQueryString
+          alertMenuItem: mmooc.settings.displayAlertsMenuItem, user: mmooc.api.getUser(), queryString: mmooc.hrefQueryString
         });
         menu.insertAdjacentHTML('afterend', html);
 
-        $('#mmooc-menu-item-varsler').click(function(event) {
-          handleMenuClick('#mmooc-menu-item-varsler', '#mmooc-activity-stream', 400);
-        });
+        if(mmooc.settings.displayAlertsMenuItem) {
+          $('#mmooc-menu-item-varsler').click(function(event) {
+            handleMenuClick('#mmooc-menu-item-varsler', '#mmooc-activity-stream', 400);
+          });
+        }
         $('#mmooc-menu-item-profile-settings').click(function(event) {
           handleMenuClick(
             '#mmooc-menu-item-profile-settings',
@@ -541,6 +543,9 @@ this.mmooc.menu = (function() {
     },
 
     updateNotificationsForUser: function() {
+      if(!mmooc.settings.displayAlertsMenuItem) {
+        return;
+      }
       mmooc.api.getActivityStreamForUser(function(activities) {
         var unreadNotifications = 0;
         for (var i = 0; i < activities.length; i++) {
