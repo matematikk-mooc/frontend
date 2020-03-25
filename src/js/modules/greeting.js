@@ -124,8 +124,21 @@ mmooc.greeting = (function() {
             values["Navn"] = profile.name;
             values["Epost"] = profile.primary_email;
             values["DiplomaId"] = $diplomaId;
+            var downloadingDiploma = false;
 
             $.ajax({
+              xhr: function() {
+                  var xhr = new window.XMLHttpRequest();
+                  xhr.addEventListener("progress", function(evt) {
+                    if(!downloadingDiploma) {
+                      downloadingDiploma = true;
+                      $('#info').html("Laster ned diplomet");
+                    } else {
+                      $('#info').append(".");
+                    }
+                  }, false);
+                  return xhr;
+              },
               url: scriptUrl,
               data: values,
                             type: "POST",
@@ -151,8 +164,8 @@ mmooc.greeting = (function() {
                   link.href = URL.createObjectURL(blob);
                   link.download = response.diplomaName + ".pdf";
                   link.innerText = "Last ned";
-                  $("#info").html("Diplomet er klart til nedlasting: ")
-                  $("#info").append(link);
+                  $("#diplomaLink").html("Diplomet er klart til nedlasting: ")
+                  $("#diplomaLink").append(link);
                 }
                 else
                 {
@@ -164,6 +177,7 @@ mmooc.greeting = (function() {
           
               complete: function () {
                 console.log('Finished all tasks');
+                $("#info").html("");
               }
             }); //End google call.
           }); //End Canvas user profile callback
