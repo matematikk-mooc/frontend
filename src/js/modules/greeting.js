@@ -97,6 +97,81 @@ mmooc.greeting = (function() {
 
       fixLinkToModules($content);
     },
+    enableDownloadDiplomaButtonIfNecessary : function() {
+      var $content = $("#content");
+      var $downloadDiplomaButton = $content.find(".download-diploma-button");
+      var $scriptUrlDiv = $content.find(".download-diploma-scriptId");
+      var $diplomaIdDiv = $content.find(".download-diploma-id");
+      var $diplomaId = "";
+
+      if($diplomaIdDiv) {
+        $diplomaId = $diplomaIdDiv.text()
+      }
+
+      if ($downloadDiplomaButton.length && $scriptUrlDiv.length) {
+
+        $('body').on('click', '.download-diploma-button', function () {
+          if ($downloadDiplomaButton.hasClass('btn-done')) {
+              return;
+          }
+
+          $('#info').append(mmooc.util.renderTemplateWithData("waitIcon", {}));
+
+          var scriptUrl = $scriptUrlDiv.text();
+
+          mmooc.api.getUserProfile(function (profile) {
+            var values = {};
+            values["Navn"] = profile.name;
+            values["Epost"] = profile.primary_email;
+            values["DiplomaId"] = $diplomaId;
+
+            $.ajax({
+              url: scriptUrl,
+              data: values,
+                            type: "POST",
+                            dataType: "json",
+              beforeSend: function () {
+              },
+          
+              error: function (jqXHR, textStatus, errorThrown) {
+                console.log(jqXHR);
+                console.log(textStatus);
+                console.log(errorThrown);
+                var s = "Diplom ble ikke laget. Følgende gikk galt: " + jqXHR + textStatus + errorThrown;
+                $('#info').html(s);
+                $(".download-diploma-button").addClass('btn-done');
+              },
+          
+              success: function (response) {
+                if(response.result == "success")
+                {
+                  var bufferArray = new Int8Array(response.diploma);
+                  var blob = new Blob([bufferArray], {type: 'application/pdf'});
+                  const link = document.createElement('a');
+                  link.href = URL.createObjectURL(blob);
+                  link.download = response.diplomaName + ".pdf";
+                  link.innerText = "Last ned";
+                  $("#info").html("Diplomet er klart til nedlasting: ")
+                  $("#info").append(link);
+                }
+                else
+                {
+                  var s = "Diplom kunne ikke lages fordi: " + response.result;
+                  $('#info').html(s);
+                }
+                $(".download-diploma-button").addClass('btn-done');
+              },
+          
+              complete: function () {
+                console.log('Finished all tasks');
+              }
+            }); //End google call.
+          }); //End Canvas user profile callback
+        }); //End diploma button clicked
+        redesignPage();
+      } //End if valid diploma fields
+      fixLinkToModules($content);
+    },
     enableNewGreetingButtonIfNecessary: function () {
       var $content = $("#content");
       var $newDiplomaButton = $content.find(".new-sikt-diploma-button");
@@ -107,12 +182,6 @@ mmooc.greeting = (function() {
       if($diplomaIdDiv) {
         $diplomaId = $diplomaIdDiv.text()
       }
-
-/*      if ($newDiplomaButton.length) {
-        $newDiplomaButton.replaceWith("<div class='uob-warning'>Vi har dessverre problemer med diplommekanismen. Vi jobber med saken.</div>");
-        return;
-      }
-*/      
 
       if ($newDiplomaButton.length && $scriptUrlDiv.length) {
 

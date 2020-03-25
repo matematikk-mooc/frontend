@@ -463,6 +463,10 @@ jQuery(function($) {
       ".new-sikt-diploma-button", 
       mmooc.greeting.enableNewGreetingButtonIfNecessary);
 
+    mmooc.util.callWhenElementIsPresent(
+      ".download-diploma-button", 
+      mmooc.greeting.enableDownloadDiplomaButtonIfNecessary); //This is the newest method which should replace the two old ones.
+  
     var courseId = mmooc.api.getCurrentCourseId();
     if ($("#kpas-lti-info").length) {
       const error = error => console.error('error calling api', error);
