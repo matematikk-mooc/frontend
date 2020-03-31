@@ -31,7 +31,7 @@ $(document).ready(function() {
                 console.error("Din nettleser støtter IKKE cookies fra tredjeparter. Rolle og gruppeverktøyet krever cookies fra tredjepart.");
             }
         } catch(err) {
-            console.log.call(console, 'Error handeling message in parent:' + err);
+            console.log.call(console, 'KPAS LTI: skip message');
         }
     }, false);
     try {

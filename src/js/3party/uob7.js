@@ -378,6 +378,29 @@ function uobAddComponents() {
           heightStyle: 'content',
           beforeActivate: function(event, ui) {
             ui.oldPanel.find('.hide_youtube_embed_link').click();
+          },
+          activate: function(event, ui) {
+            console.log("Tab activate");
+            // Let h5p iframes know we're ready!
+            var iframes = document.getElementsByTagName('iframe');
+            var ready = {
+              context: 'h5p',
+              action: 'ready'
+            };
+            for (var i = 0; i < iframes.length; i++) {
+              if (iframes[i].src.indexOf('h5p') !== -1) {
+                iframes[i].contentWindow.postMessage(ready, '*');
+              }
+            }
+          },
+          beforeLoad: function(event, ui) {
+            console.log("Tab beforeLoad");
+          },
+          create: function(event, ui) {
+            console.log("Tab create");
+          },
+          load: function(event, ui) {
+            console.log("Tab load");
           }
         });
       }
