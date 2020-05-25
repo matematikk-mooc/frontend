@@ -225,7 +225,7 @@ module.exports = function (grunt) {
           },
           {
             from: '$KPASAPIURL',
-            to: '\'https://kpas-dev.local:4430/api/\''
+            to: '\'' + process.env.KPAS_URL + '/api/\''
           }
         ]
       },
