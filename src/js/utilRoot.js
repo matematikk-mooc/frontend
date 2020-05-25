@@ -102,6 +102,36 @@ this.mmooc.utilRoot = function() {
         }
       }
       return false;
-    }
+    },
+
+    redirectToSamlIfUdirCourse: function(){
+      try {
+        if(!mmooc.utilRoot.isAuthenticated()) {
+          const currentCourseId = mmooc.api.getCurrentCourseId();
+          mmooc.utilRoot.isDeepLinkToUdirCourse(currentCourseId).then( (result) => {
+                if (result) {
+                  window.location = "/login/saml"
+                }
+              }
+          )
+        }
+      } catch (e) {
+        console.log(e);
+      }
+    },
+    isDeepLinkToUdirCourse: async function(currentCourseId) {
+
+      let requestResult = undefined;
+
+      if (currentCourseId) {
+        await $.getJSON(mmooc.settings.kpasApiUrl + "course/" + currentCourseId + "/isudircourse", function(data) {
+          requestResult = data.result;
+        });
+      } else {
+        return false;
+      }
+      return requestResult;
+
+    },
   }
 }();

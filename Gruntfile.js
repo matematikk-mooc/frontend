@@ -59,7 +59,7 @@ module.exports = function (grunt) {
           'src/js/3party/*.js',
           'tmp/templates.js',
           'src/js/api/*.js',
-          'src/js/settingsRoot.js', 
+          'src/js/settingsRoot.js',
           'src/js/utilRoot.js',
           'src/js/modules/*.js',
           'src/js/settings.js',
@@ -72,11 +72,11 @@ module.exports = function (grunt) {
       rootaccount: {
         src: ['src/js/settingsRoot.js', 'src/js/utilRoot.js', 'src/js/rootaccount.js'],
         dest: 'tmp/rootaccount.js'
-      },      
+      },
       subaccount: {
         src: ['src/js/settingsRoot.js', 'src/js/utilRoot.js', 'src/js/subaccount.js'],
         dest: 'tmp/subaccount.js'
-      },      
+      },
       extras: {
         src: [
           'node_modules/grunt-contrib-handlebars/node_modules/handlebars/dist/handlebars.min.js', // we need to embed handlebars here because it is not included in the iframe
@@ -208,6 +208,10 @@ module.exports = function (grunt) {
           {
             from: '$ACCOUNTID',
             to: '[99, 100, 102, 103, 137, 138, 139, 145]'
+          },
+          {
+            from: '$KPASAPIURL',
+            to: '\'https://kpas-lti.azurewebsites.net/api/\''
           }
         ]
       },
@@ -218,6 +222,10 @@ module.exports = function (grunt) {
           {
             from: '$ACCOUNTID',
             to: '[4, 5]'
+          },
+          {
+            from: '$KPASAPIURL',
+            to: '\'https://kpas-dev.local:4430/api/\''
           }
         ]
       },
@@ -353,7 +361,7 @@ module.exports = function (grunt) {
   grunt.registerTask('rebuildServe', ['clean:dist', 'dev_dataporten', 'dev_settings', 'make', 'dev_development']);
 
   grunt.registerTask('serve', ['clean', 'dev_dataporten', 'dev_settings',  'make',  'dev_development','connect:dev', 'watch']);
-  
+
   grunt.registerTask('serveStaging', ['clean', 'make', 'connect:staging', 'watch']);
 
   grunt.registerTask('default', ['clean', 'make']);
