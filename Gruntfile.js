@@ -139,6 +139,10 @@ module.exports = function (grunt) {
           {
             from: 'https://udirdesignjs',
             to: 'https://kompetanseudirno.azureedge.net/udirdesign/mmooc-min.js'
+          },
+          {
+            from: '$KPASAPIURL',
+            to: '\'https://kpas-lti.azurewebsites.net/api/\''
           }
         ]
       },
@@ -157,6 +161,10 @@ module.exports = function (grunt) {
           {
             from: 'https://udirdesignjs',
             to: 'http://localhost:9000/mmooc-min.js'
+          },
+          {
+            from: '$KPASAPIURL',
+            to: '\'' + process.env.KPAS_URL + '/api/\''
           }
         ]
       },
@@ -208,10 +216,6 @@ module.exports = function (grunt) {
           {
             from: '$ACCOUNTID',
             to: '[99, 100, 102, 103, 137, 138, 139, 145]'
-          },
-          {
-            from: '$KPASAPIURL',
-            to: '\'https://kpas-lti.azurewebsites.net/api/\''
           }
         ]
       },
@@ -222,10 +226,6 @@ module.exports = function (grunt) {
           {
             from: '$ACCOUNTID',
             to: '[4, 5]'
-          },
-          {
-            from: '$KPASAPIURL',
-            to: '\'' + process.env.KPAS_URL + '/api/\''
           }
         ]
       },

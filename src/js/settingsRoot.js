@@ -6,5 +6,6 @@ this.mmooc.settingsRoot = {
     feideEnrollRefferers: [
       this.mmooc.hrefQueryString
     ],
+    kpasApiUrl: $KPASAPIURL
 };
 

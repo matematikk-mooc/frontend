@@ -1,6 +1,5 @@
 jQuery(function($) {
 
-  mmooc.utilRoot.redirectToSamlIfUdirCourse();
   mmooc.routes.addRouteForPath(/\/$/, function() {
     var parentId = 'wrapper';
 

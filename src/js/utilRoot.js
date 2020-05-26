@@ -104,13 +104,17 @@ this.mmooc.utilRoot = function() {
       return false;
     },
 
-    redirectToSamlIfUdirCourse: function(){
+    redirectToSamlIfUdirCourse: function(kpasApiUrl){
       try {
         if(!mmooc.utilRoot.isAuthenticated()) {
-          const currentCourseId = mmooc.api.getCurrentCourseId();
-          mmooc.utilRoot.isDeepLinkToUdirCourse(currentCourseId).then( (result) => {
+          const currentUrl = '' + window.location.pathname;
+          const currentCourseId = mmooc.utilRoot.getCourseIdFromUrl(currentUrl);
+          mmooc.utilRoot.isDeepLinkToUdirCourse(currentCourseId, kpasApiUrl).then( (result) => {
                 if (result) {
-                  window.location = "/login/saml"
+                  window.location = "/login/saml";
+                  return true;
+                }else{
+                  return false;
                 }
               }
           )
@@ -119,12 +123,12 @@ this.mmooc.utilRoot = function() {
         console.log(e);
       }
     },
-    isDeepLinkToUdirCourse: async function(currentCourseId) {
+    isDeepLinkToUdirCourse: async function(currentCourseId, kpasApiUrl) {
 
       let requestResult = undefined;
 
       if (currentCourseId) {
-        await $.getJSON(mmooc.settings.kpasApiUrl + "course/" + currentCourseId + "/isudircourse", function(data) {
+        await $.getJSON(kpasApiUrl + "course/" + currentCourseId + "/isudircourse", function(data) {
           requestResult = data.result;
         });
       } else {
@@ -133,5 +137,28 @@ this.mmooc.utilRoot = function() {
       return requestResult;
 
     },
+    getCourseIdFromUrl(currentUrl) {
+      const matches = currentUrl.match(/\/courses\/(\d+)/);
+      if (matches != null) {
+        return parseInt(matches[1], 10);
+      } else if (this._env.group) {
+        // Group pages does not contain course id in URL, but is available via JavaScript variable
+        return this._env.group.context_id;
+      } else if ($('#discussion_container').size() > 0) {
+        const tmp = $(
+            '#discussion_topic div.entry-content header div div.pull-left span a'
+        );
+        if (tmp.length) {
+          const tmpHref = tmp.attr('href');
+          if (tmpHref.length) {
+            const tmpHrefArr = tmpHref.split('/');
+            if (tmpHrefArr.length == 3) {
+              return parseInt(tmpHrefArr[2], 10);
+            }
+          }
+        }
+      }
+      return null;
+    }
   }
 }();

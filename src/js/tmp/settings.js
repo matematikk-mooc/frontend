@@ -21,7 +21,6 @@ this.mmooc.settings = {
   contactPoint: 'kompetansesupport@udir.no',
   platformName: 'UDIR - kompetanseplattform',
   homeOrganization: 'Udir.no',
-  aboutThePlatform: 'https://kompetanseudirno.azureedge.net/udirdesign/omkompetanseudirno.html',
-  kpasApiUrl: $KPASAPIURL
+  aboutThePlatform: 'https://kompetanseudirno.azureedge.net/udirdesign/omkompetanseudirno.html'
 };
 

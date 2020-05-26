@@ -56,7 +56,10 @@ if(document.location.pathname == "/login/canvas") {
 }
 else if (document.location.pathname == "/courses") {
     redirected = mmooc.utilRoot.redirectToEnrollIfCodeParamPassed();
-} 
+} else {
+    redirected = mmooc.utilRoot.redirectToSamlIfUdirCourse(mmooc.settingsRoot.kpasApiUrl);
+}
+
 if(!redirected) {
   const urlParamsObj = mmooc.utilRoot.urlParamsToObject();
   const design = urlParamsObj && urlParamsObj['design'];
@@ -81,3 +84,4 @@ if(!redirected) {
       console.log("Root account:Not loading any special design.");
   }
 }
+
