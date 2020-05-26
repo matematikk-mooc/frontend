@@ -102,28 +102,21 @@ mmooc.greeting = (function() {
       var $downloadDiplomaButton = $content.find(".download-diploma-button");
       var $scriptUrlDiv = $content.find(".download-diploma-scriptId");
       var $diplomaIdDiv = $content.find(".download-diploma-id");
-      var $diplomaId = "";
 
-      if($diplomaIdDiv) {
-        $diplomaId = $diplomaIdDiv.text()
-      }
-
-      if ($downloadDiplomaButton.length && $scriptUrlDiv.length) {
-
+      if ($downloadDiplomaButton.length && $scriptUrlDiv.length && $diplomaIdDiv.length) {
         $('body').on('click', '.download-diploma-button', function () {
-          if ($downloadDiplomaButton.hasClass('btn-done')) {
-              return;
-          }
-
+          $downloadDiplomaButton.attr("disabled", true);
+    
           $('#info').append(mmooc.util.renderTemplateWithData("waitIcon", {}));
 
           var scriptUrl = $scriptUrlDiv.text();
+          var diplomaId = $diplomaIdDiv.text();
 
           mmooc.api.getUserProfile(function (profile) {
             var values = {};
             values["Navn"] = profile.name;
             values["Epost"] = profile.primary_email;
-            values["DiplomaId"] = $diplomaId;
+            values["DiplomaId"] = diplomaId;
             var downloadingDiploma = false;
 
             $.ajax({
@@ -132,7 +125,7 @@ mmooc.greeting = (function() {
                   xhr.addEventListener("progress", function(evt) {
                     if(!downloadingDiploma) {
                       downloadingDiploma = true;
-                      $('#info').html("Laster ned diplomet");
+                      $('#info').html("Mottar diplomet");
                     } else {
                       $('#info').append(".");
                     }
@@ -152,7 +145,6 @@ mmooc.greeting = (function() {
                 console.log(errorThrown);
                 var s = "Diplom ble ikke laget. Følgende gikk galt: " + jqXHR + textStatus + errorThrown;
                 $('#info').html(s);
-                $(".download-diploma-button").addClass('btn-done');
               },
           
               success: function (response) {
@@ -177,7 +169,6 @@ mmooc.greeting = (function() {
           
               complete: function () {
                 console.log('Finished all tasks');
-                $("#info").html("");
               }
             }); //End google call.
           }); //End Canvas user profile callback
