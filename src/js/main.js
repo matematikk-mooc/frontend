@@ -1,4 +1,5 @@
 jQuery(function($) {
+
   mmooc.routes.addRouteForPath(/\/$/, function() {
     var parentId = 'wrapper';
 

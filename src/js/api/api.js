@@ -242,27 +242,7 @@ this.mmooc.api = (function() {
 
     getCurrentCourseId() {
       const currentUrl = '' + this._location.pathname;
-      const matches = currentUrl.match(/\/courses\/(\d+)/);
-      if (matches != null) {
-        return parseInt(matches[1], 10);
-      } else if (this._env.group) {
-        // Group pages does not contain course id in URL, but is available via JavaScript variable
-        return this._env.group.context_id;
-      } else if ($('#discussion_container').size() > 0) {
-        const tmp = $(
-          '#discussion_topic div.entry-content header div div.pull-left span a'
-        );
-        if (tmp.length) {
-          const tmpHref = tmp.attr('href');
-          if (tmpHref.length) {
-            const tmpHrefArr = tmpHref.split('/');
-            if (tmpHrefArr.length == 3) {
-              return parseInt(tmpHrefArr[2], 10);
-            }
-          }
-        }
-      }
-      return null;
+      return mmooc.utilRoot.getCourseIdFromUrl(currentUrl);
     },
     getModuleItemSequence(courseId, moduleItemId, callback, error) {
       this._get({
