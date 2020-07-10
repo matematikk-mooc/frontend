@@ -5,7 +5,6 @@ this.mmooc.tinyMCEEditor = (function () {
     function getGroupNames(userGroups) {
         let groupNames = [];
         for (let i = 0; i < userGroups.length; i++){
-            console.log(userGroups[i].name);
             groupNames.push(userGroups[i].name)
         }
         return groupNames;
