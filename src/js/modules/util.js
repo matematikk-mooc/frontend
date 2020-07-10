@@ -265,10 +265,12 @@ this.mmooc.util = (function () {
         },
         //description":"courseId:360:community:1902:940101808"
         getCountyOrCommunityNumber(groupDescription) {
-            var arr = groupDescription.split(":");
-            for (var i = 0; i < arr.length; i++) {
-                if ((arr[i] == "community") || (arr[i] == "county")) {
-                    return parseInt(arr[i + 1], 10);
+            if (groupDescription !== null) {
+                var arr = groupDescription.split(":");
+                for (var i = 0; i < arr.length; i++) {
+                    if ((arr[i] == "community") || (arr[i] == "county")) {
+                        return parseInt(arr[i + 1], 10);
+                    }
                 }
             }
             return 0;
@@ -615,17 +617,19 @@ this.mmooc.util = (function () {
         executeCallbackWhenObjectExists(functionWithObjectReference, callback) {
             let counter = 0;
             let maxTries = 10;
+            let success = false;
             var objectExistInterval = setInterval(function () {
                 try {
-                    functionWithObjectReference();
-                    callback();
-                    clearInterval(objectExistInterval);
-                    return;
+                    if (!success) {
+                        functionWithObjectReference();
+                        clearInterval(objectExistInterval);
+                        callback();
+                        success = true;
+                    }
                 } catch (e) {
                     counter += 1;
                     if (counter >= maxTries) {
                         clearInterval(objectExistInterval);
-                        return;
                     }
                 }
             }, 1000);

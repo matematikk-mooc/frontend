@@ -377,9 +377,13 @@ jQuery(function($) {
           'Tilbake til diskusjoner'
         );
       }
-      mmooc.api.getUserGroupsForCourse(courseId, (userGroups) => {mmooc.util.tinyMceEditorIsInDOM(
+
+      mmooc.api.getUserGroupsForCourse(courseId, (userGroups) => {
+        mmooc.util.tinyMceEditorIsInDOM(
           () => mmooc.tinyMCEEditor.injectGroupHashtags(userGroups)
-      );});
+        );
+        mmooc.discussionTopics.injectReplyButtonAction(courseId, userGroups);
+      });
     }
   );
 
