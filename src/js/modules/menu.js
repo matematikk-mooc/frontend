@@ -222,7 +222,8 @@ this.mmooc.menu = (function() {
           mmooc.api.getModuleItemSequence(courseId, id, mmooc.menu.handlePrevModuleItem);
         } else {
           var prevButton = $(".module-sequence-footer-button--previous");
-          prevButton.attr("href", prevItem.html_url);
+          var prevButtonLink = $(".module-sequence-footer-button--previous a");
+          prevButtonLink.attr("href", prevItem.html_url);
           mmooc.menu.updateButtonTooltip(prevButton, prevItem);
           prevButton.show();
         }
@@ -281,8 +282,9 @@ this.mmooc.menu = (function() {
       var nextButton = $(".module-sequence-footer-button--next");
 
       if(prevSet) {
-          prevButton.attr("href", prevItem.html_url);
-          mmooc.menu.updateButtonTooltip(prevButton, prevItem);
+        var prevButtonLink = $(".module-sequence-footer-button--previous a");
+        prevButtonLink.attr("href", prevItem.html_url);
+        mmooc.menu.updateButtonTooltip(prevButton, prevItem);
       } else {
           prevButton.hide();
           var id = firstValidItem.id;

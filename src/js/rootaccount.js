@@ -46,7 +46,7 @@ if(document.location.pathname == "/login/canvas") {
 else if (document.location.pathname == "/courses") {
   redirected = mmooc.utilRoot.redirectToEnrollIfCodeParamPassed();
 } else {
-  redirected = mmooc.utilRoot.redirectToSamlIfUdirCourse(mmooc.settingsRoot.kpasApiUrl);
+  //redirected = mmooc.utilRoot.redirectToSamlIfUdirCourse(mmooc.settingsRoot.kpasApiUrl);
 }
 if(!redirected) {
   const urlParamsObj = mmooc.utilRoot.urlParamsToObject();

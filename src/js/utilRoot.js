@@ -123,7 +123,7 @@ this.mmooc.utilRoot = function() {
         console.log(e);
       }
     },
-    isDeepLinkToUdirCourse: async function(currentCourseId, kpasApiUrl) {
+    /*isDeepLinkToUdirCourse: async function(currentCourseId, kpasApiUrl) {
 
       let requestResult = undefined;
 
@@ -136,8 +136,8 @@ this.mmooc.utilRoot = function() {
       }
       return requestResult;
 
-    },
-    getCourseIdFromUrl(currentUrl) {
+    },*/
+    getCourseIdFromUrl : function(currentUrl) {
       const matches = currentUrl.match(/\/courses\/(\d+)/);
       if (matches != null) {
         return parseInt(matches[1], 10);
