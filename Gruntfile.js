@@ -134,11 +134,11 @@ module.exports = function (grunt) {
           },
           {
             from: 'https://udirdesigncss',
-            to: 'https://kompetanseudirno.azureedge.net/udirdesign/mmooc-min.css'
+            to: 'https://kompetanseudirno.azureedge.net/udirdesign/mmooc-min.css?version=4'
           },
           {
             from: 'https://udirdesignjs',
-            to: 'https://kompetanseudirno.azureedge.net/udirdesign/mmooc-min.js'
+            to: 'https://kompetanseudirno.azureedge.net/udirdesign/mmooc-min.js?version=4'
           },
           {
             from: '$KPASAPIURL',

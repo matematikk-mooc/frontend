@@ -65,7 +65,7 @@ this.mmooc.utilRoot = function() {
             $("#content > div > div > div > div > div.ic-Login-header > div.ic-Login-header__links").hide();
         }
         else {
-           window.location.href = '/login/saml';
+           window.location.href = '/login/saml/2';
            return true;
         }
       }
@@ -111,7 +111,7 @@ this.mmooc.utilRoot = function() {
           const currentCourseId = mmooc.utilRoot.getCourseIdFromUrl(currentUrl);
           mmooc.utilRoot.isDeepLinkToUdirCourse(currentCourseId, kpasApiUrl).then( (result) => {
                 if (result) {
-                  window.location = "/login/saml";
+                  window.location = "/login/saml/2";
                   return true;
                 }else{
                   return false;
