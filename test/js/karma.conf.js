@@ -13,7 +13,6 @@ module.exports = function (config) {
             'spec/**/*.js'
         ],
         exclude: [
-            'src/test/js/karma.conf.js',
             'src/js/3party/**/*.js',
             'src/js/main.js',
             'spec/api_spec.js',

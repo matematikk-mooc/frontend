@@ -176,15 +176,6 @@ module.exports = function(grunt) {
 			}
 		},
 
-        karma: {
-            unitTest: {
-                configFile: 'test/js/karma.conf.js',
-                autoWatch: false,
-                singleRun: true,
-                browsers: process.env.KARMA_BROWSER == null ? ['Firefox', 'Chrome'] : ['Firefox', 'Chrome', '<%= extraBrowser %>']
-            }
-        }
-
 	});
 
 	grunt.registerTask('make', [
@@ -202,7 +193,6 @@ module.exports = function(grunt) {
 
 	grunt.registerTask('runTest', [
 		'connect:test',
-    'karma:unitTest'
 	]);
 
 	grunt.registerTask('test', [
