@@ -386,11 +386,14 @@ this.mmooc.menu = function() {
                     });
                 }
                 
-                // Get help from teacher by clicking a button
-                var getHelpButtonFromteacherButtonHTML = mmooc.util.renderTemplateWithData("groupdiscussionGetHelpFromTeacher", {hoverOverText: mmooc.i18n.CallForInstructorHoverOverText});
-                //document.getElementById('content').insertAdjacentHTML('afterbegin', getHelpButtonFromteacherButtonHTML);
-                $("#discussion-managebar > div > div > div.pull-right").append(getHelpButtonFromteacherButtonHTML);
-                _addClickEventOnGetHelpFromTeacherButton();
+                if(!mmooc.settings.disableGetHelpFromTeacherButton)
+                {
+                    // Get help from teacher by clicking a button
+                    var getHelpButtonFromteacherButtonHTML = mmooc.util.renderTemplateWithData("groupdiscussionGetHelpFromTeacher", {hoverOverText: mmooc.i18n.CallForInstructorHoverOverText});
+                    //document.getElementById('content').insertAdjacentHTML('afterbegin', getHelpButtonFromteacherButtonHTML);
+                    $("#discussion-managebar > div > div > div.pull-right").append(getHelpButtonFromteacherButtonHTML);
+                    _addClickEventOnGetHelpFromTeacherButton();
+                }
             }
 
             var groupId = mmooc.api.getCurrentGroupId();

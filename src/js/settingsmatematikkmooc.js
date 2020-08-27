@@ -8,6 +8,7 @@ this.mmooc.settings = {
     'disablePeerReviewButton' : true,
     'removeGlobalGradesLink' : true,
     'displayDiscussionsTab' : false,
+    'disableGetHelpFromTeacherButton' : false,
     'displayGroupsTab' : false,
     'help' : true,
     'removeGroupsLink' : true,

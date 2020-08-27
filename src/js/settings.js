@@ -9,6 +9,7 @@ this.mmooc.settings = {
     'removeGlobalGradesLink' : true,
     'displayDiscussionsTab' : true,
     'displayGroupsTab' : true,
+    'disableGetHelpFromTeacherButton' : true,
     'help' : true,
     'removeGroupsLink' : true,
     'privacyPolicyLink' : 'http://matematikk-mooc.github.io/privacypolicy.html',
