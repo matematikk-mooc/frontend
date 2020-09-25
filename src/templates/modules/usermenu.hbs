@@ -1,9 +1,11 @@
 <ul id="user-menu">
+    {{#if displayInboxMenu}}
     <li class="mmooc-menu-item">
         <a href="/conversations{{queryString}}" class="mmooc-menu-item-title conversations">
             <span id="mmooc-unread-messages-count"></span>
         </a>
     </li>
+    {{/if}}
     {{#if alertMenuItem}}
         <li class="mmooc-menu-item" id="mmooc-menu-item-varsler">
             <a href="#" class="mmooc-menu-item-title notifications">
