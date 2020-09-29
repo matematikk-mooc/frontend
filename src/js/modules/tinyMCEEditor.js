@@ -30,6 +30,11 @@ this.mmooc.tinyMCEEditor = (function () {
         return hashtaggedGroupNames;
     }
 
+    function htmlDecode(encoded) {
+        const doc = new DOMParser().parseFromString(encoded, "text/html");
+        return doc.documentElement.textContent;
+    }
+
     return {
         injectGroupHashtags: function (userGroups) {
             const groupNames = getGroupNames(userGroups);
@@ -37,8 +42,11 @@ this.mmooc.tinyMCEEditor = (function () {
             const hashtaggedHyphenatedGroupNames = hashtagGroupNames(hyphenatedGroupNames);
             const joinedNames = hashtaggedHyphenatedGroupNames.join(" ").toString() + "";
             const htmlElementWithGroupNames = "<p>&nbsp;</p><p>&nbsp;</p><p>" + joinedNames + "</p>";
-            if (tinyMCE.activeEditor.getContent().search(joinedNames) === -1) {
-                tinyMCE.activeEditor.setContent(tinyMCE.activeEditor.getContent() + htmlElementWithGroupNames);
+            
+            const rawContent = tinyMCE.activeEditor.getContent();
+            const decodedContent = htmlDecode(rawContent);
+            if (decodedContent.search(joinedNames) === -1) {
+                tinyMCE.activeEditor.setContent(rawContent + htmlElementWithGroupNames);
             }
         }
     }
