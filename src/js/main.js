@@ -317,6 +317,13 @@ jQuery(function($) {
       } else {
         mmooc.groups.interceptLinksToTeacherGroupPage();
       }
+
+      mmooc.api.getUserGroupsForCourse(courseId, (userGroups) => {
+        mmooc.util.tinyMceEditorIsInDOM(
+          () => mmooc.tinyMCEEditor.injectGroupHashtags(userGroups)
+        );
+        mmooc.discussionTopics.injectReplyButtonAction(userGroups);
+      });
     }
   );
 
@@ -383,7 +390,7 @@ jQuery(function($) {
         mmooc.util.tinyMceEditorIsInDOM(
           () => mmooc.tinyMCEEditor.injectGroupHashtags(userGroups)
         );
-        mmooc.discussionTopics.injectReplyButtonAction(courseId, userGroups);
+        mmooc.discussionTopics.injectReplyButtonAction(userGroups);
       });
     }
   );
