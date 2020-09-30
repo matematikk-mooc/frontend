@@ -17,10 +17,11 @@ this.mmooc.settings = {
   displayDiscussionsTab : false,
   displayAlertsMenuItem : false,
   displayCallForAssistanceButtonInGroupDisccussions : false,
+  displayInboxMenu: false,
   privacyPolicyLink: 'https://kompetanseudirno.azureedge.net/udirdesign/privacypolicy.html',
   contactPoint: 'kompetansesupport@udir.no',
   platformName: 'UDIR - kompetanseplattform',
   homeOrganization: 'Udir.no',
-  aboutThePlatform: 'https://kompetanseudirno.azureedge.net/udirdesign/omkompetanseudirno.html'
+  aboutThePlatform: 'https://kompetanseudirno.azureedge.net/udirdesign/omkompetanseudirno.html',
 };
 
