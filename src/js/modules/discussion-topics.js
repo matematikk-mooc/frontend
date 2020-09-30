@@ -366,14 +366,16 @@ this.mmooc.discussionTopics = (function () {
                     .show();
             });
         },
-        injectReplyButtonAction(courseId, userGroups) {
+        injectReplyButtonAction(userGroups) {
             const action = () => mmooc.util.tinyMceEditorIsInDOM(
                     () => mmooc.tinyMCEEditor.injectGroupHashtags(userGroups)
                 );
 
-            document.querySelector("#discussion_topic > div.discussion-entry-reply-area.reply-box-container.hide-if-collapsed.hide-if-replying > a").addEventListener("click",
-                action
-            );
+            const button = document.querySelector("#discussion_topic > div.discussion-entry-reply-area.reply-box-container.hide-if-collapsed.hide-if-replying > a");
+            if (button !== null) {
+                button.addEventListener("click", action);
+            }
+
             const subReplyButtons = document.querySelectorAll('#discussion_subentries > ul > li > div.bottom-reply-with-box > div.discussion-entry-reply-area.reply-box-container.hide-if-collapsed.hide-if-replying > a');
             for (let i = 0; i<subReplyButtons.length; i++){
                 const subReplyButton = subReplyButtons[i];
