@@ -312,6 +312,21 @@ this.mmooc.util = (function() {
       return mmooc.api.getRoles() !== null;
     },
 
+    getGroupsInfo(groups) {
+      var groupsInfo = {};
+      for(var i = 0; i < groups.length; i++) {
+        if(groups[i].description) {
+          var s = groups[i].description.split(":");
+          if(s[2] == "community")
+          {
+            groupsInfo.municipalityId = s[3];
+          } else if(s[2] == "county") {
+            groupsInfo.countyId = s[3];
+          }
+        }
+      }
+      return groupsInfo;
+    },
     firstIncompleteItemHtmlUrl: function(items, bIncludeIndentedItems) {
       var firstHtmlUrl = null;
       var firstItem = null;

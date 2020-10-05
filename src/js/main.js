@@ -469,13 +469,16 @@ jQuery(function($) {
       mmooc.greeting.enableDownloadDiplomaButtonIfNecessary); //This is the newest method which should replace the two old ones.
   
     var courseId = mmooc.api.getCurrentCourseId();
-    if ($("#kpas-lti-info").length) {
+
+    if ($("#kpas-lti-info").length ||
+        $("#kommune-statistikk").length ||
+        $("#fylke-statistikk").length) {
       const error = error => console.error('error calling api', error);
       mmooc.api.getUserGroupsForCourse(courseId, function(groups) {
-        if(groups.length) {
-          $("#kpas-lti-info").show();
-          $("#kpas-lti-warning").hide();
-        }  
+        mmooc.kpas.showInfo(groups);
+        var groupsInfo = mmooc.util.getGroupsInfo(groups);
+        mmooc.kpas.createMunicipalityDiagram(courseId, groupsInfo);
+        mmooc.kpas.createCountyDiagram(courseId, groupsInfo);
       }, error);
     }
   });
