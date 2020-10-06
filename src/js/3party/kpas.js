@@ -7,6 +7,9 @@ this.mmooc.kpas = (function() {
     var hrefPrefix = 'https://statistics-api.azurewebsites.net/api/statistics/';
 
     return {
+        getLeftMargin(data) {
+        
+        },
         createDiagram : function(data, elementId, name) {
             var graphicId = name+ "-graphic".trim();
             var htmlCode = mmooc.util.renderTemplateWithData(
@@ -16,18 +19,18 @@ this.mmooc.kpas = (function() {
               );
               document
                 .getElementById(elementId)
-                .insertAdjacentHTML('afterbegin', htmlCode);
+                .innerHTML = htmlCode;
 
             //set up svg using margin conventions - we'll need plenty of room on the left for labels
             var margin = {
-                top: 15,
-                right: 25,
-                bottom: 15,
+                top: 0,
+                right: 0,
+                bottom: 0,
                 left: 250
             };
     
             var width = 960 - margin.left - margin.right,
-                height = 500 - margin.top - margin.bottom;
+                height = data.length * 20 - margin.top - margin.bottom;
     
             var svg = d3.select("#"+graphicId).append("svg")
                 .attr("width", width + margin.left + margin.right)
@@ -98,22 +101,36 @@ this.mmooc.kpas = (function() {
             $("#kpas-lti-info").show();
             $("#kpas-lti-warning").hide();
         },
+        getJsonData : function(url, progressId, name, callback) {
+            progressId.innerHTML = "Laster statistikk for " + name + "<span class='loading-gif'></span>";;
+            d3.json(url)
+            .on("progress", function() { 
+                console.log("progress", d3.event.loaded); })
+            .on("load", function(json) { 
+                console.log("success!"); callback(json) })
+            .on("error", function(error) { 
+                progressId.innerHTML = error
+                console.log("failure!", error); })
+            .get();
+        },
         createMunicipalityDiagram: function(courseId, groupsInfo) {
             if (groupsInfo.municipalityId === undefined || courseId === undefined) {
                 return null;
             }
-            d3.json(hrefPrefix + "primary_schools/municipality/" + groupsInfo.municipalityId + "/course/" + courseId, function(error, result) {
+            var elementId = "kommune-statistikk";
+            var progressId = document.getElementById(elementId);
+
+            var url = hrefPrefix + "primary_schools/municipality/" + groupsInfo.municipalityId + "/course/" + courseId;
+            mmooc.kpas.getJsonData(url, progressId, "kommunen", function(result) {
                 var data = result.Result[0].schools;
-                if (error) {
-                    throw error;
-                }
     
                 //sort bars based on value
                 data = data.sort(function (a, b) {
                     return d3.ascending(a.enrollment_percentage_category, b.enrollment_percentage_category);
                 })
     
-                mmooc.kpas.createDiagram(data, "kommune-statistikk", result.Result[0].municipality_name);
+                var name = result.Result[0].municipality_name;
+                mmooc.kpas.createDiagram(data, elementId, name);
             });
             return null;
         },
@@ -121,21 +138,21 @@ this.mmooc.kpas = (function() {
             if (groupsInfo.countyId === undefined || courseId === undefined) {
                 return null;
             }
-            d3.json(hrefPrefix +"primary_schools/county/" + groupsInfo.countyId + "/course/" + courseId, function(error, result) {
+            var elementId = "fylke-statistikk";
+            var progressId = document.getElementById(elementId);
+            var url = hrefPrefix +"primary_schools/county/" + groupsInfo.countyId + "/course/" + courseId;
+            mmooc.kpas.getJsonData(url, progressId, "fylket", function(result) {
                 var data = result.Result[0].municipalities;
-                if (error) {
-                    throw error;
-                }
     
                 //sort bars based on value
                 data = data.sort(function (a, b) {
                     return d3.ascending(a.enrollment_percentage_category, b.enrollment_percentage_category);
                 })
     
-                mmooc.kpas.createDiagram(data, "fylke-statistikk", result.Result[0].county_name);
+                var name = result.Result[0].county_name;
+                mmooc.kpas.createDiagram(data, elementId, name);
             });
             return null;
         },
     }
 })();
-$.getScript('https://d3js.org/d3.v3.min.js');
