@@ -5,10 +5,17 @@ this.mmooc = this.mmooc || {};
 //https://medium.com/@pointbmusic/youtube-api-checklist-c195e9abaff1
 this.mmooc.kpas = (function() {
     var hrefPrefix = 'https://statistics-api.azurewebsites.net/api/statistics/';
-
+    
     return {
         getLeftMargin(data) {
-        
+            var l = 0;
+            for(var i = 0; i < data.length; i++) {        
+                l = Math.max(data[i].name.length, l);
+            }
+            return l*10;
+        },
+        drawChart() {
+
         },
         createDiagram : function(data, elementId, name) {
             var graphicId = name+ "-graphic".trim();
@@ -26,7 +33,7 @@ this.mmooc.kpas = (function() {
                 top: 0,
                 right: 0,
                 bottom: 0,
-                left: 250
+                left: mmooc.kpas.getLeftMargin(data)
             };
     
             var width = 960 - margin.left - margin.right,
@@ -40,9 +47,7 @@ this.mmooc.kpas = (function() {
     
             var x = d3.scale.linear()
                 .range([0, width])
-                .domain([0, d3.max(data, function (d) {
-                    return d.enrollment_percentage_category;
-                })]);
+                .domain([0, 5]);
     
             var y = d3.scale.ordinal()
                 .rangeRoundBands([height, 0], .1)
