@@ -498,7 +498,10 @@ this.mmooc.menu = (function() {
       var menu = document.getElementById('menu');
       if (menu != null && mmooc.util.isAuthenticated()) {
         var html = mmooc.util.renderTemplateWithData('usermenu', {
-          alertMenuItem: mmooc.settings.displayAlertsMenuItem, user: mmooc.api.getUser(), queryString: mmooc.hrefQueryString
+          alertMenuItem: mmooc.settings.displayAlertsMenuItem, 
+          user: mmooc.api.getUser(), 
+          queryString: mmooc.hrefQueryString,
+          displayInboxMenu: mmooc.settings.displayInboxMenu,
         });
         menu.insertAdjacentHTML('afterend', html);
 
