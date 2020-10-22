@@ -15,7 +15,34 @@
             &#context_external_tool_1_menu_item { /* External tools hidden as default. They should be accessed from the course page instead. */
                 display: none;
             }
-            
+        //KURSP-202
+            button{
+                &#global_nav_profile_link {
+                display: none;
+                }
+                &#global_nav_history_link{
+                display:none;
+                }
+                &#global_nav_courses_link {
+                // courses and Groups menu hidden as default, since we replace it with our own Courses link
+                display: none;
+                }
+    
+                &#global_nav_accounts_link {
+                // admin link hidden as default, since we replace it with our own admin link
+                display: none;
+                }
+    
+                &#global_nav_groups_link {
+                // groups link hidden as default, since we replace it with our own groups link
+                display: none;
+                }
+    
+                &#global_nav_calendar_link {
+                // calendar link hidden as default, since we replace it with our own calendar link
+                display: none;
+                }
+            }            
             a {
                 padding-left: 18px;
                 padding-right: 18px;
