@@ -3,7 +3,8 @@
 module.exports = function (grunt) {
   // Helper function to load pre-defined grunt tasks
   require('load-grunt-tasks')(grunt);
-
+  var udv = grunt.option('udv');
+  
   // Configures grunt tasks
   grunt.initConfig({
     clean: {
@@ -122,7 +123,7 @@ module.exports = function (grunt) {
         }
       }
     },
-
+    
     replace: {
       production: {
         src: ['tmp/mmooc-min.css','tmp/rootaccount.css', 'dist/mmooc-min.js', 'tmp/rootaccount.js', 'tmp/subaccount.js'],
@@ -134,11 +135,11 @@ module.exports = function (grunt) {
           },
           {
             from: 'https://udirdesigncss',
-            to: 'https://kompetanseudirno.azureedge.net/udirdesign/mmooc-min.css?version=5'
+            to: 'https://kompetanseudirno.azureedge.net/udirdesign/mmooc-min.css?version='+udv
           },
           {
             from: 'https://udirdesignjs',
-            to: 'https://kompetanseudirno.azureedge.net/udirdesign/mmooc-min.js?version=5'
+            to: 'https://kompetanseudirno.azureedge.net/udirdesign/mmooc-min.js?version='+udv
           },
           {
             from: '$KPASAPIURL',

@@ -557,6 +557,8 @@ jQuery(function($) {
 
   try {
     mmooc.menu.injectGroupsPage();
+    mmooc.multilanguage.init();
+    //mmooc.multilanguage.displayLanguageSelector();
     mmooc.groups.changeGroupListURLs(document.location.href);
 
     mmooc.pages.updateSidebarWhenMarkedAsDone();

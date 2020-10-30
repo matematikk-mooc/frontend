@@ -59,6 +59,8 @@ this.mmooc.coursePage = (function() {
           .getElementById('course_home_content')
           .insertAdjacentHTML('beforebegin', modulesHTML);
 
+        mmooc.multilanguage.perform();
+  
         //Canvas case: Slow loading for group discussions when large number of groups Case # 05035288 
         //Display popup box when loading
         mmooc.util.postModuleCoursePageProcessing();

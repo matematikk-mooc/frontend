@@ -106,7 +106,34 @@
           float: none;
           min-width: 250px;
         }
+        //KURSP-202
+        button{
+          &#global_nav_profile_link {
+            display: none;
+          }
+          &#global_nav_history_link{
+            display:none;
+          }
+          &#global_nav_courses_link {
+            // courses and Groups menu hidden as default, since we replace it with our own Courses link
+            display: none;
+          }
 
+          &#global_nav_accounts_link {
+            // admin link hidden as default, since we replace it with our own admin link
+            display: none;
+          }
+
+          &#global_nav_groups_link {
+            // groups link hidden as default, since we replace it with our own groups link
+            display: none;
+          }
+
+          &#global_nav_calendar_link {
+            // calendar link hidden as default, since we replace it with our own calendar link
+            display: none;
+          }
+        }
         a {
           padding-left: 18px;
           padding-right: 18px;
@@ -143,7 +170,7 @@
             border-bottom: 4px solid @white;
             padding-top: 8px;
           }
-
+          
           &#global_nav_dashboard_link,
           &#global_nav_conversations_link {
             display: none;
@@ -153,7 +180,7 @@
             // hides icon used in new UI
             display: none;
           }
-
+          //WILL BE DEAD CODE COME NEXT RELEASE(NOV 2020) KURSP-202
           &#global_nav_profile_link {
             display: none;
 
@@ -166,7 +193,10 @@
               display: none;
             }
           }
-
+          //WILL BE DEAD CODE COME NEXT RElEASE (NOV 2020) KURSP-202
+          &#global_nav_history_link{
+            display:none;
+          }
           &#global_nav_courses_link {
             // courses and Groups menu hidden as default, since we replace it with our own Courses link
             display: none;
