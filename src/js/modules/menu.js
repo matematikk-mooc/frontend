@@ -152,7 +152,6 @@ this.mmooc.menu = (function() {
 
   var stylesheet = createStyleSheet();
 
-
   return {
     listModuleItems: function() {
       mmooc.api.getCurrentModule(function(module) {
