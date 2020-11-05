@@ -54,10 +54,10 @@ class MultilangUtils {
 
     static applyColorCodingInEditor() {
         function doApply() {
-            if (typeof (tinymce) != 'undefined') {
-                let iframe = document.getElementById('wiki_page_body_ifr');
-                let doc = iframe.contentWindow.document;
-                let editorCss = doc.createElement('style');
+            const iframe = document.getElementById('wiki_page_body_ifr');
+            if (iframe !== null) {
+                const doc = iframe.contentWindow.document;
+                const editorCss = doc.createElement('style');
                 editorCss.innerHTML = `
                                     .language:lang(se) {
                                     background-color: LIGHTCYAN;
@@ -68,7 +68,7 @@ class MultilangUtils {
                             `;
                 doc.head.appendChild(editorCss);
             } else {
-                setTimeout(uioTwoLangEditor, 500);
+                setTimeout(MultilangUtils.applyColorCodingInEditor, 500);
             }
         }
         doApply();
@@ -76,10 +76,10 @@ class MultilangUtils {
 
     static insertCss() {
         const langCode = MultilangUtils.getLanguageCode();
-        const uionewcss = document.createElement('style');
-                
-        uionewcss.innerHTML = MultilangUtils.createCss(langCode);
-        document.head.appendChild(uionewcss);
+        const styleElement = document.createElement('style');
+
+        styleElement.innerHTML = MultilangUtils.createCss(langCode);
+        document.head.appendChild(styleElement);
     }
 
     static makeSpansOnPage() {
