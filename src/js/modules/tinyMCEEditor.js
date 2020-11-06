@@ -41,7 +41,7 @@ this.mmooc.tinyMCEEditor = (function () {
             const hyphenatedGroupNames = hyphenateGroupNames(groupNames);
             const hashtaggedHyphenatedGroupNames = hashtagGroupNames(hyphenatedGroupNames);
             const joinedNames = hashtaggedHyphenatedGroupNames.join(" ").toString() + "";
-            const htmlElementWithGroupNames = "<p>&nbsp;</p><p>&nbsp;</p><p>" + joinedNames + "</p>";
+            const htmlElementWithGroupNames = "<p>&nbsp;</p><p>&nbsp;</p><p><span style=\"font-size: 10pt; color: gray;\">" + joinedNames + "</span></p>";
             
             const rawContent = tinyMCE.activeEditor.getContent();
             const decodedContent = htmlDecode(rawContent);
