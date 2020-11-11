@@ -1,4 +1,14 @@
 <div id="mmooc-course-tabs-container" {{#unless menuItems.length}} class="no-tabs" {{subtitle}}{{/unless}}>
+    <div id="mmooc-course-language-container">
+        <span id="mmoc-course-language-selector" >
+            <span>Språk / Giella</span>
+            <select name="language" id="mmoc-course-language-select">
+                {{#each languages}}
+                    <option value="{{this.code}}">{{this.name}}</option>
+                {{/each}}
+            </select>
+        </span>
+    </div>
     <div id="mmooc-course-tabs-container-inner">
 
         <h1>{{title}}</h1>

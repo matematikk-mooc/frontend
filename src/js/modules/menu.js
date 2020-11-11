@@ -13,9 +13,14 @@ this.mmooc.menu = (function() {
         menuItems: menuItems,
         selectedMenuItem: selectedMenuItem,
         title: title,
-        subtitle: subtitle
+        subtitle: subtitle,
+        languages: MultilangUtils.languages(),
       });
       document.getElementById('header').insertAdjacentHTML('afterend', html);
+
+      const langSelect = document.getElementById('mmoc-course-language-select');
+      langSelect.value = MultilangUtils.getLanguageCode();
+      langSelect.addEventListener('change', event => MultilangUtils.setActiveLanguage(event.target.value));
     }
 
     var menuItems = [];
@@ -157,17 +162,16 @@ this.mmooc.menu = (function() {
       mmooc.api.getCurrentModule(function(module) {
         var courseId = mmooc.api.getCurrentCourseId();
         var html = "";
-        if(mmooc.util.isActiveCourseRoleBased() && mmooc.util.isPrincipal())
-        {
+
+        if(mmooc.util.isActiveCourseRoleBased() && mmooc.util.isPrincipal()) {
           html = mmooc.util.renderTemplateWithData('moduleitemsprincipal', {
             backToCoursePage: mmooc.i18n.BackToCoursePage,
             module: module,
             courseId: courseId,
             course: mmooc.util.course
           });
-        }
-        else
-        {
+        } else {
+
           html = mmooc.util.renderTemplateWithData('moduleitems', {
             backToCoursePage: mmooc.i18n.BackToCoursePage,
             module: module,
@@ -178,12 +182,12 @@ this.mmooc.menu = (function() {
             mmooc.menu.updatePrevAndNextButtons(courseId, module);
           }
         }
-        
-        
+
         if (document.getElementById('left-side')) {
           document
             .getElementById('left-side')
             .insertAdjacentHTML('afterbegin', html);
+            mmooc.multilanguage.perform();
         }
         //Canvas case: Slow loading for group discussions when large number of groups Case # 05035288 
         //Display popup box when loading

@@ -61,18 +61,44 @@ body.embedded #content {
 #main {
   background: @backgroundColor;
   border: none !important;
-  max-width: 1200px;
+  max-width: @maxWidth;
   margin: 0 auto;
 }
 
 #mmooc-course-tabs-container {
   background: #fff;
-  padding-top: 40px;
   margin-bottom: 30px;
   border-bottom: 3px solid #dcdcdc;
 
   h1 {
     margin: 0;
+  }
+}
+
+#mmooc-course-language-container {
+  height: 40px;
+  display: flex;
+  justify-content: end;
+  max-width: @maxWidth;
+  margin: 0 auto;
+
+  @media (min-width: @smallScreenCutoff) {
+    #mmoc-course-language-selector {
+      min-width: @userMenuMinWidth + 40px;
+    }
+  }
+
+  @media (max-width: @smallScreenCutoff) {
+    #mmoc-course-language-selector {
+      min-width: 0;
+      justify-content: end;
+    }
+  }
+}
+
+@media screen and (max-width: 200px) {
+  #mmooc-course-language-container {
+    justify-content: start;
   }
 }
 

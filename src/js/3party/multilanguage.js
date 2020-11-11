@@ -3,10 +3,29 @@
 // Utility class to keep utility functions out of global scope
 class MultilangUtils {
     static languages() {
-        return ['nb', 'se'];
+        return [
+            { code: 'nb', name: "Norsk" },
+            { code: 'se', name: "Sápmi" },
+        ];
+    }
+
+    static makeSpansForSelectors(selectors) {
+        selectors.map(selector => document.querySelectorAll(selector))
+            .flatMap(nodeList => Array.from(nodeList))
+            .forEach(node => {
+                const spanned = MultilangUtils.makeSpansOf(node);
+                if (spanned !== null) {
+                    node.innerHTML = spanned;
+                }
+            });
     }
 
     static makeSpansOf(element) {
+        // If there are child nodes that are not text nodes, abort. It should already be translated
+        if (!Array.from(element.childNodes).every(childNode => childNode.nodeType === 3)) {
+            return null;
+        }
+
         //Split the elements content with '|', then check each segment for language code and make <span>-elements.
         const splitArray = element.textContent.trim().split("|");
         let newContent = '';
@@ -18,6 +37,7 @@ class MultilangUtils {
                 newContent += splitArray[i];
             }
         }
+
         return newContent; //HTML-string with span-tags
     }
 
@@ -34,12 +54,16 @@ class MultilangUtils {
         return document.cookie.replace(/(?:(?:^|.*;\s*)courselanguage\s*\=\s*([^;]*).*$)|^.*$/, "$1");
     }
 
+    static setLanguageCookie(languageCode) {
+        document.cookie = `courselanguage=${languageCode}; SameSite=Strict`;
+    }
+
     static getLanguageCode() {
         const langCode = MultilangUtils.getLanguageParameter();
         if (langCode) {
             return langCode;
         } else if (document.cookie.split(';').some((item) => item.trim().startsWith('courselanguage='))) {
-            return getLanguageCookie();
+            return MultilangUtils.getLanguageCookie();
         } else {
             return 'nb';
         }
@@ -47,9 +71,15 @@ class MultilangUtils {
 
     static createCss(activeLang) {
         return this.languages().map(l => {
-            const displayValue = activeLang.toLowerCase() === l ? 'unset' : 'none';
-            return `.language:lang(${l}) {display:${displayValue};}`
+            const displayValue = activeLang.toLowerCase() === l.code ? 'unset' : 'none';
+            return `.language:lang(${l.code}) {display:${displayValue};}`
         }).join(" ");
+    }
+
+    static setActiveLanguage(activeLang) {
+        MultilangUtils.setLanguageCookie(activeLang);
+        const styleElement = document.getElementById('language-style');
+        styleElement.innerHTML = MultilangUtils.createCss(activeLang);
     }
 
     static applyColorCodingInEditor() {
@@ -64,8 +94,7 @@ class MultilangUtils {
                                     }
                                     .language:lang(nb) {
                                     background-color: MISTYROSE;
-                                    }
-                            `;
+                                    }`;
                 doc.head.appendChild(editorCss);
             } else {
                 setTimeout(MultilangUtils.applyColorCodingInEditor, 500);
@@ -77,6 +106,7 @@ class MultilangUtils {
     static insertCss() {
         const langCode = MultilangUtils.getLanguageCode();
         const styleElement = document.createElement('style');
+        styleElement.id = 'language-style';
 
         styleElement.innerHTML = MultilangUtils.createCss(langCode);
         document.head.appendChild(styleElement);
@@ -101,29 +131,22 @@ class MultilangUtils {
         }
         */
 
-        const tooltips = document.querySelectorAll('div.tooltiptext');
-        for (let i = 0; i < tooltips.length; i++) {
-            tooltips[i].innerHTML = MultilangUtils.makeSpansOf(tooltips[i]);
-        }
-        const moduleNames = document.querySelectorAll('a.mmooc-module-name');
-        for (let i = 0; i < moduleNames.length; i++) {
-            moduleNames[i].innerHTML = MultilangUtils.makeSpansOf(moduleNames[i]);
-        }
+        const selectors = [
+            '.translate',
+            'div.tooltiptext',
+            '.show-content.user_content h1.page-title',
+            'a.mmooc-module-name',
+        ];
 
         if (location.pathname.endsWith('/modules')) {
-            const linktitles = document.querySelectorAll('a.title');
-            for (let i = 0; i < linktitles.length; i++) {
-                linktitles[i].innerHTML = MultilangUtils.makeSpansOf(linktitles[i]);
-            }
-            const modulenames = document.querySelectorAll('span.name');
-            for (let i = 0; i < modulenames.length; i++) {
-                modulenames[i].innerHTML = MultilangUtils.makeSpansOf(modulenames[i]);
-            }
-            const subtitlenames = document.querySelectorAll('span.title');
-            for (let i = 0; i < subtitlenames.length; i++) {
-                subtitlenames[i].innerHTML = MultilangUtils.makeSpansOf(subtitlenames[i]);
-            }
+            selectors.push(
+                'a.title',
+                'span.name',
+                'span.title',
+            );
         }
+
+        MultilangUtils.makeSpansForSelectors(selectors);
     }
 }
 
@@ -131,12 +154,16 @@ this.mmooc = this.mmooc || {};
 
 this.mmooc.multilanguage = (function () {
     return {
-        perform: function () {
+        perform: () => {
             if (location.pathname.endsWith('/edit')) {
                 MultilangUtils.applyColorCodingInEditor();
             } else {
-                MultilangUtils.insertCss();
                 MultilangUtils.makeSpansOnPage();
+            }
+        },
+        insertCss: () => {
+            if (!location.pathname.endsWith('/edit')) {
+                MultilangUtils.insertCss();
             }
         }
     }

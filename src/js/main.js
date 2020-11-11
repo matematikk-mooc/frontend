@@ -560,7 +560,6 @@ jQuery(function($) {
 
   try {
     mmooc.menu.injectGroupsPage();
-    mmooc.multilanguage.perform();
     //mmooc.multilanguage.displayLanguageSelector();
     mmooc.groups.changeGroupListURLs(document.location.href);
 
@@ -573,4 +572,12 @@ jQuery(function($) {
   }
 
   $("#application").show();
+
+  try {
+    // Call multilanguage.perform() last to catch all relevant DOM content
+    mmooc.multilanguage.insertCss();
+    mmooc.multilanguage.perform();
+  } catch (e) {
+    console.log(e);
+  }
 });
