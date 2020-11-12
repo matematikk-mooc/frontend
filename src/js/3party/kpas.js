@@ -231,12 +231,12 @@ this.mmooc.kpas = (function() {
             $("#kpas-lti-info").show();
         },
         getJsonData : function(url, progressId, name, callback) {
-            $(progressId).innerHTML = "Laster statistikk for " + name + "<span class='loading-gif'></span>";;
+            $(progressId).html("Laster statistikk for " + name + "<span class='loading-gif'></span>");
             d3.json(url)
             .on("progress", function() { 
                 console.log("progress", d3.event.loaded); })
             .on("load", function(json) { 
-                $(progressId).innerHTML = "";
+                $(progressId).html("");
                 console.log("success!"); callback(json) })
             .on("error", function(error) { 
                 progressId.innerHTML = error
@@ -251,7 +251,7 @@ this.mmooc.kpas = (function() {
             if($(graphicId).length == 0) {
                 return;
             }
-            var progressId = "#kommune-statistikk-progress";
+            var progressId = "#kommune-fremdrift";
 
             var url = hrefPrefix + "primary_schools/municipality/" + groupsInfo.municipalityId + "/course/" + courseId;
             mmooc.kpas.getJsonData(url, progressId, "kommunen", function(result) {
@@ -259,11 +259,13 @@ this.mmooc.kpas = (function() {
     
                 //sort bars based on value
                 data = data.sort(function (a, b) {
-                    return d3.ascending(a.enrollment_percentage_category, b.enrollment_percentage_category);
+                    return d3.ascending(a.name, b.name);
                 })
     
-                var name = result.Result[0].municipality_name;
-                //mmooc.kpas.createDiagram(data, elementId, name);
+                var kommuneNavnId = "#kommune-navn"
+                if($(kommuneNavnId).length != 0) {
+                    $(kommuneNavnId).html(result.Result[0].municipality_name);
+                }
                 mmooc.kpas.createDiagram(graphicId, data, "Skole", "Prosentkategori");
             });
             return null;
@@ -276,18 +278,20 @@ this.mmooc.kpas = (function() {
             if($(graphicId).length == 0) {
                 return;
             }
-            var progressId = "#fylke-statistikk-progress";
+            var progressId = "#fylke-fremdrift";
             var url = hrefPrefix +"primary_schools/county/" + groupsInfo.countyId + "/course/" + courseId;
             mmooc.kpas.getJsonData(url, progressId, "fylket", function(result) {
                 var data = result.Result[0].municipalities;
     
                 //sort bars based on value
                 data = data.sort(function (a, b) {
-                    return d3.ascending(a.enrollment_percentage_category, b.enrollment_percentage_category);
+                    return d3.ascending(a.name, b.name);
                 })
     
-                var name = result.Result[0].county_name;
-                //mmooc.kpas.createDiagram(data, elementId, name);
+                var fylkeNavnId = "#fylke-navn"
+                if($(fylkeNavnId).length != 0) {
+                    $(fylkeNavnId).html(result.Result[0].county_name);
+                }
                 mmooc.kpas.createDiagram(graphicId, data, "Kommune", "Prosentkategori");
             });
             return null;
