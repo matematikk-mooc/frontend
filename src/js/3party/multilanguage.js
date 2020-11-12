@@ -9,6 +9,13 @@ class MultilangUtils {
         ];
     }
 
+    static languagesMap() {
+        return MultilangUtils.languages().reduce((obj, lang) => {
+            obj[lang.code] = lang;
+            return obj;
+        }, {});
+    }
+
     static makeSpansForSelectors(selectors) {
         selectors.map(selector => document.querySelectorAll(selector))
             .flatMap(nodeList => Array.from(nodeList))
@@ -70,7 +77,7 @@ class MultilangUtils {
     }
 
     static createCss(activeLang) {
-        return this.languages().map(l => {
+        return MultilangUtils.languages().map(l => {
             const displayValue = activeLang.toLowerCase() === l.code ? 'unset' : 'none';
             return `.language:lang(${l.code}) {display:${displayValue};}`
         }).join(" ");

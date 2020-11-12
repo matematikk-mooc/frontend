@@ -8,19 +8,25 @@ this.mmooc.menu = (function() {
         title = course.name;
         subtitle = '';
       }
+
+      const selectedLanguageCode = MultilangUtils.getLanguageCode();
+      const selectedLanguage = MultilangUtils.languagesMap()[selectedLanguageCode].name;
+
       var html = mmooc.util.renderTemplateWithData('coursemenu', {
         course: course,
         menuItems: menuItems,
         selectedMenuItem: selectedMenuItem,
         title: title,
         subtitle: subtitle,
-        languages: MultilangUtils.languages(),
+        selectedLanguage: selectedLanguage,
+        languages: MultilangUtils.languages().filter(lang => lang.code !== selectedLanguageCode),
       });
       document.getElementById('header').insertAdjacentHTML('afterend', html);
 
-      const langSelect = document.getElementById('mmoc-course-language-select');
-      langSelect.value = MultilangUtils.getLanguageCode();
-      langSelect.addEventListener('change', event => MultilangUtils.setActiveLanguage(event.target.value));
+      document.querySelectorAll('button.mmooc-course-language-button')
+        .forEach(element => {
+          element.addEventListener('click', event => MultilangUtils.setActiveLanguage(event.target.value));
+        });
     }
 
     var menuItems = [];

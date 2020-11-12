@@ -75,21 +75,79 @@ body.embedded #content {
   }
 }
 
-#mmooc-course-language-container {
-  height: 40px;
+#mmooc-course-language-header {
+  @languageHeaderHeight: 40px;
+
+  height: @languageHeaderHeight;
   display: flex;
   justify-content: end;
   max-width: @maxWidth;
   margin: 0 auto;
 
+  #mmooc-course-language-container {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+
+    &:hover {
+      #mmooc-course-current-language {
+        background-color: #E2E2E2;
+      }
+
+      #mmooc-course-language-dropdown {
+        display: flex;
+      }
+    }
+
+    @langButtonHorizontalPadding: 20px;
+    @langButtonVerticalPadding: 5px;
+    @langCurrentWidth: 68px;
+
+    #mmooc-course-current-language {
+      margin-right: 4px;
+      margin-left: 4px;
+      border: 1px solid #656161;
+      background-color: #F9F9F9;
+      border-radius: 5px;
+      padding: @langButtonVerticalPadding @langButtonHorizontalPadding;
+      display: inline-flex;
+      align-items: center;
+      width: @langCurrentWidth;
+
+      .mmooc-language-select-globe {
+        position: relative;
+        right: 8px;
+      }
+    }
+
+    #mmooc-course-language-dropdown {
+      position: absolute;
+      display: none;
+      flex-direction: column;
+      top: @languageHeaderHeight - @langButtonVerticalPadding + 2px;
+      right: 30px;
+      width: @langCurrentWidth + 2 * @langButtonHorizontalPadding - 6px;
+
+      .mmooc-course-language-button {
+        background-color: #656161;
+        color: white;
+        font-family: Roboto;
+        font-size: 16px;
+        border: none;
+        height: @languageHeaderHeight - 2 * @langButtonVerticalPadding;
+        padding-left: 28px;
+      }
+    }
+  }
+
   @media (min-width: @smallScreenCutoff) {
-    #mmoc-course-language-selector {
+    #mmooc-course-language-container {
       min-width: @userMenuMinWidth + 40px;
     }
   }
 
   @media (max-width: @smallScreenCutoff) {
-    #mmoc-course-language-selector {
+    #mmooc-course-language-container {
       min-width: 0;
       justify-content: end;
     }
@@ -97,7 +155,7 @@ body.embedded #content {
 }
 
 @media screen and (max-width: 200px) {
-  #mmooc-course-language-container {
+  #mmooc-course-language-header {
     justify-content: start;
   }
 }
