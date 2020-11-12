@@ -9,6 +9,10 @@ class MultilangUtils {
         ];
     }
 
+    static languagesExcept(language) {
+        return MultilangUtils.languages().filter(lang => lang.code !== language);
+    }
+
     static languagesMap() {
         return MultilangUtils.languages().reduce((obj, lang) => {
             obj[lang.code] = lang;

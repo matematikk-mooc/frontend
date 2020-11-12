@@ -19,14 +19,25 @@ this.mmooc.menu = (function() {
         title: title,
         subtitle: subtitle,
         selectedLanguage: selectedLanguage,
-        languages: MultilangUtils.languages().filter(lang => lang.code !== selectedLanguageCode),
+        languages: MultilangUtils.languagesExcept(selectedLanguageCode),
       });
       document.getElementById('header').insertAdjacentHTML('afterend', html);
 
+      // Update current language and language selection dropdown
       document.querySelectorAll('button.mmooc-course-language-button')
-        .forEach(element => {
-          element.addEventListener('click', event => MultilangUtils.setActiveLanguage(event.target.value));
-        });
+        .forEach(element => element.addEventListener('click', event => {
+          const previousLanguage = MultilangUtils.getLanguageCode();
+          const newLanguage = event.target.value;
+
+          document.getElementById('mmooc-course-language-selected').textContent = event.target.textContent;
+          const button = Array.from(document.querySelectorAll('button.mmooc-course-language-button'))
+            .find(element => element.value === newLanguage);
+
+          button.textContent = MultilangUtils.languagesMap()[previousLanguage].name;
+          button.value = previousLanguage;
+
+          MultilangUtils.setActiveLanguage(newLanguage);
+        }));
     }
 
     var menuItems = [];
