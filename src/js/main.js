@@ -477,8 +477,8 @@ jQuery(function($) {
       mmooc.api.getUserGroupsForCourse(courseId, function(groups) {
         mmooc.kpas.showInfo(groups);
         var groupsInfo = mmooc.util.getGroupsInfo(groups);
-        mmooc.kpas.createMunicipalityDiagram(360, groupsInfo);
-        mmooc.kpas.createCountyDiagram(360, groupsInfo);
+        mmooc.kpas.createMunicipalityDiagram(courseId, groupsInfo);
+        mmooc.kpas.createCountyDiagram(courseId, groupsInfo);
       }, error);
     }
   });
