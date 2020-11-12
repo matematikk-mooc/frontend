@@ -18,7 +18,7 @@ this.mmooc.kpas = (function() {
 
         },
         createDiagram : function(data, elementId, name) {
-            var graphicId = name+ "-graphic".trim();
+            var graphicId = (name+ "-graphic").replace(/[^a-zA-Z0-9]+/g,'')
             var htmlCode = mmooc.util.renderTemplateWithData(
                 'statistics',
                 {name:name,
@@ -100,11 +100,11 @@ this.mmooc.kpas = (function() {
         },
         showInfo: function(groups) {
             if(!groups.length) {
+                $("#kpas-lti-warning").show();
                 return;
             }  
       
             $("#kpas-lti-info").show();
-            $("#kpas-lti-warning").hide();
         },
         getJsonData : function(url, progressId, name, callback) {
             progressId.innerHTML = "Laster statistikk for " + name + "<span class='loading-gif'></span>";;
