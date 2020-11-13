@@ -75,88 +75,74 @@ body.embedded #content {
   }
 }
 
-#mmooc-course-language-header {
+#mmooc-course-title-header {
+  display: inline-flex;
+  width: 100%;
+  align-items: center;
+}
+
+#mmooc-course-language-container {
   @languageHeaderHeight: 40px;
 
   height: @languageHeaderHeight;
-  display: flex;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
   justify-content: end;
-  max-width: @maxWidth;
-  margin: 0 auto;
+  flex-grow: 1;
 
-  #mmooc-course-language-container {
-    position: relative;
-    display: inline-flex;
-    align-items: center;
+  #mmooc-course-language-text {
+    color: #034961;
+  }
 
-    &:hover {
-      #mmooc-course-current-language {
-        background-color: #E2E2E2;
-      }
-
-      #mmooc-course-language-dropdown {
-        display: flex;
-      }
-    }
-
-    @langButtonHorizontalPadding: 20px;
-    @langButtonVerticalPadding: 5px;
-    @langCurrentWidth: 68px;
-
+  &:hover {
     #mmooc-course-current-language {
-      margin-right: 4px;
-      margin-left: 4px;
-      border: 1px solid #656161;
-      background-color: #F9F9F9;
-      border-radius: 5px;
-      padding: @langButtonVerticalPadding @langButtonHorizontalPadding;
-      display: inline-flex;
-      align-items: center;
-      width: @langCurrentWidth;
-
-      .mmooc-language-select-globe {
-        position: relative;
-        right: 8px;
-      }
+      background-color: #E2E2E2;
     }
 
     #mmooc-course-language-dropdown {
-      position: absolute;
-      display: none;
-      flex-direction: column;
-      top: @languageHeaderHeight - @langButtonVerticalPadding + 2px;
-      right: 30px;
-      width: @langCurrentWidth + 2 * @langButtonHorizontalPadding - 6px;
-
-      .mmooc-course-language-button {
-        background-color: #656161;
-        color: white;
-        font-family: Roboto;
-        font-size: 16px;
-        border: none;
-        height: @languageHeaderHeight - 2 * @langButtonVerticalPadding;
-        padding-left: 28px;
-      }
+      display: flex;
     }
   }
 
-  @media (min-width: @smallScreenCutoff) {
-    #mmooc-course-language-container {
-      min-width: @userMenuMinWidth + 40px;
+  @langButtonHorizontalPadding: 20px;
+  @langButtonVerticalPadding: 5px;
+  @langCurrentWidth: 68px;
+
+  #mmooc-course-current-language {
+    margin-right: 4px;
+    margin-left: 4px;
+    border: 1px solid #656161;
+    background-color: #F9F9F9;
+    border-radius: 5px;
+    padding: @langButtonVerticalPadding @langButtonHorizontalPadding;
+    display: inline-flex;
+    align-items: center;
+    width: @langCurrentWidth;
+
+    .mmooc-language-select-globe {
+      position: relative;
+      right: 8px;
     }
   }
 
-  @media (max-width: @smallScreenCutoff) {
-    #mmooc-course-language-container {
-      min-width: 0;
-      justify-content: end;
-    }
-  }
-}
+  #mmooc-course-language-dropdown {
+    position: absolute;
+    display: none;
+    flex-direction: column;
+    top: @languageHeaderHeight - @langButtonVerticalPadding + 2px;
+    right: 8px;
+    width: @langCurrentWidth + 2 * @langButtonHorizontalPadding - 6px;
 
-@media screen and (max-width: 200px) {
-  #mmooc-course-language-header {
-    justify-content: start;
+    .mmooc-course-language-button {
+      background-color: #656161;
+      color: white;
+      font-family: Roboto;
+      font-size: 16px;
+      border: none;
+      height: @languageHeaderHeight - 2 * @langButtonVerticalPadding;
+      padding-left: 28px;
+    }
   }
 }
 
