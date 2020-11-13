@@ -490,17 +490,10 @@ jQuery(function($) {
         $("#fylke-statistikk").length) {
       const error = error => console.error('error calling api', error);
       mmooc.api.getUserGroupsForCourse(courseId, function(groups) {
-<<<<<<< HEAD
-        if(groups.length) {
-          $("#kpas-lti-info").show();
-          $("#kpas-lti-warning").hide();
-        }
-=======
         mmooc.kpas.showInfo(groups);
         var groupsInfo = mmooc.util.getGroupsInfo(groups);
         mmooc.kpas.createMunicipalityDiagram(courseId, groupsInfo);
         mmooc.kpas.createCountyDiagram(courseId, groupsInfo);
->>>>>>> master
       }, error);
     }
   });
