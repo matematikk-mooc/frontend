@@ -38,10 +38,10 @@ class MultilangUtils {
         }
 
         //Split the elements content with '|', then check each segment for language code and make <span>-elements.
-        const splitArray = element.textContent.trim().split("|");
+        const splitArray = element.textContent.split("|");
         let newContent = '';
         for (let i = 0; i < splitArray.length; i++) {
-            let match = /^(\w\w):(.*)/.exec(splitArray[i]); //match language codes formed with two letters and a colon (no:, en: etc)
+            let match = /^\s*(\w\w)\s*:(.*)/.exec(splitArray[i]); //match language codes formed with two letters and a colon (no:, en: etc)
             if (match) {
                 newContent += `<span class="language" lang="${match[1]}">${match[2]}</span>`;
             } else {
