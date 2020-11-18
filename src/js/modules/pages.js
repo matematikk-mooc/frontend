@@ -142,16 +142,19 @@ this.mmooc.pages = (function() {
 
     duplicateMarkedAsDoneButton: function() {
       var checkExist = setInterval(function() {
-        if ($('.module-sequence-footer-content').length) {
+        const targetParent = "module-sequence-footer";
+        const targetParentSelector = '.' + targetParent;
+
+        if ($(targetParentSelector).length) {
           clearInterval(checkExist);
           $('#mark-as-done-checkbox')
             .clone()
-            .prependTo('.module-sequence-footer-content');
+            .prependTo(targetParentSelector);
           $(document).on('click', '#mark-as-done-checkbox', function() {
             var self = $(this);
             setTimeout(function() {
               if (
-                self.parent().attr('class') == 'module-sequence-footer-content'
+                self.parent().attr('class') == targetParent
               ) {
                 $('.header-bar-right #mark-as-done-checkbox').remove();
                 self.clone().prependTo('.header-bar-right');
@@ -159,7 +162,7 @@ this.mmooc.pages = (function() {
                 $(
                   '.module-sequence-footer-content #mark-as-done-checkbox'
                 ).remove();
-                self.clone().prependTo('.module-sequence-footer-content');
+                self.clone().prependTo(targetParentSelector);
               }
             }, 800);
           });
