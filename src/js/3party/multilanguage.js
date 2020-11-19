@@ -148,6 +148,10 @@ this.mmooc = this.mmooc || {};
 this.mmooc.multilanguage = (function () {
     return {
         perform: () => {
+            if (!this.mmooc.util.isMultilangCourse(mmooc.util.course)) {
+                return;
+            }
+
             if (location.pathname.endsWith('/edit')) {
                 MultilangUtils.applyColorCodingInEditor();
             } else {

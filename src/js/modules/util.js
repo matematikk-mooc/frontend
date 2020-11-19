@@ -181,7 +181,7 @@ this.mmooc.util = (function() {
       }
     },
     isEnrolledWithRole(course, role) {
-      if(course && course.enrollments) {
+      if (course && course.enrollments) {
         for (var i = 0; i < course.enrollments.length; i++) {
           if (course.enrollments[i].role == role) {
             return true;
@@ -190,26 +190,14 @@ this.mmooc.util = (function() {
       }
       return false;
     },
-    isPfDKCourse: function(course) {
-      if(course && course.course_code.indexOf('::PfDK::') > -1) {
-        return true;
-      }
-      return false;
-    },
+    isPfDKCourse: CourseOptions.hasOptionFunction('PfDK'),
+    isMultilangCourse: CourseOptions.hasOptionFunction('lang'),
     isPrincipal() {
       return (this.isTeacherOrAdmin() || this.isEnrolledWithRole(mmooc.util.course, mmooc.settings.principalRoleType));
     },
-    isRoleBasedCourse(course) {
-      if (course && course.course_code.indexOf('::Role::') > -1) {
-        return true;
-      }
-      return false;
-    },
+    isRoleBasedCourse: CourseOptions.hasOptionFunction('role'),
     isMMOOCLicense() {
-      if(mmooc.util.course && mmooc.util.course.course_code.indexOf('::MMOOCLICENSE::') > -1) {
-        return true;
-      }
-      return false;
+      return CourseOptions.hasOption(mmooc.util.course, 'MMOOCLICENSE');
     },
     postModuleProcessing() {
       try {

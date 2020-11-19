@@ -2,6 +2,8 @@
     <div id="mmooc-course-tabs-container-inner">
         <div id="mmooc-course-title-header">
             <h1>{{title}}</h1>
+            {{#with languageOptions}}
+            {{#if courseIsMultilanguage}}
             <div id="mmooc-course-language-container" >
                 <span id="mmooc-course-language-text">Språk / Giella</span>
                 <span id="mmooc-course-current-language">
@@ -15,11 +17,13 @@
                     <span id="mmooc-course-language-selected">{{selectedLanguage}}</span>
                 </span>
                 <div id="mmooc-course-language-dropdown">
-                    {{#each languages}}
+                    {{#each otherLanguages}}
                         <button class="mmooc-course-language-button" value="{{this.code}}">{{this.name}}</button>
                     {{/each}}
                 </div>
             </div>
+            {{/if}}
+            {{/with}}
         </div>
 
         {{#if subtitle}}

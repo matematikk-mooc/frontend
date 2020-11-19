@@ -10,7 +10,11 @@ this.mmooc.menu = (function() {
       }
 
       const selectedLanguageCode = MultilangUtils.getLanguageCode();
-      const selectedLanguage = MultilangUtils.languagesMap()[selectedLanguageCode].name;
+      const languageOptions = {
+        courseIsMultilanguage: this.mmooc.util.isMultilangCourse(mmooc.util.course),
+        selectedLanguage: MultilangUtils.languagesMap()[selectedLanguageCode].name,
+        otherLanguages: MultilangUtils.languagesExcept(selectedLanguageCode),
+      }
 
       var html = mmooc.util.renderTemplateWithData('coursemenu', {
         course: course,
@@ -18,8 +22,7 @@ this.mmooc.menu = (function() {
         selectedMenuItem: selectedMenuItem,
         title: title,
         subtitle: subtitle,
-        selectedLanguage: selectedLanguage,
-        languages: MultilangUtils.languagesExcept(selectedLanguageCode),
+        languageOptions: languageOptions,
       });
       document.getElementById('header').insertAdjacentHTML('afterend', html);
 
