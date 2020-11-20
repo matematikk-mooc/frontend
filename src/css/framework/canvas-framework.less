@@ -81,6 +81,10 @@ body.embedded #content {
   width: 100%;
   align-items: center;
   height: @languageHeaderHeight;
+
+  h1 {
+    flex-grow: 1;
+  }
 }
 
 #mmooc-course-language-container {
@@ -88,11 +92,15 @@ body.embedded #content {
   display: inline-flex;
   align-items: center;
   justify-content: flex-end;
-  flex-grow: 1;
+  height: @languageHeaderHeight;
 
   #mmooc-course-language-text {
     color: #034961;
   }
+
+  @langButtonHorizontalPadding: 20px;
+  @langButtonVerticalPadding: 5px;
+  @langCurrentWidth: 68px;
 
   &:hover {
     #mmooc-course-current-language {
@@ -103,10 +111,6 @@ body.embedded #content {
       display: flex;
     }
   }
-
-  @langButtonHorizontalPadding: 20px;
-  @langButtonVerticalPadding: 5px;
-  @langCurrentWidth: 68px;
 
   #mmooc-course-current-language {
     margin-right: 4px;
