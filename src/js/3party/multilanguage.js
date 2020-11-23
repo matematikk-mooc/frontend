@@ -2,19 +2,23 @@
 
 // Utility class to keep utility functions out of global scope
 class MultilangUtils {
-    static languages() {
+    static get LANGUAGES() {
         return [
             { code: 'nb', name: "Norsk" },
             { code: 'se', name: "Sápmi" },
         ];
     }
 
+    static get COOKIE_NAME() {
+        return 'lang';
+    }
+
     static languagesExcept(language) {
-        return MultilangUtils.languages().filter(lang => lang.code !== language);
+        return MultilangUtils.LANGUAGES.filter(lang => lang.code !== language);
     }
 
     static languagesMap() {
-        return MultilangUtils.languages().reduce((obj, lang) => {
+        return MultilangUtils.LANGUAGES.reduce((obj, lang) => {
             obj[lang.code] = lang;
             return obj;
         }, {});
@@ -53,12 +57,18 @@ class MultilangUtils {
     }
 
     static getLanguageParameter() {
-        const urlParamsObj = mmooc.utilRoot.urlParamsToObject();
-        const langCode = urlParamsObj && urlParamsObj['lang'];
-        if (langCode !== undefined) {
-            return urlParamsObj['lang'];
+        const params = new URLSearchParams(location.search);
+        return params.get(this.COOKIE_NAME);
+    }
+
+    static setLanguageParameter(languageCode) {
+        if (!this.isValidLanguage(languageCode)) {
+            return;
         }
-        return null;
+
+        const params = new URLSearchParams(location.search);
+        params.set(this.COOKIE_NAME, languageCode);
+        window.history.replaceState({}, '', `${location.pathname}?${params}`);
     }
 
     static getLanguageCookie() {
@@ -66,31 +76,46 @@ class MultilangUtils {
     }
 
     static setLanguageCookie(languageCode) {
+        if (!this.isValidLanguage(languageCode)) {
+            return;
+        }
+
         document.cookie = `courselanguage=${languageCode}; SameSite=Strict`;
     }
 
     static getLanguageCode() {
         const langCode = MultilangUtils.getLanguageParameter();
+        const langCookie = MultilangUtils.getLanguageCookie();
         if (langCode) {
             return langCode;
-        } else if (document.cookie.split(';').some((item) => item.trim().startsWith('courselanguage='))) {
-            return MultilangUtils.getLanguageCookie();
-        } else {
+        } else if (langCookie) {
+            return langCookie;
+        }
+        else {
             return 'nb';
         }
     }
 
+    static setActiveLanguage(activeLang) {
+        if (!this.isValidLanguage(activeLang)) {
+            return;
+        }
+
+        MultilangUtils.setLanguageCookie(activeLang);
+        MultilangUtils.setLanguageParameter(activeLang);
+        const styleElement = document.getElementById('language-style');
+        styleElement.innerHTML = MultilangUtils.createCss(activeLang);
+    }
+
+    static isValidLanguage(languageCode) {
+        return this.LANGUAGES.some(lang => lang.code === languageCode);
+    }
+
     static createCss(activeLang) {
-        return MultilangUtils.languages().map(l => {
+        return MultilangUtils.LANGUAGES.map(l => {
             const displayValue = activeLang.toLowerCase() === l.code ? 'unset' : 'none';
             return `.language:lang(${l.code}) {display:${displayValue};}`
         }).join(" ");
-    }
-
-    static setActiveLanguage(activeLang) {
-        MultilangUtils.setLanguageCookie(activeLang);
-        const styleElement = document.getElementById('language-style');
-        styleElement.innerHTML = MultilangUtils.createCss(activeLang);
     }
 
     static applyColorCodingInEditor() {

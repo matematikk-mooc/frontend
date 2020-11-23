@@ -12,7 +12,6 @@ jQuery(function($) {
 
   mmooc.routes.addRouteForQueryString(/invitation=/, function() {});
 
-
   mmooc.routes.addRouteForPath(/\/login\/canvas$/, function() {
     mmooc.utilRoot.redirectFeideAuthIfEnrollReferrer();
   });
@@ -509,6 +508,12 @@ jQuery(function($) {
 
   mmooc.routes.addRouteForPath(/enroll\/[0-9A-Z]+/, function() {
     mmooc.enroll.changeEnrollPage();
+  });
+
+  mmooc.routes.addRouteForQueryString(/lang/, () => {
+    const language = MultilangUtils.getLanguageParameter()
+    console.log(`Language: ${language}`);
+    MultilangUtils.setActiveLanguage(language);
   });
 
   try {
