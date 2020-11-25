@@ -343,7 +343,11 @@ this.mmooc.menu = (function() {
           $('#edit_discussions_settings').show();
           $('#availability_options').show();
           $('#group_category_options').show();
-          $('#editor_tabs').show();
+
+          //KURSP-223 Diskusjonssiden scroller til toppen når man skal skrive et innlegg eller et svar
+          //Denne koden ser ikke ut til å være nødvendig ettersom vi ikke har noe kode som
+          //skjuler editor_tabs.
+          //$('#editor_tabs').show();
 
           // Done via CSS since content is loaded using AJAX
           stylesheet.insertRule(
