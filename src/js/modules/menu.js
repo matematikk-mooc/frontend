@@ -8,14 +8,39 @@ this.mmooc.menu = (function() {
         title = course.name;
         subtitle = '';
       }
+
+      const selectedLanguageCode = MultilangUtils.getLanguageCode();
+      const languageOptions = {
+        courseIsMultilanguage: this.mmooc.util.isMultilangCourse(mmooc.util.course),
+        selectedLanguage: MultilangUtils.languagesMap()[selectedLanguageCode].name,
+        otherLanguages: MultilangUtils.languagesExcept(selectedLanguageCode),
+      }
+
       var html = mmooc.util.renderTemplateWithData('coursemenu', {
         course: course,
         menuItems: menuItems,
         selectedMenuItem: selectedMenuItem,
         title: title,
-        subtitle: subtitle
+        subtitle: subtitle,
+        languageOptions: languageOptions,
       });
       document.getElementById('header').insertAdjacentHTML('afterend', html);
+
+      // Update current language and language selection dropdown
+      document.querySelectorAll('button.mmooc-course-language-button')
+        .forEach(element => element.addEventListener('click', event => {
+          const previousLanguage = MultilangUtils.getLanguageCode();
+          const newLanguage = event.target.value;
+
+          document.getElementById('mmooc-course-language-selected').textContent = event.target.textContent;
+          const button = Array.from(document.querySelectorAll('button.mmooc-course-language-button'))
+            .find(element => element.value === newLanguage);
+
+          button.textContent = MultilangUtils.languagesMap()[previousLanguage].name;
+          button.value = previousLanguage;
+
+          MultilangUtils.setActiveLanguage(newLanguage);
+        }));
     }
 
     var menuItems = [];
@@ -152,23 +177,21 @@ this.mmooc.menu = (function() {
 
   var stylesheet = createStyleSheet();
 
-
   return {
     listModuleItems: function() {
       mmooc.api.getCurrentModule(function(module) {
         var courseId = mmooc.api.getCurrentCourseId();
         var html = "";
-        if(mmooc.util.isActiveCourseRoleBased() && mmooc.util.isPrincipal())
-        {
+
+        if(mmooc.util.isActiveCourseRoleBased() && mmooc.util.isPrincipal()) {
           html = mmooc.util.renderTemplateWithData('moduleitemsprincipal', {
             backToCoursePage: mmooc.i18n.BackToCoursePage,
             module: module,
             courseId: courseId,
             course: mmooc.util.course
           });
-        }
-        else
-        {
+        } else {
+
           html = mmooc.util.renderTemplateWithData('moduleitems', {
             backToCoursePage: mmooc.i18n.BackToCoursePage,
             module: module,
@@ -179,12 +202,12 @@ this.mmooc.menu = (function() {
             mmooc.menu.updatePrevAndNextButtons(courseId, module);
           }
         }
-        
-        
+
         if (document.getElementById('left-side')) {
           document
             .getElementById('left-side')
             .insertAdjacentHTML('afterbegin', html);
+            mmooc.multilanguage.perform();
         }
         //Canvas case: Slow loading for group discussions when large number of groups Case # 05035288 
         //Display popup box when loading

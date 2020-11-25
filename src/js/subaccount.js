@@ -49,13 +49,15 @@ jQuery(document).ready(function($) {
         window.udirDesignLoaded = true;
         this.udirDesignLoaded = true;
         console.log("Subaccount: loading design.");
-        $.getScript('https://udirdesignjs');
 
         var filename = 'https://udirdesigncss';
-        var fileref=document.createElement("link")
+        var fileref = document.createElement("link")
         fileref.setAttribute("rel", "stylesheet")
         fileref.setAttribute("type", "text/css")
         fileref.setAttribute("href", filename)
+        fileref.onload = (_) => {
+          $.getScript('https://udirdesignjs');
+        }
         document.getElementsByTagName("head")[0].appendChild(fileref)
     } else
     {

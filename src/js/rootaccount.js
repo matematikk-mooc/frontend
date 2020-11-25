@@ -56,7 +56,6 @@ if(!redirected) {
       {
           this.udirDesignLoaded = true;
           console.log("Root account:Loading udir design.");
-          getScript('https://udirdesignjs');
 
           var filename = 'https://udirdesigncss';
 
@@ -64,6 +63,9 @@ if(!redirected) {
           fileref.setAttribute("rel", "stylesheet")
           fileref.setAttribute("type", "text/css")
           fileref.setAttribute("href", filename)
+          fileref.onload = (_) => {
+            $.getScript('https://udirdesignjs');
+          }
           document.getElementsByTagName("head")[0].appendChild(fileref)
       } else {
           console.log("Root account:Udir design already loaded.");

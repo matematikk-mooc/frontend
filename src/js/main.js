@@ -12,7 +12,6 @@ jQuery(function($) {
 
   mmooc.routes.addRouteForQueryString(/invitation=/, function() {});
 
-
   mmooc.routes.addRouteForPath(/\/login\/canvas$/, function() {
     mmooc.utilRoot.redirectFeideAuthIfEnrollReferrer();
   });
@@ -511,6 +510,12 @@ jQuery(function($) {
     mmooc.enroll.changeEnrollPage();
   });
 
+  mmooc.routes.addRouteForQueryString(/lang/, () => {
+    const language = MultilangUtils.getLanguageParameter()
+    console.log(`Language: ${language}`);
+    MultilangUtils.setActiveLanguage(language);
+  });
+
   try {
     mmooc.footer.changeFooter();
     mmooc.menu.renderLeftHeaderMenu();
@@ -560,7 +565,6 @@ jQuery(function($) {
 
   try {
     mmooc.menu.injectGroupsPage();
-    mmooc.multilanguage.perform();
     //mmooc.multilanguage.displayLanguageSelector();
     mmooc.groups.changeGroupListURLs(document.location.href);
 
@@ -573,4 +577,12 @@ jQuery(function($) {
   }
 
   $("#application").show();
+
+  try {
+    // Call multilanguage.perform() last to catch all relevant DOM content
+    mmooc.multilanguage.insertCss();
+    mmooc.multilanguage.perform();
+  } catch (e) {
+    console.log(e);
+  }
 });

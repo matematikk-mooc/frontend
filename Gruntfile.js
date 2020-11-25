@@ -57,6 +57,7 @@ module.exports = function (grunt) {
       },
       js: {
         src: [
+          'src/js/utilities/*.js',
           'src/js/3party/*.js',
           'tmp/templates.js',
           'src/js/api/*.js',
