@@ -120,7 +120,6 @@ module.exports = function (grunt) {
 
     terser: {
       options: {
-        sourceMap: true
       },
       main: {
         files: {
@@ -155,7 +154,7 @@ module.exports = function (grunt) {
     
     replace: {
       production: {
-        src: ['tmp/mmooc-min.css','tmp/rootaccount.css', 'dist/mmooc-min.js', 'tmp/rootaccount.js', 'tmp/subaccount.js'],
+        src: ['tmp/mmooc-min.css','tmp/rootaccount.css', 'tmp/mmooc.js', 'tmp/rootaccount.js', 'tmp/subaccount.js'],
         dest: 'dist/',
         replacements: [
           {
@@ -177,7 +176,7 @@ module.exports = function (grunt) {
         ]
       },
       development: {
-        src: ['tmp/mmooc-min.css','tmp/rootaccount.css', 'dist/mmooc-min.js', 'tmp/rootaccount.js','tmp/subaccount.js'],
+        src: ['tmp/mmooc-min.css','tmp/rootaccount.css', 'tmp/mmooc.js', 'tmp/rootaccount.js','tmp/subaccount.js'],
         dest: 'dist/',
         replacements: [
           {
@@ -350,7 +349,7 @@ module.exports = function (grunt) {
   grunt.registerTask('make', [
     'handlebars',
     'concat',
-    'terser',
+//    'terser',
     'less',
     'copy',
   ]);
