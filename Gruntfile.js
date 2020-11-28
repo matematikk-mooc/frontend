@@ -111,16 +111,44 @@ module.exports = function (grunt) {
       }
     },
 
+/*
+        sourceMap: {
+          content: "tmp/mmooc.js.map",
+          url: "mmooc-min.js.map"
+        }
+*/
+
+    terser: {
+      options: {
+        sourceMap: true
+      },
+      main: {
+        files: {
+          'dist/mmooc-min.js': ['tmp/mmooc.js']
+        },
+      },
+    },    
+/*
+    terser: {
+      options: {
+      },
+      main: {
+        files: {
+          'dist/mmooc-min.js': ['tmp/mmooc.js']
+        },
+      },
+    },    
+*/
     uglify: {
       options: {
         sourceMap: {
           includeSources: true
         },
-        sourceMapIn: 'tmp/mmooc-babel.js.map', // input sourcemap from a previous compilation
+        sourceMapIn: 'tmp/mmooc.js.map', // input sourcemap from a previous compilation
       },
       dist: {
         files: {
-          'dist/mmooc-min.js': ['tmp/mmooc-babel.js']
+          'dist/mmooc-min.js': ['tmp/mmooc.js']
         }
       }
     },
@@ -322,8 +350,7 @@ module.exports = function (grunt) {
   grunt.registerTask('make', [
     'handlebars',
     'concat',
-    'babel',
-    'uglify',
+    'terser',
     'less',
     'copy',
   ]);
