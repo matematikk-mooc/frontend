@@ -262,7 +262,8 @@ module.exports = function (grunt) {
           { expand: true, src: ['vector_images/*'], cwd: 'src/', dest: 'dist/' },
           { expand: true, src: ['subaccount.js.map'], cwd: 'tmp/', dest: 'dist/' },
           { expand: true, src: ['rootaccount.js.map'], cwd: 'tmp/', dest: 'dist/' },
-          { expand: true, src: ['badges-min.js.map'], cwd: 'tmp/', dest: 'dist/' }
+          { expand: true, src: ['badges-min.js.map'], cwd: 'tmp/', dest: 'dist/' },
+          { expand: true, src: ['*'], cwd: 'kpas/', dest: 'dist/' }
         ]
       }
     },
