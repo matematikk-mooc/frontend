@@ -127,7 +127,7 @@ module.exports = function (grunt) {
     
     replace: {
       production: {
-        src: ['tmp/mmooc-min.css','tmp/rootaccount.css', 'dist/kpas/style.css', 'dist/mmooc-min.js', 'tmp/rootaccount.js', 'tmp/subaccount.js'],
+        src: ['tmp/mmooc-min.css','tmp/rootaccount.css', 'dist/mmooc-min.js', 'tmp/rootaccount.js', 'tmp/subaccount.js'],
         dest: 'dist/',
         replacements: [
           {
@@ -171,17 +171,17 @@ module.exports = function (grunt) {
         ]
       },
       production_kpas: {
-        src: ['dist/kpas/style.css'],
+        src: ['dist/kpas/style.css', 'dist/kpas/kpas.html', 'dist/kpas/main.js'],
         dest: 'dist/kpas/',
         replacements: [
           {
             from: 'https://server',
-            to: "https://kompetanseudirno.azureedge.net/udirdesign"
+            to: "https://kompetanseudirno.azureedge.net/"
           }
         ]
       },
       development_kpas: {
-        src: ['dist/kpas/style.css'],
+        src: ['dist/kpas/style.css', 'dist/kpas/kpas.html', 'dist/kpas/main.js'],
         dest: 'dist/kpas/',
         replacements: [
           {
