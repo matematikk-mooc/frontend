@@ -255,17 +255,18 @@ function createDiagram(...options) {
         clearTimeout(resizeDebounce);
         resizeDebounce = setTimeout(handleResize, 100);
     };
+    window.addEventListener("resize", resizeDebouneFn, true);
+    sendResizeMessage();
+}
+/// END 
+
+function sendResizeMessage() {
     var parentResizeMessageMsg = {
         subject: "kpas.frameResize",
         height: window.document.body.offsetHeight + 50
     };
     window.parent.postMessage(JSON.stringify(parentResizeMessageMsg), '*');
-
-    window.addEventListener("resize", resizeDebouneFn, true);
 }
-/// END 
-
-
 //Parse href - not part of final implementation
 function parse_query_string(query) {
     var vars = query.split("&");
@@ -295,36 +296,45 @@ function urlParamsToObject() {
     return parse_query_string(search);
 }
 
-const urlParamsObj = urlParamsToObject();
-const municipalityId = urlParamsObj && urlParamsObj['municipalityId'];
-const countyId = urlParamsObj && urlParamsObj['countyId'];
-const courseId = urlParamsObj && urlParamsObj['courseId'];
-if(courseId !== undefined) {
-    if (municipalityId !== undefined) {
-        d3.json("https://statistics-api.azurewebsites.net/api/statistics/primary_schools/municipality/" + municipalityId + "/course/" + courseId)
-            .then((result) => {
-                document.getElementById("graphic-name").innerHTML = result.Result[0].municipality_name;
-                const data = result.Result[0].schools;
-                createDiagram("#graphic", data, "Skole", "Prosentkategori");
-            })
-            .catch((error) => {
-                if (error) {
-                    throw error;
-                }
-            });
-    }
-    else if(countyId !== undefined) {
-        d3.json("https://statistics-api.azurewebsites.net/api/statistics/primary_schools/county/" + countyId + "/course/" + courseId)
-            .then((result) => {
-                document.getElementById("graphic-name").innerHTML = result.Result[0].county_name;
-                const data = result.Result[0].municipalities;
-                createDiagram("#graphic", data, "Kommune", "Prosentkategori");
-            })
-            .catch((error) => {
-                if (error) {
-                    throw error;
-                }
-            });
+function loadGraphic() {
+    const urlParamsObj = urlParamsToObject();
+    const municipalityId = urlParamsObj && urlParamsObj['municipalityId'];
+    const countyId = urlParamsObj && urlParamsObj['countyId'];
+    const courseId = urlParamsObj && urlParamsObj['courseId'];
+    const sortParam = {
+        sortDirection: "ascending",
+        sortField: "name"
+    };
+
+    if(courseId !== undefined) {
+        document.getElementById("graphic-name").innerHTML = "<span class='loading-gif'></span>";
+        if (municipalityId !== undefined) {
+            d3.json("https://statistics-api.azurewebsites.net/api/statistics/primary_schools/municipality/" + municipalityId + "/course/" + courseId)
+                .then((result) => {
+                    document.getElementById("graphic-name").innerHTML = result.Result[0].municipality_name;
+                    const data = result.Result[0].schools;
+                    createDiagram("#graphic", data, "Skole", "Prosentkategori", sortParam);
+                })
+                .catch((error) => {
+                    if (error) {
+                        throw error;
+                    }
+                });
+        }
+        else if(countyId !== undefined) {
+            d3.json("https://statistics-api.azurewebsites.net/api/statistics/primary_schools/county/" + countyId + "/course/" + courseId)
+                .then((result) => {
+                    document.getElementById("graphic-name").innerHTML = result.Result[0].county_name;
+                    const data = result.Result[0].municipalities;
+                    createDiagram("#graphic", data, "Kommune", "Prosentkategori", sortParam);
+                })
+                .catch((error) => {
+                    if (error) {
+                        throw error;
+                    }
+                });
+        }
     }
 }
+
 

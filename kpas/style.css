@@ -1,3 +1,15 @@
+body {
+    font-family: "Roboto", sans-serif;
+}
+
+.loading-gif {
+    width: 20px;
+    height: 20px;
+    background: url('https://server/bitmaps/loading.gif') no-repeat center center;
+    background-size: 70px;
+    display: inline-block;
+}
+
 .table-kpas *, .table-kpas ::after, .table-kpas ::before {
     box-sizing: border-box;
 }

@@ -47,7 +47,7 @@ this.mmooc.kpas = (function() {
                 return;
             }
             var iframeSrc = "https://server/kpas/kpas.html?courseId=" + courseId + "&countyId=" +  groupsInfo.countyId;
-            var html = "<iframe src='" + iframeSrc + "' height='600' width='100%'></iframe>";
+            var html = "<iframe id='kpas' src='" + iframeSrc + "' height='600' width='100%'></iframe>";
             if($(graphicId).length == 0) {
                 return;
             }

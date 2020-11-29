@@ -127,7 +127,7 @@ module.exports = function (grunt) {
     
     replace: {
       production: {
-        src: ['tmp/mmooc-min.css','tmp/rootaccount.css', 'dist/mmooc-min.js', 'tmp/rootaccount.js', 'tmp/subaccount.js'],
+        src: ['tmp/mmooc-min.css','tmp/rootaccount.css', 'dist/kpas/style.css', 'dist/mmooc-min.js', 'tmp/rootaccount.js', 'tmp/subaccount.js'],
         dest: 'dist/',
         replacements: [
           {
@@ -170,6 +170,27 @@ module.exports = function (grunt) {
           }
         ]
       },
+      production_kpas: {
+        src: ['dist/kpas/style.css'],
+        dest: 'dist/kpas/',
+        replacements: [
+          {
+            from: 'https://server',
+            to: "https://kompetanseudirno.azureedge.net/udirdesign"
+          }
+        ]
+      },
+      development_kpas: {
+        src: ['dist/kpas/style.css'],
+        dest: 'dist/kpas/',
+        replacements: [
+          {
+            from: 'https://server',
+            to: "http://localhost:9000"
+          }
+        ]
+      },
+
       production_dataporten: {
         src: ['src/js/tmp/dataporten.js'],
         dest: 'src/js/modules/',
@@ -337,6 +358,13 @@ module.exports = function (grunt) {
   grunt.registerTask('prod_dataporten', [
     'replace:production_dataporten'
   ]);
+  grunt.registerTask('dev_kpas', [
+    'replace:development_kpas'
+  ]);
+
+  grunt.registerTask('prod_kpas', [
+    'replace:production_kpas'
+  ]);
 
   grunt.registerTask('dev_settings', [
     'replace:development_settings',
@@ -360,11 +388,11 @@ module.exports = function (grunt) {
 
   grunt.registerTask('test', ['clean', 'make', 'runTest']);
 
-  grunt.registerTask('build', ['prod_dataporten', 'prod_settings', 'make', 'prod_production']);
+  grunt.registerTask('build', ['prod_dataporten', 'prod_settings', 'make', 'prod_production', 'prod_kpas']);
 
-  grunt.registerTask('rebuildServe', ['clean:dist', 'dev_dataporten', 'dev_settings', 'make', 'dev_development']);
+  grunt.registerTask('rebuildServe', ['clean:dist', 'dev_dataporten', 'dev_settings', 'make', 'dev_development', 'dev_kpas']);
 
-  grunt.registerTask('serve', ['clean', 'dev_dataporten', 'dev_settings',  'make',  'dev_development','connect:dev', 'watch']);
+  grunt.registerTask('serve', ['clean', 'dev_dataporten', 'dev_settings',  'make',  'dev_development','dev_kpas', 'connect:dev', 'watch']);
 
   grunt.registerTask('serveStaging', ['clean', 'make', 'connect:staging', 'watch']);
 
