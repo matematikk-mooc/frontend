@@ -296,6 +296,7 @@ module.exports = function (grunt) {
     watch: {
       dist: {
         files: [
+          'kpas/*',
           'src/css/**/*.less',
           'src/js/**/*.js',
           'src/templates/**/*.hbs',
