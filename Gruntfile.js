@@ -170,6 +170,27 @@ module.exports = function (grunt) {
           }
         ]
       },
+      production_kpas: {
+        src: ['dist/kpas/style.css', 'dist/kpas/kpas.html', 'dist/kpas/main.js'],
+        dest: 'dist/kpas/',
+        replacements: [
+          {
+            from: 'https://server',
+            to: "https://kompetanseudirno.azureedge.net/"
+          }
+        ]
+      },
+      development_kpas: {
+        src: ['dist/kpas/style.css', 'dist/kpas/kpas.html', 'dist/kpas/main.js'],
+        dest: 'dist/kpas/',
+        replacements: [
+          {
+            from: 'https://server',
+            to: "http://localhost:9000"
+          }
+        ]
+      },
+
       production_dataporten: {
         src: ['src/js/tmp/dataporten.js'],
         dest: 'src/js/modules/',
@@ -262,7 +283,8 @@ module.exports = function (grunt) {
           { expand: true, src: ['vector_images/*'], cwd: 'src/', dest: 'dist/' },
           { expand: true, src: ['subaccount.js.map'], cwd: 'tmp/', dest: 'dist/' },
           { expand: true, src: ['rootaccount.js.map'], cwd: 'tmp/', dest: 'dist/' },
-          { expand: true, src: ['badges-min.js.map'], cwd: 'tmp/', dest: 'dist/' }
+          { expand: true, src: ['badges-min.js.map'], cwd: 'tmp/', dest: 'dist/' },
+          { expand: true, src: ['*'], cwd: 'kpas/', dest: 'dist/kpas' }
         ]
       }
     },
@@ -295,6 +317,7 @@ module.exports = function (grunt) {
     watch: {
       dist: {
         files: [
+          'kpas/*',
           'src/css/**/*.less',
           'src/js/**/*.js',
           'src/templates/**/*.hbs',
@@ -335,6 +358,13 @@ module.exports = function (grunt) {
   grunt.registerTask('prod_dataporten', [
     'replace:production_dataporten'
   ]);
+  grunt.registerTask('dev_kpas', [
+    'replace:development_kpas'
+  ]);
+
+  grunt.registerTask('prod_kpas', [
+    'replace:production_kpas'
+  ]);
 
   grunt.registerTask('dev_settings', [
     'replace:development_settings',
@@ -358,11 +388,11 @@ module.exports = function (grunt) {
 
   grunt.registerTask('test', ['clean', 'make', 'runTest']);
 
-  grunt.registerTask('build', ['prod_dataporten', 'prod_settings', 'make', 'prod_production']);
+  grunt.registerTask('build', ['prod_dataporten', 'prod_settings', 'make', 'prod_production', 'prod_kpas']);
 
-  grunt.registerTask('rebuildServe', ['clean:dist', 'dev_dataporten', 'dev_settings', 'make', 'dev_development']);
+  grunt.registerTask('rebuildServe', ['clean:dist', 'dev_dataporten', 'dev_settings', 'make', 'dev_development', 'dev_kpas']);
 
-  grunt.registerTask('serve', ['clean', 'dev_dataporten', 'dev_settings',  'make',  'dev_development','connect:dev', 'watch']);
+  grunt.registerTask('serve', ['clean', 'dev_dataporten', 'dev_settings',  'make',  'dev_development','dev_kpas', 'connect:dev', 'watch']);
 
   grunt.registerTask('serveStaging', ['clean', 'make', 'connect:staging', 'watch']);
 

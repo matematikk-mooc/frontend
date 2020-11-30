@@ -17,6 +17,9 @@ $(document).ready(function() {
                 }, error);
             } else if(message.subject == "kpas-lti.update") {
                 mmooc.util.updateInformationPane();
+            } else if(message.subject == "kpas.frameResize") {
+                console.log("Resize kpas");
+                $("#kpas")[0].height = message.height;
             } else if(message.subject == "kpas-lti.3pcookiesupported") {
                 console.log("Din nettleser støtter cookies fra tredjeparter, noe som trengs for å bruke KPAS");
             } else if(message.subject == "kpas-lti.3pcookienotsupported") {

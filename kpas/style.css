@@ -1,0 +1,115 @@
+body {
+    font-family: "Roboto", sans-serif;
+}
+
+.loading-gif {
+    width: 20px;
+    height: 20px;
+    background: url('https://server/bitmaps/loading.gif') no-repeat center center;
+    background-size: 70px;
+    display: inline-block;
+}
+
+.table-kpas *, .table-kpas ::after, .table-kpas ::before {
+    box-sizing: border-box;
+}
+
+.table-kpas {
+    box-sizing: border-box;
+    font-family: "Roboto", sans-serif;
+    font-size: 16px;
+    border-spacing: 0px;
+    border-collapse: collapse;
+}
+@media (max-width: 767px) {
+    .table-kpas {
+        font-size: 12px;
+    }
+}
+
+.table-kpas th {
+    font-weight: normal;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+}
+
+.table-header th {
+    background: #BAC6D8;
+}
+.table-header th:first-child {
+    text-align: left;;
+}
+
+
+.table-ticks th {
+    text-align: center;
+    background: white;
+    top: var(--table-header-height);
+}
+
+.table-kpas td.name, .table-ticks th, .column-sorter {
+    padding: 10px;
+}
+.table-kpas td.value {
+    background-image: linear-gradient(to right, rgba(0,0,0,0.1) 1px, transparent 1px);
+    background-size: 142px 100%;
+}
+.table-kpas .bar {
+    background: #7DBF9D;
+    height: 20px;
+    transition: 0.2s ease-out background;
+    min-width: 3px;
+}
+.table-kpas .bar:hover{
+    background: #9DBF9D;
+}
+
+.table-tooltip {
+    font-family: "Roboto", sans-serif;
+    font-size: 16px;	
+    position: absolute;			
+    text-align: center;			
+    padding: 10px;				
+    background: #BAC6D8;	
+    border: 0px;		
+    pointer-events: none;
+    z-index: 1;	
+}
+
+/* Sort buttons and arrow indicators */ 
+.column-sorter {
+    height: 100%;
+    text-align: left;
+    font-size: 1rem;
+    background: transparent;
+    border: none;
+    padding-right: 20px;
+    font-weight: bold;
+    position: relative;
+}
+.column-sorter:before, .column-sorter:after {
+    border: 4px solid transparent;
+    content: "";
+    display: block;
+    height: 0;
+    right: 5px;
+    top: 50%;
+    position: absolute;
+    width: 0;
+}
+.column-sorter:before {
+    border-top-color: currentColor;
+    margin-top: 1px;
+}
+.column-sorter:after {
+    border-bottom-color: currentColor;
+    margin-top: -9px;
+}
+
+.table-sort[aria-sort="descending"] .column-sorter:after {
+    border-bottom-color: transparent;
+}
+.table-sort[aria-sort="ascending"] .column-sorter:before {
+    border-top-color: transparent;
+}
