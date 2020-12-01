@@ -44,7 +44,7 @@ this.mmooc.utilRoot = function() {
       return mmooc.utilRoot.parse_query_string(search);
     },
     checkReferrer:function(ref) {
-       return document.referrer.endsWith(ref);
+       return document.referrer.includes(ref);
     },
 
     isEnrollReferrer: function() {

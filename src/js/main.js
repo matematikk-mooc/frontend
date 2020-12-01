@@ -12,7 +12,6 @@ jQuery(function($) {
 
   mmooc.routes.addRouteForQueryString(/invitation=/, function() {});
 
-
   mmooc.routes.addRouteForPath(/\/login\/canvas$/, function() {
     mmooc.utilRoot.redirectFeideAuthIfEnrollReferrer();
   });
@@ -33,7 +32,7 @@ jQuery(function($) {
   mmooc.routes.addRouteForPath(/\/courses\/\d+/, function() {
     mmooc.util.updateInformationPane();
   });
-  
+
   //The logic below should be refactored and cleaned up.
   mmooc.routes.addRouteForPath(/\/courses\/\d+$/, function() {
     mmooc.groups.interceptLinksToGroupPage();
@@ -133,7 +132,7 @@ jQuery(function($) {
 
   mmooc.routes.addRouteForPath(/\/search\/all_courses$/, function() {
     mmooc.enroll.printAllCoursesContainer();
-    mmooc.enroll.printAllCourses(); 
+    mmooc.enroll.printAllCourses();
     mmooc.enroll.goToAllCourses();
   });
 
@@ -317,6 +316,13 @@ jQuery(function($) {
       } else {
         mmooc.groups.interceptLinksToTeacherGroupPage();
       }
+
+      mmooc.api.getUserGroupsForCourse(courseId, (userGroups) => {
+        mmooc.util.tinyMceEditorIsInDOM(
+          () => mmooc.tinyMCEEditor.injectGroupHashtags(userGroups)
+        );
+        mmooc.discussionTopics.injectReplyButtonAction(userGroups);
+      });
     }
   );
 
@@ -330,13 +336,14 @@ jQuery(function($) {
       // For discussion pages we only want the title to be "<discussion>" instead of "Discussion: <discussion>"
       var title = mmooc.util.getPageTitleAfterColon();
       //If this is a group discussion we do not allow the user to access it because
-      //he is apparantly not a member of a group. 
+      //he is apparantly not a member of a group.
       var courseId = mmooc.api.getCurrentCourseId();
 
       mmooc.util.hasRoleInCourse(courseId, "TeacherEnrollment", function(isTeacher) {
         if(!isTeacher) {
           var courseId = mmooc.api.getCurrentCourseId();
           var contentId = mmooc.api.getCurrentTypeAndContentId().contentId;
+          if (contentId){
           mmooc.api.isGroupDiscussion(courseId, contentId, function(result) {
             if(result) {
                 $(".discussion-section").hide();
@@ -346,7 +353,7 @@ jQuery(function($) {
                 Dette er en gruppediskusjon, men du er ikke medlem i noen gruppe og kan derfor ikke delta.\
                   Gå tilbake til forsiden og velg fanen "Rolle og grupper".</div>');
             }
-          });        
+          });}
         }
       });
 
@@ -377,6 +384,13 @@ jQuery(function($) {
           'Tilbake til diskusjoner'
         );
       }
+
+      mmooc.api.getUserGroupsForCourse(courseId, (userGroups) => {
+        mmooc.util.tinyMceEditorIsInDOM(
+          () => mmooc.tinyMCEEditor.injectGroupHashtags(userGroups)
+        );
+        mmooc.discussionTopics.injectReplyButtonAction(userGroups);
+      });
     }
   );
 
@@ -461,7 +475,7 @@ jQuery(function($) {
       mmooc.greeting.enableGreetingButtonIfNecessary
     );
     mmooc.util.callWhenElementIsPresent(
-      ".new-sikt-diploma-button", 
+      ".new-sikt-diploma-button",
       mmooc.greeting.enableNewGreetingButtonIfNecessary);
 
     mmooc.util.callWhenElementIsPresent(
@@ -486,14 +500,20 @@ jQuery(function($) {
   //Change "Gå til dashboard" button.
   mmooc.routes.addRouteForQueryString(/enrolled=1/, function() {
     $(".ic-Self-enrollment-footer__Primary > a").each(function() {
-      var $this = $(this);       
-      var _href = $this.attr("href"); 
+      var $this = $(this);
+      var _href = $this.attr("href");
       $this.attr("href", _href + mmooc.hrefQueryString);
    });
   });
 
   mmooc.routes.addRouteForPath(/enroll\/[0-9A-Z]+/, function() {
     mmooc.enroll.changeEnrollPage();
+  });
+
+  mmooc.routes.addRouteForQueryString(/lang/, () => {
+    const language = MultilangUtils.getLanguageParameter()
+    console.log(`Language: ${language}`);
+    MultilangUtils.setActiveLanguage(language);
   });
 
   try {
@@ -508,7 +528,7 @@ jQuery(function($) {
     console.log(e);
   }
 
-  //Try to get course information and store it such that routes can use it. 
+  //Try to get course information and store it such that routes can use it.
   //Otherwise just handle the route.
   try {
     if(mmooc.util.isAuthenticated()) {
@@ -545,7 +565,6 @@ jQuery(function($) {
 
   try {
     mmooc.menu.injectGroupsPage();
-    mmooc.multilanguage.init();
     //mmooc.multilanguage.displayLanguageSelector();
     mmooc.groups.changeGroupListURLs(document.location.href);
 
@@ -556,6 +575,14 @@ jQuery(function($) {
   } catch (e) {
     console.log(e);
   }
-  
+
   $("#application").show();
+
+  try {
+    // Call multilanguage.perform() last to catch all relevant DOM content
+    mmooc.multilanguage.insertCss();
+    mmooc.multilanguage.perform();
+  } catch (e) {
+    console.log(e);
+  }
 });

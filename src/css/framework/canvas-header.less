@@ -18,10 +18,10 @@
       width: 100%;
       justify-content: space-between;
       margin: 0 auto;
-      max-width: 1196px;
+      max-width: @maxWidth;
       padding: 0 20px;
 
-      @media screen and (max-width: 768px) {
+      @media screen and (max-width: @smallestScreenCutoff) {
         flex-flow: wrap;
       }
 
@@ -33,13 +33,13 @@
         // IE11 fallback for Flex bug
         min-width: @logo-width;
 
-        @media screen and (max-width: 1050px) {
+        @media screen and (max-width: @smallScreenCutoff) {
           flex-basis: 33%;
           margin: 0;
           order: 1;
         }
 
-        @media screen and (max-width: 768px) {
+        @media screen and (max-width: @smallestScreenCutoff) {
           flex-basis: 100%;
         }
 
@@ -54,7 +54,7 @@
           transition: none;
           margin: 20px 0;
 
-          @media screen and (max-width: 1050px) {
+          @media screen and (max-width: @smallScreenCutoff) {
             flex-basis: 100%;
             margin: 20px auto;
             background-position: center;
@@ -72,12 +72,12 @@
       align-items: center;
       flex-basis: 100%;
 
-      @media screen and (max-width: 768px) {
+      @media screen and (max-width: @smallestScreenCutoff) {
         flex-basis: 100%;
         order: 3;
       }
 
-      @media screen and (max-width: 1050px) {
+      @media screen and (max-width: @smallScreenCutoff) {
         flex-basis: 33%;
         order: 0;
         flex-direction: column;
@@ -101,7 +101,7 @@
           display: none;
         }
 
-        @media screen and (max-width: 1050px) {
+        @media screen and (max-width: @smallScreenCutoff) {
           width: 100%;
           float: none;
           min-width: 250px;
@@ -145,7 +145,7 @@
           justify-content: center;
           height: 100%;
 
-          @media screen and (max-width: 1050px) {
+          @media screen and (max-width: @smallScreenCutoff) {
             width: 100%;
             justify-content: flex-start;
             padding-left: 28px;
@@ -193,25 +193,7 @@
               display: none;
             }
           }
-          //WILL BE DEAD CODE COME NEXT RElEASE (NOV 2020) KURSP-202
-          &#global_nav_history_link{
-            display:none;
-          }
-          &#global_nav_courses_link {
-            // courses and Groups menu hidden as default, since we replace it with our own Courses link
-            display: none;
-          }
-
-          &#global_nav_accounts_link {
-            // admin link hidden as default, since we replace it with our own admin link
-            display: none;
-          }
-
-          &#global_nav_groups_link {
-            // groups link hidden as default, since we replace it with our own groups link
-            display: none;
-          }
-
+        //This has to stay due to still being under the A-tab. The rest is under button and moved. Kursp-202
           &#global_nav_calendar_link {
             // calendar link hidden as default, since we replace it with our own calendar link
             display: none;
@@ -235,14 +217,14 @@
     #user-menu {
       display: flex;
       padding-top: 27px;
-      min-width: 195px;
+      min-width: @userMenuMinWidth;
       margin-right: -20px;
 
-      @media screen and (max-width: 1050px) {
+      @media screen and (max-width: @smallScreenCutoff) {
         margin-right: 0;
       }
 
-      @media screen and (max-width: 768px) {
+      @media screen and (max-width: @smallestScreenCutoff) {
         padding-top: 0;
       }
     }
@@ -255,7 +237,7 @@
       cursor: pointer;
     }
 
-    @media screen and (max-width: 1050px) {
+    @media screen and (max-width: @smallScreenCutoff) {
       display: block;
       padding-top: 30px;
       padding-left: 10px;
@@ -267,7 +249,7 @@
       flex-basis: 33%;
     }
 
-    @media screen and (max-width: 768px) {
+    @media screen and (max-width: @smallestScreenCutoff) {
       position: absolute;
       top: 54px;
     }

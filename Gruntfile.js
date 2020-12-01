@@ -57,6 +57,7 @@ module.exports = function (grunt) {
       },
       js: {
         src: [
+          'src/js/utilities/*.js',
           'src/js/3party/*.js',
           'tmp/templates.js',
           'src/js/api/*.js',
@@ -147,6 +148,28 @@ module.exports = function (grunt) {
           }
         ]
       },
+      stage: {
+        src: ['tmp/mmooc-min.css','tmp/rootaccount.css', 'dist/mmooc-min.js', 'tmp/rootaccount.js', 'tmp/subaccount.js'],
+        dest: 'dist/',
+        replacements: [
+          {
+            from: 'https://server',
+            to: 'https://kompetanseudirno.azureedge.net/udirdesign-staging'
+          },
+          {
+            from: 'https://udirdesigncss',
+            to: 'https://kompetanseudirno.azureedge.net/udirdesign-staging/mmooc-min.css?version='+udv
+          },
+          {
+            from: 'https://udirdesignjs',
+            to: 'https://kompetanseudirno.azureedge.net/udirdesign-staging/mmooc-min.js?version='+udv
+          },
+          {
+            from: '$KPASAPIURL',
+            to: '\'https://kpas-lti-staging-kpas.azurewebsites.net/api/\''
+          }
+        ]
+      },
       development: {
         src: ['tmp/mmooc-min.css','tmp/rootaccount.css', 'dist/mmooc-min.js', 'tmp/rootaccount.js','tmp/subaccount.js'],
         dest: 'dist/',
@@ -169,7 +192,60 @@ module.exports = function (grunt) {
           }
         ]
       },
+      production_kpas: {
+        src: ['dist/kpas/style.css', 'dist/kpas/kpas.html', 'dist/kpas/main.js'],
+        dest: 'dist/kpas/',
+        replacements: [
+          {
+            from: 'https://server',
+            to: "https://kompetanseudirno.azureedge.net/"
+          }
+        ]
+      },
+      stage_kpas: {
+        src: ['dist/kpas/style.css', 'dist/kpas/kpas.html', 'dist/kpas/main.js'],
+        dest: 'dist/kpas/',
+        replacements: [
+          {
+            from: 'https://server',
+            to: "https://kompetanseudirno.azureedge.net/"
+          }
+        ]
+      },
+      development_kpas: {
+        src: ['dist/kpas/style.css', 'dist/kpas/kpas.html', 'dist/kpas/main.js'],
+        dest: 'dist/kpas/',
+        replacements: [
+          {
+            from: 'https://server',
+            to: "http://localhost:9000"
+          }
+        ]
+      },
+
       production_dataporten: {
+        src: ['src/js/tmp/dataporten.js'],
+        dest: 'src/js/modules/',
+        replacements: [
+          {
+            from: '$REQUEST',
+            to: "['email','longterm', 'openid', 'profile', 'userid-feide', 'groups', 'gk_kpas']"
+          },
+          {
+            from: '$DATAPORTENCALLBACK',
+            to: 'https://bibsys.instructure.com/courses/234?dataportenCallback=1'
+          },
+          {
+            from: '$DATAPORTENCLIENTID',
+            to: '823e54e4-9cb7-438f-b551-d1af9de0c2cd'
+          },
+          {
+            from: '$KPASAPIURL',
+            to: 'https://kpas.dataporten-api.no'
+          }
+        ]
+      },
+      stage_dataporten: {
         src: ['src/js/tmp/dataporten.js'],
         dest: 'src/js/modules/',
         replacements: [
@@ -220,6 +296,16 @@ module.exports = function (grunt) {
           }
         ]
       },
+      stage_settings: {
+        src: ['src/js/tmp/settings.js'],
+        dest: 'src/js/',
+        replacements: [
+          {
+            from: '$ACCOUNTID',
+            to: '[253]'
+          }
+        ]
+      },
       development_settings: {
         src: ['src/js/tmp/settings.js'],
         dest: 'src/js/',
@@ -231,6 +317,16 @@ module.exports = function (grunt) {
         ]
       },
       production_badge: {
+        src: ['tmp/badges-min.js'],
+        dest: 'dist/badgesafe.js',
+        replacements: [
+          {
+            from: 'https://server',
+            to: 'https://matematikk-mooc.github.io/frontend'
+          }
+        ]
+      },
+      stage_badge: {
         src: ['tmp/badges-min.js'],
         dest: 'dist/badgesafe.js',
         replacements: [
@@ -261,7 +357,8 @@ module.exports = function (grunt) {
           { expand: true, src: ['vector_images/*'], cwd: 'src/', dest: 'dist/' },
           { expand: true, src: ['subaccount.js.map'], cwd: 'tmp/', dest: 'dist/' },
           { expand: true, src: ['rootaccount.js.map'], cwd: 'tmp/', dest: 'dist/' },
-          { expand: true, src: ['badges-min.js.map'], cwd: 'tmp/', dest: 'dist/' }
+          { expand: true, src: ['badges-min.js.map'], cwd: 'tmp/', dest: 'dist/' },
+          { expand: true, src: ['*'], cwd: 'kpas/', dest: 'dist/kpas' }
         ]
       }
     },
@@ -294,6 +391,7 @@ module.exports = function (grunt) {
     watch: {
       dist: {
         files: [
+          'kpas/*',
           'src/css/**/*.less',
           'src/js/**/*.js',
           'src/templates/**/*.hbs',
@@ -334,6 +432,19 @@ module.exports = function (grunt) {
   grunt.registerTask('prod_dataporten', [
     'replace:production_dataporten'
   ]);
+  grunt.registerTask('stage_dataporten', [
+    'replace:stage_dataporten'
+  ]);
+  grunt.registerTask('dev_kpas', [
+    'replace:development_kpas'
+  ]);
+  grunt.registerTask('stage_kpas', [
+    'replace:stage_kpas'
+  ]);
+
+  grunt.registerTask('prod_kpas', [
+    'replace:production_kpas'
+  ]);
 
   grunt.registerTask('dev_settings', [
     'replace:development_settings',
@@ -346,22 +457,31 @@ module.exports = function (grunt) {
   grunt.registerTask('prod_production', [
     'replace:production',
   ]);
+  grunt.registerTask('stage_staging', [
+    'replace:stage',
+  ]);
 
   grunt.registerTask('prod_settings', [
     'replace:production_settings',
     'replace:production_badge',
   ]);
 
+  grunt.registerTask('stage_settings', [
+    'replace:stage_settings',
+    'replace:stage_badge',
+  ]);
+ 
 
   grunt.registerTask('runTest', ['connect:test', 'karma:unitTest']);
 
   grunt.registerTask('test', ['clean', 'make', 'runTest']);
 
-  grunt.registerTask('build', ['prod_dataporten', 'prod_settings', 'make', 'prod_production']);
+  grunt.registerTask('build', ['prod_dataporten', 'prod_settings', 'make', 'prod_production', 'prod_kpas']);
+  grunt.registerTask('staging', ['stage_dataporten', 'stage_settings', 'make', 'stage_staging', 'stage_kpas']);
 
-  grunt.registerTask('rebuildServe', ['clean:dist', 'dev_dataporten', 'dev_settings', 'make', 'dev_development']);
+  grunt.registerTask('rebuildServe', ['clean:dist', 'dev_dataporten', 'dev_settings', 'make', 'dev_development', 'dev_kpas']);
 
-  grunt.registerTask('serve', ['clean', 'dev_dataporten', 'dev_settings',  'make',  'dev_development','connect:dev', 'watch']);
+  grunt.registerTask('serve', ['clean', 'dev_dataporten', 'dev_settings',  'make',  'dev_development','dev_kpas', 'connect:dev', 'watch']);
 
   grunt.registerTask('serveStaging', ['clean', 'make', 'connect:staging', 'watch']);
 

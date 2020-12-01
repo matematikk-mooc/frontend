@@ -1,7 +1,31 @@
 <div id="mmooc-course-tabs-container" {{#unless menuItems.length}} class="no-tabs" {{subtitle}}{{/unless}}>
     <div id="mmooc-course-tabs-container-inner">
+        <div id="mmooc-course-title-header">
+            <h1>{{title}}</h1>
+            {{#with languageOptions}}
+            {{#if courseIsMultilanguage}}
+            <div id="mmooc-course-language-container" >
+                <span id="mmooc-course-language-text">Språk / Giella</span>
+                <span id="mmooc-course-current-language">
+                    <svg class="mmooc-language-select-globe" width="22" height="22" fill="none" version="1.1" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+                        <g stroke="#656161" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+                            <path d="m11 21c5.5228 0 10-4.4772 10-10s-4.4772-10-10-10-10 4.4772-10 10 4.4772 10 10 10z"/>
+                            <path d="m1 11h20"/>
+                            <path d="m11 1c2.5013 2.7384 3.9228 6.292 4 10-0.0772 3.708-1.4987 7.2616-4 10-2.5013-2.7384-3.9228-6.292-4-10 0.0772-3.708 1.4987-7.2616 4-10z"/>
+                        </g>
+                    </svg>
+                    <span id="mmooc-course-language-selected">{{selectedLanguage}}</span>
+                </span>
+                <div id="mmooc-course-language-dropdown">
+                    {{#each otherLanguages}}
+                        <button class="mmooc-course-language-button" value="{{this.code}}">{{this.name}}</button>
+                    {{/each}}
+                </div>
+            </div>
+            {{/if}}
+            {{/with}}
+        </div>
 
-        <h1>{{title}}</h1>
         {{#if subtitle}}
         <span class="h1-sub-heading">{{subtitle}}</span>{{/if}} {{#if menuItems.length}}
         <ul class="mmooc-course-tabs">

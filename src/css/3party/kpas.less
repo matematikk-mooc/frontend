@@ -1,64 +1,61 @@
-*, ::after, ::before {
-    box-sizing: border-box;
-}
-
-body {
-    font-family: "Roboto", sans-serif;
-    font-size: 16px;
-}
-
-table.table-kpas {
-    border-spacing: 0px;
-    border-collapse: collapse;
-}
-@media (max-width: 767px) {
-    table.table-kpas {
-        font-size: 12px;
+#kommune-statistikk, #fylke-statistikk {
+    *, ::after, ::before {
+        box-sizing: border-box;
     }
-}
 
-.table-header th {
-    background: #BAC6D8;
-}
+    table.table-kpas {
+        border-spacing: 0px;
+        border-collapse: collapse;
+    }
+    @media (max-width: 767px) {
+        table.table-kpas {
+            font-size: 12px;
+        }
+    }
 
-.table-header th:first-child {
-    text-align: left;;
-}
-.table-ticks th {
-    text-align: center;
-    background: white;
-    top: var(--table-header-height);
-}
-.table-kpas th {
-    font-weight: normal;
-    position: sticky;
-    top: 0;
-    z-index: 1;
-}
-.table-kpas th button {
-    height: 100%;
-    text-align: left;
-    font-size: 1rem;
-    background: transparent;
-    border: none;
-    padding: 0;
-    font-weight: bold;
-}
+    .table-header th {
+        background: #BAC6D8;
+    }
 
-.table-kpas td.name, th {
-    padding: 10px;
-}
-.table-kpas td.value {
-    background-image: linear-gradient(to right, rgba(0,0,0,0.1) 1px, transparent 1px);
-    background-size: 142px 100%;
-}
+    .table-header th:first-child {
+        text-align: left;;
+    }
+    .table-ticks th {
+        text-align: center;
+        background: white;
+        top: var(--table-header-height);
+    }
+    .table-kpas th {
+        font-weight: normal;
+        position: sticky;
+        top: 0;
+        z-index: 1;
+    }
+    .table-kpas th button {
+        height: 100%;
+        text-align: left;
+        font-size: 1rem;
+        background: transparent;
+        border: none;
+        padding: 0;
+        font-weight: bold;
+    }
 
-.table-kpas .bar {
-    background: #7DBF9D;
-    height: 20px;
+    .table-kpas td.name, th {
+        padding: 10px;
+    }
+    .table-kpas td.value {
+        background-image: linear-gradient(to right, rgba(0,0,0,0.1) 1px, transparent 1px);
+        background-size: 142px 100%;
+    }
 
-    transition: 0.2s ease-out background;
-}
-.table-kpas .bar:hover{
-    background: #9DBF9D;
+    .table-kpas .bar {
+        background: #7DBF9D;
+        height: 20px;
+
+        transition: 0.2s ease-out background;
+    }
+    .table-kpas .bar:hover{
+        background: #9DBF9D;
+    }
 }

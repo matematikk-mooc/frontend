@@ -61,18 +61,92 @@ body.embedded #content {
 #main {
   background: @backgroundColor;
   border: none !important;
-  max-width: 1200px;
+  max-width: @maxWidth;
   margin: 0 auto;
 }
 
 #mmooc-course-tabs-container {
-  background: #fff;
   padding-top: 40px;
+  background: #fff;
   margin-bottom: 30px;
   border-bottom: 3px solid #dcdcdc;
 
   h1 {
     margin: 0;
+  }
+}
+
+@languageHeaderHeight: 40px;
+#mmooc-course-title-header {
+  display: inline-flex;
+  width: 100%;
+  align-items: center;
+  height: @languageHeaderHeight;
+
+  h1 {
+    flex-grow: 1;
+  }
+}
+
+#mmooc-course-language-container {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-end;
+  height: @languageHeaderHeight;
+
+  #mmooc-course-language-text {
+    color: #034961;
+  }
+
+  @langButtonHorizontalPadding: 20px;
+  @langButtonVerticalPadding: 5px;
+  @langCurrentWidth: 68px;
+
+  &:hover {
+    #mmooc-course-current-language {
+      background-color: #E2E2E2;
+    }
+
+    #mmooc-course-language-dropdown {
+      display: flex;
+    }
+  }
+
+  #mmooc-course-current-language {
+    margin-right: 4px;
+    margin-left: 4px;
+    border: 1px solid #656161;
+    background-color: #F9F9F9;
+    border-radius: 5px;
+    padding: @langButtonVerticalPadding @langButtonHorizontalPadding;
+    display: inline-flex;
+    align-items: center;
+    width: @langCurrentWidth;
+
+    .mmooc-language-select-globe {
+      position: relative;
+      right: 8px;
+    }
+  }
+
+  #mmooc-course-language-dropdown {
+    position: absolute;
+    display: none;
+    flex-direction: column;
+    top: @languageHeaderHeight - @langButtonVerticalPadding + 2px;
+    right: 8px;
+    width: @langCurrentWidth + 2 * @langButtonHorizontalPadding - 6px;
+
+    .mmooc-course-language-button {
+      background-color: #656161;
+      color: white;
+      font-family: Roboto;
+      font-size: 16px;
+      border: none;
+      height: @languageHeaderHeight - 2 * @langButtonVerticalPadding;
+      padding-left: 28px;
+    }
   }
 }
 
