@@ -6,8 +6,27 @@ this.mmooc.enroll = (function() {
       var informationPolicy = $('.ic-Self-enrollment-footer__Secondary > a');
       informationPolicy.attr("href", mmooc.settings.privacyPolicyLink);
     },
+    addForgotPasswordLink: function() {
+      const buttonId = 'selfEnrollmentForgotPassword';
+      const forgotPasswordButtonHtml =
+        '<button id="'+ buttonId +'" class="btn btn-primary" style="display: none;" type="submit">' +
+        'Glemt passord?</button>';
+
+      const parentDiv = $('.ic-Self-enrollment-footer__Primary');
+      parentDiv.prepend(forgotPasswordButtonHtml);
+
+      const forgotPasswordButton = $(`#${buttonId}`);
+      forgotPasswordButton.on('click', _ => window.location = '/login/canvas?normalLogin=1&design=udir&gp');
+
+      const alreadyHasUserButton = $('#selfEnrollmentAuthRegLogin');
+      alreadyHasUserButton.on('click', _ => forgotPasswordButton.show());
+
+      const newUserButton = $('#selfEnrollmentAuthRegCreate');
+      newUserButton.on('click', _ => forgotPasswordButton.hide());
+    },
     changeEnrollPage: function() {
       this.changeEnrollInformationPolicyLink();
+      this.addForgotPasswordLink();
     },
     printAllCoursesContainer: function() {
       html = mmooc.util.renderTemplateWithData('allcoursescontainer', {
