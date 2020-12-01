@@ -14,6 +14,7 @@ jQuery(function($) {
 
   mmooc.routes.addRouteForPath(/\/login\/canvas$/, function() {
     mmooc.utilRoot.redirectFeideAuthIfEnrollReferrer();
+    mmooc.utilRoot.triggerForgotPasswordIfParamPassed();
   });
 
   mmooc.routes.addRouteForPath(/\/login$/, function() {

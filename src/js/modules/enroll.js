@@ -16,7 +16,9 @@ this.mmooc.enroll = (function () {
       parentDiv.prepend(forgotPasswordButtonHtml);
 
       const forgotPasswordButton = $(`#${buttonId}`);
-      forgotPasswordButton.on('click', _ => window.location = '/login/canvas?normalLogin=1&design=udir&gp');
+      forgotPasswordButton.on(
+        'click', _ => window.location = '/login/canvas?normalLogin=1&design=udir&gp'
+      );
 
       const alreadyHasUserButton = $('#selfEnrollmentAuthRegLogin');
       alreadyHasUserButton.on('click', _ => forgotPasswordButton.show());

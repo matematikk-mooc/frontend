@@ -36,7 +36,6 @@ this.mmooc.utilRoot = function() {
       }
       return query_string;
     },
-
     urlParamsToObject: function() {
       if (document.location.search === '') return {};
 
@@ -84,6 +83,12 @@ this.mmooc.utilRoot = function() {
             return true;
         }
         return false;    
+    },
+    triggerForgotPasswordIfParamPassed: function() {
+      const params = this.urlParamsToObject();
+      if (params['gp'] !== undefined) {
+        $('#login_forgot_password').click();
+      }
     },
     redirectToEnrollIfCodeParamPassed: function() {
       // If user wanted to enroll a course using Feide auth,
