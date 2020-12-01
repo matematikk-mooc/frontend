@@ -500,7 +500,7 @@ this.mmooc.util = (function () {
         var currentClass = $(this).attr('class');
         if (modulesFound && currentClass != 'settings') {
           var href = $(this).attr('href');
-          var title = $(this).attr('title');
+          var title = $(this).html();
           var activeTool = false;
           if (href == path) {
             activeTool = true;
