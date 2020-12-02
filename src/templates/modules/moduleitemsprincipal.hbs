@@ -29,7 +29,7 @@
                                             {{/if}}
                                         </i>
                                 </span>
-                                <span class="mmooc-module-item-title mmooc-module-item-header-title">{{title}}</span>
+                                <span class="mmooc-module-item-title mmooc-module-item-header-title translate">{{title}}</span>
                             </a>
                         </li>
                     </ul>
@@ -37,7 +37,7 @@
                 {{else}}
                     <li class="mmooc-module-item mmooc-module-item-icon">
                         <a class="{{#if isCurrent}}active{{/if}}" href="{{html_url}}">
-                            <span class="mmooc-module-item-title">{{title}}</span>
+                            <span class="mmooc-module-item-title translate">{{title}}</span>
                             <span class="mmooc-module-items-icons-{{type}}{{#ifItemIsCompleted completion_requirement}} done{{/ifItemIsCompleted}}" href="{{html_url}}">
                                 <i class="icon-{{lowercase type}}{{overrideIconClassByTitle title}}">
                                     {{#ifIsIndented}}
