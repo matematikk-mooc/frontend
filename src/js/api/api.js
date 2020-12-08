@@ -707,19 +707,16 @@ body: test
       });
     },
     getUserGroupsForCourse(courseId, callback, error) {
-      this.getUserGroups(
-        (function(courseId) {
-          return groups => {
-            let usersGroups = [];
-            for (let i = 0; i < groups.length; i++) {
-              const group = groups[i];
-              if (group.course_id == courseId) {
-                usersGroups.push(group);
-              }
+      this.getUserGroups(groups => {
+          let usersGroups = [];
+          for (let i = 0; i < groups.length; i++) {
+            const group = groups[i];
+            if (group.course_id == courseId) {
+              usersGroups.push(group);
             }
-            callback(usersGroups);
-          };
-        })(courseId)
+          }
+          callback(usersGroups);
+        }
       );
     },
 

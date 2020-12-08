@@ -143,6 +143,10 @@ module.exports = function (grunt) {
             to: 'https://kompetanseudirno.azureedge.net/udirdesign/mmooc-min.js?version='+udv
           },
           {
+            from: 'KPAS_IFRAME_VERSION',
+            to: udv
+          },
+          {
             from: '$KPASAPIURL',
             to: '\'https://kpas-lti.azurewebsites.net/api/\''
           }
@@ -163,6 +167,10 @@ module.exports = function (grunt) {
           {
             from: 'https://udirdesignjs',
             to: 'https://kompetanseudirno.azureedge.net/udirdesign-staging/mmooc-min.js?version='+udv
+          },
+          {
+            from: 'KPAS_IFRAME_VERSION',
+            to: udv
           },
           {
             from: '$KPASAPIURL',
@@ -187,6 +195,10 @@ module.exports = function (grunt) {
             to: 'http://localhost:9000/mmooc-min.js'
           },
           {
+            from: 'KPAS_IFRAME_VERSION',
+            to: udv
+          },
+          {
             from: '$KPASAPIURL',
             to: '\'' + process.env.KPAS_URL + '/api/\''
           }
@@ -199,6 +211,10 @@ module.exports = function (grunt) {
           {
             from: 'https://server',
             to: "https://kompetanseudirno.azureedge.net/"
+          },
+          {
+            from: 'KPAS_IFRAME_VERSION',
+            to: udv
           }
         ]
       },
@@ -209,6 +225,10 @@ module.exports = function (grunt) {
           {
             from: 'https://server',
             to: "https://kompetanseudirno.azureedge.net/"
+          },
+          {
+            from: 'KPAS_IFRAME_VERSION',
+            to: udv
           }
         ]
       },
@@ -219,6 +239,10 @@ module.exports = function (grunt) {
           {
             from: 'https://server',
             to: "http://localhost:9000"
+          },
+          {
+            from: 'KPAS_IFRAME_VERSION',
+            to: udv
           }
         ]
       },
@@ -360,6 +384,15 @@ module.exports = function (grunt) {
           { expand: true, src: ['badges-min.js.map'], cwd: 'tmp/', dest: 'dist/' },
           { expand: true, src: ['*'], cwd: 'kpas/', dest: 'dist/kpas' }
         ]
+      },
+      dev: {
+        files: [
+          { expand: true, src: ['tmp/mmooc.js'], 
+            rename: function () {       // The value for rename must be a function
+              return 'dist/mmooc-min.js'; // The function must return a string with the complete destination
+            }
+          }
+        ]
       }
     },
 
@@ -422,8 +455,15 @@ module.exports = function (grunt) {
     'babel',
     'uglify',
     'less',
-    'copy',
+    'copy:main',
   ]);
+  grunt.registerTask('make_dev', [
+    'handlebars',
+    'concat',
+    'less',
+    'copy'
+  ]);
+
 
   grunt.registerTask('dev_dataporten', [
     'replace:development_dataporten'
@@ -479,9 +519,9 @@ module.exports = function (grunt) {
   grunt.registerTask('build', ['prod_dataporten', 'prod_settings', 'make', 'prod_production', 'prod_kpas']);
   grunt.registerTask('staging', ['stage_dataporten', 'stage_settings', 'make', 'stage_staging', 'stage_kpas']);
 
-  grunt.registerTask('rebuildServe', ['clean:dist', 'dev_dataporten', 'dev_settings', 'make', 'dev_development', 'dev_kpas']);
+  grunt.registerTask('rebuildServe', ['clean:dist', 'dev_dataporten', 'dev_settings', 'make_dev', 'dev_development', 'dev_kpas']);
 
-  grunt.registerTask('serve', ['clean', 'dev_dataporten', 'dev_settings',  'make',  'dev_development','dev_kpas', 'connect:dev', 'watch']);
+  grunt.registerTask('serve', ['clean', 'dev_dataporten', 'dev_settings',  'make_dev',  'dev_development','dev_kpas', 'connect:dev', 'watch']);
 
   grunt.registerTask('serveStaging', ['clean', 'make', 'connect:staging', 'watch']);
 
