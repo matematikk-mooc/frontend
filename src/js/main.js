@@ -539,6 +539,13 @@ jQuery(function($) {
           function(course) {
             mmooc.util.course = course;
             mmooc.routes.performHandlerForUrl(document.location);
+            try {
+              // Call multilanguage.perform() last to catch all relevant DOM content
+              mmooc.multilanguage.insertCss();
+              mmooc.multilanguage.perform();
+            } catch (e) {
+              console.log(e);
+            }
           },
           function(error) {
             console.error(
@@ -577,12 +584,4 @@ jQuery(function($) {
   }
 
   $("#application").show();
-
-  try {
-    // Call multilanguage.perform() last to catch all relevant DOM content
-    mmooc.multilanguage.insertCss();
-    mmooc.multilanguage.perform();
-  } catch (e) {
-    console.log(e);
-  }
 });
