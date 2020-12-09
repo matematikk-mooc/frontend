@@ -30,7 +30,7 @@ this.mmooc.kpas = (function() {
                 return null;
             }
             var graphicId = "#kommune-statistikk";
-            var iframeSrc = "https://server/kpas/kpas.html?courseId=" + courseId + "&municipalityId=" +  groupsInfo.municipalityId;
+            var iframeSrc = "https://server/kpas/kpas.html?version=KPAS_IFRAME_VERSION&courseId=" + courseId + "&municipalityId=" +  groupsInfo.municipalityId;
             var html = "<iframe id='kpas' src='" + iframeSrc + "' height='600' width='100%'></iframe>";
             if($(graphicId).length == 0) {
                 return;
@@ -46,7 +46,7 @@ this.mmooc.kpas = (function() {
             if($(graphicId).length == 0) {
                 return;
             }
-            var iframeSrc = "https://server/kpas/kpas.html?courseId=" + courseId + "&countyId=" +  groupsInfo.countyId;
+            var iframeSrc = "https://server/kpas/kpas.html??version=KPAS_IFRAME_VERSION&courseId=" + courseId + "&countyId=" +  groupsInfo.countyId;
             var html = "<iframe id='kpas' src='" + iframeSrc + "' height='600' width='100%'></iframe>";
             if($(graphicId).length == 0) {
                 return;

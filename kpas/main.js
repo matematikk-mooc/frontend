@@ -204,16 +204,31 @@ function createDiagram(...options) {
         .attr("style", () => `background-size: ${cellWidth}px 100%`)
         .append("div")
         .attr("class", "bar")
-        .attr("aria-label", d => `Prosentkategori: ${getPercentageRange(d.enrollment_percentage_category - 1)}`)
-        .attr("style", d => `width: ${cellWidth * d.enrollment_percentage_category}px;`)
+        .attr("aria-label", function(d,i) {
+            if(d.enrollment_percentage_category < 99) {
+                return `Prosentkategori: ${getPercentageRange(d.enrollment_percentage_category - 1)}`
+            }
+            return `Dataene er skjult grunnet personvernhensyn.`;
+        }) 
+        .attr("style", function(d,i) {
+            if(d.enrollment_percentage_category < 99) {
+                return `width: ${cellWidth * d.enrollment_percentage_category}px;`;
+            }
+            return `background: #6d889d; border-radius: 50%; width: 10px; height: 10px;`;
+        })
         .on("mouseover", function (event, d) {
             d3.select(this).attr("aria-describedby", "table-tooltip");
             tooltip.transition()
                 .duration(200)
                 .style("opacity", 1);
-            tooltip.html(`Prosentkategori: ${getPercentageRange(d.enrollment_percentage_category - 1)}`)
-                .style("left", (event.pageX) + "px")
-                .style("top", (event.pageY - 40) + "px");
+            if(d.enrollment_percentage_category < 99) {
+                tooltipText = `Prosentkategori: ${getPercentageRange(d.enrollment_percentage_category - 1)}`;
+            } else {
+                tooltipText = "Dataene er skjult grunnet personvernhensyn."
+            }
+            tooltip.html(tooltipText)
+            .style("left", (event.pageX) + "px")
+            .style("top", (event.pageY - 40) + "px");
         })
         .on("mouseout", function () {
             d3.select(this).attr("aria-describedby", null);

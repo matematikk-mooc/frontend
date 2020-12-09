@@ -14,6 +14,7 @@ jQuery(function($) {
 
   mmooc.routes.addRouteForPath(/\/login\/canvas$/, function() {
     mmooc.utilRoot.redirectFeideAuthIfEnrollReferrer();
+    mmooc.utilRoot.triggerForgotPasswordIfParamPassed();
   });
 
   mmooc.routes.addRouteForPath(/\/login$/, function() {
@@ -284,12 +285,11 @@ jQuery(function($) {
     ],
     function() {
       mmooc.menu.showDiscussionGroupMenu();
+      const courseId = mmooc.api.getCurrentCourseId();
 
       //20180911ETH Need to know if I got here from the discussion list or from the module
       //            navigation.
       if (!this.hasQueryString) {
-        var courseId = mmooc.api.getCurrentCourseId();
-
         //If courseId was found, it is a group discussion created by a teacher.
         if (courseId) {
           mmooc.menu.showBackButton(
@@ -539,6 +539,13 @@ jQuery(function($) {
           function(course) {
             mmooc.util.course = course;
             mmooc.routes.performHandlerForUrl(document.location);
+            try {
+              // Call multilanguage.perform() last to catch all relevant DOM content
+              mmooc.multilanguage.insertCss();
+              mmooc.multilanguage.perform();
+            } catch (e) {
+              console.log(e);
+            }
           },
           function(error) {
             console.error(
@@ -577,12 +584,4 @@ jQuery(function($) {
   }
 
   $("#application").show();
-
-  try {
-    // Call multilanguage.perform() last to catch all relevant DOM content
-    mmooc.multilanguage.insertCss();
-    mmooc.multilanguage.perform();
-  } catch (e) {
-    console.log(e);
-  }
 });
