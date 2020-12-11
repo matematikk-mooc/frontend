@@ -154,6 +154,8 @@ class MultilangUtils {
             'div.tooltiptext',
             '.show-content.user_content h1.page-title',
             'a.mmooc-module-name',
+            '.discussion-title',
+            
         ];
 
         if (location.pathname.endsWith('/modules')) {
