@@ -605,33 +605,41 @@ function uobAddComponents() {
         'udir-eksempel'
       ];
 
-      for (var i = 0; i < aBoxTags.length; i++) {
-        var strTag = aBoxTags[i];
-        var $boxTable = $content
-          .find('table')
-          .has('table > tbody > tr > td:contains([' + strTag + '])');
-
-        if ($boxTable.length) {
-          $boxTable.each(function(_idx, _item) {
-            // Add new container immediately before table
-            $table = $(_item);
-
-            if (strTag == 'uob-header')
-              $table.before('<h2 class="' + strTag + '"></h2>');
-            else if (strTag == 'uob-quote')
-              $table.before(
-                '<div class="' + strTag + '"><div class="uob-quote99" /></div>'
-              );
-            else $table.before('<div class="' + strTag + '"></div>');
-
-            // Move content from table to container
-            $table.prev().append($table.find('tr:eq(1) > td:eq(0)').contents());
-
-            // Remove original table
-            $table.remove();
+      do {
+        var found = false;
+        var strTag = "";
+        var $table = $content
+          .find("table")
+          .filter(function(index) {
+            var str = $(this).find("tr:eq(0) > td").text();
+            var patt = /\[(.*)\]/i;
+            var result = str.match(patt);
+            
+            if(!found && aBoxTags.indexOf(result[1] > -1)) {
+              strTag = result[1];
+              found = true;
+              return true;
+            } 
+            return false;
           });
+
+        if (found) {
+          // Add new container immediately before table
+          if (strTag == 'uob-header')
+            $table.before('<h2 class="' + strTag + '"></h2>');
+          else if (strTag == 'uob-quote')
+            $table.before(
+              '<div class="' + strTag + '"><div class="uob-quote99" /></div>'
+            );
+          else $table.before('<div class="' + strTag + '"></div>');
+
+          // Move content from table to container
+          $table.prev().append($table.find('tr:eq(1) > td:eq(0)').contents());
+
+          // Remove original table
+          $table.remove();
         }
-      }
+      } while(found);
 
       // ================================================================================
       // Previews
