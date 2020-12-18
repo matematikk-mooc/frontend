@@ -196,7 +196,7 @@ function uobAddComponents() {
 
       strSetNum = 0;
 
-      for (i = 0; i < 10; i++) {
+      for (i = 0; i < 20; i++) {
         // Locate the next uob-reveal table
         var $table = $content
           .find('table')
