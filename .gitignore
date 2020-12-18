@@ -12,3 +12,4 @@ _site/
 frontend.code-workspace
 src/js/settings.js
 src/js/modules/dataporten.js
+package-lock.json

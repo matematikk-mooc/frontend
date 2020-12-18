@@ -178,12 +178,15 @@ this.mmooc.menu = (function() {
   var stylesheet = createStyleSheet();
 
   return {
+    tooltipRegexpPattern : new RegExp("(<br>|</i>)(.*$)"),
+
     listModuleItems: function() {
       mmooc.api.getCurrentModule(function(module) {
         var courseId = mmooc.api.getCurrentCourseId();
         var html = "";
+        var courseIsRoleBased = mmooc.util.isActiveCourseRoleBased();
 
-        if(mmooc.util.isActiveCourseRoleBased() && mmooc.util.isPrincipal()) {
+        if(courseIsRoleBased && mmooc.util.isPrincipal()) {
           html = mmooc.util.renderTemplateWithData('moduleitemsprincipal', {
             backToCoursePage: mmooc.i18n.BackToCoursePage,
             module: module,
@@ -191,15 +194,19 @@ this.mmooc.menu = (function() {
             course: mmooc.util.course
           });
         } else {
-
           html = mmooc.util.renderTemplateWithData('moduleitems', {
             backToCoursePage: mmooc.i18n.BackToCoursePage,
             module: module,
             courseId: courseId,
             course: mmooc.util.course
           });
-          if(mmooc.util.isActiveCourseRoleBased()) {
+
+          //Need to update previous and next buttons. If the course is role based
+          //multilanguage will be handled by that method.
+          if(courseIsRoleBased) {
             mmooc.menu.updatePrevAndNextButtons(courseId, module);
+          } else {
+            mmooc.multilanguage.performPrevNextTooltip();       
           }
         }
 
@@ -248,6 +255,7 @@ this.mmooc.menu = (function() {
           var prevButtonLink = $(".module-sequence-footer-button--previous a");
           prevButtonLink.attr("href", prevItem.html_url);
           mmooc.menu.updateButtonTooltip(prevButton, prevItem);
+          mmooc.multilanguage.performPrevTooltip();
           prevButton.show();
         }
       }
@@ -263,16 +271,21 @@ this.mmooc.menu = (function() {
           var nextButtonLink = $(".module-sequence-footer-button--next a");
           nextButtonLink.attr("href", nextItem.html_url);
           mmooc.menu.updateButtonTooltip(nextButton, nextItem);
+          mmooc.multilanguage.performNextTooltip();
           nextButton.show();
         }
       }
     },
+
+    createNewTooltipText : function(oldText, tooltipType, newText) {
+      return oldText.replace(mmooc.menu.tooltipRegexpPattern, tooltipType + newText)
+    },
     updateButtonTooltip : function(el, item) {
-        var tooltip = el.attr("data-html-tooltip-title");
-        if(tooltip) {
-          var newTooltip = tooltip.replace(/<\/i>.*$/, "</i>" + item.title )
-          el.attr("data-html-tooltip-title", newTooltip);
-        }
+      var tooltip = el.attr("data-html-tooltip-title");
+      if(tooltip) {
+        el.attr("data-html-tooltip-title", mmooc.menu.createNewTooltipText(tooltip, "</i>", item.title));
+        mmooc.multilanguage.update
+      }
     },
     updatePrevAndNextButtons : function(courseId, module) {
       var prevItem = "";
@@ -308,6 +321,7 @@ this.mmooc.menu = (function() {
         var prevButtonLink = $(".module-sequence-footer-button--previous a");
         prevButtonLink.attr("href", prevItem.html_url);
         mmooc.menu.updateButtonTooltip(prevButton, prevItem);
+        mmooc.multilanguage.performPrevTooltip();
       } else {
           prevButton.hide();
           var id = firstValidItem.id;
@@ -319,6 +333,7 @@ this.mmooc.menu = (function() {
           var nextButtonLink = $(".module-sequence-footer-button--next a");
           nextButtonLink.attr("href", nextItem.html_url);
           mmooc.menu.updateButtonTooltip(nextButton, nextItem);
+          mmooc.multilanguage.performNextTooltip();
       } else {
           nextButton.hide();
           var id = lastValidItem.id;
