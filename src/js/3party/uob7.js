@@ -195,8 +195,7 @@ function uobAddComponents() {
       // ................................................................................
 
       strSetNum = 0;
-
-      for (i = 0; i < 10; i++) {
+      do {
         // Locate the next uob-reveal table
         var $table = $content
           .find('table')
@@ -204,45 +203,46 @@ function uobAddComponents() {
           .last();
 
         // Break loop if no more reveal tables are to be converted.
-        if ($table.length != 1) break;
+        var tableFound = $table.length;
+        if (tableFound) {
 
-        // Convert table into a reveal
-        strSetNum++;
+          // Convert table into a reveal
+          strSetNum++;
 
-        $table.find('tbody:first > tr:gt(0) > td').each(function(_idx, _item) {
-          var strAnchor =
-            'set' + strSetNum + 'reveal' + (_idx - (_idx % 2)) / 2;
+          $table.find('tbody:first > tr:gt(0) > td').each(function(_idx, _item) {
+            var strAnchor =
+              'set' + strSetNum + 'reveal' + (_idx - (_idx % 2)) / 2;
 
-          if ((_idx + 1) % 2) {
-            // Add new reveal button immediately before table
-            $table.before(
-              '<p><a href="#' +
-                strAnchor +
-                '" class="uob-reveal-button"></a></p>'
-            );
-            $table
-              .prev()
-              .children()
-              .append(
-                $(_item)
-                  .text()
-                  .trim()
+            if ((_idx + 1) % 2) {
+              // Add new reveal button immediately before table
+              $table.before(
+                '<p><a href="#' +
+                  strAnchor +
+                  '" class="uob-reveal-button"></a></p>'
               );
-          }
+              $table
+                .prev()
+                .children()
+                .append(
+                  $(_item)
+                    .text()
+                    .trim()
+                );
+            }
 
-          if (_idx % 2) {
-            // Add new reveal content immediately before table
-            $table.before(
-              '<div id="' + strAnchor + '" class="uob-reveal-content"></div>'
-            );
-            $table.prev().append($(_item).contents());
-          }
-        });
+            if (_idx % 2) {
+              // Add new reveal content immediately before table
+              $table.before(
+                '<div id="' + strAnchor + '" class="uob-reveal-content"></div>'
+              );
+              $table.prev().append($(_item).contents());
+            }
+          });
 
-        // Remove original table
-        $table.remove();
-      }
-
+          // Remove original table
+          $table.remove();
+        }
+      } while(tableFound)
       // ================================================================================
       // RegExp (Part 1/1)
       //
