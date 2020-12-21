@@ -615,7 +615,7 @@ function uobAddComponents() {
             var patt = /\[(.*)\]/i;
             var result = str.match(patt);
             
-            if(!found && aBoxTags.indexOf(result[1] > -1)) {
+            if(!found && result && result[1] && aBoxTags.indexOf(result[1] > -1)) {
               strTag = result[1];
               found = true;
               return true;
