@@ -30,7 +30,7 @@ class MultilangUtils {
 
     static makeSpansForTooltip(attrSelector) {
         var node = document.querySelector(attrSelector);
-        var tooltip = node.getAttribute("data-html-tooltip-title");
+        var tooltip = node && node.getAttribute("data-html-tooltip-title");
         if(tooltip) {
             var tooltipParsedResult = MultilangUtils.getParsedTooltipText(tooltip);
             if(tooltipParsedResult && tooltipParsedResult[1] && tooltipParsedResult[2]) {
@@ -104,7 +104,7 @@ class MultilangUtils {
             return;
         }
 
-        document.cookie = `courselanguage=${languageCode}; SameSite=Strict`;
+        document.cookie = `courselanguage=${languageCode}; SameSite=Strict; path=/`;
     }
 
     static getLanguageCode() {
