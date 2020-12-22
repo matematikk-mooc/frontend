@@ -57,6 +57,14 @@ function uobAddComponents() {
   onElementRendered(
     '#content .user_content.enhanced,#content .show-content.enhanced',
     function($content) {
+      //KURSP-279 Multilanguage must be run when content is ready
+      try {
+        // Call multilanguage.perform() last to catch all relevant DOM content
+        mmooc.multilanguage.perform();
+      } catch (e) {
+        console.log(e);
+      }
+
       // Tooltip
       var re = /\[(.*?)\]\((.*?)\)/g;
 
