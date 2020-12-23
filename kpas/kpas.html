@@ -2,8 +2,53 @@
 <html lang="no">
 
 <head>
-    <meta charset="utf-8">
-    <title>Simple Bar chart</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+    body {font-family: Arial, Helvetica, sans-serif;}
+    * {box-sizing: border-box;}
+    
+    .form-inline {  
+      display: flex;
+      flex-flow: row wrap;
+      align-items: center;
+    }
+    
+    .form-inline label {
+      margin: 5px 10px 5px 0;
+    }
+    
+    .form-inline input {
+      vertical-align: middle;
+      margin: 5px 10px 5px 0;
+      padding: 10px;
+      background-color: #fff;
+      border: 1px solid #ddd;
+    }
+    
+    .form-inline button {
+      padding: 10px 20px;
+      background-color: dodgerblue;
+      border: 1px solid #ddd;
+      color: white;
+      cursor: pointer;
+    }
+    
+    .form-inline button:hover {
+      background-color: royalblue;
+    }
+    
+    @media (max-width: 800px) {
+      .form-inline input {
+        margin: 10px 0;
+      }
+      
+      .form-inline {
+        flex-direction: column;
+        align-items: stretch;
+      }
+    }
+    </style>
+    <title>Kompetanseportal - statistikk</title>
     <link rel="stylesheet" href="style.css?version=KPAS_IFRAME_VERSION">
     <script src="https://d3js.org/d3-fetch.v2.min.js"></script>
     <script src="https://d3js.org/d3-array.v2.min.js"></script>
@@ -18,6 +63,20 @@
 </head>
 
 <body onload="loadGraphic()">
+    <div id="fylkeValg" style="display: none">
+        <form class="form-inline" action="javascript:updateCountyGraphic();">
+            <label for="fylke">Fylkenummer: </label>
+            <input type="number" id="fylke" name="fylke"><br>
+            <button type="submit">Oppdater</button>
+        </form>
+    </div>
+    <div id="kommuneValg" style="display: none">
+        <form class="form-inline" action="javascript:updateMunicipalityGraphic();">
+            <label for="fylke">Kommunenummer: </label>
+            <input type="number" id="kommune" name="kommune"><br>
+            <button type="submit" value="Oppdater">
+        </form>
+    </div>
     <h2><span id="graphic-name">&nbsp;</span></h2>
     <div id="graphic"></div>
 </body>
