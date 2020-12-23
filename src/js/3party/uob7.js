@@ -57,6 +57,14 @@ function uobAddComponents() {
   onElementRendered(
     '#content .user_content.enhanced,#content .show-content.enhanced',
     function($content) {
+      //KURSP-279 Multilanguage must be run when content is ready
+      try {
+        // Call multilanguage.perform() last to catch all relevant DOM content
+        mmooc.multilanguage.perform();
+      } catch (e) {
+        console.log(e);
+      }
+
       // Tooltip
       var re = /\[(.*?)\]\((.*?)\)/g;
 
@@ -195,8 +203,7 @@ function uobAddComponents() {
       // ................................................................................
 
       strSetNum = 0;
-
-      for (i = 0; i < 10; i++) {
+      do {
         // Locate the next uob-reveal table
         var $table = $content
           .find('table')
@@ -204,45 +211,46 @@ function uobAddComponents() {
           .last();
 
         // Break loop if no more reveal tables are to be converted.
-        if ($table.length != 1) break;
+        var tableFound = $table.length;
+        if (tableFound) {
 
-        // Convert table into a reveal
-        strSetNum++;
+          // Convert table into a reveal
+          strSetNum++;
 
-        $table.find('tbody:first > tr:gt(0) > td').each(function(_idx, _item) {
-          var strAnchor =
-            'set' + strSetNum + 'reveal' + (_idx - (_idx % 2)) / 2;
+          $table.find('tbody:first > tr:gt(0) > td').each(function(_idx, _item) {
+            var strAnchor =
+              'set' + strSetNum + 'reveal' + (_idx - (_idx % 2)) / 2;
 
-          if ((_idx + 1) % 2) {
-            // Add new reveal button immediately before table
-            $table.before(
-              '<p><a href="#' +
-                strAnchor +
-                '" class="uob-reveal-button"></a></p>'
-            );
-            $table
-              .prev()
-              .children()
-              .append(
-                $(_item)
-                  .text()
-                  .trim()
+            if ((_idx + 1) % 2) {
+              // Add new reveal button immediately before table
+              $table.before(
+                '<p><a href="#' +
+                  strAnchor +
+                  '" class="uob-reveal-button"></a></p>'
               );
-          }
+              $table
+                .prev()
+                .children()
+                .append(
+                  $(_item)
+                    .text()
+                    .trim()
+                );
+            }
 
-          if (_idx % 2) {
-            // Add new reveal content immediately before table
-            $table.before(
-              '<div id="' + strAnchor + '" class="uob-reveal-content"></div>'
-            );
-            $table.prev().append($(_item).contents());
-          }
-        });
+            if (_idx % 2) {
+              // Add new reveal content immediately before table
+              $table.before(
+                '<div id="' + strAnchor + '" class="uob-reveal-content"></div>'
+              );
+              $table.prev().append($(_item).contents());
+            }
+          });
 
-        // Remove original table
-        $table.remove();
-      }
-
+          // Remove original table
+          $table.remove();
+        }
+      } while(tableFound)
       // ================================================================================
       // RegExp (Part 1/1)
       //
@@ -605,33 +613,41 @@ function uobAddComponents() {
         'udir-eksempel'
       ];
 
-      for (var i = 0; i < aBoxTags.length; i++) {
-        var strTag = aBoxTags[i];
-        var $boxTable = $content
-          .find('table')
-          .has('table > tbody > tr > td:contains([' + strTag + '])');
-
-        if ($boxTable.length) {
-          $boxTable.each(function(_idx, _item) {
-            // Add new container immediately before table
-            $table = $(_item);
-
-            if (strTag == 'uob-header')
-              $table.before('<h2 class="' + strTag + '"></h2>');
-            else if (strTag == 'uob-quote')
-              $table.before(
-                '<div class="' + strTag + '"><div class="uob-quote99" /></div>'
-              );
-            else $table.before('<div class="' + strTag + '"></div>');
-
-            // Move content from table to container
-            $table.prev().append($table.find('tr:eq(1) > td:eq(0)').contents());
-
-            // Remove original table
-            $table.remove();
+      do {
+        var found = false;
+        var strTag = "";
+        var $table = $content
+          .find("table")
+          .filter(function(index) {
+            var str = $(this).find("tr:eq(0) > td").text();
+            var patt = /\[(.*)\]/i;
+            var result = str.match(patt);
+            
+            if(!found && result && result[1] && aBoxTags.indexOf(result[1] > -1)) {
+              strTag = result[1];
+              found = true;
+              return true;
+            } 
+            return false;
           });
+
+        if (found) {
+          // Add new container immediately before table
+          if (strTag == 'uob-header')
+            $table.before('<h2 class="' + strTag + '"></h2>');
+          else if (strTag == 'uob-quote')
+            $table.before(
+              '<div class="' + strTag + '"><div class="uob-quote99" /></div>'
+            );
+          else $table.before('<div class="' + strTag + '"></div>');
+
+          // Move content from table to container
+          $table.prev().append($table.find('tr:eq(1) > td:eq(0)').contents());
+
+          // Remove original table
+          $table.remove();
         }
-      }
+      } while(found);
 
       // ================================================================================
       // Previews

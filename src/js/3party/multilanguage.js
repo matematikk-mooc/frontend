@@ -24,6 +24,26 @@ class MultilangUtils {
         }, {});
     }
 
+    static getParsedTooltipText(tooltipText) {
+        return mmooc.menu.tooltipRegexpPattern.exec(tooltipText);
+    }
+
+    static makeSpansForTooltip(attrSelector) {
+        var node = document.querySelector(attrSelector);
+        var tooltip = node && node.getAttribute("data-html-tooltip-title");
+        if(tooltip) {
+            var tooltipParsedResult = MultilangUtils.getParsedTooltipText(tooltip);
+            if(tooltipParsedResult && tooltipParsedResult[1] && tooltipParsedResult[2]) {
+                const spanned = MultilangUtils.getSpannedText(tooltipParsedResult[2]);
+                if (spanned !== null) {
+                    var newTooltipText = mmooc.menu.createNewTooltipText(tooltip, tooltipParsedResult[1], spanned);
+                    //newTooltipText="<strong style='float:left'>Forrige modul:</strong> <br>ERLEND";
+                    node.setAttribute("data-html-tooltip-title", newTooltipText);
+                }
+            }
+        }
+    }
+
     static makeSpansForSelectors(selectors) {
         selectors.map(selector => document.querySelectorAll(selector))
             .flatMap(nodeList => Array.from(nodeList))
@@ -35,25 +55,29 @@ class MultilangUtils {
             });
     }
 
-    static makeSpansOf(element) {
-        // If there are child nodes that are not text nodes, abort. It should already be translated
-        if (!Array.from(element.childNodes).every(childNode => childNode.nodeType === 3)) {
-            return null;
-        }
-
+    static getSpannedText(textContent) {
         //Split the elements content with '|', then check each segment for language code and make <span>-elements.
-        const splitArray = element.textContent.split("|");
+        const splitArray = textContent.split("|");
         let newContent = '';
         for (let i = 0; i < splitArray.length; i++) {
             let match = /^\s*(\w\w)\s*:(.*)/.exec(splitArray[i]); //match language codes formed with two letters and a colon (no:, en: etc)
             if (match) {
-                newContent += `<span class="language" lang="${match[1]}">${match[2]}</span>`;
+                newContent += `<span class='language' lang='${match[1]}'>${match[2]}</span>`;
             } else {
                 newContent += splitArray[i];
             }
         }
 
         return newContent; //HTML-string with span-tags
+        
+    }
+
+    static makeSpansOf(element) {
+        // If there are child nodes that are not text nodes, abort. It should already be translated
+        if (!Array.from(element.childNodes).every(childNode => childNode.nodeType === 3)) {
+            return null;
+        }
+        return MultilangUtils.getSpannedText(element.textContent);
     }
 
     static getLanguageParameter() {
@@ -80,7 +104,7 @@ class MultilangUtils {
             return;
         }
 
-        document.cookie = `courselanguage=${languageCode}; SameSite=Strict`;
+        document.cookie = `courselanguage=${languageCode}; SameSite=Strict; path=/`;
     }
 
     static getLanguageCode() {
@@ -154,6 +178,8 @@ class MultilangUtils {
             'div.tooltiptext',
             '.show-content.user_content h1.page-title',
             'a.mmooc-module-name',
+            '.discussion-title',
+            
         ];
 
         if (location.pathname.endsWith('/modules')) {
@@ -182,6 +208,17 @@ this.mmooc.multilanguage = (function () {
             } else {
                 MultilangUtils.makeSpansOnPage();
             }
+        },
+        performPrevNextTooltip: () => {
+            MultilangUtils.makeSpansForTooltip('.module-sequence-footer-button--previous');
+            MultilangUtils.makeSpansForTooltip('.module-sequence-footer-button--next');
+        },
+            
+        performNextTooltip: () => {
+            MultilangUtils.makeSpansForTooltip('.module-sequence-footer-button--next');
+        },
+        performPrevTooltip: () => {
+            MultilangUtils.makeSpansForTooltip('.module-sequence-footer-button--previous');
         },
         insertCss: () => {
             if (!location.pathname.endsWith('/edit')) {

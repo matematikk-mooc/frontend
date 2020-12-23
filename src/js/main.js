@@ -1,4 +1,6 @@
 jQuery(function($) {
+  //Multilanguage KURSP-279 Css must be present before javascript is run.
+  mmooc.multilanguage.insertCss();
 
   mmooc.routes.addRouteForPath(/\/$/, function() {
     var parentId = 'wrapper';
@@ -539,13 +541,6 @@ jQuery(function($) {
           function(course) {
             mmooc.util.course = course;
             mmooc.routes.performHandlerForUrl(document.location);
-            try {
-              // Call multilanguage.perform() last to catch all relevant DOM content
-              mmooc.multilanguage.insertCss();
-              mmooc.multilanguage.perform();
-            } catch (e) {
-              console.log(e);
-            }
           },
           function(error) {
             console.error(
