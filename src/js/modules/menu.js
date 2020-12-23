@@ -185,6 +185,7 @@ this.mmooc.menu = (function() {
         var courseId = mmooc.api.getCurrentCourseId();
         var html = "";
         var courseIsRoleBased = mmooc.util.isActiveCourseRoleBased();
+        var tooltipsHandled = false;
 
         if(courseIsRoleBased && mmooc.util.isPrincipal()) {
           html = mmooc.util.renderTemplateWithData('moduleitemsprincipal', {
@@ -205,9 +206,11 @@ this.mmooc.menu = (function() {
           //multilanguage will be handled by that method.
           if(courseIsRoleBased) {
             mmooc.menu.updatePrevAndNextButtons(courseId, module);
-          } else {
-            mmooc.multilanguage.performPrevNextTooltip();       
+            tooltipsHandled = true;
           }
+        }
+        if(!tooltipsHandled) {
+          mmooc.multilanguage.performPrevNextTooltip();       
         }
 
         if (document.getElementById('left-side')) {
