@@ -380,7 +380,7 @@ function loadGraphic() {
 
     if(show) {
         if(show == "kommune-statistikk") {
-            document.getElementById("fylkeValg").style.display = "block";
+            document.getElementById("kommuneValg").style.display = "block";
         } else if (show == "fylke-statistikk") {
             document.getElementById("fylkeValg").style.display = "block";
         }
