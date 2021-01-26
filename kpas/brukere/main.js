@@ -145,7 +145,7 @@ function createDiagram(...options) {
     th.append("button")
         .attr("class", "column-sorter")
         .attr("id", d => d.id)
-        .text(d => d.activity_date)
+        .text(d => d.name)
         .on("click", function (event, d) {
             handleSortClick(this.parentNode, d.sortField);
         });
