@@ -52,7 +52,7 @@ body {
     padding: 10px;
 }
 .table-kpas td.value {
-    background-image: linear-gradient(to right, rgba(0,0,0,0.1) 1px, transparent 1px);
+    background-image: linear-gradient(to right, white(0,0,0,0.1) 1px, transparent 1px);
     background-size: 142px 100%;
 }
 .table-kpas .bar {
