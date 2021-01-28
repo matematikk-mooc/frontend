@@ -72,7 +72,7 @@ function createDiagram(...options) {
     // Names of columns
     const tableHeader = thead.append("tr")
         .attr("role", "row")
-        .attr("class", "table-header");
+        .attr("class", "table-header kpas-brukere");
     // To use aria-sort we need to add role and scope for html validation
     const th = tableHeader.selectAll("th")
         .data(headers)
@@ -308,6 +308,19 @@ function updateGraphic() {
     from = document.getElementById('fraDato').value;
     to = document.getElementById('tilDato').value;
     loadGraphic();
+}
+
+function allDatesClicked() {
+    var allDatesChecked = document.getElementById('alleDatoer').checked;
+    document.getElementById('fraDato').disabled = allDatesChecked;
+    document.getElementById('tilDato').disabled = allDatesChecked;
+    if(allDatesChecked) {
+        from = "1970-01-01";
+        to = getTodaysDate();
+        document.getElementById('fraDato').value = from;
+        document.getElementById('tilDato').value = to;
+        loadGraphic();
+    }
 }
 
 function loadGraphic() {

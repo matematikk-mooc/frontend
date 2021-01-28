@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="no">
+
+<head>
+    <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1">
+    <title>Kompetanseportal - brukerstatistikk</title>
+    <link rel="stylesheet" href="style.css?version=KPAS_IFRAME_VERSION">
+    <script src="https://d3js.org/d3-fetch.v2.min.js"></script>
+    <script src="https://d3js.org/d3-array.v2.min.js"></script>
+    <script src="https://d3js.org/d3-color.v2.min.js"></script>
+    <script src="https://d3js.org/d3-dispatch.v2.min.js"></script>
+    <script src="https://d3js.org/d3-ease.v2.min.js"></script>
+    <script src="https://d3js.org/d3-interpolate.v2.min.js"></script>
+    <script src="https://d3js.org/d3-selection.v2.min.js"></script>
+    <script src="https://d3js.org/d3-timer.v2.min.js"></script>
+    <script src="https://d3js.org/d3-transition.v2.min.js"></script>
+    <script src="brukere.js?version=KPAS_IFRAME_VERSION"></script>
+</head>
+
+<body onload="init()">
+    <form class="form-inline" action="javascript:updateGraphic();">
+      <label for="fraDato">Fra: </label>
+      <input type="date" id="fraDato" name="fraDato"><br>
+      <label for="tilDato">Til: </label>
+      <input type="date" id="tilDato" name="tilDato"><br>
+        <input type="checkbox" id="alleDatoer" name="alleDatoer" value="0" onclick="javascript:allDatesClicked();">
+        <label for="alleDatoer">Alle datoer</label><br>
+        <button type="submit">Oppdater</button>
+    </form>
+  </form>
+
+  <h2><span id="graphic-name">&nbsp;</span></h2>
+  <div id="graphic"></div>
+</body>
+</html>
