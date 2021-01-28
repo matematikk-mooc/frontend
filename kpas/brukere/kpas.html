@@ -62,7 +62,15 @@
     <script src="main.js?version=KPAS_IFRAME_VERSION"></script>
 </head>
 
-<body onload="loadGraphic()">
+<body onload="init()">
+    <form class="form-inline" action="javascript:updateGraphic();">
+        <label for="fylke">Fra: </label>
+        <input type="date" id="fraDato" name="fraDato"><br>
+        <input type="date" id="tilDato" name="tilDato"><br>
+        <button type="submit">Hent data</button>
+    </form>
+  </form>
+
   <h2><span id="graphic-name">&nbsp;</span></h2>
   <div id="graphic"></div>
 </body>

@@ -1,4 +1,6 @@
 var courseId = null;
+var from = "1970-01-01";
+var to = getTodaysDate();
 var resizeDebounce = null;
 const sortParam = {
     sortDirection: "ascending",
@@ -277,29 +279,66 @@ function urlParamsToObject() {
     return parse_query_string(search);
 }
 
-function loadGraphic() {
-    
+function getTodaysDate() {
+    var local = new Date();
+    local.setMinutes(local.getMinutes() - local.getTimezoneOffset());
+    return inputDato = local.toJSON().slice(0,10);
+}
+
+function init() {
     const urlParamsObj = urlParamsToObject();
     //Course id is defined on global scope such that it is available for the update functions above.
     courseId = urlParamsObj && urlParamsObj['courseId'];
-    const show = urlParamsObj && urlParamsObj['show'];
-    
+
+    var todaysDate = getTodaysDate();
+    from = todaysDate;
+    to = todaysDate;
+    if(urlParamsObj && urlParamsObj['from']) {
+        from = urlParamsObj['from'];
+    }
+    if(urlParamsObj && urlParamsObj['to']) {
+        to = urlParamsObj['to'];
+    }
+    document.getElementById('fraDato').value = from;
+    document.getElementById('tilDato').value = to;
+
+    loadGraphic();
+}
+function updateGraphic() {
+    from = document.getElementById('fraDato').value;
+    to = document.getElementById('tilDato').value;
+    loadGraphic();
+}
+
+function loadGraphic() {
+
+    if(resizeDebounce) {
+        clearTimeout(resizeDebounce);
+    } 
+    d3.select("#table-tooltip").remove();
+    d3.select(".table-kpas").remove();
 
     document.getElementById("graphic-name").innerHTML = "<span class='loading-gif'></span>";
-    d3.json("https://statistics-api.azurewebsites.net/api/statistics/user_activity/" + courseId)
+    d3.json("https://statistics-api.azurewebsites.net/api/statistics/user_activity/" + courseId + "?from=" + from + "&" + to)
     .then((result) => {
         const data = result;
-        var maxUserCount = 0;
-        result.forEach(o => {
-            if(o.active_users_count > maxUserCount) {
-                maxUserCount = o.active_users_count;
-            }
-        });
-        createDiagram("#graphic", data, maxUserCount, "Dato", "Antall", sortParam);
+        if(result.length && result[0].course_name) {
+            document.getElementById("graphic-name").innerHTML = result[0].course_name;
+            var maxUserCount = 0;
+            result.forEach(o => {
+                if(o.active_users_count > maxUserCount) {
+                    maxUserCount = o.active_users_count;
+                }
+            });
+            createDiagram("#graphic", data, maxUserCount, "Dato", "Antall", sortParam);
+        }
+        else {
+            document.getElementById("graphic-name").innerHTML = "Fant ingen data";
+        }
     })
-     .catch((error) => {
-         if (error) {
+    .catch((error) => {
+        if (error) {
             document.getElementById("graphic-name").innerHTML = error.message;
         }
-      }); 
+    }); 
 }
