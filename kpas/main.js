@@ -1,7 +1,7 @@
 var courseId = null;
 var resizeDebounce = null;
 const sortParam = {
-    sortDirection: "ascending",
+    sortDirection: "descending",
     sortField: "name"
 };
 

@@ -3,7 +3,7 @@ var from = "1970-01-01";
 var to = getTodaysDate();
 var resizeDebounce = null;
 const sortParam = {
-    sortDirection: "ascending",
+    sortDirection: "descending",
     sortField: "activity_date"
 };
 
@@ -291,17 +291,26 @@ function init() {
     courseId = urlParamsObj && urlParamsObj['courseId'];
 
     var todaysDate = getTodaysDate();
-    from = todaysDate;
     to = todaysDate;
+    var datesSpecified = false;
     if(urlParamsObj && urlParamsObj['from']) {
         from = urlParamsObj['from'];
+        datesSpecified = true;
     }
     if(urlParamsObj && urlParamsObj['to']) {
         to = urlParamsObj['to'];
+        datesSpecified = true;
     }
     document.getElementById('fraDato').value = from;
     document.getElementById('tilDato').value = to;
 
+    if(!datesSpecified) {
+        document.getElementById('fraDato').disabled = true;
+        document.getElementById('tilDato').disabled = true;
+    } else {
+        document.getElementById('alleDatoer').checked = false;
+    }
+     
     loadGraphic();
 }
 function updateGraphic() {
@@ -332,8 +341,9 @@ function loadGraphic() {
     d3.select(".table-kpas").remove();
 
     document.getElementById("graphic-name").innerHTML = "<span class='loading-gif'></span>";
-    d3.json("https://statistics-api.azurewebsites.net/api/statistics/user_activity/" + courseId + "?from=" + from + "&" + to)
+    d3.json("https://statistics-api.azurewebsites.net/api/statistics/user_activity/" + courseId + "?from=" + from + "&to=" + to)
     .then((result) => {
+        result.sort(function(a, b){return new Date(b["activity_date"]) - new Date(a["activity_date"])});
         const data = result;
         if(result.length && result[0].course_name) {
             document.getElementById("graphic-name").innerHTML = result[0].course_name;
