@@ -205,7 +205,7 @@ module.exports = function (grunt) {
         ]
       },
       production_kpas: {
-        src: ['dist/kpas/style.css', 'dist/kpas/kpas.html', 'dist/kpas/main.js'],
+        src: ['dist/kpas/style.css', 'dist/kpas/kpas.html', 'dist/kpas/brukere.html','dist/kpas/main.js'],
         dest: 'dist/kpas/',
         replacements: [
           {
@@ -219,7 +219,7 @@ module.exports = function (grunt) {
         ]
       },
       stage_kpas: {
-        src: ['dist/kpas/style.css', 'dist/kpas/kpas.html', 'dist/kpas/main.js'],
+        src: ['dist/kpas/style.css', 'dist/kpas/kpas.html', 'dist/kpas/brukere.html', 'dist/kpas/main.js'],
         dest: 'dist/kpas/',
         replacements: [
           {
@@ -233,7 +233,7 @@ module.exports = function (grunt) {
         ]
       },
       development_kpas: {
-        src: ['dist/kpas/style.css', 'dist/kpas/kpas.html', 'dist/kpas/main.js'],
+        src: ['dist/kpas/style.css', 'dist/kpas/kpas.html', 'dist/kpas/brukere.html', 'dist/kpas/main.js'],
         dest: 'dist/kpas/',
         replacements: [
           {
