@@ -1,19 +1,22 @@
 var courseId = null;
+var from = "1970-01-01";
+var to = getTodaysDate();
 var resizeDebounce = null;
 const sortParam = {
     sortDirection: "descending",
-    sortField: "name"
+    sortField: "activity_date"
 };
+
 
 function createDiagram(...options) {
     const [
-        htmlElementId, data, column1name, column2name, previousSort
+        htmlElementId, data, maxUserCount, column1name, column2name, previousSort
     ] = options;
 
     let diagramData = data;
 
     const MAX_WIDTH = 960;
-    const MAX_X = 5;
+    const MAX_X = 1;
 
     // These should match CSS
     const SMALL_BREAKPOINT = 768;
@@ -32,7 +35,6 @@ function createDiagram(...options) {
     const column1width = window.innerWidth > SMALL_BREAKPOINT ? PREFFERED_COLUMN_WIDTH.LARGE : PREFFERED_COLUMN_WIDTH.SMALL;
     // Rest of width is given to column 2
     const column2width = workingWidth - column1width;
-    const cellWidth = column2width / MAX_X;
 
     const table = container.append("table")
         .attr("class", "table-kpas")
@@ -45,14 +47,14 @@ function createDiagram(...options) {
         {
             name: column1name,
             sortDirection: "none",
-            sortField: "name",
+            sortField: "activity_date",
             id: "byKey",
             colspan: 1
         },
         {
             name: column2name,
             sortDirection: "none",
-            sortField: "enrollment_percentage_category",
+            sortField: "active_users_count",
             id: "byValue",
             colspan: MAX_X
         }
@@ -70,11 +72,7 @@ function createDiagram(...options) {
     // Names of columns
     const tableHeader = thead.append("tr")
         .attr("role", "row")
-        .attr("class", "table-header");
-    // Percentage ticks
-    const tableTicks = thead.append("tr")
-        .attr("class", "table-ticks")
-
+        .attr("class", "table-header kpas-brukere");
     // To use aria-sort we need to add role and scope for html validation
     const th = tableHeader.selectAll("th")
         .data(headers)
@@ -87,44 +85,14 @@ function createDiagram(...options) {
         .attr("aria-sort", d => d.sortDirection);
 
 
-    // 0 -> 1-20%,  1 -> 21-40%
-    const getPercentageRange = (index, stepSize = 20) => {
-        if (index < 0) {
-            return "0%";
-        }
-
-        let start = index * stepSize;
-        start++;
-
-        const stop = (index + 1) * stepSize;
-
-        // After the – there is a U+200B, a zero width space, to make it break into two lines nicer
-        return `${start}–​${stop}%`
-    };
-
     // Once layout calculations are finished, save header height. Used to make header ticks sticky when scrolling
     window.requestAnimationFrame(() => {
         table.node().style.setProperty('--table-header-height', `${tableHeader.node().offsetHeight}px`);
     });
 
-    // Create data array for percentage ticks
-    const xTicks = [];
-    for (let i = 0; i < MAX_X; i++) {
-        xTicks.push(getPercentageRange(i));
-    }
-
-    tableTicks.selectAll("th")
-        .data(["", ...xTicks])
-        .enter()
-        .append("th")
-        .attr("width", cellWidth)
-        .attr("colspan", 1)
-        .text(d => d);
-
-
     // When sorting, get the needed translate amount to get from old position to new
     const getTranslatePosition = (d, el) => {
-        const newIndex = diagramData.map(_d => _d.name).indexOf(d.name);
+        const newIndex = diagramData.map(_d => _d.activity_date).indexOf(d.activity_date);
 
         const newOffsetTop = diagramData.reduce((acc, _d, i) => {
             if (i < newIndex) {
@@ -152,7 +120,7 @@ function createDiagram(...options) {
         window.requestAnimationFrame(function () {
             rows.style("transform", "translate3d(0,0px,0)")
                 .style("border-color", null)
-                .data(diagramData, d => d.name)
+                .data(diagramData, d => d.activity_date)
                 .order();
         });
     };
@@ -189,7 +157,7 @@ function createDiagram(...options) {
 
     const tbody = table.append("tbody");
     const tr = tbody.selectAll("tr")
-        .data(diagramData, d => d.name)
+        .data(diagramData, d => d.activity_date)
         .enter()
         .append("tr")
         .attr("style", d => `transform: translate3d(0,0px,0)`);
@@ -204,36 +172,29 @@ function createDiagram(...options) {
     // Create the name column
     tr.append("td").attr("class", "data name")
         .attr("width", column1width)
-        .text(function (d) { return d.name });
+        .text(function (d) { 
+            var theDate = d.activity_date.split("T")[0];
+            return theDate; 
+        });
 
     // Create the percent value column
     tr.append("td").attr("class", "data value")
-        .attr("colspan", MAX_X)
-        .attr("style", () => `background-size: ${cellWidth}px 100%`)
         .append("div")
         .attr("class", "bar")
-        .attr("aria-label", function(d,i) {
-            if(d.enrollment_percentage_category < 99) {
-                return `Prosentkategori: ${getPercentageRange(d.enrollment_percentage_category - 1)}`
-            }
-            return `Dataene er skjult grunnet personvernhensyn.`;
-        }) 
-        .attr("style", function(d,i) {
-            if(d.enrollment_percentage_category < 99) {
-                return `width: ${cellWidth * d.enrollment_percentage_category}px;`;
-            }
-            return `background: #6d889d; border-radius: 50%; width: 10px; height: 10px;`;
+        .text(function(d) { 
+            return d.active_users_count;
+        })
+        .attr("style", function(d) {
+            var barWidth = d.active_users_count / maxUserCount * 100;
+            return "width:" + barWidth + "%";
         })
         .on("mouseover", function (event, d) {
             d3.select(this).attr("aria-describedby", "table-tooltip");
             tooltip.transition()
                 .duration(200)
                 .style("opacity", 1);
-            if(d.enrollment_percentage_category < 99) {
-                tooltipText = `Prosentkategori: ${getPercentageRange(d.enrollment_percentage_category - 1)}`;
-            } else {
-                tooltipText = "Dataene er skjult grunnet personvernhensyn."
-            }
+            tooltipText = `${d.active_users_count}`;
+          
             tooltip.html(tooltipText)
             .style("left", (event.pageX) + "px")
             .style("top", (event.pageY - 40) + "px");
@@ -245,15 +206,15 @@ function createDiagram(...options) {
                 .style("opacity", 0);
         });
 
-
+//maybe change name back
     const rowHeights = tr.nodes().reduce((acc, el, index) => {
-        acc[diagramData[index].name] = el.getBoundingClientRect().height;
+        acc[diagramData[index].activity_date] = el.getBoundingClientRect().height;
         return acc;
     }, {});
 
     // Add row height to each row object 
     diagramData = diagramData.map((d) => {
-        d.rowHeight = rowHeights[d.name];
+        d.rowHeight = rowHeights[d.activity_date];
         return d;
     });
 
@@ -318,80 +279,89 @@ function urlParamsToObject() {
     return parse_query_string(search);
 }
 
-function loadMunicipalityGraphic(courseId, municipalityId) {
-    document.getElementById("graphic-name").innerHTML = "<span class='loading-gif'></span>";
-    d3.json("https://statistics-api.azurewebsites.net/api/statistics/primary_schools/municipality/" + municipalityId + "/course/" + courseId)
-    .then((result) => {
-        document.getElementById("graphic-name").innerHTML = result.Result[0].municipality_name;
-        const data = result.Result[0].schools;
-        createDiagram("#graphic", data, "Skole", "Prosentkategori", sortParam);
-    })
-    .catch((error) => {
-        if (error) {
-            document.getElementById("graphic-name").innerHTML = error.message;
-        }
-    });
-}
-function loadCountyGraphic(courseId, countyId) {
-    document.getElementById("graphic-name").innerHTML = "<span class='loading-gif'></span>";
-    d3.json("https://statistics-api.azurewebsites.net/api/statistics/primary_schools/county/" + countyId + "/course/" + courseId)
-    .then((result) => {
-        document.getElementById("graphic-name").innerHTML = result.Result[0].county_name;
-        const data = result.Result[0].municipalities;
-        createDiagram("#graphic", data, "Kommune", "Prosentkategori", sortParam);
-    })
-    .catch((error) => {
-        if (error) {
-            document.getElementById("graphic-name").innerHTML = error.message;
-        }
-    });
+function getTodaysDate() {
+    var local = new Date();
+    local.setMinutes(local.getMinutes() - local.getTimezoneOffset());
+    return inputDato = local.toJSON().slice(0,10);
 }
 
-function updateCountyGraphic() {
-    var countyId = document.getElementById("fylke").value;
-    if(countyId == "") {
-        document.getElementById("graphic-name").innerHTML = "Vennligst oppgi et fylkesnummer.";
-        return;
+function init() {
+    const urlParamsObj = urlParamsToObject();
+    //Course id is defined on global scope such that it is available for the update functions above.
+    courseId = urlParamsObj && urlParamsObj['courseId'];
+
+    var todaysDate = getTodaysDate();
+    to = todaysDate;
+    var datesSpecified = false;
+    if(urlParamsObj && urlParamsObj['from']) {
+        from = urlParamsObj['from'];
+        datesSpecified = true;
     }
-    clearTimeout(resizeDebounce);
-    d3.select("#table-tooltip").remove();
-    d3.select(".table-kpas").remove();
-    loadCountyGraphic(courseId, countyId);
+    if(urlParamsObj && urlParamsObj['to']) {
+        to = urlParamsObj['to'];
+        datesSpecified = true;
+    }
+    document.getElementById('fraDato').value = from;
+    document.getElementById('tilDato').value = to;
+
+    if(!datesSpecified) {
+        document.getElementById('fraDato').disabled = true;
+        document.getElementById('tilDato').disabled = true;
+    } else {
+        document.getElementById('alleDatoer').checked = false;
+    }
+     
+    loadGraphic();
 }
-function updateMunicipalityGraphic() {
-    var municipalityId = document.getElementById("kommune").value;
-    if(municipalityId == "") {
-        document.getElementById("graphic-name").innerHTML = "Vennligst oppgi et kommunenummer.";
-        return;
+function updateGraphic() {
+    from = document.getElementById('fraDato').value;
+    to = document.getElementById('tilDato').value;
+    loadGraphic();
+}
+
+function allDatesClicked() {
+    var allDatesChecked = document.getElementById('alleDatoer').checked;
+    document.getElementById('fraDato').disabled = allDatesChecked;
+    document.getElementById('tilDato').disabled = allDatesChecked;
+    if(allDatesChecked) {
+        from = "1970-01-01";
+        to = getTodaysDate();
+        document.getElementById('fraDato').value = from;
+        document.getElementById('tilDato').value = to;
+        loadGraphic();
     }
-    clearTimeout(resizeDebounce);
-    d3.select("#table-tooltip").remove();
-    d3.select(".table-kpas").remove();
-    loadMunicipalityGraphic(courseId, municipalityId)
 }
 
 function loadGraphic() {
-    const urlParamsObj = urlParamsToObject();
-    const municipalityId = urlParamsObj && urlParamsObj['municipalityId'];
-    const countyId = urlParamsObj && urlParamsObj['countyId'];
-    //Course id is defined on global scope such that it is available for the update functions above.
-    courseId = urlParamsObj && urlParamsObj['courseId'];
-    const show = urlParamsObj && urlParamsObj['show'];
 
-    if(show) {
-        if(show == "kommune-statistikk") {
-            document.getElementById("kommuneValg").style.display = "block";
-        } else if (show == "fylke-statistikk") {
-            document.getElementById("fylkeValg").style.display = "block";
+    if(resizeDebounce) {
+        clearTimeout(resizeDebounce);
+    } 
+    d3.select("#table-tooltip").remove();
+    d3.select(".table-kpas").remove();
+
+    document.getElementById("graphic-name").innerHTML = "<span class='loading-gif'></span>";
+    d3.json("https://statistics-api.azurewebsites.net/api/statistics/user_activity/" + courseId + "?from=" + from + "&to=" + to)
+    .then((result) => {
+        result.sort(function(a, b){return new Date(b["activity_date"]) - new Date(a["activity_date"])});
+        const data = result;
+        if(result.length && result[0].course_name) {
+            document.getElementById("graphic-name").innerHTML = result[0].course_name;
+            var maxUserCount = 0;
+            result.forEach(o => {
+                if(o.active_users_count > maxUserCount) {
+                    maxUserCount = o.active_users_count;
+                }
+            });
+            createDiagram("#graphic", data, maxUserCount, "Dato", "Antall", sortParam);
         }
-    } else if(courseId !== undefined) {
-        if (municipalityId !== undefined) {
-            loadMunicipalityGraphic(courseId, municipalityId);            
+        else {
+            document.getElementById("graphic-name").innerHTML = "Fant ingen data";
         }
-        else if(countyId !== undefined) {
-            loadCountyGraphic(courseId, countyId)
+    })
+    .catch((error) => {
+        if (error) {
+            document.getElementById("graphic-name").innerHTML = error.message;
         }
-    }
+    }); 
 }
-
-

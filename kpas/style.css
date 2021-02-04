@@ -25,6 +25,14 @@ body {
     .table-kpas {
         font-size: 12px;
     }
+    .form-inline input {
+        margin: 10px 0;
+    }
+      
+    .form-inline {
+    flex-direction: column;
+    align-items: stretch;
+    }
 }
 
 .table-kpas th {
@@ -38,7 +46,10 @@ body {
     background: #BAC6D8;
 }
 .table-header th:first-child {
-    text-align: left;;
+    text-align: left;
+}
+.kpas-brukere th {
+    text-align: left;
 }
 
 
@@ -113,3 +124,35 @@ body {
 .table-sort[aria-sort="ascending"] .column-sorter:before {
     border-top-color: transparent;
 }
+
+.form-inline {  
+    display: flex;
+    flex-flow: row wrap;
+    align-items: center;
+  }
+  
+  .form-inline label {
+    margin: 5px 10px 5px 0;
+  }
+  
+  .form-inline input {
+    vertical-align: middle;
+    margin: 5px 10px 5px 0;
+    padding: 10px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+  }
+  
+  .form-inline button {
+    padding: 10px 20px;
+    background-color: #7DBF9D;
+    border: 1px solid #ddd;
+    color: white;
+    cursor: pointer;
+  }
+  
+  .form-inline button:hover {
+    background-color: #7DBF9D;
+  }
+  
+ 
