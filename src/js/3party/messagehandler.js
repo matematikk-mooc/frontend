@@ -17,6 +17,15 @@ $(document).ready(function() {
                 }, error);
             } else if(message.subject == "kpas-lti.update") {
                 mmooc.util.updateInformationPane();
+            } else if(message.subject == "kpas-lti.getBgColor") {
+                var elem = document.getElementsByTagName("body")[0];
+                var bgColor = window.getComputedStyle(elem, null).getPropertyValue("background-color");            
+                const bgColorMessage = {
+                    subject: 'kpas-lti.ltibgcolor',
+                    bgColor: bgColor
+                }
+                var sendMsg = JSON.stringify(bgColorMessage);
+                e.source.postMessage(sendMsg, e.origin);
             } else if(message.subject == "kpas.frameResize") {
                 console.log("Resize kpas");
                 $("#kpas")[0].height = message.height;

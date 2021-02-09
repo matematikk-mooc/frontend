@@ -317,7 +317,11 @@ module.exports = function (grunt) {
           {
             from: '$ACCOUNTID',
             to: '[99, 100, 102, 103, 137, 138, 139, 145]'
-          }
+          },
+          {
+            from: '$KPAS_MERGE_LTI_ID',
+            to: '862'
+          }        
         ]
       },
       stage_settings: {
@@ -327,6 +331,10 @@ module.exports = function (grunt) {
           {
             from: '$ACCOUNTID',
             to: '[253]'
+          },
+          {
+            from: '$KPAS_MERGE_LTI_ID',
+            to: '863'
           }
         ]
       },
@@ -337,6 +345,10 @@ module.exports = function (grunt) {
           {
             from: '$ACCOUNTID',
             to: '[4, 5]'
+          },
+          {
+            from: '$KPAS_MERGE_LTI_ID',
+            to: '862'
           }
         ]
       },
