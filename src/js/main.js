@@ -148,14 +148,21 @@ jQuery(function($) {
   });
 
   mmooc.routes.addRouteForPath(/\/profile\/settings$/, function() {
+    if(!mmooc.settings.displayProfileLeftMenu) {
+      document.getElementById("section-tabs").style.display = "none";
+    }
     var notificationButtonHTML = mmooc.util.renderTemplateWithData(
       'notifications',
       {}
     );
-    mmooc.menu.showLeftMenu();
-    document
-      .getElementById('confirm_email_channel')
-      .insertAdjacentHTML('beforebegin', notificationButtonHTML);
+    var mergeUserButtonHTML = mmooc.util.renderTemplateWithData(
+      'usermerge',
+      {userId:mmooc.api.getUser().id, userMergeLtiToolId:mmooc.settings.userMergeLtiToolId}
+    );
+    var elementId = document.getElementById('confirm_email_channel');
+
+    elementId.insertAdjacentHTML('beforebegin', mergeUserButtonHTML);
+    elementId.insertAdjacentHTML('beforebegin', notificationButtonHTML);
   });
 
   mmooc.routes.addRouteForPath(/\/courses\/\d+\/announcements$/, function() {
