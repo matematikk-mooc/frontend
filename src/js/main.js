@@ -498,10 +498,11 @@ jQuery(function($) {
         $("#fylke-statistikk").length) {
       const error = error => console.error('error calling api', error);
       mmooc.api.getUserGroupsForCourse(courseId, function(groups) {
-        mmooc.kpas.showInfo(groups);
+        var isTeacherOrAdmin = mmooc.util.isTeacherOrAdmin();
+        mmooc.kpas.showInfo(isTeacherOrAdmin, groups);
         var groupsInfo = mmooc.util.getGroupsInfo(groups);
-        mmooc.kpas.createMunicipalityDiagram(courseId, groupsInfo);
-        mmooc.kpas.createCountyDiagram(courseId, groupsInfo);
+        mmooc.kpas.createDiagram("kommune-statistikk", isTeacherOrAdmin, courseId, groupsInfo);
+        mmooc.kpas.createDiagram("fylke-statistikk", isTeacherOrAdmin, courseId, groupsInfo);
       }, error);
     }
   });
