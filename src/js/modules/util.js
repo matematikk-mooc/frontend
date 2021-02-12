@@ -228,6 +228,7 @@ this.mmooc.util = (function () {
         console.log(e);
       }
     },
+  
 
     isAlertMsg(course) {
       if (course) {
@@ -251,6 +252,17 @@ this.mmooc.util = (function () {
       }
       return "";
     },
+    isNotificationToUser(course) {
+      if (course) {
+        var arr = course.course_code.split("::");
+        for (var i =0; i < arr.length; i++) {
+          if (arr[i] == "notificationtouser"){
+            return arr[i+1];
+          }
+        }
+      }
+      return "";
+    },
     //description":"courseId:360:community:1902:940101808"
     getCountyOrCommunityNumber(groupDescription) {
       var arr = groupDescription.split(":");
@@ -267,8 +279,9 @@ this.mmooc.util = (function () {
         var pfdk = mmooc.util.isPfDKCourse(mmooc.util.course);
         var unmaintainedSince = mmooc.util.isUnmaintained(mmooc.util.course);
         var alertMsg = mmooc.util.isAlertMsg(mmooc.util.course);
-        if (observer || pfdk || unmaintainedSince || alertMsg || isMemberOfExpiredCommunity) {
-          mmooc.pages.showInformationPane(observer, pfdk, unmaintainedSince, alertMsg, isMemberOfExpiredCommunity);
+        var notificationtouser= mmooc.util.isNotificationToUser(mmooc.utilcourse);
+        if (observer || pfdk || unmaintainedSince || alertMsg || isMemberOfExpiredCommunity || notificationtouser) {
+          mmooc.pages.showInformationPane(observer, pfdk, unmaintainedSince, alertMsg, isMemberOfExpiredCommunity, notificationtouser);
         } else {
           mmooc.pages.hideInformationPane();
         }
