@@ -171,7 +171,7 @@ this.mmooc.pages = (function() {
     },
 
     showInformationPane: function(observer, pfdk, unmaintainedSince, alertMsg, isMemberOfExpiredCommunity, notificationtouser) {
-      var paneHTML = mmooc.util.renderTemplateWithData('informationpane', {observer:observer, pfdk:pfdk, unmaintainedSince:unmaintainedSince, alertMsg:alertMsg, expiredCommunity: isMemberOfExpiredCommunity, notificationtouser});
+      var paneHTML = mmooc.util.renderTemplateWithData('informationpane', {observer:observer, pfdk:pfdk, unmaintainedSince:unmaintainedSince, alertMsg:alertMsg, expiredCommunity: isMemberOfExpiredCommunity, notificationtouser: notificationtouser});
       document
         .getElementById('wrapper')
         .insertAdjacentHTML('afterend', paneHTML);

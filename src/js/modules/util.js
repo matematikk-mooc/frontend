@@ -257,7 +257,7 @@ this.mmooc.util = (function () {
         var arr = course.course_code.split("::");
         for (var i =0; i < arr.length; i++) {
           if (arr[i] == "notificationtouser"){
-            return arr[i+1];
+            return true ;
           }
         }
       }
@@ -279,7 +279,7 @@ this.mmooc.util = (function () {
         var pfdk = mmooc.util.isPfDKCourse(mmooc.util.course);
         var unmaintainedSince = mmooc.util.isUnmaintained(mmooc.util.course);
         var alertMsg = mmooc.util.isAlertMsg(mmooc.util.course);
-        var notificationtouser= mmooc.util.isNotificationToUser(mmooc.utilcourse);
+        var notificationtouser= mmooc.util.isNotificationToUser(mmooc.util.course);
         if (observer || pfdk || unmaintainedSince || alertMsg || isMemberOfExpiredCommunity || notificationtouser) {
           mmooc.pages.showInformationPane(observer, pfdk, unmaintainedSince, alertMsg, isMemberOfExpiredCommunity, notificationtouser);
         } else {

@@ -36,27 +36,20 @@ PfDK-MOOC er opprinnelig en lukket videreutdanning for lærere. Dette er den åp
            <br/>
            {{/if}} 
            {{#if unmaintainedSince}}
-           Vil du være med på brukertesting? 
-           <span class="tooltip tooltip-underline"> Les mer.<span style="font-weight:normal;color:black" class="tooltiptext">
-<p>
-Utdanningsdirektoratet skal brukerteste kompetansepakker, og trenger din hjelp!
-</p>
-<p>
-Kunne du tenkte deg å gi din mening/innsikt til oss som produserer innhold på kompetanse.udir.no?
-</p>  
-</span></span>
-           <button class="button_brukertest" onclick="window.location.href='https://forms.office.com/Pages/ResponsePage.aspx?id=04XRjKY6lEWDPaBY2rtbbYlKoW2pvuFMksRihjhWMl9URFNDM0ZBNk1QT0Y4NTVHSktQVUtOSVlaTS4u'">Meld deg på!</button>
-           <br/>
-
-           {{/if}} 
-          {{#if fishing}}
-          Utdanningsdirektoratet søker brukere for tilbakemelding på kompetansepakker! Kunne du tenke deg å hjelpe til med å forbedre kompetansepakkene? Meld deg på her:
-                <a class="icon-link" style="color:white" href="https://www.hvl.no/studier/studieprogram/pfdk/" target="_blank">Meld deg på!</a>
-                eller 
-                <a class="icon-link" style="color:white" href="(https://www.usn.no/studier/finn-studier/larer-lektor-og-pedagogikk/videreutdanning-i-profesjonsfaglig-digital-kompetanse-for-larere/"
-                target="_blank">usn.no</a>
-                  <br/>
-          {{/if}}
+          {{/if}} 
+         
+          {{#if notificationtouser}}
+              Vil du være med på 
+              <span class="tooltip tooltip-underline"> beta/brukertesting? <span style="font-weight:normal;color:black" class="tooltiptext">
+              <p>
+              Utdanningsdirektoratet skal brukerteste kompetansepakker, og trenger din hjelp! Vi ønsker innsikt i hvordan du bruker kompetansepakker. Hva du syntes er bra, samt hva som ikke er like bra. 
+              </p>
+              <p>Bli den første som får ta i bruk ny-funksjonalitet! Delta på utformingen av nye-verktøy eller gi innsikt til brukervennlighet!
+              </p>
+              </span></span>
+              <button class="Button reset_test_student" onclick="window.location.href='https://forms.office.com/Pages/ResponsePage.aspx?id=04XRjKY6lEWDPaBY2rtbbYlKoW2pvuFMksRihjhWMl9URFNDM0ZBNk1QT0Y4NTVHSktQVUtOSVlaTS4u'">Meld deg på!</button>
+              <br/>
+          {{/if}} 
            </div>
           </div>
       </div>
