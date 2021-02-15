@@ -1,5 +1,11 @@
 <div id="fixed_bottom">
-    <div id="masquerade_bar" class="ic-alert-masquerade-student-view">
+   {{#if notificationtouser}}
+   <div id="masquerade_bar" class="ic-alert-masquerade-student-view_2">
+     {{/if}} 
+  |{{#else}}
+  <div id="masquerade_bar" class="ic-alert-masquerade-student-view">
+    {{/else}}
+
       <div class="ic-alert-masquerade-student-view-module ic-alert-masquerade-student-view-module--header">
         <div class="ic-image-text-combo">
           <i class="icon-student-view"></i>
@@ -35,11 +41,40 @@ PfDK-MOOC er opprinnelig en lukket videreutdanning for lærere. Dette er den åp
         target="_blank">usn.no</a>
            <br/>
            {{/if}} 
-           {{#if unmaintainedSince}}
+            {{#if unmaintainedSince}}
 NB! Denne kompetansepakken ble sist vedlikeholdt {{unmaintainedSince}}
            {{/if}} 
+          {{#if notificationtouser}}
+<div id="fixed_bottom">
+    <div id="masquerade_bar" class="ic-alert-masquerade-student-view_2">
+      <div class="ic-alert-masquerade-student-view-module ic-alert-masquerade-student-view-module--header">
+        <div class="ic-image-text-combo">
+          <i class="icon-student-view"></i>
+           <div class="ic-image-text-combo__text">
+
+<a style="color: white;"> Vil du være med på </a>
+              <span class="tooltip tooltip-underline"> <a style="color: white;">beta/brukertesting? </a><span style="font-weight:normal;color:black" class="tooltiptext">
+              <p>
+              Utdanningsdirektoratet skal brukerteste kompetansepakker, og trenger din hjelp! Vi ønsker innsikt i hvordan du bruker kompetansepakker. Hva du syntes er bra, samt hva som ikke er like bra. 
+              </p>
+              <p>Bli den første som får ta i bruk ny-funksjonalitet! Delta på utformingen av nye-verktøy eller gi innsikt til brukervennlighet!
+              </p>
+              </span></span>
+              <button class="Button reset_test_student" onclick="window.location.href='https://forms.office.com/Pages/ResponsePage.aspx?id=04XRjKY6lEWDPaBY2rtbbYlKoW2pvuFMksRihjhWMl9URFNDM0ZBNk1QT0Y4NTVHSktQVUtOSVlaTS4u'">Meld deg på!</button>
+              <br/>
+                 {{/if}} 
            </div>
           </div>
       </div>
     </div>
 </div>
+
+         
+          </div>
+      </div>
+    </div>
+</div>
+
+
+
+
