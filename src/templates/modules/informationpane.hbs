@@ -3,13 +3,14 @@
   <div id="masquerade_bar" class="ic-alert-masquerade-student-view_2">
     <div class="ic-alert-masquerade-student-view-module ic-alert-masquerade-student-view-module--header_2">
           <div class="ic-image-text-combo_">
+            <div class="ic-image-text-combo__text_notificationtouser">
     {{else}}
-    <div id="masquerade_bar" class="ic-alert-masquerade-student-view">
-      <div class="ic-alert-masquerade-student-view-module ic-alert-masquerade-student-view-module--header">
-          <div class="ic-image-text-combo">
-          <i class="icon-student-view">
-      {{/if}}
+     <div id="masquerade_bar" class="ic-alert-masquerade-student-view">
+    <div class="ic-alert-masquerade-student-view-module ic-alert-masquerade-student-view-module--header">
+        <div class="ic-image-text-combo">
+          <i class="icon-student-view"></i>
           <div class="ic-image-text-combo__text">
+      {{/if}}
             {{#if expiredCommunity}}
             Du er meldt inn i et fylke og/eller en kommune som har fått nytt kommunenummer.
             <span class="tooltip tooltip-underline"> Les mer.<span style="font-weight:normal;color:black"
@@ -61,20 +62,15 @@
                 {{/if}}
                 {{#if notificationtouser}}
                 <a style="color: rgb(0, 0, 0);"> Vil du være med på </a>
-                <span class="tooltip tooltip-underline"> <a style="color: black;">beta/brukertesting? </a><span
+                <span class="tooltip tooltip-underline"> <a style="color: black;">brukertesting? </a><span
                     style="font-weight:normal;color:black" class="tooltiptext">
                     <p>
-                      Utdanningsdirektoratet skal brukerteste kompetansepakker, og trenger din hjelp! Vi ønsker
-                      innsikt i hvordan du bruker kompetansepakker. Hva du syntes er bra, samt hva som ikke er
-                      like bra.
+                       Utdanningsdirektoratet trenger dine tilbakemeldinger på hvordan du opplever kompetansepakkene. Kan du hjelpe oss? Vi trenger innsikt i hvordan du/dere bruker pakken, hva dere opplever som styrker og hva dere kunne ønske var annerledes. Samt tilbakemelding på ny funksjonalitet. 
                     </p>
-                    <p>Bli den første som får ta i bruk ny-funksjonalitet! Delta på utformingen av nye-verktøy
-                      eller gi innsikt til brukervennlighet!
+                    <p>Din tilbakemelding kan gjøre oss bedre! 
                     </p>
                   </span></span>
-                <button class="Button reset_test_student"
-                  onclick="window.location.href='https://forms.office.com/Pages/ResponsePage.aspx?id=04XRjKY6lEWDPaBY2rtbbYlKoW2pvuFMksRihjhWMl9URFNDM0ZBNk1QT0Y4NTVHSktQVUtOSVlaTS4u'">Meld
-                  deg på!</button>
+                <button class="button_notificationtouser button_nottouser" onclick="window.location.href='https://forms.office.com/Pages/ResponsePage.aspx?id=04XRjKY6lEWDPaBY2rtbbYlKoW2pvuFMksRihjhWMl9URFNDM0ZBNk1QT0Y4NTVHSktQVUtOSVlaTS4u'">Meld deg på!</button>
                 <br />
                 {{/if}}
               </div>
