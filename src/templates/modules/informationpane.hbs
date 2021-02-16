@@ -1,80 +1,79 @@
 <div id="fixed_bottom">
-   {{#if notificationtouser}}
-   <div id="masquerade_bar" class="ic-alert-masquerade-student-view_2">
-     {{/if}} 
-  |{{#else}}
-  <div id="masquerade_bar" class="ic-alert-masquerade-student-view">
-    {{/else}}
-
-      <div class="ic-alert-masquerade-student-view-module ic-alert-masquerade-student-view-module--header">
+  {{#if notificationtouser}}
+  <div id="masquerade_bar" class="ic-alert-masquerade-student-view_2">
+    <div class="ic-alert-masquerade-student-view-module ic-alert-masquerade-student-view-module--header_2">
+          <div class="ic-image-text-combo_">
+            <div class="ic-image-text-combo__text_notificationtouser">
+    {{else}}
+     <div id="masquerade_bar" class="ic-alert-masquerade-student-view">
+    <div class="ic-alert-masquerade-student-view-module ic-alert-masquerade-student-view-module--header">
         <div class="ic-image-text-combo">
           <i class="icon-student-view"></i>
-           <div class="ic-image-text-combo__text">
-           {{#if expiredCommunity}}
-Du er meldt inn i et fylke og/eller en kommune som har fått nytt kommunenummer. 
-<span class="tooltip tooltip-underline"> Les mer.<span style="font-weight:normal;color:black" class="tooltiptext">
+          <div class="ic-image-text-combo__text">
+      {{/if}}
+            {{#if expiredCommunity}}
+            Du er meldt inn i et fylke og/eller en kommune som har fått nytt kommunenummer.
+            <span class="tooltip tooltip-underline"> Les mer.<span style="font-weight:normal;color:black"
+                class="tooltiptext">
 
-<p>
-Velg tilhørighet på nytt
- i "Rolle og grupper"-fanen. 
-</p>
-<p>
-Vær oppmerksom på at dersom du ønsker å ta vare på diskusjonsinnleggene fra gamle grupper, må disse kopieres til et tekstdokument, 
-før du velger ny tilhørighet. 
-</p>  
-</span></span>
-           <br/>
-           {{/if}} 
-           {{#if alertMsg}}
-              {{alertMsg}}
-           {{/if}} 
-           {{#if observer}}
-Du er inne i dette emnet som observatør. Du vil ikke kunne levere inn oppgaver, bidra i diskusjoner eller se hva andre har bidratt med.
-           <br/>
-           {{/if}} 
-           {{#if pfdk}}
-PfDK-MOOC er opprinnelig en lukket videreutdanning for lærere. Dette er den åpne versjonen. Du ser alt det faglige innhold, men kan ikke levere oppgaver, diskutere i forum eller få veiledning.
-Ønsker du mer informasjon om videreutdanningen, se 
-        <a class="icon-link" style="color:white" href="https://www.hvl.no/studier/studieprogram/pfdk/" target="_blank">hvl.no</a>
-        eller 
-        <a class="icon-link" style="color:white" href="(https://www.usn.no/studier/finn-studier/larer-lektor-og-pedagogikk/videreutdanning-i-profesjonsfaglig-digital-kompetanse-for-larere/"
-        target="_blank">usn.no</a>
-           <br/>
-           {{/if}} 
-            {{#if unmaintainedSince}}
-NB! Denne kompetansepakken ble sist vedlikeholdt {{unmaintainedSince}}
-           {{/if}} 
-          {{#if notificationtouser}}
-<div id="fixed_bottom">
-    <div id="masquerade_bar" class="ic-alert-masquerade-student-view_2">
-      <div class="ic-alert-masquerade-student-view-module ic-alert-masquerade-student-view-module--header">
-        <div class="ic-image-text-combo">
-          <i class="icon-student-view"></i>
-           <div class="ic-image-text-combo__text">
-
-<a style="color: white;"> Vil du være med på </a>
-              <span class="tooltip tooltip-underline"> <a style="color: white;">beta/brukertesting? </a><span style="font-weight:normal;color:black" class="tooltiptext">
-              <p>
-              Utdanningsdirektoratet skal brukerteste kompetansepakker, og trenger din hjelp! Vi ønsker innsikt i hvordan du bruker kompetansepakker. Hva du syntes er bra, samt hva som ikke er like bra. 
-              </p>
-              <p>Bli den første som får ta i bruk ny-funksjonalitet! Delta på utformingen av nye-verktøy eller gi innsikt til brukervennlighet!
-              </p>
+                <p>
+                  Velg tilhørighet på nytt
+                  i "Rolle og grupper"-fanen.
+                </p>
+                <p>
+                  Vær oppmerksom på at dersom du ønsker å ta vare på diskusjonsinnleggene fra gamle grupper, må disse
+                  kopieres til et tekstdokument,
+                  før du velger ny tilhørighet.
+                </p>
               </span></span>
-              <button class="Button reset_test_student" onclick="window.location.href='https://forms.office.com/Pages/ResponsePage.aspx?id=04XRjKY6lEWDPaBY2rtbbYlKoW2pvuFMksRihjhWMl9URFNDM0ZBNk1QT0Y4NTVHSktQVUtOSVlaTS4u'">Meld deg på!</button>
-              <br/>
-                 {{/if}} 
-           </div>
+            <br />
+            {{/if}}
+            {{#if alertMsg}}
+            {{alertMsg}}
+            {{/if}}
+            {{#if observer}}<div id="fixed_bottom">
+              {{#if notificationtouser}}
+              <div id="masquerade_bar" class="ic-alert-masquerade-student-view_2">
+                {{#else}}
+                <div id="masquerade_bar" class="ic-alert-masquerade-student-view">
+                  {{/else}}
+                  {{/if}}
+                </div>
+                Du er inne i dette emnet som observatør. Du vil ikke kunne levere inn oppgaver, bidra i diskusjoner
+                eller se
+                hva andre har bidratt med.
+                <br />
+                {{/if}}
+                {{#if pfdk}}
+                PfDK-MOOC er opprinnelig en lukket videreutdanning for lærere. Dette er den åpne versjonen. Du ser alt
+                det
+                faglige innhold, men kan ikke levere oppgaver, diskutere i forum eller få veiledning.
+                Ønsker du mer informasjon om videreutdanningen, se
+                <a class="icon-link" style="color:white" href="https://www.hvl.no/studier/studieprogram/pfdk/"
+                  target="_blank">hvl.no</a>
+                eller
+                <a class="icon-link" style="color:white"
+                  href="(https://www.usn.no/studier/finn-studier/larer-lektor-og-pedagogikk/videreutdanning-i-profesjonsfaglig-digital-kompetanse-for-larere/"
+                  target="_blank">usn.no</a>
+                <br />
+                {{/if}}
+                {{#if unmaintainedSince}}
+                NB! Denne kompetansepakken ble sist vedlikeholdt {{unmaintainedSince}}
+                {{/if}}
+                {{#if notificationtouser}}
+                <a style="color: rgb(0, 0, 0);"> Vil du være med på </a>
+                <span class="tooltip tooltip-underline"> <a style="color: black;">brukertesting? </a><span
+                    style="font-weight:normal;color:black" class="tooltiptext">
+                    <p>
+                       Utdanningsdirektoratet trenger dine tilbakemeldinger på hvordan du opplever kompetansepakkene. Kan du hjelpe oss? Vi trenger innsikt i hvordan du/dere bruker pakken, hva dere opplever som styrker og hva dere kunne ønske var annerledes. Samt tilbakemelding på ny funksjonalitet. 
+                    </p>
+                    <p>Din tilbakemelding kan gjøre oss bedre! 
+                    </p>
+                  </span></span>
+                <button class="button_notificationtouser button_nottouser" onclick="window.location.href='https://forms.office.com/Pages/ResponsePage.aspx?id=04XRjKY6lEWDPaBY2rtbbYlKoW2pvuFMksRihjhWMl9URFNDM0ZBNk1QT0Y4NTVHSktQVUtOSVlaTS4u'">Meld deg på!</button>
+                <br />
+                {{/if}}
+              </div>
+            </div>
           </div>
-      </div>
-    </div>
-</div>
-
-         
-          </div>
-      </div>
-    </div>
-</div>
-
-
-
-
+        </div>
