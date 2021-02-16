@@ -324,7 +324,7 @@ function loadMunicipalityGraphic(courseId, municipalityId) {
     .then((result) => {
         document.getElementById("graphic-name").innerHTML = result.Result[0].municipality_name;
         const data = result.Result[0].schools;
-        createDiagram("#graphic", data, "Skole", "Prosentkategori", sortParam);
+        createDiagram("#kommunegrafikk", data, "Skole", "Prosentkategori", sortParam);
     })
     .catch((error) => {
         if (error) {
@@ -338,7 +338,7 @@ function loadCountyGraphic(courseId, countyId) {
     .then((result) => {
         document.getElementById("graphic-name").innerHTML = result.Result[0].county_name;
         const data = result.Result[0].municipalities;
-        createDiagram("#graphic", data, "Kommune", "Prosentkategori", sortParam);
+        createDiagram("#fylkegrafikk", data, "Kommune", "Prosentkategori", sortParam);
     })
     .catch((error) => {
         if (error) {
