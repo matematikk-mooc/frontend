@@ -13,6 +13,8 @@ this.mmooc.settings = {
   principalRoleType: "Skoleleder",
   removeGlobalGradesLink: true,
   removeGroupsLink: true,
+  displayProfileLeftMenu: false,
+  userMergeLtiToolId: $KPAS_MERGE_LTI_ID,
   displayGroupsTab: false,
   displayDiscussionsTab : false,
   displayAlertsMenuItem : false,
