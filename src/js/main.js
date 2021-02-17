@@ -568,6 +568,8 @@ jQuery(function($) {
   }
 
   try {
+    mmooc.messageHandler.init();
+    mmooc.uob.init();
     mmooc.nrk.init();
   } catch (e) {
     console.log(e);
