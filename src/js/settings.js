@@ -14,7 +14,7 @@ this.mmooc.settings = {
   removeGlobalGradesLink: true,
   removeGroupsLink: true,
   displayProfileLeftMenu: false,
-  userMergeLtiToolId: 862,
+  userMergeLtiToolId: 863,
   displayGroupsTab: false,
   displayDiscussionsTab : false,
   displayAlertsMenuItem : false,
