@@ -44,10 +44,23 @@ if(document.location.pathname == "/login/canvas") {
     redirected = mmooc.utilRoot.redirectFeideAuthIfEnrollReferrer();
     if(!redirected) {
       if(!document.location.search.includes("normalLogin=1")) {
-        let html = '<div class="login-box"><div class="login-box__upper"><p class="login-box__text">Logg inn på kompetanseportalen</p>\
-        <div class="login-box__close"></div></div><div class="login-box__lower">\
-        <a class="mmooc-button mmooc-button-primary" onclick="window.location.href=\'/login/saml\'">&nbsp;\
-        </a><a class="mmooc-button mmooc-button-secondary" onclick="$(\'.login-box, .overlay\').remove(); $(\'.ic-Login\').show()">Har ikke Feide</a></div></div>';
+        let html = `<div class="login-box frontPageLoginBox">
+          <div class="login-box__upper">
+          <p class="login-box__text">
+          <img width="50px" src="https://server/bitmaps/unit-logo.png"/>&nbsp;&nbsp;
+          <span><h3>Velkommen til Unit kompetanseportal</h3></span></p>
+          <div class="login-box__close"></div></div>
+          <div class="login-box__lower">
+          <a class="mmooc-button mmooc-button-primary" onclick="window.location.href=\'/login/saml\'">&nbsp;
+          </a>&nbsp;&nbsp;
+          <a class="mmooc-button mmooc-button-secondary" onclick="$(\'.login-box, .overlay\').remove(); $(\'.ic-Login\').show()">Har ikke Feide</a>
+          </div>
+        <div class="unitPartners">
+        <img class="unitPartnersLogo" src="https://server/bitmaps/udirlogo50px.png"/>
+        <img class="unitPartnersSmallLogo" height=15px" src="https://server/bitmaps/logo_ntnu.png"/>
+        </div>
+        </div>
+        `;
         
         document.getElementById('wrapper').insertAdjacentHTML('afterend', html);
         $(".login-box__close").hide();
@@ -60,6 +73,16 @@ if(document.location.pathname == "/login/canvas") {
   }
 } else if (document.location.pathname == "/courses") {
   redirected = mmooc.utilRoot.redirectToEnrollIfCodeParamPassed();
+} else if (document.location.pathname == "/" && !$(".ic-DashboardCard__header_hero").length) {
+  let html = `
+  <div class="card card-body">
+  <h3>Er det tomt her?</h3>
+    Dersom du har valgt å logge inn med Feide og ikke finner innholdet ditt kan det hende det er fordi du 
+    vanligvis har logget på med en annen bruker ved å bruke epost og passord. Du kan hente innholdet fra den andre brukeren din
+    ved å velge <b>Konto->Slå sammen brukere</b> i venstremenyen og følge oppskriften.
+  </div>
+  `;
+  document.getElementById('dashboard-activity').insertAdjacentHTML('beforebegin', html);
 }
 
 if(!redirected) {
