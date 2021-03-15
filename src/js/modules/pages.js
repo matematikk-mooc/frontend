@@ -170,8 +170,8 @@ this.mmooc.pages = (function() {
       }, 100);
     },
 
-    showInformationPane: function(observer, pfdk, unmaintainedSince, alertMsg, isMemberOfExpiredCommunity, notificationtouser) {
-      var paneHTML = mmooc.util.renderTemplateWithData('informationpane', {observer:observer, pfdk:pfdk, unmaintainedSince:unmaintainedSince, alertMsg:alertMsg, expiredCommunity: isMemberOfExpiredCommunity, notificationtouser: notificationtouser});
+    showInformationPane: function(observer, pfdk, unmaintainedSince, alertMsg, isMemberOfExpiredCommunity, notificationtouser, feedback) {
+      var paneHTML = mmooc.util.renderTemplateWithData('informationpane', {observer:observer, pfdk:pfdk, unmaintainedSince:unmaintainedSince, alertMsg:alertMsg, expiredCommunity: isMemberOfExpiredCommunity, notificationtouser: notificationtouser, feedback: feedback});
       document
         .getElementById('wrapper')
         .insertAdjacentHTML('afterend', paneHTML);
