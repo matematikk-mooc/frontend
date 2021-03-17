@@ -359,7 +359,7 @@ module.exports = function (grunt) {
         replacements: [
           {
             from: '$ACCOUNTID',
-            to: '[4, 5]'
+            to: '[99, 100, 102, 103, 137, 138, 139, 145]'
           },
           {
             from: '$KPAS_MERGE_LTI_ID',

@@ -35,7 +35,12 @@ function getScript(url, callback) {
 
 //Redirect if necessary
 var redirected = false;
-if(document.location.pathname == "/login/canvas") {
+//If this is a Feide self enrollment link, forward to a page that requires authentication. It will redirect to the Canvas login page
+//which will pick up that there is an enrollment code in the link and forward to Feide.
+if(document.location.pathname == "/search/all_courses" && document.location.search.includes('?enroll_code')) {
+  window.location.href = '/courses' + document.location.search;
+  redirected = true;
+} else if(document.location.pathname == "/login/canvas") {
   if (document.referrer.endsWith("/logout" + mmooc.hrefQueryString)) {
      window.location.href = '/search/all_courses' + mmooc.hrefQueryString;
      redirected = true;
