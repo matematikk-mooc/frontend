@@ -41,6 +41,7 @@ if(document.location.pathname == "/login/canvas") {
     redirected = true;
   } else {
     $(".ic-Login").hide();
+    $("#f1_container").hide();
     redirected = mmooc.utilRoot.redirectFeideAuthIfEnrollReferrer();
     if(!redirected) {
       if(!document.location.search.includes("normalLogin=1")) {
@@ -51,18 +52,24 @@ if(document.location.pathname == "/login/canvas") {
           <span><h3>Velkommen til Unit kompetanseportal</h3></span></p>
           <div class="login-box__close"></div></div>
           <div class="login-box__lower">
-          <a class="mmooc-button mmooc-button-primary" onclick="window.location.href=\'/login/saml\'">&nbsp;
-          </a>&nbsp;&nbsp;
-          <a class="mmooc-button mmooc-button-secondary" onclick="$(\'.login-box, .overlay\').remove(); $(\'.ic-Login\').show()">Har ikke Feide</a>
-          </div>
-        <div class="unitPartners">
+            <a class="mmooc-button mmooc-button-primary" onclick="window.location.href=\'/login/saml\'">&nbsp;
+            </a>
+            &nbsp;&nbsp;
+            &nbsp;&nbsp;
+            <a class="icon-question unit-help-login" target="_blank" href="https://bibsys.instructure.com/courses/553"></a>
+            &nbsp;&nbsp;
+            &nbsp;&nbsp;
+            <a class="mmooc-button mmooc-button-secondary" onclick="$(\'.login-box, .overlay\').remove(); $(\'.ic-Login\').show()">Har ikke Feide</a>
+            </div>
+          <div class="unitPartners">
         <img class="unitPartnersLogo" src="https://server/bitmaps/udirlogo50px.png"/>
         <img class="unitPartnersSmallLogo" height=15px" src="https://server/bitmaps/logo_ntnu.png"/>
         </div>
         </div>
         `;
         
-        document.getElementById('wrapper').insertAdjacentHTML('afterend', html);
+        document.getElementsByTagName('body')[0].innerHTML += html;
+//        document.getElementsByName('body').insertAdjacentHTML('afterend', html);
         $(".login-box__close").hide();
         $('#application').before(`<div class="overlay"></div>`);
       }
@@ -78,8 +85,7 @@ if(document.location.pathname == "/login/canvas") {
   <div class="card card-body">
   <h3>Er det tomt her?</h3>
     Dersom du har valgt å logge inn med Feide og ikke finner innholdet ditt kan det hende det er fordi du 
-    vanligvis har logget på med en annen bruker ved å bruke epost og passord. Du kan hente innholdet fra den andre brukeren din
-    ved å velge <b>Konto->Slå sammen brukere</b> i venstremenyen og følge oppskriften.
+    vanligvis har logget på med en annen bruker ved å bruke epost og passord. Logg ut og inn igjen med epost/passord.
   </div>
   `;
   document.getElementById('dashboard-activity').insertAdjacentHTML('beforebegin', html);
