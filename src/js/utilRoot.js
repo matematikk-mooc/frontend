@@ -96,8 +96,13 @@ this.mmooc.utilRoot = function() {
       if (document.location.search !== '') {
         const urlParamsObj = mmooc.utilRoot.urlParamsToObject();
         var enrollCode = mmooc.utilRoot.isEnrollCodeParamPassed(urlParamsObj);
+        var design = urlParamsObj && urlParamsObj['design'];
         if (enrollCode) {
-          window.location.href = "/enroll/" + enrollCode + mmooc.hrefQueryString;
+          var newHref = "/enroll/" + enrollCode;  // + mmooc.hrefQueryString;
+          if(design) {
+            newHref += "&design=" + design; 
+          }
+          window.location.href = newHref;
           return true;
         }
         if (mmooc.utilRoot.isLoginParamPassed(urlParamsObj)) {

@@ -179,7 +179,7 @@ module.exports = function (grunt) {
         ]
       },
       development: {
-        src: ['tmp/mmooc-min.css','tmp/rootaccount.css', 'dist/mmooc-min.js', 'tmp/rootaccount.js','tmp/subaccount.js'],
+        src: ['tmp/mmooc-min.css','tmp/rootaccount.css', 'src/js/rootaccountfwd-dev.js','dist/mmooc-min.js', 'tmp/rootaccount.js','tmp/subaccount.js'],
         dest: 'dist/',
         replacements: [
           {
@@ -345,7 +345,7 @@ module.exports = function (grunt) {
         replacements: [
           {
             from: '$ACCOUNTID',
-            to: '[253]'
+            to: '[99, 100, 102, 103, 137, 138, 139, 145]'
           },
           {
             from: '$KPAS_MERGE_LTI_ID',
@@ -363,7 +363,7 @@ module.exports = function (grunt) {
           },
           {
             from: '$KPAS_MERGE_LTI_ID',
-            to: '862'
+            to: '863'
           }
         ]
       },

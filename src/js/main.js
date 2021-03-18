@@ -138,7 +138,7 @@ jQuery(function($) {
     mmooc.enroll.printAllCourses();
     mmooc.enroll.goToAllCourses();
   });
-
+  
   mmooc.routes.addRouteForPath(/\/courses\/\d+\/settings$/, function() {
     mmooc.coursesettings.addSanityCheckButton();
     mmooc.coursesettings.addListSectionsButton();

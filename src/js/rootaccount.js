@@ -42,17 +42,60 @@ if(document.location.pathname == "/search/all_courses" && document.location.sear
   redirected = true;
 } else if(document.location.pathname == "/login/canvas") {
   if (document.referrer.endsWith("/logout" + mmooc.hrefQueryString)) {
-     window.location.href = '/search/all_courses' + mmooc.hrefQueryString;
-     redirected = true;
+    window.location.href = '/search/all_courses' + mmooc.hrefQueryString;
+    redirected = true;
   } else {
+    $(".ic-Login").hide();
+    $("#f1_container").hide();
     redirected = mmooc.utilRoot.redirectFeideAuthIfEnrollReferrer();
+    if(!redirected) {
+      if(!document.location.search.includes("normalLogin=1")) {
+        let html = `<div class="login-box frontPageLoginBox">
+          <div class="login-box__upper">
+          <p class="login-box__text">
+          <img width="50px" src="https://server/bitmaps/unit-logo.png"/>&nbsp;&nbsp;
+          <span><h3>Velkommen til Unit kompetanseportal</h3></span></p>
+          <div class="login-box__close"></div></div>
+          <div class="login-box__lower">
+            <a class="mmooc-button mmooc-button-primary" onclick="window.location.href=\'/login/saml\'">&nbsp;
+            </a>
+            &nbsp;&nbsp;
+            &nbsp;&nbsp;
+            <a class="icon-question unit-help-login" target="_blank" href="https://bibsys.instructure.com/courses/553"></a>
+            &nbsp;&nbsp;
+            &nbsp;&nbsp;
+            <a class="mmooc-button mmooc-button-secondary" onclick="$(\'.login-box, .overlay\').remove(); $(\'.ic-Login\').show()">Har ikke Feide</a>
+            </div>
+          <div class="unitPartners">
+        <img class="unitPartnersLogo" src="https://server/bitmaps/udirlogo50px.png"/>
+        <img class="unitPartnersSmallLogo" height=15px" src="https://server/bitmaps/logo_ntnu.png"/>
+        </div>
+        </div>
+        `;
+        
+        document.getElementsByTagName('body')[0].innerHTML += html;
+//        document.getElementsByName('body').insertAdjacentHTML('afterend', html);
+        $(".login-box__close").hide();
+        $('#application').before(`<div class="overlay"></div>`);
+      }
+      else {
+        $(".ic-Login").show();
+      }
+    }
   }
-}
-else if (document.location.pathname == "/courses") {
+} else if (document.location.pathname == "/courses") {
   redirected = mmooc.utilRoot.redirectToEnrollIfCodeParamPassed();
-} else {
-  //redirected = mmooc.utilRoot.redirectToSamlIfUdirCourse(mmooc.settingsRoot.kpasApiUrl);
+} else if (document.location.pathname == "/" && !$(".ic-DashboardCard__header_hero").length) {
+  let html = `
+  <div class="card card-body">
+  <h3>Er det tomt her?</h3>
+    Dersom du har valgt å logge inn med Feide og ikke finner innholdet ditt kan det hende det er fordi du 
+    vanligvis har logget på med en annen bruker ved å bruke epost og passord. Logg ut og inn igjen med epost/passord.
+  </div>
+  `;
+  document.getElementById('dashboard-activity').insertAdjacentHTML('beforebegin', html);
 }
+
 if(!redirected) {
   const urlParamsObj = mmooc.utilRoot.urlParamsToObject();
   const design = urlParamsObj && urlParamsObj['design'];
