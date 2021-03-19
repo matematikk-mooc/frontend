@@ -33,6 +33,11 @@ function getScript(url, callback) {
   return undefined;
 }
 
+function showCanvasLogin() {
+  $('.login-box, .overlay').remove(); 
+  $('.ic-Login').show();
+  $("#f1_container").show(); //Small screens
+}
 //Redirect if necessary
 var redirected = false;
 //If this is a Feide self enrollment link, forward to a page that requires authentication. It will redirect to the Canvas login page
@@ -46,7 +51,7 @@ if(document.location.pathname == "/search/all_courses" && document.location.sear
     redirected = true;
   } else {
     $(".ic-Login").hide();
-    $("#f1_container").hide();
+    $("#f1_container").hide(); //Small screens
     redirected = mmooc.utilRoot.redirectFeideAuthIfEnrollReferrer();
     if(!redirected) {
       if(!document.location.search.includes("normalLogin=1")) {
@@ -64,7 +69,7 @@ if(document.location.pathname == "/search/all_courses" && document.location.sear
             <a class="icon-question unit-help-login" target="_blank" href="https://bibsys.instructure.com/courses/553"></a>
             &nbsp;&nbsp;
             &nbsp;&nbsp;
-            <a class="mmooc-button mmooc-button-secondary" onclick="$(\'.login-box, .overlay\').remove(); $(\'.ic-Login\').show()">Har ikke Feide</a>
+            <a class="mmooc-button mmooc-button-secondary" onclick="showCanvasLogin();">Har ikke Feide</a>
             </div>
           <div class="unitPartners">
         <img class="unitPartnersLogo" src="https://server/bitmaps/udirlogo50px.png"/>
@@ -74,7 +79,6 @@ if(document.location.pathname == "/search/all_courses" && document.location.sear
         `;
         
         document.getElementsByTagName('body')[0].innerHTML += html;
-//        document.getElementsByName('body').insertAdjacentHTML('afterend', html);
         $(".login-box__close").hide();
         $('#application').before(`<div class="overlay"></div>`);
       }
