@@ -1,5 +1,6 @@
 #application.ic-app {
   #header.ic-app-header {
+    display:block !important;
     min-height: 80px;
     width: 100%;
     background-color: @darkTealColor;
@@ -21,10 +22,6 @@
       max-width: @maxWidth;
       padding: 0 20px;
 
-      @media screen and (max-width: @smallestScreenCutoff) {
-        flex-flow: wrap;
-      }
-
       .ic-app-header__logomark-container {
         width: @logo-width;
         margin: 0 80px 0 0;
@@ -37,10 +34,6 @@
           flex-basis: 33%;
           margin: 0;
           order: 1;
-        }
-
-        @media screen and (max-width: @smallestScreenCutoff) {
-          flex-basis: 100%;
         }
 
         .ic-app-header__logomark {
@@ -71,11 +64,6 @@
       display: flex;
       align-items: center;
       flex-basis: 100%;
-
-      @media screen and (max-width: @smallestScreenCutoff) {
-        flex-basis: 100%;
-        order: 3;
-      }
 
       @media screen and (max-width: @smallScreenCutoff) {
         flex-basis: 33%;
@@ -217,19 +205,17 @@
     #user-menu {
       display: flex;
       padding-top: 27px;
-      min-width: @userMenuMinWidth;
-      margin-right: -20px;
 
       @media screen and (max-width: @smallScreenCutoff) {
         margin-right: 0;
       }
-
-      @media screen and (max-width: @smallestScreenCutoff) {
-        padding-top: 0;
-      }
     }
   }
 
+  #mobile-header {
+      display: none;
+  }
+  
   .menu-mobile {
     display: none;
 
@@ -247,11 +233,6 @@
       font-size: 25px;
       font-weight: bold;
       flex-basis: 33%;
-    }
-
-    @media screen and (max-width: @smallestScreenCutoff) {
-      position: absolute;
-      top: 54px;
     }
   }
 }

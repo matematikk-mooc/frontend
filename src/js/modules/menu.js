@@ -426,28 +426,16 @@ this.mmooc.menu = (function() {
         let html = mmooc.util.renderTemplateWithData('noLoggedInHeader', {
           logInText: mmooc.i18n.LogIn
         });
+        let htmlMobile = mmooc.util.renderTemplateWithData('noLoggedInHeaderMobile', {
+          logInText: mmooc.i18n.LogIn
+        });
 
         $('#menu').append(html);
         $('.ic-app-header__main-navigation').append(html);
 
-          this.unAuthenticatedMobileMenu();
+        $("#mobile-header").append(htmlMobile);
 
-          $(window).on('resize', () => {
-            this.unAuthenticatedMobileMenu();
-          });
-        
-          mmooc.login.handleLoginButtonClick();
-      }
-    },
-    unAuthenticatedMobileMenu() {
-      var mobileViewport = window.matchMedia("(max-width: 768px)");
-
-      if(mobileViewport.matches) {
-        $('#header').addClass("ic-app-header--mobile");
-        $('.mmooc-header').addClass("mmooc-header--mobile")
-      }else {
-        $('.mmooc-header').removeClass("mmooc-header--mobile")
-        $('#header').removeClass("ic-app-header--mobile");
+        mmooc.login.handleLoginButtonClick();
       }
     },
     hideRightMenu: function() {
