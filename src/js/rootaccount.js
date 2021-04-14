@@ -75,7 +75,7 @@ if(document.location.pathname == "/search/all_courses" && document.location.sear
           <div class="unitPartners">
             <a href="https://udir.no" target="_blank"><img class="unitPartnersLogo" src="https://server/bitmaps/udirlogo50px.png"/></a>
             <a href="https://ntnu.no" target="_blank"><img class="unitPartnersSmallLogo" src="https://server/bitmaps/logo_ntnu.png"/></a>
-            <a href="https://unit.no" target="_blank"><img class="unitPartnersSmallLogo" src="https://server/bitmaps/unit-logo-farge.jpg"/></a>
+            <a href="https://unit.no" target="_blank"><img class="unitPartnersUnitLogo" src="https://server/bitmaps/unit-logo-farge.svg"/></a>
             </div>
         </div>
         `;
