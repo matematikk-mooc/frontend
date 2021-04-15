@@ -84,6 +84,7 @@ if(document.location.pathname == "/search/all_courses" && document.location.sear
       }
       else {
         $(".ic-Login").show();
+        $("#f1_container").show(); //Small screens
       }
     }
   }

@@ -88,10 +88,6 @@
         .mmooc-button-ctr {
           flex-direction: column;
         }
-
-        .mmooc-button {
-          margin-bottom: 24px;
-        }
       }
     }
 
@@ -107,6 +103,7 @@
     padding: 24px 24px 24px 40px;
     display: flex;
     align-items: center;
+    text-align: left;
 
     * {
       pointer-events: none;
@@ -123,7 +120,15 @@
       margin: 0;
       padding-bottom: 30px;
     }
-  }
+    .mmooc-button-ctr {
+      padding: 0 0 40px 40px;
+      display: flex;
+
+      .mmooc-button {
+        margin-right: 24px;
+      }
+    }
+}
 
   .mmooc-tabs-mobile-content-active {
     display: block;

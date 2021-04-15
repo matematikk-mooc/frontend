@@ -15,12 +15,6 @@
     display: flex;
   }
 
-  @media screen and (max-width: @smallestScreenCutoff) {
-    flex-direction: column;
-    height: 130px;
-    justify-content: space-around;
-  }
-
   &__logo {
     background-image: @logo-image;
     width: 274px;
@@ -49,9 +43,6 @@
     border: none;
     border-radius: 4px;
 
-    @media screen and (max-width: @smallestScreenCutoff) {
-      height: 38px;
-    }
 
     &:hover {
       opacity: 0.8;
