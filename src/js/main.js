@@ -571,6 +571,8 @@ jQuery(function($) {
     mmooc.messageHandler.init();
     mmooc.uob.init();
     mmooc.nrk.init();
+//    mmooc.youtube.init();
+    mmooc.vimeo.init();
   } catch (e) {
     console.log(e);
   }
