@@ -2,19 +2,17 @@ this.mmooc=this.mmooc||{};
 
 //https://webapps.stackexchange.com/questions/85517/how-can-i-download-subtitles-for-a-vimeo-video
 this.mmooc.vimeo = function() {
-	var hrefPrefix = "https://83dbd85bfa27.ngrok.io/api/vimeo/";
+	var hrefPrefix = "https://ff641f6593eb.ngrok.io/api/vimeo/";
 	var transcriptIdPrefix = "vimeoTranscript";
 	var transcriptArr = [];
 	var initialized = false;
-    var videoId = null;
-    var player = null;
 
 	function transcript(transcriptId, language, name)
 	{
 		var transcriptId = transcriptId;
-		this.videoId = transcriptId.split(transcriptIdPrefix)[1];
+		var videoId = transcriptId.split(transcriptIdPrefix)[1];
 
-		var href = hrefPrefix + this.videoId;
+		var href = hrefPrefix + videoId;
         //Array of captions in video
 		var captionsLoaded = false;
 
@@ -27,13 +25,15 @@ this.mmooc.vimeo = function() {
 		var currentCaptionIndex = 0;
 		var nextCaptionIndex = 0;
 
-        var iframe = document.getElementById("vimeo" + this.videoId);
-        this.player = new Vimeo.Player(iframe);
-        this.player.on('play', function() {
+        var iframe = document.getElementById("vimeo" + videoId);
+        var player = new Vimeo.Player(iframe);
+        player.on('play', function() {
             console.log('Played the video');
         });
-      
-        this.player.getVideoTitle().then(function(title) {
+        player.ready().then(function () {
+            console.log('player is ready!');
+        });           
+        player.getVideoTitle().then(function(title) {
             console.log('title:', title);
         });
 
@@ -123,6 +123,45 @@ this.mmooc.vimeo = function() {
 		//////////////////
 		//Public functions
 		/////////////////
+		this.setCurrentTime = function (seekToTime)
+		{
+            player.setCurrentTime(seekToTime).then(function(seconds) {
+                console.log("Jumped to " + seconds);
+            }).catch(function(error) {
+                switch (error.name) {
+                case 'RangeError':
+                    console.log("The time is less than 0 or greater than the video's duration.");
+                    break;
+            
+                default:
+                    console.log("Some other error occurred.");
+                    break;
+                }
+            });
+        }
+
+        this.play = function() {
+            player.play().then(function() {
+                console.log("The video is playing");
+              }).catch(function(error) {
+                switch (error.name) {
+                  case 'PasswordError':
+                      console.log("The video is password protected.")
+                      break;
+              
+                  case 'PrivacyError':
+                      // The video is private
+                      console.log("The video is private.")
+                      break;
+              
+                  default:
+                     console.log("Some error occured.")
+    
+                      break;
+                }
+              });
+        }
+
 
 		//This function highlights the next caption in the list and
 		//sets a timeout for the next one after that.
@@ -178,7 +217,7 @@ this.mmooc.vimeo = function() {
 				srt_output += "<span class='btnVimeoSeek' data-seek='" + start + "' id='" + timestampId + "'>" + captionText + "</span> ";
 			};
 
-			$("#vimeoTranscript" + this.videoId).append(srt_output);
+			$("#vimeoTranscript" + videoId).append(srt_output);
 			captionsLoaded = true;
 		}
 		
@@ -188,7 +227,11 @@ this.mmooc.vimeo = function() {
 		}
 		this.getVideoId = function()
 		{
-			return this.videoId;
+			return videoId;
+		}
+		this.getPlayer = function()
+		{
+			return player;
 		}
 		
         this.getTranscript = function()
@@ -232,41 +275,15 @@ this.mmooc.vimeo = function() {
 		$(document).on('click', '.btnVimeoSeek', function() {
 			var seekToTime = $(this).data('seek');
 			var transcript = mmooc.vimeo.getTranscriptFromTranscriptId($(this).parent().attr("id"));
-            var iframe = document.getElementById("vimeo" + transcript.videoId);
-            var player = new Vimeo.Player(iframe);
-    
-            player.setCurrentTime(seekToTime).then(function(seconds) {
-                console.log("Jumped to " + seconds);
-              }).catch(function(error) {
-                switch (error.name) {
-                  case 'RangeError':
-                      console.log("The time is less than 0 or greater than the video's duration.");
-                      break;
-              
-                  default:
-                      console.log("Some other error occurred.");
-                      break;
-                }
-              });
-			player.play().then(function() {
-                console.log("The video is playing");
-              }).catch(function(error) {
-                switch (error.name) {
-                  case 'PasswordError':
-                      console.log("The video is password protected.")
-                      break;
-              
-                  case 'PrivacyError':
-                      // The video is private
-                      console.log("The video is private.")
-                      break;
-              
-                  default:
-                     console.log("Some error occured.")
-
-                      break;
-                }
-              });
+//            var iframe = document.getElementById("vimeo" + transcript.videoId);
+//            var player = new Vimeo.Player(iframe);
+            try {
+                transcript.setCurrentTime(seekToTime);
+                transcript.play();
+            }
+            catch(e) {
+                console.log("Vimeo exception:" + e);
+            }
 		});
 	});
 
@@ -292,25 +309,26 @@ this.mmooc.vimeo = function() {
 			return null;
 	    },
 	    
-		APIReady : function ()
+		init : function ()
 		{
-			if(!initialized)
+            console.log("Vimeo initializing");
+            var iframe = document.getElementById("vimeo417239677");
+            if(!iframe) {
+                console.log("Iframe is not ready");
+            }
+
+            if(!initialized)
 			{
 				$(".mmoocVimeoVideoTranscript" ).each(function( i ) {
 					var language = $(this).data('language');
 					var name = $(this).data('name');
 					var oTranscript = new transcript(this.id, language, name);
-					oTranscript.getTranscript();
 					transcriptArr.push(oTranscript);
+                    oTranscript.getTranscript();
 				});
 				initialized = true;
 			}
-		},
-		init : function ()
-		{
-			this.APIReady();
 		}		
 	}
-    $.getScript('https://player.vimeo.com/api/player.js');
 }();
 
