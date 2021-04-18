@@ -2,11 +2,12 @@ this.mmooc=this.mmooc||{};
 
 //https://webapps.stackexchange.com/questions/85517/how-can-i-download-subtitles-for-a-vimeo-video
 this.mmooc.vimeo = function() {
-	var hrefPrefix = "https://d24dffeba836.ngrok.io/api/vimeo/";
+	var hrefPrefix = "https://ac9f1949768f.ngrok.io/api/vimeo/";
 	var transcriptIdPrefix = "vimeoTranscript";
 	var transcriptArr = [];
 	var initialized = false;
-
+    var noOfVimeoVideos = $(".mmoocVimeoVideoTranscript").length;
+    var noOfInits = 0;
 	function transcript(transcriptId, language, name)
 	{
 		var transcriptId = transcriptId;
@@ -26,12 +27,11 @@ this.mmooc.vimeo = function() {
 		var currentCaptionIndex = 0;
 		var nextCaptionIndex = 0;
 
+        var transcript = this;
         var iframe = document.getElementById(iframeId);
         var player = new Vimeo.Player(iframe);
         player.on('play', function() {
             console.log('Played the video');
-            var transcript = mmooc.vimeo.getTranscriptFromIframeId(player.element.id);
-            transcript.playerPlaying();
         });
         player.ready().then(function () {
             console.log('player is ready!');
@@ -41,6 +41,7 @@ this.mmooc.vimeo = function() {
         });
         player.on('cuechange', function(d) {
             //console.log(d);
+            transcript.playerPlaying();
         });
         player.on('cuepoint', function(d) {
             console.log(d);
@@ -53,23 +54,23 @@ this.mmooc.vimeo = function() {
 		{
 			var start = 0;
 			var duration = 0;
-			for (var i = 0, il = captions.length; i < il; i++) {
+            var captionIndex = -1;
+            var startIndex = 0;
+            if(currentCaptionIndex > -1) {
+                startIndex = currentCaptionIndex;
+            }
+			for (var i = startIndex, il = captions.length; i < il; i++) {
 				start = Number(getStartTimeFromCaption(i));
 				duration = Number(getDurationFromCaption(i));
-	
-				//Return the first caption if the timeStamp is smaller than the first caption start time.
-				if(timeStamp < start)
-				{
-					break;
-				}
-	
+		
 				//Check if the timestamp is in the interval of this caption.
 				if((timeStamp >= start) && (timeStamp < (start + duration)))
 				{
-					break;
+					captionIndex = i;
+                    break;
 				}        
 			}
-			return i;
+			return captionIndex;
 		}
 
 
@@ -83,30 +84,6 @@ this.mmooc.vimeo = function() {
 		{
 			var timestampId = getTimeIdFromTimestampIndex(nextCaptionIndex);
 			$("#"+timestampId).css('background-color', 'yellow');
-		}
-
-		var calculateTimeout = function (currentTime)
-		{
-			var startTime = Number(getStartTimeFromCaption(currentCaptionIndex));
-			var duration = Number(getDurationFromCaption(currentCaptionIndex));
-			var timeoutValue = startTime - currentTime + duration;
-			return timeoutValue;
-		}
-
-		this.setCaptionTimeout = function (timeoutValue)
-		{
-			if(timeoutValue < 0)
-			{
-				return;
-			}
-			
-			clearTimeout(captionTimeout);
-			
-			var transcript = this;
-			
-			captionTimeout = setTimeout(function() {
-				transcript.highlightCaptionAndPrepareForNext();
-			}, timeoutValue*1000)
 		}
 
 		var getStartTimeFromCaption = function(i)
@@ -128,7 +105,7 @@ this.mmooc.vimeo = function() {
 		var getTimeIdFromTimestampIndex = function(i)
 		{
 			var strTimestamp = "" + i;
-			return "t" + strTimestamp;
+			return "t" + videoId + strTimestamp;
 		}
 
 
@@ -137,6 +114,7 @@ this.mmooc.vimeo = function() {
 		/////////////////
 		this.setCurrentTime = function (seekToTime)
 		{
+            currentCaptionIndex = 0;
             player.setCurrentTime(seekToTime).then(function(seconds) {
                 console.log("Jumped to " + seconds);
             }).catch(function(error) {
@@ -174,52 +152,13 @@ this.mmooc.vimeo = function() {
               });
         }
 
-
-		//This function highlights the next caption in the list and
-		//sets a timeout for the next one after that.
-		//It must be public as it is called from a timer.
-		this.highlightCaptionAndPrepareForNext = function ()
-		{
-			clearCurrentHighlighting();
-			highlightNextCaption();
-			currentCaptionIndex = nextCaptionIndex;
-			nextCaptionIndex++;
-
-            var player = this.getPlayer();
-            var transcript = this;
-
-			player.getCurrentTime().then(function(currentTime) {
-                var timeoutValue = calculateTimeout(currentTime);
-		
-                if(nextCaptionIndex <= captions.length)			
-                {
-                    transcript.setCaptionTimeout(timeoutValue);
-                }
-            }).catch(function(error) {
-                console.log("Could not get current time from vimeo.");
-            });
-		}
-		
 		//Called if the user has dragged the slider to somewhere in the video.
 		this.highlightCaptionFromTimestamp = function(timeStamp)
 		{
 			clearCurrentHighlighting();
 			nextCaptionIndex = findCaptionIndexFromTimestamp(timeStamp);
 			currentCaptionIndex = nextCaptionIndex;
-
-			var startTime = Number(getStartTimeFromCaption(currentCaptionIndex));
-
-			var timeoutValue = -1;		
-			if(timeStamp < startTime)
-			{
-				timeoutValue = startTime - timeStamp;
-			}
-			else
-			{
-				highlightNextCaption();
-				timeoutValue = calculateTimeout(timeStamp);
-			}
-			this.setCaptionTimeout(timeoutValue);
+            highlightNextCaption();
 		}   
 
 		this.transcriptLoaded = function(transcript) {
@@ -335,7 +274,9 @@ this.mmooc.vimeo = function() {
 			}
 			return null;
 	    },
-	    
+	    getNoOfVimeoVideos() {
+            return noOfVimeoVideos;
+        },
 	    getTranscriptFromVideoId(videoId)
 	    {
 			for (index = 0; index < transcriptArr.length; ++index) {
@@ -349,6 +290,12 @@ this.mmooc.vimeo = function() {
 	    
 		init : function ()
 		{
+            noOfInits++;
+            if(noOfInits < noOfVimeoVideos)
+            {
+                console.log("" + noOfInits + " of " + noOfVimeoVideos + " initialized.");
+                return;
+            }
             console.log("Vimeo initializing");
             var iframe = document.getElementById("vimeo417239677");
             if(!iframe) {
