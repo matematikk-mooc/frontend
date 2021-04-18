@@ -572,8 +572,6 @@ jQuery(function($) {
     mmooc.uob.init();
     mmooc.nrk.init();
 //    mmooc.youtube.init();
-    console.log("Init vimeo");
-    setTimeout(mmooc.vimeo.init, 1000);
   } catch (e) {
     console.log(e);
   }

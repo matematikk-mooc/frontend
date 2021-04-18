@@ -2,7 +2,7 @@ this.mmooc=this.mmooc||{};
 
 //https://webapps.stackexchange.com/questions/85517/how-can-i-download-subtitles-for-a-vimeo-video
 this.mmooc.vimeo = function() {
-	var hrefPrefix = "https://ff641f6593eb.ngrok.io/api/vimeo/";
+	var hrefPrefix = "https://d24dffeba836.ngrok.io/api/vimeo/";
 	var transcriptIdPrefix = "vimeoTranscript";
 	var transcriptArr = [];
 	var initialized = false;
@@ -11,6 +11,7 @@ this.mmooc.vimeo = function() {
 	{
 		var transcriptId = transcriptId;
 		var videoId = transcriptId.split(transcriptIdPrefix)[1];
+        var iframeId = "vimeo" + videoId;
 
 		var href = hrefPrefix + videoId;
         //Array of captions in video
@@ -25,10 +26,12 @@ this.mmooc.vimeo = function() {
 		var currentCaptionIndex = 0;
 		var nextCaptionIndex = 0;
 
-        var iframe = document.getElementById("vimeo" + videoId);
+        var iframe = document.getElementById(iframeId);
         var player = new Vimeo.Player(iframe);
         player.on('play', function() {
             console.log('Played the video');
+            var transcript = mmooc.vimeo.getTranscriptFromIframeId(player.element.id);
+            transcript.playerPlaying();
         });
         player.ready().then(function () {
             console.log('player is ready!');
@@ -36,6 +39,15 @@ this.mmooc.vimeo = function() {
         player.getVideoTitle().then(function(title) {
             console.log('title:', title);
         });
+        player.on('cuechange', function(d) {
+            //console.log(d);
+        });
+        player.on('cuepoint', function(d) {
+            console.log(d);
+        })
+        player.on('texttrackchange', function(d) {
+            console.log(d);
+        })
 
 		var findCaptionIndexFromTimestamp = function(timeStamp)
 		{
@@ -173,13 +185,19 @@ this.mmooc.vimeo = function() {
 			currentCaptionIndex = nextCaptionIndex;
 			nextCaptionIndex++;
 
-			var currentTime = this.player.getCurrentTime();
-			var timeoutValue = calculateTimeout(currentTime);
+            var player = this.getPlayer();
+            var transcript = this;
+
+			player.getCurrentTime().then(function(currentTime) {
+                var timeoutValue = calculateTimeout(currentTime);
 		
-			if(nextCaptionIndex <= captions.length)			
-			{
-				this.setCaptionTimeout(timeoutValue);
-			}
+                if(nextCaptionIndex <= captions.length)			
+                {
+                    transcript.setCaptionTimeout(timeoutValue);
+                }
+            }).catch(function(error) {
+                console.log("Could not get current time from vimeo.");
+            });
 		}
 		
 		//Called if the user has dragged the slider to somewhere in the video.
@@ -194,12 +212,12 @@ this.mmooc.vimeo = function() {
 			var timeoutValue = -1;		
 			if(timeStamp < startTime)
 			{
-				timeoutValue = startTime - currentTime;
+				timeoutValue = startTime - timeStamp;
 			}
 			else
 			{
 				highlightNextCaption();
-				timeoutValue = calculateTimeout(currentTime);
+				timeoutValue = calculateTimeout(timeStamp);
 			}
 			this.setCaptionTimeout(timeoutValue);
 		}   
@@ -224,6 +242,10 @@ this.mmooc.vimeo = function() {
 		this.getTranscriptId = function()
 		{
 			return transcriptId;
+		}
+		this.getIframeId = function()
+		{
+			return iframeId;
 		}
 		this.getVideoId = function()
 		{
@@ -257,8 +279,13 @@ this.mmooc.vimeo = function() {
 				return;
 			}	
 			
-		    currentTime = this.player.getCurrentTime();
-		    this.highlightCaptionFromTimestamp(currentTime);
+            var player = this.getPlayer();
+            var transcript = this;
+            player.getCurrentTime().then(function(currentTime) {
+    		    transcript.highlightCaptionFromTimestamp(currentTime);
+            }).catch(function(error) {
+                console.log("Could not get current time from vimeo in player playing.");
+            });
 		}
 		this.playerNotPlaying = function (transcript)
 		{
@@ -298,6 +325,17 @@ this.mmooc.vimeo = function() {
 			}
 			return null;
 		},
+	    getTranscriptFromIframeId(iframeId)
+	    {
+			for (index = 0; index < transcriptArr.length; ++index) {
+				if(transcriptArr[index].getIframeId() == iframeId)
+				{
+					return transcriptArr[index];
+				}
+			}
+			return null;
+	    },
+	    
 	    getTranscriptFromVideoId(videoId)
 	    {
 			for (index = 0; index < transcriptArr.length; ++index) {
