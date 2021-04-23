@@ -155,13 +155,15 @@ jQuery(function($) {
       'notifications',
       {}
     );
-    var mergeUserButtonHTML = mmooc.util.renderTemplateWithData(
-      'usermerge',
-      {userId:mmooc.api.getUser().id, userMergeLtiToolId:mmooc.settings.userMergeLtiToolId}
-    );
-    var elementId = document.getElementById('confirm_email_channel');
+    if(!mmooc.settings.displayUserMergeButton) {
+      var mergeUserButtonHTML = mmooc.util.renderTemplateWithData(
+        'usermerge',
+        {userId:mmooc.api.getUser().id, userMergeLtiToolId:mmooc.settings.userMergeLtiToolId}
+      );
+      elementId.insertAdjacentHTML('beforebegin', mergeUserButtonHTML);
+    }
 
-    elementId.insertAdjacentHTML('beforebegin', mergeUserButtonHTML);
+    var elementId = document.getElementById('confirm_email_channel');
     elementId.insertAdjacentHTML('beforebegin', notificationButtonHTML);
   });
 
