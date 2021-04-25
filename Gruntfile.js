@@ -148,7 +148,7 @@ module.exports = function (grunt) {
           },
           {
             from: '$KPASAPIURL',
-            to: '\'https://kpas-lti.azurewebsites.net/api/\''
+            to: 'https://kpas-lti.azurewebsites.net/api'
           }
         ]
       },
@@ -174,7 +174,7 @@ module.exports = function (grunt) {
           },
           {
             from: '$KPASAPIURL',
-            to: '\'https://kpas-lti-staging-kpas.azurewebsites.net/api/\''
+            to: 'https://kpas-lti-staging-kpas.azurewebsites.net/api'
           }
         ]
       },
@@ -200,7 +200,7 @@ module.exports = function (grunt) {
           },
           {
             from: '$KPASAPIURL',
-            to: 'https://kpas-lti-staging-kpas.azurewebsites.net/api/'
+            to: 'https://ba29b88f98a2.ngrok.io/api'
           }
         ]
       },
