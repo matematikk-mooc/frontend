@@ -8,6 +8,6 @@ this.mmooc.settingsRoot = {
       "enroll_code",
       "kslaring.no"
     ],
-    kpasApiUrl: $KPASAPIURL
+    kpasApiUrl: '$KPASAPIURL'
 };
 

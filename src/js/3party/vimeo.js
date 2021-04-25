@@ -2,7 +2,7 @@ this.mmooc=this.mmooc||{};
 
 //https://webapps.stackexchange.com/questions/85517/how-can-i-download-subtitles-for-a-vimeo-video
 this.mmooc.vimeo = function() {
-	var hrefPrefix = "https://ac9f1949768f.ngrok.io/api/vimeo/";
+	var hrefPrefix = "$KPASAPIURL/vimeo/";
 	var transcriptIdPrefix = "vimeoTranscript";
 	var transcriptArr = [];
 	var initialized = false;
@@ -164,7 +164,17 @@ this.mmooc.vimeo = function() {
 		this.transcriptLoaded = function(transcript) {
 			var start = 0;
 			captions = transcript.getElementsByTagName('text');
-			var srt_output = "<div class='btnVimeoSeek' id='btnVimeoSeek' data-seek='0'>0:00</div>";
+
+			var transcriptButtonId = "vimeoTranscriptButtonId" + this.getVideoId();
+			var transcriptContentId = "vimeoTranscriptContentId" + this.getVideoId();
+			var srt_output = '<p>';
+			srt_output += '<a id="' + transcriptButtonId + '" href="#set1reveal0" class="uob-reveal-button ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-secondary" role="button" aria-disabled="false">';
+			srt_output += '<span class="ui-button-text">Transcript</span>';
+			srt_output += '<span class="ui-button-icon-secondary ui-icon ui-icon-triangle-1-s"></span></a></p>';
+
+			srt_output += '<div id="' + transcriptContentId + '" style="display: none;">';
+
+			srt_output += "<div class='btnVimeoSeek' id='btnVimeoSeek' data-seek='0'>0:00</div>";
 
 			for (var i = 0, il = captions.length; i < il; i++) {
 				start =+ getStartTimeFromCaption(i);
@@ -173,8 +183,14 @@ this.mmooc.vimeo = function() {
 				var timestampId = getTimeIdFromTimestampIndex(i);
 				srt_output += "<span class='btnVimeoSeek' data-seek='" + start + "' id='" + timestampId + "'>" + captionText + "</span> ";
 			};
+			srt_output += "</div>";
 
 			$("#vimeoTranscript" + videoId).append(srt_output);
+
+			$('#' + transcriptButtonId).click(function(event) {
+				mmooc.vimeo.toggleReveal(transcriptContentId);
+			});
+
 			captionsLoaded = true;
 		}
 		
@@ -254,6 +270,14 @@ this.mmooc.vimeo = function() {
 	});
 
 	return {
+		toggleReveal(id) {
+			var body = "#"+id;
+			if ($(body).css('display') != 'none') {
+				$(body).slideUp(400);
+			} else {
+				$(body).slideDown(400);				
+			}	
+		},
 		getTranscriptFromTranscriptId(transcriptId)
 		{
 			for (index = 0; index < transcriptArr.length; ++index) {

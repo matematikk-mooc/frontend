@@ -200,7 +200,7 @@ module.exports = function (grunt) {
           },
           {
             from: '$KPASAPIURL',
-            to: '\'' + process.env.KPAS_URL + '/api/\''
+            to: 'https://kpas-lti-staging-kpas.azurewebsites.net/api/'
           }
         ]
       },
