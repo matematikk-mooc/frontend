@@ -1,6 +1,7 @@
 jQuery(function($) {
   //Multilanguage KURSP-279 Css must be present before javascript is run.
-  mmooc.multilanguage.insertCss();
+  //KURSP-376-multilanguage-fix 
+  mmooc.multilanguage.initializeCss();
 
   mmooc.routes.addRouteForPath(/\/$/, function() {
     var parentId = 'wrapper';
@@ -550,6 +551,13 @@ jQuery(function($) {
           courseId,
           function(course) {
             mmooc.util.course = course;
+            //KURSP-376-multilanguage-fix
+            if (mmooc.util.isMultilangCourse(mmooc.util.course)) {
+              var langCode = MultilangUtils.getLanguageCode();
+              MultilangUtils.setActiveLanguage(langCode);
+            } else {
+              mmooc.multilanguage.updateCss();
+            }
             mmooc.routes.performHandlerForUrl(document.location);
           },
           function(error) {
