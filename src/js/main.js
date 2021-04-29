@@ -555,8 +555,6 @@ jQuery(function($) {
             if (mmooc.util.isMultilangCourse(mmooc.util.course)) {
               var langCode = MultilangUtils.getLanguageCode();
               MultilangUtils.setActiveLanguage(langCode);
-            } else {
-              mmooc.multilanguage.updateCss();
             }
             mmooc.routes.performHandlerForUrl(document.location);
           },

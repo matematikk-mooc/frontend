@@ -140,7 +140,7 @@ class MultilangUtils {
             var displayValue = "none";
             if(activeLang == "all") {
                 displayValue = "unset";
-            } else if(activeLang != "none") {
+            } else {
                 displayValue = activeLang.toLowerCase() === l.code ? 'unset' : 'none';
             }
             return `.language:lang(${l.code}) {display:${displayValue};}`
@@ -225,12 +225,8 @@ this.mmooc.multilanguage = (function () {
         },
         initializeCss: () => {
             if (!location.pathname.endsWith('/edit')) {
-                MultilangUtils.initializeCss("none");
+                MultilangUtils.initializeCss("all");
             }
-        },
-        updateCss: () => {
-            const styleElement = document.getElementById('language-style');
-            styleElement.innerHTML = MultilangUtils.createCss("all");
         }
     }
 })();
