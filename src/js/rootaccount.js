@@ -58,7 +58,7 @@ if(document.location.pathname == "/search/all_courses" && document.location.sear
         let html = `<div class="login-box frontPageLoginBox">
           <div class="login-box__upper">
           <p class="login-box__text">
-          <img width="50px" src="https://server/bitmaps/unit-logo.png"/>&nbsp;&nbsp;
+          <img alt="UNIT logo" width="50px" src="https://server/bitmaps/unit-logo.png"/>&nbsp;&nbsp;
           <span><h3>Velkommen til Unit kompetanseportal</h3></span></p>
           <div class="login-box__close"></div></div>
           <div class="login-box__lower">
@@ -72,9 +72,11 @@ if(document.location.pathname == "/search/all_courses" && document.location.sear
             <a class="mmooc-button mmooc-button-secondary" onclick="showCanvasLogin();">Har ikke Feide</a>
             </div>
           <div class="unitPartners">
-        <img class="unitPartnersLogo" src="https://server/bitmaps/udirlogo50px.png"/>
-        <img class="unitPartnersSmallLogo" height=15px" src="https://server/bitmaps/logo_ntnu.png"/>
+        <img alt="UNIT logo" class="unitPartnersLogo" src="https://server/bitmaps/udirlogo50px.png"/>
+        <img alt="NTNU logo" class="unitPartnersSmallLogo" height=15px" src="https://server/bitmaps/logo_ntnu.png"/>
         </div>
+        <div class="informationPane"><br><small><b>Kjenner du deg ikke igjen?</b> 18. mai oppdaterte vi innloggingssiden slik at alle brukere kan logge
+        på med Feide. Dersom du ikke har brukt Feide tidligere skal du logge med <b>Har ikke Feide</b></small>
         </div>
         `;
         
@@ -90,15 +92,20 @@ if(document.location.pathname == "/search/all_courses" && document.location.sear
   }
 } else if (document.location.pathname == "/courses") {
   redirected = mmooc.utilRoot.redirectToEnrollIfCodeParamPassed();
-} else if (document.location.pathname == "/" && !$(".ic-DashboardCard__header_hero").length) {
-  let html = `
-  <div class="card card-body">
-  <h3>Er det tomt her?</h3>
-    Dersom du har valgt å logge inn med Feide og ikke finner innholdet ditt kan det hende det er fordi du 
-    vanligvis har logget på med en annen bruker ved å bruke epost og passord. Logg ut og inn igjen med epost/passord.
-  </div>
-  `;
-  document.getElementById('dashboard-activity').insertAdjacentHTML('beforebegin', html);
+} else if (document.location.pathname == "/") {
+  setTimeout(function() { 
+    if(!$(".ic-DashboardCard__header_hero").length) {
+      let html = `
+      <div class="card card-body">
+      <h3>Er det tomt her?</h3>
+        Dersom du har valgt å logge inn med Feide og ikke finner innholdet ditt kan det hende det er fordi du 
+        vanligvis har logget på med en annen bruker ved å bruke epost og passord. Logg ut og inn igjen ved å benytte "Har ikke Feide" - knappen.
+        <img src="https://server/bitmaps/nyinnlogging.png" alt="Ny innloggingsskjerm"/>
+      </div>
+      `;
+      document.getElementById('dashboard-activity').insertAdjacentHTML('beforebegin', html);
+    }
+  }, 1000);
 }
 
 if(!redirected) {
