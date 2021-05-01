@@ -77,6 +77,8 @@ if(document.location.pathname == "/search/all_courses" && document.location.sear
             <a href="https://ntnu.no" target="_blank"><img class="unitPartnersSmallLogo" src="https://server/bitmaps/logo_ntnu.png"/></a>
             <a href="https://unit.no" target="_blank"><img class="unitPartnersUnitLogo" src="https://server/bitmaps/unit-logo-farge.svg"/></a>
             </div>
+        <div class="informationPane"><br><small><b>Kjenner du deg ikke igjen?</b> 18. mai oppdaterte vi innloggingssiden slik at alle brukere kan logge
+        på med Feide. Dersom du ikke har brukt Feide tidligere skal du velge <b>Har ikke Feide</b></small>
         </div>
         `;
         
@@ -99,7 +101,8 @@ if(document.location.pathname == "/search/all_courses" && document.location.sear
       <div class="card card-body">
       <h3>Er det tomt her?</h3>
         Dersom du har valgt å logge inn med Feide og ikke finner innholdet ditt kan det hende det er fordi du 
-        vanligvis har logget på med en annen bruker ved å bruke epost og passord. Logg ut og velg "Har ikke Feide" for å logge på med epost/passord.
+        vanligvis har logget på med en annen bruker ved å bruke epost og passord. Logg ut og inn igjen ved å benytte "Har ikke Feide" - knappen.
+        <img src="https://server/bitmaps/nyinnlogging.png" alt="Ny innloggingsskjerm"/>
       </div>
       `;
       document.getElementById('dashboard-activity').insertAdjacentHTML('beforebegin', html);
