@@ -76,7 +76,7 @@ if(document.location.pathname == "/search/all_courses" && document.location.sear
         <img alt="NTNU logo" class="unitPartnersSmallLogo" height=15px" src="https://server/bitmaps/logo_ntnu.png"/>
         </div>
         <div class="informationPane"><br><small><b>Kjenner du deg ikke igjen?</b> 18. mai oppdaterte vi innloggingssiden slik at alle brukere kan logge
-        på med Feide. Dersom du ikke har brukt Feide tidligere skal du logge med <b>Har ikke Feide</b></small>
+        på med Feide. Dersom du ikke har brukt Feide tidligere skal du velge <b>Har ikke Feide</b></small>
         </div>
         `;
         
