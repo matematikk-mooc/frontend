@@ -57,12 +57,13 @@ if(document.location.pathname == "/search/all_courses" && document.location.sear
       if(!document.location.search.includes("normalLogin=1")) {
         let html = `<div class="login-box frontPageLoginBox">
           <div class="login-box__upper">
-          <p class="login-box__text">
-          <img alt="UNIT logo" width="50px" src="https://server/bitmaps/unit-logo.png"/>&nbsp;&nbsp;
-          <span><h3>Velkommen til Unit kompetanseportal</h3></span></p>
+          <div class="login-box__text">
+            <div class="unitHeading">Canvas innlogging for åpne nettkurs og kompetansepakker</div>
+            <div class="unitSubHeading">-for fleksibel og livslang læring</div>
+          </div>
           <div class="login-box__close"></div></div>
           <div class="login-box__lower">
-            <a class="mmooc-button mmooc-button-primary" onclick="window.location.href=\'/login/saml\'">&nbsp;
+            <a class="feide-button mmooc-button mmooc-button-primary" onclick="window.location.href=\'/login/saml/2\'">&nbsp;
             </a>
             &nbsp;&nbsp;
             &nbsp;&nbsp;
@@ -72,9 +73,10 @@ if(document.location.pathname == "/search/all_courses" && document.location.sear
             <a class="mmooc-button mmooc-button-secondary" onclick="showCanvasLogin();">Har ikke Feide</a>
             </div>
           <div class="unitPartners">
-        <img alt="UNIT logo" class="unitPartnersLogo" src="https://server/bitmaps/udirlogo50px.png"/>
-        <img alt="NTNU logo" class="unitPartnersSmallLogo" height=15px" src="https://server/bitmaps/logo_ntnu.png"/>
-        </div>
+            <a href="https://udir.no" target="_blank"><img class="unitPartnersLogo" src="https://server/bitmaps/udirlogo50px.png"/></a>
+            <a href="https://ntnu.no" target="_blank"><img class="unitPartnersSmallLogo" src="https://server/bitmaps/logo_ntnu.png"/></a>
+            <a href="https://unit.no" target="_blank"><img class="unitPartnersUnitLogo" src="https://server/bitmaps/unit-logo-farge.svg"/></a>
+            </div>
         <div class="informationPane"><br><small><b>Kjenner du deg ikke igjen?</b> 18. mai oppdaterte vi innloggingssiden slik at alle brukere kan logge
         på med Feide. Dersom du ikke har brukt Feide tidligere skal du velge <b>Har ikke Feide</b></small>
         </div>
@@ -93,7 +95,7 @@ if(document.location.pathname == "/search/all_courses" && document.location.sear
 } else if (document.location.pathname == "/courses") {
   redirected = mmooc.utilRoot.redirectToEnrollIfCodeParamPassed();
 } else if (document.location.pathname == "/") {
-  setTimeout(function() { 
+  setTimeout(function() {
     if(!$(".ic-DashboardCard__header_hero").length) {
       let html = `
       <div class="card card-body">
@@ -105,8 +107,9 @@ if(document.location.pathname == "/search/all_courses" && document.location.sear
       `;
       document.getElementById('dashboard-activity').insertAdjacentHTML('beforebegin', html);
     }
-  }, 1000);
+  }, 1000)  
 }
+
 
 if(!redirected) {
   const urlParamsObj = mmooc.utilRoot.urlParamsToObject();

@@ -15,9 +15,9 @@
                         {{else}}
                             <li class="mmooc-module-item-icon">
                                 <div class="tooltip">
-                                    <a class="mmooc-module-items-icons-{{type}} 
+                                    <a aria-label="{{title}}" class="mmooc-module-items-icons-{{type}} 
                                                 {{#ifItemIsCompleted completion_requirement}}done{{/ifItemIsCompleted}}" href="{{html_url}}">
-                                        <i class="icon-{{lowercase type}}{{overrideIconClassByTitle title}}"></i>
+                                        <i aria-hidden="true" class="icon-{{lowercase type}}{{overrideIconClassByTitle title}}"></i>
                                         {{#ifItemTypeDiscussion type}}
                                         <div class="discussion-unread-tag discussion-id-{{this.content_id}}"></div>
                                         {{/ifItemTypeDiscussion}}
