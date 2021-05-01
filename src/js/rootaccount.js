@@ -57,12 +57,13 @@ if(document.location.pathname == "/search/all_courses" && document.location.sear
       if(!document.location.search.includes("normalLogin=1")) {
         let html = `<div class="login-box frontPageLoginBox">
           <div class="login-box__upper">
-          <p class="login-box__text">
-          <img width="50px" src="https://server/bitmaps/unit-logo.png"/>&nbsp;&nbsp;
-          <span><h3>Velkommen til Unit kompetanseportal</h3></span></p>
+          <div class="login-box__text">
+            <div class="unitHeading">Canvas innlogging for åpne nettkurs og kompetansepakker</div>
+            <div class="unitSubHeading">-for fleksibel og livslang læring</div>
+          </div>
           <div class="login-box__close"></div></div>
           <div class="login-box__lower">
-            <a class="mmooc-button mmooc-button-primary" onclick="window.location.href=\'/login/saml\'">&nbsp;
+            <a class="feide-button mmooc-button mmooc-button-primary" onclick="window.location.href=\'/login/saml/2\'">&nbsp;
             </a>
             &nbsp;&nbsp;
             &nbsp;&nbsp;
@@ -72,9 +73,10 @@ if(document.location.pathname == "/search/all_courses" && document.location.sear
             <a class="mmooc-button mmooc-button-secondary" onclick="showCanvasLogin();">Har ikke Feide</a>
             </div>
           <div class="unitPartners">
-        <img class="unitPartnersLogo" src="https://server/bitmaps/udirlogo50px.png"/>
-        <img class="unitPartnersSmallLogo" height=15px" src="https://server/bitmaps/logo_ntnu.png"/>
-        </div>
+            <a href="https://udir.no" target="_blank"><img class="unitPartnersLogo" src="https://server/bitmaps/udirlogo50px.png"/></a>
+            <a href="https://ntnu.no" target="_blank"><img class="unitPartnersSmallLogo" src="https://server/bitmaps/logo_ntnu.png"/></a>
+            <a href="https://unit.no" target="_blank"><img class="unitPartnersUnitLogo" src="https://server/bitmaps/unit-logo-farge.svg"/></a>
+            </div>
         </div>
         `;
         
@@ -90,16 +92,21 @@ if(document.location.pathname == "/search/all_courses" && document.location.sear
   }
 } else if (document.location.pathname == "/courses") {
   redirected = mmooc.utilRoot.redirectToEnrollIfCodeParamPassed();
-} else if (document.location.pathname == "/" && !$(".ic-DashboardCard__header_hero").length) {
-  let html = `
-  <div class="card card-body">
-  <h3>Er det tomt her?</h3>
-    Dersom du har valgt å logge inn med Feide og ikke finner innholdet ditt kan det hende det er fordi du 
-    vanligvis har logget på med en annen bruker ved å bruke epost og passord. Logg ut og inn igjen med epost/passord.
-  </div>
-  `;
-  document.getElementById('dashboard-activity').insertAdjacentHTML('beforebegin', html);
+} else if (document.location.pathname == "/") {
+  setTimeout(function() {
+    if(!$(".ic-DashboardCard__header_hero").length) {
+      let html = `
+      <div class="card card-body">
+      <h3>Er det tomt her?</h3>
+        Dersom du har valgt å logge inn med Feide og ikke finner innholdet ditt kan det hende det er fordi du 
+        vanligvis har logget på med en annen bruker ved å bruke epost og passord. Logg ut og velg "Har ikke Feide" for å logge på med epost/passord.
+      </div>
+      `;
+      document.getElementById('dashboard-activity').insertAdjacentHTML('beforebegin', html);
+    }
+  }, 1000)  
 }
+
 
 if(!redirected) {
   const urlParamsObj = mmooc.utilRoot.urlParamsToObject();
