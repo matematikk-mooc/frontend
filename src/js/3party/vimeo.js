@@ -6,14 +6,14 @@ this.mmooc.vimeo = function() {
 	var transcriptIdPrefix = "vimeoTranscript";
 	var transcriptArr = [];
 	var initialized = false;
-    var noOfVimeoVideos = $(".mmoocVimeoVideoTranscript").length;
+    var noOfVimeoVideos = 0;
+
     var noOfInits = 0;
-	function transcript(transcriptId, language, name)
+	function transcript(vimeoVideoId, iframe)
 	{
 		var playbackRate = 1.0;
-		var transcriptId = transcriptId;
-		var videoId = transcriptId.split(transcriptIdPrefix)[1];
-        var iframeId = "vimeo" + videoId;
+		var transcriptId = "transcript" + vimeoVideoId;
+		var videoId = vimeoVideoId;
 		var transcriptButtonId = "vimeoTranscriptButtonId" + videoId;
 		var transcriptContentId = "vimeoTranscriptContentId" + videoId;
 		var player = null;
@@ -33,7 +33,7 @@ this.mmooc.vimeo = function() {
 
 		this.initializePlayer = function() {
 			var transcript = this;
-			var iframe = document.getElementById(iframeId);
+			var iframe = transcript.getIframeElement();
 			player = new Vimeo.Player(iframe);
 			player.on('play', function() {
 				console.log('Played the video');
@@ -43,10 +43,6 @@ this.mmooc.vimeo = function() {
 				console.log("Paused the video.");
 				transcript.playerNotPlaying();
 			});
-	/*        player.ready().then(function () {
-				console.log('player is ready!');
-			});           
-	*/		
 			player.getVideoTitle().then(function(title) {
 				console.log('title:', title);
 			});
@@ -249,7 +245,7 @@ this.mmooc.vimeo = function() {
 			}
 			this.setCaptionTimeout(timeoutValue);
 		  };
-		this.transcriptLoaded = function(transcript) {
+		this.transcriptLoaded = function(transcript, iframe) {
 			console.log("Transcript loaded.");
 			var start = 0;
 			captions = transcript.getElementsByTagName('text');
@@ -279,7 +275,10 @@ this.mmooc.vimeo = function() {
 			srt_output += "</p>";
 			srt_output += "</div>";
 
-			$("#vimeoTranscript" + videoId).append(srt_output);
+			var e = document.createElement('div');
+			e.innerHTML = srt_output;
+			
+			iframe.parentNode.insertBefore(e, iframe.nextSibling);
 
 			$('#' + transcriptButtonId).click(function(event) {
 				mmooc.vimeo.toggleReveal(transcriptContentId);
@@ -310,13 +309,12 @@ this.mmooc.vimeo = function() {
 		{
 			return transcriptContentId;
 		}
-		this.getIframeId = function()
-		{
-			return iframeId;
-		}
 		this.getVideoId = function()
 		{
 			return videoId;
+		}
+		this.getIframeElement = function() {
+			return iframe;
 		}
 		this.getPlaybackRate = function() {
 			return playbackRate;
@@ -337,7 +335,7 @@ this.mmooc.vimeo = function() {
 				type: 'GET',
                 data: {},
 				success: function(response) {
-					oTranscript.transcriptLoaded(response);
+					oTranscript.transcriptLoaded(response, oTranscript.getIframeElement());
 				},
 				error: function(XMLHttpRequest, textStatus, errorThrown) {
 					console.log("Error during GET");
@@ -409,16 +407,6 @@ this.mmooc.vimeo = function() {
 			}
 			return null;
 		},
-	    getTranscriptFromIframeId(iframeId)
-	    {
-			for (index = 0; index < transcriptArr.length; ++index) {
-				if(transcriptArr[index].getIframeId() == iframeId)
-				{
-					return transcriptArr[index];
-				}
-			}
-			return null;
-	    },
 	    getNoOfVimeoVideos() {
             return noOfVimeoVideos;
         },
@@ -432,7 +420,15 @@ this.mmooc.vimeo = function() {
 			}
 			return null;
 	    },
-	    
+	    getVimeoVideoIdFromUrl(url) {
+			var id = "";
+			var result = url.match(/(?:www\.|player\.)?vimeo.com\/(?:channels\/(?:\w+\/)?|groups\/(?:[^\/]*)\/videos\/|album\/(?:\d+)\/video\/|video\/|)(\d+)(?:[a-zA-Z0-9_\-]+)?/i);
+						
+			if (result){
+				id = result[1];
+			}
+			return id;
+		},
 		init : function ()
 		{
             noOfInits++;
@@ -446,17 +442,22 @@ this.mmooc.vimeo = function() {
 			if(!initialized)
 			{
 				initialized = true;
-				$(".mmoocVimeoVideoTranscript" ).each(function( i ) {
-					var language = $(this).data('language');
-					var name = $(this).data('name');
-					var oTranscript = new transcript(this.id, language, name);
-					transcriptArr.push(oTranscript);
-                    oTranscript.getTranscript();
-				});
+				var iframes = document.getElementsByTagName('iframe');
+				for (var i = 0; i < iframes.length; i++) {
+					var iframe = iframes[i];
+					var vimeoId = mmooc.vimeo.getVimeoVideoIdFromUrl(iframe.src);
+					if(vimeoId != "") {
+						noOfVimeoVideos++;
+						var oTranscript = new transcript(vimeoId, iframe);
+						transcriptArr.push(oTranscript);
+						oTranscript.getTranscript();
+					}
+				}
 			} else {
 				console.log("Vimeo already initialized. Reinitialize player.");
 				for(var i = 0; i < transcriptArr.length; i++) {
-					transcriptArr[i].initializePlayer();
+					var oTranscript = transcriptArr[i];
+					oTranscript.initializePlayer();
 				}
 			}
 		}		
