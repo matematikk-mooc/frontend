@@ -276,9 +276,8 @@ this.mmooc.vimeo = function() {
 			srt_output += "</div>";
 
 			var e = document.createElement('div');
-			e.innerHTML = srt_output;
-			
 			iframe.parentNode.insertBefore(e, iframe.nextSibling);
+			e.innerHTML = srt_output;
 
 			$('#' + transcriptButtonId).click(function(event) {
 				mmooc.vimeo.toggleReveal(transcriptContentId);
