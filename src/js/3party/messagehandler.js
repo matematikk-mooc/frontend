@@ -7,14 +7,19 @@ this.mmooc.messageHandler = (function() {
             window.addEventListener('message', function(e) {
                 const error = error => console.error('error calling api', error);
                 try {
-                    var message = JSON.parse(e.data);
-                    console.log("Parent received message " + e.data + " from " + e.origin);
+                    console.log("Parent received message from " + e.origin);
+                    console.log(e.data);
                     if(e.origin.includes("vimeo")) {
-                        if(message.event == "ready") {
-                            console.log("Initialize vimeo.");
-                            mmooc.vimeo.init();
+                        if(e.data.method == undefined) {
+                            var message = JSON.parse(e.data);
+                            console.log(e);
+                            if(message.event == "ready") {
+                                console.log("Initialize vimeo.");
+                                mmooc.vimeo.init();
+                            }
                         }
                     } else {
+                        var message = JSON.parse(e.data);
                         if(message.subject == "kpas-lti.getusergroups") {
                             mmooc.api.getUserGroups(function(groups) {
                                 const usergroupsmsg = {
@@ -53,7 +58,7 @@ this.mmooc.messageHandler = (function() {
                         }
                     }
                 } catch(err) {
-                    console.log.call(console, 'KPAS LTI: skip message');
+                    console.log.call(console, 'KPAS LTI: skip message:' +err);
                 }
             }, false);
             try {

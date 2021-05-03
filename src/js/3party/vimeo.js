@@ -10,11 +10,13 @@ this.mmooc.vimeo = function() {
     var noOfInits = 0;
 	function transcript(transcriptId, language, name)
 	{
+		var playbackRate = 1.0;
 		var transcriptId = transcriptId;
 		var videoId = transcriptId.split(transcriptIdPrefix)[1];
         var iframeId = "vimeo" + videoId;
 		var transcriptButtonId = "vimeoTranscriptButtonId" + videoId;
 		var transcriptContentId = "vimeoTranscriptContentId" + videoId;
+		var player = null;
 
 		var href = hrefPrefix + videoId;
         //Array of captions in video
@@ -29,34 +31,40 @@ this.mmooc.vimeo = function() {
 		var currentCaptionIndex = 0;
 		var nextCaptionIndex = 0;
 
-        var transcript = this;
-        var iframe = document.getElementById(iframeId);
-        var player = new Vimeo.Player(iframe);
-        player.on('play', function() {
-            console.log('Played the video');
-			transcript.playerPlaying();
-        });
-		player.on('pause', function() {
-			console.log("Paused the video.");
-			transcript.playerNotPlaying();
-		});
-        player.ready().then(function () {
-            console.log('player is ready!');
-        });           
-        player.getVideoTitle().then(function(title) {
-            console.log('title:', title);
-        });
-        player.on('cuechange', function(d) {
-            //console.log(d);
-            //transcript.playerPlaying();
-        });
-        player.on('cuepoint', function(d) {
-            console.log(d);
-        })
-        player.on('texttrackchange', function(d) {
-            console.log(d);
-        })
-	
+		this.initializePlayer = function() {
+			var transcript = this;
+			var iframe = document.getElementById(iframeId);
+			player = new Vimeo.Player(iframe);
+			player.on('play', function() {
+				console.log('Played the video');
+				transcript.playerPlaying();
+			});
+			player.on('pause', function() {
+				console.log("Paused the video.");
+				transcript.playerNotPlaying();
+			});
+	/*        player.ready().then(function () {
+				console.log('player is ready!');
+			});           
+	*/		
+			player.getVideoTitle().then(function(title) {
+				console.log('title:', title);
+			});
+			player.on('cuechange', function(d) {
+				//console.log(d);
+				//transcript.playerPlaying();
+			});
+			player.on('cuepoint', function(d) {
+				console.log(d);
+			})
+			player.on('texttrackchange', function(d) {
+				console.log(d);
+			})
+			player.on('playbackratechange', function(d) {
+				transcript.setPlaybackRate(d.playbackRate);
+				console.log(d);
+			})
+		}
 		var findCaptionIndexFromTimestamp = function(timeStamp) {
 			var start = 0;
 			var duration = 0;
@@ -88,24 +96,32 @@ this.mmooc.vimeo = function() {
 		{
 			var timestampId = getTimeIdFromTimestampIndex(nextCaptionIndex);
 			$("#"+timestampId).css('background-color', 'yellow');
+			console.log("Timestamp id:" + timestampId);
 			var target = document.getElementById(timestampId);
 			var targetParent = document.getElementById(transcriptContentId);
+			console.log("target offsetTop:" + target.offsetTop);
+			console.log("targetParent offsetTop:" + targetParent.offsetTop);
+
 			targetParent.scrollTop = target.offsetTop - (targetParent.offsetTop + targetParent.offsetHeight / 2);
 			
 		}
+		//Calculate timeout for when next subtitle should be displayed
 		var calculateTimeout = function(currentTime) {
-			var startTime = Number(getStartTimeFromCaption(currentCaptionIndex));
-			var duration = Number(getDurationFromCaption(currentCaptionIndex));
+			var startTimeCurrentCaption = Number(getStartTimeFromCaption(currentCaptionIndex));
+			var startTimeNextCaption = Number(getStartTimeFromCaption(nextCaptionIndex));
+			var durationCurrentCaption = Number(getDurationFromCaption(currentCaptionIndex));
 			var timeoutValue = 0;
-			if(startTime >= currentTime) {
-				timeoutValue = startTime - currentTime + duration;
-			} else {
-				timeoutValue = duration - (currentTime  - startTime);
+
+			console.log("calculateTimeout. CurrentTime:" + currentTime + " startTimeNextCaption:" + startTimeNextCaption);
+			//The normal case
+			if(startTimeNextCaption >= currentTime) {
+				timeoutValue = startTimeNextCaption - currentTime;
 			}
 			return timeoutValue;
 		  };
 	  
 		  this.setCaptionTimeout = function(timeoutValue) {
+			console.log("setCaptionTimeout:" + timeoutValue);
 			if (timeoutValue < 0) {
 			  return;
 			}
@@ -113,10 +129,12 @@ this.mmooc.vimeo = function() {
 			clearTimeout(captionTimeout);
 	  
 			var transcript = this;
+			var adjustedTimeoutValue = timeoutValue / transcript.getPlaybackRate(); 
+			console.log("adjusted timeout:" + adjustedTimeoutValue);
 	  
 			captionTimeout = setTimeout(function() {
 			  transcript.highlightCaptionAndPrepareForNext();
-			}, timeoutValue * 1000);
+			}, adjustedTimeoutValue * 1000);
 		  };
 	  
 		var getStartTimeFromCaption = function(i)
@@ -160,11 +178,13 @@ this.mmooc.vimeo = function() {
 
 			player.getCurrentTime().then(function(currentTime) {
 				var timeoutValue = calculateTimeout(currentTime);
-				if (nextCaptionIndex <= captions.length) {
+				if (nextCaptionIndex < captions.length) {
 					transcript.setCaptionTimeout(timeoutValue);
+				} else {
+					console.log("No more captions.");
 				}
 			}).catch(function(error) {
-                console.log("highlightCaptionAndPrepareForNext:Could not get current time from vimeo in player playing.");
+                console.log("highlightCaptionAndPrepareForNext:Could not get current time from vimeo in player playing:" + error);
             });;
 		};
 		this.setCurrentTime = function (seekToTime)
@@ -230,6 +250,7 @@ this.mmooc.vimeo = function() {
 			this.setCaptionTimeout(timeoutValue);
 		  };
 		this.transcriptLoaded = function(transcript) {
+			console.log("Transcript loaded.");
 			var start = 0;
 			captions = transcript.getElementsByTagName('text');
 
@@ -268,7 +289,13 @@ this.mmooc.vimeo = function() {
 			captionsLoaded = true;
 
 			var transcript = this;
+
+			transcript.initializePlayer();
+
+			console.log("Get player state.");
+			console.log(player);
 			player.getPaused().then(function(paused) {
+				console.log("Player state paused:" + paused);
 				if(!paused) {
 					transcript.playerPlaying();
 				}
@@ -290,6 +317,12 @@ this.mmooc.vimeo = function() {
 		this.getVideoId = function()
 		{
 			return videoId;
+		}
+		this.getPlaybackRate = function() {
+			return playbackRate;
+		}
+		this.setPlaybackRate = function(newPlaybackRate) {
+			playbackRate = newPlaybackRate;
 		}
 		this.getPlayer = function()
 		{
@@ -314,8 +347,10 @@ this.mmooc.vimeo = function() {
 		
 		this.playerPlaying = function()
 		{
+			console.log("Player playing.");
 			if(!captionsLoaded)
 			{
+				console.log("Captions not loaded.");
 				return;
 			}	
 			
@@ -324,7 +359,7 @@ this.mmooc.vimeo = function() {
             player.getCurrentTime().then(function(currentTime) {
     		    transcript.highlightCaptionFromTimestamp(currentTime);
             }).catch(function(error) {
-                console.log("Could not get current time from vimeo in player playing.");
+                console.log("Could not get current time from vimeo in player playing:" + error);
             });
 		}
 		this.playerNotPlaying = function (transcript)
@@ -410,6 +445,7 @@ this.mmooc.vimeo = function() {
 
 			if(!initialized)
 			{
+				initialized = true;
 				$(".mmoocVimeoVideoTranscript" ).each(function( i ) {
 					var language = $(this).data('language');
 					var name = $(this).data('name');
@@ -417,7 +453,11 @@ this.mmooc.vimeo = function() {
 					transcriptArr.push(oTranscript);
                     oTranscript.getTranscript();
 				});
-				initialized = true;
+			} else {
+				console.log("Vimeo already initialized. Reinitialize player.");
+				for(var i = 0; i < transcriptArr.length; i++) {
+					transcriptArr[i].initializePlayer();
+				}
 			}
 		}		
 	}
