@@ -18,6 +18,7 @@ this.mmooc.vimeo = function() {
 		var transcriptButtonId = "vimeoTranscriptButtonId" + videoId;
 		var transcriptContentId = "vimeoTranscriptContentId" + videoId;
 		var player = null;
+		var transcriptParentDiv = null;
 
 		var href = hrefPrefix + videoId;
         //Array of captions in video
@@ -26,6 +27,7 @@ this.mmooc.vimeo = function() {
 		//Timeout for next caption
 		var captionTimeout = null;
 		
+		var captionsArr = [];
 		var captions = null;
 
 		//Keep track of which captions we are showing
@@ -245,10 +247,33 @@ this.mmooc.vimeo = function() {
 			  timeoutValue = calculateTimeout(timeStamp);
 			}
 			this.setCaptionTimeout(timeoutValue);
-		  };
+		};
+		this.updateTranscriptText = function(languageCode) {
+			var transcript = this;
+			captions = captionsArr[languageCode];
+			var srt_output = '<p>';
+			var noOfSentencesInParagraph = 0;
+			var captionText = "";
+			for (var i = 0, il = captions.length; i < il; i++) {
+				start =+ getStartTimeFromCaption(i);
 
-		this.createTranscriptArea = function(transcriptParentDiv, srt_output) {
-			var revealButtonHtml = '<a class="uob-reveal-button" id="' + transcriptButtonId + '" href="#' + transcriptContentId + '">Transcript</a>';
+				captionText = captions[i].textContent.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+				var timestampId = getTimeIdFromTimestampIndex(i);
+				srt_output += "<span class='btnVimeoSeek' data-seek='" + start + "' id='" + timestampId + "'>" + captionText + "</span> ";
+				noOfSentencesInParagraph++;
+				if((noOfSentencesInParagraph > 10) && captionText.includes(".")) {
+					srt_output += "</p><p>";
+					noOfSentencesInParagraph = 0;
+				}
+			};
+			srt_output += "</p>";
+			srt_output += "</div>";
+
+			var e = document.getElementById(transcriptContentId);
+			e.innerHTML = srt_output;
+		}
+		this.createTranscriptArea = function(srt_output) {
+			var revealButtonHtml = '<a class="uob-reveal-button" id="' + transcriptButtonId + '" href="#' + transcriptContentId + '">Videotranskripsjon</a>';
 
 			var p = document.createElement('p');
 			transcriptParentDiv.appendChild(p);
@@ -261,7 +286,6 @@ this.mmooc.vimeo = function() {
 			e.setAttribute("id", transcriptContentId);
 			e.setAttribute("class", "transcript");
 			e.setAttribute("style", "display: none;");
-			e.innerHTML = srt_output;
 
 			var transcript = this;
 			$('#' + transcriptButtonId)
@@ -295,46 +319,39 @@ this.mmooc.vimeo = function() {
 					languageTracks: tracks,
 				});
 				e.innerHTML = html;
+				var s = document.getElementById(transcriptSelectId);
+				function show(){
+				  transcript.updateTranscriptText(s.value);
+				  console.log(s.value);
+				}
+				s.onchange=show;
 			});
 		};
 		this.transcriptLoaded = function(transcript) {
 			console.log("Transcript loaded.");
 			var start = 0;
-			captions = transcript.getElementsByTagName('text');
-
-			var srt_output = '<p>';
-			var noOfSentencesInParagraph = 0;
-			var captionText = "";
-			for (var i = 0, il = captions.length; i < il; i++) {
-				start =+ getStartTimeFromCaption(i);
-
-				captionText = captions[i].textContent.replace(/</g, '&lt;').replace(/>/g, '&gt;');
-				var timestampId = getTimeIdFromTimestampIndex(i);
-				srt_output += "<span class='btnVimeoSeek' data-seek='" + start + "' id='" + timestampId + "'>" + captionText + "</span> ";
-				noOfSentencesInParagraph++;
-				if((noOfSentencesInParagraph > 10) && captionText.includes(".")) {
-					srt_output += "</p><p>";
-					noOfSentencesInParagraph = 0;
-				}
-			};
-			srt_output += "</p>";
-			srt_output += "</div>";
-
-
+			languages = transcript.getElementsByTagName('language'); 
+			var selectedLanguageCode = "";
+			for (var languageNo = 0, languageTotal = languages.length; languageNo < languageTotal; languageNo++) {
+				var language = languages[languageNo];
+				var languageCode = language.getAttribute("lang");
+				selectedLanguageCode = languageCode;
+				captionsArr[languageCode] = language.getElementsByTagName('text');
+			}
 			captionsLoaded = true;
-
+			
 			var transcript = this;
 
-
-			transcript.initializePlayer();
-
-			var transcriptParentDiv = document.createElement('div');
+			transcriptParentDiv = document.createElement('div');
 
 			var iframe = document.getElementById(iframeId);
 			iframe.parentNode.insertBefore(transcriptParentDiv, iframe.nextSibling);
 			transcriptParentDiv.setAttribute("class", "uob-box");
 
-			transcript.createTranscriptArea(transcriptParentDiv, srt_output);
+			transcript.createTranscriptArea();
+			transcript.updateTranscriptText(selectedLanguageCode);
+
+			transcript.initializePlayer();
 
 			console.log("Get player state.");
 			console.log(player);
