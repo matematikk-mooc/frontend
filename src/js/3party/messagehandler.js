@@ -10,7 +10,7 @@ this.mmooc.messageHandler = (function() {
                     console.log("Parent received message from " + e.origin);
                     console.log(e.data);
                     if(e.origin.includes("vimeo")) {
-                        if(e.data.method == undefined) {
+                        if((e.data.method == undefined) && (e.data.event == undefined)) {
                             var message = JSON.parse(e.data);
                             console.log(e);
                             if(message.event == "ready") {

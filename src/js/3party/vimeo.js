@@ -297,9 +297,11 @@ this.mmooc.vimeo = function() {
 				var body = "#"+transcriptContentId;
 				if ($(body).css('display') != 'none') {
 					$(body).slideUp(400);
+					$(body).removeClass("uob-box");
 					options = { icons: { secondary: 'ui-icon-triangle-1-e' } };
 				} else {
 					$(body).slideDown(400);				
+					$(body).addClass("uob-box");
 					options = { icons: { secondary: 'ui-icon-triangle-1-s' } };
 				}	
 				$button.button('option', options);
@@ -327,6 +329,28 @@ this.mmooc.vimeo = function() {
 				s.onchange=show;
 			});
 		};
+		this.insertTranscriptParent = function() {
+			transcriptParentDiv = document.createElement('div');
+
+			var iframe = document.getElementById(iframeId);
+
+			var nextElementSibling = iframe.nextElementSibling;
+			var insertAfterSibling = nextElementSibling;
+			if(nextElementSibling) {
+				var firstElementChild = nextElementSibling.firstElementChild;
+				if(firstElementChild) {
+					var href = firstElementChild.getAttribute("href");
+					var siblingVideoId = mmooc.vimeo.getVimeoVideoIdFromUrl(href);
+					console.log("Sibling video id:" +siblingVideoId);
+					if(siblingVideoId != videoId) {
+						insertAfterSibling = iframe;
+					}
+					iframe.parentNode.insertBefore(transcriptParentDiv, insertAfterSibling.nextSibling);
+				}
+			} else {
+				iframe.parentElement.appendChild(transcriptParentDiv);
+			}
+		}
 		this.transcriptLoaded = function(transcript) {
 			console.log("Transcript loaded.");
 			var start = 0;
@@ -342,11 +366,7 @@ this.mmooc.vimeo = function() {
 			
 			var transcript = this;
 
-			transcriptParentDiv = document.createElement('div');
-
-			var iframe = document.getElementById(iframeId);
-			iframe.parentNode.insertBefore(transcriptParentDiv, iframe.nextSibling);
-			transcriptParentDiv.setAttribute("class", "uob-box");
+			transcript.insertTranscriptParent();
 
 			transcript.createTranscriptArea();
 			transcript.updateTranscriptText(selectedLanguageCode);
@@ -366,6 +386,10 @@ this.mmooc.vimeo = function() {
 		this.getTranscriptId = function()
 		{
 			return transcriptId;
+		}
+		this.getTranscriptParentId = function()
+		{
+			return transcriptParentDiv;
 		}
 		this.getTranscriptContentId = function()
 		{
