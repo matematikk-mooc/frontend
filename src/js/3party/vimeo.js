@@ -249,7 +249,6 @@ this.mmooc.vimeo = function() {
 			this.setCaptionTimeout(timeoutValue);
 		};
 		this.updateTranscriptText = function(languageCode) {
-			var transcript = this;
 			captions = captionsArr[languageCode];
 			var srt_output = '<p>';
 			var noOfSentencesInParagraph = 0;
@@ -267,19 +266,20 @@ this.mmooc.vimeo = function() {
 				}
 			};
 			srt_output += "</p>";
-			srt_output += "</div>";
 
 			var e = document.getElementById(transcriptContentId);
 			e.innerHTML = srt_output;
 		}
-		this.createTranscriptArea = function(srt_output) {
+		this.displayErrorMessage = function(msg) {
+			var e = document.getElementById(transcriptContentId);
+			e.innerHTML = "<p>" + msg + "</p>";
+		}
+		this.createTranscriptArea = function() {
 			var revealButtonHtml = '<a class="uob-reveal-button" id="' + transcriptButtonId + '" href="#' + transcriptContentId + '">Videotranskripsjon</a>';
 
 			var p = document.createElement('p');
 			transcriptParentDiv.appendChild(p);
 			p.innerHTML = revealButtonHtml;
-
-			this.createLanguageMenu(p);
 
 			var e = document.createElement('div');
 			transcriptParentDiv.appendChild(e);
@@ -307,7 +307,8 @@ this.mmooc.vimeo = function() {
 				$button.button('option', options);
 	
 				return false;
-			});			
+			});
+			return p;	
 		}		  
 		this.createLanguageMenu = function(transcriptParentDiv) {
 			var e = document.createElement('span');
@@ -341,7 +342,6 @@ this.mmooc.vimeo = function() {
 				if(firstElementChild) {
 					var href = firstElementChild.getAttribute("href");
 					var siblingVideoId = mmooc.vimeo.getVimeoVideoIdFromUrl(href);
-					console.log("Sibling video id:" +siblingVideoId);
 					if(siblingVideoId != videoId) {
 						insertAfterSibling = iframe;
 					}
@@ -351,36 +351,35 @@ this.mmooc.vimeo = function() {
 				iframe.parentElement.appendChild(transcriptParentDiv);
 			}
 		}
-		this.transcriptLoaded = function(transcript) {
-			console.log("Transcript loaded.");
-			var start = 0;
-			languages = transcript.getElementsByTagName('language'); 
-			var selectedLanguageCode = "";
-			for (var languageNo = 0, languageTotal = languages.length; languageNo < languageTotal; languageNo++) {
-				var language = languages[languageNo];
-				var languageCode = language.getAttribute("lang");
-				selectedLanguageCode = languageCode;
-				captionsArr[languageCode] = language.getElementsByTagName('text');
-			}
-			captionsLoaded = true;
-			
+		this.transcriptLoaded = function(transcriptXml) {
 			var transcript = this;
-
 			transcript.insertTranscriptParent();
 
-			transcript.createTranscriptArea();
-			transcript.updateTranscriptText(selectedLanguageCode);
+			var error = transcriptXml.getElementsByTagName('error');
+			if(error.length) {
+				var errorMessage = error[0];
+				transcript.displayErrorMessage(errorMessage.textContent);
+			} else {
+				var p = transcript.createTranscriptArea();
+				transcript.createLanguageMenu(p);
 
-			transcript.initializePlayer();
-
-			console.log("Get player state.");
-			console.log(player);
-			player.getPaused().then(function(paused) {
-				console.log("Player state paused:" + paused);
-				if(!paused) {
-					transcript.playerPlaying();
+				languages = transcriptXml.getElementsByTagName('language'); 
+				var selectedLanguageCode = "";
+				for (var languageNo = 0, languageTotal = languages.length; languageNo < languageTotal; languageNo++) {
+					var language = languages[languageNo];
+					var languageCode = language.getAttribute("lang");
+					selectedLanguageCode = languageCode;
+					captionsArr[languageCode] = language.getElementsByTagName('text');
 				}
-			});
+				captionsLoaded = true;
+				transcript.updateTranscriptText(selectedLanguageCode);
+				transcript.initializePlayer();
+				player.getPaused().then(function(paused) {
+					if(!paused) {
+						transcript.playerPlaying();
+					}
+				});
+			}
 		}
 		
 		this.getTranscriptId = function()
