@@ -49,8 +49,8 @@ if(document.location.pathname == "/search/all_courses" && document.location.sear
   if (document.referrer.endsWith("/logout" + mmooc.hrefQueryString)) {
     window.location.href = '/search/all_courses' + mmooc.hrefQueryString;
     redirected = true;
-  } else {
-    $(".ic-Login").hide();
+  } else if(!document.referrer.includes("/login/canvas")) {
+      $(".ic-Login").hide();
     $("#f1_container").hide(); //Small screens
     redirected = mmooc.utilRoot.redirectFeideAuthIfEnrollReferrer();
     if(!redirected) {
