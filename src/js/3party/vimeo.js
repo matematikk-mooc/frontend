@@ -12,6 +12,7 @@ this.mmooc.vimeo = function() {
 	{
 		var playbackRate = 1.0;
 		var transcriptId = "transcript" + vimeoIframeId;
+		var transcriptLoadingId = transcriptId + "loading";
 		var videoId = vimeoVideoId;
 		var iframeId = vimeoIframeId;
 		var transcriptButtonId = "vimeoTranscriptButtonId" + vimeoIframeId;
@@ -331,11 +332,16 @@ this.mmooc.vimeo = function() {
 		};
 		this.insertTranscriptParent = function() {
 			transcriptParentDiv = document.createElement('div');
-
+			var e = document.createElement('div');
+			transcriptParentDiv.appendChild(e);
+			e.setAttribute("id", transcriptLoadingId);
+			e.setAttribute("class", "loading-gif");
+	  
 			var iframe = document.getElementById(iframeId);
 
 			var nextElementSibling = iframe.nextElementSibling;
 			var insertAfterSibling = nextElementSibling;
+			//If there is an element after the iframe, we insert the transcript before that one.
 			if(nextElementSibling) {
 				var firstElementChild = nextElementSibling.firstElementChild;
 				if(firstElementChild) {
@@ -346,13 +352,17 @@ this.mmooc.vimeo = function() {
 					}
 					iframe.parentNode.insertBefore(transcriptParentDiv, insertAfterSibling.nextSibling);
 				}
-			} else {
+			} //If the iframe is the last element on the page, we add the transcript at the bottom.
+			else {
 				iframe.parentElement.appendChild(transcriptParentDiv);
 			}
 		}
 		this.transcriptLoaded = function(transcriptXml) {
 			var transcript = this;
-			transcript.insertTranscriptParent();
+			var e = document.getElementById(transcriptLoadingId);
+			e.setAttribute("style", "display: none;");
+
+			var p = transcript.createTranscriptArea();
 
 			var error = transcriptXml.getElementsByTagName('error');
 			if(error.length) {
@@ -360,7 +370,6 @@ this.mmooc.vimeo = function() {
 				transcript.displayErrorMessage(errorMessage.textContent);
 			} else {
 				transcript.initializePlayer();
-				var p = transcript.createTranscriptArea();
 				transcript.createLanguageMenu(p);
 
 				languages = transcriptXml.getElementsByTagName('language'); 
@@ -464,8 +473,6 @@ this.mmooc.vimeo = function() {
 		$(document).on('click', '.btnVimeoSeek', function() {
 			var seekToTime = $(this).data('seek');
 			var transcript = mmooc.vimeo.getTranscriptFromTranscriptId($(this).parent().parent().attr("id"));
-//            var iframe = document.getElementById("vimeo" + transcript.videoId);
-//            var player = new Vimeo.Player(iframe);
             try {
                 transcript.setCurrentTime(seekToTime);
                 transcript.play();
@@ -543,6 +550,7 @@ this.mmooc.vimeo = function() {
 
 						noOfVimeoVideos++;
 						var oTranscript = new transcript(vimeoIframeId, vimeoId);
+						oTranscript.insertTranscriptParent();
 						transcriptArr[vimeoIframeId]= oTranscript;
 						oTranscript.getTranscript();
 					}
