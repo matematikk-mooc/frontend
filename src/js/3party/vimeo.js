@@ -272,7 +272,11 @@ this.mmooc.vimeo = function() {
 		}
 		this.displayErrorMessage = function(msg) {
 			var e = document.getElementById(transcriptContentId);
-			e.innerHTML = "<p>" + msg + "</p>";
+			if(e) {
+				e.innerHTML = "<p>" + msg + "</p>";
+			} else {
+				console.log("No transcript area.");
+			}
 		}
 		this.createTranscriptArea = function() {
 			var revealButtonHtml = '<a class="uob-reveal-button" id="' + transcriptButtonId + '" href="#' + transcriptContentId + '">Videotranskripsjon</a>';
@@ -310,9 +314,9 @@ this.mmooc.vimeo = function() {
 			});
 			return p;	
 		}		  
-		this.createLanguageMenu = function(transcriptParentDiv) {
+		this.createLanguageMenu = function(p, selectedLanguage) {
 			var e = document.createElement('span');
-			transcriptParentDiv.appendChild(e);
+			p.appendChild(e);
 			var transcript = this;
 			player.getTextTracks().then(function(tracks) {
 				console.log(tracks);
@@ -320,6 +324,7 @@ this.mmooc.vimeo = function() {
 				var html = mmooc.util.renderTemplateWithData('transcriptMenu', {
 					transcriptSelectId: transcriptSelectId,
 					languageTracks: tracks,
+					selectedLanguage: selectedLanguage
 				});
 				e.innerHTML = html;
 				var s = document.getElementById(transcriptSelectId);
@@ -374,7 +379,6 @@ this.mmooc.vimeo = function() {
 				transcript.displayErrorMessage(errorMessage.textContent);
 			} else {
 				transcript.initializePlayer();
-				transcript.createLanguageMenu(p);
 
 				var preferredLanguage = MultilangUtils.getPreferredLanguage();
 				languages = transcriptXml.getElementsByTagName('language'); 
@@ -395,6 +399,7 @@ this.mmooc.vimeo = function() {
 					selectedLanguageCode = "nb";
 				}
 				captionsLoaded = true;
+				transcript.createLanguageMenu(p, selectedLanguageCode);
 				transcript.updateTranscriptText(selectedLanguageCode);
 				player.getPaused().then(function(paused) {
 					if(!paused) {
