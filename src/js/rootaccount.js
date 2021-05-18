@@ -49,37 +49,36 @@ if(document.location.pathname == "/search/all_courses" && document.location.sear
   if (document.referrer.endsWith("/logout" + mmooc.hrefQueryString)) {
     window.location.href = '/search/all_courses' + mmooc.hrefQueryString;
     redirected = true;
-  } else {
-    $(".ic-Login").hide();
+  } else if(!document.referrer.includes("/login/canvas")) {
+      $(".ic-Login").hide();
     $("#f1_container").hide(); //Small screens
     redirected = mmooc.utilRoot.redirectFeideAuthIfEnrollReferrer();
     if(!redirected) {
       if(!document.location.search.includes("normalLogin=1")) {
-        let html = `<div class="login-box frontPageLoginBox">
+        let html = `
+        <div class="login-box frontPageLoginBox">
           <div class="login-box__upper">
-          <div class="login-box__text">
-            <div class="unitHeading">Canvas innlogging for åpne nettkurs og kompetansepakker</div>
-            <div class="unitSubHeading">-for fleksibel og livslang læring</div>
-          </div>
-          <div class="login-box__close"></div></div>
-          <div class="login-box__lower">
-            <a class="feide-button mmooc-button mmooc-button-primary" onclick="window.location.href=\'/login/saml/2\'">&nbsp;
-            </a>
-            &nbsp;&nbsp;
-            &nbsp;&nbsp;
-            <a class="icon-question unit-help-login" target="_blank" href="https://bibsys.instructure.com/courses/553"></a>
-            &nbsp;&nbsp;
-            &nbsp;&nbsp;
-            <a class="mmooc-button mmooc-button-secondary" onclick="showCanvasLogin();">Har ikke Feide</a>
+            <div class="login-box__text">
+              <div class="unitHeading">Canvas innlogging for åpne nettkurs og kompetansepakker</div>
+              <div class="unitSubHeading">-for fleksibel og livslang læring</div>
             </div>
+            <div class="login-box__close"></div>
+          </div>
+          <div class="loginText"><b>Logg på med</b></div>
+          <div class="login-box__lower">
+            <a class="feide-button mmooc-button mmooc-button-primary" onclick="window.location.href=\'/login/saml/2\'">
+              </a>
+              <a class="icon-question unit-help-login" target="_blank" href="https://bibsys.instructure.com/courses/553"></a>
+              <a class="mmooc-button mmooc-button-secondary" onclick="showCanvasLogin();">Ikke Feide</a>
+          </div>
+          <div class="informationPane"><small><b>Kjenner du deg ikke igjen?</b> 18. mai oppdaterte vi innloggingssiden slik at alle brukere kan logge
+            på med Feide. Dersom du ikke har brukt Feide tidligere skal du velge <b>Ikke Feide</b> for å finne ditt innhold.</small>
+          </div>
           <div class="unitPartners">
-            <a href="https://udir.no" target="_blank"><img class="unitPartnersLogo" src="https://server/bitmaps/udirlogo50px.png"/></a>
+            <a href="https://udir.no" target="_blank"><img class="unitPartnersUdirLogo unitPartnersLogo" src="https://server/bitmaps/udirlogo50px.png"/></a>
             <a href="https://ntnu.no" target="_blank"><img class="unitPartnersSmallLogo" src="https://server/bitmaps/logo_ntnu.png"/></a>
             <a href="https://unit.no" target="_blank"><img class="unitPartnersUnitLogo" src="https://server/bitmaps/unit-logo-farge.svg"/></a>
-            </div>
-        <div class="informationPane"><br><small><b>Kjenner du deg ikke igjen?</b> 18. mai oppdaterte vi innloggingssiden slik at alle brukere kan logge
-        på med Feide. Dersom du ikke har brukt Feide tidligere skal du velge <b>Har ikke Feide</b> for å finne ditt innhold.</small>
-        </div>
+          </div>
         `;
         
         document.getElementsByTagName('body')[0].innerHTML += html;
