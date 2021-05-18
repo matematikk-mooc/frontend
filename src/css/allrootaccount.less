@@ -2,34 +2,98 @@
 @import 'modules/loginPopup.less';
 
 .frontPageLoginBox {
-    width: 560px;
-    height: 284px;
+    width: 720px;
+    height: 450px;
 }
 
 .login-box__lower {
-    margin-left: 20px;
+    margin-left: 0px;
     justify-content: center;
-    margin-bottom: 30px;
-    margin-top: 30px;
+}
+.informationPane {
+    text-align: center;
+}
+.unit-help-login {
+    padding-left:10px;
+    padding-right:10px;
 }
 
-.unit-help-login {
+.feide-button {
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.unitHeading {
+    text-align: center;
+    font-size: 24px;
+}
+
+.unitSubHeading {
+    text-align: center;
+    font-size: 18px;
+    padding-top: 10px;
+}
+
+.loginText {
+    text-align: center;
+    font-size: 18px;
+    padding-top: 10px;
+    margin-bottom: -40px;
+}
+
+.unitTjeneste {
+    margin: auto;
+    font-size: 12px;
+    padding-top: 30px;
 }
 
 .unitPartners {
-    margin: auto;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 0px;
+    margin-bottom: 0px;
 }
 
 .unitPartnersLogo {
     height: 20px;
+    margin-right: 20px;
 }
+.unitPartnersUdirLogo {
+    padding-left: 20px;
+}
+
 .unitPartnersSmallLogo {
     height: 15px;
+    margin-right: 20px;
+}
+.unitPartnersUnitLogo {
+    height: 70px;
 }
 
 @media only screen and (max-width: 600px) {
     .frontPageLoginBox {
         width: 360px;
-        height: 360px;
+        height: 550px;
+    }
+    .unitPartners {
+        margin: auto;
+        padding-left: 20px;
+    }
+    .unitPartnersLogo {
+        height: 15px;
+        margin-right: 10px;
+    }
+    .unitPartnersSmallLogo {
+        height: 10px;
+        margin-right: 10px;
+    }
+    .unitPartnersUnitLogo {
+        height: 50px;
+    }
+    .loginText {
+        text-align: center;
+        font-size: 18px;
+        padding-top: 10px;
+        margin-bottom: 10px;
     }
 }
