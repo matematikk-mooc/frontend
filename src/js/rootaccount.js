@@ -100,7 +100,7 @@ if(document.location.pathname == "/search/all_courses" && document.location.sear
       <div class="card card-body">
       <h3>Er det tomt her?</h3>
         <p>Dersom du har valgt å logge inn med Feide og ikke finner innholdet ditt kan det hende det er fordi du 
-        vanligvis har logget på med en annen bruker ved å bruke epost og passord. Logg ut og inn igjen ved å benytte "Har ikke Feide" - knappen.
+        vanligvis har logget på med en annen bruker ved å bruke epost og passord. Logg ut og inn igjen ved å benytte "Ikke Feide" - knappen.
         </p>
         <img src="https://server/bitmaps/nyinnlogging.png" width="70%" alt="Ny innloggingsskjerm"/>
       </div>
