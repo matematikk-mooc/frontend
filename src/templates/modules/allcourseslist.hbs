@@ -60,6 +60,9 @@
                     {{#each courses}}
                     <div id="mmooc-tab-content-{{id}}" class="mmooc-tab-content mmooc-tab-content-{{@index}}">
                         <p>{{public_description}}</p>
+                        {{#ifUnmaintained}}
+                            <p><b>NB! Denne kompetansepakken ble sist vedlikeholdt i {{courseAlert}}</b></p>
+                        {{/ifUnmaintained}}
                         <div class="mmooc-button-ctr">
                             {{#unless ../isAuthenticated}}
                               <a class="mmooc-button mmooc-button-primary" href="/courses{{../../queryString}}&enroll_code={{self_enrollment_code}}">
