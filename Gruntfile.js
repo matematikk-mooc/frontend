@@ -318,7 +318,7 @@ module.exports = function (grunt) {
             to: 'https://localhost/courses/1?dataportenCallback=1'
           },          {
             from: '$DATAPORTENCLIENTID',
-            to: 'fb2f6378-2d35-4354-8ae8-2e82e2af2a8f'
+            to: '823e54e4-9cb7-438f-b551-d1af9de0c2cd'
           },          {
             from: '$KPASAPIURL',
             to: 'https://netgurukpasapi.dataporten-api.no'
@@ -335,7 +335,7 @@ module.exports = function (grunt) {
           },
           {
             from: '$KPAS_MERGE_LTI_ID',
-            to: '862'
+            to: '845'
           }        
         ]
       },
