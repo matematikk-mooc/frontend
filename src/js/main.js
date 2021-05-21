@@ -149,6 +149,7 @@ jQuery(function($) {
   });
 
   mmooc.routes.addRouteForPath(/\/profile\/settings$/, function() {
+    var elementId = document.getElementById('confirm_email_channel');
     if(!mmooc.settings.displayProfileLeftMenu) {
       document.getElementById("section-tabs").style.display = "none";
     }
@@ -156,7 +157,7 @@ jQuery(function($) {
       'notifications',
       {}
     );
-    if(!mmooc.settings.displayUserMergeButton) {
+    if(mmooc.settings.displayUserMergeButton) {
       var mergeUserButtonHTML = mmooc.util.renderTemplateWithData(
         'usermerge',
         {userId:mmooc.api.getUser().id, userMergeLtiToolId:mmooc.settings.userMergeLtiToolId}
@@ -164,7 +165,6 @@ jQuery(function($) {
       elementId.insertAdjacentHTML('beforebegin', mergeUserButtonHTML);
     }
 
-    var elementId = document.getElementById('confirm_email_channel');
     elementId.insertAdjacentHTML('beforebegin', notificationButtonHTML);
   });
 
