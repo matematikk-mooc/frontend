@@ -1,0 +1,9 @@
+  <select style="display: none;" class="vimeoSelectLanguage" id="{{transcriptSelectId}}">
+        {{#each languageTracks}}
+        <option value="{{this.language}}" 
+        {{#ifEquals this.language ../selectedLanguage}}
+            selected
+        {{/ifEquals}}
+        >{{this.label}}</option>
+        {{/each}}
+  </select>
