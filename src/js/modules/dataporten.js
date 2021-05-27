@@ -7,7 +7,7 @@ this.mmooc.dataporten = function() {
 // VARIABLES CHANGED BY GRUNT
     let request = ['email','longterm', 'openid', 'profile', 'userid-feide', 'groups', 'gk_netgurukpasapi'];
     let dataportenCallback = 'https://localhost/courses/1?dataportenCallback=1';
-    let dataportenClientId = 'fb2f6378-2d35-4354-8ae8-2e82e2af2a8f';
+    let dataportenClientId = '823e54e4-9cb7-438f-b551-d1af9de0c2cd';
     let kpasapiurl = 'https://netgurukpasapi.dataporten-api.no';    
 
     
