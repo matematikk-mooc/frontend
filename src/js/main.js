@@ -1,4 +1,8 @@
 jQuery(function($) {
+  //Multilanguage KURSP-279 Css must be present before javascript is run.
+  //KURSP-376-multilanguage-fix 
+  mmooc.multilanguage.initializeCss();
+
   mmooc.routes.addRouteForPath(/\/$/, function() {
     var parentId = 'wrapper';
 
@@ -11,9 +15,9 @@ jQuery(function($) {
 
   mmooc.routes.addRouteForQueryString(/invitation=/, function() {});
 
-
   mmooc.routes.addRouteForPath(/\/login\/canvas$/, function() {
     mmooc.utilRoot.redirectFeideAuthIfEnrollReferrer();
+    mmooc.utilRoot.triggerForgotPasswordIfParamPassed();
   });
 
   mmooc.routes.addRouteForPath(/\/login$/, function() {
@@ -32,7 +36,7 @@ jQuery(function($) {
   mmooc.routes.addRouteForPath(/\/courses\/\d+/, function() {
     mmooc.util.updateInformationPane();
   });
-  
+
   //The logic below should be refactored and cleaned up.
   mmooc.routes.addRouteForPath(/\/courses\/\d+$/, function() {
     mmooc.groups.interceptLinksToGroupPage();
@@ -132,10 +136,10 @@ jQuery(function($) {
 
   mmooc.routes.addRouteForPath(/\/search\/all_courses$/, function() {
     mmooc.enroll.printAllCoursesContainer();
-    mmooc.enroll.printAllCourses(); 
+    mmooc.enroll.printAllCourses();
     mmooc.enroll.goToAllCourses();
   });
-
+  
   mmooc.routes.addRouteForPath(/\/courses\/\d+\/settings$/, function() {
     mmooc.coursesettings.addSanityCheckButton();
     mmooc.coursesettings.addListSectionsButton();
@@ -145,14 +149,23 @@ jQuery(function($) {
   });
 
   mmooc.routes.addRouteForPath(/\/profile\/settings$/, function() {
+    var elementId = document.getElementById('confirm_email_channel');
+    if(!mmooc.settings.displayProfileLeftMenu) {
+      document.getElementById("section-tabs").style.display = "none";
+    }
     var notificationButtonHTML = mmooc.util.renderTemplateWithData(
       'notifications',
       {}
     );
-    mmooc.menu.showLeftMenu();
-    document
-      .getElementById('confirm_email_channel')
-      .insertAdjacentHTML('beforebegin', notificationButtonHTML);
+    if(mmooc.settings.displayUserMergeButton) {
+      var mergeUserButtonHTML = mmooc.util.renderTemplateWithData(
+        'usermerge',
+        {userId:mmooc.api.getUser().id, userMergeLtiToolId:mmooc.settings.userMergeLtiToolId}
+      );
+      elementId.insertAdjacentHTML('beforebegin', mergeUserButtonHTML);
+    }
+
+    elementId.insertAdjacentHTML('beforebegin', notificationButtonHTML);
   });
 
   mmooc.routes.addRouteForPath(/\/courses\/\d+\/announcements$/, function() {
@@ -284,12 +297,11 @@ jQuery(function($) {
     ],
     function() {
       mmooc.menu.showDiscussionGroupMenu();
+      const courseId = mmooc.api.getCurrentCourseId();
 
       //20180911ETH Need to know if I got here from the discussion list or from the module
       //            navigation.
       if (!this.hasQueryString) {
-        var courseId = mmooc.api.getCurrentCourseId();
-
         //If courseId was found, it is a group discussion created by a teacher.
         if (courseId) {
           mmooc.menu.showBackButton(
@@ -316,6 +328,13 @@ jQuery(function($) {
       } else {
         mmooc.groups.interceptLinksToTeacherGroupPage();
       }
+
+      mmooc.api.getUserGroupsForCourse(courseId, (userGroups) => {
+        mmooc.util.tinyMceEditorIsInDOM(
+          () => mmooc.tinyMCEEditor.injectGroupHashtags(userGroups)
+        );
+        mmooc.discussionTopics.injectReplyButtonAction(userGroups);
+      });
     }
   );
 
@@ -329,13 +348,14 @@ jQuery(function($) {
       // For discussion pages we only want the title to be "<discussion>" instead of "Discussion: <discussion>"
       var title = mmooc.util.getPageTitleAfterColon();
       //If this is a group discussion we do not allow the user to access it because
-      //he is apparantly not a member of a group. 
+      //he is apparantly not a member of a group.
       var courseId = mmooc.api.getCurrentCourseId();
 
       mmooc.util.hasRoleInCourse(courseId, "TeacherEnrollment", function(isTeacher) {
         if(!isTeacher) {
           var courseId = mmooc.api.getCurrentCourseId();
           var contentId = mmooc.api.getCurrentTypeAndContentId().contentId;
+          if (contentId){
           mmooc.api.isGroupDiscussion(courseId, contentId, function(result) {
             if(result) {
                 $(".discussion-section").hide();
@@ -345,7 +365,7 @@ jQuery(function($) {
                 Dette er en gruppediskusjon, men du er ikke medlem i noen gruppe og kan derfor ikke delta.\
                   Gå tilbake til forsiden og velg fanen "Rolle og grupper".</div>');
             }
-          });        
+          });}
         }
       });
 
@@ -376,6 +396,13 @@ jQuery(function($) {
           'Tilbake til diskusjoner'
         );
       }
+
+      mmooc.api.getUserGroupsForCourse(courseId, (userGroups) => {
+        mmooc.util.tinyMceEditorIsInDOM(
+          () => mmooc.tinyMCEEditor.injectGroupHashtags(userGroups)
+        );
+        mmooc.discussionTopics.injectReplyButtonAction(userGroups);
+      });
     }
   );
 
@@ -460,17 +487,25 @@ jQuery(function($) {
       mmooc.greeting.enableGreetingButtonIfNecessary
     );
     mmooc.util.callWhenElementIsPresent(
-      ".new-sikt-diploma-button", 
+      ".new-sikt-diploma-button",
       mmooc.greeting.enableNewGreetingButtonIfNecessary);
 
+    mmooc.util.callWhenElementIsPresent(
+      ".download-diploma-button", 
+      mmooc.greeting.enableDownloadDiplomaButtonIfNecessary); //This is the newest method which should replace the two old ones.
+  
     var courseId = mmooc.api.getCurrentCourseId();
-    if ($("#kpas-lti-info").length) {
+
+    if ($("#kpas-lti-info").length ||
+        $("#kommune-statistikk").length ||
+        $("#fylke-statistikk").length) {
       const error = error => console.error('error calling api', error);
       mmooc.api.getUserGroupsForCourse(courseId, function(groups) {
-        if(groups.length) {
-          $("#kpas-lti-info").show();
-          $("#kpas-lti-warning").hide();
-        }  
+        var isTeacherOrAdmin = mmooc.util.isTeacherOrAdmin();
+        mmooc.kpas.showInfo(isTeacherOrAdmin, groups);
+        var groupsInfo = mmooc.util.getGroupsInfo(groups);
+        mmooc.kpas.createDiagram("kommune-statistikk", isTeacherOrAdmin, courseId, groupsInfo);
+        mmooc.kpas.createDiagram("fylke-statistikk", isTeacherOrAdmin, courseId, groupsInfo);
       }, error);
     }
   });
@@ -478,14 +513,20 @@ jQuery(function($) {
   //Change "Gå til dashboard" button.
   mmooc.routes.addRouteForQueryString(/enrolled=1/, function() {
     $(".ic-Self-enrollment-footer__Primary > a").each(function() {
-      var $this = $(this);       
-      var _href = $this.attr("href"); 
+      var $this = $(this);
+      var _href = $this.attr("href");
       $this.attr("href", _href + mmooc.hrefQueryString);
    });
   });
 
   mmooc.routes.addRouteForPath(/enroll\/[0-9A-Z]+/, function() {
     mmooc.enroll.changeEnrollPage();
+  });
+
+  mmooc.routes.addRouteForQueryString(/lang/, () => {
+    const language = MultilangUtils.getLanguageParameter()
+    console.log(`Language: ${language}`);
+    MultilangUtils.setActiveLanguage(language);
   });
 
   try {
@@ -500,7 +541,7 @@ jQuery(function($) {
     console.log(e);
   }
 
-  //Try to get course information and store it such that routes can use it. 
+  //Try to get course information and store it such that routes can use it.
   //Otherwise just handle the route.
   try {
     if(mmooc.util.isAuthenticated()) {
@@ -510,6 +551,11 @@ jQuery(function($) {
           courseId,
           function(course) {
             mmooc.util.course = course;
+            //KURSP-376-multilanguage-fix
+            if (mmooc.util.isMultilangCourse(mmooc.util.course)) {
+              var langCode = MultilangUtils.getLanguageCode();
+              MultilangUtils.setActiveLanguage(langCode);
+            }
             mmooc.routes.performHandlerForUrl(document.location);
           },
           function(error) {
@@ -530,6 +576,8 @@ jQuery(function($) {
   }
 
   try {
+    mmooc.messageHandler.init();
+    mmooc.uob.init();
     mmooc.nrk.init();
   } catch (e) {
     console.log(e);
@@ -537,6 +585,7 @@ jQuery(function($) {
 
   try {
     mmooc.menu.injectGroupsPage();
+    //mmooc.multilanguage.displayLanguageSelector();
     mmooc.groups.changeGroupListURLs(document.location.href);
 
     mmooc.pages.updateSidebarWhenMarkedAsDone();
@@ -546,6 +595,6 @@ jQuery(function($) {
   } catch (e) {
     console.log(e);
   }
-  
+
   $("#application").show();
 });

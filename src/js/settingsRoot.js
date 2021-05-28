@@ -4,7 +4,10 @@ this.mmooc.hrefQueryString = "?design=udir";
 
 this.mmooc.settingsRoot = {
     feideEnrollRefferers: [
-      this.mmooc.hrefQueryString
+      "design=udir",
+      "enroll_code",
+      "kslaring.no"
     ],
+    kpasApiUrl: $KPASAPIURL
 };
 

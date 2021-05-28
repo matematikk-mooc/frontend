@@ -36,7 +36,6 @@ this.mmooc.utilRoot = function() {
       }
       return query_string;
     },
-
     urlParamsToObject: function() {
       if (document.location.search === '') return {};
 
@@ -44,7 +43,7 @@ this.mmooc.utilRoot = function() {
       return mmooc.utilRoot.parse_query_string(search);
     },
     checkReferrer:function(ref) {
-       return document.referrer.endsWith(ref);
+       return document.referrer.includes(ref);
     },
 
     isEnrollReferrer: function() {
@@ -65,7 +64,7 @@ this.mmooc.utilRoot = function() {
             $("#content > div > div > div > div > div.ic-Login-header > div.ic-Login-header__links").hide();
         }
         else {
-           window.location.href = '/login/saml';
+           window.location.href = '/login/saml/2';
            return true;
         }
       }
@@ -85,14 +84,25 @@ this.mmooc.utilRoot = function() {
         }
         return false;    
     },
+    triggerForgotPasswordIfParamPassed: function() {
+      const params = this.urlParamsToObject();
+      if (params['gp'] !== undefined) {
+        $('#login_forgot_password').click();
+      }
+    },
     redirectToEnrollIfCodeParamPassed: function() {
       // If user wanted to enroll a course using Feide auth,
       // then was returned from SAML login view, we redirect to proper enrollment page
       if (document.location.search !== '') {
         const urlParamsObj = mmooc.utilRoot.urlParamsToObject();
         var enrollCode = mmooc.utilRoot.isEnrollCodeParamPassed(urlParamsObj);
+        var design = urlParamsObj && urlParamsObj['design'];
         if (enrollCode) {
-          window.location.href = "/enroll/" + enrollCode + mmooc.hrefQueryString;
+          var newHref = "/enroll/" + enrollCode;  // + mmooc.hrefQueryString;
+          if(design) {
+            newHref += "?design=" + design; 
+          }
+          window.location.href = newHref;
           return true;
         }
         if (mmooc.utilRoot.isLoginParamPassed(urlParamsObj)) {
@@ -102,6 +112,63 @@ this.mmooc.utilRoot = function() {
         }
       }
       return false;
+    },
+
+    redirectToSamlIfUdirCourse: function(kpasApiUrl){
+      try {
+        if(!mmooc.utilRoot.isAuthenticated()) {
+          const currentUrl = '' + window.location.pathname;
+          const currentCourseId = mmooc.utilRoot.getCourseIdFromUrl(currentUrl);
+          mmooc.utilRoot.isDeepLinkToUdirCourse(currentCourseId, kpasApiUrl).then( (result) => {
+                if (result) {
+                  window.location = "/login/saml/2";
+                  return true;
+                }else{
+                  return false;
+                }
+              }
+          )
+        }
+      } catch (e) {
+        console.log(e);
+      }
+    },
+    /*isDeepLinkToUdirCourse: async function(currentCourseId, kpasApiUrl) {
+
+      let requestResult = undefined;
+
+      if (currentCourseId) {
+        await $.getJSON(kpasApiUrl + "course/" + currentCourseId + "/isudircourse", function(data) {
+          requestResult = data.result;
+        });
+      } else {
+        return false;
+      }
+      return requestResult;
+
+    },*/
+    getCourseIdFromUrl : function(currentUrl) {
+      const matches = currentUrl.match(/\/courses\/(\d+)/);
+      if (matches != null) {
+        return parseInt(matches[1], 10);
+      } else if (this._env.group) {
+        // Group pages does not contain course id in URL, but is available via JavaScript variable
+        return this._env.group.context_id;
+      } else if ($('#discussion_container').size() > 0) {
+        const tmp = $(
+            '#discussion_topic div.entry-content header div div.pull-left span a'
+        );
+        if (tmp.length) {
+          const tmpHref = tmp.attr('href');
+          if (tmpHref.length) {
+            const tmpHrefArr = tmpHref.split('/');
+            if (tmpHrefArr.length == 3) {
+              return parseInt(tmpHrefArr[2], 10);
+            }
+          }
+        }
+      }
+      return null;
     }
   }
 }();

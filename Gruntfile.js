@@ -3,7 +3,8 @@
 module.exports = function (grunt) {
   // Helper function to load pre-defined grunt tasks
   require('load-grunt-tasks')(grunt);
-
+  var udv = grunt.option('udv');
+  
   // Configures grunt tasks
   grunt.initConfig({
     clean: {
@@ -56,10 +57,11 @@ module.exports = function (grunt) {
       },
       js: {
         src: [
+          'src/js/utilities/*.js',
           'src/js/3party/*.js',
           'tmp/templates.js',
           'src/js/api/*.js',
-          'src/js/settingsRoot.js', 
+          'src/js/settingsRoot.js',
           'src/js/utilRoot.js',
           'src/js/modules/*.js',
           'src/js/settings.js',
@@ -72,11 +74,11 @@ module.exports = function (grunt) {
       rootaccount: {
         src: ['src/js/settingsRoot.js', 'src/js/utilRoot.js', 'src/js/rootaccount.js'],
         dest: 'tmp/rootaccount.js'
-      },      
+      },
       subaccount: {
         src: ['src/js/settingsRoot.js', 'src/js/utilRoot.js', 'src/js/subaccount.js'],
         dest: 'tmp/subaccount.js'
-      },      
+      },
       extras: {
         src: [
           'node_modules/grunt-contrib-handlebars/node_modules/handlebars/dist/handlebars.min.js', // we need to embed handlebars here because it is not included in the iframe
@@ -122,7 +124,7 @@ module.exports = function (grunt) {
         }
       }
     },
-
+    
     replace: {
       production: {
         src: ['tmp/mmooc-min.css','tmp/rootaccount.css', 'dist/mmooc-min.js', 'tmp/rootaccount.js', 'tmp/subaccount.js'],
@@ -134,16 +136,50 @@ module.exports = function (grunt) {
           },
           {
             from: 'https://udirdesigncss',
-            to: 'https://kompetanseudirno.azureedge.net/udirdesign/mmooc-min.css'
+            to: 'https://kompetanseudirno.azureedge.net/udirdesign/mmooc-min.css?version='+udv
           },
           {
             from: 'https://udirdesignjs',
-            to: 'https://kompetanseudirno.azureedge.net/udirdesign/mmooc-min.js'
+            to: 'https://kompetanseudirno.azureedge.net/udirdesign/mmooc-min.js?version='+udv
+          },
+          {
+            from: 'KPAS_IFRAME_VERSION',
+            to: udv
+          },
+          {
+            from: '$KPASAPIURL',
+            to: '\'https://kpas-lti.azurewebsites.net/api/\''
+          }
+        ]
+      },
+      stage: {
+        src: ['tmp/mmooc-min.css','tmp/rootaccount.css', 'dist/mmooc-min.js', 'tmp/rootaccount.js', 'tmp/subaccount.js'],
+        dest: 'dist/',
+        replacements: [
+          {
+            from: 'https://server',
+            to: 'https://kompetanseudirno.azureedge.net/udirdesign-staging'
+          },
+          {
+            from: 'https://udirdesigncss',
+            to: 'https://kompetanseudirno.azureedge.net/udirdesign-staging/mmooc-min.css?version='+udv
+          },
+          {
+            from: 'https://udirdesignjs',
+            to: 'https://kompetanseudirno.azureedge.net/udirdesign-staging/mmooc-min.js?version='+udv
+          },
+          {
+            from: 'KPAS_IFRAME_VERSION',
+            to: udv
+          },
+          {
+            from: '$KPASAPIURL',
+            to: '\'https://kpas-lti-staging-kpas.azurewebsites.net/api/\''
           }
         ]
       },
       development: {
-        src: ['tmp/mmooc-min.css','tmp/rootaccount.css', 'dist/mmooc-min.js', 'tmp/rootaccount.js','tmp/subaccount.js'],
+        src: ['tmp/mmooc-min.css','tmp/rootaccount.css', 'src/js/rootaccountfwd-dev.js','dist/mmooc-min.js', 'tmp/rootaccount.js','tmp/subaccount.js'],
         dest: 'dist/',
         replacements: [
           {
@@ -157,10 +193,98 @@ module.exports = function (grunt) {
           {
             from: 'https://udirdesignjs',
             to: 'http://localhost:9000/mmooc-min.js'
+          },
+          {
+            from: 'KPAS_IFRAME_VERSION',
+            to: udv
+          },
+          {
+            from: '$KPASAPIURL',
+            to: '\'' + process.env.KPAS_URL + '/api/\''
           }
         ]
       },
+      production_kpas: {
+        src: [
+          'dist/kpas/style.css', 
+          'dist/kpas/kpas.html', 
+          'dist/kpas/brukere.html',
+          'dist/kpas/grupper.html',
+          'dist/kpas/main.js'],
+        dest: 'dist/kpas/',
+        replacements: [
+          {
+            from: 'https://server',
+            to: "https://kompetanseudirno.azureedge.net/"
+          },
+          {
+            from: 'KPAS_IFRAME_VERSION',
+            to: udv
+          }
+        ]
+      },
+      stage_kpas: {
+        src: [
+          'dist/kpas/style.css', 
+          'dist/kpas/kpas.html', 
+          'dist/kpas/brukere.html', 
+          'dist/kpas/grupper.html',
+          'dist/kpas/main.js'],
+        dest: 'dist/kpas/',
+        replacements: [
+          {
+            from: 'https://server',
+            to: "https://kompetanseudirno.azureedge.net/"
+          },
+          {
+            from: 'KPAS_IFRAME_VERSION',
+            to: udv
+          }
+        ]
+      },
+      development_kpas: {
+        src: [
+          'dist/kpas/style.css', 
+          'dist/kpas/kpas.html', 
+          'dist/kpas/brukere.html', 
+          'dist/kpas/grupper.html',
+          'dist/kpas/main.js'],
+        dest: 'dist/kpas/',
+        replacements: [
+          {
+            from: 'https://server',
+            to: "http://localhost:9000"
+          },
+          {
+            from: 'KPAS_IFRAME_VERSION',
+            to: udv
+          }
+        ]
+      },
+
       production_dataporten: {
+        src: ['src/js/tmp/dataporten.js'],
+        dest: 'src/js/modules/',
+        replacements: [
+          {
+            from: '$REQUEST',
+            to: "['email','longterm', 'openid', 'profile', 'userid-feide', 'groups', 'gk_kpas']"
+          },
+          {
+            from: '$DATAPORTENCALLBACK',
+            to: 'https://bibsys.instructure.com/courses/234?dataportenCallback=1'
+          },
+          {
+            from: '$DATAPORTENCLIENTID',
+            to: '823e54e4-9cb7-438f-b551-d1af9de0c2cd'
+          },
+          {
+            from: '$KPASAPIURL',
+            to: 'https://kpas.dataporten-api.no'
+          }
+        ]
+      },
+      stage_dataporten: {
         src: ['src/js/tmp/dataporten.js'],
         dest: 'src/js/modules/',
         replacements: [
@@ -194,7 +318,7 @@ module.exports = function (grunt) {
             to: 'https://localhost/courses/1?dataportenCallback=1'
           },          {
             from: '$DATAPORTENCLIENTID',
-            to: 'fb2f6378-2d35-4354-8ae8-2e82e2af2a8f'
+            to: '823e54e4-9cb7-438f-b551-d1af9de0c2cd'
           },          {
             from: '$KPASAPIURL',
             to: 'https://netgurukpasapi.dataporten-api.no'
@@ -208,6 +332,24 @@ module.exports = function (grunt) {
           {
             from: '$ACCOUNTID',
             to: '[99, 100, 102, 103, 137, 138, 139, 145]'
+          },
+          {
+            from: '$KPAS_MERGE_LTI_ID',
+            to: '845'
+          }        
+        ]
+      },
+      stage_settings: {
+        src: ['src/js/tmp/settings.js'],
+        dest: 'src/js/',
+        replacements: [
+          {
+            from: '$ACCOUNTID',
+            to: '[99, 100, 102, 103, 137, 138, 139, 145]'
+          },
+          {
+            from: '$KPAS_MERGE_LTI_ID',
+            to: '863'
           }
         ]
       },
@@ -217,11 +359,25 @@ module.exports = function (grunt) {
         replacements: [
           {
             from: '$ACCOUNTID',
-            to: '[4, 5]'
+            to: '[99, 100, 102, 103, 137, 138, 139, 145]'
+          },
+          {
+            from: '$KPAS_MERGE_LTI_ID',
+            to: '863'
           }
         ]
       },
       production_badge: {
+        src: ['tmp/badges-min.js'],
+        dest: 'dist/badgesafe.js',
+        replacements: [
+          {
+            from: 'https://server',
+            to: 'https://matematikk-mooc.github.io/frontend'
+          }
+        ]
+      },
+      stage_badge: {
         src: ['tmp/badges-min.js'],
         dest: 'dist/badgesafe.js',
         replacements: [
@@ -252,7 +408,17 @@ module.exports = function (grunt) {
           { expand: true, src: ['vector_images/*'], cwd: 'src/', dest: 'dist/' },
           { expand: true, src: ['subaccount.js.map'], cwd: 'tmp/', dest: 'dist/' },
           { expand: true, src: ['rootaccount.js.map'], cwd: 'tmp/', dest: 'dist/' },
-          { expand: true, src: ['badges-min.js.map'], cwd: 'tmp/', dest: 'dist/' }
+          { expand: true, src: ['badges-min.js.map'], cwd: 'tmp/', dest: 'dist/' },
+          { expand: true, src: ['*'], cwd: 'kpas/', dest: 'dist/kpas' }
+        ]
+      },
+      dev: {
+        files: [
+          { expand: true, src: ['tmp/mmooc.js'], 
+            rename: function () {       // The value for rename must be a function
+              return 'dist/mmooc-min.js'; // The function must return a string with the complete destination
+            }
+          }
         ]
       }
     },
@@ -285,6 +451,7 @@ module.exports = function (grunt) {
     watch: {
       dist: {
         files: [
+          'kpas/*',
           'src/css/**/*.less',
           'src/js/**/*.js',
           'src/templates/**/*.hbs',
@@ -315,8 +482,15 @@ module.exports = function (grunt) {
     'babel',
     'uglify',
     'less',
-    'copy',
+    'copy:main',
   ]);
+  grunt.registerTask('make_dev', [
+    'handlebars',
+    'concat',
+    'less',
+    'copy'
+  ]);
+
 
   grunt.registerTask('dev_dataporten', [
     'replace:development_dataporten'
@@ -324,6 +498,19 @@ module.exports = function (grunt) {
 
   grunt.registerTask('prod_dataporten', [
     'replace:production_dataporten'
+  ]);
+  grunt.registerTask('stage_dataporten', [
+    'replace:stage_dataporten'
+  ]);
+  grunt.registerTask('dev_kpas', [
+    'replace:development_kpas'
+  ]);
+  grunt.registerTask('stage_kpas', [
+    'replace:stage_kpas'
+  ]);
+
+  grunt.registerTask('prod_kpas', [
+    'replace:production_kpas'
   ]);
 
   grunt.registerTask('dev_settings', [
@@ -337,23 +524,32 @@ module.exports = function (grunt) {
   grunt.registerTask('prod_production', [
     'replace:production',
   ]);
+  grunt.registerTask('stage_staging', [
+    'replace:stage',
+  ]);
 
   grunt.registerTask('prod_settings', [
     'replace:production_settings',
     'replace:production_badge',
   ]);
 
+  grunt.registerTask('stage_settings', [
+    'replace:stage_settings',
+    'replace:stage_badge',
+  ]);
+ 
 
   grunt.registerTask('runTest', ['connect:test', 'karma:unitTest']);
 
   grunt.registerTask('test', ['clean', 'make', 'runTest']);
 
-  grunt.registerTask('build', ['prod_dataporten', 'prod_settings', 'make', 'prod_production']);
+  grunt.registerTask('build', ['prod_dataporten', 'prod_settings', 'make', 'prod_production', 'prod_kpas']);
+  grunt.registerTask('staging', ['stage_dataporten', 'stage_settings', 'make', 'stage_staging', 'stage_kpas']);
 
-  grunt.registerTask('rebuildServe', ['clean:dist', 'dev_dataporten', 'dev_settings', 'make', 'dev_development']);
+  grunt.registerTask('rebuildServe', ['clean:dist', 'dev_dataporten', 'dev_settings', 'make_dev', 'dev_development', 'dev_kpas']);
 
-  grunt.registerTask('serve', ['clean', 'dev_dataporten', 'dev_settings',  'make',  'dev_development','connect:dev', 'watch']);
-  
+  grunt.registerTask('serve', ['clean', 'dev_dataporten', 'dev_settings',  'make_dev',  'dev_development','dev_kpas', 'connect:dev', 'watch']);
+
   grunt.registerTask('serveStaging', ['clean', 'make', 'connect:staging', 'watch']);
 
   grunt.registerTask('default', ['clean', 'make']);

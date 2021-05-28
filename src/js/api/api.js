@@ -141,17 +141,27 @@ this.mmooc.api = (function() {
     },
 
     getCurrentTypeAndContentId() {
-      const regexp = /\/courses\/\d+\/\w+\/\d+/;
+      const contentElementRegexp = /\/courses\/\d+\/\w+\/\d+/;
+      const isContentRegexp = /\/courses\/\d+\/\w+\/\.*/;
 
-      if (regexp.test('' + this._location.pathname)) {
+      var type = null;
+      var contentId = null;
+
+      if (isContentRegexp.test('' + this._location.pathname)) {
         const tmp = this._location.pathname.split('/');
-        if (tmp.length >= 5) {
-          const type = _urlToTypeMapping[tmp[3]];
-          const contentId = parseInt(tmp[4], 10);
-          return { contentId: contentId, type: type };
+        if (tmp.length >= 4) {
+          type = _urlToTypeMapping[tmp[3]];
         }
       }
-      return null;
+
+      if (contentElementRegexp.test('' + this._location.pathname)) {
+        const tmp = this._location.pathname.split('/');
+        if (tmp.length >= 5) {
+          contentId = parseInt(tmp[4], 10);
+        }
+      }
+
+      return { contentId: contentId, type: type };
     },
 
     getAllCourses(callback, error) {
@@ -242,27 +252,7 @@ this.mmooc.api = (function() {
 
     getCurrentCourseId() {
       const currentUrl = '' + this._location.pathname;
-      const matches = currentUrl.match(/\/courses\/(\d+)/);
-      if (matches != null) {
-        return parseInt(matches[1], 10);
-      } else if (this._env.group) {
-        // Group pages does not contain course id in URL, but is available via JavaScript variable
-        return this._env.group.context_id;
-      } else if ($('#discussion_container').size() > 0) {
-        const tmp = $(
-          '#discussion_topic div.entry-content header div div.pull-left span a'
-        );
-        if (tmp.length) {
-          const tmpHref = tmp.attr('href');
-          if (tmpHref.length) {
-            const tmpHrefArr = tmpHref.split('/');
-            if (tmpHrefArr.length == 3) {
-              return parseInt(tmpHrefArr[2], 10);
-            }
-          }
-        }
-      }
-      return null;
+      return mmooc.utilRoot.getCourseIdFromUrl(currentUrl);
     },
     getModuleItemSequence(courseId, moduleItemId, callback, error) {
       this._get({
@@ -717,19 +707,16 @@ body: test
       });
     },
     getUserGroupsForCourse(courseId, callback, error) {
-      this.getUserGroups(
-        (function(courseId) {
-          return groups => {
-            let usersGroups = [];
-            for (let i = 0; i < groups.length; i++) {
-              const group = groups[i];
-              if (group.course_id == courseId) {
-                usersGroups.push(group);
-              }
+      this.getUserGroups(groups => {
+          let usersGroups = [];
+          for (let i = 0; i < groups.length; i++) {
+            const group = groups[i];
+            if (group.course_id == courseId) {
+              usersGroups.push(group);
             }
-            callback(usersGroups);
-          };
-        })(courseId)
+          }
+          callback(usersGroups);
+        }
       );
     },
 

@@ -8,14 +8,39 @@ this.mmooc.menu = (function() {
         title = course.name;
         subtitle = '';
       }
+
+      const selectedLanguageCode = MultilangUtils.getLanguageCode();
+      const languageOptions = {
+        courseIsMultilanguage: this.mmooc.util.isMultilangCourse(mmooc.util.course),
+        selectedLanguage: MultilangUtils.languagesMap()[selectedLanguageCode].name,
+        otherLanguages: MultilangUtils.languagesExcept(selectedLanguageCode),
+      }
+
       var html = mmooc.util.renderTemplateWithData('coursemenu', {
         course: course,
         menuItems: menuItems,
         selectedMenuItem: selectedMenuItem,
         title: title,
-        subtitle: subtitle
+        subtitle: subtitle,
+        languageOptions: languageOptions,
       });
       document.getElementById('header').insertAdjacentHTML('afterend', html);
+
+      // Update current language and language selection dropdown
+      document.querySelectorAll('button.mmooc-course-language-button')
+        .forEach(element => element.addEventListener('click', event => {
+          const previousLanguage = MultilangUtils.getLanguageCode();
+          const newLanguage = event.target.value;
+
+          document.getElementById('mmooc-course-language-selected').textContent = event.target.textContent;
+          const button = Array.from(document.querySelectorAll('button.mmooc-course-language-button'))
+            .find(element => element.value === newLanguage);
+
+          button.textContent = MultilangUtils.languagesMap()[previousLanguage].name;
+          button.value = previousLanguage;
+
+          MultilangUtils.setActiveLanguage(newLanguage);
+        }));
     }
 
     var menuItems = [];
@@ -152,39 +177,47 @@ this.mmooc.menu = (function() {
 
   var stylesheet = createStyleSheet();
 
-
   return {
+    tooltipRegexpPattern : new RegExp("(<br>|</i>)(.*$)"),
+
     listModuleItems: function() {
       mmooc.api.getCurrentModule(function(module) {
         var courseId = mmooc.api.getCurrentCourseId();
         var html = "";
-        if(mmooc.util.isActiveCourseRoleBased() && mmooc.util.isPrincipal())
-        {
+        var courseIsRoleBased = mmooc.util.isActiveCourseRoleBased();
+        var tooltipsHandled = false;
+
+        if(courseIsRoleBased && mmooc.util.isPrincipal()) {
           html = mmooc.util.renderTemplateWithData('moduleitemsprincipal', {
             backToCoursePage: mmooc.i18n.BackToCoursePage,
             module: module,
             courseId: courseId,
             course: mmooc.util.course
           });
-        }
-        else
-        {
+        } else {
           html = mmooc.util.renderTemplateWithData('moduleitems', {
             backToCoursePage: mmooc.i18n.BackToCoursePage,
             module: module,
             courseId: courseId,
             course: mmooc.util.course
           });
-          if(mmooc.util.isActiveCourseRoleBased()) {
+
+          //Need to update previous and next buttons. If the course is role based
+          //multilanguage will be handled by that method.
+          if(courseIsRoleBased) {
             mmooc.menu.updatePrevAndNextButtons(courseId, module);
+            tooltipsHandled = true;
           }
         }
-        
-        
+        if(!tooltipsHandled) {
+          mmooc.multilanguage.performPrevNextTooltip();       
+        }
+
         if (document.getElementById('left-side')) {
           document
             .getElementById('left-side')
             .insertAdjacentHTML('afterbegin', html);
+            mmooc.multilanguage.perform();
         }
         //Canvas case: Slow loading for group discussions when large number of groups Case # 05035288 
         //Display popup box when loading
@@ -222,8 +255,10 @@ this.mmooc.menu = (function() {
           mmooc.api.getModuleItemSequence(courseId, id, mmooc.menu.handlePrevModuleItem);
         } else {
           var prevButton = $(".module-sequence-footer-button--previous");
-          prevButton.attr("href", prevItem.html_url);
+          var prevButtonLink = $(".module-sequence-footer-button--previous a");
+          prevButtonLink.attr("href", prevItem.html_url);
           mmooc.menu.updateButtonTooltip(prevButton, prevItem);
+          mmooc.multilanguage.performPrevTooltip();
           prevButton.show();
         }
       }
@@ -239,16 +274,21 @@ this.mmooc.menu = (function() {
           var nextButtonLink = $(".module-sequence-footer-button--next a");
           nextButtonLink.attr("href", nextItem.html_url);
           mmooc.menu.updateButtonTooltip(nextButton, nextItem);
+          mmooc.multilanguage.performNextTooltip();
           nextButton.show();
         }
       }
     },
+
+    createNewTooltipText : function(oldText, tooltipType, newText) {
+      return oldText.replace(mmooc.menu.tooltipRegexpPattern, tooltipType + newText)
+    },
     updateButtonTooltip : function(el, item) {
-        var tooltip = el.attr("data-html-tooltip-title");
-        if(tooltip) {
-          var newTooltip = tooltip.replace(/<\/i>.*$/, "</i>" + item.title )
-          el.attr("data-html-tooltip-title", newTooltip);
-        }
+      var tooltip = el.attr("data-html-tooltip-title");
+      if(tooltip) {
+        el.attr("data-html-tooltip-title", mmooc.menu.createNewTooltipText(tooltip, "</i>", item.title));
+        mmooc.multilanguage.update
+      }
     },
     updatePrevAndNextButtons : function(courseId, module) {
       var prevItem = "";
@@ -281,8 +321,10 @@ this.mmooc.menu = (function() {
       var nextButton = $(".module-sequence-footer-button--next");
 
       if(prevSet) {
-          prevButton.attr("href", prevItem.html_url);
-          mmooc.menu.updateButtonTooltip(prevButton, prevItem);
+        var prevButtonLink = $(".module-sequence-footer-button--previous a");
+        prevButtonLink.attr("href", prevItem.html_url);
+        mmooc.menu.updateButtonTooltip(prevButton, prevItem);
+        mmooc.multilanguage.performPrevTooltip();
       } else {
           prevButton.hide();
           var id = firstValidItem.id;
@@ -294,6 +336,7 @@ this.mmooc.menu = (function() {
           var nextButtonLink = $(".module-sequence-footer-button--next a");
           nextButtonLink.attr("href", nextItem.html_url);
           mmooc.menu.updateButtonTooltip(nextButton, nextItem);
+          mmooc.multilanguage.performNextTooltip();
       } else {
           nextButton.hide();
           var id = lastValidItem.id;
@@ -341,7 +384,11 @@ this.mmooc.menu = (function() {
           $('#edit_discussions_settings').show();
           $('#availability_options').show();
           $('#group_category_options').show();
-          $('#editor_tabs').show();
+
+          //KURSP-223 Diskusjonssiden scroller til toppen når man skal skrive et innlegg eller et svar
+          //Denne koden ser ikke ut til å være nødvendig ettersom vi ikke har noe kode som
+          //skjuler editor_tabs.
+          //$('#editor_tabs').show();
 
           // Done via CSS since content is loaded using AJAX
           stylesheet.insertRule(
@@ -379,28 +426,16 @@ this.mmooc.menu = (function() {
         let html = mmooc.util.renderTemplateWithData('noLoggedInHeader', {
           logInText: mmooc.i18n.LogIn
         });
+        let htmlMobile = mmooc.util.renderTemplateWithData('noLoggedInHeaderMobile', {
+          logInText: mmooc.i18n.LogIn
+        });
 
         $('#menu').append(html);
         $('.ic-app-header__main-navigation').append(html);
 
-          this.unAuthenticatedMobileMenu();
+        $("#mobile-header").append(htmlMobile);
 
-          $(window).on('resize', () => {
-            this.unAuthenticatedMobileMenu();
-          });
-        
-          mmooc.login.handleLoginButtonClick();
-      }
-    },
-    unAuthenticatedMobileMenu() {
-      var mobileViewport = window.matchMedia("(max-width: 768px)");
-
-      if(mobileViewport.matches) {
-        $('#header').addClass("ic-app-header--mobile");
-        $('.mmooc-header').addClass("mmooc-header--mobile")
-      }else {
-        $('.mmooc-header').removeClass("mmooc-header--mobile")
-        $('#header').removeClass("ic-app-header--mobile");
+        mmooc.login.handleLoginButtonClick();
       }
     },
     hideRightMenu: function() {
@@ -496,7 +531,10 @@ this.mmooc.menu = (function() {
       var menu = document.getElementById('menu');
       if (menu != null && mmooc.util.isAuthenticated()) {
         var html = mmooc.util.renderTemplateWithData('usermenu', {
-          alertMenuItem: mmooc.settings.displayAlertsMenuItem, user: mmooc.api.getUser(), queryString: mmooc.hrefQueryString
+          alertMenuItem: mmooc.settings.displayAlertsMenuItem, 
+          user: mmooc.api.getUser(), 
+          queryString: mmooc.hrefQueryString,
+          displayInboxMenu: mmooc.settings.displayInboxMenu,
         });
         menu.insertAdjacentHTML('afterend', html);
 

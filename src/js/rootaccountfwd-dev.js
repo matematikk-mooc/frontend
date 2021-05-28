@@ -36,5 +36,14 @@ jQuery.extend({
 });
 
 jQuery(document).ready(function($) {
-  $.getScript('http://localhost:9000/rootaccount.js');
+  var filename = 'http://localhost:9000/rootaccount.css';
+
+  var fileref=document.createElement("link")
+  fileref.setAttribute("rel", "stylesheet")
+  fileref.setAttribute("type", "text/css")
+  fileref.setAttribute("href", filename)
+  fileref.onload = (_) => {
+    $.getScript('http://localhost:9000/rootaccount.js');
+  }
+  document.getElementsByTagName("head")[0].appendChild(fileref)
 });

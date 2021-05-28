@@ -1,22 +1,22 @@
 this.mmooc = this.mmooc || {};
 
-this.mmooc.util = (function() {
+this.mmooc.util = (function () {
   return {
     courseListEnum: {
-        normalCourse : 1,
-        allCoursesList : 2,
-        myCoursesList : 3,
-        dataportenCallback : 4,
-        uidpCallback : 5
+      normalCourse: 1,
+      allCoursesList: 2,
+      myCoursesList: 3,
+      dataportenCallback: 4,
+      uidpCallback: 5
     },
-    mmoocLoadScript: function(mmoocScript) {
+    mmoocLoadScript: function (mmoocScript) {
       var mmoocScriptElement = document.createElement('script');
       mmoocScriptElement.setAttribute('charset', 'UTF-8');
       mmoocScriptElement.setAttribute('src', mmoocScript);
       document.body.appendChild(mmoocScriptElement);
     },
 
-    renderTemplateWithData: function(template, data) {
+    renderTemplateWithData: function (template, data) {
       var html = '';
       try {
         html = mmooc.templates[template](data);
@@ -27,7 +27,7 @@ this.mmooc.util = (function() {
       return html;
     },
 
-    getPageTitleBeforeColon: function() {
+    getPageTitleBeforeColon: function () {
       // For discussion pages we only want the title to be "<discussion>" instead of "Discussion: <discussion>"
       var title = document.title;
       if (title.indexOf(':')) {
@@ -36,7 +36,7 @@ this.mmooc.util = (function() {
       return title;
     },
 
-    getPageTitleAfterColon: function() {
+    getPageTitleAfterColon: function () {
       // For discussion pages we only want the title to be "<discussion>" instead of "Discussion: <discussion>"
       var title = document.title;
       if (title.indexOf(':')) {
@@ -45,20 +45,20 @@ this.mmooc.util = (function() {
       return title;
     },
 
-    filterCourse: function(course) {
-      if(!this.mmooc.settings.filterCourses) {
+    filterCourse: function (course) {
+      if (!this.mmooc.settings.filterCourses) {
         return true;
       }
       return this.mmooc.settings.filterCoursesOnAccountId.includes(course.account_id);
     },
-    filterSearchAllCourse: function(course) {
-      if(!this.mmooc.settings.filterCourses) {
+    filterSearchAllCourse: function (course) {
+      if (!this.mmooc.settings.filterCourses) {
         return true;
       }
       return this.mmooc.settings.filterCoursesOnAccountId.includes(course.course.account_id);
     },
-    callWhenElementIsPresent: function(classId, callback) {
-      var checkExist = setInterval(function() {
+    callWhenElementIsPresent: function (classId, callback) {
+      var checkExist = setInterval(function () {
         var checkClassId = classId;
         if ($(checkClassId).length) {
           clearInterval(checkExist);
@@ -67,12 +67,12 @@ this.mmooc.util = (function() {
       }, 100);
     },
 
-    arraySorted: function(array, elementToSort) {
+    arraySorted: function (array, elementToSort) {
       if (
         Object.prototype.toString.call(array) === '[object Array]' &&
         elementToSort
       ) {
-        return array.sort(function(a, b) {
+        return array.sort(function (a, b) {
           if (
             a.hasOwnProperty(elementToSort) &&
             b.hasOwnProperty(elementToSort)
@@ -87,7 +87,7 @@ this.mmooc.util = (function() {
       return array;
     },
 
-    goBack: function(e) {
+    goBack: function (e) {
       //http://stackoverflow.com/questions/9756159/using-javascript-how-to-create-a-go-back-link-that-takes-the-user-to-a-link-i
       var defaultLocation = 'https://server';
       var oldHash = window.location.hash;
@@ -113,7 +113,7 @@ this.mmooc.util = (function() {
         newHash === oldHash &&
         (typeof document.referrer !== 'string' || document.referrer === '')
       ) {
-        window.setTimeout(function() {
+        window.setTimeout(function () {
           // redirect to default location
           window.location.href = defaultLocation;
         }, 1000); // set timeout in ms
@@ -125,7 +125,7 @@ this.mmooc.util = (function() {
       return false; // stop event propagation and browser default event
     },
 
-    adaptHeightToIframeContentForId: function(containerId, frameId) {
+    adaptHeightToIframeContentForId: function (containerId, frameId) {
       var scrollHeight =
         Number(
           document.getElementById(frameId).contentWindow.document.body
@@ -135,7 +135,7 @@ this.mmooc.util = (function() {
         scrollHeight + 'px';
     },
 
-    isEnrolledAsStudent: function(enrollments) {
+    isEnrolledAsStudent: function (enrollments) {
       for (var i = 0; i < enrollments.length; i++) {
         if (enrollments[i].role == 'StudentEnrollment') {
           return true;
@@ -143,7 +143,7 @@ this.mmooc.util = (function() {
       }
       return false;
     },
-    isEnrolledAsObserver: function(enrollments) {
+    isEnrolledAsObserver: function (enrollments) {
       for (var i = 0; i < enrollments.length; i++) {
         if (enrollments[i].role == 'ObserverEnrollment') {
           return true;
@@ -151,37 +151,36 @@ this.mmooc.util = (function() {
       }
       return false;
     },
-    enrollmentsHasRoleInCourse : function(enrollments, role) {
-      for(i = 0; i < enrollments.length; i++) {
+    enrollmentsHasRoleInCourse: function (enrollments, role) {
+      for (i = 0; i < enrollments.length; i++) {
         let enrollment = enrollments[i];
-        if(enrollment["role"] == role)
-        {
-            return true;
+        if (enrollment["role"] == role) {
+          return true;
         }
       }
       return false;
     },
-    hasRoleInCourse : function(courseId, role, callback) {
-      return function(callback, role) {
-          mmooc.api.getUsersEnrollmentsForCourse(courseId, function(enrollments) {
-            callback(mmooc.util.enrollmentsHasRoleInCourse(enrollments, role));
-          });
+    hasRoleInCourse: function (courseId, role, callback) {
+      return function (callback, role) {
+        mmooc.api.getUsersEnrollmentsForCourse(courseId, function (enrollments) {
+          callback(mmooc.util.enrollmentsHasRoleInCourse(enrollments, role));
+        });
       }(callback, role)
     },
-    isTeacherOrAdmin: function() {
+    isTeacherOrAdmin: function () {
       var roles = mmooc.api.getRoles();
       return (
         roles != null &&
         (roles.indexOf('teacher') != -1 || roles.indexOf('admin') != -1)
       );
     },
-    isObserver: function(course) {
-      if(course && course.enrollments) {
+    isObserver: function (course) {
+      if (course && course.enrollments) {
         return this.isEnrolledAsObserver(course.enrollments);
       }
     },
     isEnrolledWithRole(course, role) {
-      if(course && course.enrollments) {
+      if (course && course.enrollments) {
         for (var i = 0; i < course.enrollments.length; i++) {
           if (course.enrollments[i].role == role) {
             return true;
@@ -190,63 +189,52 @@ this.mmooc.util = (function() {
       }
       return false;
     },
-    isPfDKCourse: function(course) {
-      if(course && course.course_code.indexOf('::PfDK::') > -1) {
-        return true;
-      }
-      return false;
-    },
+    isPfDKCourse: CourseOptions.hasOptionFunction('PfDK'),
+    isMultilangCourse: CourseOptions.hasOptionFunction('lang'),
     isPrincipal() {
       return (this.isTeacherOrAdmin() || this.isEnrolledWithRole(mmooc.util.course, mmooc.settings.principalRoleType));
     },
-    isRoleBasedCourse(course) {
-      if (course && course.course_code.indexOf('::Role::') > -1) {
-        return true;
-      }
-      return false;
-    },
+    isRoleBasedCourse: CourseOptions.hasOptionFunction('role'),
     isMMOOCLicense() {
-      if(mmooc.util.course && mmooc.util.course.course_code.indexOf('::MMOOCLICENSE::') > -1) {
-        return true;
-      }
-      return false;
+      return CourseOptions.hasOption(mmooc.util.course, 'MMOOCLICENSE');
     },
     postModuleProcessing() {
       try {
-          let html = '<div class="login-box" style="position: fixed">Laster diskusjonen</div>';    
-          $("#wrapper").append(html);
-          setInterval(function() {
-            console.log("postModuleProcessing intervall timer called")
-            $(".login-box").append(".");
-          } , 1000);
+        let html = '<div class="login-box" style="position: fixed">Laster diskusjonen</div>';
+        $("#wrapper").append(html);
+        setInterval(function () {
+          console.log("postModuleProcessing intervall timer called")
+          $(".login-box").append(".");
+        }, 1000);
       } catch (e) {
         console.log(e);
       }
     },
     postModuleCoursePageProcessing() {
       try {
-        $(".mmooc-module-items-icons-Discussion").click(function(){
-            mmooc.util.postModuleProcessing()
-        }); 
+        $(".mmooc-module-items-icons-Discussion").click(function () {
+          mmooc.util.postModuleProcessing()
+        });
       } catch (e) {
         console.log(e);
       }
     },
     postModuleMenuProcessing() {
       try {
-        $(".mmooc-module-items-icons-Discussion").parent().click(function(){
-            mmooc.util.postModuleProcessing()
-        }); 
+        $(".mmooc-module-items-icons-Discussion").parent().click(function () {
+          mmooc.util.postModuleProcessing()
+        });
       } catch (e) {
         console.log(e);
       }
     },
-    
+  
+
     isAlertMsg(course) {
-      if(course) {
+      if (course) {
         var arr = course.course_code.split("::");
-        for(var i = 0; i < arr.length; i++) {
-          if(arr[i] == "ALERTMSG") {
+        for (var i = 0; i < arr.length; i++) {
+          if (arr[i] == "ALERTMSG") {
             return arr[i + 1];
           }
         }
@@ -254,11 +242,33 @@ this.mmooc.util = (function() {
       return "";
     },
     isUnmaintained(course) {
-      if(course) {
+      if (course) {
         var arr = course.course_code.split("::");
-        for(var i = 0; i < arr.length; i++) {
-          if(arr[i] == "UNMAINTAINED") {
+        for (var i = 0; i < arr.length; i++) {
+          if (arr[i] == "UNMAINTAINED") {
             return arr[i + 1];
+          }
+        }
+      }
+      return "";
+    },
+    isNotificationToUser(course) {
+      if (course) {
+        var arr = course.course_code.split("::");
+        for (var i =0; i < arr.length; i++) {
+          if (arr[i] == "notificationtouser"){
+            return true ;
+          }
+        }
+      }
+      return "";
+    },
+    isFeedback(course) {
+      if (course) {
+        var arr = course.course_code.split("::");
+        for (var i =0; i < arr.length; i++) {
+          if (arr[i] == "feedback"){
+            return true ;
           }
         }
       }
@@ -267,35 +277,37 @@ this.mmooc.util = (function() {
     //description":"courseId:360:community:1902:940101808"
     getCountyOrCommunityNumber(groupDescription) {
       var arr = groupDescription.split(":");
-      for(var i = 0; i < arr.length; i++) {
-        if((arr[i] == "community") || (arr[i] ==  "county")) {
+      for (var i = 0; i < arr.length; i++) {
+        if ((arr[i] == "community") || (arr[i] == "county")) {
           return parseInt(arr[i + 1], 10);
         }
       }
       return 0;
     },
     updateInformationPane() {
-      mmooc.util.isMemberOfExpiredCommunity(mmooc.util.course, function(isMemberOfExpiredCommunity) {
+      mmooc.util.isMemberOfExpiredCommunity(mmooc.util.course, function (isMemberOfExpiredCommunity) {
         var observer = (mmooc.util.isAuthenticated() && mmooc.util.isObserver(mmooc.util.course));
         var pfdk = mmooc.util.isPfDKCourse(mmooc.util.course);
         var unmaintainedSince = mmooc.util.isUnmaintained(mmooc.util.course);
         var alertMsg = mmooc.util.isAlertMsg(mmooc.util.course);
-        if(observer || pfdk || unmaintainedSince || alertMsg || isMemberOfExpiredCommunity) {
-          mmooc.pages.showInformationPane(observer, pfdk, unmaintainedSince, alertMsg, isMemberOfExpiredCommunity);
+        var notificationtouser= mmooc.util.isNotificationToUser(mmooc.util.course);
+        var feedback= mmooc.util.isFeedback(mmooc.util.course);
+        if (observer || pfdk || unmaintainedSince || alertMsg || isMemberOfExpiredCommunity || notificationtouser || feedback) {
+          mmooc.pages.showInformationPane(observer, pfdk, unmaintainedSince, alertMsg, isMemberOfExpiredCommunity, notificationtouser, feedback);
         } else {
           mmooc.pages.hideInformationPane();
         }
       });
     },
     isMemberOfExpiredCommunity(course, callback) {
-      mmooc.api.getUserGroupsForCourse(course.id, function(groups) {
+      mmooc.api.getUserGroupsForCourse(course.id, function (groups) {
         var memberOfUtgaattKommune = false;
-        if(groups.length) {
-          for(var i = 0; i < groups.length; i++) {
+        if (groups.length) {
+          for (var i = 0; i < groups.length; i++) {
             var group = groups[i];
             var countyOrCommunityNumber = mmooc.util.getCountyOrCommunityNumber(group.description);
-            if(countyOrCommunityNumber) {
-              if(utgaatteKommuneNr.indexOf(countyOrCommunityNumber) > -1) {
+            if (countyOrCommunityNumber) {
+              if (utgaatteKommuneNr.indexOf(countyOrCommunityNumber) > -1) {
                 memberOfUtgaattKommune = true;
                 break;
               }
@@ -308,21 +320,35 @@ this.mmooc.util = (function() {
     isActiveCourseRoleBased() {
       return mmooc.util.isRoleBasedCourse(mmooc.util.course);
     },
-    isAuthenticated: function() {
+    isAuthenticated: function () {
       return mmooc.api.getRoles() !== null;
     },
 
-    firstIncompleteItemHtmlUrl: function(items, bIncludeIndentedItems) {
+    getGroupsInfo(groups) {
+      var groupsInfo = {};
+      for (var i = 0; i < groups.length; i++) {
+        if (groups[i].description) {
+          var s = groups[i].description.split(":");
+          if (s[2] == "community") {
+            groupsInfo.municipalityId = s[3];
+          } else if (s[2] == "county") {
+            groupsInfo.countyId = s[3];
+          }
+        }
+      }
+      return groupsInfo;
+    },
+    firstIncompleteItemHtmlUrl: function (items, bIncludeIndentedItems) {
       var firstHtmlUrl = null;
       var firstItem = null;
       if (items != null && items != undefined && items.length > 0) {
         for (var i = 0; i < items.length; i++) {
           var item = items[i];
-          if(!firstHtmlUrl && item.html_url) {
+          if (!firstHtmlUrl && item.html_url) {
             firstHtmlUrl = item.html_url;
           }
           if (item.completion_requirement && !(item.indent && !bIncludeIndentedItems)) {
-            if(!firstItem) {
+            if (!firstItem) {
               firstItem = item;
             }
             if (!item.completion_requirement.completed) {
@@ -331,13 +357,13 @@ this.mmooc.util = (function() {
           }
         }
       }
-      if(firstItem) {
+      if (firstItem) {
         return firstItem.html_url;
       }
       return firstHtmlUrl;
     },
 
-    percentageProgress: function(modules, bIncludeIndentedItems) {
+    percentageProgress: function (modules, bIncludeIndentedItems) {
       var total = 0;
       var completed = 0;
 
@@ -359,33 +385,32 @@ this.mmooc.util = (function() {
     },
     updateProgressForRoleBasedCourses: function (courses) {
       const error = error => console.error('error calling api', error);
-      for(var i = 0; i < courses.length; i++) {
+      for (var i = 0; i < courses.length; i++) {
         var course = courses[i];
-        if(mmooc.util.isRoleBasedCourse(course) && !mmooc.util.isEnrolledWithRole(course, mmooc.settings.principalRoleType)) {
-          mmooc.api.listModulesForCourse( 
-          (function(courseId){ 
-            return function(modules) {
-              var bIncludeIndentedItems = false;
-              var p = mmooc.util.percentageProgress(modules, bIncludeIndentedItems);
-              var divId = "#course_" + courseId + "> div > div.mmooc-course-list-progress > div ";
-              $(divId + " > div").attr("style", "width:" + p + "%; -webkit-transition: width 2s; transition: width 2s;");
-              if(p == 100)
-              {
-                $(divId).addClass("mmooc-progress-bar-done");
-              }
-            };
-          })(course.id)
-          ,error, course.id);
+        if (mmooc.util.isRoleBasedCourse(course) && !mmooc.util.isEnrolledWithRole(course, mmooc.settings.principalRoleType)) {
+          mmooc.api.listModulesForCourse(
+            (function (courseId) {
+              return function (modules) {
+                var bIncludeIndentedItems = false;
+                var p = mmooc.util.percentageProgress(modules, bIncludeIndentedItems);
+                var divId = "#course_" + courseId + "> div > div.mmooc-course-list-progress > div ";
+                $(divId + " > div").attr("style", "width:" + p + "%; -webkit-transition: width 2s; transition: width 2s;");
+                if (p == 100) {
+                  $(divId).addClass("mmooc-progress-bar-done");
+                }
+              };
+            })(course.id)
+            , error, course.id);
         }
       }
     },
-    setGlobalPeerReviewButtonState: function() {
+    setGlobalPeerReviewButtonState: function () {
       if (mmooc.settings.disablePeerReviewButton == true) {
         $('.assignments #right-side :submit').prop('disabled', true);
       }
     },
 
-    formattedDate: function(date) {
+    formattedDate: function (date) {
       var date = new Date(date);
       var month = mmooc.util.getMonthShortName(date);
       return (
@@ -402,12 +427,12 @@ this.mmooc.util = (function() {
       );
     },
 
-    getWeekdayShortName: function(date) {
+    getWeekdayShortName: function (date) {
       var weekdays = ['sø', 'ma', 'ti', 'on', 'to', 'fr', 'lø'];
       return weekdays[date.getDay()];
     },
 
-    getMonthShortName: function(date) {
+    getMonthShortName: function (date) {
       var months = [
         'jan',
         'feb',
@@ -424,7 +449,7 @@ this.mmooc.util = (function() {
       ];
       return months[date.getMonth()];
     },
-    getCourseCategories: function(courses) {
+    getCourseCategories: function (courses) {
       var categorys = [];
       var hasOther = false;
       for (var i = 0; i < courses.length; i++) {
@@ -437,31 +462,31 @@ this.mmooc.util = (function() {
           }
         }
       }
-//      categorys.sort();
+      //      categorys.sort();
       if (hasOther) {
         categorys.push('Andre');
       }
       return categorys;
     },
-    sortCourses: function(courses) {
-      return courses.sort(function(a,b) {
+    sortCourses: function (courses) {
+      return courses.sort(function (a, b) {
         var aParams = a.course_code.split("::");
-        if(aParams.length < 2) {
+        if (aParams.length < 2) {
           return 1;
         }
 
-        var aCourseCode = aParams[aParams.length-1];
+        var aCourseCode = aParams[aParams.length - 1];
 
         var bParams = b.course_code.split("::");
-        if(bParams.length < 2) {
+        if (bParams.length < 2) {
           return -1;
         }
-        var bCourseCode = bParams[bParams.length-1];
+        var bCourseCode = bParams[bParams.length - 1];
 
         return aCourseCode < bCourseCode ? -1 : 1;
       });
     },
-    getCoursesCategorized: function(courses, categorys) {
+    getCoursesCategorized: function (courses, categorys) {
       var coursesCategorized = [];
       for (var i = 0; i < categorys.length; i++) {
         var categoryCourses = [];
@@ -471,10 +496,10 @@ this.mmooc.util = (function() {
             categoryCourses.push(courses[j]);
           }
         }
-/*        categoryCourses.sort(function(a, b) {
-          return a.course_code > b.course_code;
-        });
-*/        
+        /*        categoryCourses.sort(function(a, b) {
+                  return a.course_code > b.course_code;
+                });
+        */
         var categoryObj = {
           title: categorys[i],
           courses: categoryCourses
@@ -483,24 +508,24 @@ this.mmooc.util = (function() {
       }
       return coursesCategorized;
     },
-    getCourseCategory: function(courseCode) {
+    getCourseCategory: function (courseCode) {
       var category = 'Andre';
       if (courseCode && courseCode.indexOf('::') > -1) {
         category = courseCode.substring(0, courseCode.indexOf('::'));
       }
       return category;
     },
-    getToolsInLeftMenu: function(path) {
+    getToolsInLeftMenu: function (path) {
       var modulesFound = false;
       var toolList = [];
       var activeToolName = 'Verktøy';
       var activeToolPath = '';
 
-      $('#section-tabs .section > a').each(function() {
+      $('#section-tabs .section > a').each(function () {
         var currentClass = $(this).attr('class');
         if (modulesFound && currentClass != 'settings') {
           var href = $(this).attr('href');
-          var title = $(this).attr('title');
+          var title = $(this).html();
           var activeTool = false;
           if (href == path) {
             activeTool = true;
@@ -522,11 +547,11 @@ this.mmooc.util = (function() {
         toolList: toolList
       };
     },
-    debounce: function(func, wait, immediate) {
+    debounce: function (func, wait, immediate) {
       var timeout;
-      return function() {
+      return function () {
         var context = this, args = arguments;
-        var later = function() {
+        var later = function () {
           timeout = null;
           if (!immediate) func.apply(context, args);
         };
@@ -536,7 +561,7 @@ this.mmooc.util = (function() {
         if (callNow) func.apply(context, args);
       };
     },
-    filter: function(arr, fun) {
+    filter: function (arr, fun) {
       var len = arr.length;
       if (typeof fun != "function")
         throw new TypeError();
@@ -562,58 +587,77 @@ this.mmooc.util = (function() {
         (key, value) => key === "" ? value : decodeURIComponent(value)
       );
     },
-    
-    getLinkToAvailableCourses: function() {
-        var linkToAvailableCourses = "/search/all_courses" + mmooc.hrefQueryString;
-//ETH20190409 By making sure the root account loads our design, we do not need a front page.
-/*
-        if (this.mmooc.allCoursesFrontpageCourseID > 0) {
-            linkToAvailableCourses = "/courses/" + this.mmooc.allCoursesFrontpageCourseID + "?coursesList=1";
-        }
-*/        
-        return linkToAvailableCourses;
+
+    getLinkToAvailableCourses: function () {
+      var linkToAvailableCourses = "/search/all_courses" + mmooc.hrefQueryString;
+      //ETH20190409 By making sure the root account loads our design, we do not need a front page.
+      /*
+              if (this.mmooc.allCoursesFrontpageCourseID > 0) {
+                  linkToAvailableCourses = "/courses/" + this.mmooc.allCoursesFrontpageCourseID + "?coursesList=1";
+              }
+      */
+      return linkToAvailableCourses;
     },
     //This function can probably be deleted now that we use ?udirDesign
-    isCourseFrontpageForAllCoursesList: function() {
+    isCourseFrontpageForAllCoursesList: function () {
       return false;
       const queryString = document.location.search;
       const currentCourseID = mmooc.api.getCurrentCourseId();
 
       const isOverridenCourse = currentCourseID === this.mmooc.allCoursesFrontpageCourseID;
       const isNotTeacherOrAdmin = !mmooc.util.isTeacherOrAdmin();
-      
-      const urlParamsObj = mmooc.utilRoot.urlParamsToObject();      
-      const isOverridenAnyCourse = urlParamsObj && urlParamsObj['coursesList'];
-      const isDisabledOverridenCourse = urlParamsObj &&  !urlParamsObj['skipCoursesList'];
-      const isMyCourses = urlParamsObj &&  urlParamsObj['myCourses'];
-      const isDataportenCallback = urlParamsObj &&  urlParamsObj['dataportenCallback'];
 
-      const urlHashObj = mmooc.util.urlHashToObject();   
-      const isUidpCallback = urlHashObj &&  urlHashObj['id_token'];
+      const urlParamsObj = mmooc.utilRoot.urlParamsToObject();
+      const isOverridenAnyCourse = urlParamsObj && urlParamsObj['coursesList'];
+      const isDisabledOverridenCourse = urlParamsObj && !urlParamsObj['skipCoursesList'];
+      const isMyCourses = urlParamsObj && urlParamsObj['myCourses'];
+      const isDataportenCallback = urlParamsObj && urlParamsObj['dataportenCallback'];
+
+      const urlHashObj = mmooc.util.urlHashToObject();
+      const isUidpCallback = urlHashObj && urlHashObj['id_token'];
 
       var returnCode = mmooc.util.courseListEnum.normalCourse;
-      
-      if (isOverridenCourse && isNotTeacherOrAdmin && isDisabledOverridenCourse)
-      {
-        returnCode = mmooc.util.courseListEnum.allCoursesList;
-      }        
-      if(isOverridenAnyCourse)
-      {
+
+      if (isOverridenCourse && isNotTeacherOrAdmin && isDisabledOverridenCourse) {
         returnCode = mmooc.util.courseListEnum.allCoursesList;
       }
-      if (isMyCourses)
-      {
+      if (isOverridenAnyCourse) {
+        returnCode = mmooc.util.courseListEnum.allCoursesList;
+      }
+      if (isMyCourses) {
         returnCode = mmooc.util.courseListEnum.myCoursesList;
       }
-      if (isDataportenCallback)
-      {
+      if (isDataportenCallback) {
         returnCode = mmooc.util.courseListEnum.dataportenCallback;
-      }
-      else if(isUidpCallback)
-      {
+      } else if (isUidpCallback) {
         returnCode = mmooc.util.courseListEnum.uidpCallback;
       }
       return returnCode;
+    },
+    tinyMceEditorIsInDOM(callback) {
+      this.executeCallbackWhenObjectExists(function () {
+        this.tinyMCE.activeEditor;
+      }, callback);
+    },
+    executeCallbackWhenObjectExists(functionWithObjectReference, callback) {
+      let counter = 0;
+      let maxTries = 10;
+      let success = false;
+      var objectExistInterval = setInterval(function () {
+        try {
+          if (!success) {
+            functionWithObjectReference();
+            clearInterval(objectExistInterval);
+            callback();
+            success = true;
+          }
+        } catch (e) {
+          counter += 1;
+          if (counter >= maxTries) {
+            clearInterval(objectExistInterval);
+          }
+        }
+      }, 1000);
     }
   };
 })();
