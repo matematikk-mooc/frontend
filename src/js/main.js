@@ -1,6 +1,7 @@
 jQuery(function($) {
   //Multilanguage KURSP-279 Css must be present before javascript is run.
-  mmooc.multilanguage.insertCss();
+  //KURSP-376-multilanguage-fix 
+  mmooc.multilanguage.initializeCss();
 
   mmooc.routes.addRouteForPath(/\/$/, function() {
     var parentId = 'wrapper';
@@ -148,6 +149,7 @@ jQuery(function($) {
   });
 
   mmooc.routes.addRouteForPath(/\/profile\/settings$/, function() {
+    var elementId = document.getElementById('confirm_email_channel');
     if(!mmooc.settings.displayProfileLeftMenu) {
       document.getElementById("section-tabs").style.display = "none";
     }
@@ -155,7 +157,7 @@ jQuery(function($) {
       'notifications',
       {}
     );
-    if(!mmooc.settings.displayUserMergeButton) {
+    if(mmooc.settings.displayUserMergeButton) {
       var mergeUserButtonHTML = mmooc.util.renderTemplateWithData(
         'usermerge',
         {userId:mmooc.api.getUser().id, userMergeLtiToolId:mmooc.settings.userMergeLtiToolId}
@@ -163,7 +165,6 @@ jQuery(function($) {
       elementId.insertAdjacentHTML('beforebegin', mergeUserButtonHTML);
     }
 
-    var elementId = document.getElementById('confirm_email_channel');
     elementId.insertAdjacentHTML('beforebegin', notificationButtonHTML);
   });
 
@@ -550,6 +551,11 @@ jQuery(function($) {
           courseId,
           function(course) {
             mmooc.util.course = course;
+            //KURSP-376-multilanguage-fix
+            if (mmooc.util.isMultilangCourse(mmooc.util.course)) {
+              var langCode = MultilangUtils.getLanguageCode();
+              MultilangUtils.setActiveLanguage(langCode);
+            }
             mmooc.routes.performHandlerForUrl(document.location);
           },
           function(error) {

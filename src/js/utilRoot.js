@@ -100,7 +100,7 @@ this.mmooc.utilRoot = function() {
         if (enrollCode) {
           var newHref = "/enroll/" + enrollCode;  // + mmooc.hrefQueryString;
           if(design) {
-            newHref += "&design=" + design; 
+            newHref += "?design=" + design; 
           }
           window.location.href = newHref;
           return true;

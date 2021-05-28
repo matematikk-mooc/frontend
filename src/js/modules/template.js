@@ -21,6 +21,18 @@ Handlebars.registerHelper('ifEquals', function(var1, var2, options) {
   }
 });
 
+Handlebars.registerHelper('ifUnmaintained', function(options) {
+  if(mmooc.util.isUnmaintained(this)) {
+    return options.fn(this);
+  } else {
+    return options.inverse(this);
+  }
+});
+
+Handlebars.registerHelper('courseAlert', function() {
+  return mmooc.util.isUnmaintained(this);
+});
+
 Handlebars.registerHelper('getCourseUrl', function() {
   if (mmooc.util.isAuthenticated()) {
     return '/courses/' + this.id;

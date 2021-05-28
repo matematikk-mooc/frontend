@@ -134,10 +134,15 @@ class MultilangUtils {
     static isValidLanguage(languageCode) {
         return this.LANGUAGES.some(lang => lang.code === languageCode);
     }
-
+    
     static createCss(activeLang) {
         return MultilangUtils.LANGUAGES.map(l => {
-            const displayValue = activeLang.toLowerCase() === l.code ? 'unset' : 'none';
+            var displayValue = "none";
+            if(activeLang == "all") {
+                displayValue = "unset";
+            } else {
+                displayValue = activeLang.toLowerCase() === l.code ? 'unset' : 'none';
+            }
             return `.language:lang(${l.code}) {display:${displayValue};}`
         }).join(" ");
     }
@@ -162,13 +167,11 @@ class MultilangUtils {
         }
         doApply();
     }
-
-    static insertCss() {
-        const langCode = MultilangUtils.getLanguageCode();
+    static initializeCss(language) {
         const styleElement = document.createElement('style');
         styleElement.id = 'language-style';
 
-        styleElement.innerHTML = MultilangUtils.createCss(langCode);
+        styleElement.innerHTML = MultilangUtils.createCss(language);
         document.head.appendChild(styleElement);
     }
 
@@ -220,9 +223,9 @@ this.mmooc.multilanguage = (function () {
         performPrevTooltip: () => {
             MultilangUtils.makeSpansForTooltip('.module-sequence-footer-button--previous');
         },
-        insertCss: () => {
+        initializeCss: () => {
             if (!location.pathname.endsWith('/edit')) {
-                MultilangUtils.insertCss();
+                MultilangUtils.initializeCss("all");
             }
         }
     }
