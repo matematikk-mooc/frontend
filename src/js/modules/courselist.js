@@ -50,6 +50,12 @@ this.mmooc.courseList = (() => {
 
           $.isFunction(callback) && callback();
         });
+      } else {
+        html = mmooc.util.renderTemplateWithData('enrollprivacypolicy', {
+          privacypolicylink: mmooc.settings.privacyPolicyLink
+        });
+  
+        $(".terms_of_service_link").html(html);
       }
     },
     showAddCourseButton() {

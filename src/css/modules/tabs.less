@@ -10,7 +10,8 @@
     outline: none;
     
     svg {
-      margin-left: 8px;
+      margin-right: 8px;
+      overflow: visible;
     }
   }
 
@@ -54,10 +55,11 @@
 
     .mmooc-tab-head {
       width: 326px;
-      padding-left: 40px;
+      padding-left: 8px;
       display: flex;
       justify-content: flex-start;
       align-items: center;
+      text-align: left;
     }
   }
 
@@ -67,9 +69,14 @@
     .mmooc-tab-content {
       flex-direction: column;
 
-      p {
+      p.mmooc-tab-content-description {
         margin: 0;
-        padding: 40px;
+        padding: 20px 40px 20px 40px;
+        flex-grow: 1;
+      }
+      p.mmooc-tab-content-alert {
+        margin: 0;
+        padding: 0px 40px 20px 40px;
         flex-grow: 1;
       }
 
@@ -86,10 +93,6 @@
         .mmooc-button-ctr {
           flex-direction: column;
         }
-
-        .mmooc-button {
-          margin-bottom: 24px;
-        }
       }
     }
 
@@ -105,6 +108,7 @@
     padding: 24px 24px 24px 40px;
     display: flex;
     align-items: center;
+    text-align: left;
 
     * {
       pointer-events: none;
@@ -121,7 +125,15 @@
       margin: 0;
       padding-bottom: 30px;
     }
-  }
+    .mmooc-button-ctr {
+      padding: 0 0 40px 40px;
+      display: flex;
+
+      .mmooc-button {
+        margin-right: 24px;
+      }
+    }
+}
 
   .mmooc-tabs-mobile-content-active {
     display: block;

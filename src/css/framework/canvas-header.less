@@ -1,5 +1,6 @@
 #application.ic-app {
   #header.ic-app-header {
+    display:block !important;
     min-height: 80px;
     width: 100%;
     background-color: @darkTealColor;
@@ -18,12 +19,8 @@
       width: 100%;
       justify-content: space-between;
       margin: 0 auto;
-      max-width: 1196px;
+      max-width: @maxWidth;
       padding: 0 20px;
-
-      @media screen and (max-width: 768px) {
-        flex-flow: wrap;
-      }
 
       .ic-app-header__logomark-container {
         width: @logo-width;
@@ -33,14 +30,10 @@
         // IE11 fallback for Flex bug
         min-width: @logo-width;
 
-        @media screen and (max-width: 1050px) {
+        @media screen and (max-width: @smallScreenCutoff) {
           flex-basis: 33%;
           margin: 0;
           order: 1;
-        }
-
-        @media screen and (max-width: 768px) {
-          flex-basis: 100%;
         }
 
         .ic-app-header__logomark {
@@ -54,7 +47,7 @@
           transition: none;
           margin: 20px 0;
 
-          @media screen and (max-width: 1050px) {
+          @media screen and (max-width: @smallScreenCutoff) {
             flex-basis: 100%;
             margin: 20px auto;
             background-position: center;
@@ -72,12 +65,7 @@
       align-items: center;
       flex-basis: 100%;
 
-      @media screen and (max-width: 768px) {
-        flex-basis: 100%;
-        order: 3;
-      }
-
-      @media screen and (max-width: 1050px) {
+      @media screen and (max-width: @smallScreenCutoff) {
         flex-basis: 33%;
         order: 0;
         flex-direction: column;
@@ -101,12 +89,39 @@
           display: none;
         }
 
-        @media screen and (max-width: 1050px) {
+        @media screen and (max-width: @smallScreenCutoff) {
           width: 100%;
           float: none;
           min-width: 250px;
         }
+        //KURSP-202
+        button{
+          &#global_nav_profile_link {
+            display: none;
+          }
+          &#global_nav_history_link{
+            display:none;
+          }
+          &#global_nav_courses_link {
+            // courses and Groups menu hidden as default, since we replace it with our own Courses link
+            display: none;
+          }
 
+          &#global_nav_accounts_link {
+            // admin link hidden as default, since we replace it with our own admin link
+            display: none;
+          }
+
+          &#global_nav_groups_link {
+            // groups link hidden as default, since we replace it with our own groups link
+            display: none;
+          }
+
+          &#global_nav_calendar_link {
+            // calendar link hidden as default, since we replace it with our own calendar link
+            display: none;
+          }
+        }
         a {
           padding-left: 18px;
           padding-right: 18px;
@@ -118,7 +133,7 @@
           justify-content: center;
           height: 100%;
 
-          @media screen and (max-width: 1050px) {
+          @media screen and (max-width: @smallScreenCutoff) {
             width: 100%;
             justify-content: flex-start;
             padding-left: 28px;
@@ -143,7 +158,7 @@
             border-bottom: 4px solid @white;
             padding-top: 8px;
           }
-
+          
           &#global_nav_dashboard_link,
           &#global_nav_conversations_link {
             display: none;
@@ -153,7 +168,7 @@
             // hides icon used in new UI
             display: none;
           }
-
+          //WILL BE DEAD CODE COME NEXT RELEASE(NOV 2020) KURSP-202
           &#global_nav_profile_link {
             display: none;
 
@@ -166,22 +181,7 @@
               display: none;
             }
           }
-
-          &#global_nav_courses_link {
-            // courses and Groups menu hidden as default, since we replace it with our own Courses link
-            display: none;
-          }
-
-          &#global_nav_accounts_link {
-            // admin link hidden as default, since we replace it with our own admin link
-            display: none;
-          }
-
-          &#global_nav_groups_link {
-            // groups link hidden as default, since we replace it with our own groups link
-            display: none;
-          }
-
+        //This has to stay due to still being under the A-tab. The rest is under button and moved. Kursp-202
           &#global_nav_calendar_link {
             // calendar link hidden as default, since we replace it with our own calendar link
             display: none;
@@ -205,19 +205,17 @@
     #user-menu {
       display: flex;
       padding-top: 27px;
-      min-width: 195px;
-      margin-right: -20px;
 
-      @media screen and (max-width: 1050px) {
+      @media screen and (max-width: @smallScreenCutoff) {
         margin-right: 0;
-      }
-
-      @media screen and (max-width: 768px) {
-        padding-top: 0;
       }
     }
   }
 
+  #mobile-header {
+      display: none;
+  }
+  
   .menu-mobile {
     display: none;
 
@@ -225,7 +223,7 @@
       cursor: pointer;
     }
 
-    @media screen and (max-width: 1050px) {
+    @media screen and (max-width: @smallScreenCutoff) {
       display: block;
       padding-top: 30px;
       padding-left: 10px;
@@ -235,11 +233,6 @@
       font-size: 25px;
       font-weight: bold;
       flex-basis: 33%;
-    }
-
-    @media screen and (max-width: 768px) {
-      position: absolute;
-      top: 54px;
     }
   }
 }

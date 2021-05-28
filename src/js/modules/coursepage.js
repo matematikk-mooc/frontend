@@ -46,6 +46,7 @@ this.mmooc.coursePage = (function() {
             course: mmooc.util.course
           });
         }
+        
         if(mmooc.util.isMMOOCLicense()) {
           mmooc.footer.addLicenseInFooter();
         }
@@ -57,6 +58,12 @@ this.mmooc.coursePage = (function() {
         document
           .getElementById('course_home_content')
           .insertAdjacentHTML('beforebegin', modulesHTML);
+
+        mmooc.multilanguage.perform();
+  
+        //Canvas case: Slow loading for group discussions when large number of groups Case # 05035288 
+        //Display popup box when loading
+        mmooc.util.postModuleCoursePageProcessing();
 
         mmooc.discussionTopics.printDiscussionUnreadCount(
           modules,

@@ -45,19 +45,24 @@
                 <div class="mmooc-tab-heads">
                     {{#each courses}}
                     <span class="{{id}}" data-name="course">
-                    <button id="mmooc-tab-head-{{id}}" class="mmooc-tab-head mmooc-tab-head-{{@index}}" index="{{id}}">
-                        {{name}}
-                        {{#if enrolled}}
-                            <svg width="16" height="16" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><path d="M-4-4h24v24H-4z"/><path d="M8 0c4.416 0 8 3.584 8 8s-3.584 8-8 8-8-3.584-8-8 3.584-8 8-8zM6.4 12l6.43-6.43-1.127-1.137L6.4 9.736 3.528 6.872 2.4 8l4 4z" fill="#00AC18" fill-rule="nonzero"/></g></svg>
-                        {{/if}}
-                    </button>
+                        <button id="mmooc-tab-head-{{id}}" class="mmooc-tab-head mmooc-tab-head-{{@index}}" index="{{id}}">
+                            {{#if enrolled}}
+                                <svg width="16" height="16" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><path d="M-4-4h24v24H-4z"/><path d="M8 0c4.416 0 8 3.584 8 8s-3.584 8-8 8-8-3.584-8-8 3.584-8 8-8zM6.4 12l6.43-6.43-1.127-1.137L6.4 9.736 3.528 6.872 2.4 8l4 4z" fill="#00AC18" fill-rule="nonzero"/></g></svg>
+                            {{else}}
+                                <svg width="16" height="16" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><path d="M-4-4h24v24H-4z"/><path d="M8 0c4.416 0 8 3.584 8 8s-3.584 8-8 8-8-3.584-8-8 3.584-8 8-8z" stroke-opaicty="0.0" fill-opacity="0.0" fill-rule="nonzero"/></g></svg>
+                            {{/if}}
+                            {{name}}
+                        </button>
                     </span>
                     {{/each}}
                 </div>
                 <div class="mmooc-tab-content-ctr">
                     {{#each courses}}
                     <div id="mmooc-tab-content-{{id}}" class="mmooc-tab-content mmooc-tab-content-{{@index}}">
-                        <p>{{public_description}}</p>
+                        <p class="mmooc-tab-content-description">{{public_description}}</p>
+                        {{#ifUnmaintained}}
+                            <p class="mmooc-tab-content-alert"><b>NB! Denne kompetansepakken ble sist vedlikeholdt i {{courseAlert}}</b></p>
+                        {{/ifUnmaintained}}
                         <div class="mmooc-button-ctr">
                             {{#unless ../isAuthenticated}}
                               <a class="mmooc-button mmooc-button-primary" href="/courses{{../../queryString}}&enroll_code={{self_enrollment_code}}">
