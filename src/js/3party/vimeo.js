@@ -88,13 +88,13 @@ this.mmooc.vimeo = function() {
 		{
 			console.log("Clear caption index ") + currentCaptionIndex;
 			var timeStampId = getTimeIdFromTimestampIndex(currentCaptionIndex);
-			$("#"+timeStampId).css('background-color', '');
+			$("#"+timeStampId).removeClass("vimeoCaptionActive");
 		}
 
 		var highlightNextCaption = function ()
 		{
 			var timestampId = getTimeIdFromTimestampIndex(nextCaptionIndex);
-			$("#"+timestampId).css('background-color', 'yellow');
+			$("#"+timestampId).addClass("vimeoCaptionActive");
 			console.log("Timestamp id:" + timestampId);
 			var target = document.getElementById(timestampId);
 			var targetParent = document.getElementById(transcriptContentId);
@@ -248,7 +248,18 @@ this.mmooc.vimeo = function() {
 			}
 			this.setCaptionTimeout(timeoutValue);
 		};
-		this.updateTranscriptText = function(languageCode) {
+		this.removeLeadingAndTrailingDash = function(s) {
+			if(s[0] == "-") {
+				s = s.slice(1, s.length);
+			}
+			s = s.replace(/ +$/, '');
+			if(s[s.length-1] == "-") {
+				s = s.slice(0, -1);
+			}
+			s += " ";
+			return s;
+		};
+		this.updateTranscriptText = function(p, languageCode) {
 			captions = captionsArr[languageCode];
 			var srt_output = '<p>';
 			var noOfSentencesInParagraph = 0;
@@ -257,6 +268,7 @@ this.mmooc.vimeo = function() {
 				start =+ getStartTimeFromCaption(i);
 
 				captionText = captions[i].textContent.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+				captionText = this.removeLeadingAndTrailingDash(captionText);
 				var timestampId = getTimeIdFromTimestampIndex(i);
 				srt_output += "<span class='btnVimeoSeek' data-seek='" + start + "' id='" + timestampId + "'>" + captionText + "</span> ";
 				noOfSentencesInParagraph++;
@@ -267,8 +279,7 @@ this.mmooc.vimeo = function() {
 			};
 			srt_output += "</p>";
 
-			var e = document.getElementById(transcriptContentId);
-			e.innerHTML = srt_output;
+			p.innerHTML = srt_output;
 		}
 		this.displayErrorMessage = function(msg) {
 			var e = document.getElementById(transcriptContentId);
@@ -312,24 +323,29 @@ this.mmooc.vimeo = function() {
 	
 				return false;
 			});
-			return p;	
+			return {transcriptArea:p, transcriptContentArea: e};
 		}		  
-		this.createLanguageMenu = function(p, selectedLanguage) {
+		this.createLanguageMenu = function(oTranscriptArea, selectedLanguage) {
 			var e = document.createElement('span');
-			p.appendChild(e);
+			oTranscriptArea.transcriptArea.appendChild(e);
 			var transcript = this;
 			player.getTextTracks().then(function(tracks) {
 				console.log(tracks);
 				var transcriptSelectId = transcript.getTranscriptSelectId();
+				var s = document.createElement('select');
+				e.appendChild(s);
+				s.setAttribute("id", transcriptSelectId);
+				s.setAttribute("class", "vimeoSelectLanguage");
+				s.setAttribute("style", "display: none;");
+	
 				var html = mmooc.util.renderTemplateWithData('transcriptMenu', {
 					transcriptSelectId: transcriptSelectId,
 					languageTracks: tracks,
 					selectedLanguage: selectedLanguage
 				});
-				e.innerHTML = html;
-				var s = document.getElementById(transcriptSelectId);
+				s.innerHTML = html;
 				function show(){
-				  transcript.updateTranscriptText(s.value);
+				  transcript.updateTranscriptText(oTranscriptArea.transcriptContentArea, s.value);
 				  console.log(s.value);
 				}
 				s.onchange=show;
@@ -371,8 +387,6 @@ this.mmooc.vimeo = function() {
 			var e = document.getElementById(transcriptLoadingId);
 			e.setAttribute("style", "display: none;");
 
-			var p = transcript.createTranscriptArea();
-
 			var error = transcriptXml.getElementsByTagName('error');
 			if(error.length) {
 				var errorMessage = error[0];
@@ -393,14 +407,20 @@ this.mmooc.vimeo = function() {
 					if(languageCode == preferredLanguage) {
 						selectedLanguageCode = languageCode;
 					}
+					if(selectedLanguageCode == "") {
+						selectedLanguageCode = languageCode; //Default to first language available.
+					}
 					captionsArr[languageCode] = language.getElementsByTagName('text');
 				}
 				if(selectedLanguageCode == "" && nbLanguageAvailable) {
 					selectedLanguageCode = "nb";
 				}
 				captionsLoaded = true;
-				transcript.createLanguageMenu(p, selectedLanguageCode);
-				transcript.updateTranscriptText(selectedLanguageCode);
+
+				var oTranscriptArea = transcript.createTranscriptArea();
+
+				transcript.createLanguageMenu(oTranscriptArea, selectedLanguageCode);
+				transcript.updateTranscriptText(oTranscriptArea.transcriptContentArea, selectedLanguageCode);
 				player.getPaused().then(function(paused) {
 					if(!paused) {
 						transcript.playerPlaying();

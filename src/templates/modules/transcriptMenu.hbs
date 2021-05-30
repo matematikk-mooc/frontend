@@ -1,4 +1,3 @@
-  <select style="display: none;" class="vimeoSelectLanguage" id="{{transcriptSelectId}}">
         {{#each languageTracks}}
         <option value="{{this.language}}" 
         {{#ifEquals this.language ../selectedLanguage}}
@@ -6,4 +5,3 @@
         {{/ifEquals}}
         >{{this.label}}</option>
         {{/each}}
-  </select>
