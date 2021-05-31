@@ -4,12 +4,14 @@ this.mmooc.courseList = (() => {
   return {
     listCourses(parentId, callback) {
       if (document.getElementsByClassName('reaccept_terms').length === 0) {
+        let htmlLoading = `<div class='mmooc-loader-wrapper'><span class='loading-gif'></span></div>`;
+        $(`#${parentId}`).html(htmlLoading); //overwrite the contents in parentID and display: 'Laster kurs....'
+
         mmooc.api.getEnrolledCourses(courses => {
+          $('.mmooc-loader-wrapper').remove();
+
           const $oldContent = $(`#${parentId}`).children(); //After an update the 'Add course button' is in #content including a popupform. So we need to move this to another place in the DOM so we don't overwrite it.
           $oldContent.appendTo('#right-side-wrapper #right-side');
-          $(`#${parentId}`).html(
-            `<div>Laster ${mmooc.i18n.CoursePlural.toLowerCase()}....</div>`
-          ); //overwrite the contents in parentID and display: 'Laster kurs....'
           let html = '';
           let linkToAvailableCourses = mmooc.util.getLinkToAvailableCourses(); 
           if (courses.length == 0) {
