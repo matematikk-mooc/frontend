@@ -1,11 +1,15 @@
 .btnVimeoSeek {
     cursor: pointer;
 }
-.btnVimeoSeek:active {
-  background-color: yellow;
+
+.vimeoCaptionActive {
+  background-color: @captionHighLightedColor;
+  outline: 1px solid rgba(42,181,115,.5);
+  outline-offset:-1px;
 }
+
 .btnVimeoSeek:hover {
-  background-color: lightskyblue;
+  background-color: @captionHoverColor;
 }
 div.transcript {
   height: 110px;
