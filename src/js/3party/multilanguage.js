@@ -119,6 +119,15 @@ class MultilangUtils {
             return 'nb';
         }
     }
+    static getPreferredLanguage() {
+        if(!mmooc.util.isMultilangCourse) {
+            return mmooc.api.getLocale();
+        }
+        if(MultilangUtils.getLanguageCode == "nb") {
+            return mmooc.api.getLocale();
+        }
+        return MultilangUtils.getLanguageCode();
+    }
 
     static setActiveLanguage(activeLang) {
         if (!this.isValidLanguage(activeLang)) {

@@ -7,46 +7,58 @@ this.mmooc.messageHandler = (function() {
             window.addEventListener('message', function(e) {
                 const error = error => console.error('error calling api', error);
                 try {
-                    var message = JSON.parse(e.data);
-                    console.log("Parent received message " + e.data);
-                    if(message.subject == "kpas-lti.getusergroups") {
-                        mmooc.api.getUserGroups(function(groups) {
-                            const usergroupsmsg = {
-                                subject: 'kpas-lti.usergroups',
-                                groups: groups
+                    console.log("Parent received message from " + e.origin);
+                    console.log(e.data);
+                    if(e.origin.includes("vimeo")) {
+                        if((e.data.method == undefined) && (e.data.event == undefined)) {
+                            var message = JSON.parse(e.data);
+                            console.log(e);
+                            if(message.event == "ready") {
+                                console.log("Initialize vimeo.");
+                                mmooc.vimeo.init();
                             }
-                            var sendMsg = JSON.stringify(usergroupsmsg);
-                            e.source.postMessage(sendMsg, e.origin);
-                        }, error);
-                    } else if(message.subject == "kpas-lti.update") {
-                        mmooc.util.updateInformationPane();
-                    } else if(message.subject == "kpas-lti.getBgColor") {
-                        var elem = document.getElementsByTagName("body")[0];
-                        var bgColor = window.getComputedStyle(elem, null).getPropertyValue("background-color");            
-                        const bgColorMessage = {
-                            subject: 'kpas-lti.ltibgcolor',
-                            bgColor: bgColor
                         }
-                        var sendMsg = JSON.stringify(bgColorMessage);
-                        e.source.postMessage(sendMsg, e.origin);
-                    } else if(message.subject == "kpas.frameResize") {
-                        console.log("Resize kpas");
-                        $("#kpas")[0].height = message.height;
-                    } else if(message.subject == "kpas-lti.3pcookiesupported") {
-                        console.log("Din nettleser støtter cookies fra tredjeparter, noe som trengs for å bruke KPAS");
-                    } else if(message.subject == "kpas-lti.3pcookienotsupported") {
-                        var kpasCheckElement = $("#kpas-lti-cookie-check");
-                        kpasCheckElement.html("En automatisk sjekk har funnet at \
-                        du har slått av informasjonskapsler fra tredjepartsnettsteder. \
-                        Du vil ikke kunne velge hvilken rolle eller hvilke grupper du skal delta i.\
-                        <p>Kontakt din IT-avdeling eller les om hvordan du\
-                        <a class='alert-link' target='_blank' href='https://nettvett.no/slik-administrer-du-informasjonskapsler/'>\
-                        aktiverer informasjonskapsler fra tredjeparter.</a>");
-                        kpasCheckElement.show();
-                        console.error("Din nettleser støtter IKKE cookies fra tredjeparter. Rolle og gruppeverktøyet krever cookies fra tredjepart.");
+                    } else {
+                        var message = JSON.parse(e.data);
+                        if(message.subject == "kpas-lti.getusergroups") {
+                            mmooc.api.getUserGroups(function(groups) {
+                                const usergroupsmsg = {
+                                    subject: 'kpas-lti.usergroups',
+                                    groups: groups
+                                }
+                                var sendMsg = JSON.stringify(usergroupsmsg);
+                                e.source.postMessage(sendMsg, e.origin);
+                            }, error);
+                        } else if(message.subject == "kpas-lti.update") {
+                            mmooc.util.updateInformationPane();
+                        } else if(message.subject == "kpas-lti.getBgColor") {
+                            var elem = document.getElementsByTagName("body")[0];
+                            var bgColor = window.getComputedStyle(elem, null).getPropertyValue("background-color");            
+                            const bgColorMessage = {
+                                subject: 'kpas-lti.ltibgcolor',
+                                bgColor: bgColor
+                            }
+                            var sendMsg = JSON.stringify(bgColorMessage);
+                            e.source.postMessage(sendMsg, e.origin);
+                        } else if(message.subject == "kpas.frameResize") {
+                            console.log("Resize kpas");
+                            $("#kpas")[0].height = message.height;
+                        } else if(message.subject == "kpas-lti.3pcookiesupported") {
+                            console.log("Din nettleser støtter cookies fra tredjeparter, noe som trengs for å bruke KPAS");
+                        } else if(message.subject == "kpas-lti.3pcookienotsupported") {
+                            var kpasCheckElement = $("#kpas-lti-cookie-check");
+                            kpasCheckElement.html("En automatisk sjekk har funnet at \
+                            du har slått av informasjonskapsler fra tredjepartsnettsteder. \
+                            Du vil ikke kunne velge hvilken rolle eller hvilke grupper du skal delta i.\
+                            <p>Kontakt din IT-avdeling eller les om hvordan du\
+                            <a class='alert-link' target='_blank' href='https://nettvett.no/slik-administrer-du-informasjonskapsler/'>\
+                            aktiverer informasjonskapsler fra tredjeparter.</a>");
+                            kpasCheckElement.show();
+                            console.error("Din nettleser støtter IKKE cookies fra tredjeparter. Rolle og gruppeverktøyet krever cookies fra tredjepart.");
+                        }
                     }
                 } catch(err) {
-                    console.log.call(console, 'KPAS LTI: skip message');
+                    console.log.call(console, 'KPAS LTI: skip message:' +err);
                 }
             }, false);
             try {
