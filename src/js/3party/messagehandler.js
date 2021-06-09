@@ -2,19 +2,13 @@ this.mmooc = this.mmooc || {};
 this.mmooc.messageHandler = (function() {
     return {
         init: function() {
-            console.log("Listening for KPAS-LTI requests.");
-
             window.addEventListener('message', function(e) {
                 const error = error => console.error('error calling api', error);
                 try {
-                    console.log("Parent received message from " + e.origin);
-                    console.log(e.data);
                     if(e.origin.includes("vimeo")) {
                         if((e.data.method == undefined) && (e.data.event == undefined)) {
                             var message = JSON.parse(e.data);
-                            console.log(e);
                             if(message.event == "ready") {
-                                console.log("Initialize vimeo.");
                                 mmooc.vimeo.init();
                             }
                         }
@@ -41,10 +35,8 @@ this.mmooc.messageHandler = (function() {
                             var sendMsg = JSON.stringify(bgColorMessage);
                             e.source.postMessage(sendMsg, e.origin);
                         } else if(message.subject == "kpas.frameResize") {
-                            console.log("Resize kpas");
                             $("#kpas")[0].height = message.height;
                         } else if(message.subject == "kpas-lti.3pcookiesupported") {
-                            console.log("Din nettleser støtter cookies fra tredjeparter, noe som trengs for å bruke KPAS");
                         } else if(message.subject == "kpas-lti.3pcookienotsupported") {
                             var kpasCheckElement = $("#kpas-lti-cookie-check");
                             kpasCheckElement.html("En automatisk sjekk har funnet at \
@@ -63,7 +55,6 @@ this.mmooc.messageHandler = (function() {
             }, false);
             try {
                 $("#tool_content").ready(function() {
-                    console.log("LTI iframe ready. Informing it parent is also ready.");
                     const ltiparentready = {
                         subject: 'kpas-lti.ltiparentready'
                     }

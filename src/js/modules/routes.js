@@ -46,7 +46,6 @@ this.mmooc.routes = (function() {
               route.hasQueryString = queryString.length;
               route.path = path;
               route.isAlreadyHandled = true;
-              console.log('Handle route: ' + route.paths[j]);
               route.handler();
             }
           }
