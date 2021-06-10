@@ -93,12 +93,6 @@ this.mmooc.pages = (function() {
       buttonHtml += '<i class="icon-student-view"></i>Studentvisning</a>';
       addButton(buttonHtml);
     },
-    addImmersiveReaderButton: function() {
-      var courseId = mmooc.api.getCurrentCourseId();
-      var buttonHtml = '<a class="btn immersive_reader_button" ';
-      addButton(buttonHtml);
-    },
-
 
     updateSidebarWhenMarkedAsDone: function() {
       $('body').on('click', '#mark-as-done-checkbox', function() {
