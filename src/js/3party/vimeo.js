@@ -325,6 +325,7 @@ this.mmooc.vimeo = function() {
 		};
 		this.insertTranscriptParent = function() {
 			transcriptParentDiv = document.createElement('div');
+			transcriptParentDiv.setAttribute("class", "transcriptParent");
 			var e = document.createElement('div');
 			transcriptParentDiv.appendChild(e);
 			e.setAttribute("id", transcriptLoadingId);
