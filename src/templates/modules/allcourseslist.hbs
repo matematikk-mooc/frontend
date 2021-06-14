@@ -3,7 +3,7 @@
         <button id="mmooc-accordion-header-{{index}}" class="mmooc-accordion-header" index={{index}} data-title="{{title}}">
             <div class="mmooc-accordion-header-main" index={{index}}>
                 <div>
-                    <h1>{{title}}</h1>
+                    <h2>{{title}}</h2>
                 </div> 
                 <div>
                     {{#if coursesAmount}}
@@ -65,11 +65,11 @@
                         {{/ifUnmaintained}}
                         <div class="mmooc-button-ctr">
                             {{#unless ../isAuthenticated}}
-                              <a class="mmooc-button mmooc-button-primary" href="/courses{{../../queryString}}&enroll_code={{self_enrollment_code}}">
+                              <a aria-label="enroll" class="mmooc-button mmooc-button-primary" href="/courses{{../../queryString}}&enroll_code={{self_enrollment_code}}">
                               </a>
                             {{/unless}}
                             {{#if enrolled}}
-                              <a class="mmooc-button mmooc-button-secondary" href="/courses/{{../id}}">{{../../goToCourse}}</a>
+                              <a aria-label="enroll" class="mmooc-button mmooc-button-secondary" href="/courses/{{../id}}">{{../../goToCourse}}</a>
                             {{else}}
                                 <a class="mmooc-button mmooc-button-secondary" href="/enroll/{{../self_enrollment_code}}">{{../../courseRegister}}</a>
                             {{/if}}
@@ -93,7 +93,7 @@
                     <p>{{public_description}}</p>
                     <div class="mmooc-button-ctr">
                         {{#unless ../isAuthenticated}}
-                            <a class="mmooc-button mmooc-button-primary" href="/courses{{../../queryString}}&enroll_code={{self_enrollment_code}}"></a>
+                            <a aria-label="enroll" class="mmooc-button mmooc-button-primary" href="/courses{{../../queryString}}&enroll_code={{self_enrollment_code}}"></a>
                         {{/unless}}
                         {{#if enrolled}}
                             <a class="mmooc-button mmooc-button-secondary" href="/courses/{{../id}}">{{../../goToCourse}}</a>
