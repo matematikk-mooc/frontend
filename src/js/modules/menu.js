@@ -89,7 +89,7 @@ this.mmooc.menu = (function() {
           title: tool.title,
           url: tool.href
         };
-      } else {
+      } else if(tools.toolList.length > 1) {
         menuItems[menuItems.length] = {
           title: tools.activeToolName,
           toolList: tools.toolList,
