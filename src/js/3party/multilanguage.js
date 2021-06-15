@@ -214,12 +214,10 @@ this.mmooc.multilanguage = (function () {
             if (!this.mmooc.util.isMultilangCourse(mmooc.util.course)) {
                 return;
             }
-
-            if (location.pathname.endsWith('/edit')) {
-                MultilangUtils.applyColorCodingInEditor();
-            } else {
-                MultilangUtils.makeSpansOnPage();
-            }
+            //KURSP-293-RCE-mister-farge-for-redigering
+            //Apply color to editor moved to separate route in main.js
+            //This perform function will only be called by content that is not edited.
+            MultilangUtils.makeSpansOnPage();
         },
         performPrevNextTooltip: () => {
             MultilangUtils.makeSpansForTooltip('.module-sequence-footer-button--previous');
@@ -232,10 +230,10 @@ this.mmooc.multilanguage = (function () {
         performPrevTooltip: () => {
             MultilangUtils.makeSpansForTooltip('.module-sequence-footer-button--previous');
         },
+        //KURSP-293-RCE-mister-farge-for-redigering
+        //Pages in edit mode should also have css inserted.
         initializeCss: () => {
-            if (!location.pathname.endsWith('/edit')) {
-                MultilangUtils.initializeCss("all");
-            }
+            MultilangUtils.initializeCss("all");
         }
     }
 })();

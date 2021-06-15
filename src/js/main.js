@@ -20,6 +20,11 @@ jQuery(function($) {
     mmooc.utilRoot.triggerForgotPasswordIfParamPassed();
   });
 
+  ////KURSP-293-RCE-mister-farge-for-redigering
+  mmooc.routes.addRouteForPath(/\/edit$/, function() {
+    MultilangUtils.applyColorCodingInEditor();
+  });
+
   mmooc.routes.addRouteForPath(/\/login$/, function() {
     $('#register_link').html('<i>Trenger du en konto?</i><b>Klikk her.</b>');
   });

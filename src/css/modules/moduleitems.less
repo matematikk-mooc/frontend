@@ -137,3 +137,19 @@
 #not_right_side .mmooc-module-items-back-to-course-button {
   text-align: left;
 }
+
+#immersive_reader_mount_point > div >button > span {
+    border: 1px solid @darkTealGradientBorder;
+    background:linear-gradient(
+      -180deg,
+      @darkTealGradientStart 0%,
+      @darkTealGradientEnd 100%
+    ) !important;
+    border-radius:5px;
+    color:#fff!important;
+
+    //Change svg icon fill color
+    * {
+      fill: #ffffff;
+    }
+}
