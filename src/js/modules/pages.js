@@ -160,7 +160,7 @@ this.mmooc.pages = (function() {
                 self.clone().prependTo('.header-bar-right');
               } else {
                 $(
-                  '.module-sequence-footer-content #mark-as-done-checkbox'
+                  '.module-sequence-footer #mark-as-done-checkbox'
                 ).remove();
                 self.clone().prependTo(targetParentSelector);
               }
