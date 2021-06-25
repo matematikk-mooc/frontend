@@ -140,32 +140,40 @@ this.mmooc.pages = (function() {
       });
     },
 
-    duplicateMarkedAsDoneButton: function() {
-      var checkExist = setInterval(function() {
-        const targetParent = "module-sequence-footer";
-        const targetParentSelector = '.' + targetParent;
+    createMarkAsDoneButtonClone: function(parent, markAsDoneButton) {
+      let cloneButtonId = "mark-as-done-checkbox-clone";
+      let oldMarkAsDoneButtonClone = document.getElementById(cloneButtonId);
+      if(oldMarkAsDoneButtonClone) {
+        oldMarkAsDoneButtonClone.remove();
+      }
 
-        if ($(targetParentSelector).length) {
+      let newMarkAsDoneButtonClone = markAsDoneButton.cloneNode(true);
+      newMarkAsDoneButtonClone.setAttribute("id", cloneButtonId);
+      parent.prepend(newMarkAsDoneButtonClone);
+      newMarkAsDoneButtonClone.onclick = function() {
+        markAsDoneButton.click();
+      };
+    },
+
+    duplicateMarkedAsDoneButton: function() {
+      //It can take some time for the page to load, check regularly:
+      var checkExist = setInterval(function() {
+        const targetParentSelector = 'module-sequence-footer';
+        var parents = document.getElementsByClassName(targetParentSelector);
+
+        if (parents.length) {
           clearInterval(checkExist);
-          $('#mark-as-done-checkbox')
-            .clone()
-            .prependTo(targetParentSelector);
-          $(document).on('click', '#mark-as-done-checkbox', function() {
-            var self = $(this);
+
+          let parent = parents[0];
+          var markAsDoneButton = document.getElementById("mark-as-done-checkbox");
+          mmooc.pages.createMarkAsDoneButtonClone(parent, markAsDoneButton);
+
+          markAsDoneButton.onclick = function() {
+            //Give Canvas some time to toggle button before we copy it.
             setTimeout(function() {
-              if (
-                self.parent().attr('class') == targetParent
-              ) {
-                $('.header-bar-right #mark-as-done-checkbox').remove();
-                self.clone().prependTo('.header-bar-right');
-              } else {
-                $(
-                  '.module-sequence-footer #mark-as-done-checkbox'
-                ).remove();
-                self.clone().prependTo(targetParentSelector);
-              }
-            }, 800);
-          });
+              mmooc.pages.createMarkAsDoneButtonClone(parent, markAsDoneButton);
+            }, 500);
+          };
         }
       }, 100);
     },
