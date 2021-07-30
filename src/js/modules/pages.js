@@ -158,7 +158,7 @@ this.mmooc.pages = (function() {
     duplicateMarkedAsDoneButton: function() {
       //It can take some time for the page to load, check regularly:
       var checkExist = setInterval(function() {
-        const targetParentSelector = 'module-sequence-footer';
+        const targetParentSelector = 'page-toolbar-end';
         var parents = document.getElementsByClassName(targetParentSelector);
 
         if (parents.length) {
