@@ -155,29 +155,6 @@ this.mmooc.pages = (function() {
       };
     },
 
-    duplicateMarkedAsDoneButton: function() {
-      //It can take some time for the page to load, check regularly:
-      var checkExist = setInterval(function() {
-        const targetParentSelector = 'page-toolbar-end';
-        var parents = document.getElementsByClassName(targetParentSelector);
-
-        if (parents.length) {
-          clearInterval(checkExist);
-
-          let parent = parents[0];
-          var markAsDoneButton = document.getElementById("mark-as-done-checkbox");
-          mmooc.pages.createMarkAsDoneButtonClone(parent, markAsDoneButton);
-
-          markAsDoneButton.onclick = function() {
-            //Give Canvas some time to toggle button before we copy it.
-            setTimeout(function() {
-              mmooc.pages.createMarkAsDoneButtonClone(parent, markAsDoneButton);
-            }, 500);
-          };
-        }
-      }, 100);
-    },
-
     showInformationPane: function(observer, pfdk, unmaintainedSince, alertMsg, isMemberOfExpiredCommunity, notificationtouser, feedback) {
       var paneHTML = mmooc.util.renderTemplateWithData('informationpane', {observer:observer, pfdk:pfdk, unmaintainedSince:unmaintainedSince, alertMsg:alertMsg, expiredCommunity: isMemberOfExpiredCommunity, notificationtouser: notificationtouser, feedback: feedback});
       document
