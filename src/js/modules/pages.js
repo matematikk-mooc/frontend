@@ -140,34 +140,19 @@ this.mmooc.pages = (function() {
       });
     },
 
-    duplicateMarkedAsDoneButton: function() {
-      var checkExist = setInterval(function() {
-        const targetParent = "module-sequence-footer";
-        const targetParentSelector = '.' + targetParent;
+    createMarkAsDoneButtonClone: function(parent, markAsDoneButton) {
+      let cloneButtonId = "mark-as-done-checkbox-clone";
+      let oldMarkAsDoneButtonClone = document.getElementById(cloneButtonId);
+      if(oldMarkAsDoneButtonClone) {
+        oldMarkAsDoneButtonClone.remove();
+      }
 
-        if ($(targetParentSelector).length) {
-          clearInterval(checkExist);
-          $('#mark-as-done-checkbox')
-            .clone()
-            .prependTo(targetParentSelector);
-          $(document).on('click', '#mark-as-done-checkbox', function() {
-            var self = $(this);
-            setTimeout(function() {
-              if (
-                self.parent().attr('class') == targetParent
-              ) {
-                $('.header-bar-right #mark-as-done-checkbox').remove();
-                self.clone().prependTo('.header-bar-right');
-              } else {
-                $(
-                  '.module-sequence-footer-content #mark-as-done-checkbox'
-                ).remove();
-                self.clone().prependTo(targetParentSelector);
-              }
-            }, 800);
-          });
-        }
-      }, 100);
+      let newMarkAsDoneButtonClone = markAsDoneButton.cloneNode(true);
+      newMarkAsDoneButtonClone.setAttribute("id", cloneButtonId);
+      parent.prepend(newMarkAsDoneButtonClone);
+      newMarkAsDoneButtonClone.onclick = function() {
+        markAsDoneButton.click();
+      };
     },
 
     showInformationPane: function(observer, pfdk, unmaintainedSince, alertMsg, isMemberOfExpiredCommunity, notificationtouser, feedback) {
