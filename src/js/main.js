@@ -422,7 +422,6 @@ jQuery(function($) {
       mmooc.menu.showLeftMenu();
       mmooc.menu.listModuleItems();
       mmooc.pages.modifyMarkAsDoneButton();
-      mmooc.pages.duplicateMarkedAsDoneButton();
       //20180911ETH showDiscussionGroupMenu is handled by group discussion path above.
       //        mmooc.menu.showDiscussionGroupMenu();
       mmooc.groups.moveSequenceLinks();
