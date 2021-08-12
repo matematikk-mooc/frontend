@@ -3,7 +3,6 @@
     .module-sequence-footer-content {
       height: 55px;
       padding-top: 0;
-      display: flex;
       justify-content: center;
 
       a {
@@ -24,7 +23,6 @@
           display: none;
         }
       }
-
       .module-sequence-footer-button--previous a{
         background: @darkTealColor url('https://server/vector_images/mmooc-icon-arrow-left-white.svg') 10px center no-repeat !important;
         background-size: 20px;
@@ -34,7 +32,7 @@
       .module-sequence-footer-button--previous {
         float: none !important;
         min-height: 40px;
-        margin-left: 5px;
+        margin-left: 35%;
       }
 
 
@@ -50,8 +48,6 @@
         text-indent: 30px;
       }
 
-      #mark-as-done-checkbox {
-        float: left;
       }
     }
   }
@@ -79,7 +75,7 @@
       }
     }
   }
-}
+
 
 //Submission iframe - do no want double footer
 body.is-inside-submission-frame {

@@ -44,6 +44,7 @@ jQuery(function($) {
 
   //The logic below should be refactored and cleaned up.
   mmooc.routes.addRouteForPath(/\/courses\/\d+$/, function() {
+    mmooc.util.updateRightMenuButtons();
     mmooc.groups.interceptLinksToGroupPage();
     mmooc.coursePage.showCourseInvitation();
     // override default view and display all courses list instead
@@ -422,7 +423,6 @@ jQuery(function($) {
       mmooc.menu.showLeftMenu();
       mmooc.menu.listModuleItems();
       mmooc.pages.modifyMarkAsDoneButton();
-      mmooc.pages.duplicateMarkedAsDoneButton();
       //20180911ETH showDiscussionGroupMenu is handled by group discussion path above.
       //        mmooc.menu.showDiscussionGroupMenu();
       mmooc.groups.moveSequenceLinks();
