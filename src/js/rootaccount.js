@@ -50,7 +50,7 @@ if(document.location.pathname == "/search/all_courses" && document.location.sear
     window.location.href = '/search/all_courses' + mmooc.hrefQueryString;
     redirected = true;
   } else if(!document.referrer.includes("/login/canvas")) {
-      $(".ic-Login").hide();
+    $(".ic-Login").hide();
     $("#f1_container").hide(); //Small screens
     redirected = mmooc.utilRoot.redirectFeideAuthIfEnrollReferrer();
     if(!redirected) {
@@ -80,8 +80,11 @@ if(document.location.pathname == "/search/all_courses" && document.location.sear
           </div>
         </div>
         `;
-        
-        document.getElementById('wrapper').insertAdjacentHTML('afterend', html);
+        var feidLoginBoxPosition = document.getElementById('wrapper');
+        if(!feidLoginBoxPosition) {
+          feidLoginBoxPosition = document.getElementById('f1_container');
+        }
+        feidLoginBoxPosition.insertAdjacentHTML('afterend', html);
         $('#application').before(`<div class="overlay"></div>`);
       }
       else {
