@@ -15,7 +15,7 @@ this.mmooc.settings = {
   removeGroupsLink: true,
   displayProfileLeftMenu: false,
   displayUserMergeButton: true,
-  userMergeLtiToolId: 863,
+  userMergeLtiToolId: 845,
   displayGroupsTab: false,
   displayDiscussionsTab : false,
   displayAlertsMenuItem : false,

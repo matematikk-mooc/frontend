@@ -62,7 +62,6 @@ if(document.location.pathname == "/search/all_courses" && document.location.sear
               <div class="unitHeading">Canvas innlogging for åpne nettkurs og kompetansepakker</div>
               <div class="unitSubHeading">-for fleksibel og livslang læring</div>
             </div>
-            <div class="login-box__close"></div>
           </div>
           <div class="loginText"><b>Logg på med</b></div>
           <div class="login-box__lower">
@@ -79,10 +78,10 @@ if(document.location.pathname == "/search/all_courses" && document.location.sear
             <a href="https://ntnu.no" target="_blank"><img class="unitPartnersSmallLogo" src="https://server/bitmaps/logo_ntnu.png"/></a>
             <a href="https://unit.no" target="_blank"><img class="unitPartnersUnitLogo" src="https://server/bitmaps/unit-logo-farge.svg"/></a>
           </div>
+        </div>
         `;
         
-        document.getElementsByTagName('body')[0].innerHTML += html;
-        $(".login-box__close").hide();
+        document.getElementById('wrapper').insertAdjacentHTML('afterend', html);
         $('#application').before(`<div class="overlay"></div>`);
       }
       else {
