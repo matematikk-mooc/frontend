@@ -323,14 +323,7 @@ this.mmooc.vimeo = function() {
 				s.onchange=show;
 			});
 		};
-		this.insertTranscriptParent = function() {
-			transcriptParentDiv = document.createElement('div');
-			transcriptParentDiv.setAttribute("class", "transcriptParent");
-			var e = document.createElement('div');
-			transcriptParentDiv.appendChild(e);
-			e.setAttribute("id", transcriptLoadingId);
-			e.setAttribute("class", "loading-gif");
-	  
+		this.autoPositionTranscriptParent = function() {
 			var iframe = document.getElementById(iframeId);
 
 			var nextElementSibling = iframe.nextElementSibling;
@@ -354,7 +347,23 @@ this.mmooc.vimeo = function() {
 			else {
 				iframe.parentElement.appendChild(transcriptParentDiv);
 			}
-		}
+		};
+		this.insertTranscriptParent = function() {
+			//KURSP-462 Check if user wants to put transcript in specific place.
+			var customTranscriptParent = "transcriptParent" + videoId;
+			transcriptParentDiv = document.getElementById(customTranscriptParent);
+
+			if(!transcriptParentDiv) {
+				transcriptParentDiv = document.createElement('div');
+				autoPositionTranscriptParent();
+			}
+
+			transcriptParentDiv.setAttribute("class", "transcriptParent");
+			var e = document.createElement('div');
+			transcriptParentDiv.appendChild(e);
+			e.setAttribute("id", transcriptLoadingId);
+			e.setAttribute("class", "loading-gif");
+		};
 		this.transcriptLoaded = function(transcriptXml) {
 			var transcript = this;
 			var e = document.getElementById(transcriptLoadingId);
