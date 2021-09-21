@@ -358,20 +358,13 @@ this.mmooc.vimeo = function() {
 			}
 		};
 		this.insertTranscriptParent = function() {
-			//KURSP-462 Check if user wants to put transcript in specific place.
-			var customTranscriptParent = "transcriptParent" + videoId;
-			transcriptParentDiv = document.getElementById(customTranscriptParent);
-
-			if(!transcriptParentDiv) {
-				transcriptParentDiv = document.createElement('div');
-				this.autoPositionTranscriptParent();
-			}
-
+			transcriptParentDiv = document.createElement('div');
 			transcriptParentDiv.setAttribute("class", "transcriptParent");
 			var e = document.createElement('div');
 			transcriptParentDiv.appendChild(e);
 			e.setAttribute("id", transcriptLoadingId);
 			e.setAttribute("class", "loading-gif");
+			this.autoPositionTranscriptParent();
 		};
 		this.transcriptLoaded = function(transcriptXml) {
 			var transcript = this;
