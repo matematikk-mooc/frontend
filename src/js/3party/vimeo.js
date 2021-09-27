@@ -323,18 +323,20 @@ this.mmooc.vimeo = function() {
 				s.onchange=show;
 			});
 		};
-		this.insertTranscriptParent = function() {
-			transcriptParentDiv = document.createElement('div');
-			transcriptParentDiv.setAttribute("class", "transcriptParent");
-			var e = document.createElement('div');
-			transcriptParentDiv.appendChild(e);
-			e.setAttribute("id", transcriptLoadingId);
-			e.setAttribute("class", "loading-gif");
-	  
+		this.autoPositionTranscriptParent = function() {
 			var iframe = document.getElementById(iframeId);
 
 			var nextElementSibling = iframe.nextElementSibling;
 			var insertAfterSibling = iframe;
+
+			var iframeParent = iframe.parentElement;
+			var iframeParentStyle = iframeParent.getAttribute("style");
+			//Responsive vimeo videos has a parent element with a style that contains this:
+			if(iframeParentStyle && (iframeParentStyle.indexOf("56.25%") > 0)) {
+				insertAfterSibling = iframeParent;
+				nextElementSibling = iframeParent.nextElementSibling;
+			}
+
 			//If there is an element after the iframe, we insert the transcript before that one.
 			if(nextElementSibling) {
 				//Some vimeo videos has a link to the video. In that case we put the transcript
@@ -349,12 +351,21 @@ this.mmooc.vimeo = function() {
 						}
 					}
 				}
-				iframe.parentNode.insertBefore(transcriptParentDiv, insertAfterSibling.nextSibling);
+				insertAfterSibling.parentNode.insertBefore(transcriptParentDiv, insertAfterSibling.nextSibling);
 			} //If the iframe is the last element on the page, we add the transcript at the bottom.
 			else {
-				iframe.parentElement.appendChild(transcriptParentDiv);
+				insertAfterSibling.parentElement.appendChild(transcriptParentDiv);
 			}
-		}
+		};
+		this.insertTranscriptParent = function() {
+			transcriptParentDiv = document.createElement('div');
+			transcriptParentDiv.setAttribute("class", "transcriptParent");
+			var e = document.createElement('div');
+			transcriptParentDiv.appendChild(e);
+			e.setAttribute("id", transcriptLoadingId);
+			e.setAttribute("class", "loading-gif");
+			this.autoPositionTranscriptParent();
+		};
 		this.transcriptLoaded = function(transcriptXml) {
 			var transcript = this;
 			var e = document.getElementById(transcriptLoadingId);
