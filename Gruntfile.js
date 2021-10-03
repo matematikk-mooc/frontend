@@ -137,7 +137,9 @@ module.exports = function(grunt) {
 			main: {
 				files: [
 					{expand: true, src: ['bitmaps/*'], cwd: 'src/', dest: 'dist/'},
-					{expand: true, src: ['vector_images/*'], cwd: 'src/', dest: 'dist/'}
+					{expand: true, src: ['vector_images/*'], cwd: 'src/', dest: 'dist/'},
+					{expand: true, src: ['js/*'], cwd: 'test/', dest: 'dist/'},
+					{expand: true, src: ['frontpage.html'], cwd: 'test/', dest: 'dist/'}
 				]
 			}
 		},

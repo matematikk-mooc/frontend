@@ -13,6 +13,14 @@ jQuery(function($) {
             window.location.href = "/courses";
         }
     });
+    mmooc.routes.addRouteForPath(/\/frontpage.html$/, function() {
+        var parentId = 'content'
+        if (document.location.search === "?mmpf") {
+            mmooc.powerFunctions.show(parentId);
+        } else {
+            window.location.href = "/courses";
+        }
+    });
 
     mmooc.routes.addRouteForQueryString(/invitation=/, function() {
     });

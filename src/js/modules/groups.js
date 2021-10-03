@@ -2,7 +2,7 @@ this.mmooc=this.mmooc||{};
 
 
 this.mmooc.groups = function() {
-    function interceptLinkToGroupPageForHref(href, event) {
+    function interceptLinkToGroupPageForHref(href, event){
         if (/\/groups\/\d+$/.test(href)) {
             event.preventDefault();
             location.href = href + '/discussion_topics';

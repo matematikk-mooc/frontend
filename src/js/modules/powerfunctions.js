@@ -351,8 +351,146 @@ this.mmooc.powerFunctions = function() {
       }
     };
   }
+  function ListStudentProgressForGroups() {
+    var error = function(error) {
+        console.error("error calling api", error);
+    };
+    	
+    function _renderView() {    
+      mmooc.api.getCoursesForUser(function(courses) {
+        _render("powerfunctions/student-progress-groups",
+                "List student progress by section",
+                {courses: courses});
+        $('#mmpf-course-select').change(function () {
+          var courseID = $('#mmpf-course-select option:selected').val();
+          var params = { per_page: 999 };
+		  if(courseID == "") {
+			$('.step-2').css('display', 'none');
+			$('.step-3').css('display', 'none');
+			$('.step-4').css('display', 'none');
+			$(".student-progress-table").html("");
+		  } else {
+			mmooc.api.getGroupCategoriesForCourse(courseID, function(categories) {
+				$('.step-2').css('display', 'list-item');
+				$('.step-3').css('display', 'none');
+				$('.step-4').css('display', 'none');
+				$(".student-progress-table").html("");
+				var html = html + "<option value=''>Choose a group set</option>";
+				for (var i = 0; i < categories.length; i++) {
+				  html = html + "<option value=" + categories[i].id + ">" + categories[i].name + "</option>";
+				}
+				$("#mmpf-category-select").html(html);
+			  });
+			}
+        });
+        $('#mmpf-category-select').change(function () {
+			var categoryID = $('#mmpf-category-select option:selected').val();
+			if(categoryID == "") {
+				$('.step-3').css('display', 'none');
+				$('.step-4').css('display', 'none');
+				$(".student-progress-table").html("");
+			} else {
+				mmooc.api.getGroupsInCategory(categoryID, function(groups) {
+				$('.step-3').css('display', 'list-item');
+				$('.step-4').css('display', 'none');
+				$(".student-progress-table").html("");
+				var html = html + "<option value=''>Choose groups</option>";
+				for (var i = 0; i < groups.length; i++) {
+					html = html + "<option value=" + groups[i].id + ">" + groups[i].name + "</option>";
+				}
+				$("#mmpf-group-select").html(html);
+				});
+			  }
+		});
+        $('#mmpf-group-select').change(function () {
+			var courseID = $('#mmpf-course-select option:selected').val();
+			var groupId = $('#mmpf-group-select option:selected').val();
+			if(groupId == "") {
+				$('.step-4').css('display', 'none');
+				$(".student-progress-table").html("");
+			} else {
+				mmooc.api.getModulesForCourseId(function(modules) {
+				$('.step-4').css('display', 'list-item');
+				$(".student-progress-table").html("");
+				var html = html + "<option value=''>Choose a module</option>";
+				for (var i = 0; i < modules.length; i++) {
+					html = html + "<option value=" + modules[i].id + ">" + modules[i].name + "</option>";
+				}
+				$("#mmpf-module-select").html(html);
+				$(".student-progress-table").html("");
+				}, error, courseID);
+			}
+		});
+	
+		$('#mmpf-module-select').change(function () {
+			_printStudentProgressForGroup();
+			$(".student-progress-table").html("");
+		});
+      });
+    }
+    
+    function _printStudentProgressForGroup() {
+	    $("#progress").hide();
+	    var courseID = $('#mmpf-course-select option:selected').val();
+	    var moduleID = $('#mmpf-module-select option:selected').val();
+	    var groupId = $('#mmpf-group-select option:selected').val();
+	    var moduleParams = { per_page: 999 };
+	    var html = "<table><tr><th>Navn</th>";
+	    var asyncsDone = 0;
+	    mmooc.api.getItemsForModuleId(function(items) {
+		    for (var i = 0; i < items.length; i++) {
+			    html = html + "<th>" + items[i].title + "</th>";
+		    }
+		    html = html + "</tr>";
+			mmooc.api.getGroupMembers(groupId, function(students) {
+			    if(students.length < 1) {
+				    $(".student-progress-table").html("Ingen studenter funnet i gruppen");
+			    }    
+			    for (var j = 0; j < students.length; j++) {				    
+				    moduleParams = { student_id: students[j].id, per_page: 999 };
+				    mmooc.api.getItemsForModuleId(function(itemsForStudent) {
+    				    for(var l = 0; l < students.length; l++) {
+        				    if (students[l].id == itemsForStudent[0].student_id) {
+            				    html = html + "<tr><td>" + students[l].name + "</td>";
+        				    }
+    				    }
+					    if(itemsForStudent.length < 1) {
+						    html = html + "<td>Ingen krav</td>";
+					    }
+					    for (var k = 0; k < itemsForStudent.length; k++) {
+						    if("completion_requirement" in itemsForStudent[k]) {
+							    if(itemsForStudent[k].completion_requirement.completed) {
+							    	html = html + "<td class='ok' />";
+							    }else {
+								    html = html + "<td class='nok' />";
+							    }
+						    }else {
+							    html = html + "<td>Ingen krav</td>";
+						    }
+					    }
+					    asyncsDone++;
+					    var width = ((100 / students.length) * asyncsDone + "%");
+					    $("#bar").width(width);
+					    $("#progress").show();
+					    if(asyncsDone == students.length) {
+						    $("#progress").hide();
+						    $(".student-progress-table").html(html + "</table>");
+					    }
+				    }, error, courseID, moduleID, moduleParams);
+				    html = html + "</tr>";
+			    }
+			    
+		    });
+	    }, error, courseID, moduleID, moduleParams);
+    }
+    return {
+		run: function() {
+		  _renderView();
+		}
+	  };
+	}
   
-  function ListStudentProgress() {
+  function ListStudentProgressForSections() {
     var error = function(error) {
         console.error("error calling api", error);
     };
@@ -464,8 +602,11 @@ this.mmooc.powerFunctions = function() {
       $("#mmooc-pf-peer-review-btn").click(function() {
         new AssignPeerReviewsForGroup().run();
       });
-      $("#mmooc-pf-student-progress-btn").click(function() {
-        new ListStudentProgress().run();
+      $("#mmooc-pf-student-progress-for-sections-btn").click(function() {
+        new ListStudentProgressForSections().run();
+      });
+      $("#mmooc-pf-student-progress-for-groups-btn").click(function() {
+        new ListStudentProgressForGroups().run();
       });
     }
 
