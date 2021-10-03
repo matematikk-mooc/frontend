@@ -1,17 +1,6 @@
 <form>
+  <h1>{{course.name}}</h1>
   <ol>
-    <li class="step-1">
-      <select id="mmpf-course-select">
-        {{#unless courses}}
-          <option value="">No courses defined for account</option>
-        {{else}}
-          <option value="">Choose a course</option>
-          {{#each courses}}
-            <option value="{{id}}">{{name}}</option>
-          {{/each}}
-        {{/unless}}
-      </select>
-    </li>
     <li class="step-2">
       <select id="mmpf-category-select" name="category">
           <option value="">No group categories defined for course</option>

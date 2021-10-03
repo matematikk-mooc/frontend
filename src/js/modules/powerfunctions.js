@@ -357,32 +357,23 @@ this.mmooc.powerFunctions = function() {
     };
     	
     function _renderView() {    
-      mmooc.api.getCoursesForUser(function(courses) {
+	  var courseId = mmooc.api.getCurrentCourseId();
+      mmooc.api.getCourse(courseId, function(course) {
         _render("powerfunctions/student-progress-groups",
                 "List student progress by section",
-                {courses: courses});
-        $('#mmpf-course-select').change(function () {
-          var courseID = $('#mmpf-course-select option:selected').val();
-          var params = { per_page: 999 };
-		  if(courseID == "") {
-			$('.step-2').css('display', 'none');
+                {course: course});
+		mmooc.api.getGroupCategoriesForCourse(courseID, function(categories) {
+			$('.step-2').css('display', 'list-item');
 			$('.step-3').css('display', 'none');
 			$('.step-4').css('display', 'none');
 			$(".student-progress-table").html("");
-		  } else {
-			mmooc.api.getGroupCategoriesForCourse(courseID, function(categories) {
-				$('.step-2').css('display', 'list-item');
-				$('.step-3').css('display', 'none');
-				$('.step-4').css('display', 'none');
-				$(".student-progress-table").html("");
-				var html = html + "<option value=''>Choose a group set</option>";
-				for (var i = 0; i < categories.length; i++) {
-				  html = html + "<option value=" + categories[i].id + ">" + categories[i].name + "</option>";
-				}
-				$("#mmpf-category-select").html(html);
-			  });
+			var html = html + "<option value=''>Choose a group set</option>";
+			for (var i = 0; i < categories.length; i++) {
+				html = html + "<option value=" + categories[i].id + ">" + categories[i].name + "</option>";
 			}
-        });
+			$("#mmpf-category-select").html(html);
+			});
+		}
         $('#mmpf-category-select').change(function () {
 			var categoryID = $('#mmpf-category-select option:selected').val();
 			if(categoryID == "") {
