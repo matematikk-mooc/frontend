@@ -357,10 +357,10 @@ this.mmooc.powerFunctions = function() {
     };
     	
     function _renderView() {    
-	  var courseId = mmooc.api.getCurrentCourseId();
-      mmooc.api.getCourse(courseId, function(course) {
+	  var courseID = mmooc.api.getCurrentCourseId();
+      mmooc.api.getCourse(courseID, function(course) {
         _render("powerfunctions/student-progress-groups",
-                "List student progress by section",
+                "List student progress by groups",
                 {course: course});
 		mmooc.api.getGroupCategoriesForCourse(courseID, function(categories) {
 			$('.step-2').css('display', 'list-item');
@@ -372,8 +372,7 @@ this.mmooc.powerFunctions = function() {
 				html = html + "<option value=" + categories[i].id + ">" + categories[i].name + "</option>";
 			}
 			$("#mmpf-category-select").html(html);
-			});
-		}
+		});
         $('#mmpf-category-select').change(function () {
 			var categoryID = $('#mmpf-category-select option:selected').val();
 			if(categoryID == "") {
@@ -394,7 +393,6 @@ this.mmooc.powerFunctions = function() {
 			  }
 		});
         $('#mmpf-group-select').change(function () {
-			var courseID = $('#mmpf-course-select option:selected').val();
 			var groupId = $('#mmpf-group-select option:selected').val();
 			if(groupId == "") {
 				$('.step-4').css('display', 'none');
@@ -414,15 +412,14 @@ this.mmooc.powerFunctions = function() {
 		});
 	
 		$('#mmpf-module-select').change(function () {
-			_printStudentProgressForGroup();
+			_printStudentProgressForGroup(courseID);
 			$(".student-progress-table").html("");
 		});
       });
     }
     
-    function _printStudentProgressForGroup() {
+    function _printStudentProgressForGroup(courseID) {
 	    $("#progress").hide();
-	    var courseID = $('#mmpf-course-select option:selected').val();
 	    var moduleID = $('#mmpf-module-select option:selected').val();
 	    var groupId = $('#mmpf-group-select option:selected').val();
 	    var moduleParams = { per_page: 999 };
