@@ -144,6 +144,11 @@ this.mmooc.util = function () {
                 && (roles.indexOf('teacher') != -1
                     || roles.indexOf('admin') != -1);
         },
+        isAdmin: function() {
+            var roles = mmooc.api.getRoles();
+            return roles != null
+                && roles.indexOf('admin') != -1;
+        },
         isObserver: function(course) {
             return course.enrollments[0] && course.enrollments[0].type == "observer";
         },

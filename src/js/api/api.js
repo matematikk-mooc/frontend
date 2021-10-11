@@ -813,7 +813,7 @@ $canvas.post(uri, {'enrollment[user_id]' => user_id, 'enrollment[type]' => etype
                     'enrollment[user_id]': userId,
                     'enrollment[type]': etype,
                     'enrollment[enrollment_state]': 'active',
-                    'enrollment[limit_privileges_to_course_section]': true
+                    'enrollment[limit_privileges_to_course_section]': false
                 }
             });
             return true;
