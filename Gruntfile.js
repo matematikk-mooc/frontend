@@ -200,7 +200,8 @@ module.exports = function (grunt) {
           },
           {
             from: '$KPASAPIURL',
-            to: 'https://ba29b88f98a2.ngrok.io/api'
+            to: 'https://kpas-lti.azurewebsites.net/api'
+//            to: 'https://ba29b88f98a2.ngrok.io/api'
           }
         ]
       },
