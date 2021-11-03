@@ -1,18 +1,20 @@
 
 function visFylkesStatistikk() {
     var fylkesNr = $("#fylker option[value='" + $("#fylke").val() + "']").attr("fylkesnr");
+    var courseId = document.getElementById('course_id').value;
     clearTimeout(resizeDebounce);
     d3.select("#table-tooltip").remove();
     d3.select(".table-kpas").remove();
-    loadCountyGraphic(360, fylkesNr);
+    loadCountyGraphic(courseId, fylkesNr);
 }  
 
 function visKommuneStatistikk() {
     var kommuneNr = $("#kommuner option[value='" + $("#kommune").val() + "']").attr("kommunenr");
+    var courseId = document.getElementById('course_id').value;
     clearTimeout(resizeDebounce);
     d3.select("#table-tooltip").remove();
     d3.select(".table-kpas").remove();
-    loadMunicipalityGraphic(360, kommuneNr);
+    loadMunicipalityGraphic(courseId, kommuneNr);
 }  
 
 function loadFylker() {
