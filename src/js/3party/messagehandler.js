@@ -1,5 +1,15 @@
 this.mmooc = this.mmooc || {};
 this.mmooc.messageHandler = (function() {
+    var findDomForWindow = function(sourceWindow) {
+        const iframes = document.getElementsByTagName('IFRAME');
+        for (let i = 0; i < iframes.length; i += 1) {
+          if (iframes[i].contentWindow === sourceWindow) {
+            return iframes[i];
+          }
+        }
+        return null;
+    }
+
     return {
         init: function() {
             window.addEventListener('message', function(e) {
@@ -25,17 +35,25 @@ this.mmooc.messageHandler = (function() {
                             }, error);
                         } else if(message.subject == "kpas-lti.update") {
                             mmooc.util.updateInformationPane();
+
+                            var courseId = mmooc.api.getCurrentCourseId();
+
+                            mmooc.api.getUserGroupsForCourse(courseId, function(groups) {
+                                var isTeacherOrAdmin = mmooc.util.isTeacherOrAdmin();
+                                mmooc.kpas.showInfo(isTeacherOrAdmin, groups);
+                            }, error);
                         } else if(message.subject == "kpas-lti.getBgColor") {
-                            var elem = document.getElementsByTagName("body")[0];
-                            var bgColor = window.getComputedStyle(elem, null).getPropertyValue("background-color");            
-                            const bgColorMessage = {
-                                subject: 'kpas-lti.ltibgcolor',
-                                bgColor: bgColor
+                            var dom = findDomForWindow(e.source);
+                            if(dom) {
+                                var elem = dom.parentElement;
+                                var bgColor = window.getComputedStyle(elem, null).getPropertyValue("background-color");            
+                                const bgColorMessage = {
+                                    subject: 'kpas-lti.ltibgcolor',
+                                    bgColor: bgColor
+                                }
+                                var sendMsg = JSON.stringify(bgColorMessage);
+                                e.source.postMessage(sendMsg, e.origin);
                             }
-                            var sendMsg = JSON.stringify(bgColorMessage);
-                            e.source.postMessage(sendMsg, e.origin);
-                        } else if(message.subject == "kpas.frameResize") {
-                            $("#kpas")[0].height = message.height;
                         } else if(message.subject == "kpas-lti.3pcookiesupported") {
                         } else if(message.subject == "kpas-lti.3pcookienotsupported") {
                             var kpasCheckElement = $("#kpas-lti-cookie-check");
