@@ -3,9 +3,6 @@ this.mmooc = this.mmooc || {};
 this.mmooc.kpas = (function() {
     return {
         showInfo: function(isTeacherOrAdmin, groups) {
-            if(isTeacherOrAdmin) {
-                return;
-            }
             if(!groups.length) {
                 $("#kpas-lti-warning").show();
                 $("#kpas-lti-info").hide();
