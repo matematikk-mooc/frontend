@@ -507,12 +507,13 @@ jQuery(function($) {
     var courseId = mmooc.api.getCurrentCourseId();
 
     if ($("#kpas-lti-info").length ||
+        $(".kpas-lti-info").length ||
         $("#kommune-statistikk").length ||
         $("#fylke-statistikk").length) {
       const error = error => console.error('error calling api', error);
       mmooc.api.getUserGroupsForCourse(courseId, function(groups) {
         var isTeacherOrAdmin = mmooc.util.isTeacherOrAdmin();
-        mmooc.kpas.showInfo(isTeacherOrAdmin, groups);
+        mmooc.kpas.showInfo(groups);
         var groupsInfo = mmooc.util.getGroupsInfo(groups);
         mmooc.kpas.createDiagram("kommune-statistikk", isTeacherOrAdmin, courseId, groupsInfo);
         mmooc.kpas.createDiagram("fylke-statistikk", isTeacherOrAdmin, courseId, groupsInfo);
