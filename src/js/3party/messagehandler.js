@@ -24,7 +24,13 @@ this.mmooc.messageHandler = (function() {
                         }
                     } else {
                         var message = JSON.parse(e.data);
-                        if(message.subject == "kpas-lti.getusergroups") {
+                        if(message.subject == "kpas-lti.connect") {
+                            const connectedMsg = {
+                                subject: 'kpas-lti.ltiparentready'
+                            }
+                            var sendMsg = JSON.stringify(connectedMsg);
+                            e.source.postMessage(sendMsg, e.origin);
+                        } else if(message.subject == "kpas-lti.getusergroups") {
                             mmooc.api.getUserGroups(function(groups) {
                                 const usergroupsmsg = {
                                     subject: 'kpas-lti.usergroups',
@@ -71,19 +77,6 @@ this.mmooc.messageHandler = (function() {
                     console.log.call(console, 'KPAS LTI: skip message:' +err);
                 }
             }, false);
-            try {
-                $("#tool_content").ready(function() {
-                    const ltiparentready = {
-                        subject: 'kpas-lti.ltiparentready'
-                    }
-                    var LTI = document.getElementById("tool_content");
-                    if(LTI) {
-                        LTI.contentWindow.postMessage(JSON.stringify(ltiparentready),"*");
-                    }
-                });
-            } catch(err) {
-                console.log.call(console, 'No LTI tool active.' + err);
-            }
         }
     }
 })();
