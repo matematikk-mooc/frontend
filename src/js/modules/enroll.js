@@ -4,12 +4,13 @@ this.mmooc.enroll = (function () {
   return {
     changeEnrollInformationPolicyLink: function () {
       var informationPolicy = $('.ic-Self-enrollment-footer__Secondary > a');
-      var termsOfService = $('#terms_of_service_modal');
       if(informationPolicy) {
         informationPolicy.attr("href", mmooc.settings.privacyPolicyLink);
       }
+      
+      var termsOfService = $('#create_user_info > div.ic-Checkbox-group > div > label');
       if(termsOfService) {
-        termsOfService.html("personvernspolitikken.");
+        termsOfService.html("Jeg er enig i personvernspolitikken.");
       }
     },
     addForgotPasswordLink: function () {
