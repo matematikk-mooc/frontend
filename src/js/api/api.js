@@ -995,6 +995,28 @@ $canvas.post(uri, {'enrollment[user_id]' => user_id, 'enrollment[type]' => etype
       });
     },
 
+    savePrivacyPolicyAccepted(version, callback) {
+      this._put({
+        callback: callback,
+        uri: `/users/self/custom_data`,
+        params: {  
+          "ns": "no.udir.kompetanse",
+          "data": {
+            "privacyPolicyVersion": version,
+          }
+        }
+      });
+    },
+    loadPrivacyPolicyAccepted(callback, error) {
+      this._get({
+        callback: callback,
+        error: error,
+        uri: `/users/self/custom_data`,
+        params: {  
+          "ns": "no.udir.kompetanse",
+        }
+      });
+    },
 
     getCaledarEvents(params, callback) {
       this._get({

@@ -586,6 +586,8 @@ jQuery(function($) {
     console.log(e);
   }
 
+  mmooc.privacyPolicy.init();
+
   try {
     mmooc.messageHandler.init();
     mmooc.uob.init();
