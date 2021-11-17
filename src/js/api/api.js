@@ -37,6 +37,7 @@ this.mmooc.api = (function() {
       const uri = this._uriPrefix + options.uri;
       const params = options.params || {};
       const callback = options.callback;
+      const customError = options.error;
 
       $.ajax({
         url: uri,
@@ -62,6 +63,9 @@ this.mmooc.api = (function() {
         },
         error(XMLHttpRequest, textStatus, errorThrown) {
           console.log('Error during GET');
+          if(customError) {
+            customError(XMLHttpRequest.responseText);
+          }
         }
       });
     },
@@ -84,6 +88,24 @@ this.mmooc.api = (function() {
         },
         error(XMLHttpRequest, textStatus, errorThrown) {
           console.log('Error during PUT');
+        }
+      });
+    },
+
+    _delete(options) {
+      const uri = this._uriPrefix + options.uri;
+      const params = options.params || {};
+      const callback = options.callback;
+
+      $.ajax({
+        url: uri,
+        type: 'DELETE',
+        data: params,
+        success(response) {
+          callback(response);
+        },
+        error(XMLHttpRequest, textStatus, errorThrown) {
+          console.log('Error during DELETE');
         }
       });
     },
@@ -994,7 +1016,47 @@ $canvas.post(uri, {'enrollment[user_id]' => user_id, 'enrollment[type]' => etype
         params: params
       });
     },
+    deleteUserCustomData(callback) {
+      this._delete({
+        callback: callback,
+        uri: `/users/self/custom_data`,
+        params: {  
+          "ns": "no.udir.kompetanse"
+        }
+      });
+    },
 
+    saveUserCustomData(privacyPolicyVersion, callback) {
+      this._put({
+        callback: callback,
+        uri: `/users/self/custom_data`,
+        params: {  
+          "ns": "no.udir.kompetanse",
+          "data": {
+            "privacyPolicyVersion": privacyPolicyVersion,
+          }
+        }
+      });
+    },
+
+    saveUserPrivacyPolicyVersion(privacyPolicyVersion, callback) {
+      this.saveUserCustomData(privacyPolicyVersion, callback);
+    },
+
+    loadUserCustomData(callback, error) {
+      this._get({
+        callback: callback,
+        error: error,
+        uri: `/users/self/custom_data`,
+        params: {  
+          "ns": "no.udir.kompetanse",
+        }
+      });
+    },
+
+    loadUserPrivacyPolicyVersion(callback, error) {
+      this.loadUserCustomData(callback, error);
+    },
 
     getCaledarEvents(params, callback) {
       this._get({
