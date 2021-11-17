@@ -2,18 +2,19 @@ this.mmooc = this.mmooc || {};
 
 this.mmooc.kpas = (function() {
     return {
-        showInfo: function(isTeacherOrAdmin, groups) {
-            if(isTeacherOrAdmin) {
-                return;
-            }
+        showInfo: function(groups) {
             if(!groups.length) {
                 $("#kpas-lti-warning").show();
                 $("#kpas-lti-info").hide();
+                $(".kpas-lti-warning").show();
+                $(".kpas-lti-info").hide();
                 return;
             }  
       
             $("#kpas-lti-warning").hide();
             $("#kpas-lti-info").show();
+            $(".kpas-lti-warning").hide();
+            $(".kpas-lti-info").show();
         },
         getJsonData : function(url, progressId, name, callback) {
             $(progressId).html("Laster statistikk for " + name + "<span class='loading-gif'></span>");

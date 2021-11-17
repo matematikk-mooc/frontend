@@ -4,7 +4,14 @@ this.mmooc.enroll = (function () {
   return {
     changeEnrollInformationPolicyLink: function () {
       var informationPolicy = $('.ic-Self-enrollment-footer__Secondary > a');
-      informationPolicy.attr("href", mmooc.settings.privacyPolicyLink);
+      if(informationPolicy) {
+        informationPolicy.attr("href", mmooc.settings.privacyPolicyLink);
+      }
+      
+      var termsOfService = $('#create_user_info > div.ic-Checkbox-group > div > label');
+      if(termsOfService) {
+        termsOfService.html("Jeg er enig i personvernspolitikken.");
+      }
     },
     addForgotPasswordLink: function () {
       const buttonId = 'selfEnrollmentForgotPassword';

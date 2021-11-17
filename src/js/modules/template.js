@@ -57,6 +57,15 @@ Handlebars.registerHelper('ifGreaterThan', function(value1, value2, options) {
   }
 });
 
+Handlebars.registerHelper('mapItemType', function(type) {
+  type = type.toLowerCase();
+  if (type.indexOf('externalurl') != -1 ||
+      type.indexOf('externaltool') != -1) {
+    return 'link';
+  }
+  return type;
+});
+
 Handlebars.registerHelper('overrideIconClassByTitle', function(title) {
   title = title.toLowerCase();
   if (title.indexOf('utmerkelse') != -1) {

@@ -1,4 +1,9 @@
 jQuery(function($) {
+  //KURSP-469 Support embedding of KPAS LTI tool. In general our design should not load in iframes. 
+  //The code below detects if we are in an iframe and then returns.
+  if(window.self != window.top) {
+    return;
+  }
   //Multilanguage KURSP-279 Css must be present before javascript is run.
   //KURSP-376-multilanguage-fix 
   mmooc.multilanguage.initializeCss();
@@ -502,12 +507,13 @@ jQuery(function($) {
     var courseId = mmooc.api.getCurrentCourseId();
 
     if ($("#kpas-lti-info").length ||
+        $(".kpas-lti-info").length ||
         $("#kommune-statistikk").length ||
         $("#fylke-statistikk").length) {
       const error = error => console.error('error calling api', error);
       mmooc.api.getUserGroupsForCourse(courseId, function(groups) {
         var isTeacherOrAdmin = mmooc.util.isTeacherOrAdmin();
-        mmooc.kpas.showInfo(isTeacherOrAdmin, groups);
+        mmooc.kpas.showInfo(groups);
         var groupsInfo = mmooc.util.getGroupsInfo(groups);
         mmooc.kpas.createDiagram("kommune-statistikk", isTeacherOrAdmin, courseId, groupsInfo);
         mmooc.kpas.createDiagram("fylke-statistikk", isTeacherOrAdmin, courseId, groupsInfo);
