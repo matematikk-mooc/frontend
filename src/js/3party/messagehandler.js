@@ -45,8 +45,7 @@ this.mmooc.messageHandler = (function() {
                             var courseId = mmooc.api.getCurrentCourseId();
 
                             mmooc.api.getUserGroupsForCourse(courseId, function(groups) {
-                                var isTeacherOrAdmin = mmooc.util.isTeacherOrAdmin();
-                                mmooc.kpas.showInfo(isTeacherOrAdmin, groups);
+                                mmooc.kpas.showInfo(groups);
                             }, error);
                         } else if(message.subject == "kpas-lti.getBgColor") {
                             var dom = findDomForWindow(e.source);
