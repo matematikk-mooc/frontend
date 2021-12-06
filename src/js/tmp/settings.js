@@ -21,7 +21,7 @@ this.mmooc.settings = {
   displayAlertsMenuItem : false,
   displayCallForAssistanceButtonInGroupDisccussions : false,
   displayInboxMenu: false,
-  privacyPolicyLink: 'https://kompetanseudirno.azureedge.net/udirdesign/privacypolicy.html',
+  privacyPolicyLink: 'https://kompetanseudirno.azureedge.net/udirdesign/privacypolicy.html?v=1_0',
   contactPoint: 'kompetansesupport@udir.no',
   platformName: 'UDIR - kompetanseplattform',
   homeOrganization: 'Udir.no',
