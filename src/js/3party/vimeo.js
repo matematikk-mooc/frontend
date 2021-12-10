@@ -13,6 +13,7 @@ this.mmooc.vimeo = function() {
 		var playbackRate = 1.0;
 		var transcriptId = "transcript" + vimeoIframeId;
 		var transcriptLoadingId = transcriptId + "loading";
+		var transcriptParentId = transcriptId + "parent";
 		var videoId = vimeoVideoId;
 		var iframeId = vimeoIframeId;
 		var transcriptButtonId = "vimeoTranscriptButtonId" + vimeoIframeId;
@@ -264,17 +265,25 @@ this.mmooc.vimeo = function() {
 			oTranscriptArea.transcriptContentArea.innerHTML = "<p>" + msg + "</p>";
 		}
 		this.createTranscriptArea = function() {
-			var revealButtonHtml = '<a class="uob-reveal-button" id="' + transcriptButtonId + '" href="#' + transcriptContentId + '">Videotranskripsjon</a>';
+			var b = document.createElement('a');
+			b.setAttribute("class", "vimeotranscript-reveal-button");
+			b.setAttribute("id", transcriptButtonId);
+			b.setAttribute("href", "#" + transcriptContentId);
+			b.innerHTML = "Videotranskripsjon";
 
 			var p = document.createElement('p');
 			transcriptParentDiv.appendChild(p);
-			p.innerHTML = revealButtonHtml;
+			p.appendChild(b);
+			console.log("createTranscriptArea:" + transcriptParentDiv.parentElement.innerHTML);
 
 			var e = document.createElement('div');
 			transcriptParentDiv.appendChild(e);
 			e.setAttribute("id", transcriptContentId);
 			e.setAttribute("class", "transcript");
 			e.setAttribute("style", "display: none;");
+
+			var br = document.createElement('br');
+			transcriptParentDiv.appendChild(br);
 
 			var transcript = this;
 			$('#' + transcriptButtonId)
@@ -297,6 +306,7 @@ this.mmooc.vimeo = function() {
 	
 				return false;
 			});
+			
 			return {transcriptArea:p, transcriptContentArea: e};
 		}		  
 		this.createLanguageMenu = function(oTranscriptArea, selectedLanguage) {
@@ -360,6 +370,7 @@ this.mmooc.vimeo = function() {
 		this.insertTranscriptParent = function() {
 			transcriptParentDiv = document.createElement('div');
 			transcriptParentDiv.setAttribute("class", "transcriptParent");
+			transcriptParentDiv.setAttribute("id", transcriptParentId);
 			var e = document.createElement('div');
 			transcriptParentDiv.appendChild(e);
 			e.setAttribute("id", transcriptLoadingId);
