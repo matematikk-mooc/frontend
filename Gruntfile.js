@@ -474,9 +474,9 @@ module.exports = function (grunt) {
           base: 'dist',
           hostname: 'localhost',
           protocol: 'https',
-          key: grunt.file.read('server.key').toString(),
-          cert: grunt.file.read('server.crt').toString(),
-          ca: grunt.file.read('ca.crt').toString(),
+//          key: grunt.file.read('server.key').toString(),
+//          cert: grunt.file.read('server.crt').toString(),
+//          ca: grunt.file.read('ca.crt').toString(),
           open: true
         }
       },
