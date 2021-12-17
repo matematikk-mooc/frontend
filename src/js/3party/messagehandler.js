@@ -19,7 +19,7 @@ this.mmooc.messageHandler = (function() {
                         if((e.data.method == undefined) && (e.data.event == undefined)) {
                             var message = JSON.parse(e.data);
                             if(message.event == "ready") {
-                                mmooc.vimeo.init();
+                                mmooc.uob.setVimeoPlayerReady();
                             }
                         }
                     } else {
