@@ -27,6 +27,9 @@ this.mmooc.privacyPolicy = (function() {
     }
     return {
         init: function() {
+            if(!mmooc.util.isAuthenticated()) {
+                return;
+            }
             var error = function(error) {
                 displayPrivacyPolicyDialog();
             };

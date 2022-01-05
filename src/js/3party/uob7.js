@@ -32,6 +32,9 @@ this.mmooc.uob = (function() {
   // Declare veriables that are used for multiple tasks.
   // -----------------------------------------------------------------------------------
   var i;
+  var vimeoPlayerReady = false;
+  var vimeoTranscriptInitialized = false;
+  var uobInititalized = false;
   var strSetNum = 0;
   // --------------------------------------------------------------------------------
   // uobAddComponents
@@ -49,14 +52,6 @@ this.mmooc.uob = (function() {
     onElementRendered(
       '#content .user_content.enhanced,#content .show-content.enhanced',
       function($content) {
-        //KURSP-279 Multilanguage must be run when content is ready
-        try {
-          // Call multilanguage.perform() last to catch all relevant DOM content
-          mmooc.multilanguage.perform();
-        } catch (e) {
-          console.log(e);
-        }
-
         // Tooltip
         var re = /\[(.*?)\]\((.*?)\)/g;
 
@@ -64,15 +59,18 @@ this.mmooc.uob = (function() {
         //en user content for hvert innlegg, og mange av innleggene blir lastet inn etter
         //at koden vår har kjørt. Dersom vi skal støtte dette må vi ha en måte å vite når
         //alle innleggene er lastet inn på. Da kan man kjøre $content.each iterasjon.
-        $content.first().html(
-          $content
-            .first()
-            .html()
-            .replace(
-              re,
-              '<span class="tooltip tooltip-underline">$1<span class="tooltiptext">$2</span></span>'
-            )
-        );
+
+
+        $tooltipElements = $content.first().filter(function() {
+          return this.innerHTML.match(re);
+        });
+        
+        $tooltipElements.each(function (i, el) {
+            $(this).html($(this).html().replace(
+                re,
+                '<span class="tooltip tooltip-underline">$1<span class="tooltiptext">$2</span></span>'
+            ))
+        });
 
         // ================================================================================
         // Show non-uob-component tables
@@ -734,6 +732,20 @@ this.mmooc.uob = (function() {
 
         // ================================================================================
         // --------------------------------------------------------------------------------
+
+        //KURSP-279 Multilanguage must be run when content is ready
+        try {
+          // Call multilanguage.perform() last to catch all relevant DOM content
+          mmooc.multilanguage.perform();
+        } catch (e) {
+          console.log(e);
+        }
+
+        if(vimeoPlayerReady && !vimeoTranscriptInitialized) {
+          vimeoTranscriptInitialized = true;
+          mmooc.vimeo.init();
+        }
+        uobInititalized = true;
       }
     );
   }
@@ -844,6 +856,13 @@ this.mmooc.uob = (function() {
       onPage(/\/(courses|groups)\/\d+/, function() {
         uobAddComponents();
       });
+    },
+    setVimeoPlayerReady: function() {
+      vimeoPlayerReady = true;
+      if(uobInititalized && !vimeoTranscriptInitialized) {
+        mmooc.vimeo.init();
+        vimeoTranscriptInitialized = true;
+      }
     }
   };
 })();

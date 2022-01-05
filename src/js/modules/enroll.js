@@ -42,7 +42,8 @@ this.mmooc.enroll = (function () {
         courseLabel: mmooc.i18n.CoursePlural.toLowerCase(),
         allAvailableCoursesIngress: mmooc.i18n.AllAvailableCoursesIngress,
         linkToMyCourses: mmooc.utilRoot.getLinkToMyCourses(),
-        isAuthenticated: mmooc.util.isAuthenticated()
+        isAuthenticated: mmooc.util.isAuthenticated(),
+        isMobileOrTablet: mmooc.util.isMobileOrTablet()
       });
       document.title = 'Tilgjengelige ' + mmooc.i18n.CoursePlural.toLowerCase();
       document.getElementById('content').innerHTML = html;
