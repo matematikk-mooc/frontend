@@ -201,6 +201,33 @@ module.exports = function (grunt) {
           {
             from: '$KPASAPIURL',
 //            to: 'https://kpas-lti.azurewebsites.net/api'
+            to: 'https://0e80-2001-4647-a388-0-f9f1-4fd9-70f7-8613.ngrok.io/api'
+          }
+        ]
+      },
+      development_mobile: {
+        src: ['tmp/mmooc-min.css','tmp/rootaccount.css', 'src/js/rootaccountfwd-dev.js','dist/mmooc-min.js', 'tmp/rootaccount.js','tmp/subaccount.js'],
+        dest: 'dist/',
+        replacements: [
+          {
+            from: 'https://server',
+            to: 'https://erlend-2.local:9000'
+          },
+          {
+            from: 'https://udirdesigncss',
+            to: 'https://erlend-2.local:9000/mmooc-min.css'
+          },
+          {
+            from: 'https://udirdesignjs',
+            to: 'https://erlend-2.local:9000/mmooc-min.js'
+          },
+          {
+            from: 'KPAS_IFRAME_VERSION',
+            to: udv
+          },
+          {
+            from: '$KPASAPIURL',
+//            to: 'https://kpas-lti.azurewebsites.net/api'
             to: 'https://bf59-193-215-200-178.ngrok.io/api'
           }
         ]
@@ -441,6 +468,18 @@ module.exports = function (grunt) {
           open: true
         }
       },
+      dev_mobile: { //setup fo local development
+        options: {
+          port: 9000,
+          base: 'dist',
+          hostname: 'localhost',
+          protocol: 'https',
+//          key: grunt.file.read('server.key').toString(),
+//          cert: grunt.file.read('server.crt').toString(),
+//          ca: grunt.file.read('ca.crt').toString(),
+          open: true
+        }
+      },
       test: {
         options: {
           port: 9988,
@@ -522,6 +561,9 @@ module.exports = function (grunt) {
   grunt.registerTask('dev_development', [
     'replace:development',
   ]);
+  grunt.registerTask('dev_development_mobile', [
+    'replace:development_mobile',
+  ]);
   grunt.registerTask('prod_production', [
     'replace:production',
   ]);
@@ -549,7 +591,8 @@ module.exports = function (grunt) {
 
   grunt.registerTask('rebuildServe', ['clean:dist', 'dev_dataporten', 'dev_settings', 'make_dev', 'dev_development', 'dev_kpas']);
 
-  grunt.registerTask('serve', ['clean', 'dev_dataporten', 'dev_settings',  'make_dev',  'dev_development','dev_kpas', 'connect:dev', 'watch']);
+  grunt.registerTask('serve',        ['clean', 'dev_dataporten', 'dev_settings',  'make_dev',  'dev_development','dev_kpas', 'connect:dev', 'watch']);
+  grunt.registerTask('serve_mobile', ['clean', 'dev_dataporten', 'dev_settings',  'make_dev',  'dev_development_mobile','dev_kpas', 'connect:dev_mobile', 'watch']);
 
   grunt.registerTask('serveStaging', ['clean', 'make', 'connect:staging', 'watch']);
 
