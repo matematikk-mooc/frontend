@@ -182,7 +182,7 @@ module.exports = function (grunt) {
         ]
       },
       development: {
-        src: ['tmp/<%= outFileName%>.css','tmp/rootaccount.css', 'src/js/rootaccountfwd-dev.js','dist/<%= outFileName%>.js', 'tmp/<%= rootaccountFileName%>.js','tmp/<%= subaccountFileName%>.js'],
+        src: ['tmp/<%= outFileName%>.css','tmp/rootaccount.css', 'src/js/rootaccountfwd-dev.js','src/js/subaccountfwd-dev.js','dist/<%= outFileName%>.js', 'tmp/<%= rootaccountFileName%>.js','tmp/<%= subaccountFileName%>.js'],
         dest: 'dist/',
         replacements: [
           {
@@ -204,7 +204,7 @@ module.exports = function (grunt) {
           {
             from: '$KPASAPIURL',
 //            to: 'https://kpas-lti.azurewebsites.net/api'
-            to: 'https://0e80-2001-4647-a388-0-f9f1-4fd9-70f7-8613.ngrok.io/api'
+            to: 'https://4b01-2001-4647-a388-0-d5d0-6375-9e7f-c1a0.ngrok.io/api'
           }
         ]
       },
