@@ -36,14 +36,14 @@ jQuery.extend({
 });
 
 jQuery(document).ready(function($) {
-  var filename = 'http://localhost:9000/rootaccount.css';
+  var filename = 'http://localhost:9000/rootaccount-localhost.css';
 
   var fileref=document.createElement("link")
   fileref.setAttribute("rel", "stylesheet")
   fileref.setAttribute("type", "text/css")
   fileref.setAttribute("href", filename)
   fileref.onload = (_) => {
-    $.getScript('http://localhost:9000/rootaccount.js');
+    $.getScript('http://localhost:9000/rootaccount-localhost.js');
   }
   document.getElementsByTagName("head")[0].appendChild(fileref)
 });
