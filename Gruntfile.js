@@ -8,6 +8,7 @@ module.exports = function (grunt) {
   // Configures grunt tasks
   grunt.initConfig({
     outFileName: 'mmooc-min-' + udv,
+    srcFileName: 'mmooc-' +udv,
     subaccountFileName: 'subaccount-' + udv,
     rootaccountFileName: 'rootaccount-' + udv,
     clean: {
@@ -72,7 +73,7 @@ module.exports = function (grunt) {
           'src/js/main.js',
           'src/addons/canva_badges/js/*.js'
         ],
-        dest: 'tmp/mmooc.js'
+        dest: 'tmp/<%= srcFileName%>.js'
       },
       rootaccount: {
         src: ['src/js/settingsRoot.js', 'src/js/utilRoot.js', 'src/js/rootaccount.js'],
@@ -109,7 +110,7 @@ module.exports = function (grunt) {
       },
       dist: {
         files: {
-          'tmp/mmooc-babel.js': 'tmp/mmooc.js'
+          'tmp/mmooc-babel.js': 'tmp/<%= srcFileName%>.js'
         }
       }
     },
@@ -445,7 +446,7 @@ module.exports = function (grunt) {
       },
       dev: {
         files: [
-          { expand: true, src: ['tmp/mmooc.js'], 
+          { expand: true, src: ['tmp/<%= srcFileName%>.js'], 
             rename: function () {       // The value for rename must be a function
               return 'dist/<%= outFileName%>.js'; // The function must return a string with the complete destination
             }
