@@ -7,6 +7,10 @@ module.exports = function (grunt) {
   
   // Configures grunt tasks
   grunt.initConfig({
+    outFileName: 'mmooc-min-' + udv,
+    srcFileName: 'mmooc-' +udv,
+    subaccountFileName: 'subaccount-' + udv,
+    rootaccountFileName: 'rootaccount-' + udv,
     clean: {
       dist: {
         files: [
@@ -44,9 +48,9 @@ module.exports = function (grunt) {
           cleancss: true
         },
         files: {
-          'tmp/mmooc-min.css': ['src/css/all.less'],
+          'tmp/<%= outFileName%>.css': ['src/css/all.less'],
           'dist/badgesafe.css': ['src/addons/badges/css/all.less'],
-          'tmp/rootaccount.css': ['src/css/allrootaccount.less']
+          'tmp/<%= rootaccountFileName%>.css': ['src/css/allrootaccount.less']
         }
       }
     },
@@ -69,15 +73,15 @@ module.exports = function (grunt) {
           'src/js/main.js',
           'src/addons/canva_badges/js/*.js'
         ],
-        dest: 'tmp/mmooc.js'
+        dest: 'tmp/<%= srcFileName%>.js'
       },
       rootaccount: {
         src: ['src/js/settingsRoot.js', 'src/js/utilRoot.js', 'src/js/rootaccount.js'],
-        dest: 'tmp/rootaccount.js'
+        dest: 'tmp/<%= rootaccountFileName%>.js'
       },
       subaccount: {
         src: ['src/js/settingsRoot.js', 'src/js/utilRoot.js', 'src/js/subaccount.js'],
-        dest: 'tmp/subaccount.js'
+        dest: 'tmp/<%= subaccountFileName%>.js'
       },
       extras: {
         src: [
@@ -106,7 +110,7 @@ module.exports = function (grunt) {
       },
       dist: {
         files: {
-          'tmp/mmooc-babel.js': 'tmp/mmooc.js'
+          'tmp/mmooc-babel.js': 'tmp/<%= srcFileName%>.js'
         }
       }
     },
@@ -120,14 +124,14 @@ module.exports = function (grunt) {
       },
       dist: {
         files: {
-          'dist/mmooc-min.js': ['tmp/mmooc-babel.js']
+          'dist/<%= outFileName%>.js': ['tmp/mmooc-babel.js']
         }
       }
     },
     
     replace: {
       production: {
-        src: ['tmp/mmooc-min.css','tmp/rootaccount.css', 'dist/mmooc-min.js', 'tmp/rootaccount.js', 'tmp/subaccount.js'],
+        src: ['tmp/<%= outFileName%>.css','tmp/<%= rootaccountFileName%>.css', 'dist/<%= outFileName%>.js', 'tmp/<%= rootaccountFileName%>.js', 'tmp/<%= subaccountFileName%>.js'],
         dest: 'dist/',
         replacements: [
           {
@@ -136,11 +140,11 @@ module.exports = function (grunt) {
           },
           {
             from: 'https://udirdesigncss',
-            to: 'https://kompetanseudirno.azureedge.net/udirdesign/mmooc-min.css?version='+udv
+            to: 'https://kompetanseudirno.azureedge.net/udirdesign/<%= outFileName%>.css'
           },
           {
             from: 'https://udirdesignjs',
-            to: 'https://kompetanseudirno.azureedge.net/udirdesign/mmooc-min.js?version='+udv
+            to: 'https://kompetanseudirno.azureedge.net/udirdesign/<%= outFileName%>.js'
           },
           {
             from: 'KPAS_IFRAME_VERSION',
@@ -153,7 +157,7 @@ module.exports = function (grunt) {
         ]
       },
       stage: {
-        src: ['tmp/mmooc-min.css','tmp/rootaccount.css', 'dist/mmooc-min.js', 'tmp/rootaccount.js', 'tmp/subaccount.js'],
+        src: ['tmp/<%= outFileName%>.css','tmp/<%= rootaccountFileName%>.css', 'dist/<%= outFileName%>.js', 'tmp/<%= rootaccountFileName%>.js', 'tmp/<%= subaccountFileName%>.js'],
         dest: 'dist/',
         replacements: [
           {
@@ -162,11 +166,11 @@ module.exports = function (grunt) {
           },
           {
             from: 'https://udirdesigncss',
-            to: 'https://kompetanseudirno.azureedge.net/udirdesign-staging/mmooc-min.css?version='+udv
+            to: 'https://kompetanseudirno.azureedge.net/udirdesign-staging/<%= outFileName%>.css'
           },
           {
             from: 'https://udirdesignjs',
-            to: 'https://kompetanseudirno.azureedge.net/udirdesign-staging/mmooc-min.js?version='+udv
+            to: 'https://kompetanseudirno.azureedge.net/udirdesign-staging/<%= outFileName%>.js'
           },
           {
             from: 'KPAS_IFRAME_VERSION',
@@ -179,7 +183,7 @@ module.exports = function (grunt) {
         ]
       },
       development: {
-        src: ['tmp/mmooc-min.css','tmp/rootaccount.css', 'src/js/rootaccountfwd-dev.js','dist/mmooc-min.js', 'tmp/rootaccount.js','tmp/subaccount.js'],
+        src: ['tmp/<%= outFileName%>.css','tmp/rootaccount.css', 'src/js/rootaccountfwd-dev.js','src/js/subaccountfwd-dev.js','dist/<%= outFileName%>.js', 'tmp/<%= rootaccountFileName%>.js','tmp/<%= subaccountFileName%>.js'],
         dest: 'dist/',
         replacements: [
           {
@@ -188,11 +192,11 @@ module.exports = function (grunt) {
           },
           {
             from: 'https://udirdesigncss',
-            to: 'http://localhost:9000/mmooc-min.css'
+            to: 'http://localhost:9000/<%= outFileName%>.css'
           },
           {
             from: 'https://udirdesignjs',
-            to: 'http://localhost:9000/mmooc-min.js'
+            to: 'http://localhost:9000/<%= outFileName%>.js'
           },
           {
             from: 'KPAS_IFRAME_VERSION',
@@ -201,12 +205,12 @@ module.exports = function (grunt) {
           {
             from: '$KPASAPIURL',
 //            to: 'https://kpas-lti.azurewebsites.net/api'
-            to: 'https://0e80-2001-4647-a388-0-f9f1-4fd9-70f7-8613.ngrok.io/api'
+            to: 'https://4b01-2001-4647-a388-0-d5d0-6375-9e7f-c1a0.ngrok.io/api'
           }
         ]
       },
       development_mobile: {
-        src: ['tmp/mmooc-min.css','tmp/rootaccount.css', 'src/js/rootaccountfwd-dev.js','dist/mmooc-min.js', 'tmp/rootaccount.js','tmp/subaccount.js'],
+        src: ['tmp/<%= outFileName%>.css','tmp/rootaccount.css', 'src/js/rootaccountfwd-dev.js','dist/<%= outFileName%>.js', 'tmp/<%= rootaccountFileName%>.js','tmp/<%= subaccountFileName%>.js'],
         dest: 'dist/',
         replacements: [
           {
@@ -215,11 +219,11 @@ module.exports = function (grunt) {
           },
           {
             from: 'https://udirdesigncss',
-            to: 'https://erlend-2.local:9000/mmooc-min.css'
+            to: 'https://erlend-2.local:9000/<%= outFileName%>.css'
           },
           {
             from: 'https://udirdesignjs',
-            to: 'https://erlend-2.local:9000/mmooc-min.js'
+            to: 'https://erlend-2.local:9000/<%= outFileName%>.js'
           },
           {
             from: 'KPAS_IFRAME_VERSION',
@@ -430,21 +434,21 @@ module.exports = function (grunt) {
     copy: {
       main: {
         files: [
-          { expand: true, src: ['rootaccount*'], cwd: 'src/css/', dest: 'dist/' },
-          { expand: true, src: ['subaccount*'], cwd: 'src/css/', dest: 'dist/' },
+          { expand: true, src: ['<%= rootaccountFileName%>*'], cwd: 'src/css/', dest: 'dist/' },
+          { expand: true, src: ['<%= subaccountFileName%>*'], cwd: 'src/css/', dest: 'dist/' },
           { expand: true, src: ['bitmaps/*'], cwd: 'src/', dest: 'dist/' },
           { expand: true, src: ['vector_images/*'], cwd: 'src/', dest: 'dist/' },
-          { expand: true, src: ['subaccount.js.map'], cwd: 'tmp/', dest: 'dist/' },
-          { expand: true, src: ['rootaccount.js.map'], cwd: 'tmp/', dest: 'dist/' },
+          { expand: true, src: ['<%= subaccountFileName%>.js.map'], cwd: 'tmp/', dest: 'dist/' },
+          { expand: true, src: ['<%= rootaccountFileName%>*.js.map'], cwd: 'tmp/', dest: 'dist/' },
           { expand: true, src: ['badges-min.js.map'], cwd: 'tmp/', dest: 'dist/' },
           { expand: true, src: ['*'], cwd: 'kpas/', dest: 'dist/kpas' }
         ]
       },
       dev: {
         files: [
-          { expand: true, src: ['tmp/mmooc.js'], 
+          { expand: true, src: ['tmp/<%= srcFileName%>.js'], 
             rename: function () {       // The value for rename must be a function
-              return 'dist/mmooc-min.js'; // The function must return a string with the complete destination
+              return 'dist/<%= outFileName%>.js'; // The function must return a string with the complete destination
             }
           }
         ]
