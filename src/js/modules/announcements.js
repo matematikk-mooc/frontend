@@ -45,13 +45,14 @@ this.mmooc.announcements = (() => {
       });
     },
     printUnreadCountInTab(totalUnread) {
-      $('.mmooc-course-tab a').each(() => {
+      $('.mmooc-course-tab a').each(function() {
         $(this).text() == 'Kunngjøringer' &&
           $(this)
             .parent()
             .append(
               `<span class='discussion-unread-value discussion-unread-tab'>${totalUnread}</span>`
             );
+        }
       });
     },
     setAnnouncementsListUnreadClass() {
