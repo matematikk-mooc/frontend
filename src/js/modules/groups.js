@@ -67,9 +67,11 @@ this.mmooc.groups = (function() {
 
     moveSequenceLinks: function() {
       var sequenceContainer = $('#module_sequence_footer');
+      var cloneSequenceContainer = sequenceContainer.clone();
+      cloneSequenceContainer.attr("id", "module_sequence_footer_top");
       var discussionContainer = $('#discussion_container');
-      sequenceContainer.addClass('module-sequence-top');
-      sequenceContainer.insertBefore(discussionContainer);
+      cloneSequenceContainer.addClass('module-sequence-top');
+      cloneSequenceContainer.insertBefore(discussionContainer);
     }
   };
 })();
