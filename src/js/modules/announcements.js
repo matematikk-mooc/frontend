@@ -53,7 +53,7 @@ this.mmooc.announcements = (() => {
               `<span class='discussion-unread-value discussion-unread-tab'>${totalUnread}</span>`
             );
         }
-      });
+      );
     },
     setAnnouncementsListUnreadClass() {
       const checkExist = setInterval(() => {
