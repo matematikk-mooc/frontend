@@ -37,7 +37,6 @@ class MultilangUtils {
                 const spanned = MultilangUtils.getSpannedText(tooltipParsedResult[2]);
                 if (spanned !== null) {
                     var newTooltipText = mmooc.menu.createNewTooltipText(tooltip, tooltipParsedResult[1], spanned);
-                    //newTooltipText="<strong style='float:left'>Forrige modul:</strong> <br>ERLEND";
                     node.setAttribute("data-html-tooltip-title", newTooltipText);
                 }
             }

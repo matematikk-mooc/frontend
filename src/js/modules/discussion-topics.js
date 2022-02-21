@@ -2,6 +2,18 @@ this.mmooc = this.mmooc || {};
 
 this.mmooc.discussionTopics = (function () {
     return {
+        moveSequenceLinks: function() {
+            var sequenceContainer = $('#module_sequence_footer');
+            if(sequenceContainer) {
+              var cloneSequenceContainer = sequenceContainer.clone();
+              cloneSequenceContainer.attr("id", "module_sequence_footer_top");
+              var discussionContainer = $('#discussion_container');
+              cloneSequenceContainer.addClass('module-sequence-top');
+              cloneSequenceContainer.insertBefore(discussionContainer);
+            } else {
+              setTimeout(mmooc.groups.moveSequenceLinks(), 200);        
+            }
+        },
         setDiscussionTopicPubDate: function (discussionTopic) {
             if (discussionTopic) {
                 var formattedDate = mmooc.util.formattedDate(discussionTopic.posted_at);

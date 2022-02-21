@@ -64,14 +64,5 @@ this.mmooc.groups = (function() {
 
       return false;
     },
-
-    moveSequenceLinks: function() {
-      var sequenceContainer = $('#module_sequence_footer');
-      var cloneSequenceContainer = sequenceContainer.clone();
-      cloneSequenceContainer.attr("id", "module_sequence_footer_top");
-      var discussionContainer = $('#discussion_container');
-      cloneSequenceContainer.addClass('module-sequence-top');
-      cloneSequenceContainer.insertBefore(discussionContainer);
-    }
   };
 })();

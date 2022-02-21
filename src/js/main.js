@@ -281,26 +281,6 @@ jQuery(function($) {
     }
   });
 
-  //Path for showing a group discussion or creating a new discussion
-  //20180821ETH Some functionality moved to new path below and to module_item_id path below
-  /*
-    mmooc.routes.addRouteForPath([/\/groups\/\d+\/discussion_topics\/\d+$/, /\/groups\/\d+\/discussion_topics\/new$/], function() {
-        mmooc.menu.showLeftMenu();
-        mmooc.menu.listModuleItems();
-        mmooc.menu.showDiscussionGroupMenu();
-
-        if (!mmooc.util.isTeacherOrAdmin()) {
-        	mmooc.menu.hideSectionTabsHeader();
-        }
-    });
-
-    mmooc.routes.addRouteForPath([/\/groups\/\d+\/discussion_topics\/\d+$/], function() {
-        mmooc.groups.moveSequenceLinks();
-        if (!mmooc.util.isTeacherOrAdmin()) {
-            mmooc.menu.hideRightMenu();
-        }
-    });
-*/
   mmooc.routes.addRouteForPath(
     [
       /\/groups\/\d+\/discussion_topics\/\d+$/,
@@ -416,6 +396,10 @@ jQuery(function($) {
       });
     }
   );
+  
+  mmooc.routes.addRouteForPath([/\/discussion_topics\/\d+/], function() {
+    mmooc.discussionTopics.moveSequenceLinks();
+  });
 
   mmooc.routes.addRouteForPathOrQueryString(
     [
@@ -428,11 +412,6 @@ jQuery(function($) {
       mmooc.menu.showLeftMenu();
       mmooc.menu.listModuleItems();
       mmooc.pages.modifyMarkAsDoneButton();
-      //20180911ETH showDiscussionGroupMenu is handled by group discussion path above.
-      //        mmooc.menu.showDiscussionGroupMenu();
-      mmooc.groups.moveSequenceLinks();
-
-      // mmooc.pages.changeTranslations();
 
       if (mmooc.util.isTeacherOrAdmin()) {
         mmooc.pages.addGotoModuleButton();
