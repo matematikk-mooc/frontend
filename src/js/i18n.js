@@ -14,7 +14,9 @@ if (typeof this.mmooc.i18n === 'undefined') {
       CloseCoursesGroup: 'Lukk',
       LogIn: 'Logg inn',
       LogInPopup: 'Logg inn på kompetanseportalen',
-      LogInCanvas: 'Har ikke Feide',
+      LogInCanvas: 'Har ikkje Feide',
+      RegisterPopup: 'Registrer deg',
+      RegisterWithCanvas: 'Har ikkje Feide',
       JoinCourseDialogText:
         'Du kan melde deg på kompetansepakken igjen seinare om du vil ',
       DropCourse: 'Meld deg av kompetansepakken',
@@ -106,6 +108,8 @@ if (typeof this.mmooc.i18n === 'undefined') {
       LogInPopup: 'Logg inn på kompetanseportalen',
       LogIn: 'Logg inn',
       LogInCanvas: 'Har ikke Feide',
+      RegisterPopup: 'Registrer deg',
+      RegisterWithCanvas: 'Har ikke Feide',
       JoinCourseDialogText:
         'Du kan melde deg på kompetansepakken igjen senere om du vil ',
       DropCourse: 'Meld deg av kompetansepakken',
