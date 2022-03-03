@@ -1,0 +1,23 @@
+.uob-info, .uob-warning {
+    margin-top: 1em;
+    margin-bottom: 1em;
+    padding: 0.5em 0.5em 0.5em 12px;
+    border-radius: 4px;
+    border-color: silver;
+    border-style: solid;
+    border-width: 1px;
+    background-repeat: no-repeat;
+    background-position: 4px 4px;
+    min-height: 50px;
+}
+.uob-info {
+    background-color: #c7d3e1;
+}
+.uob-warning {
+    background-color: #ffeeee;
+}
+body {
+    width:960px;
+    margin: 20px;
+    padding: 20px;
+}
