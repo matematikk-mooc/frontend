@@ -65,16 +65,21 @@
                         {{/ifUnmaintained}}
                         {{#ifRoleBased}}
                             <p class="mmooc-tab-content-alert">
-                                <span class="tooltip tooltip-underline">
-                                    <span class="mmooc-tag mmooc-tag-azur">
+                                <span class="tooltip">
+                                    <span class="mmooc-tag mmooc-tag-course-type-collective">
                                         <label>kollektiv</label>
                                     </span>
-                                <span class="tooltiptext">Kollektive kompetansepakker inneholder blant annet lederstøtte og innhold der man skal samarbeide med andre.</span></span>
+                                    <span class="tooltiptext">Kollektive kompetansepakker inneholder blant annet lederstøtte og innhold der man skal samarbeide med andre.</span>
+                                </span>
                             </p>
                         {{else}}
                             <p class="mmooc-tab-content-alert">
-                                <span class="tooltip tooltip-underline"><span class="label label-info"><span class="label label-info">individuell</span></span><span class="tooltiptext">Individuelle e-læringskurs egner seg godt til å ta på egenhånd.</span></span>
-                                
+                                <span class="tooltip">
+                                    <span class="mmooc-tag mmooc-tag-course-type-individual">
+                                        <label>individuell</label>
+                                    </span>
+                                    <span class="tooltiptext">Individuelle e-læringskurs egner seg godt til å ta på egenhånd.</span>
+                                </span>
                             </p>
                         {{/ifRoleBased}}
                         <div class="mmooc-button-ctr">
@@ -107,12 +112,21 @@
                     {{/ifUnmaintained}}
                     {{#ifRoleBased}}
                         <p class="mmooc-tab-content-alert">
-                            <span class="tooltip tooltip-underline"><span class="label label-info">kollektiv</span><span class="tooltiptext">Kollektive kompetansepakker inneholder blant annet lederstøtte og innhold der man skal samarbeide med andre.</span></span>
+                            <span class="tooltip">
+                                <span class="mmooc-tag mmooc-tag-course-type-collective">
+                                    <label>kollektiv</label>
+                                </span>
+                                <span class="tooltiptext">Kollektive kompetansepakker inneholder blant annet lederstøtte og innhold der man skal samarbeide med andre.</span>
+                            </span>
                         </p>
                     {{else}}
                         <p class="mmooc-tab-content-alert">
-                            <span class="tooltip tooltip-underline"><span class="label label-info"><span class="label label-info">individuell</span></span><span class="tooltiptext">Individuelle e-læringskurs egner seg godt til å ta på egenhånd.</span></span>
-                            
+                            <span class="tooltip">
+                                <span class="mmooc-tag mmooc-tag-course-type-individual">
+                                    <label>individuell</label>
+                                </span>
+                                <span class="tooltiptext">Individuelle e-læringskurs egner seg godt til å ta på egenhånd.</span>
+                            </span>
                         </p>
                     {{/ifRoleBased}}
                     <div class="mmooc-button-ctr">
