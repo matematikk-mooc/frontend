@@ -29,6 +29,14 @@ Handlebars.registerHelper('ifUnmaintained', function(options) {
   }
 });
 
+Handlebars.registerHelper('ifRoleBased', function(options) {
+  if(mmooc.util.isRoleBasedCourse(this)) {
+    return options.fn(this);
+  } else {
+    return options.inverse(this);
+  }
+});
+
 Handlebars.registerHelper('courseAlert', function() {
   return mmooc.util.isUnmaintained(this);
 });

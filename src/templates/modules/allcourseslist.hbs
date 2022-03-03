@@ -63,6 +63,20 @@
                         {{#ifUnmaintained}}
                             <p class="mmooc-tab-content-alert"><b>NB! Denne kompetansepakken ble sist vedlikeholdt i {{courseAlert}}</b></p>
                         {{/ifUnmaintained}}
+                        {{#ifRoleBased}}
+                            <p class="mmooc-tab-content-alert">
+                                <span class="tooltip tooltip-underline">
+                                    <span class="mmooc-tag mmooc-tag-azur">
+                                        <label>kollektiv</label>
+                                    </span>
+                                <span class="tooltiptext">Kollektive kompetansepakker inneholder blant annet lederstøtte og innhold der man skal samarbeide med andre.</span></span>
+                            </p>
+                        {{else}}
+                            <p class="mmooc-tab-content-alert">
+                                <span class="tooltip tooltip-underline"><span class="label label-info"><span class="label label-info">individuell</span></span><span class="tooltiptext">Individuelle e-læringskurs egner seg godt til å ta på egenhånd.</span></span>
+                                
+                            </p>
+                        {{/ifRoleBased}}
                         <div class="mmooc-button-ctr">
                             {{#if enrolled}}
                                 <a aria-label="enroll" class="mmooc-button mmooc-button-secondary" href="/courses/{{../id}}">{{../../goToCourse}}</a>
@@ -87,11 +101,25 @@
                 </span>
                 <article id="mmooc-tabs-mobile-content-{{id}}" class="mmooc-tabs-mobile-content">
                     <p>{{public_description}}</p>
+                    <p class="mmooc-tab-content-description">{{public_description}}</p>
+                    {{#ifUnmaintained}}
+                        <p class="mmooc-tab-content-alert"><b>NB! Denne kompetansepakken ble sist vedlikeholdt i {{courseAlert}}</b></p>
+                    {{/ifUnmaintained}}
+                    {{#ifRoleBased}}
+                        <p class="mmooc-tab-content-alert">
+                            <span class="tooltip tooltip-underline"><span class="label label-info">kollektiv</span><span class="tooltiptext">Kollektive kompetansepakker inneholder blant annet lederstøtte og innhold der man skal samarbeide med andre.</span></span>
+                        </p>
+                    {{else}}
+                        <p class="mmooc-tab-content-alert">
+                            <span class="tooltip tooltip-underline"><span class="label label-info"><span class="label label-info">individuell</span></span><span class="tooltiptext">Individuelle e-læringskurs egner seg godt til å ta på egenhånd.</span></span>
+                            
+                        </p>
+                    {{/ifRoleBased}}
                     <div class="mmooc-button-ctr">
                         {{#if enrolled}}
                             <a class="mmooc-button mmooc-button-secondary" href="/courses/{{../id}}">{{../../goToCourse}}</a>
                         {{else}}
-                            <button id="{{self_enrollment_code}}" class="mmooc-header__register-button mmooc-button mmooc-button-secondary">Registrer deg</button>
+                            <button id="{{self_enrollment_code}}" class="mmooc-header__register-button mmooc-button mmooc-button-secondary">Meld deg på</button>
                         {{/if}}
                     </div>
                 </article>

@@ -15,7 +15,7 @@ if (typeof this.mmooc.i18n === 'undefined') {
       LogIn: 'Logg inn',
       LogInPopup: 'Logg inn på kompetanseportalen',
       LogInCanvas: 'Har ikkje Feide',
-      RegisterPopup: 'Registrer deg',
+      RegisterPopup: 'Meld deg på',
       RegisterWithCanvas: 'Har ikkje Feide',
       JoinCourseDialogText:
         'Du kan melde deg på kompetansepakken igjen seinare om du vil ',
@@ -108,7 +108,7 @@ if (typeof this.mmooc.i18n === 'undefined') {
       LogInPopup: 'Logg inn på kompetanseportalen',
       LogIn: 'Logg inn',
       LogInCanvas: 'Har ikke Feide',
-      RegisterPopup: 'Registrer deg',
+      RegisterPopup: 'Meld deg på',
       RegisterWithCanvas: 'Har ikke Feide',
       JoinCourseDialogText:
         'Du kan melde deg på kompetansepakken igjen senere om du vil ',

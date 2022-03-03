@@ -106,6 +106,8 @@ this.mmooc.enroll = (function () {
               courses: coursesCategory.courses,
               coursesEnrolledAmount: coursesEnrolledAmount,
               coursesAmount: coursesAmount,
+              coursesRoleBasedAmount: coursesCategory.noOfRoleBasedCourses,
+              coursesPersonalBasedAmount: coursesCategory.noOfPersonalBasedCourses,
               coursesAmountText: mmooc.i18n.CoursesAmount(coursesAmount),
               courseLabel: mmooc.i18n.Course.toLowerCase(),
               goToCourse: mmooc.i18n.GoToCourse,
