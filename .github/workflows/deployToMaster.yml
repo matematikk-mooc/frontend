@@ -1,0 +1,25 @@
+name: Frontend staging
+
+on:
+    push:
+        branches: [ master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: azure/login@v1
+      with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+    - name: Upload to blob storage
+      uses: azure/CLI@v1
+      with:
+        inlineScript: |
+            az storage blob upload-batch --account-name udirdit --auth-mode key -d udirdesign -s dist
+  # Azure logout
+    - name: logout
+      run: |
+            az logout
+      if: always()
