@@ -307,6 +307,9 @@ this.mmooc.util = (function () {
       });
     },
     isMemberOfExpiredCommunity(course, callback) {
+      if(!course) {
+        return;
+      }
       mmooc.api.getUserGroupsForCourse(course.id, function (groups) {
         var memberOfUtgaattKommune = false;
         if (groups.length) {

@@ -44,7 +44,11 @@ jQuery(function($) {
   });
 
   mmooc.routes.addRouteForPath(/\/courses\/\d+/, function() {
-    mmooc.util.updateInformationPane();
+    if(!mmooc.util.isAuthenticated()) {
+      
+    } else {
+      mmooc.util.updateInformationPane();
+    }
   });
 
   //The logic below should be refactored and cleaned up.
@@ -555,30 +559,26 @@ jQuery(function($) {
   //Try to get course information and store it such that routes can use it.
   //Otherwise just handle the route.
   try {
-    if(mmooc.util.isAuthenticated()) {
-      var courseId = mmooc.api.getCurrentCourseId();
-      if(courseId) {
-        mmooc.api.getCourse(
-          courseId,
-          function(course) {
-            mmooc.util.course = course;
-            //KURSP-376-multilanguage-fix
-            if (mmooc.util.isMultilangCourse(mmooc.util.course)) {
-              var langCode = MultilangUtils.getLanguageCode();
-              MultilangUtils.setActiveLanguage(langCode);
-            }
-            mmooc.routes.performHandlerForUrl(document.location);
-          },
-          function(error) {
-            console.error(
-              'error calling mmooc.api.getCourse(' + courseId + ')',
-              error
-            );
+    var courseId = mmooc.api.getCurrentCourseId();
+    if(courseId) {
+      mmooc.api.getCourse(
+        courseId,
+        function(course) {
+          mmooc.util.course = course;
+          //KURSP-376-multilanguage-fix
+          if (course && mmooc.util.isMultilangCourse(course)) {
+            var langCode = MultilangUtils.getLanguageCode();
+            MultilangUtils.setActiveLanguage(langCode);
           }
-        );
-      } else {
-        mmooc.routes.performHandlerForUrl(document.location);
-      }
+          mmooc.routes.performHandlerForUrl(document.location);
+        },
+        function(error) {
+          console.error(
+            'error calling mmooc.api.getCourse(' + courseId + ')',
+            error
+          );
+        }
+      );
     } else {
       mmooc.routes.performHandlerForUrl(document.location);
     }
