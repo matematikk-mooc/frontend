@@ -1,7 +1,8 @@
 .DS_Store
 .idea
 /node_modules
-/dist
+/dist/bitmaps
+/dist/vector_images
 /tmp
 *.iml
 .eslintrc
