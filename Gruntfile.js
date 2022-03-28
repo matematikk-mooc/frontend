@@ -16,7 +16,7 @@ module.exports = function (grunt) {
         files: [
           {
             dot: true,
-            src: ['dist', 'tmp']
+            src: ['dist', 'tmp', 'babel', 'replace']
           }
         ]
       },
@@ -110,7 +110,7 @@ module.exports = function (grunt) {
       },
       dist: {
         files: {
-          'tmp/mmooc-babel.js': 'tmp/<%= srcFileName%>.js'
+          'babel/mmooc-babel.js': 'replace/<%= srcFileName%>.js'
         }
       }
     },
@@ -120,11 +120,11 @@ module.exports = function (grunt) {
         sourceMap: {
           includeSources: true
         },
-        sourceMapIn: 'tmp/mmooc-babel.js.map', // input sourcemap from a previous compilation
+        sourceMapIn: 'babel/mmooc-babel.js.map', // input sourcemap from a previous compilation
       },
       dist: {
         files: {
-          'dist/<%= outFileName%>.js': ['tmp/mmooc-babel.js']
+          'dist/<%= outFileName%>.js': ['babel/mmooc-babel.js']
         }
       }
     },
@@ -157,8 +157,8 @@ module.exports = function (grunt) {
         ]
       },
       stage: {
-        src: ['tmp/<%= outFileName%>.css','tmp/<%= rootaccountFileName%>.css', 'dist/<%= outFileName%>.js', 'tmp/<%= rootaccountFileName%>.js', 'tmp/<%= subaccountFileName%>.js'],
-        dest: 'dist/',
+        src: ['tmp/<%= outFileName%>.css','tmp/<%= rootaccountFileName%>.css', 'tmp/<%= srcFileName%>.js', 'tmp/<%= rootaccountFileName%>.js', 'tmp/<%= subaccountFileName%>.js'],
+        dest: 'replace/',
         replacements: [
           {
             from: 'https://server',
@@ -183,8 +183,8 @@ module.exports = function (grunt) {
         ]
       },
       development: {
-        src: ['tmp/<%= outFileName%>.css','tmp/rootaccount.css', 'src/js/rootaccountfwd-dev.js','src/js/subaccountfwd-dev.js','dist/<%= outFileName%>.js', 'tmp/<%= rootaccountFileName%>.js','tmp/<%= subaccountFileName%>.js'],
-        dest: 'dist/',
+        src: ['tmp/<%= outFileName%>.css','tmp/rootaccount.css', 'src/js/rootaccountfwd-dev.js','src/js/subaccountfwd-dev.js','tmp/<%= srcFileName%>.js', 'tmp/<%= rootaccountFileName%>.js','tmp/<%= subaccountFileName%>.js'],
+        dest: 'replace/',
         replacements: [
           {
             from: 'https://server',
@@ -206,33 +206,6 @@ module.exports = function (grunt) {
             from: '$KPASAPIURL',
 //            to: 'https://kpas-lti.azurewebsites.net/api'
             to: 'https://4b01-2001-4647-a388-0-d5d0-6375-9e7f-c1a0.ngrok.io/api'
-          }
-        ]
-      },
-      development_mobile: {
-        src: ['tmp/<%= outFileName%>.css','tmp/rootaccount.css', 'src/js/rootaccountfwd-dev.js','dist/<%= outFileName%>.js', 'tmp/<%= rootaccountFileName%>.js','tmp/<%= subaccountFileName%>.js'],
-        dest: 'dist/',
-        replacements: [
-          {
-            from: 'https://server',
-            to: 'https://erlend-2.local:9000'
-          },
-          {
-            from: 'https://udirdesigncss',
-            to: 'https://erlend-2.local:9000/<%= outFileName%>.css'
-          },
-          {
-            from: 'https://udirdesignjs',
-            to: 'https://erlend-2.local:9000/<%= outFileName%>.js'
-          },
-          {
-            from: 'KPAS_IFRAME_VERSION',
-            to: udv
-          },
-          {
-            from: '$KPASAPIURL',
-//            to: 'https://kpas-lti.azurewebsites.net/api'
-            to: 'https://bf59-193-215-200-178.ngrok.io/api'
           }
         ]
       },
@@ -294,69 +267,6 @@ module.exports = function (grunt) {
         ]
       },
 
-      production_dataporten: {
-        src: ['src/js/tmp/dataporten.js'],
-        dest: 'src/js/modules/',
-        replacements: [
-          {
-            from: '$REQUEST',
-            to: "['email','longterm', 'openid', 'profile', 'userid-feide', 'groups', 'gk_kpas']"
-          },
-          {
-            from: '$DATAPORTENCALLBACK',
-            to: 'https://bibsys.instructure.com/courses/234?dataportenCallback=1'
-          },
-          {
-            from: '$DATAPORTENCLIENTID',
-            to: '823e54e4-9cb7-438f-b551-d1af9de0c2cd'
-          },
-          {
-            from: '$KPASAPIURL',
-            to: 'https://kpas.dataporten-api.no'
-          }
-        ]
-      },
-      stage_dataporten: {
-        src: ['src/js/tmp/dataporten.js'],
-        dest: 'src/js/modules/',
-        replacements: [
-          {
-            from: '$REQUEST',
-            to: "['email','longterm', 'openid', 'profile', 'userid-feide', 'groups', 'gk_kpas']"
-          },
-          {
-            from: '$DATAPORTENCALLBACK',
-            to: 'https://bibsys.instructure.com/courses/234?dataportenCallback=1'
-          },
-          {
-            from: '$DATAPORTENCLIENTID',
-            to: '823e54e4-9cb7-438f-b551-d1af9de0c2cd'
-          },
-          {
-            from: '$KPASAPIURL',
-            to: 'https://kpas.dataporten-api.no'
-          }
-        ]
-      },
-      development_dataporten: {
-        src: ['src/js/tmp/dataporten.js'],
-        dest: 'src/js/modules/',
-        replacements: [
-          {
-            from: '$REQUEST',
-            to: "['email','longterm', 'openid', 'profile', 'userid-feide', 'groups', 'gk_netgurukpasapi']"
-          },          {
-            from: '$DATAPORTENCALLBACK',
-            to: 'https://localhost/courses/1?dataportenCallback=1'
-          },          {
-            from: '$DATAPORTENCLIENTID',
-            to: '823e54e4-9cb7-438f-b551-d1af9de0c2cd'
-          },          {
-            from: '$KPASAPIURL',
-            to: 'https://netgurukpasapi.dataporten-api.no'
-          }
-        ]
-      },
       production_settings: {
         src: ['src/js/tmp/settings.js'],
         dest: 'src/js/',
@@ -438,21 +348,11 @@ module.exports = function (grunt) {
           { expand: true, src: ['<%= subaccountFileName%>*'], cwd: 'src/css/', dest: 'dist/' },
           { expand: true, src: ['bitmaps/*'], cwd: 'src/', dest: 'dist/' },
           { expand: true, src: ['vector_images/*'], cwd: 'src/', dest: 'dist/' },
-          { expand: true, src: ['<%= subaccountFileName%>.js.map'], cwd: 'tmp/', dest: 'dist/' },
-          { expand: true, src: ['<%= rootaccountFileName%>*.js.map'], cwd: 'tmp/', dest: 'dist/' },
-          { expand: true, src: ['badges-min.js.map'], cwd: 'tmp/', dest: 'dist/' },
+          { expand: true, src: ['<%= outFileName%>.css'], cwd: 'replace/', dest: 'dist/' },
+          { expand: true, src: ['*'], cwd: 'replace/', dest: 'dist/' },
           { expand: true, src: ['*'], cwd: 'kpas/', dest: 'dist/kpas' }
         ]
       },
-      dev: {
-        files: [
-          { expand: true, src: ['tmp/<%= srcFileName%>.js'], 
-            rename: function () {       // The value for rename must be a function
-              return 'dist/<%= outFileName%>.js'; // The function must return a string with the complete destination
-            }
-          }
-        ]
-      }
     },
 
     connect: {
@@ -528,75 +428,57 @@ module.exports = function (grunt) {
     'less',
     'copy:main',
   ]);
-  grunt.registerTask('make_dev', [
+  grunt.registerTask('make_staging', [
+    'less',
     'handlebars',
     'concat',
+    'replace:stage_settings', 
+    'replace:stage', 
+    'replace:stage_kpas', 
+    'babel',
+    'uglify',
+    'copy:main',
+  ]);
+  grunt.registerTask('make_dev', [
     'less',
-    'copy'
-  ]);
-
-
-  grunt.registerTask('dev_dataporten', [
-    'replace:development_dataporten'
-  ]);
-
-  grunt.registerTask('prod_dataporten', [
-    'replace:production_dataporten'
-  ]);
-  grunt.registerTask('stage_dataporten', [
-    'replace:stage_dataporten'
-  ]);
-  grunt.registerTask('dev_kpas', [
-    'replace:development_kpas'
-  ]);
-  grunt.registerTask('stage_kpas', [
-    'replace:stage_kpas'
+    'handlebars',
+    'concat',
+    'replace:development_settings',
+    'replace:development_badge',
+    'replace:development',
+    'replace:development_kpas',
+    'babel',
+    'uglify',
+    'copy:main',
   ]);
 
   grunt.registerTask('prod_kpas', [
     'replace:production_kpas'
   ]);
 
-  grunt.registerTask('dev_settings', [
-    'replace:development_settings',
-    'replace:development',
-    'replace:development_badge',
-  ]);
-  grunt.registerTask('dev_development', [
-    'replace:development',
-  ]);
   grunt.registerTask('dev_development_mobile', [
     'replace:development_mobile',
   ]);
   grunt.registerTask('prod_production', [
     'replace:production',
   ]);
-  grunt.registerTask('stage_staging', [
-    'replace:stage',
-  ]);
-
+  
   grunt.registerTask('prod_settings', [
     'replace:production_settings',
     'replace:production_badge',
   ]);
 
-  grunt.registerTask('stage_settings', [
-    'replace:stage_settings',
-    'replace:stage_badge',
-  ]);
- 
-
+  
   grunt.registerTask('runTest', ['connect:test', 'karma:unitTest']);
 
   grunt.registerTask('test', ['clean', 'make', 'runTest']);
 
-  grunt.registerTask('build', ['prod_dataporten', 'prod_settings', 'make', 'prod_production', 'prod_kpas']);
-  grunt.registerTask('staging', ['stage_dataporten', 'stage_settings', 'make', 'stage_staging', 'stage_kpas']);
+  grunt.registerTask('build', ['prod_settings', 'make', 'prod_production', 'prod_kpas']);
+  grunt.registerTask('staging', ['make_staging']);
 
-  grunt.registerTask('rebuildServe', ['clean:dist', 'dev_dataporten', 'dev_settings', 'make_dev', 'dev_development', 'dev_kpas']);
+  grunt.registerTask('rebuildServe', ['clean:dist', 'make_dev']);
 
-  grunt.registerTask('serve',        ['clean', 'dev_dataporten', 'dev_settings',  'make_dev',  'dev_development','dev_kpas', 'connect:dev', 'watch']);
-  grunt.registerTask('serve_mobile', ['clean', 'dev_dataporten', 'dev_settings',  'make_dev',  'dev_development_mobile','dev_kpas', 'connect:dev_mobile', 'watch']);
+  grunt.registerTask('serve',        ['clean', 'make_dev', 'connect:dev', 'watch']);
 
   grunt.registerTask('serveStaging', ['clean', 'make', 'connect:staging', 'watch']);
 
