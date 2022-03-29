@@ -316,6 +316,14 @@ Handlebars.registerHelper('ifUnmaintained', function(options) {
   }
 });
 
+Handlebars.registerHelper('ifRoleBased', function(options) {
+  if(mmooc.util.isRoleBasedCourse(this)) {
+    return options.fn(this);
+  } else {
+    return options.inverse(this);
+  }
+});
+
 Handlebars.registerHelper('courseAlert', function() {
   return mmooc.util.isUnmaintained(this);
 });
@@ -690,7 +698,7 @@ this.mmooc.util = (function () {
 
     goBack: function (e) {
       //http://stackoverflow.com/questions/9756159/using-javascript-how-to-create-a-go-back-link-that-takes-the-user-to-a-link-i
-      var defaultLocation = 'https://matematikk-mooc.github.io/frontend';
+      var defaultLocation = 'http://localhost:9000';
       var oldHash = window.location.hash;
 
       history.back(); // Try to go back
@@ -1091,10 +1099,19 @@ this.mmooc.util = (function () {
       var coursesCategorized = [];
       for (var i = 0; i < categorys.length; i++) {
         var categoryCourses = [];
+        var noOfRoleBasedCourses = 0;
+        var noOfPersonalBasedCourses = 0;
         for (var j = 0; j < courses.length; j++) {
-          var category = mmooc.util.getCourseCategory(courses[j].course_code);
+          var course = courses[j];
+          var category = mmooc.util.getCourseCategory(course.course_code);
           if (categorys[i] == category) {
-            categoryCourses.push(courses[j]);
+            course.roleBasedCourse = mmooc.util.isRoleBasedCourse(course);
+            if(course.roleBasedCourse) {
+              noOfRoleBasedCourses++;
+            } else {
+              noOfPersonalBasedCourses++;
+            }
+            categoryCourses.push(course);
           }
         }
         /*        categoryCourses.sort(function(a, b) {
@@ -1103,6 +1120,8 @@ this.mmooc.util = (function () {
         */
         var categoryObj = {
           title: categorys[i],
+          noOfRoleBasedCourses: noOfRoleBasedCourses,
+          noOfPersonalBasedCourses: noOfPersonalBasedCourses,
           courses: categoryCourses
         };
         coursesCategorized.push(categoryObj);
@@ -1285,7 +1304,9 @@ if (typeof this.mmooc.i18n === 'undefined') {
       CloseCoursesGroup: 'Lukk',
       LogIn: 'Logg inn',
       LogInPopup: 'Logg inn på kompetanseportalen',
-      LogInCanvas: 'Har ikke Feide',
+      LogInCanvas: 'Har ikkje Feide',
+      RegisterPopup: 'Meld deg på',
+      RegisterWithCanvas: 'Har ikkje Feide',
       JoinCourseDialogText:
         'Du kan melde deg på kompetansepakken igjen seinare om du vil ',
       DropCourse: 'Meld deg av kompetansepakken',
@@ -1377,6 +1398,8 @@ if (typeof this.mmooc.i18n === 'undefined') {
       LogInPopup: 'Logg inn på kompetanseportalen',
       LogIn: 'Logg inn',
       LogInCanvas: 'Har ikke Feide',
+      RegisterPopup: 'Meld deg på',
+      RegisterWithCanvas: 'Har ikke Feide',
       JoinCourseDialogText:
         'Du kan melde deg på kompetansepakken igjen senere om du vil ',
       DropCourse: 'Meld deg av kompetansepakken',

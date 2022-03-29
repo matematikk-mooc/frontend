@@ -106,6 +106,8 @@ this.mmooc.enroll = (function () {
               courses: coursesCategory.courses,
               coursesEnrolledAmount: coursesEnrolledAmount,
               coursesAmount: coursesAmount,
+              coursesRoleBasedAmount: coursesCategory.noOfRoleBasedCourses,
+              coursesPersonalBasedAmount: coursesCategory.noOfPersonalBasedCourses,
               coursesAmountText: mmooc.i18n.CoursesAmount(coursesAmount),
               courseLabel: mmooc.i18n.Course.toLowerCase(),
               goToCourse: mmooc.i18n.GoToCourse,
@@ -116,8 +118,9 @@ this.mmooc.enroll = (function () {
               index: i
             });
             $('.mmooc-all-courses-list').append(html);
+            mmooc.enroll.handleRegisterButtonClick();
           }
-
+          
           // Displays information, that there is no current courses available to enroll
           if (coursesCategorized.length == 0) {
             html = '<p class="text-center">' + mmooc.i18n.NoCoursesInfo + '</p>';
@@ -215,6 +218,23 @@ this.mmooc.enroll = (function () {
           self.scrollToCourse();
         });
       });
+    },
+    handleRegisterButtonClick : function() {
+      $('.mmooc-header__register-button').click(function(event) {
+        if(!$('.login-box').length) {
+          let html = mmooc.util.renderTemplateWithData('registerPopup', {
+            selfRegisterCode: event.target.id,
+            queryString: mmooc.hrefQueryString,
+            RegisterText: mmooc.i18n.RegisterPopup,
+            RegisterWithCanvasText: mmooc.i18n.RegisterWithCanvas,
+          });
+            document.getElementById('wrapper').insertAdjacentHTML('afterend', html);
+            $('#application').before(`<div class="overlay"></div>`)
+            $('.login-box__close, .overlay').click(() => {
+              $('.login-box, .overlay').remove()
+            })
+        }
+      })
     },
     createHashTags: function () {
       $('span').click(function (e) {

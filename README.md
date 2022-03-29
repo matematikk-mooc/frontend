@@ -217,3 +217,4 @@ modify the following section in Gruntfile.js
 		to: 'https://apps.kantega.no/mmooc'
     }]
 ```
+Added line to test change in kursp-542
