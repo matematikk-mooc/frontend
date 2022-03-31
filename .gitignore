@@ -1,6 +1,8 @@
 .DS_Store
 .idea
 /node_modules
+/babel
+/replace
 /dist/bitmaps
 /dist/vector_images
 /tmp

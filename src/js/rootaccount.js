@@ -70,9 +70,6 @@ if(document.location.pathname == "/search/all_courses" && document.location.sear
               <a class="icon-question unit-help-login" target="_blank" href="https://bibsys.instructure.com/courses/553"></a>
               <a class="mmooc-button mmooc-button-secondary" onclick="showCanvasLogin();">Ikke Feide</a>
           </div>
-          <div class="informationPane"><small><b>Kjenner du deg ikke igjen?</b> 18. mai oppdaterte vi innloggingssiden slik at alle brukere kan logge
-            på med Feide. Dersom du ikke har brukt Feide tidligere skal du velge <b>Ikke Feide</b> for å finne ditt innhold.</small>
-          </div>
           <div class="unitPartners">
             <a href="https://udir.no" target="_blank"><img class="unitPartnersUdirLogo unitPartnersLogo" src="https://server/bitmaps/udirlogo50px.png"/></a>
             <a href="https://ntnu.no" target="_blank"><img class="unitPartnersSmallLogo" src="https://server/bitmaps/logo_ntnu.png"/></a>

@@ -23,6 +23,7 @@ jQuery(function($) {
   mmooc.routes.addRouteForPath(/\/login\/canvas$/, function() {
     mmooc.utilRoot.redirectFeideAuthIfEnrollReferrer();
     mmooc.utilRoot.triggerForgotPasswordIfParamPassed();
+    mmooc.login.addInfoMessage();
   });
 
   ////KURSP-293-RCE-mister-farge-for-redigering
@@ -45,7 +46,15 @@ jQuery(function($) {
 
   mmooc.routes.addRouteForPath(/\/courses\/\d+/, function() {
     if(!mmooc.util.isAuthenticated()) {
-      
+      let forwardTo = window.location.href;
+      let closeOption = false;
+      let registerText = "For å se denne siden må du være registrert på " + mmooc.util.course.name +". Meld deg på med";
+      mmooc.enroll.displayRegisterPopup(
+        closeOption,
+        registerText,
+        mmooc.util.course.self_enrollment_code, 
+        mmooc.util.course.name,
+        forwardTo);
     } else {
       mmooc.util.updateInformationPane();
     }
@@ -285,26 +294,6 @@ jQuery(function($) {
     }
   });
 
-  //Path for showing a group discussion or creating a new discussion
-  //20180821ETH Some functionality moved to new path below and to module_item_id path below
-  /*
-    mmooc.routes.addRouteForPath([/\/groups\/\d+\/discussion_topics\/\d+$/, /\/groups\/\d+\/discussion_topics\/new$/], function() {
-        mmooc.menu.showLeftMenu();
-        mmooc.menu.listModuleItems();
-        mmooc.menu.showDiscussionGroupMenu();
-
-        if (!mmooc.util.isTeacherOrAdmin()) {
-        	mmooc.menu.hideSectionTabsHeader();
-        }
-    });
-
-    mmooc.routes.addRouteForPath([/\/groups\/\d+\/discussion_topics\/\d+$/], function() {
-        mmooc.groups.moveSequenceLinks();
-        if (!mmooc.util.isTeacherOrAdmin()) {
-            mmooc.menu.hideRightMenu();
-        }
-    });
-*/
   mmooc.routes.addRouteForPath(
     [
       /\/groups\/\d+\/discussion_topics\/\d+$/,
@@ -371,16 +360,19 @@ jQuery(function($) {
           var courseId = mmooc.api.getCurrentCourseId();
           var contentId = mmooc.api.getCurrentTypeAndContentId().contentId;
           if (contentId){
-          mmooc.api.isGroupDiscussion(courseId, contentId, function(result) {
-            if(result) {
-                $(".discussion-section").hide();
-                $("#discussion-toolbar").hide();
-                $(".discussion-entry-reply-area").hide();
-                $("#discussion-managebar").html('<div class="uob-warning"> \
-                Dette er en gruppediskusjon, men du er ikke medlem i noen gruppe og kan derfor ikke delta.\
-                  Gå tilbake til forsiden og velg fanen "Rolle og grupper".</div>');
-            }
-          });}
+            mmooc.api.isGroupDiscussion(courseId, contentId, function(result) {
+              if(result) {
+                  $(".discussion-section").hide();
+                  $("#discussion-toolbar").hide();
+                  $(".discussion-entry-reply-area").hide();
+                  $("#discussion-managebar").html('<div class="uob-warning"> \
+                  Dette er en gruppediskusjon, men du er ikke medlem i noen gruppe og kan derfor ikke delta.\
+                    Gå tilbake til forsiden og velg fanen "Rolle og grupper".</div>');
+              } else {
+                mmooc.discussionTopics.moveSequenceLinks();
+              }
+            });
+          }
         }
       });
 
@@ -420,6 +412,10 @@ jQuery(function($) {
       });
     }
   );
+  
+  mmooc.routes.addRouteForPath([/\/groups\/\d+\/discussion_topics\/\d+/], function() {
+    mmooc.discussionTopics.moveSequenceLinks();
+  });
 
   mmooc.routes.addRouteForPathOrQueryString(
     [
@@ -432,11 +428,6 @@ jQuery(function($) {
       mmooc.menu.showLeftMenu();
       mmooc.menu.listModuleItems();
       mmooc.pages.modifyMarkAsDoneButton();
-      //20180911ETH showDiscussionGroupMenu is handled by group discussion path above.
-      //        mmooc.menu.showDiscussionGroupMenu();
-      mmooc.groups.moveSequenceLinks();
-
-      // mmooc.pages.changeTranslations();
 
       if (mmooc.util.isTeacherOrAdmin()) {
         mmooc.pages.addGotoModuleButton();
@@ -525,15 +516,6 @@ jQuery(function($) {
     }
   });
 
-  //Change "Gå til dashboard" button.
-  mmooc.routes.addRouteForQueryString(/enrolled=1/, function() {
-    $(".ic-Self-enrollment-footer__Primary > a").each(function() {
-      var $this = $(this);
-      var _href = $this.attr("href");
-      $this.attr("href", _href + mmooc.hrefQueryString);
-   });
-  });
-
   mmooc.routes.addRouteForPath(/enroll\/[0-9A-Z]+/, function() {
     mmooc.enroll.changeEnrollPage();
   });
@@ -545,6 +527,7 @@ jQuery(function($) {
   });
 
   try {
+    mmooc.util.forwardIfRequestedAndNotOnEnrollPage();
     mmooc.footer.changeFooter();
     mmooc.menu.renderLeftHeaderMenu();
     mmooc.menu.showUserMenu();

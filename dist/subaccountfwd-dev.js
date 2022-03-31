@@ -36,5 +36,5 @@ jQuery.extend({
 });
 
 jQuery(document).ready(function($) {
-  $.getScript('http://localhost:9000/rootaccount-localhost.js');
+  $.getScript('http://localhost:9000/subaccount-localhost.js');
 });

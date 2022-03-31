@@ -2,7 +2,7 @@ this.mmooc = this.mmooc || {};
 
 this.mmooc.login = (() => {
   return {
-    handleLoginButtonClick() {
+    handleLoginButtonClick : function() {
       $('.mmooc-header__login-button').click(() => {
         if(!$('.login-box').length) {
           let html = mmooc.util.renderTemplateWithData('loginPopup', {
@@ -16,6 +16,11 @@ this.mmooc.login = (() => {
             })
         }
       })
+    },
+    addInfoMessage: function() {
+      let html = mmooc.util.renderTemplateWithData('loginInfo');      
+      $(".ic-Login-footer").html(html);
+      $(".ic-Login-footer").show();
     }
   };
 })();
