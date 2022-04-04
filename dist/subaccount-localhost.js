@@ -112,10 +112,19 @@ this.mmooc.utilRoot = function() {
         const urlParamsObj = mmooc.utilRoot.urlParamsToObject();
         var enrollCode = mmooc.utilRoot.isEnrollCodeParamPassed(urlParamsObj);
         var design = urlParamsObj && urlParamsObj['design'];
+        var forwardTo = urlParamsObj && urlParamsObj['forwardTo'];
         if (enrollCode) {
           var newHref = "/enroll/" + enrollCode;  // + mmooc.hrefQueryString;
           if(design) {
             newHref += "?design=" + design; 
+          }
+          if(forwardTo) {
+            if(design) {
+              newHref += "&";
+            } else {
+              newHref += "?";
+            }
+            newHref += "forwardTo=" + forwardTo; 
           }
           window.location.href = newHref;
           return true;

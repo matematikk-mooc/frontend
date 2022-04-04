@@ -2,6 +2,25 @@ this.mmooc = this.mmooc || {};
 
 this.mmooc.enroll = (function () {
   return {
+    displayRegisterPopup: function(authenticated, closeOption, registerText, registerWithCanvasText, selfRegisterCode, courseName, forwardTo) {
+      if(!$('.login-box').length) {
+        let html = mmooc.util.renderTemplateWithData('registerPopup', {
+          authenticated: authenticated,
+          closeOption: closeOption,
+          selfRegisterCode: selfRegisterCode,
+          courseName: courseName,
+          queryString: mmooc.hrefQueryString,
+          RegisterText: registerText,
+          RegisterWithCanvasText: registerWithCanvasText, 
+          forwardTo: forwardTo,
+        });
+          document.getElementById('wrapper').insertAdjacentHTML('afterend', html);
+          $('#application').before(`<div class="overlay"></div>`)
+          $('.login-box__close, .overlay').click(() => {
+            $('.login-box, .overlay').remove()
+          })
+      }
+    },
     changeEnrollInformationPolicyLink: function () {
       var informationPolicy = $('.ic-Self-enrollment-footer__Secondary > a');
       if(informationPolicy) {
@@ -33,9 +52,24 @@ this.mmooc.enroll = (function () {
       const newUserButton = $('#selfEnrollmentAuthRegCreate');
       newUserButton.on('click', _ => forgotPasswordButton.hide());
     },
+    updateGotoDashboardButton: function() {
+      $(".ic-Self-enrollment-footer__Primary > a").each(function() {
+        var $this = $(this);
+        var _href = $this.attr("href") + mmooc.hrefQueryString;
+
+        const urlParamsObj = mmooc.utilRoot.urlParamsToObject();
+
+        let forwardTo = encodeURIComponent(mmooc.util.forwardTo(urlParamsObj));
+        if(forwardTo) {
+          _href += "&forwardTo=" + forwardTo;
+        }
+        $this.attr("href", _href);
+     });
+    },
     changeEnrollPage: function () {
       this.changeEnrollInformationPolicyLink();
       this.addForgotPasswordLink();
+      this.updateGotoDashboardButton();
     },
     printAllCoursesContainer: function () {
       html = mmooc.util.renderTemplateWithData('allcoursescontainer', {
@@ -221,19 +255,9 @@ this.mmooc.enroll = (function () {
     },
     handleRegisterButtonClick : function() {
       $('.mmooc-header__register-button').click(function(event) {
-        if(!$('.login-box').length) {
-          let html = mmooc.util.renderTemplateWithData('registerPopup', {
-            selfRegisterCode: event.target.id,
-            queryString: mmooc.hrefQueryString,
-            RegisterText: mmooc.i18n.RegisterPopup,
-            RegisterWithCanvasText: mmooc.i18n.RegisterWithCanvas,
-          });
-            document.getElementById('wrapper').insertAdjacentHTML('afterend', html);
-            $('#application').before(`<div class="overlay"></div>`)
-            $('.login-box__close, .overlay').click(() => {
-              $('.login-box, .overlay').remove()
-            })
-        }
+        let closeOption = true;
+        let authenticated = false;
+        mmooc.enroll.displayRegisterPopup(authenticated, closeOption, mmooc.i18n.RegisterWithCanvas, mmooc.i18n.RegisterPopup, event.target.id, mmooc.i18n.RegisterPopup);
       })
     },
     createHashTags: function () {

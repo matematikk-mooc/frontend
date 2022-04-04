@@ -289,7 +289,7 @@ this.mmooc.api = (function() {
       this._get({
         callback: callback,
         error: error,
-        uri: `/courses/${courseId}`,
+        uri: `/courses/${courseId}?include[]=self_enrollment_code`,
         params: {}
       });
     },

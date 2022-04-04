@@ -45,7 +45,38 @@ jQuery(function($) {
   });
 
   mmooc.routes.addRouteForPath(/\/courses\/\d+/, function() {
-    mmooc.util.updateInformationPane();
+    let forwardTo = encodeURIComponent(window.location.href);
+    let closeOption = false;
+    let authenticated = mmooc.util.isAuthenticated();
+    
+    if(!authenticated) {
+      let registerText = "For å få fullt utbytte av denne siden må du melde deg på med";
+      mmooc.enroll.displayRegisterPopup(
+        authenticated,
+        closeOption,
+        registerText,
+        mmooc.i18n.RegisterWithCanvas,
+        mmooc.util.course.self_enrollment_code, 
+        mmooc.util.course.name,
+        forwardTo);
+    } else {
+      mmooc.api.getUsersEnrollmentsForCourse(mmooc.util.course.id, function(courses) {
+        if(!courses.length) {
+          let registerText = "For å få fullt utbytte av denne siden må du melde deg på";
+          let registerWithCanvasText = "Meld deg på";
+          mmooc.enroll.displayRegisterPopup(
+            authenticated,
+            closeOption,
+            registerText,
+            registerWithCanvasText,
+            mmooc.util.course.self_enrollment_code, 
+            mmooc.util.course.name,
+            forwardTo);
+        } else {
+          mmooc.util.updateInformationPane();
+        }
+      });
+    }
   });
 
   //The logic below should be refactored and cleaned up.
@@ -504,15 +535,6 @@ jQuery(function($) {
     }
   });
 
-  //Change "Gå til dashboard" button.
-  mmooc.routes.addRouteForQueryString(/enrolled=1/, function() {
-    $(".ic-Self-enrollment-footer__Primary > a").each(function() {
-      var $this = $(this);
-      var _href = $this.attr("href");
-      $this.attr("href", _href + mmooc.hrefQueryString);
-   });
-  });
-
   mmooc.routes.addRouteForPath(/enroll\/[0-9A-Z]+/, function() {
     mmooc.enroll.changeEnrollPage();
   });
@@ -524,6 +546,15 @@ jQuery(function($) {
   });
 
   try {
+    const urlParamsObj = mmooc.utilRoot.urlParamsToObject();
+    if(!mmooc.util.onEnrollPage()) {
+      let forwardTo = mmooc.util.forwardTo(urlParamsObj);
+      if(forwardTo) {
+        window.location.href = forwardTo;
+        return;
+      }
+    }
+
     mmooc.footer.changeFooter();
     mmooc.menu.renderLeftHeaderMenu();
     mmooc.menu.showUserMenu();
@@ -538,30 +569,26 @@ jQuery(function($) {
   //Try to get course information and store it such that routes can use it.
   //Otherwise just handle the route.
   try {
-    if(mmooc.util.isAuthenticated()) {
-      var courseId = mmooc.api.getCurrentCourseId();
-      if(courseId) {
-        mmooc.api.getCourse(
-          courseId,
-          function(course) {
-            mmooc.util.course = course;
-            //KURSP-376-multilanguage-fix
-            if (mmooc.util.isMultilangCourse(mmooc.util.course)) {
-              var langCode = MultilangUtils.getLanguageCode();
-              MultilangUtils.setActiveLanguage(langCode);
-            }
-            mmooc.routes.performHandlerForUrl(document.location);
-          },
-          function(error) {
-            console.error(
-              'error calling mmooc.api.getCourse(' + courseId + ')',
-              error
-            );
+    var courseId = mmooc.api.getCurrentCourseId();
+    if(courseId) {
+      mmooc.api.getCourse(
+        courseId,
+        function(course) {
+          mmooc.util.course = course;
+          //KURSP-376-multilanguage-fix
+          if (course && mmooc.util.isMultilangCourse(course)) {
+            var langCode = MultilangUtils.getLanguageCode();
+            MultilangUtils.setActiveLanguage(langCode);
           }
-        );
-      } else {
-        mmooc.routes.performHandlerForUrl(document.location);
-      }
+          mmooc.routes.performHandlerForUrl(document.location);
+        },
+        function(error) {
+          console.error(
+            'error calling mmooc.api.getCourse(' + courseId + ')',
+            error
+          );
+        }
+      );
     } else {
       mmooc.routes.performHandlerForUrl(document.location);
     }

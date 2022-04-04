@@ -131,8 +131,8 @@ module.exports = function (grunt) {
     
     replace: {
       production: {
-        src: ['tmp/<%= outFileName%>.css','tmp/<%= rootaccountFileName%>.css', 'dist/<%= outFileName%>.js', 'tmp/<%= rootaccountFileName%>.js', 'tmp/<%= subaccountFileName%>.js'],
-        dest: 'dist/',
+        src: ['tmp/<%= outFileName%>.css', 'tmp/<%= rootaccountFileName%>.css', 'dist/<%= outFileName%>.js', 'tmp/<%= rootaccountFileName%>.js', 'tmp/<%= subaccountFileName%>.js'],
+        dest: 'replace/',
         replacements: [
           {
             from: 'https://server',
@@ -183,7 +183,7 @@ module.exports = function (grunt) {
         ]
       },
       development: {
-        src: ['tmp/<%= outFileName%>.css','tmp/rootaccount.css', 'src/js/rootaccountfwd-dev.js','src/js/subaccountfwd-dev.js','tmp/<%= srcFileName%>.js', 'tmp/<%= rootaccountFileName%>.js','tmp/<%= subaccountFileName%>.js'],
+        src: ['tmp/<%= outFileName%>.css','tmp/<%= rootaccountFileName%>.css', 'src/js/rootaccountfwd-dev.js','src/js/subaccountfwd-dev.js','tmp/<%= srcFileName%>.js', 'tmp/<%= rootaccountFileName%>.js','tmp/<%= subaccountFileName%>.js'],
         dest: 'replace/',
         replacements: [
           {
@@ -344,8 +344,8 @@ module.exports = function (grunt) {
     copy: {
       main: {
         files: [
-          { expand: true, src: ['<%= rootaccountFileName%>*'], cwd: 'src/css/', dest: 'dist/' },
-          { expand: true, src: ['<%= subaccountFileName%>*'], cwd: 'src/css/', dest: 'dist/' },
+          { expand: true, src: ['<%= rootaccountFileName%>*'], cwd: 'replace/', dest: 'dist/' },
+          { expand: true, src: ['<%= subaccountFileName%>*'], cwd: 'replace/', dest: 'dist/' },
           { expand: true, src: ['bitmaps/*'], cwd: 'src/', dest: 'dist/' },
           { expand: true, src: ['vector_images/*'], cwd: 'src/', dest: 'dist/' },
           { expand: true, src: ['<%= outFileName%>.css'], cwd: 'replace/', dest: 'dist/' },
