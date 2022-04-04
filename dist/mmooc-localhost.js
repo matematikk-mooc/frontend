@@ -7718,6 +7718,18 @@ function program1(depth0,data) {
 function program3(depth0,data) {
   
   var buffer = "", stack1, helper;
+  buffer += "\n      <a aria-label=\"enroll\"  class=\"mmooc-button mmooc-button-primary\" href=\"/search/all_courses?enroll_code=";
+  if (helper = helpers.selfRegisterCode) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.selfRegisterCode); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1);
+  stack1 = helpers['if'].call(depth0, (depth0 && depth0.forwardTo), {hash:{},inverse:self.noop,fn:self.program(4, program4, data),data:data});
+  if(stack1 || stack1 === 0) { buffer += stack1; }
+  buffer += "\">&nbsp;\n      </a>\n    ";
+  return buffer;
+  }
+function program4(depth0,data) {
+  
+  var buffer = "", stack1, helper;
   buffer += "&forwardTo=";
   if (helper = helpers.forwardTo) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.forwardTo); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
@@ -7725,7 +7737,7 @@ function program3(depth0,data) {
   return buffer;
   }
 
-function program5(depth0,data) {
+function program6(depth0,data) {
   
   var buffer = "", stack1, helper;
   buffer += "?forwardTo=";
@@ -7742,17 +7754,14 @@ function program5(depth0,data) {
     + "</p>\n    ";
   stack1 = helpers['if'].call(depth0, (depth0 && depth0.closeOption), {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\n  </div>\n  <div class=\"login-box__lower\">\n    <a aria-label=\"enroll\"  class=\"mmooc-button mmooc-button-primary\" href=\"/search/all_courses?enroll_code=";
-  if (helper = helpers.selfRegisterCode) { stack1 = helper.call(depth0, {hash:{},data:data}); }
-  else { helper = (depth0 && depth0.selfRegisterCode); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
-  buffer += escapeExpression(stack1);
-  stack1 = helpers['if'].call(depth0, (depth0 && depth0.forwardTo), {hash:{},inverse:self.noop,fn:self.program(3, program3, data),data:data});
+  buffer += "\n  </div>\n  <div class=\"login-box__lower\">\n    ";
+  stack1 = helpers.unless.call(depth0, (depth0 && depth0.authenticated), {hash:{},inverse:self.noop,fn:self.program(3, program3, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\">&nbsp;\n    </a>\n    <a class=\"mmooc-button mmooc-button-secondary\" href=\"/enroll/";
+  buffer += "\n    <a class=\"mmooc-button mmooc-button-secondary\" href=\"/enroll/";
   if (helper = helpers.selfRegisterCode) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.selfRegisterCode); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1);
-  stack1 = helpers['if'].call(depth0, (depth0 && depth0.forwardTo), {hash:{},inverse:self.noop,fn:self.program(5, program5, data),data:data});
+  stack1 = helpers['if'].call(depth0, (depth0 && depth0.forwardTo), {hash:{},inverse:self.noop,fn:self.program(6, program6, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "\">\n      ";
   if (helper = helpers.RegisterWithCanvasText) { stack1 = helper.call(depth0, {hash:{},data:data}); }
@@ -9104,7 +9113,12 @@ this.mmooc.utilRoot = function() {
             newHref += "?design=" + design; 
           }
           if(forwardTo) {
-            newHref += "?forwardTo=" + forwardTo; 
+            if(design) {
+              newHref += "&";
+            } else {
+              newHref += "?";
+            }
+            newHref += "forwardTo=" + forwardTo; 
           }
           window.location.href = newHref;
           return true;
@@ -11149,15 +11163,16 @@ this.mmooc = this.mmooc || {};
 
 this.mmooc.enroll = (function () {
   return {
-    displayRegisterPopup: function(closeOption, registerText, selfRegisterCode, courseName, forwardTo) {
+    displayRegisterPopup: function(authenticated, closeOption, registerText, registerWithCanvasText, selfRegisterCode, courseName, forwardTo) {
       if(!$('.login-box').length) {
         let html = mmooc.util.renderTemplateWithData('registerPopup', {
+          authenticated: authenticated,
           closeOption: closeOption,
           selfRegisterCode: selfRegisterCode,
           courseName: courseName,
           queryString: mmooc.hrefQueryString,
           RegisterText: registerText,
-          RegisterWithCanvasText: mmooc.i18n.RegisterWithCanvas,
+          RegisterWithCanvasText: registerWithCanvasText, 
           forwardTo: forwardTo,
         });
           document.getElementById('wrapper').insertAdjacentHTML('afterend', html);
@@ -11201,8 +11216,15 @@ this.mmooc.enroll = (function () {
     updateGotoDashboardButton: function() {
       $(".ic-Self-enrollment-footer__Primary > a").each(function() {
         var $this = $(this);
-        var _href = $this.attr("href");
-        $this.attr("href", _href + mmooc.hrefQueryString);
+        var _href = $this.attr("href") + mmooc.hrefQueryString;
+
+        const urlParamsObj = mmooc.utilRoot.urlParamsToObject();
+
+        let forwardTo = encodeURIComponent(mmooc.util.forwardTo(urlParamsObj));
+        if(forwardTo) {
+          _href += "&forwardTo=" + forwardTo;
+        }
+        $this.attr("href", _href);
      });
     },
     changeEnrollPage: function () {
@@ -11395,7 +11417,8 @@ this.mmooc.enroll = (function () {
     handleRegisterButtonClick : function() {
       $('.mmooc-header__register-button').click(function(event) {
         let closeOption = true;
-        displayRegisterPopup(closeOption, mmooc.i18n.RegisterPopup, event.target.id, mmooc.i18n.RegisterPopup);
+        let authenticated = false;
+        mmooc.enroll.displayRegisterPopup(authenticated, closeOption, mmooc.i18n.RegisterWithCanvas, mmooc.i18n.RegisterPopup, event.target.id, mmooc.i18n.RegisterPopup);
       })
     },
     createHashTags: function () {
@@ -15473,15 +15496,16 @@ this.mmooc.util = (function () {
       }
       return 0;
     },
-    forwardIfRequestedAndNotOnEnrollPage() {
-      if(window.location.href.includes('/enroll/')) {
-        return;
-      }
-      const urlParamsObj = mmooc.utilRoot.urlParamsToObject();
+    onEnrollPage() {
+      return window.location.href.includes('/enroll/');
+    },
+
+    forwardTo(urlParamsObj) {
       var forwardTo = urlParamsObj && urlParamsObj['forwardTo'];
       if(forwardTo) {
-        window.location.href = forwardTo;
+        return decodeURIComponent(forwardTo);
       }
+      return null;
     },
     updateInformationPane() {
       mmooc.util.isMemberOfExpiredCommunity(mmooc.util.course, function (isMemberOfExpiredCommunity) {
@@ -16147,18 +16171,37 @@ jQuery(function($) {
   });
 
   mmooc.routes.addRouteForPath(/\/courses\/\d+/, function() {
-    if(!mmooc.util.isAuthenticated()) {
-      let forwardTo = window.location.href;
-      let closeOption = false;
-      let registerText = "For å se denne siden må du være registrert på " + mmooc.util.course.name +". Meld deg på med";
+    let forwardTo = encodeURIComponent(window.location.href);
+    let closeOption = false;
+    let authenticated = mmooc.util.isAuthenticated();
+    
+    if(!authenticated) {
+      let registerText = "For å få fullt utbytte av denne siden må du melde deg på med";
       mmooc.enroll.displayRegisterPopup(
+        authenticated,
         closeOption,
         registerText,
+        mmooc.i18n.RegisterWithCanvas,
         mmooc.util.course.self_enrollment_code, 
         mmooc.util.course.name,
         forwardTo);
     } else {
-      mmooc.util.updateInformationPane();
+      mmooc.api.getUsersEnrollmentsForCourse(mmooc.util.course.id, function(courses) {
+        if(!courses.length) {
+          let registerText = "For å få fullt utbytte av denne siden må du melde deg på";
+          let registerWithCanvasText = "Meld deg på";
+          mmooc.enroll.displayRegisterPopup(
+            authenticated,
+            closeOption,
+            registerText,
+            registerWithCanvasText,
+            mmooc.util.course.self_enrollment_code, 
+            mmooc.util.course.name,
+            forwardTo);
+        } else {
+          mmooc.util.updateInformationPane();
+        }
+      });
     }
   });
 
@@ -16629,7 +16672,15 @@ jQuery(function($) {
   });
 
   try {
-    mmooc.util.forwardIfRequestedAndNotOnEnrollPage();
+    const urlParamsObj = mmooc.utilRoot.urlParamsToObject();
+    if(!mmooc.util.onEnrollPage()) {
+      let forwardTo = mmooc.util.forwardTo(urlParamsObj);
+      if(forwardTo) {
+        window.location.href = forwardTo;
+        return;
+      }
+    }
+
     mmooc.footer.changeFooter();
     mmooc.menu.renderLeftHeaderMenu();
     mmooc.menu.showUserMenu();

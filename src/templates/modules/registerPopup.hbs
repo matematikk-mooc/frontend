@@ -6,8 +6,10 @@
     {{/if}}
   </div>
   <div class="login-box__lower">
-    <a aria-label="enroll"  class="mmooc-button mmooc-button-primary" href="/search/all_courses?enroll_code={{selfRegisterCode}}{{#if forwardTo}}&forwardTo={{forwardTo}}{{/if}}">&nbsp;
-    </a>
+    {{#unless authenticated}}
+      <a aria-label="enroll"  class="mmooc-button mmooc-button-primary" href="/search/all_courses?enroll_code={{selfRegisterCode}}{{#if forwardTo}}&forwardTo={{forwardTo}}{{/if}}">&nbsp;
+      </a>
+    {{/unless}}
     <a class="mmooc-button mmooc-button-secondary" href="/enroll/{{selfRegisterCode}}{{#if forwardTo}}?forwardTo={{forwardTo}}{{/if}}">
       {{RegisterWithCanvasText}}
     </a>

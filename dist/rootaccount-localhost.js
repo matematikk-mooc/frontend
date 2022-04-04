@@ -119,7 +119,12 @@ this.mmooc.utilRoot = function() {
             newHref += "?design=" + design; 
           }
           if(forwardTo) {
-            newHref += "?forwardTo=" + forwardTo; 
+            if(design) {
+              newHref += "&";
+            } else {
+              newHref += "?";
+            }
+            newHref += "forwardTo=" + forwardTo; 
           }
           window.location.href = newHref;
           return true;

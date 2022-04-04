@@ -45,18 +45,37 @@ jQuery(function($) {
   });
 
   mmooc.routes.addRouteForPath(/\/courses\/\d+/, function() {
-    if(!mmooc.util.isAuthenticated()) {
-      let forwardTo = window.location.href;
-      let closeOption = false;
-      let registerText = "For å se denne siden må du være registrert på " + mmooc.util.course.name +". Meld deg på med";
+    let forwardTo = encodeURIComponent(window.location.href);
+    let closeOption = false;
+    let authenticated = mmooc.util.isAuthenticated();
+    
+    if(!authenticated) {
+      let registerText = "For å få fullt utbytte av denne siden må du melde deg på med";
       mmooc.enroll.displayRegisterPopup(
+        authenticated,
         closeOption,
         registerText,
+        mmooc.i18n.RegisterWithCanvas,
         mmooc.util.course.self_enrollment_code, 
         mmooc.util.course.name,
         forwardTo);
     } else {
-      mmooc.util.updateInformationPane();
+      mmooc.api.getUsersEnrollmentsForCourse(mmooc.util.course.id, function(courses) {
+        if(!courses.length) {
+          let registerText = "For å få fullt utbytte av denne siden må du melde deg på";
+          let registerWithCanvasText = "Meld deg på";
+          mmooc.enroll.displayRegisterPopup(
+            authenticated,
+            closeOption,
+            registerText,
+            registerWithCanvasText,
+            mmooc.util.course.self_enrollment_code, 
+            mmooc.util.course.name,
+            forwardTo);
+        } else {
+          mmooc.util.updateInformationPane();
+        }
+      });
     }
   });
 
@@ -527,7 +546,15 @@ jQuery(function($) {
   });
 
   try {
-    mmooc.util.forwardIfRequestedAndNotOnEnrollPage();
+    const urlParamsObj = mmooc.utilRoot.urlParamsToObject();
+    if(!mmooc.util.onEnrollPage()) {
+      let forwardTo = mmooc.util.forwardTo(urlParamsObj);
+      if(forwardTo) {
+        window.location.href = forwardTo;
+        return;
+      }
+    }
+
     mmooc.footer.changeFooter();
     mmooc.menu.renderLeftHeaderMenu();
     mmooc.menu.showUserMenu();

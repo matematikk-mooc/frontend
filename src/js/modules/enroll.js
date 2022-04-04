@@ -2,15 +2,16 @@ this.mmooc = this.mmooc || {};
 
 this.mmooc.enroll = (function () {
   return {
-    displayRegisterPopup: function(closeOption, registerText, selfRegisterCode, courseName, forwardTo) {
+    displayRegisterPopup: function(authenticated, closeOption, registerText, registerWithCanvasText, selfRegisterCode, courseName, forwardTo) {
       if(!$('.login-box').length) {
         let html = mmooc.util.renderTemplateWithData('registerPopup', {
+          authenticated: authenticated,
           closeOption: closeOption,
           selfRegisterCode: selfRegisterCode,
           courseName: courseName,
           queryString: mmooc.hrefQueryString,
           RegisterText: registerText,
-          RegisterWithCanvasText: mmooc.i18n.RegisterWithCanvas,
+          RegisterWithCanvasText: registerWithCanvasText, 
           forwardTo: forwardTo,
         });
           document.getElementById('wrapper').insertAdjacentHTML('afterend', html);
@@ -54,8 +55,15 @@ this.mmooc.enroll = (function () {
     updateGotoDashboardButton: function() {
       $(".ic-Self-enrollment-footer__Primary > a").each(function() {
         var $this = $(this);
-        var _href = $this.attr("href");
-        $this.attr("href", _href + mmooc.hrefQueryString);
+        var _href = $this.attr("href") + mmooc.hrefQueryString;
+
+        const urlParamsObj = mmooc.utilRoot.urlParamsToObject();
+
+        let forwardTo = encodeURIComponent(mmooc.util.forwardTo(urlParamsObj));
+        if(forwardTo) {
+          _href += "&forwardTo=" + forwardTo;
+        }
+        $this.attr("href", _href);
      });
     },
     changeEnrollPage: function () {
@@ -248,7 +256,8 @@ this.mmooc.enroll = (function () {
     handleRegisterButtonClick : function() {
       $('.mmooc-header__register-button').click(function(event) {
         let closeOption = true;
-        displayRegisterPopup(closeOption, mmooc.i18n.RegisterPopup, event.target.id, mmooc.i18n.RegisterPopup);
+        let authenticated = false;
+        mmooc.enroll.displayRegisterPopup(authenticated, closeOption, mmooc.i18n.RegisterWithCanvas, mmooc.i18n.RegisterPopup, event.target.id, mmooc.i18n.RegisterPopup);
       })
     },
     createHashTags: function () {

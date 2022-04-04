@@ -291,15 +291,16 @@ this.mmooc.util = (function () {
       }
       return 0;
     },
-    forwardIfRequestedAndNotOnEnrollPage() {
-      if(window.location.href.includes('/enroll/')) {
-        return;
-      }
-      const urlParamsObj = mmooc.utilRoot.urlParamsToObject();
+    onEnrollPage() {
+      return window.location.href.includes('/enroll/');
+    },
+
+    forwardTo(urlParamsObj) {
       var forwardTo = urlParamsObj && urlParamsObj['forwardTo'];
       if(forwardTo) {
-        window.location.href = forwardTo;
+        return decodeURIComponent(forwardTo);
       }
+      return null;
     },
     updateInformationPane() {
       mmooc.util.isMemberOfExpiredCommunity(mmooc.util.course, function (isMemberOfExpiredCommunity) {
