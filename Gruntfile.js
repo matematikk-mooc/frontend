@@ -131,7 +131,7 @@ module.exports = function (grunt) {
     
     replace: {
       production: {
-        src: ['tmp/<%= outFileName%>.css', 'tmp/<%= rootaccountFileName%>.css', 'dist/<%= outFileName%>.js', 'tmp/<%= rootaccountFileName%>.js', 'tmp/<%= subaccountFileName%>.js'],
+        src: ['tmp/<%= outFileName%>.css', 'tmp/<%= rootaccountFileName%>.css', 'tmp/<%= srcFileName%>.js', 'tmp/<%= rootaccountFileName%>.js', 'tmp/<%= subaccountFileName%>.js'],
         dest: 'replace/',
         replacements: [
           {
@@ -421,11 +421,14 @@ module.exports = function (grunt) {
   });
 
   grunt.registerTask('make', [
+    'less',
     'handlebars',
     'concat',
+    'replace:production_settings', 
+    'replace:production', 
+    'replace:production_kpas', 
     'babel',
     'uglify',
-    'less',
     'copy:main',
   ]);
   grunt.registerTask('make_staging', [
@@ -452,28 +455,16 @@ module.exports = function (grunt) {
     'copy:main',
   ]);
 
-  grunt.registerTask('prod_kpas', [
-    'replace:production_kpas'
-  ]);
 
   grunt.registerTask('dev_development_mobile', [
     'replace:development_mobile',
   ]);
-  grunt.registerTask('prod_production', [
-    'replace:production',
-  ]);
-  
-  grunt.registerTask('prod_settings', [
-    'replace:production_settings',
-    'replace:production_badge',
-  ]);
-
   
   grunt.registerTask('runTest', ['connect:test', 'karma:unitTest']);
 
   grunt.registerTask('test', ['clean', 'make', 'runTest']);
 
-  grunt.registerTask('build', ['prod_settings', 'make', 'prod_production', 'prod_kpas']);
+  grunt.registerTask('build', ['make']);
   grunt.registerTask('staging', ['make_staging']);
 
   grunt.registerTask('rebuildServe', ['clean:dist', 'make_dev']);

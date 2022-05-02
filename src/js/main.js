@@ -548,9 +548,9 @@ jQuery(function($) {
   try {
     const urlParamsObj = mmooc.utilRoot.urlParamsToObject();
     if(!mmooc.util.onEnrollPage()) {
-      let forwardTo = mmooc.util.forwardTo(urlParamsObj);
+      let forwardTo = urlParamsObj && urlParamsObj['forwardTo'];
       if(forwardTo) {
-        window.location.href = forwardTo;
+        window.location.href = decodeURIComponent(forwardTo);
         return;
       }
     }

@@ -295,13 +295,6 @@ this.mmooc.util = (function () {
       return window.location.href.includes('/enroll/');
     },
 
-    forwardTo(urlParamsObj) {
-      var forwardTo = urlParamsObj && urlParamsObj['forwardTo'];
-      if(forwardTo) {
-        return decodeURIComponent(forwardTo);
-      }
-      return null;
-    },
     updateInformationPane() {
       mmooc.util.isMemberOfExpiredCommunity(mmooc.util.course, function (isMemberOfExpiredCommunity) {
         var observer = (mmooc.util.isAuthenticated() && mmooc.util.isObserver(mmooc.util.course));

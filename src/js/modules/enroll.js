@@ -59,9 +59,9 @@ this.mmooc.enroll = (function () {
 
         const urlParamsObj = mmooc.utilRoot.urlParamsToObject();
 
-        let forwardTo = encodeURIComponent(mmooc.util.forwardTo(urlParamsObj));
+        let forwardTo = urlParamsObj && urlParamsObj['forwardTo'];
         if(forwardTo) {
-          _href += "&forwardTo=" + forwardTo;
+          _href += "&forwardTo=" + encodeURIComponent(forwardTo);
         }
         $this.attr("href", _href);
      });
