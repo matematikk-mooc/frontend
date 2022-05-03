@@ -291,6 +291,10 @@ this.mmooc.util = (function () {
       }
       return 0;
     },
+    onEnrollPage() {
+      return window.location.href.includes('/enroll/');
+    },
+
     updateInformationPane() {
       mmooc.util.isMemberOfExpiredCommunity(mmooc.util.course, function (isMemberOfExpiredCommunity) {
         var observer = (mmooc.util.isAuthenticated() && mmooc.util.isObserver(mmooc.util.course));
@@ -307,6 +311,9 @@ this.mmooc.util = (function () {
       });
     },
     isMemberOfExpiredCommunity(course, callback) {
+      if(!course) {
+        return;
+      }
       mmooc.api.getUserGroupsForCourse(course.id, function (groups) {
         var memberOfUtgaattKommune = false;
         if (groups.length) {
@@ -497,10 +504,19 @@ this.mmooc.util = (function () {
       var coursesCategorized = [];
       for (var i = 0; i < categorys.length; i++) {
         var categoryCourses = [];
+        var noOfRoleBasedCourses = 0;
+        var noOfPersonalBasedCourses = 0;
         for (var j = 0; j < courses.length; j++) {
-          var category = mmooc.util.getCourseCategory(courses[j].course_code);
+          var course = courses[j];
+          var category = mmooc.util.getCourseCategory(course.course_code);
           if (categorys[i] == category) {
-            categoryCourses.push(courses[j]);
+            course.roleBasedCourse = mmooc.util.isRoleBasedCourse(course);
+            if(course.roleBasedCourse) {
+              noOfRoleBasedCourses++;
+            } else {
+              noOfPersonalBasedCourses++;
+            }
+            categoryCourses.push(course);
           }
         }
         /*        categoryCourses.sort(function(a, b) {
@@ -509,6 +525,8 @@ this.mmooc.util = (function () {
         */
         var categoryObj = {
           title: categorys[i],
+          noOfRoleBasedCourses: noOfRoleBasedCourses,
+          noOfPersonalBasedCourses: noOfPersonalBasedCourses,
           courses: categoryCourses
         };
         coursesCategorized.push(categoryObj);

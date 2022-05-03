@@ -95,16 +95,34 @@ this.mmooc.utilRoot = function() {
       // then was returned from SAML login view, we redirect to proper enrollment page
       if (document.location.search !== '') {
         const urlParamsObj = mmooc.utilRoot.urlParamsToObject();
-        var enrollCode = mmooc.utilRoot.isEnrollCodeParamPassed(urlParamsObj);
+
         var design = urlParamsObj && urlParamsObj['design'];
+
+        var newHref = null;
+
+        var enrollCode = mmooc.utilRoot.isEnrollCodeParamPassed(urlParamsObj);
         if (enrollCode) {
-          var newHref = "/enroll/" + enrollCode;  // + mmooc.hrefQueryString;
+          newHref = "/enroll/" + enrollCode;  // + mmooc.hrefQueryString;
           if(design) {
             newHref += "?design=" + design; 
           }
+        } 
+
+        var forwardTo = urlParamsObj && urlParamsObj['forwardTo'];
+        if(forwardTo) {
+          if(design) {
+            newHref += "&";
+          } else {
+            newHref += "?";
+          }
+          newHref += "forwardTo=" + encodeURIComponent(forwardTo); 
+        }
+
+        if(newHref) {
           window.location.href = newHref;
           return true;
         }
+
         if (mmooc.utilRoot.isLoginParamPassed(urlParamsObj)) {
           const linkToMyCourses = mmooc.utilRoot.getLinkToMyCourses();
           window.location.href = linkToMyCourses;
