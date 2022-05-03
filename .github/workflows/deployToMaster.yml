@@ -1,8 +1,8 @@
-name: Frontend staging
+name: Frontend master
 
 on:
     push:
-        branches: [ staging ]
+        branches: [ master ]
 
 jobs:
   build:
@@ -17,7 +17,7 @@ jobs:
       uses: azure/CLI@v1
       with:
         inlineScript: |
-            az storage blob upload-batch --account-name udirdit --auth-mode key -d udirdesign-staging -s dist
+            az storage blob upload-batch --account-name udirdit --auth-mode key -d udirdesign -s dist
   # Azure logout
     - name: logout
       run: |
