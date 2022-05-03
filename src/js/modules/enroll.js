@@ -257,7 +257,7 @@ this.mmooc.enroll = (function () {
       $('.mmooc-header__register-button').click(function(event) {
         let closeOption = true;
         let authenticated = false;
-        mmooc.enroll.displayRegisterPopup(authenticated, closeOption, mmooc.i18n.RegisterWithCanvas, mmooc.i18n.RegisterPopup, event.target.id, mmooc.i18n.RegisterPopup);
+        mmooc.enroll.displayRegisterPopup(authenticated, closeOption, mmooc.i18n.RegisterPopup, mmooc.i18n.RegisterWithCanvas, event.target.id, mmooc.i18n.RegisterPopup);
       })
     },
     createHashTags: function () {
