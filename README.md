@@ -26,7 +26,7 @@ Clone the frontend from https://github.com/matematikk-mooc/frontend or download 
 git clone https://github.com/matematikk-mooc/frontend.git
 ```
 
-## Install Grunt and build dependencies (Node packages)
+## Install [GRUNT](http://gruntjs.com/) and build dependencies (Node packages)
 
 Switch to the directory where the frontend is located and install the dependencies using [yarn](https://yarnpkg.com/lang/en/docs/install/#mac-stable) or [NPM](https://www.npmjs.com/).
 
@@ -40,15 +40,6 @@ or
 npm install
 ```
 
-## Compile JS and CSS files
-
-Compile JS and CSS files using [GRUNT](http://gruntjs.com/)
-
-```
-grunt
-```
-
-The resulting JS and CSS file can then be found in the **dist** directory
 
 ## Start a web server on your local machine
 
@@ -66,6 +57,22 @@ All changes in LESS (CSS) and JavaScript will automatically be compiled and are 
 - [http://localhost:9000/badges-dev.js](http://localhost:9000/badges-dev.js) (for dev)
 - [http://localhost:9000/badgesafe.js](http://localhost:9000/badgesafe.js) (for prod)
 - [http://localhost:9000/badgesafe.css](http://localhost:9000/badgesafe.css)
+
+## Build JS and CSS files for staging and production environment
+
+Compile JS and CSS for the staging environment using 
+
+```
+grunt staging -udv="Staging_version_1_1"
+
+```
+Compile JS and CSS for the production environment using 
+
+```
+grunt build -udv="Production_version_1_1"
+
+``
+The differences between serve, staging and build can be seen in the Gruntfile.js build file. Basically there are different variables being replaced with values corresponding to the specified environments. The resulting JS and CSS file can be found in the **dist** directory
 
 ## Run Jasmine JavaScript tests
 
