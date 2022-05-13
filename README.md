@@ -55,10 +55,8 @@ The resulting JS and CSS file can then be found in the **dist** directory
 If you want to serve the CSS and JS files on your local machine for development, you can do this using Grunt:
 
 ```
-KPAS_URL="https://kpas-dev.local:4430" grunt serve
+grunt serve -udv="localhost"
 ```
-
-Substitute "KPAS_URL" with the URL of your local instance of the KPAS module. This setting can be omitted, but it is necessary in order to redirect deep links to the appropriate login option.
 
 All changes in LESS (CSS) and JavaScript will automatically be compiled and are available using the following URLs:
 
