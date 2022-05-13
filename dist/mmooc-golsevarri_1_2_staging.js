@@ -3012,7 +3012,7 @@ this.mmooc.kpas = (function() {
                 return;
             }
 
-            var iframeSrc = "https://kompetanseudirno.azureedge.net/udirdesign-staging/kpas/kpas.html?version=golsevarri_1_1_staging&courseId=" + courseId;
+            var iframeSrc = "https://kompetanseudirno.azureedge.net/udirdesign-staging/kpas/kpas.html?version=golsevarri_1_2_staging&courseId=" + courseId;
             if (isTeacherOrAdmin) {
                 iframeSrc+="&show=" + graphicId;
             } else if((groupsInfo.municipalityId === undefined) || (groupsInfo.countyId === undefined)) {
@@ -16874,4 +16874,4 @@ $(function() {
   }
 });
 
-//# sourceMappingURL=mmooc-golsevarri_1_1_staging.js.map
+//# sourceMappingURL=mmooc-golsevarri_1_2_staging.js.map
