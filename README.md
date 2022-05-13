@@ -71,7 +71,7 @@ Compile JS and CSS for the production environment using
 ```
 grunt build -udv="Production_version_1_1"
 
-``
+```
 The differences between serve, staging and build can be seen in the Gruntfile.js build file. Basically there are different variables being replaced with values corresponding to the specified environments. The resulting JS and CSS file can be found in the **dist** directory
 
 ## Run Jasmine JavaScript tests
