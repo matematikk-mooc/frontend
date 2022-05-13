@@ -3012,7 +3012,7 @@ this.mmooc.kpas = (function() {
                 return;
             }
 
-            var iframeSrc = "https://kompetanseudirno.azureedge.net/udirdesign-staging/kpas/kpas.html?version=navn&courseId=" + courseId;
+            var iframeSrc = "http://localhost:9000/kpas/kpas.html?version=localhost&courseId=" + courseId;
             if (isTeacherOrAdmin) {
                 iframeSrc+="&show=" + graphicId;
             } else if((groupsInfo.municipalityId === undefined) || (groupsInfo.countyId === undefined)) {
@@ -3429,7 +3429,7 @@ this.mmooc.privacyPolicy = (function() {
             var error = function(error) {
                 displayPrivacyPolicyDialog();
             };
-            var url = "https://kpas-lti-staging-kpas.azurewebsites.net/api" + "/kpasinfo";
+            var url = "https://4b01-2001-4647-a388-0-d5d0-6375-9e7f-c1a0.ngrok.io/api" + "/kpasinfo";
             $.getJSON(url, function(kpasinfo) {
                 currentPrivacyPolicyVersion = kpasinfo.result.privacyPolicyVersion;
                 mmooc.api.loadUserPrivacyPolicyVersion(function(userData) {
@@ -4314,7 +4314,7 @@ this.mmooc=this.mmooc||{};
 
 //https://webapps.stackexchange.com/questions/85517/how-can-i-download-subtitles-for-a-vimeo-video
 this.mmooc.vimeo = function() {
-	var hrefPrefix = "https://kpas-lti-staging-kpas.azurewebsites.net/api/vimeo/";
+	var hrefPrefix = "https://4b01-2001-4647-a388-0-d5d0-6375-9e7f-c1a0.ngrok.io/api/vimeo/";
 	var transcriptContainer = {};
 	var initialized = false;
     var noOfVimeoVideos = 0;
@@ -9015,7 +9015,7 @@ this.mmooc.settingsRoot = {
       "enroll_code",
       "kslaring.no"
     ],
-    kpasApiUrl: 'https://kpas-lti-staging-kpas.azurewebsites.net/api'
+    kpasApiUrl: 'https://4b01-2001-4647-a388-0-d5d0-6375-9e7f-c1a0.ngrok.io/api'
 };
 
 
@@ -9816,7 +9816,7 @@ this.mmooc.coursesettings = (function() {
     $('#' + tableId).append(
       "<tr id='" +
         getWaitIconRowId(tableId) +
-        "'>td><img src='https://kompetanseudirno.azureedge.net/udirdesign-staging/bitmaps/loading.gif'/>"
+        "'>td><img src='http://localhost:9000/bitmaps/loading.gif'/>"
     );
   }
   function clearWaitIcon(tableId) {
@@ -13239,7 +13239,7 @@ this.mmooc.menu = (function() {
       $('a.ic-app-header__logomark').attr('href', linkToMyCourses); //New UI
 // 20180122ETH Uncommenting the line below to see if we can specify the logo in the theme editor instead.
 //             In any case the logo should not be hardcoded but taken from the variables file instead.      
-      $('a.ic-app-header__logomark').attr('src', 'https://kompetanseudirno.azureedge.net/udirdesign-staging/Ny-Udir-Logo-RGB-Neg.png'); //New UI
+      $('a.ic-app-header__logomark').attr('src', 'http://localhost:9000/Ny-Udir-Logo-RGB-Neg.png'); //New UI
       $('.ic-app-header__logomark-container')
         .detach()
         .prependTo('.ic-app-header__main-navigation');
@@ -15322,7 +15322,7 @@ this.mmooc.util = (function () {
 
     goBack: function (e) {
       //http://stackoverflow.com/questions/9756159/using-javascript-how-to-create-a-go-back-link-that-takes-the-user-to-a-link-i
-      var defaultLocation = 'https://kompetanseudirno.azureedge.net/udirdesign-staging';
+      var defaultLocation = 'http://localhost:9000';
       var oldHash = window.location.hash;
 
       history.back(); // Try to go back
@@ -15936,7 +15936,7 @@ this.mmooc.settings = {
   removeGroupsLink: true,
   displayProfileLeftMenu: false,
   displayUserMergeButton: true,
-  userMergeLtiToolId: 845,
+  userMergeLtiToolId: 863,
   displayGroupsTab: false,
   displayDiscussionsTab : false,
   displayAlertsMenuItem : false,
@@ -16874,4 +16874,4 @@ $(function() {
   }
 });
 
-//# sourceMappingURL=mmooc-navn.js.map
+//# sourceMappingURL=mmooc-localhost.js.map

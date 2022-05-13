@@ -3012,7 +3012,7 @@ this.mmooc.kpas = (function() {
                 return;
             }
 
-            var iframeSrc = "https://kompetanseudirno.azureedge.net/udirdesign/kpas/kpas.html?version=Goalsevarri_1_0&courseId=" + courseId;
+            var iframeSrc = "https://kompetanseudirno.azureedge.net/udirdesign-staging/kpas/kpas.html?version=golsevarri_1_1_staging&courseId=" + courseId;
             if (isTeacherOrAdmin) {
                 iframeSrc+="&show=" + graphicId;
             } else if((groupsInfo.municipalityId === undefined) || (groupsInfo.countyId === undefined)) {
@@ -3032,6 +3032,18 @@ this.mmooc.kpas = (function() {
     }
 })();
 
+
+var _paq = window._paq = window._paq || [];
+/* tracker methods like "setCustomDimension" should be called before "trackPageView" */
+_paq.push(['trackPageView']);
+_paq.push(['enableLinkTracking']);
+(function() {
+    var u="//statistik.digilaer.no/";
+    _paq.push(['setTrackerUrl', u+'matomo.php']);
+    _paq.push(['setSiteId', '1']);
+    var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+    g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
+})();
 
 this.mmooc = this.mmooc || {};
 this.mmooc.messageHandler = (function() {
@@ -3417,7 +3429,7 @@ this.mmooc.privacyPolicy = (function() {
             var error = function(error) {
                 displayPrivacyPolicyDialog();
             };
-            var url = "https://kpas-lti.azurewebsites.net/api" + "/kpasinfo";
+            var url = "https://kpas-lti-staging-kpas.azurewebsites.net/api" + "/kpasinfo";
             $.getJSON(url, function(kpasinfo) {
                 currentPrivacyPolicyVersion = kpasinfo.result.privacyPolicyVersion;
                 mmooc.api.loadUserPrivacyPolicyVersion(function(userData) {
@@ -4302,7 +4314,7 @@ this.mmooc=this.mmooc||{};
 
 //https://webapps.stackexchange.com/questions/85517/how-can-i-download-subtitles-for-a-vimeo-video
 this.mmooc.vimeo = function() {
-	var hrefPrefix = "https://kpas-lti.azurewebsites.net/api/vimeo/";
+	var hrefPrefix = "https://kpas-lti-staging-kpas.azurewebsites.net/api/vimeo/";
 	var transcriptContainer = {};
 	var initialized = false;
     var noOfVimeoVideos = 0;
@@ -9003,7 +9015,7 @@ this.mmooc.settingsRoot = {
       "enroll_code",
       "kslaring.no"
     ],
-    kpasApiUrl: 'https://kpas-lti.azurewebsites.net/api'
+    kpasApiUrl: 'https://kpas-lti-staging-kpas.azurewebsites.net/api'
 };
 
 
@@ -9804,7 +9816,7 @@ this.mmooc.coursesettings = (function() {
     $('#' + tableId).append(
       "<tr id='" +
         getWaitIconRowId(tableId) +
-        "'>td><img src='https://kompetanseudirno.azureedge.net/udirdesign/bitmaps/loading.gif'/>"
+        "'>td><img src='https://kompetanseudirno.azureedge.net/udirdesign-staging/bitmaps/loading.gif'/>"
     );
   }
   function clearWaitIcon(tableId) {
@@ -13227,7 +13239,7 @@ this.mmooc.menu = (function() {
       $('a.ic-app-header__logomark').attr('href', linkToMyCourses); //New UI
 // 20180122ETH Uncommenting the line below to see if we can specify the logo in the theme editor instead.
 //             In any case the logo should not be hardcoded but taken from the variables file instead.      
-      $('a.ic-app-header__logomark').attr('src', 'https://kompetanseudirno.azureedge.net/udirdesign/Ny-Udir-Logo-RGB-Neg.png'); //New UI
+      $('a.ic-app-header__logomark').attr('src', 'https://kompetanseudirno.azureedge.net/udirdesign-staging/Ny-Udir-Logo-RGB-Neg.png'); //New UI
       $('.ic-app-header__logomark-container')
         .detach()
         .prependTo('.ic-app-header__main-navigation');
@@ -15310,7 +15322,7 @@ this.mmooc.util = (function () {
 
     goBack: function (e) {
       //http://stackoverflow.com/questions/9756159/using-javascript-how-to-create-a-go-back-link-that-takes-the-user-to-a-link-i
-      var defaultLocation = 'https://kompetanseudirno.azureedge.net/udirdesign';
+      var defaultLocation = 'https://kompetanseudirno.azureedge.net/udirdesign-staging';
       var oldHash = window.location.hash;
 
       history.back(); // Try to go back
@@ -16862,4 +16874,4 @@ $(function() {
   }
 });
 
-//# sourceMappingURL=mmooc-Goalsevarri_1_0.js.map
+//# sourceMappingURL=mmooc-golsevarri_1_1_staging.js.map
