@@ -258,13 +258,13 @@ jQuery(document).ready(function($) {
         this.udirDesignLoaded = true;
         console.log("Subaccount: loading design.");
 
-        var filename = 'https://kompetanseudirno.azureedge.net/udirdesign-staging/mmooc-min-testing_matomo.css';
+        var filename = 'https://kompetanseudirno.azureedge.net/udirdesign-staging/mmooc-min-Golsevarri_1_4_matomo.css';
         var fileref = document.createElement("link")
         fileref.setAttribute("rel", "stylesheet")
         fileref.setAttribute("type", "text/css")
         fileref.setAttribute("href", filename)
         fileref.onload = (_) => {
-          $.getScript('https://kompetanseudirno.azureedge.net/udirdesign-staging/mmooc-min-testing_matomo.js');
+          $.getScript('https://kompetanseudirno.azureedge.net/udirdesign-staging/mmooc-min-Golsevarri_1_4_matomo.js');
         }
         document.getElementsByTagName("head")[0].appendChild(fileref)
     } else
@@ -273,4 +273,4 @@ jQuery(document).ready(function($) {
     }
 });
 
-//# sourceMappingURL=subaccount-testing_matomo.js.map
+//# sourceMappingURL=subaccount-Golsevarri_1_4_matomo.js.map

@@ -3012,7 +3012,7 @@ this.mmooc.kpas = (function() {
                 return;
             }
 
-            var iframeSrc = "https://kompetanseudirno.azureedge.net/udirdesign-staging/kpas/kpas.html?version=testing_matomo&courseId=" + courseId;
+            var iframeSrc = "https://kompetanseudirno.azureedge.net/udirdesign-staging/kpas/kpas.html?version=Golsevarri_1_4_matomo&courseId=" + courseId;
             if (isTeacherOrAdmin) {
                 iframeSrc+="&show=" + graphicId;
             } else if((groupsInfo.municipalityId === undefined) || (groupsInfo.countyId === undefined)) {
@@ -16874,4 +16874,4 @@ $(function() {
   }
 });
 
-//# sourceMappingURL=mmooc-testing_matomo.js.map
+//# sourceMappingURL=mmooc-Golsevarri_1_4_matomo.js.map
