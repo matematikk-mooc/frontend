@@ -1,7 +1,7 @@
 {
   "name": "mooc",
   "version": "0.1.0",
-  "description": "",
+  "description": "Custom JS and CSS frontend for inclusion in [Canvas](http://www.instructure.com/).",
   "jest": {
     "setupFiles": [
       "<rootDir>/test-env-setup.js"
@@ -15,7 +15,7 @@
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-config-prettier": "^3.3.0",
     "eslint-plugin-import": "^2.14.0",
-    "grunt": "~1.3.0",
+    "grunt": "^1.5.3",
     "grunt-babel": "^8.0.0",
     "grunt-cli": "^1.3.2",
     "grunt-contrib-clean": "~0.6.0",
@@ -43,7 +43,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "http://github.com/matematikk-mooc/frontend.git"
+    "url": "git+ssh://git@github.com/matematikk-mooc/frontend.git"
   },
   "scripts": {
     "build": "grunt build",
@@ -53,5 +53,16 @@
     "test:regression:update": "jest -u --runInBand",
     "test:regression:course": "jest courses.test.js course.test.js coursePart2.test.js appUnauthenticated.test.js --runInBand",
     "test:regression:user": "jest account.test.js accountPart2.test.js --runInBand"
-  }
+  },
+  "bugs": {
+    "url": "https://github.com/matematikk-mooc/frontend/issues"
+  },
+  "homepage": "https://github.com/matematikk-mooc/frontend#readme",
+  "main": "Gruntfile.js",
+  "directories": {
+    "doc": "doc",
+    "test": "test"
+  },
+  "author": "",
+  "license": "ISC"
 }
