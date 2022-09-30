@@ -44,6 +44,9 @@ body {
 
 .table-header th {
     background: #BAC6D8;
+    -webkit-print-color-adjust: exact !important; 
+    color-adjust: exact !important;                 
+    print-color-adjust: exact !important;      
 }
 .table-header th:first-child {
     text-align: left;
@@ -71,6 +74,9 @@ body {
     height: 20px;
     transition: 0.2s ease-out background;
     min-width: 3px;
+    -webkit-print-color-adjust: exact !important;   /* Chrome, Safari 6 – 15.3, Edge */
+    color-adjust: exact !important;                 /* Firefox 48 – 96 */
+    print-color-adjust: exact !important;      
 }
 .table-kpas .bar:hover{
     background: #9DBF9D;
@@ -155,4 +161,3 @@ body {
     background-color: #7DBF9D;
   }
   
- 
