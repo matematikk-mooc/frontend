@@ -3012,7 +3012,7 @@ this.mmooc.kpas = (function() {
                 return;
             }
 
-            var iframeSrc = "https://kompetanseudirno.azureedge.net/udirdesign-staging/kpas/kpas.html?version=staging_matomo_vakkerheia_3105&courseId=" + courseId;
+            var iframeSrc = "https://kompetanseudirno.azureedge.net/udirdesign-staging/kpas/kpas.html?version=willitcompile&courseId=" + courseId;
             if (isTeacherOrAdmin) {
                 iframeSrc+="&show=" + graphicId;
             } else if((groupsInfo.municipalityId === undefined) || (groupsInfo.countyId === undefined)) {
@@ -5204,7 +5204,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   var buffer = "", stack1, helper, functionType="function", escapeExpression=this.escapeExpression;
 
 
-  buffer += "<div class=\"mmooc-action-button\">\r\n    <a href=\"#\" id=\"";
+  buffer += "<div class=\"mmooc-action-button\">\n    <a href=\"#\" id=\"";
   if (helper = helpers.id) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.id); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
@@ -5212,7 +5212,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   if (helper = helpers.title) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.title); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "</a>\r\n</div>";
+    + "</a>\n</div>";
   return buffer;
   });
 
@@ -5224,21 +5224,21 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
 function program1(depth0,data) {
   
   var buffer = "", stack1, helper, options;
-  buffer += "\r\n    <li class=\""
+  buffer += "\n    <li class=\""
     + escapeExpression((helper = helpers.checkReadStateFor || (depth0 && depth0.checkReadStateFor),options={hash:{},data:data},helper ? helper.call(depth0, depth0, options) : helperMissing.call(depth0, "checkReadStateFor", depth0, options)))
-    + "\">\r\n        <a href=\""
+    + "\">\n        <a href=\""
     + escapeExpression((helper = helpers.findRightUrlFor || (depth0 && depth0.findRightUrlFor),options={hash:{},data:data},helper ? helper.call(depth0, depth0, options) : helperMissing.call(depth0, "findRightUrlFor", depth0, options)))
     + "\">";
   if (helper = helpers.title) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.title); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "\r\n            <br>\r\n            <span class=\"mmooc-notification-type\">"
+    + "\n            <br>\n            <span class=\"mmooc-notification-type\">"
     + escapeExpression((helper = helpers.localize || (depth0 && depth0.localize),options={hash:{},data:data},helper ? helper.call(depth0, (depth0 && depth0.type), options) : helperMissing.call(depth0, "localize", (depth0 && depth0.type), options)))
-    + "</span>\r\n            <br>\r\n            <span class=\"notification-pubdate\">";
+    + "</span>\n            <br>\n            <span class=\"notification-pubdate\">";
   if (helper = helpers.created_at) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.created_at); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "</span>\r\n        </a>\r\n    </li>\r\n    ";
+    + "</span>\n        </a>\n    </li>\n    ";
   stack1 = helpers['if'].call(depth0, (data == null || data === false ? data : data.last), {hash:{},inverse:self.noop,fn:self.program(2, program2, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += " ";
@@ -5247,19 +5247,19 @@ function program1(depth0,data) {
 function program2(depth0,data) {
   
   
-  return "\r\n    <a href=\"#\" id=\"mmooc-notifications-showall\">Vis alle</a>\r\n    ";
+  return "\n    <a href=\"#\" id=\"mmooc-notifications-showall\">Vis alle</a>\n    ";
   }
 
 function program4(depth0,data) {
   
   
-  return "\r\n    <li>Ingen varsler</li>\r\n    ";
+  return "\n    <li>Ingen varsler</li>\n    ";
   }
 
-  buffer += "<ul id=\"mmooc-notifications\">\r\n    ";
+  buffer += "<ul id=\"mmooc-notifications\">\n    ";
   stack1 = helpers.each.call(depth0, (depth0 && depth0.activities), {hash:{},inverse:self.program(4, program4, data),fn:self.program(1, program1, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\r\n</ul>";
+  buffer += "\n</ul>";
   return buffer;
   });
 
@@ -5271,41 +5271,41 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
 function program1(depth0,data) {
   
   
-  return "\r\n      <button id=\"mmooc-all-courses-btn\" class=\"btn\">Til mine kompetansepakker</button>\r\n    ";
+  return "\n      <button id=\"mmooc-all-courses-btn\" class=\"btn\">Til mine kompetansepakker</button>\n    ";
   }
 
 function program3(depth0,data) {
   
   
-  return "\r\n    <div class=\"uob-warning\">Det ser ut som du bruker en mobil enhet. Vi jobber med saken, men innholdet på kompetanse.udir.no \r\n      er ikke optimalisert for mobile enheter enda. \r\n      Vi anbefaler derfor at du bruker en PC i stedet. Dersom du allikevel velger å jobbe videre med din mobile enhet må du være oppmerksom på  \r\n      at visningen av innholdet i noen tilfeller kan være av dårlig kvalitet.\r\n    </div>\r\n    ";
+  return "\n    <div class=\"uob-warning\">Det ser ut som du bruker en mobil enhet. Vi jobber med saken, men innholdet på kompetanse.udir.no \n      er ikke optimalisert for mobile enheter enda. \n      Vi anbefaler derfor at du bruker en PC i stedet. Dersom du allikevel velger å jobbe videre med din mobile enhet må du være oppmerksom på  \n      at visningen av innholdet i noen tilfeller kan være av dårlig kvalitet.\n    </div>\n    ";
   }
 
 function program5(depth0,data) {
   
   
-  return "\r\n      Her finner du en oversikt over alle tilgjengelige kompetansepakker som du kan melde deg på. \r\n    ";
+  return "\n      Her finner du en oversikt over alle tilgjengelige kompetansepakker som du kan melde deg på. \n    ";
   }
 
 function program7(depth0,data) {
   
   
-  return "\r\n      Tjenesten er laget for ansatte i skole og barnehage. Den er gratis og du kan logge på med Feide eller \r\n      opprette en <span class=\"tooltip tooltip-underline\">egen bruker<span class=\"tooltiptext\">Første gang du skal logge på med egen bruker må du registrere deg i en av kompetansepakkene nedenfor. Deretter kan du logge inn med knappen oppe til høyre.</span></span>. \r\n    ";
+  return "\n      Tjenesten er laget for ansatte i skole og barnehage. Den er gratis og du kan logge på med Feide eller \n      opprette en <span class=\"tooltip tooltip-underline\">egen bruker<span class=\"tooltiptext\">Første gang du skal logge på med egen bruker må du registrere deg i en av kompetansepakkene nedenfor. Deretter kan du logge inn med knappen oppe til høyre.</span></span>. \n    ";
   }
 
-  buffer += "<div class=\"mmooc-all-courses\">\r\n    <!-- TODO: use translation feature -->\r\n    <div class=\"mmooc-all-courses-header\">\r\n    <h1>Velkommen til Utdanningsdirektoratets kompetanseportal</h1>\r\n    ";
+  buffer += "<div class=\"mmooc-all-courses\">\n    <!-- TODO: use translation feature -->\n    <div class=\"mmooc-all-courses-header\">\n    <h1>Velkommen til Utdanningsdirektoratets kompetanseportal</h1>\n    ";
   stack1 = helpers['if'].call(depth0, (depth0 && depth0.isAuthenticated), {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\r\n    </div>\r\n    ";
+  buffer += "\n    </div>\n    ";
   stack1 = helpers['if'].call(depth0, (depth0 && depth0.isMobileOrTablet), {hash:{},inverse:self.noop,fn:self.program(3, program3, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\r\n    ";
+  buffer += "\n    ";
   stack1 = helpers['if'].call(depth0, (depth0 && depth0.isAuthenticated), {hash:{},inverse:self.program(7, program7, data),fn:self.program(5, program5, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "    \r\n    <!--If the amount of courses is large, the filter select box and corresponding javascript code in enroll.js should be enabled\r\n    <select id='filter'></select>\r\n    -->\r\n<!--    <h3>Alle tilgjengelige ";
+  buffer += "    \n    <!--If the amount of courses is large, the filter select box and corresponding javascript code in enroll.js should be enabled\n    <select id='filter'></select>\n    -->\n<!--    <h3>Alle tilgjengelige ";
   if (helper = helpers.courseLabel) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.courseLabel); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "</h3>-->\r\n    <br><br>\r\n    <div class=\"mmooc-all-courses-list\"></div>\r\n</div>\r\n";
+    + "</h3>-->\n    <br><br>\n    <div class=\"mmooc-all-courses-list\"></div>\n</div>\n";
   return buffer;
   });
 
@@ -5317,33 +5317,33 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
 function program1(depth0,data) {
   
   var buffer = "", stack1, helper;
-  buffer += "\r\n                        <div class=\"mmooc-tag mmooc-tag-teal\">\r\n                            <label>";
+  buffer += "\n                        <div class=\"mmooc-tag mmooc-tag-teal\">\n                            <label>";
   if (helper = helpers.coursesAmountText) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.coursesAmountText); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "</label>\r\n                        </div>\r\n                    ";
+    + "</label>\n                        </div>\n                    ";
   return buffer;
   }
 
 function program3(depth0,data) {
   
   var buffer = "", stack1, helper;
-  buffer += "\r\n                        <div class=\"mmooc-tag mmooc-tag-green\">\r\n                            <label>";
+  buffer += "\n                        <div class=\"mmooc-tag mmooc-tag-green\">\n                            <label>";
   if (helper = helpers.YouAreRegisteredToXCoursesText) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.YouAreRegisteredToXCoursesText); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "</label>\r\n                        </div>\r\n                    ";
+    + "</label>\n                        </div>\n                    ";
   return buffer;
   }
 
 function program5(depth0,data) {
   
   var buffer = "", stack1, helper;
-  buffer += "\r\n                    <span class=\"";
+  buffer += "\n                    <span class=\"";
   if (helper = helpers.id) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.id); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "\" data-name=\"course\">\r\n                        <button id=\"mmooc-tab-head-";
+    + "\" data-name=\"course\">\n                        <button id=\"mmooc-tab-head-";
   if (helper = helpers.id) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.id); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
@@ -5353,112 +5353,112 @@ function program5(depth0,data) {
   if (helper = helpers.id) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.id); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "\">\r\n                            ";
+    + "\">\n                            ";
   stack1 = helpers['if'].call(depth0, (depth0 && depth0.enrolled), {hash:{},inverse:self.program(8, program8, data),fn:self.program(6, program6, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\r\n                            ";
+  buffer += "\n                            ";
   if (helper = helpers.name) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.name); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "\r\n                        </button>\r\n                    </span>\r\n                    ";
+    + "\n                        </button>\n                    </span>\n                    ";
   return buffer;
   }
 function program6(depth0,data) {
   
   
-  return "\r\n                                <svg width=\"16\" height=\"16\" xmlns=\"http://www.w3.org/2000/svg\"><g fill=\"none\" fill-rule=\"evenodd\"><path d=\"M-4-4h24v24H-4z\"/><path d=\"M8 0c4.416 0 8 3.584 8 8s-3.584 8-8 8-8-3.584-8-8 3.584-8 8-8zM6.4 12l6.43-6.43-1.127-1.137L6.4 9.736 3.528 6.872 2.4 8l4 4z\" fill=\"#00AC18\" fill-rule=\"nonzero\"/></g></svg>\r\n                            ";
+  return "\n                                <svg width=\"16\" height=\"16\" xmlns=\"http://www.w3.org/2000/svg\"><g fill=\"none\" fill-rule=\"evenodd\"><path d=\"M-4-4h24v24H-4z\"/><path d=\"M8 0c4.416 0 8 3.584 8 8s-3.584 8-8 8-8-3.584-8-8 3.584-8 8-8zM6.4 12l6.43-6.43-1.127-1.137L6.4 9.736 3.528 6.872 2.4 8l4 4z\" fill=\"#00AC18\" fill-rule=\"nonzero\"/></g></svg>\n                            ";
   }
 
 function program8(depth0,data) {
   
   
-  return "\r\n                                <svg width=\"16\" height=\"16\" xmlns=\"http://www.w3.org/2000/svg\"><g fill=\"none\" fill-rule=\"evenodd\"><path d=\"M-4-4h24v24H-4z\"/><path d=\"M8 0c4.416 0 8 3.584 8 8s-3.584 8-8 8-8-3.584-8-8 3.584-8 8-8z\" stroke-opaicty=\"0.0\" fill-opacity=\"0.0\" fill-rule=\"nonzero\"/></g></svg>\r\n                            ";
+  return "\n                                <svg width=\"16\" height=\"16\" xmlns=\"http://www.w3.org/2000/svg\"><g fill=\"none\" fill-rule=\"evenodd\"><path d=\"M-4-4h24v24H-4z\"/><path d=\"M8 0c4.416 0 8 3.584 8 8s-3.584 8-8 8-8-3.584-8-8 3.584-8 8-8z\" stroke-opaicty=\"0.0\" fill-opacity=\"0.0\" fill-rule=\"nonzero\"/></g></svg>\n                            ";
   }
 
 function program10(depth0,data,depth1) {
   
   var buffer = "", stack1, helper, options;
-  buffer += "\r\n                    <div id=\"mmooc-tab-content-";
+  buffer += "\n                    <div id=\"mmooc-tab-content-";
   if (helper = helpers.id) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.id); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
     + "\" class=\"mmooc-tab-content mmooc-tab-content-"
     + escapeExpression(((stack1 = (data == null || data === false ? data : data.index)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
-    + "\">\r\n                        <p class=\"mmooc-tab-content-description\">";
+    + "\">\n                        <p class=\"mmooc-tab-content-description\">";
   if (helper = helpers.public_description) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.public_description); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "</p>\r\n                        ";
+    + "</p>\n                        ";
   options={hash:{},inverse:self.noop,fn:self.program(11, program11, data),data:data}
   if (helper = helpers.ifUnmaintained) { stack1 = helper.call(depth0, options); }
   else { helper = (depth0 && depth0.ifUnmaintained); stack1 = typeof helper === functionType ? helper.call(depth0, options) : helper; }
   if (!helpers.ifUnmaintained) { stack1 = blockHelperMissing.call(depth0, stack1, {hash:{},inverse:self.noop,fn:self.program(11, program11, data),data:data}); }
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\r\n                        ";
+  buffer += "\n                        ";
   options={hash:{},inverse:self.program(15, program15, data),fn:self.program(13, program13, data),data:data}
   if (helper = helpers.ifRoleBased) { stack1 = helper.call(depth0, options); }
   else { helper = (depth0 && depth0.ifRoleBased); stack1 = typeof helper === functionType ? helper.call(depth0, options) : helper; }
   if (!helpers.ifRoleBased) { stack1 = blockHelperMissing.call(depth0, stack1, {hash:{},inverse:self.program(15, program15, data),fn:self.program(13, program13, data),data:data}); }
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\r\n                        <div class=\"mmooc-button-ctr\">\r\n                            ";
+  buffer += "\n                        <div class=\"mmooc-button-ctr\">\n                            ";
   stack1 = helpers['if'].call(depth0, (depth0 && depth0.enrolled), {hash:{},inverse:self.program(19, program19, data),fn:self.programWithDepth(17, program17, data, depth0, depth1),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\r\n                        </div>\r\n                    </div>\r\n                    ";
+  buffer += "\n                        </div>\n                    </div>\n                    ";
   return buffer;
   }
 function program11(depth0,data) {
   
   var buffer = "", stack1, helper;
-  buffer += "\r\n                            <p class=\"mmooc-tab-content-alert\"><b>NB! Denne kompetansepakken ble sist vedlikeholdt i ";
+  buffer += "\n                            <p class=\"mmooc-tab-content-alert\"><b>NB! Denne kompetansepakken ble sist vedlikeholdt i ";
   if (helper = helpers.courseAlert) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.courseAlert); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "</b></p>\r\n                        ";
+    + "</b></p>\n                        ";
   return buffer;
   }
 
 function program13(depth0,data) {
   
   
-  return "\r\n                            <p class=\"mmooc-tab-content-alert\">\r\n                                <span class=\"tooltip\">\r\n                                    <span class=\"mmooc-tag mmooc-tag-course-type-collective\">\r\n                                        <label>kollektiv</label>\r\n                                    </span>\r\n                                    <span class=\"tooltiptext\">Kollektive kompetansepakker inneholder blant annet lederstøtte og innhold der man skal samarbeide med andre.</span>\r\n                                </span>\r\n                            </p>\r\n                        ";
+  return "\n                            <p class=\"mmooc-tab-content-alert\">\n                                <span class=\"tooltip\">\n                                    <span class=\"mmooc-tag mmooc-tag-course-type-collective\">\n                                        <label>kollektiv</label>\n                                    </span>\n                                    <span class=\"tooltiptext\">Kollektive kompetansepakker inneholder blant annet lederstøtte og innhold der man skal samarbeide med andre.</span>\n                                </span>\n                            </p>\n                        ";
   }
 
 function program15(depth0,data) {
   
   
-  return "\r\n                            <p class=\"mmooc-tab-content-alert\">\r\n                                <span class=\"tooltip\">\r\n                                    <span class=\"mmooc-tag mmooc-tag-course-type-individual\">\r\n                                        <label>individuell</label>\r\n                                    </span>\r\n                                    <span class=\"tooltiptext\">Individuelle e-læringskurs egner seg godt til å ta på egenhånd.</span>\r\n                                </span>\r\n                            </p>\r\n                        ";
+  return "\n                            <p class=\"mmooc-tab-content-alert\">\n                                <span class=\"tooltip\">\n                                    <span class=\"mmooc-tag mmooc-tag-course-type-individual\">\n                                        <label>individuell</label>\n                                    </span>\n                                    <span class=\"tooltiptext\">Individuelle e-læringskurs egner seg godt til å ta på egenhånd.</span>\n                                </span>\n                            </p>\n                        ";
   }
 
 function program17(depth0,data,depth1,depth2) {
   
   var buffer = "", stack1;
-  buffer += "\r\n                                <a aria-label=\"enroll\" class=\"mmooc-button mmooc-button-secondary\" href=\"/courses/"
+  buffer += "\n                                <a aria-label=\"enroll\" class=\"mmooc-button mmooc-button-secondary\" href=\"/courses/"
     + escapeExpression(((stack1 = (depth1 && depth1.id)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
     + "\">"
     + escapeExpression(((stack1 = (depth2 && depth2.goToCourse)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
-    + "</a>\r\n                            ";
+    + "</a>\n                            ";
   return buffer;
   }
 
 function program19(depth0,data) {
   
   var buffer = "", stack1, helper;
-  buffer += "\r\n                                <button id=\"";
+  buffer += "\n                                <button id=\"";
   if (helper = helpers.self_enrollment_code) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.self_enrollment_code); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "\" class=\"mmooc-header__register-button mmooc-button mmooc-button-secondary\">Meld deg på</button>\r\n                            ";
+    + "\" class=\"mmooc-header__register-button mmooc-button mmooc-button-secondary\">Meld deg på</button>\n                            ";
   return buffer;
   }
 
 function program21(depth0,data,depth1) {
   
   var buffer = "", stack1, helper, options;
-  buffer += "\r\n                <span class=\"";
+  buffer += "\n                <span class=\"";
   if (helper = helpers.id) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.id); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "\" data-name=\"course\">\r\n                <button id=\"mmooc-tabs-mobile-header-";
+    + "\" data-name=\"course\">\n                <button id=\"mmooc-tabs-mobile-header-";
   if (helper = helpers.id) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.id); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
@@ -5466,95 +5466,95 @@ function program21(depth0,data,depth1) {
   if (helper = helpers.id) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.id); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + ">\r\n                    ";
+    + ">\n                    ";
   if (helper = helpers.name) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.name); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "\r\n                    ";
+    + "\n                    ";
   stack1 = helpers['if'].call(depth0, (depth0 && depth0.enrolled), {hash:{},inverse:self.noop,fn:self.program(22, program22, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\r\n                </button>\r\n                </span>\r\n                <article id=\"mmooc-tabs-mobile-content-";
+  buffer += "\n                </button>\n                </span>\n                <article id=\"mmooc-tabs-mobile-content-";
   if (helper = helpers.id) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.id); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "\" class=\"mmooc-tabs-mobile-content\">\r\n                    <p>";
+    + "\" class=\"mmooc-tabs-mobile-content\">\n                    <p>";
   if (helper = helpers.public_description) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.public_description); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "</p>\r\n                    <p class=\"mmooc-tab-content-description\">";
+    + "</p>\n                    <p class=\"mmooc-tab-content-description\">";
   if (helper = helpers.public_description) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.public_description); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "</p>\r\n                    ";
+    + "</p>\n                    ";
   options={hash:{},inverse:self.noop,fn:self.program(24, program24, data),data:data}
   if (helper = helpers.ifUnmaintained) { stack1 = helper.call(depth0, options); }
   else { helper = (depth0 && depth0.ifUnmaintained); stack1 = typeof helper === functionType ? helper.call(depth0, options) : helper; }
   if (!helpers.ifUnmaintained) { stack1 = blockHelperMissing.call(depth0, stack1, {hash:{},inverse:self.noop,fn:self.program(24, program24, data),data:data}); }
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\r\n                    ";
+  buffer += "\n                    ";
   options={hash:{},inverse:self.program(28, program28, data),fn:self.program(26, program26, data),data:data}
   if (helper = helpers.ifRoleBased) { stack1 = helper.call(depth0, options); }
   else { helper = (depth0 && depth0.ifRoleBased); stack1 = typeof helper === functionType ? helper.call(depth0, options) : helper; }
   if (!helpers.ifRoleBased) { stack1 = blockHelperMissing.call(depth0, stack1, {hash:{},inverse:self.program(28, program28, data),fn:self.program(26, program26, data),data:data}); }
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\r\n                    <div class=\"mmooc-button-ctr\">\r\n                        ";
+  buffer += "\n                    <div class=\"mmooc-button-ctr\">\n                        ";
   stack1 = helpers['if'].call(depth0, (depth0 && depth0.enrolled), {hash:{},inverse:self.program(32, program32, data),fn:self.programWithDepth(30, program30, data, depth0, depth1),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\r\n                    </div>\r\n                </article>\r\n                ";
+  buffer += "\n                    </div>\n                </article>\n                ";
   return buffer;
   }
 function program22(depth0,data) {
   
   
-  return "\r\n                        <svg width=\"16\" height=\"16\" xmlns=\"http://www.w3.org/2000/svg\"><g fill=\"none\" fill-rule=\"evenodd\"><path d=\"M-4-4h24v24H-4z\"/><path d=\"M8 0c4.416 0 8 3.584 8 8s-3.584 8-8 8-8-3.584-8-8 3.584-8 8-8zM6.4 12l6.43-6.43-1.127-1.137L6.4 9.736 3.528 6.872 2.4 8l4 4z\" fill=\"#00AC18\" fill-rule=\"nonzero\"/></g></svg>\r\n                    ";
+  return "\n                        <svg width=\"16\" height=\"16\" xmlns=\"http://www.w3.org/2000/svg\"><g fill=\"none\" fill-rule=\"evenodd\"><path d=\"M-4-4h24v24H-4z\"/><path d=\"M8 0c4.416 0 8 3.584 8 8s-3.584 8-8 8-8-3.584-8-8 3.584-8 8-8zM6.4 12l6.43-6.43-1.127-1.137L6.4 9.736 3.528 6.872 2.4 8l4 4z\" fill=\"#00AC18\" fill-rule=\"nonzero\"/></g></svg>\n                    ";
   }
 
 function program24(depth0,data) {
   
   var buffer = "", stack1, helper;
-  buffer += "\r\n                        <p class=\"mmooc-tab-content-alert\"><b>NB! Denne kompetansepakken ble sist vedlikeholdt i ";
+  buffer += "\n                        <p class=\"mmooc-tab-content-alert\"><b>NB! Denne kompetansepakken ble sist vedlikeholdt i ";
   if (helper = helpers.courseAlert) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.courseAlert); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "</b></p>\r\n                    ";
+    + "</b></p>\n                    ";
   return buffer;
   }
 
 function program26(depth0,data) {
   
   
-  return "\r\n                        <p class=\"mmooc-tab-content-alert\">\r\n                            <span class=\"tooltip\">\r\n                                <span class=\"mmooc-tag mmooc-tag-course-type-collective\">\r\n                                    <label>kollektiv</label>\r\n                                </span>\r\n                                <span class=\"tooltiptext\">Kollektive kompetansepakker inneholder blant annet lederstøtte og innhold der man skal samarbeide med andre.</span>\r\n                            </span>\r\n                        </p>\r\n                    ";
+  return "\n                        <p class=\"mmooc-tab-content-alert\">\n                            <span class=\"tooltip\">\n                                <span class=\"mmooc-tag mmooc-tag-course-type-collective\">\n                                    <label>kollektiv</label>\n                                </span>\n                                <span class=\"tooltiptext\">Kollektive kompetansepakker inneholder blant annet lederstøtte og innhold der man skal samarbeide med andre.</span>\n                            </span>\n                        </p>\n                    ";
   }
 
 function program28(depth0,data) {
   
   
-  return "\r\n                        <p class=\"mmooc-tab-content-alert\">\r\n                            <span class=\"tooltip\">\r\n                                <span class=\"mmooc-tag mmooc-tag-course-type-individual\">\r\n                                    <label>individuell</label>\r\n                                </span>\r\n                                <span class=\"tooltiptext\">Individuelle e-læringskurs egner seg godt til å ta på egenhånd.</span>\r\n                            </span>\r\n                        </p>\r\n                    ";
+  return "\n                        <p class=\"mmooc-tab-content-alert\">\n                            <span class=\"tooltip\">\n                                <span class=\"mmooc-tag mmooc-tag-course-type-individual\">\n                                    <label>individuell</label>\n                                </span>\n                                <span class=\"tooltiptext\">Individuelle e-læringskurs egner seg godt til å ta på egenhånd.</span>\n                            </span>\n                        </p>\n                    ";
   }
 
 function program30(depth0,data,depth1,depth2) {
   
   var buffer = "", stack1;
-  buffer += "\r\n                            <a class=\"mmooc-button mmooc-button-secondary\" href=\"/courses/"
+  buffer += "\n                            <a class=\"mmooc-button mmooc-button-secondary\" href=\"/courses/"
     + escapeExpression(((stack1 = (depth1 && depth1.id)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
     + "\">"
     + escapeExpression(((stack1 = (depth2 && depth2.goToCourse)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
-    + "</a>\r\n                        ";
+    + "</a>\n                        ";
   return buffer;
   }
 
 function program32(depth0,data) {
   
   var buffer = "", stack1, helper;
-  buffer += "\r\n                            <button id=\"";
+  buffer += "\n                            <button id=\"";
   if (helper = helpers.self_enrollment_code) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.self_enrollment_code); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "\" class=\"mmooc-header__register-button mmooc-button mmooc-button-secondary\">Meld deg på</button>\r\n                        ";
+    + "\" class=\"mmooc-header__register-button mmooc-button mmooc-button-secondary\">Meld deg på</button>\n                        ";
   return buffer;
   }
 
-  buffer += "<div class=\"mmooc-enroll-category\">\r\n    <section class=\"mmooc-accordion\">\r\n        <button id=\"mmooc-accordion-header-";
+  buffer += "<div class=\"mmooc-enroll-category\">\n    <section class=\"mmooc-accordion\">\n        <button id=\"mmooc-accordion-header-";
   if (helper = helpers.index) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.index); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
@@ -5566,42 +5566,42 @@ function program32(depth0,data) {
   if (helper = helpers.title) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.title); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "\">\r\n            <div class=\"mmooc-accordion-header-main\" index=";
+    + "\">\n            <div class=\"mmooc-accordion-header-main\" index=";
   if (helper = helpers.index) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.index); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + ">\r\n                <div>\r\n                    <h2>";
+    + ">\n                <div>\n                    <h2>";
   if (helper = helpers.title) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.title); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "</h2>\r\n                </div> \r\n                <div>\r\n                    ";
+    + "</h2>\n                </div> \n                <div>\n                    ";
   stack1 = helpers['if'].call(depth0, (depth0 && depth0.coursesAmount), {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\r\n                    <!-- TODO: variable with a number of courses the user is subscribed to shall be placed here\r\n                        also, it should be visible only on the 'logged in screen' -->\r\n                    ";
+  buffer += "\n                    <!-- TODO: variable with a number of courses the user is subscribed to shall be placed here\n                        also, it should be visible only on the 'logged in screen' -->\n                    ";
   stack1 = helpers['if'].call(depth0, (depth0 && depth0.coursesEnrolledAmount), {hash:{},inverse:self.noop,fn:self.program(3, program3, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\r\n                </div>\r\n            </div>\r\n            <div class=\"mmooc-accordion-label-closed\">\r\n                <label class=\"mmooc-accordion-header-label\">";
+  buffer += "\n                </div>\n            </div>\n            <div class=\"mmooc-accordion-label-closed\">\n                <label class=\"mmooc-accordion-header-label\">";
   if (helper = helpers.openCoursesGroupText) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.openCoursesGroupText); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "</label>\r\n                <svg width=\"16\" height=\"9\" xmlns=\"http://www.w3.org/2000/svg\">\r\n                    <g fill=\"none\" fill-rule=\"evenodd\">\r\n                        <path d=\"M-8-12h32v32H-8z\" />\r\n                        <path fill-opacity=\".5\" fill=\"#373737\" d=\"M1.887 0L8 5.565 14.113 0 16 1.717 8 9 0 1.717z\" />\r\n                    </g>\r\n                </svg>\r\n            </div>\r\n            <div class=\"mmooc-accordion-label-open\">\r\n                <label class=\"mmooc-accordion-header-label\">";
+    + "</label>\n                <svg width=\"16\" height=\"9\" xmlns=\"http://www.w3.org/2000/svg\">\n                    <g fill=\"none\" fill-rule=\"evenodd\">\n                        <path d=\"M-8-12h32v32H-8z\" />\n                        <path fill-opacity=\".5\" fill=\"#373737\" d=\"M1.887 0L8 5.565 14.113 0 16 1.717 8 9 0 1.717z\" />\n                    </g>\n                </svg>\n            </div>\n            <div class=\"mmooc-accordion-label-open\">\n                <label class=\"mmooc-accordion-header-label\">";
   if (helper = helpers.closeCoursesGroupText) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.closeCoursesGroupText); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "</label>\r\n                <svg width=\"16\" height=\"9\" xmlns=\"http://www.w3.org/2000/svg\">\r\n                    <g fill=\"none\" fill-rule=\"evenodd\">\r\n                        <path d=\"M-8 21h32v-32H-8z\" />\r\n                        <path fill=\"#24A1B3\" d=\"M1.887 9L8 3.435 14.113 9 16 7.283 8 0 0 7.283z\" />\r\n                    </g>\r\n                </svg>\r\n            </div>\r\n        </button>\r\n        <article id=\"mmooc-accordion-content-";
+    + "</label>\n                <svg width=\"16\" height=\"9\" xmlns=\"http://www.w3.org/2000/svg\">\n                    <g fill=\"none\" fill-rule=\"evenodd\">\n                        <path d=\"M-8 21h32v-32H-8z\" />\n                        <path fill=\"#24A1B3\" d=\"M1.887 9L8 3.435 14.113 9 16 7.283 8 0 0 7.283z\" />\n                    </g>\n                </svg>\n            </div>\n        </button>\n        <article id=\"mmooc-accordion-content-";
   if (helper = helpers.index) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.index); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "\" class=\"mmooc-accordion-content\">\r\n\r\n            <div class=\"mmooc-tabs\">\r\n                <div class=\"mmooc-tab-heads\">\r\n                    ";
+    + "\" class=\"mmooc-accordion-content\">\n\n            <div class=\"mmooc-tabs\">\n                <div class=\"mmooc-tab-heads\">\n                    ";
   stack1 = helpers.each.call(depth0, (depth0 && depth0.courses), {hash:{},inverse:self.noop,fn:self.program(5, program5, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\r\n                </div>\r\n                <div class=\"mmooc-tab-content-ctr\">\r\n                    ";
+  buffer += "\n                </div>\n                <div class=\"mmooc-tab-content-ctr\">\n                    ";
   stack1 = helpers.each.call(depth0, (depth0 && depth0.courses), {hash:{},inverse:self.noop,fn:self.programWithDepth(10, program10, data, depth0),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += " \r\n                </div>\r\n            </div>\r\n\r\n            <section class=\"mmooc-tabs-mobile\">\r\n                ";
+  buffer += " \n                </div>\n            </div>\n\n            <section class=\"mmooc-tabs-mobile\">\n                ";
   stack1 = helpers.each.call(depth0, (depth0 && depth0.courses), {hash:{},inverse:self.noop,fn:self.programWithDepth(21, program21, data, depth0),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\r\n            </section>\r\n        </article>\r\n    </section>\r\n</div>\r\n";
+  buffer += "\n            </section>\n        </article>\n    </section>\n</div>\n";
   return buffer;
   });
 
@@ -5625,16 +5625,16 @@ function program3(depth0,data) {
 function program5(depth0,data) {
   
   var buffer = "", stack1;
-  buffer += "\r\n			<ul class=\"mmooc-assignment-files\">\r\n				";
+  buffer += "\n			<ul class=\"mmooc-assignment-files\">\n				";
   stack1 = helpers.each.call(depth0, ((stack1 = (depth0 && depth0.submission)),stack1 == null || stack1 === false ? stack1 : stack1.attachments), {hash:{},inverse:self.noop,fn:self.program(6, program6, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\r\n			</ul>\r\n			";
+  buffer += "\n			</ul>\n			";
   return buffer;
   }
 function program6(depth0,data) {
   
   var buffer = "", stack1, helper;
-  buffer += "\r\n				<li>\r\n					<a href=\"";
+  buffer += "\n				<li>\n					<a href=\"";
   if (helper = helpers.url) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.url); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
@@ -5642,64 +5642,64 @@ function program6(depth0,data) {
   if (helper = helpers.display_name) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.display_name); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "</a>\r\n				</li>\r\n				";
+    + "</a>\n				</li>\n				";
   return buffer;
   }
 
 function program8(depth0,data) {
   
   var buffer = "", stack1, helper, options;
-  buffer += "\r\n			<a href=\""
+  buffer += "\n			<a href=\""
     + escapeExpression((helper = helpers.getPathFromUrl || (depth0 && depth0.getPathFromUrl),options={hash:{},data:data},helper ? helper.call(depth0, ((stack1 = (depth0 && depth0.submission)),stack1 == null || stack1 === false ? stack1 : stack1.preview_url), options) : helperMissing.call(depth0, "getPathFromUrl", ((stack1 = (depth0 && depth0.submission)),stack1 == null || stack1 === false ? stack1 : stack1.preview_url), options)))
-    + "\">Vis detaljer om innlevering &raquo;</a>\r\n			";
+    + "\">Vis detaljer om innlevering &raquo;</a>\n			";
   return buffer;
   }
 
 function program10(depth0,data) {
   
   
-  return "\r\n			<p>Du må gjøre hverandre-vurderingen(e) nedenfor før du kan se detaljer om din oppgave.</p>\r\n			";
+  return "\n			<p>Du må gjøre hverandre-vurderingen(e) nedenfor før du kan se detaljer om din oppgave.</p>\n			";
   }
 
 function program12(depth0,data) {
   
   
-  return "\r\n			<li>Ingen innleveringer tildelt</li>\r\n			";
+  return "\n			<li>Ingen innleveringer tildelt</li>\n			";
   }
 
 function program14(depth0,data) {
   
   var buffer = "", stack1, helper, options;
-  buffer += "\r\n			<li>\r\n				<a class=\""
+  buffer += "\n			<li>\n				<a class=\""
     + escapeExpression((helper = helpers.getPeerReviewWorkflowIconClass || (depth0 && depth0.getPeerReviewWorkflowIconClass),options={hash:{},data:data},helper ? helper.call(depth0, (depth0 && depth0.workflow_state), options) : helperMissing.call(depth0, "getPeerReviewWorkflowIconClass", (depth0 && depth0.workflow_state), options)))
     + "\" href=\""
     + escapeExpression(((stack1 = ((stack1 = (depth0 && depth0.assessor)),stack1 == null || stack1 === false ? stack1 : stack1.mmooc_url)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
     + "\">"
     + escapeExpression(((stack1 = ((stack1 = (depth0 && depth0.assessor)),stack1 == null || stack1 === false ? stack1 : stack1.display_name)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
-    + "</a>\r\n			</li>\r\n			";
+    + "</a>\n			</li>\n			";
   return buffer;
   }
 
-  buffer += "<div class=\"mmooc-assignment-rightside\">\r\n	<div class=\"mmooc-assignment-responses\">\r\n		<h3>Besvarelser</h3>\r\n		<div class=\"mmooc-assignment-responses-contents\">\r\n			<p class=\"mmooc-assignment-delivery-date";
+  buffer += "<div class=\"mmooc-assignment-rightside\">\n	<div class=\"mmooc-assignment-responses\">\n		<h3>Besvarelser</h3>\n		<div class=\"mmooc-assignment-responses-contents\">\n			<p class=\"mmooc-assignment-delivery-date";
   stack1 = helpers['if'].call(depth0, ((stack1 = (depth0 && depth0.submission)),stack1 == null || stack1 === false ? stack1 : stack1.late), {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "\">Levert "
     + escapeExpression((helper = helpers.norwegianDateAndTime || (depth0 && depth0.norwegianDateAndTime),options={hash:{},data:data},helper ? helper.call(depth0, ((stack1 = (depth0 && depth0.submission)),stack1 == null || stack1 === false ? stack1 : stack1.submitted_at), options) : helperMissing.call(depth0, "norwegianDateAndTime", ((stack1 = (depth0 && depth0.submission)),stack1 == null || stack1 === false ? stack1 : stack1.submitted_at), options)));
   stack1 = helpers['if'].call(depth0, ((stack1 = (depth0 && depth0.submission)),stack1 == null || stack1 === false ? stack1 : stack1.late), {hash:{},inverse:self.noop,fn:self.program(3, program3, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "</p>\r\n			";
+  buffer += "</p>\n			";
   stack1 = helpers['if'].call(depth0, ((stack1 = (depth0 && depth0.submission)),stack1 == null || stack1 === false ? stack1 : stack1.attachments), {hash:{},inverse:self.noop,fn:self.program(5, program5, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\r\n		</div>\r\n		<div class=\"mmooc-assignment-details\">\r\n			";
+  buffer += "\n		</div>\n		<div class=\"mmooc-assignment-details\">\n			";
   stack1 = (helper = helpers.ifAllPeerReviewsAreComplete || (depth0 && depth0.ifAllPeerReviewsAreComplete),options={hash:{},inverse:self.program(10, program10, data),fn:self.program(8, program8, data),data:data},helper ? helper.call(depth0, (depth0 && depth0.peerReview), options) : helperMissing.call(depth0, "ifAllPeerReviewsAreComplete", (depth0 && depth0.peerReview), options));
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\r\n		</div>\r\n	</div>\r\n	<div class=\"mmooc-peer-reviews\">\r\n		<h3>Hverandrevurdering tildelt deg</h3>\r\n		<ul class=\"unstyled_list\">\r\n			";
+  buffer += "\n		</div>\n	</div>\n	<div class=\"mmooc-peer-reviews\">\n		<h3>Hverandrevurdering tildelt deg</h3>\n		<ul class=\"unstyled_list\">\n			";
   stack1 = helpers.unless.call(depth0, ((stack1 = (depth0 && depth0.peerReview)),stack1 == null || stack1 === false ? stack1 : stack1.length), {hash:{},inverse:self.noop,fn:self.program(12, program12, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += " ";
   stack1 = helpers.each.call(depth0, (depth0 && depth0.peerReview), {hash:{},inverse:self.noop,fn:self.program(14, program14, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\r\n		</ul>\r\n	</div>\r\n</div>";
+  buffer += "\n		</ul>\n	</div>\n</div>";
   return buffer;
   });
 
@@ -5718,7 +5718,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   
 
 
-  return "<div class=\"mmooc-peer-review-warning\">\r\n	<p class=\"mmooc-warning\">\r\n		Denne oppgaven er ikke ferdig før du har fylt ut vurderingsskjemaet til hver tildelte hverandrevurdering\r\n	</p>\r\n</div>";
+  return "<div class=\"mmooc-peer-review-warning\">\n	<p class=\"mmooc-warning\">\n		Denne oppgaven er ikke ferdig før du har fylt ut vurderingsskjemaet til hver tildelte hverandrevurdering\n	</p>\n</div>";
   });
 
 this["mmooc"]["templates"]["assignmentSubmission"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
@@ -5741,9 +5741,9 @@ function program3(depth0,data) {
 function program5(depth0,data) {
   
   var buffer = "", stack1;
-  buffer += "\r\n						<span class=\"mmooc-assignment-delivered-by\"> av "
+  buffer += "\n						<span class=\"mmooc-assignment-delivered-by\"> av "
     + escapeExpression(((stack1 = ((stack1 = ((stack1 = (depth0 && depth0.submission)),stack1 == null || stack1 === false ? stack1 : stack1.user)),stack1 == null || stack1 === false ? stack1 : stack1.name)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
-    + "</span>\r\n						";
+    + "</span>\n						";
   return buffer;
   }
 
@@ -5759,19 +5759,19 @@ function program7(depth0,data) {
 function program8(depth0,data) {
   
   
-  return "\r\n		<div class=\"mmooc-peer-review-success\">\r\n			<p class=\"mmooc-success singleLine\">\r\n				Du har fullført hverandrevurderingen.\r\n			</p>\r\n		</div>\r\n		";
+  return "\n		<div class=\"mmooc-peer-review-success\">\n			<p class=\"mmooc-success singleLine\">\n				Du har fullført hverandrevurderingen.\n			</p>\n		</div>\n		";
   }
 
 function program10(depth0,data) {
   
   
-  return "\r\n		<div class=\"mmooc-peer-review-warning\">\r\n			<p class=\"mmooc-warning singleLine\">\r\n				Denne oppgaven er ikke ferdig før du har fylt ut vurderingsskjemaet.\r\n			</p>\r\n		</div>\r\n		";
+  return "\n		<div class=\"mmooc-peer-review-warning\">\n			<p class=\"mmooc-warning singleLine\">\n				Denne oppgaven er ikke ferdig før du har fylt ut vurderingsskjemaet.\n			</p>\n		</div>\n		";
   }
 
 function program12(depth0,data) {
   
   
-  return "\r\n				<h3>Din vurdering</h3>\r\n				";
+  return "\n				<h3>Din vurdering</h3>\n				";
   }
 
 function program14(depth0,data) {
@@ -5786,23 +5786,23 @@ function program14(depth0,data) {
 function program15(depth0,data) {
   
   
-  return "\r\n				<h3>Vurdering av besvarelse</h3>\r\n				";
+  return "\n				<h3>Vurdering av besvarelse</h3>\n				";
   }
 
 function program17(depth0,data) {
   
   
-  return "\r\n				<h3>Vurdering av din besvarelse</h3>\r\n				";
+  return "\n				<h3>Vurdering av din besvarelse</h3>\n				";
   }
 
 function program19(depth0,data) {
   
   var buffer = "", stack1;
-  buffer += "\r\n				<p class=\"assessment\">Karakter: "
+  buffer += "\n				<p class=\"assessment\">Karakter: "
     + escapeExpression(((stack1 = ((stack1 = (depth0 && depth0.submission)),stack1 == null || stack1 === false ? stack1 : stack1.grade)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
     + "/"
     + escapeExpression(((stack1 = ((stack1 = (depth0 && depth0.assignment)),stack1 == null || stack1 === false ? stack1 : stack1.points_possible)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
-    + "</p>\r\n				";
+    + "</p>\n				";
   return buffer;
   }
 
@@ -5812,21 +5812,21 @@ function program21(depth0,data) {
   buffer += " ";
   stack1 = helpers.unless.call(depth0, (depth0 && depth0.isPeerReviewFinished), {hash:{},inverse:self.noop,fn:self.program(22, program22, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\r\n				<a href=\"#\" class=\"open-assessment-dialog-button\">Vurderingsskjema</a>\r\n				";
+  buffer += "\n				<a href=\"#\" class=\"open-assessment-dialog-button\">Vurderingsskjema</a>\n				";
   return buffer;
   }
 function program22(depth0,data) {
   
   
-  return "\r\n				<p class=\"assessment-warning\">Du har ikke vurdert denne oppgaven.</p>\r\n				";
+  return "\n				<p class=\"assessment-warning\">Du har ikke vurdert denne oppgaven.</p>\n				";
   }
 
 function program24(depth0,data) {
   
   var buffer = "", stack1, helper, options;
-  buffer += "\r\n				<p class=\"assessment-text\">"
+  buffer += "\n				<p class=\"assessment-text\">"
     + escapeExpression((helper = helpers.getSubmissionAssessmentText || (depth0 && depth0.getSubmissionAssessmentText),options={hash:{},data:data},helper ? helper.call(depth0, (depth0 && depth0.peerReview), options) : helperMissing.call(depth0, "getSubmissionAssessmentText", (depth0 && depth0.peerReview), options)))
-    + "</p>\r\n				";
+    + "</p>\n				";
   stack1 = (helper = helpers.ifAtLeastOnePeerReviewIsComplete || (depth0 && depth0.ifAtLeastOnePeerReviewIsComplete),options={hash:{},inverse:self.program(27, program27, data),fn:self.program(25, program25, data),data:data},helper ? helper.call(depth0, (depth0 && depth0.peerReview), options) : helperMissing.call(depth0, "ifAtLeastOnePeerReviewIsComplete", (depth0 && depth0.peerReview), options));
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += " ";
@@ -5835,13 +5835,13 @@ function program24(depth0,data) {
 function program25(depth0,data) {
   
   
-  return "\r\n				<a href=\"#\" class=\"open-assessment-dialog-button\">Vis vurdering</a>\r\n				";
+  return "\n				<a href=\"#\" class=\"open-assessment-dialog-button\">Vis vurdering</a>\n				";
   }
 
 function program27(depth0,data) {
   
   
-  return "\r\n				<br/> ";
+  return "\n				<br/> ";
   }
 
 function program29(depth0,data) {
@@ -5868,47 +5868,47 @@ function program35(depth0,data) {
   return " withNoGradesText";
   }
 
-  buffer += "<div class=\"mmooc-assignment-submission\">\r\n	<div class=\"mmooc-assignment-submission-leftside\">\r\n		<div class=\"mmooc-assignment-submission-metadata\">\r\n			<h2 class=\"mmooc-assignment-submission-header\">";
+  buffer += "<div class=\"mmooc-assignment-submission\">\n	<div class=\"mmooc-assignment-submission-leftside\">\n		<div class=\"mmooc-assignment-submission-metadata\">\n			<h2 class=\"mmooc-assignment-submission-header\">";
   if (helper = helpers.submissionTitle) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.submissionTitle); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "</h2>\r\n			<ul class=\"mmooc-assignment-submission-metadata-list\">\r\n				<li>\r\n					<span class=\"title\">Oppgave:</span>\r\n					<span class=\"value\">\r\n						<a href=\"/courses/"
+    + "</h2>\n			<ul class=\"mmooc-assignment-submission-metadata-list\">\n				<li>\n					<span class=\"title\">Oppgave:</span>\n					<span class=\"value\">\n						<a href=\"/courses/"
     + escapeExpression(((stack1 = ((stack1 = ((stack1 = (depth0 && depth0.submission)),stack1 == null || stack1 === false ? stack1 : stack1.course)),stack1 == null || stack1 === false ? stack1 : stack1.id)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
     + "/assignments/"
     + escapeExpression(((stack1 = ((stack1 = (depth0 && depth0.submission)),stack1 == null || stack1 === false ? stack1 : stack1.assignment_id)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
     + "\">"
     + escapeExpression(((stack1 = ((stack1 = (depth0 && depth0.assignment)),stack1 == null || stack1 === false ? stack1 : stack1.name)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
-    + "</a>\r\n					</span>\r\n				</li>\r\n				<li>\r\n					<span class=\"title\">Innlevert:</span>\r\n					<span class=\"value\">\r\n						<span class=\"mmooc-assignment-delivery-date";
+    + "</a>\n					</span>\n				</li>\n				<li>\n					<span class=\"title\">Innlevert:</span>\n					<span class=\"value\">\n						<span class=\"mmooc-assignment-delivery-date";
   stack1 = helpers['if'].call(depth0, ((stack1 = (depth0 && depth0.submission)),stack1 == null || stack1 === false ? stack1 : stack1.late), {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "\">"
     + escapeExpression((helper = helpers.norwegianDateAndTime || (depth0 && depth0.norwegianDateAndTime),options={hash:{},data:data},helper ? helper.call(depth0, ((stack1 = (depth0 && depth0.submission)),stack1 == null || stack1 === false ? stack1 : stack1.submitted_at), options) : helperMissing.call(depth0, "norwegianDateAndTime", ((stack1 = (depth0 && depth0.submission)),stack1 == null || stack1 === false ? stack1 : stack1.submitted_at), options)));
   stack1 = helpers['if'].call(depth0, ((stack1 = (depth0 && depth0.submission)),stack1 == null || stack1 === false ? stack1 : stack1.late), {hash:{},inverse:self.noop,fn:self.program(3, program3, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "</span>\r\n						";
+  buffer += "</span>\n						";
   stack1 = helpers['if'].call(depth0, (depth0 && depth0.isPeerReview), {hash:{},inverse:self.noop,fn:self.program(5, program5, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += " ";
   stack1 = helpers['if'].call(depth0, (depth0 && depth0.isTeacherViewingStudentsSubmission), {hash:{},inverse:self.noop,fn:self.program(5, program5, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\r\n					</span>\r\n				</li>\r\n			</ul>\r\n		</div>\r\n		";
+  buffer += "\n					</span>\n				</li>\n			</ul>\n		</div>\n		";
   stack1 = helpers['if'].call(depth0, (depth0 && depth0.isPeerReview), {hash:{},inverse:self.noop,fn:self.program(7, program7, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\r\n	</div>\r\n	<div class=\"mmooc-assignment-submission-rightside\">\r\n		<div class=\"mmooc-assignment-submission-assessment\">\r\n			<div class=\"mmooc-assignment-submission-assessment-header\">\r\n				";
+  buffer += "\n	</div>\n	<div class=\"mmooc-assignment-submission-rightside\">\n		<div class=\"mmooc-assignment-submission-assessment\">\n			<div class=\"mmooc-assignment-submission-assessment-header\">\n				";
   stack1 = helpers['if'].call(depth0, (depth0 && depth0.isPeerReview), {hash:{},inverse:self.program(14, program14, data),fn:self.program(12, program12, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\r\n			</div>\r\n			<div class=\"mmooc-assignment-submission-assessment-contents\">\r\n				";
+  buffer += "\n			</div>\n			<div class=\"mmooc-assignment-submission-assessment-contents\">\n				";
   stack1 = helpers['if'].call(depth0, ((stack1 = (depth0 && depth0.submission)),stack1 == null || stack1 === false ? stack1 : stack1.grade), {hash:{},inverse:self.noop,fn:self.program(19, program19, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += " ";
   stack1 = helpers['if'].call(depth0, (depth0 && depth0.isPeerReview), {hash:{},inverse:self.program(24, program24, data),fn:self.program(21, program21, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\r\n			</div>\r\n		</div>\r\n	</div>\r\n</div>\r\n\r\n<div class=\"mmooc-assignment-submission-answers";
+  buffer += "\n			</div>\n		</div>\n	</div>\n</div>\n\n<div class=\"mmooc-assignment-submission-answers";
   stack1 = helpers['if'].call(depth0, (depth0 && depth0.isPeerReview), {hash:{},inverse:self.program(31, program31, data),fn:self.program(29, program29, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
   stack1 = helpers['if'].call(depth0, ((stack1 = (depth0 && depth0.submission)),stack1 == null || stack1 === false ? stack1 : stack1.grade), {hash:{},inverse:self.program(35, program35, data),fn:self.program(33, program33, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\">\r\n	<h3>Besvarelser</h3>\r\n</div>";
+  buffer += "\">\n	<h3>Besvarelser</h3>\n</div>";
   return buffer;
   });
 
@@ -5918,7 +5918,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   var buffer = "", stack1, helper, functionType="function", escapeExpression=this.escapeExpression;
 
 
-  buffer += "<div class=\"mmooc-back-button\">\r\n    <a href=\"";
+  buffer += "<div class=\"mmooc-back-button\">\n    <a href=\"";
   if (helper = helpers.url) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.url); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
@@ -5926,7 +5926,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   if (helper = helpers.title) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.title); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "</a>\r\n</div>";
+    + "</a>\n</div>";
   return buffer;
   });
 
@@ -5938,33 +5938,33 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
 function program1(depth0,data) {
   
   var buffer = "", stack1, helper, options;
-  buffer += "\r\n        <div id=\"course_";
+  buffer += "\n        <div id=\"course_";
   if (helper = helpers.id) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.id); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "\" class=\"mmooc-size-1of3\">\r\n            <div class=\"mmooc-course-list-item\">\r\n                <div class=\"mmooc-course-list-heading\">\r\n                    <h2 ";
+    + "\" class=\"mmooc-size-1of3\">\n            <div class=\"mmooc-course-list-item\">\n                <div class=\"mmooc-course-list-heading\">\n                    <h2 ";
   stack1 = (helper = helpers.ifHasRole || (depth0 && depth0.ifHasRole),options={hash:{},inverse:self.noop,fn:self.program(2, program2, data),data:data},helper ? helper.call(depth0, (depth0 && depth0.enrollments), "ObserverEnrollment", options) : helperMissing.call(depth0, "ifHasRole", (depth0 && depth0.enrollments), "ObserverEnrollment", options));
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += ">\r\n                        <a href=\""
+  buffer += ">\n                        <a href=\""
     + escapeExpression((helper = helpers.urlForCourseId || (depth0 && depth0.urlForCourseId),options={hash:{},data:data},helper ? helper.call(depth0, (depth0 && depth0.id), options) : helperMissing.call(depth0, "urlForCourseId", (depth0 && depth0.id), options)))
-    + "\">\r\n                            ";
+    + "\">\n                            ";
   if (helper = helpers.name) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.name); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
     + " ";
   stack1 = (helper = helpers.ifHasRole || (depth0 && depth0.ifHasRole),options={hash:{},inverse:self.noop,fn:self.program(4, program4, data),data:data},helper ? helper.call(depth0, (depth0 && depth0.enrollments), "ObserverEnrollment", options) : helperMissing.call(depth0, "ifHasRole", (depth0 && depth0.enrollments), "ObserverEnrollment", options));
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\r\n                        </a>\r\n                    </h2>\r\n                </div>\r\n\r\n                <div class=\"mmooc-course-list-description\">\r\n                    ";
+  buffer += "\n                        </a>\n                    </h2>\n                </div>\n\n                <div class=\"mmooc-course-list-description\">\n                    ";
   stack1 = helpers['if'].call(depth0, (depth0 && depth0.syllabus_body), {hash:{},inverse:self.noop,fn:self.program(6, program6, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\r\n                </div>\r\n                ";
+  buffer += "\n                </div>\n                ";
   if (helper = helpers.debug) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.debug); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "\r\n\r\n                <div class=\"mmooc-course-list-progress\">\r\n                    ";
+    + "\n\n                <div class=\"mmooc-course-list-progress\">\n                    ";
   stack1 = (helper = helpers.ifHasRole || (depth0 && depth0.ifHasRole),options={hash:{},inverse:self.noop,fn:self.program(8, program8, data),data:data},helper ? helper.call(depth0, (depth0 && depth0.enrollments), "StudentEnrollment", options) : helperMissing.call(depth0, "ifHasRole", (depth0 && depth0.enrollments), "StudentEnrollment", options));
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\r\n                </div>\r\n            </div>\r\n        </div>\r\n        ";
+  buffer += "\n                </div>\n            </div>\n        </div>\n        ";
   return buffer;
   }
 function program2(depth0,data) {
@@ -5976,7 +5976,7 @@ function program2(depth0,data) {
 function program4(depth0,data) {
   
   
-  return " - Observatør\r\n                            <div class=\"tooltiptext\">\r\n                                Som observatør kan du se innholdet i emner der du ikke er registrert som student.\r\n                            </div>\r\n                            ";
+  return " - Observatør\n                            <div class=\"tooltiptext\">\n                                Som observatør kan du se innholdet i emner der du ikke er registrert som student.\n                            </div>\n                            ";
   }
 
 function program6(depth0,data) {
@@ -6011,12 +6011,12 @@ function program9(depth0,data) {
 function program10(depth0,data) {
   
   var buffer = "", stack1, helper, options;
-  buffer += "\r\n                    <div class=\"mmooc-progress-bar";
+  buffer += "\n                    <div class=\"mmooc-progress-bar";
   stack1 = (helper = helpers.ifEquals || (depth0 && depth0.ifEquals),options={hash:{},inverse:self.noop,fn:self.program(11, program11, data),data:data},helper ? helper.call(depth0, (depth0 && depth0.requirement_completed_count), (depth0 && depth0.requirement_count), options) : helperMissing.call(depth0, "ifEquals", (depth0 && depth0.requirement_completed_count), (depth0 && depth0.requirement_count), options));
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\">\r\n                        <div class=\"mmooc-progress-bar-inner\" style=\"width:"
+  buffer += "\">\n                        <div class=\"mmooc-progress-bar-inner\" style=\"width:"
     + escapeExpression((helper = helpers.percentage || (depth0 && depth0.percentage),options={hash:{},data:data},helper ? helper.call(depth0, (depth0 && depth0.requirement_completed_count), (depth0 && depth0.requirement_count), options) : helperMissing.call(depth0, "percentage", (depth0 && depth0.requirement_completed_count), (depth0 && depth0.requirement_count), options)))
-    + "%\">\r\n                        </div>\r\n                    </div>\r\n                    ";
+    + "%\">\n                        </div>\n                    </div>\n                    ";
   return buffer;
   }
 function program11(depth0,data) {
@@ -6025,14 +6025,14 @@ function program11(depth0,data) {
   return " mmooc-progress-bar-done";
   }
 
-  buffer += "<div class=\"mmooc-course-list\">\r\n    <h2 class=\"mmooc-course-category-title\">";
+  buffer += "<div class=\"mmooc-course-list\">\n    <h2 class=\"mmooc-course-category-title\">";
   if (helper = helpers.title) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.title); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "</h2>\r\n    <!--If the amount of courses is large, the filter select box and corresponding javascript code in courselist.js should be enabled\r\n    <select id=\"filter\"></select>\r\n-->\r\n    <div class=\"mmooc-row\">\r\n        ";
+    + "</h2>\n    <!--If the amount of courses is large, the filter select box and corresponding javascript code in courselist.js should be enabled\n    <select id=\"filter\"></select>\n-->\n    <div class=\"mmooc-row\">\n        ";
   stack1 = helpers.each.call(depth0, (depth0 && depth0.courses), {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\r\n    </div>\r\n</div>";
+  buffer += "\n    </div>\n</div>";
   return buffer;
   });
 
@@ -6076,40 +6076,40 @@ function program1(depth0,data) {
 function program3(depth0,data) {
   
   var buffer = "", stack1;
-  buffer += "\r\n            ";
+  buffer += "\n            ";
   stack1 = helpers['if'].call(depth0, (depth0 && depth0.courseIsMultilanguage), {hash:{},inverse:self.noop,fn:self.program(4, program4, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\r\n            ";
+  buffer += "\n            ";
   return buffer;
   }
 function program4(depth0,data) {
   
   var buffer = "", stack1, helper;
-  buffer += "\r\n            <div id=\"mmooc-course-language-container\" >\r\n                <span id=\"mmooc-course-language-text\">Språk / Giella</span>\r\n                <span id=\"mmooc-course-current-language\">\r\n                    <svg class=\"mmooc-language-select-globe\" width=\"22\" height=\"22\" fill=\"none\" version=\"1.1\" viewBox=\"0 0 22 22\" xmlns=\"http://www.w3.org/2000/svg\">\r\n                        <g stroke=\"#656161\" stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"2\">\r\n                            <path d=\"m11 21c5.5228 0 10-4.4772 10-10s-4.4772-10-10-10-10 4.4772-10 10 4.4772 10 10 10z\"/>\r\n                            <path d=\"m1 11h20\"/>\r\n                            <path d=\"m11 1c2.5013 2.7384 3.9228 6.292 4 10-0.0772 3.708-1.4987 7.2616-4 10-2.5013-2.7384-3.9228-6.292-4-10 0.0772-3.708 1.4987-7.2616 4-10z\"/>\r\n                        </g>\r\n                    </svg>\r\n                    <span id=\"mmooc-course-language-selected\">";
+  buffer += "\n            <div id=\"mmooc-course-language-container\" >\n                <span id=\"mmooc-course-language-text\">Språk / Giella</span>\n                <span id=\"mmooc-course-current-language\">\n                    <svg class=\"mmooc-language-select-globe\" width=\"22\" height=\"22\" fill=\"none\" version=\"1.1\" viewBox=\"0 0 22 22\" xmlns=\"http://www.w3.org/2000/svg\">\n                        <g stroke=\"#656161\" stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"2\">\n                            <path d=\"m11 21c5.5228 0 10-4.4772 10-10s-4.4772-10-10-10-10 4.4772-10 10 4.4772 10 10 10z\"/>\n                            <path d=\"m1 11h20\"/>\n                            <path d=\"m11 1c2.5013 2.7384 3.9228 6.292 4 10-0.0772 3.708-1.4987 7.2616-4 10-2.5013-2.7384-3.9228-6.292-4-10 0.0772-3.708 1.4987-7.2616 4-10z\"/>\n                        </g>\n                    </svg>\n                    <span id=\"mmooc-course-language-selected\">";
   if (helper = helpers.selectedLanguage) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.selectedLanguage); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "</span>\r\n                </span>\r\n                <div id=\"mmooc-course-language-dropdown\">\r\n                    ";
+    + "</span>\n                </span>\n                <div id=\"mmooc-course-language-dropdown\">\n                    ";
   stack1 = helpers.each.call(depth0, (depth0 && depth0.otherLanguages), {hash:{},inverse:self.noop,fn:self.program(5, program5, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\r\n                </div>\r\n            </div>\r\n            ";
+  buffer += "\n                </div>\n            </div>\n            ";
   return buffer;
   }
 function program5(depth0,data) {
   
   var buffer = "", stack1;
-  buffer += "\r\n                        <button class=\"mmooc-course-language-button\" value=\""
+  buffer += "\n                        <button class=\"mmooc-course-language-button\" value=\""
     + escapeExpression(((stack1 = (depth0 && depth0.code)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
     + "\">"
     + escapeExpression(((stack1 = (depth0 && depth0.name)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
-    + "</button>\r\n                    ";
+    + "</button>\n                    ";
   return buffer;
   }
 
 function program7(depth0,data) {
   
   var buffer = "", stack1, helper;
-  buffer += "\r\n        <span class=\"h1-sub-heading\">";
+  buffer += "\n        <span class=\"h1-sub-heading\">";
   if (helper = helpers.subtitle) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.subtitle); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
@@ -6120,10 +6120,10 @@ function program7(depth0,data) {
 function program9(depth0,data) {
   
   var buffer = "", stack1;
-  buffer += "\r\n        <ul class=\"mmooc-course-tabs\">\r\n            ";
+  buffer += "\n        <ul class=\"mmooc-course-tabs\">\n            ";
   stack1 = helpers.each.call(depth0, (depth0 && depth0.menuItems), {hash:{},inverse:self.noop,fn:self.programWithDepth(10, program10, data, depth0),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\r\n        </ul>\r\n        ";
+  buffer += "\n        </ul>\n        ";
   return buffer;
   }
 function program10(depth0,data,depth1) {
@@ -6138,17 +6138,17 @@ function program10(depth0,data,depth1) {
 function program11(depth0,data,depth2) {
   
   var buffer = "", stack1, helper, options;
-  buffer += "\r\n            <li class=\"mmooc-course-tab ";
+  buffer += "\n            <li class=\"mmooc-course-tab ";
   stack1 = (helper = helpers.ifEquals || (depth0 && depth0.ifEquals),options={hash:{},inverse:self.noop,fn:self.program(12, program12, data),data:data},helper ? helper.call(depth0, (depth0 && depth0.url), (depth2 && depth2.selectedMenuItem), options) : helperMissing.call(depth0, "ifEquals", (depth0 && depth0.url), (depth2 && depth2.selectedMenuItem), options));
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\" id=\"mmooc-menu-item-verktoy\">\r\n                <a href=\"#\">";
+  buffer += "\" id=\"mmooc-menu-item-verktoy\">\n                <a href=\"#\">";
   if (helper = helpers.title) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.title); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "\r\n                    <i class=\"icon-mini-arrow-down\"></i>\r\n                </a>\r\n                <div class=\"mmooc-course-tab-menu-item-drop\" id=\"mmooc-verktoy-list\">\r\n                    <ul class=\"mmooc-course-tab-menu-item-list\">\r\n                        ";
+    + "\n                    <i class=\"icon-mini-arrow-down\"></i>\n                </a>\n                <div class=\"mmooc-course-tab-menu-item-drop\" id=\"mmooc-verktoy-list\">\n                    <ul class=\"mmooc-course-tab-menu-item-list\">\n                        ";
   stack1 = helpers.each.call(depth0, (depth0 && depth0.toolList), {hash:{},inverse:self.noop,fn:self.program(14, program14, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\r\n                    </ul>\r\n                </div>\r\n            </li>\r\n            ";
+  buffer += "\n                    </ul>\n                </div>\n            </li>\n            ";
   return buffer;
   }
 function program12(depth0,data) {
@@ -6160,7 +6160,7 @@ function program12(depth0,data) {
 function program14(depth0,data) {
   
   var buffer = "", stack1, helper;
-  buffer += "\r\n                        <li class=\"mmooc-course-tab-menu-item-list-item\">\r\n                            <a href=\"";
+  buffer += "\n                        <li class=\"mmooc-course-tab-menu-item-list-item\">\n                            <a href=\"";
   if (helper = helpers.href) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.href); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
@@ -6168,17 +6168,17 @@ function program14(depth0,data) {
   if (helper = helpers.title) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.title); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "</a>\r\n                        </li>\r\n                        ";
+    + "</a>\n                        </li>\n                        ";
   return buffer;
   }
 
 function program16(depth0,data,depth2) {
   
   var buffer = "", stack1, helper, options;
-  buffer += "\r\n            <li class=\"mmooc-course-tab ";
+  buffer += "\n            <li class=\"mmooc-course-tab ";
   stack1 = (helper = helpers.ifEquals || (depth0 && depth0.ifEquals),options={hash:{},inverse:self.noop,fn:self.program(12, program12, data),data:data},helper ? helper.call(depth0, (depth0 && depth0.title), (depth2 && depth2.selectedMenuItem), options) : helperMissing.call(depth0, "ifEquals", (depth0 && depth0.title), (depth2 && depth2.selectedMenuItem), options));
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\">\r\n                <a href=\"";
+  buffer += "\">\n                <a href=\"";
   if (helper = helpers.url) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.url); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
@@ -6186,27 +6186,27 @@ function program16(depth0,data,depth2) {
   if (helper = helpers.title) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.title); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "</a>\r\n            </li>\r\n            ";
+    + "</a>\n            </li>\n            ";
   return buffer;
   }
 
   buffer += "<div id=\"mmooc-course-tabs-container\" ";
   stack1 = helpers.unless.call(depth0, ((stack1 = (depth0 && depth0.menuItems)),stack1 == null || stack1 === false ? stack1 : stack1.length), {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += ">\r\n    <div id=\"mmooc-course-tabs-container-inner\">\r\n        <div id=\"mmooc-course-title-header\">\r\n            <h1>";
+  buffer += ">\n    <div id=\"mmooc-course-tabs-container-inner\">\n        <div id=\"mmooc-course-title-header\">\n            <h1>";
   if (helper = helpers.title) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.title); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "</h1>\r\n            ";
+    + "</h1>\n            ";
   stack1 = helpers['with'].call(depth0, (depth0 && depth0.languageOptions), {hash:{},inverse:self.noop,fn:self.program(3, program3, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\r\n        </div>\r\n\r\n        ";
+  buffer += "\n        </div>\n\n        ";
   stack1 = helpers['if'].call(depth0, (depth0 && depth0.subtitle), {hash:{},inverse:self.noop,fn:self.program(7, program7, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += " ";
   stack1 = helpers['if'].call(depth0, ((stack1 = (depth0 && depth0.menuItems)),stack1 == null || stack1 === false ? stack1 : stack1.length), {hash:{},inverse:self.noop,fn:self.program(9, program9, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\r\n    </div>\r\n</div>";
+  buffer += "\n    </div>\n</div>";
   return buffer;
   });
 
@@ -6221,16 +6221,16 @@ function program1(depth0,data) {
   return " mmooc-progress-bar-done";
   }
 
-  buffer += "<div class=\"mmooc-course-progress\">\r\n    <div>\r\n        <div class=\"mmooc-course-progress-label\">";
+  buffer += "<div class=\"mmooc-course-progress\">\n    <div>\n        <div class=\"mmooc-course-progress-label\">";
   if (helper = helpers.title) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.title); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "</div>\r\n        <div class=\"mmooc-course-progress-bar\">\r\n            <div class=\"mmooc-progress-bar";
+    + "</div>\n        <div class=\"mmooc-course-progress-bar\">\n            <div class=\"mmooc-progress-bar";
   stack1 = (helper = helpers.ifAllModulesCompleted || (depth0 && depth0.ifAllModulesCompleted),options={hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data},helper ? helper.call(depth0, (depth0 && depth0.modules), options) : helperMissing.call(depth0, "ifAllModulesCompleted", (depth0 && depth0.modules), options));
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\">\r\n                <div class=\"mmooc-progress-bar-inner\" style=\"width:"
+  buffer += "\">\n                <div class=\"mmooc-progress-bar-inner\" style=\"width:"
     + escapeExpression((helper = helpers.percentageForModules || (depth0 && depth0.percentageForModules),options={hash:{},data:data},helper ? helper.call(depth0, (depth0 && depth0.modules), options) : helperMissing.call(depth0, "percentageForModules", (depth0 && depth0.modules), options)))
-    + "%\">\r\n                </div>\r\n            </div>\r\n        </div>\r\n    </div>\r\n</div>";
+    + "%\">\n                </div>\n            </div>\n        </div>\n    </div>\n</div>";
   return buffer;
   });
 
@@ -6245,16 +6245,16 @@ function program1(depth0,data) {
   return " mmooc-progress-bar-done";
   }
 
-  buffer += "<div class=\"mmooc-course-progress\">\r\n    <div>\r\n        <div class=\"mmooc-course-progress-label\">";
+  buffer += "<div class=\"mmooc-course-progress\">\n    <div>\n        <div class=\"mmooc-course-progress-label\">";
   if (helper = helpers.title) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.title); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "</div>\r\n        <div class=\"mmooc-course-progress-bar\">\r\n            <div class=\"mmooc-progress-bar";
+    + "</div>\n        <div class=\"mmooc-course-progress-bar\">\n            <div class=\"mmooc-progress-bar";
   stack1 = (helper = helpers.ifAllStudentModulesCompleted || (depth0 && depth0.ifAllStudentModulesCompleted),options={hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data},helper ? helper.call(depth0, (depth0 && depth0.modules), options) : helperMissing.call(depth0, "ifAllStudentModulesCompleted", (depth0 && depth0.modules), options));
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\">\r\n                <div class=\"mmooc-progress-bar-inner\" style=\"width:"
+  buffer += "\">\n                <div class=\"mmooc-progress-bar-inner\" style=\"width:"
     + escapeExpression((helper = helpers.percentageForStudentModules || (depth0 && depth0.percentageForStudentModules),options={hash:{},data:data},helper ? helper.call(depth0, (depth0 && depth0.modules), options) : helperMissing.call(depth0, "percentageForStudentModules", (depth0 && depth0.modules), options)))
-    + "%\">\r\n                </div>\r\n            </div>\r\n        </div>\r\n    </div>\r\n</div>";
+    + "%\">\n                </div>\n            </div>\n        </div>\n    </div>\n</div>";
   return buffer;
   });
 
@@ -6264,7 +6264,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   
 
 
-  return "I denne kompetansepakken benytter vi oss av grupper fra dataporten. For å se\r\n hvilke du kan melde deg inn i, må du logge deg på dataporten.<div>\r\n <button class=\"button\" id=\"dataportenPopupLogin\">Login dataporten</button>\r\n </div>\r\n";
+  return "I denne kompetansepakken benytter vi oss av grupper fra dataporten. For å se\n hvilke du kan melde deg inn i, må du logge deg på dataporten.<div>\n <button class=\"button\" id=\"dataportenPopupLogin\">Login dataporten</button>\n </div>\n";
   });
 
 this["mmooc"]["templates"]["dataportenGroups"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
@@ -6275,26 +6275,26 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
 function program1(depth0,data) {
   
   
-  return "\r\n    <b>medlem</b>\r\n";
+  return "\n    <b>medlem</b>\n";
   }
 
 function program3(depth0,data) {
   
   var buffer = "", stack1, helper;
-  buffer += "\r\n    <button id=\"";
+  buffer += "\n    <button id=\"";
   if (helper = helpers.id) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.id); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "\">Meld deg inn</button>\r\n";
+    + "\">Meld deg inn</button>\n";
   return buffer;
   }
 
   buffer += "<div>"
     + escapeExpression(((stack1 = ((stack1 = (depth0 && depth0.dataportenGroup)),stack1 == null || stack1 === false ? stack1 : stack1.displayName)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
-    + "\r\n";
+    + "\n";
   stack1 = helpers['if'].call(depth0, (depth0 && depth0.member), {hash:{},inverse:self.program(3, program3, data),fn:self.program(1, program1, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\r\n</div>\r\n";
+  buffer += "\n</div>\n";
   return buffer;
   });
 
@@ -6308,7 +6308,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   if (helper = helpers.privacypolicylink) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.privacypolicylink); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "\" class=\"external\" rel=\"noreferrer\">\r\n  <span>personvernvilkårene</span>\r\n  <span class=\"ui-icon ui-icon-extlink ui-icon-inline\" title=\"Lenker til en ekstern side.\"></span>\r\n</a>";
+    + "\" class=\"external\" rel=\"noreferrer\">\n  <span>personvernvilkårene</span>\n  <span class=\"ui-icon ui-icon-extlink ui-icon-inline\" title=\"Lenker til en ekstern side.\"></span>\n</a>";
   return buffer;
   });
 
@@ -6318,7 +6318,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   
 
 
-  return "Lisensnivå: Illustrasjoner og filmer utviklet i regi av prosjektet:\r\n<a href=\"http://creativecommons.org/licenses/by-nc-nd/4.0/\"\r\n    class=\"external_link\" target=\"_blank\" rel=\"license\">\r\n    <span>CC BY-NC-ND 4.0</span>\r\n</a>\r\nAnnet innhold utviklet i regi av prosjektet:\r\n<a href=\"http://creativecommons.org/licenses/by-nc-sa/4.0\" class=\"external_link\"\r\n    target=\"_blank\" rel=\"license\">\r\n    <span>CC BY-NC-SA 4.0</span>\r\n</a>\r\n<br>\r\n";
+  return "Lisensnivå: Illustrasjoner og filmer utviklet i regi av prosjektet:\n<a href=\"http://creativecommons.org/licenses/by-nc-nd/4.0/\"\n    class=\"external_link\" target=\"_blank\" rel=\"license\">\n    <span>CC BY-NC-ND 4.0</span>\n</a>\nAnnet innhold utviklet i regi av prosjektet:\n<a href=\"http://creativecommons.org/licenses/by-nc-sa/4.0\" class=\"external_link\"\n    target=\"_blank\" rel=\"license\">\n    <span>CC BY-NC-SA 4.0</span>\n</a>\n<br>\n";
   });
 
 this["mmooc"]["templates"]["footer"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
@@ -6329,7 +6329,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
 function program1(depth0,data) {
   
   var buffer = "", stack1, helper;
-  buffer += "\r\n             <a  target=\"_blank\" class=\"external_link\"  href=\"https://";
+  buffer += "\n             <a  target=\"_blank\" class=\"external_link\"  href=\"https://";
   if (helper = helpers.homeOrganization) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.homeOrganization); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
@@ -6337,25 +6337,25 @@ function program1(depth0,data) {
   if (helper = helpers.homeOrganization) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.homeOrganization); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "</a>\r\n            ";
+    + "</a>\n            ";
   return buffer;
   }
 
 function program3(depth0,data) {
   
   var buffer = "", stack1, helper;
-  buffer += "\r\n            | <a  target=\"_blank\" class=\"external_link\" href=\"";
+  buffer += "\n            | <a  target=\"_blank\" class=\"external_link\" href=\"";
   if (helper = helpers.privacyPolicyLink) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.privacyPolicyLink); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "\">Personvernvilkår</a>\r\n            ";
+    + "\">Personvernvilkår</a>\n            ";
   return buffer;
   }
 
 function program5(depth0,data) {
   
   var buffer = "", stack1, helper;
-  buffer += "\r\n             | Kontakt oss: <a  target=\"_blank\" class=\"external_link\"  href=\"mailto:";
+  buffer += "\n             | Kontakt oss: <a  target=\"_blank\" class=\"external_link\"  href=\"mailto:";
   if (helper = helpers.contactPoint) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.contactPoint); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
@@ -6363,34 +6363,34 @@ function program5(depth0,data) {
   if (helper = helpers.contactPoint) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.contactPoint); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "</a>\r\n            ";
+    + "</a>\n            ";
   return buffer;
   }
 
 function program7(depth0,data) {
   
   var buffer = "", stack1, helper;
-  buffer += "\r\n             | <a  target=\"_blank\" class=\"external_link\"  href=\"";
+  buffer += "\n             | <a  target=\"_blank\" class=\"external_link\"  href=\"";
   if (helper = helpers.about) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.about); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "\">Om denne plattformen</a>\r\n            ";
+    + "\">Om denne plattformen</a>\n            ";
   return buffer;
   }
 
-  buffer += "<footer role=\"contentinfo\" id=\"mmooc-footer\" class=\"ic-app-footer\">\r\n    <div class=\"mmooc-license\">\r\n        <p id=\"mmoocLicense\" class=\"public-license-text\"></p>\r\n        <p class=\"public-license-text\">\r\n            ";
+  buffer += "<footer role=\"contentinfo\" id=\"mmooc-footer\" class=\"ic-app-footer\">\n    <div class=\"mmooc-license\">\n        <p id=\"mmoocLicense\" class=\"public-license-text\"></p>\n        <p class=\"public-license-text\">\n            ";
   stack1 = helpers['if'].call(depth0, (depth0 && depth0.homeOrganization), {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += " \r\n            ";
+  buffer += " \n            ";
   stack1 = helpers['if'].call(depth0, (depth0 && depth0.privacyPolicyLink), {hash:{},inverse:self.noop,fn:self.program(3, program3, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += " \r\n            ";
+  buffer += " \n            ";
   stack1 = helpers['if'].call(depth0, (depth0 && depth0.contactPoint), {hash:{},inverse:self.noop,fn:self.program(5, program5, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += " \r\n            ";
+  buffer += " \n            ";
   stack1 = helpers['if'].call(depth0, (depth0 && depth0.about), {hash:{},inverse:self.noop,fn:self.program(7, program7, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += " \r\n            </div>\r\n        </p>\r\n    </div>\r\n</footer>";
+  buffer += " \n            </div>\n        </p>\n    </div>\n</footer>";
   return buffer;
   });
 
@@ -6400,11 +6400,11 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   var buffer = "", stack1, helper, functionType="function", escapeExpression=this.escapeExpression;
 
 
-  buffer += "<div class=\"getTeachersHelpContainer\">\r\n    <div class=\"tooltip_below\">\r\n        <button type=\"button\" id=\"mmooc-get-teachers-help\" class=\"btn btn-primary getTeachersHelp\">Tilkall veileder</button>\r\n        <div class=\"tooltiptext\">\r\n            ";
+  buffer += "<div class=\"getTeachersHelpContainer\">\n    <div class=\"tooltip_below\">\n        <button type=\"button\" id=\"mmooc-get-teachers-help\" class=\"btn btn-primary getTeachersHelp\">Tilkall veileder</button>\n        <div class=\"tooltiptext\">\n            ";
   if (helper = helpers.hoverOverText) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.hoverOverText); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "\r\n        </div>\r\n    </div>\r\n</div>";
+    + "\n        </div>\n    </div>\n</div>";
   return buffer;
   });
 
@@ -6414,11 +6414,11 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   var buffer = "", stack1, functionType="function", escapeExpression=this.escapeExpression;
 
 
-  buffer += "<div id=\"mmooc-group-header\">\r\n    <div id=\"mmooc-group-members\">\r\n        <div class=\"mmooc-back-button\">\r\n            <a href=\"/groups/"
+  buffer += "<div id=\"mmooc-group-header\">\n    <div id=\"mmooc-group-members\">\n        <div class=\"mmooc-back-button\">\n            <a href=\"/groups/"
     + escapeExpression(((stack1 = ((stack1 = (depth0 && depth0.group)),stack1 == null || stack1 === false ? stack1 : stack1.id)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
     + "/discussion_topics\">"
     + escapeExpression(((stack1 = ((stack1 = (depth0 && depth0.group)),stack1 == null || stack1 === false ? stack1 : stack1.name)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
-    + "</a>\r\n        </div>\r\n    </div>\r\n    <div id=\"mmooc-group-links\">\r\n    </div>\r\n</div>";
+    + "</a>\n        </div>\n    </div>\n    <div id=\"mmooc-group-links\">\n    </div>\n</div>";
   return buffer;
   });
 
@@ -6430,11 +6430,11 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
 function program1(depth0,data) {
   
   var buffer = "", stack1, helper;
-  buffer += "\r\n            <div class=\"mmooc-group-member\">\r\n                <div class=\"mmooc-group-member-avatar\" style=\"background-image: url('";
+  buffer += "\n            <div class=\"mmooc-group-member\">\n                <div class=\"mmooc-group-member-avatar\" style=\"background-image: url('";
   if (helper = helpers.avatar_url) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.avatar_url); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "')\"></div>\r\n                <div class=\"mmooc-group-member-link\">\r\n                    <a href=\"/about/";
+    + "')\"></div>\n                <div class=\"mmooc-group-member-link\">\n                    <a href=\"/about/";
   if (helper = helpers.id) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.id); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
@@ -6442,20 +6442,20 @@ function program1(depth0,data) {
   if (helper = helpers.name) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.name); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "</a>\r\n                </div>\r\n            </div>\r\n            ";
+    + "</a>\n                </div>\n            </div>\n            ";
   return buffer;
   }
 
-  buffer += "<div class=\"mmooc-back-button\">\r\n    <a href=\""
+  buffer += "<div class=\"mmooc-back-button\">\n    <a href=\""
     + escapeExpression((helper = helpers.urlForCourseId || (depth0 && depth0.urlForCourseId),options={hash:{},data:data},helper ? helper.call(depth0, (depth0 && depth0.courseId), options) : helperMissing.call(depth0, "urlForCourseId", (depth0 && depth0.courseId), options)))
-    + "/groups\">Tilbake til gruppeliste</a>\r\n</div>\r\n<div id=\"mmooc-group-header\">\r\n    <div id=\"mmooc-group-members\">\r\n        <p>\r\n            <b>Gruppemedlemmer</b>\r\n        </p>\r\n        <div class=\"mmooc-group-members-list\">\r\n            ";
+    + "/groups\">Tilbake til gruppeliste</a>\n</div>\n<div id=\"mmooc-group-header\">\n    <div id=\"mmooc-group-members\">\n        <p>\n            <b>Gruppemedlemmer</b>\n        </p>\n        <div class=\"mmooc-group-members-list\">\n            ";
   stack1 = helpers.each.call(depth0, (depth0 && depth0.members), {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\r\n        </div>\r\n    </div>\r\n    <div id=\"mmooc-group-links\">\r\n        <p>\r\n            <a target=\"_new\" href=\"https://connect.uninett.no/uit-videorom-matematikkmooc-";
+  buffer += "\n        </div>\n    </div>\n    <div id=\"mmooc-group-links\">\n        <p>\n            <a target=\"_new\" href=\"https://connect.uninett.no/uit-videorom-matematikkmooc-";
   if (helper = helpers.groupId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.groupId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "\" class=\"external\">\r\n                <b>Videorom for gruppa</b>\r\n                <span class=\"ui-icon ui-icon-extlink ui-icon-inline\" title=\"Lenker til en ekstern side.\"></span>\r\n            </a>\r\n        </p>\r\n    </div>\r\n</div>";
+    + "\" class=\"external\">\n                <b>Videorom for gruppa</b>\n                <span class=\"ui-icon ui-icon-extlink ui-icon-inline\" title=\"Lenker til en ekstern side.\"></span>\n            </a>\n        </p>\n    </div>\n</div>";
   return buffer;
   });
 
@@ -6467,107 +6467,107 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
 function program1(depth0,data) {
   
   
-  return "\r\n    <div id=\"masquerade_bar\" class=\"ic-alert-masquerade-student-view_2\">\r\n      <div class=\"ic-alert-masquerade-student-view-module ic-alert-masquerade-student-view-module--header_2\">\r\n        <div class=\"ic-image-text-combo_\">\r\n          <div class=\"ic-image-text-combo__text_notificationtouser\">\r\n  ";
+  return "\n    <div id=\"masquerade_bar\" class=\"ic-alert-masquerade-student-view_2\">\n      <div class=\"ic-alert-masquerade-student-view-module ic-alert-masquerade-student-view-module--header_2\">\n        <div class=\"ic-image-text-combo_\">\n          <div class=\"ic-image-text-combo__text_notificationtouser\">\n  ";
   }
 
 function program3(depth0,data) {
   
   var buffer = "", stack1;
-  buffer += "\r\n    ";
+  buffer += "\n    ";
   stack1 = helpers['if'].call(depth0, (depth0 && depth0.feedback), {hash:{},inverse:self.program(6, program6, data),fn:self.program(4, program4, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\r\n  ";
+  buffer += "\n  ";
   return buffer;
   }
 function program4(depth0,data) {
   
   
-  return "\r\n      <div id=\"masquerade_bar\" class=\"ic-alert-masquerade-student-view_2\">\r\n        <div class=\"ic-alert-masquerade-student-view-module ic-alert-masquerade-student-view-module--header_2\">\r\n          <div class=\"ic-image-text-combo_\">\r\n            <div class=\"ic-image-text-combo__text_notificationtouser\">\r\n    ";
+  return "\n      <div id=\"masquerade_bar\" class=\"ic-alert-masquerade-student-view_2\">\n        <div class=\"ic-alert-masquerade-student-view-module ic-alert-masquerade-student-view-module--header_2\">\n          <div class=\"ic-image-text-combo_\">\n            <div class=\"ic-image-text-combo__text_notificationtouser\">\n    ";
   }
 
 function program6(depth0,data) {
   
   
-  return "\r\n       <div id=\"masquerade_bar\" class=\"ic-alert-masquerade-student-view\">\r\n        <div class=\"ic-alert-masquerade-student-view-module ic-alert-masquerade-student-view-module--header\">\r\n          <div class=\"ic-image-text-combo\">\r\n            <i class=\"icon-student-view\"></i>\r\n            <div class=\"ic-image-text-combo__text\">\r\n    ";
+  return "\n       <div id=\"masquerade_bar\" class=\"ic-alert-masquerade-student-view\">\n        <div class=\"ic-alert-masquerade-student-view-module ic-alert-masquerade-student-view-module--header\">\n          <div class=\"ic-image-text-combo\">\n            <i class=\"icon-student-view\"></i>\n            <div class=\"ic-image-text-combo__text\">\n    ";
   }
 
 function program8(depth0,data) {
   
   
-  return "\r\n    Du er meldt inn i et fylke og/eller en kommune som har fått nytt kommunenummer.\r\n    <span class=\"tooltip tooltip-underline\"> Les mer.<span style=\"font-weight:normal;color:black\"\r\n        class=\"tooltiptext\">\r\n\r\n        <p>\r\n          Velg tilhørighet på nytt\r\n          i \"Rolle og grupper\"-fanen.\r\n        </p>\r\n        <p>\r\n          Vær oppmerksom på at dersom du ønsker å ta vare på diskusjonsinnleggene fra gamle grupper, må disse\r\n          kopieres til et tekstdokument,\r\n          før du velger ny tilhørighet.\r\n        </p>\r\n    </span></span>\r\n    <br />\r\n  ";
+  return "\n    Du er meldt inn i et fylke og/eller en kommune som har fått nytt kommunenummer.\n    <span class=\"tooltip tooltip-underline\"> Les mer.<span style=\"font-weight:normal;color:black\"\n        class=\"tooltiptext\">\n\n        <p>\n          Velg tilhørighet på nytt\n          i \"Rolle og grupper\"-fanen.\n        </p>\n        <p>\n          Vær oppmerksom på at dersom du ønsker å ta vare på diskusjonsinnleggene fra gamle grupper, må disse\n          kopieres til et tekstdokument,\n          før du velger ny tilhørighet.\n        </p>\n    </span></span>\n    <br />\n  ";
   }
 
 function program10(depth0,data) {
   
   var buffer = "", stack1, helper;
-  buffer += "\r\n    ";
+  buffer += "\n    ";
   if (helper = helpers.alertMsg) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.alertMsg); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "\r\n  ";
+    + "\n  ";
   return buffer;
   }
 
 function program12(depth0,data) {
   
   
-  return "\r\n    Du er inne i dette emnet som observatør. Du vil ikke kunne levere inn oppgaver, bidra i diskusjoner\r\n    eller se\r\n    hva andre har bidratt med.\r\n    <br />\r\n  ";
+  return "\n    Du er inne i dette emnet som observatør. Du vil ikke kunne levere inn oppgaver, bidra i diskusjoner\n    eller se\n    hva andre har bidratt med.\n    <br />\n  ";
   }
 
 function program14(depth0,data) {
   
   
-  return "\r\n    PfDK-MOOC er opprinnelig en lukket videreutdanning for lærere. Dette er den åpne versjonen. Du ser alt\r\n    det\r\n    faglige innhold, men kan ikke levere oppgaver, diskutere i forum eller få veiledning.\r\n    Ønsker du mer informasjon om videreutdanningen, se\r\n    <a class=\"icon-link\" style=\"color:white\" href=\"https://www.hvl.no/studier/studieprogram/pfdk/\"\r\n      target=\"_blank\">hvl.no</a>\r\n    eller\r\n    <a class=\"icon-link\" style=\"color:white\"\r\n      href=\"(https://www.usn.no/studier/finn-studier/larer-lektor-og-pedagogikk/videreutdanning-i-profesjonsfaglig-digital-kompetanse-for-larere/\"\r\n      target=\"_blank\">usn.no</a>\r\n    <br />\r\n  ";
+  return "\n    PfDK-MOOC er opprinnelig en lukket videreutdanning for lærere. Dette er den åpne versjonen. Du ser alt\n    det\n    faglige innhold, men kan ikke levere oppgaver, diskutere i forum eller få veiledning.\n    Ønsker du mer informasjon om videreutdanningen, se\n    <a class=\"icon-link\" style=\"color:white\" href=\"https://www.hvl.no/studier/studieprogram/pfdk/\"\n      target=\"_blank\">hvl.no</a>\n    eller\n    <a class=\"icon-link\" style=\"color:white\"\n      href=\"(https://www.usn.no/studier/finn-studier/larer-lektor-og-pedagogikk/videreutdanning-i-profesjonsfaglig-digital-kompetanse-for-larere/\"\n      target=\"_blank\">usn.no</a>\n    <br />\n  ";
   }
 
 function program16(depth0,data) {
   
   var buffer = "", stack1, helper;
-  buffer += "\r\n    NB! Denne kompetansepakken ble sist vedlikeholdt ";
+  buffer += "\n    NB! Denne kompetansepakken ble sist vedlikeholdt ";
   if (helper = helpers.unmaintainedSince) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.unmaintainedSince); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "\r\n  ";
+    + "\n  ";
   return buffer;
   }
 
 function program18(depth0,data) {
   
   
-  return "\r\n    <a style=\"color: rgb(0, 0, 0);\"> Vil du være med på </a>\r\n    <span class=\"tooltip tooltip-underline\"><a style=\"color: black;\">brukertesting?</a>\r\n    <spanstyle=\"font-weight:normal;color:black\" class=\"tooltiptext\">\r\n        <p>\r\n            Utdanningsdirektoratet trenger dine tilbakemeldinger på hvordan du opplever kompetansepakkene. Kan du hjelpe oss? Vi trenger innsikt i hvordan du/dere bruker pakken, hva dere opplever som styrker og hva dere kunne ønske var annerledes. Samt tilbakemelding på ny funksjonalitet. \r\n        </p>\r\n        <p>Din tilbakemelding kan gjøre oss bedre! \r\n        </p>\r\n      </span></span>\r\n    <button class=\"button_notificationtouser button_nottouser\" onclick=\"window.location.href='https://forms.office.com/Pages/ResponsePage.aspx?id=04XRjKY6lEWDPaBY2rtbbYlKoW2pvuFMksRihjhWMl9URFNDM0ZBNk1QT0Y4NTVHSktQVUtOSVlaTS4u'\">Meld deg på!</button>\r\n    <br />\r\n  ";
+  return "\n    <a style=\"color: rgb(0, 0, 0);\"> Vil du være med på </a>\n    <span class=\"tooltip tooltip-underline\"><a style=\"color: black;\">brukertesting?</a>\n    <spanstyle=\"font-weight:normal;color:black\" class=\"tooltiptext\">\n        <p>\n            Utdanningsdirektoratet trenger dine tilbakemeldinger på hvordan du opplever kompetansepakkene. Kan du hjelpe oss? Vi trenger innsikt i hvordan du/dere bruker pakken, hva dere opplever som styrker og hva dere kunne ønske var annerledes. Samt tilbakemelding på ny funksjonalitet. \n        </p>\n        <p>Din tilbakemelding kan gjøre oss bedre! \n        </p>\n      </span></span>\n    <button class=\"button_notificationtouser button_nottouser\" onclick=\"window.location.href='https://forms.office.com/Pages/ResponsePage.aspx?id=04XRjKY6lEWDPaBY2rtbbYlKoW2pvuFMksRihjhWMl9URFNDM0ZBNk1QT0Y4NTVHSktQVUtOSVlaTS4u'\">Meld deg på!</button>\n    <br />\n  ";
   }
 
 function program20(depth0,data) {
   
   
-  return "\r\n    <a style=\"color: rgb(0, 0, 0);\"> Har du 3 – 5 minutter til en brukerundersøkelse om innholdet i pakken?  </a>\r\n      </span></span>\r\n    <button class=\"button_notificationtouser button_nottouser\" onclick=\"window.location.href='https://bibsys.instructure.com/courses/311/modules/items/32671'\">Gi oss din tilbakemelding</button>\r\n    <br />\r\n  ";
+  return "\n    <a style=\"color: rgb(0, 0, 0);\"> Har du 3 – 5 minutter til en brukerundersøkelse om innholdet i pakken?  </a>\n      </span></span>\n    <button class=\"button_notificationtouser button_nottouser\" onclick=\"window.location.href='https://bibsys.instructure.com/courses/311/modules/items/32671'\">Gi oss din tilbakemelding</button>\n    <br />\n  ";
   }
 
-  buffer += "\r\n<div id=\"fixed_bottom\">\r\n  ";
+  buffer += "\n<div id=\"fixed_bottom\">\n  ";
   stack1 = helpers['if'].call(depth0, (depth0 && depth0.notificationtouser), {hash:{},inverse:self.program(3, program3, data),fn:self.program(1, program1, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\r\n\r\n  ";
+  buffer += "\n\n  ";
   stack1 = helpers['if'].call(depth0, (depth0 && depth0.expiredCommunity), {hash:{},inverse:self.noop,fn:self.program(8, program8, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\r\n\r\n  ";
+  buffer += "\n\n  ";
   stack1 = helpers['if'].call(depth0, (depth0 && depth0.alertMsg), {hash:{},inverse:self.noop,fn:self.program(10, program10, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\r\n\r\n  ";
+  buffer += "\n\n  ";
   stack1 = helpers['if'].call(depth0, (depth0 && depth0.observer), {hash:{},inverse:self.noop,fn:self.program(12, program12, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\r\n\r\n  ";
+  buffer += "\n\n  ";
   stack1 = helpers['if'].call(depth0, (depth0 && depth0.pfdk), {hash:{},inverse:self.noop,fn:self.program(14, program14, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\r\n\r\n  ";
+  buffer += "\n\n  ";
   stack1 = helpers['if'].call(depth0, (depth0 && depth0.unmaintainedSince), {hash:{},inverse:self.noop,fn:self.program(16, program16, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\r\n\r\n  ";
+  buffer += "\n\n  ";
   stack1 = helpers['if'].call(depth0, (depth0 && depth0.notificationtouser), {hash:{},inverse:self.noop,fn:self.program(18, program18, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\r\n\r\n  ";
+  buffer += "\n\n  ";
   stack1 = helpers['if'].call(depth0, (depth0 && depth0.feedback), {hash:{},inverse:self.noop,fn:self.program(20, program20, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\r\n\r\n      </div>\r\n    </div>\r\n  </div>\r\n</div>";
+  buffer += "\n\n      </div>\n    </div>\n  </div>\n</div>";
   return buffer;
   });
 
@@ -6586,15 +6586,15 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   var buffer = "", stack1, helper, functionType="function", escapeExpression=this.escapeExpression;
 
 
-  buffer += "<div class=\"login-box\">\r\n  <div class=\"login-box__upper\">\r\n    <p class=\"login-box__text\">";
+  buffer += "<div class=\"login-box\">\n  <div class=\"login-box__upper\">\n    <p class=\"login-box__text\">";
   if (helper = helpers.logInText) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.logInText); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "</p>\r\n    <div class=\"login-box__close\"></div>\r\n  </div>\r\n  <div class=\"login-box__lower\">\r\n    <a aria-label=\"enroll\"  class=\"mmooc-button mmooc-button-primary\" href=\"/courses?login=1&design=udir\">&nbsp;\r\n    </a>\r\n    <a class=\"mmooc-button mmooc-button-secondary\" href=\"/login/canvas?normalLogin=1&design=udir\">\r\n      ";
+    + "</p>\n    <div class=\"login-box__close\"></div>\n  </div>\n  <div class=\"login-box__lower\">\n    <a aria-label=\"enroll\"  class=\"mmooc-button mmooc-button-primary\" href=\"/courses?login=1&design=udir\">&nbsp;\n    </a>\n    <a class=\"mmooc-button mmooc-button-secondary\" href=\"/login/canvas?normalLogin=1&design=udir\">\n      ";
   if (helper = helpers.logInCanvasText) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.logInCanvasText); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "\r\n    </a>\r\n  </div>\r\n</div>\r\n";
+    + "\n    </a>\n  </div>\n</div>\n";
   return buffer;
   });
 
@@ -6606,11 +6606,11 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
 function program1(depth0,data) {
   
   var buffer = "", stack1, helper;
-  buffer += "\r\n<div class=\"header translate\">\r\n    ";
+  buffer += "\n<div class=\"header translate\">\n    ";
   if (helper = helpers.name) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.name); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "\r\n</div>\r\n";
+    + "\n</div>\n";
   stack1 = helpers['if'].call(depth0, (depth0 && depth0.items), {hash:{},inverse:self.noop,fn:self.program(2, program2, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += " ";
@@ -6619,67 +6619,67 @@ function program1(depth0,data) {
 function program2(depth0,data) {
   
   var buffer = "", stack1;
-  buffer += "\r\n    <nav aria-label=\"content\" role=\"navigation\">\r\n        <ul class=\"mmooc-module-items\">\r\n            ";
+  buffer += "\n    <nav aria-label=\"content\" role=\"navigation\">\n        <ul class=\"mmooc-module-items\">\n            ";
   stack1 = helpers.each.call(depth0, (depth0 && depth0.items), {hash:{},inverse:self.noop,fn:self.program(3, program3, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\r\n        </ul>\r\n    </nav>\r\n";
+  buffer += "\n        </ul>\n    </nav>\n";
   return buffer;
   }
 function program3(depth0,data) {
   
   var buffer = "", stack1;
-  buffer += " \r\n                ";
+  buffer += " \n                ";
   stack1 = helpers.unless.call(depth0, (depth0 && depth0.indent), {hash:{},inverse:self.noop,fn:self.program(4, program4, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\r\n            ";
+  buffer += "\n            ";
   return buffer;
   }
 function program4(depth0,data) {
   
   var buffer = "", stack1, helper, options;
-  buffer += "\r\n                    ";
+  buffer += "\n                    ";
   stack1 = (helper = helpers.ifEquals || (depth0 && depth0.ifEquals),options={hash:{},inverse:self.program(23, program23, data),fn:self.program(5, program5, data),data:data},helper ? helper.call(depth0, (depth0 && depth0.type), "SubHeader", options) : helperMissing.call(depth0, "ifEquals", (depth0 && depth0.type), "SubHeader", options));
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += " \r\n                ";
+  buffer += " \n                ";
   return buffer;
   }
 function program5(depth0,data) {
   
   var buffer = "", stack1, helper;
-  buffer += "\r\n                        </ul>\r\n                        <ul class=\"mmooc-module-items \r\n                                            ";
+  buffer += "\n                        </ul>\n                        <ul class=\"mmooc-module-items \n                                            ";
   stack1 = helpers['if'].call(depth0, (data == null || data === false ? data : data.first), {hash:{},inverse:self.program(8, program8, data),fn:self.program(6, program6, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\r\n                                            \" />\r\n                            <li class=\"mmooc-module-item-reveal\">\r\n                                <a class=\"mmooc-reveal-trigger\" ";
+  buffer += "\n                                            \" />\n                            <li class=\"mmooc-module-item-reveal\">\n                                <a class=\"mmooc-reveal-trigger\" ";
   stack1 = helpers['if'].call(depth0, (depth0 && depth0.isCurrentHeader), {hash:{},inverse:self.noop,fn:self.program(13, program13, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += " href=\"#mmooc-reveal-";
   if (helper = helpers.id) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.id); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "\">\r\n                                    <span class=\"mmooc-module-items-icons-page ";
+    + "\">\n                                    <span class=\"mmooc-module-items-icons-page ";
   stack1 = helpers['if'].call(depth0, (depth0 && depth0.done), {hash:{},inverse:self.noop,fn:self.program(15, program15, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\">\r\n                                        ";
+  buffer += "\">\n                                        ";
   stack1 = helpers['if'].call(depth0, (depth0 && depth0.isCurrentHeader), {hash:{},inverse:self.program(19, program19, data),fn:self.program(17, program17, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\r\n                                            </i>\r\n                                    </span>\r\n                                    <span class=\"mmooc-module-item-title mmooc-module-item-header-title translate\">";
+  buffer += "\n                                            </i>\n                                    </span>\n                                    <span class=\"mmooc-module-item-title mmooc-module-item-header-title translate\">";
   if (helper = helpers.title) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.title); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "</span>\r\n                                </a>\r\n                            </li>\r\n                        </ul>\r\n                        <ul ";
+    + "</span>\n                                </a>\n                            </li>\n                        </ul>\n                        <ul ";
   stack1 = helpers.unless.call(depth0, (depth0 && depth0.isCurrentHeader), {hash:{},inverse:self.noop,fn:self.program(21, program21, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += " id=\"mmooc-reveal-";
   if (helper = helpers.id) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.id); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "\" class=\"mmooc-module-items\">\r\n                    ";
+    + "\" class=\"mmooc-module-items\">\n                    ";
   return buffer;
   }
 function program6(depth0,data) {
   
   
-  return " mmooc-module-items-header-first\r\n                                            ";
+  return " mmooc-module-items-header-first\n                                            ";
   }
 
 function program8(depth0,data) {
@@ -6687,19 +6687,19 @@ function program8(depth0,data) {
   var buffer = "", stack1;
   stack1 = helpers['if'].call(depth0, (data == null || data === false ? data : data.last), {hash:{},inverse:self.program(11, program11, data),fn:self.program(9, program9, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\r\n                                            ";
+  buffer += "\n                                            ";
   return buffer;
   }
 function program9(depth0,data) {
   
   
-  return " mmooc-module-items-header-last\r\n                                            ";
+  return " mmooc-module-items-header-last\n                                            ";
   }
 
 function program11(depth0,data) {
   
   
-  return " mmooc-module-items-header\r\n                                                ";
+  return " mmooc-module-items-header\n                                                ";
   }
 
 function program13(depth0,data) {
@@ -6717,13 +6717,13 @@ function program15(depth0,data) {
 function program17(depth0,data) {
   
   
-  return "\r\n                                        <i class=\"icon-mini-arrow-down\">\r\n                                            ";
+  return "\n                                        <i class=\"icon-mini-arrow-down\">\n                                            ";
   }
 
 function program19(depth0,data) {
   
   
-  return "\r\n                                            <i class=\"icon-mini-arrow-right\">\r\n                                                ";
+  return "\n                                            <i class=\"icon-mini-arrow-right\">\n                                                ";
   }
 
 function program21(depth0,data) {
@@ -6735,18 +6735,18 @@ function program21(depth0,data) {
 function program23(depth0,data) {
   
   var buffer = "", stack1, helper, options;
-  buffer += "\r\n                        <li class=\"mmooc-module-item mmooc-module-item-icon\">\r\n                            <a class=\"";
+  buffer += "\n                        <li class=\"mmooc-module-item mmooc-module-item-icon\">\n                            <a class=\"";
   stack1 = helpers['if'].call(depth0, (depth0 && depth0.isCurrent), {hash:{},inverse:self.noop,fn:self.program(24, program24, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "\" href=\"";
   if (helper = helpers.html_url) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.html_url); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "\">\r\n                                <span class=\"mmooc-module-item-title translate\">";
+    + "\">\n                                <span class=\"mmooc-module-item-title translate\">";
   if (helper = helpers.title) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.title); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "</span>\r\n                                <span class=\"mmooc-module-items-icons-";
+    + "</span>\n                                <span class=\"mmooc-module-items-icons-";
   if (helper = helpers.type) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.type); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1);
@@ -6756,10 +6756,10 @@ function program23(depth0,data) {
   if (helper = helpers.html_url) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.html_url); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "\">\r\n                                    <i class=\"icon-"
+    + "\">\n                                    <i class=\"icon-"
     + escapeExpression((helper = helpers.mapItemType || (depth0 && depth0.mapItemType),options={hash:{},data:data},helper ? helper.call(depth0, (depth0 && depth0.type), options) : helperMissing.call(depth0, "mapItemType", (depth0 && depth0.type), options)))
     + escapeExpression((helper = helpers.overrideIconClassByTitle || (depth0 && depth0.overrideIconClassByTitle),options={hash:{},data:data},helper ? helper.call(depth0, (depth0 && depth0.title), options) : helperMissing.call(depth0, "overrideIconClassByTitle", (depth0 && depth0.title), options)))
-    + "\">\r\n                                    </i>\r\n                                </span>\r\n                            </a>\r\n                        </li>\r\n                    ";
+    + "\">\n                                    </i>\n                                </span>\n                            </a>\n                        </li>\n                    ";
   return buffer;
   }
 function program24(depth0,data) {
@@ -6774,13 +6774,13 @@ function program26(depth0,data) {
   return " done";
   }
 
-  buffer += "<div class=\"mmooc-module-items-back-to-course-button mmooc-back-button\">\r\n    <a href=\""
+  buffer += "<div class=\"mmooc-module-items-back-to-course-button mmooc-back-button\">\n    <a href=\""
     + escapeExpression((helper = helpers.urlForCourseId || (depth0 && depth0.urlForCourseId),options={hash:{},data:data},helper ? helper.call(depth0, (depth0 && depth0.courseId), options) : helperMissing.call(depth0, "urlForCourseId", (depth0 && depth0.courseId), options)))
     + "\">";
   if (helper = helpers.backToCoursePage) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.backToCoursePage); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "</a>\r\n</div>\r\n\r\n";
+    + "</a>\n</div>\n\n";
   stack1 = helpers['with'].call(depth0, (depth0 && depth0.module), {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
   return buffer;
@@ -6794,11 +6794,11 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
 function program1(depth0,data) {
   
   var buffer = "", stack1, helper;
-  buffer += "\r\n<div class=\"header translate\">\r\n    ";
+  buffer += "\n<div class=\"header translate\">\n    ";
   if (helper = helpers.name) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.name); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "\r\n</div>\r\n";
+    + "\n</div>\n";
   stack1 = helpers['if'].call(depth0, (depth0 && depth0.items), {hash:{},inverse:self.noop,fn:self.program(2, program2, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += " ";
@@ -6807,58 +6807,58 @@ function program1(depth0,data) {
 function program2(depth0,data) {
   
   var buffer = "", stack1;
-  buffer += "\r\n    <nav aria-label=\"content\" role=\"navigation\">\r\n        <ul class=\"mmooc-module-items\">\r\n            ";
+  buffer += "\n    <nav aria-label=\"content\" role=\"navigation\">\n        <ul class=\"mmooc-module-items\">\n            ";
   stack1 = helpers.each.call(depth0, (depth0 && depth0.items), {hash:{},inverse:self.noop,fn:self.program(3, program3, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\r\n        </ul>\r\n    </nav>\r\n";
+  buffer += "\n        </ul>\n    </nav>\n";
   return buffer;
   }
 function program3(depth0,data) {
   
   var buffer = "", stack1, helper, options;
-  buffer += " \r\n                ";
+  buffer += " \n                ";
   stack1 = (helper = helpers.ifEquals || (depth0 && depth0.ifEquals),options={hash:{},inverse:self.program(22, program22, data),fn:self.program(4, program4, data),data:data},helper ? helper.call(depth0, (depth0 && depth0.type), "SubHeader", options) : helperMissing.call(depth0, "ifEquals", (depth0 && depth0.type), "SubHeader", options));
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += " \r\n            ";
+  buffer += " \n            ";
   return buffer;
   }
 function program4(depth0,data) {
   
   var buffer = "", stack1, helper;
-  buffer += "\r\n                    </ul>\r\n                    <ul class=\"mmooc-module-items \r\n                                        ";
+  buffer += "\n                    </ul>\n                    <ul class=\"mmooc-module-items \n                                        ";
   stack1 = helpers['if'].call(depth0, (data == null || data === false ? data : data.first), {hash:{},inverse:self.program(7, program7, data),fn:self.program(5, program5, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\r\n                                        \" />\r\n                        <li class=\"mmooc-module-item-reveal\">\r\n                            <a class=\"mmooc-reveal-trigger\" ";
+  buffer += "\n                                        \" />\n                        <li class=\"mmooc-module-item-reveal\">\n                            <a class=\"mmooc-reveal-trigger\" ";
   stack1 = helpers['if'].call(depth0, (depth0 && depth0.isCurrentHeader), {hash:{},inverse:self.noop,fn:self.program(12, program12, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += " href=\"#mmooc-reveal-";
   if (helper = helpers.id) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.id); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "\">\r\n                                <span class=\"mmooc-module-items-icons-page ";
+    + "\">\n                                <span class=\"mmooc-module-items-icons-page ";
   stack1 = helpers['if'].call(depth0, (depth0 && depth0.done), {hash:{},inverse:self.noop,fn:self.program(14, program14, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\">\r\n                                    ";
+  buffer += "\">\n                                    ";
   stack1 = helpers['if'].call(depth0, (depth0 && depth0.isCurrentHeader), {hash:{},inverse:self.program(18, program18, data),fn:self.program(16, program16, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\r\n                                        </i>\r\n                                </span>\r\n                                <span class=\"mmooc-module-item-title mmooc-module-item-header-title translate\">";
+  buffer += "\n                                        </i>\n                                </span>\n                                <span class=\"mmooc-module-item-title mmooc-module-item-header-title translate\">";
   if (helper = helpers.title) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.title); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "</span>\r\n                            </a>\r\n                        </li>\r\n                    </ul>\r\n                    <ul ";
+    + "</span>\n                            </a>\n                        </li>\n                    </ul>\n                    <ul ";
   stack1 = helpers.unless.call(depth0, (depth0 && depth0.isCurrentHeader), {hash:{},inverse:self.noop,fn:self.program(20, program20, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += " id=\"mmooc-reveal-";
   if (helper = helpers.id) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.id); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "\" class=\"mmooc-module-items\">\r\n                ";
+    + "\" class=\"mmooc-module-items\">\n                ";
   return buffer;
   }
 function program5(depth0,data) {
   
   
-  return " mmooc-module-items-header-first\r\n                                        ";
+  return " mmooc-module-items-header-first\n                                        ";
   }
 
 function program7(depth0,data) {
@@ -6866,19 +6866,19 @@ function program7(depth0,data) {
   var buffer = "", stack1;
   stack1 = helpers['if'].call(depth0, (data == null || data === false ? data : data.last), {hash:{},inverse:self.program(10, program10, data),fn:self.program(8, program8, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\r\n                                        ";
+  buffer += "\n                                        ";
   return buffer;
   }
 function program8(depth0,data) {
   
   
-  return " mmooc-module-items-header-last\r\n                                        ";
+  return " mmooc-module-items-header-last\n                                        ";
   }
 
 function program10(depth0,data) {
   
   
-  return " mmooc-module-items-header\r\n                                            ";
+  return " mmooc-module-items-header\n                                            ";
   }
 
 function program12(depth0,data) {
@@ -6896,13 +6896,13 @@ function program14(depth0,data) {
 function program16(depth0,data) {
   
   
-  return "\r\n                                    <i class=\"icon-mini-arrow-down\">\r\n                                        ";
+  return "\n                                    <i class=\"icon-mini-arrow-down\">\n                                        ";
   }
 
 function program18(depth0,data) {
   
   
-  return "\r\n                                        <i class=\"icon-mini-arrow-right\">\r\n                                            ";
+  return "\n                                        <i class=\"icon-mini-arrow-right\">\n                                            ";
   }
 
 function program20(depth0,data) {
@@ -6914,18 +6914,18 @@ function program20(depth0,data) {
 function program22(depth0,data) {
   
   var buffer = "", stack1, helper, options;
-  buffer += "\r\n                    <li class=\"mmooc-module-item mmooc-module-item-icon\">\r\n                        <a class=\"";
+  buffer += "\n                    <li class=\"mmooc-module-item mmooc-module-item-icon\">\n                        <a class=\"";
   stack1 = helpers['if'].call(depth0, (depth0 && depth0.isCurrent), {hash:{},inverse:self.noop,fn:self.program(23, program23, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "\" href=\"";
   if (helper = helpers.html_url) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.html_url); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "\">\r\n                            <span class=\"mmooc-module-item-title translate\">";
+    + "\">\n                            <span class=\"mmooc-module-item-title translate\">";
   if (helper = helpers.title) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.title); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "</span>\r\n                            <span class=\"mmooc-module-items-icons-";
+    + "</span>\n                            <span class=\"mmooc-module-items-icons-";
   if (helper = helpers.type) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.type); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1);
@@ -6935,16 +6935,16 @@ function program22(depth0,data) {
   if (helper = helpers.html_url) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.html_url); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "\">\r\n                                <i class=\"icon-"
+    + "\">\n                                <i class=\"icon-"
     + escapeExpression((helper = helpers.mapItemType || (depth0 && depth0.mapItemType),options={hash:{},data:data},helper ? helper.call(depth0, (depth0 && depth0.type), options) : helperMissing.call(depth0, "mapItemType", (depth0 && depth0.type), options)))
     + escapeExpression((helper = helpers.overrideIconClassByTitle || (depth0 && depth0.overrideIconClassByTitle),options={hash:{},data:data},helper ? helper.call(depth0, (depth0 && depth0.title), options) : helperMissing.call(depth0, "overrideIconClassByTitle", (depth0 && depth0.title), options)))
-    + "\">\r\n                                    ";
+    + "\">\n                                    ";
   options={hash:{},inverse:self.noop,fn:self.program(27, program27, data),data:data}
   if (helper = helpers.ifIsIndented) { stack1 = helper.call(depth0, options); }
   else { helper = (depth0 && depth0.ifIsIndented); stack1 = typeof helper === functionType ? helper.call(depth0, options) : helper; }
   if (!helpers.ifIsIndented) { stack1 = blockHelperMissing.call(depth0, stack1, {hash:{},inverse:self.noop,fn:self.program(27, program27, data),data:data}); }
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\r\n                                </i>\r\n                            </span>\r\n                        </a>\r\n                    </li>\r\n                ";
+  buffer += "\n                                </i>\n                            </span>\n                        </a>\n                    </li>\n                ";
   return buffer;
   }
 function program23(depth0,data) {
@@ -6962,31 +6962,31 @@ function program25(depth0,data) {
 function program27(depth0,data) {
   
   var buffer = "", stack1, helper, options;
-  buffer += "\r\n                                        <div class=\"mmooc-icon-principal-tag\r\n                                            ";
+  buffer += "\n                                        <div class=\"mmooc-icon-principal-tag\n                                            ";
   stack1 = (helper = helpers.ifItemIsCompleted || (depth0 && depth0.ifItemIsCompleted),options={hash:{},inverse:self.program(30, program30, data),fn:self.program(28, program28, data),data:data},helper ? helper.call(depth0, (depth0 && depth0.completion_requirement), options) : helperMissing.call(depth0, "ifItemIsCompleted", (depth0 && depth0.completion_requirement), options));
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\r\n                                        \">\r\n                                            <div class=\"mmooc-icon-principal-symbol\"></div>\r\n                                        </div> \r\n                                    ";
+  buffer += "\n                                        \">\n                                            <div class=\"mmooc-icon-principal-symbol\"></div>\n                                        </div> \n                                    ";
   return buffer;
   }
 function program28(depth0,data) {
   
   
-  return " \r\n                                                done\r\n                                            ";
+  return " \n                                                done\n                                            ";
   }
 
 function program30(depth0,data) {
   
   
-  return "\r\n                                                not_done\r\n                                            ";
+  return "\n                                                not_done\n                                            ";
   }
 
-  buffer += "<div class=\"mmooc-module-items-back-to-course-button mmooc-back-button\">\r\n    <a href=\""
+  buffer += "<div class=\"mmooc-module-items-back-to-course-button mmooc-back-button\">\n    <a href=\""
     + escapeExpression((helper = helpers.urlForCourseId || (depth0 && depth0.urlForCourseId),options={hash:{},data:data},helper ? helper.call(depth0, (depth0 && depth0.courseId), options) : helperMissing.call(depth0, "urlForCourseId", (depth0 && depth0.courseId), options)))
     + "\">";
   if (helper = helpers.backToCoursePage) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.backToCoursePage); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "</a>\r\n</div>\r\n\r\n";
+    + "</a>\n</div>\n\n";
   stack1 = helpers['with'].call(depth0, (depth0 && depth0.module), {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
   return buffer;
@@ -7000,64 +7000,64 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
 function program1(depth0,data) {
   
   var buffer = "", stack1, helper, options;
-  buffer += "\r\n    <div class=\"mmooc-module\">\r\n        <h2 class=\"light\">\r\n            <a class=\"mmooc-module-name\" href=\""
+  buffer += "\n    <div class=\"mmooc-module\">\n        <h2 class=\"light\">\n            <a class=\"mmooc-module-name\" href=\""
     + escapeExpression((helper = helpers.urlForFirstNoneCompleteItem || (depth0 && depth0.urlForFirstNoneCompleteItem),options={hash:{},data:data},helper ? helper.call(depth0, (depth0 && depth0.items), options) : helperMissing.call(depth0, "urlForFirstNoneCompleteItem", (depth0 && depth0.items), options)))
     + "\">";
   if (helper = helpers.name) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.name); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "</a>\r\n        </h2>\r\n        ";
+    + "</a>\n        </h2>\n        ";
   stack1 = helpers['if'].call(depth0, (depth0 && depth0.items), {hash:{},inverse:self.noop,fn:self.program(2, program2, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\r\n    </div>\r\n    ";
+  buffer += "\n    </div>\n    ";
   return buffer;
   }
 function program2(depth0,data) {
   
   var buffer = "", stack1;
-  buffer += "\r\n            <ul class=\"mmooc-module-items-icons\">\r\n                ";
+  buffer += "\n            <ul class=\"mmooc-module-items-icons\">\n                ";
   stack1 = helpers.each.call(depth0, (depth0 && depth0.items), {hash:{},inverse:self.noop,fn:self.program(3, program3, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\r\n            </ul>\r\n        ";
+  buffer += "\n            </ul>\n        ";
   return buffer;
   }
 function program3(depth0,data) {
   
   var buffer = "", stack1;
-  buffer += " \r\n                    ";
+  buffer += " \n                    ";
   stack1 = helpers.unless.call(depth0, (depth0 && depth0.indent), {hash:{},inverse:self.noop,fn:self.program(4, program4, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\r\n                ";
+  buffer += "\n                ";
   return buffer;
   }
 function program4(depth0,data) {
   
   var buffer = "", stack1, helper, options;
-  buffer += "\r\n                        ";
+  buffer += "\n                        ";
   stack1 = (helper = helpers.ifEquals || (depth0 && depth0.ifEquals),options={hash:{},inverse:self.program(8, program8, data),fn:self.program(5, program5, data),data:data},helper ? helper.call(depth0, (depth0 && depth0.type), "SubHeader", options) : helperMissing.call(depth0, "ifEquals", (depth0 && depth0.type), "SubHeader", options));
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += " \r\n                    ";
+  buffer += " \n                    ";
   return buffer;
   }
 function program5(depth0,data) {
   
   var buffer = "", stack1;
-  buffer += " \r\n                            ";
+  buffer += " \n                            ";
   stack1 = helpers.unless.call(depth0, (data == null || data === false ? data : data.first), {hash:{},inverse:self.noop,fn:self.program(6, program6, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += " \r\n                        ";
+  buffer += " \n                        ";
   return buffer;
   }
 function program6(depth0,data) {
   
   
-  return " \r\n                            ";
+  return " \n                            ";
   }
 
 function program8(depth0,data) {
   
   var buffer = "", stack1, helper, options;
-  buffer += "\r\n                            <li class=\"mmooc-module-item-icon\">\r\n                                <div class=\"tooltip\">\r\n                                    <a aria-label=\"";
+  buffer += "\n                            <li class=\"mmooc-module-item-icon\">\n                                <div class=\"tooltip\">\n                                    <a aria-label=\"";
   if (helper = helpers.title) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.title); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
@@ -7065,24 +7065,24 @@ function program8(depth0,data) {
   if (helper = helpers.type) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.type); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + " \r\n                                                ";
+    + " \n                                                ";
   stack1 = (helper = helpers.ifItemIsCompleted || (depth0 && depth0.ifItemIsCompleted),options={hash:{},inverse:self.noop,fn:self.program(9, program9, data),data:data},helper ? helper.call(depth0, (depth0 && depth0.completion_requirement), options) : helperMissing.call(depth0, "ifItemIsCompleted", (depth0 && depth0.completion_requirement), options));
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "\" href=\"";
   if (helper = helpers.html_url) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.html_url); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "\">\r\n                                        <i aria-hidden=\"true\" class=\"icon-"
+    + "\">\n                                        <i aria-hidden=\"true\" class=\"icon-"
     + escapeExpression((helper = helpers.mapItemType || (depth0 && depth0.mapItemType),options={hash:{},data:data},helper ? helper.call(depth0, (depth0 && depth0.type), options) : helperMissing.call(depth0, "mapItemType", (depth0 && depth0.type), options)))
     + escapeExpression((helper = helpers.overrideIconClassByTitle || (depth0 && depth0.overrideIconClassByTitle),options={hash:{},data:data},helper ? helper.call(depth0, (depth0 && depth0.title), options) : helperMissing.call(depth0, "overrideIconClassByTitle", (depth0 && depth0.title), options)))
-    + "\"></i>\r\n                                        ";
+    + "\"></i>\n                                        ";
   stack1 = (helper = helpers.ifItemTypeDiscussion || (depth0 && depth0.ifItemTypeDiscussion),options={hash:{},inverse:self.noop,fn:self.program(11, program11, data),data:data},helper ? helper.call(depth0, (depth0 && depth0.type), options) : helperMissing.call(depth0, "ifItemTypeDiscussion", (depth0 && depth0.type), options));
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\r\n                                    </a>\r\n                                    <div class=\"tooltiptext\">";
+  buffer += "\n                                    </a>\n                                    <div class=\"tooltiptext\">";
   if (helper = helpers.title) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.title); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "</div>\r\n                                </div>\r\n                            </li>\r\n                        ";
+    + "</div>\n                                </div>\n                            </li>\n                        ";
   return buffer;
   }
 function program9(depth0,data) {
@@ -7094,20 +7094,20 @@ function program9(depth0,data) {
 function program11(depth0,data) {
   
   var buffer = "", stack1;
-  buffer += "\r\n                                        <div class=\"discussion-unread-tag discussion-id-"
+  buffer += "\n                                        <div class=\"discussion-unread-tag discussion-id-"
     + escapeExpression(((stack1 = (depth0 && depth0.content_id)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
-    + "\"></div>\r\n                                        ";
+    + "\"></div>\n                                        ";
   return buffer;
   }
 
-  buffer += "<div class=\"mmooc-modules\">\r\n    <h2 class=\"h3\">";
+  buffer += "<div class=\"mmooc-modules\">\n    <h2 class=\"h3\">";
   if (helper = helpers.coursemodules) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.coursemodules); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "</h2>\r\n    ";
+    + "</h2>\n    ";
   stack1 = helpers.each.call(depth0, (depth0 && depth0.modules), {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\r\n</div>";
+  buffer += "\n</div>";
   return buffer;
   });
 
@@ -7119,25 +7119,25 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
 function program1(depth0,data) {
   
   var buffer = "", stack1, helper, options;
-  buffer += "\r\n    <div class=\"mmooc-module\">\r\n        <h2 class=\"light\">\r\n            <a class=\"mmooc-module-name\" href=\""
+  buffer += "\n    <div class=\"mmooc-module\">\n        <h2 class=\"light\">\n            <a class=\"mmooc-module-name\" href=\""
     + escapeExpression((helper = helpers.urlForFirstNoneCompletePrincipalItem || (depth0 && depth0.urlForFirstNoneCompletePrincipalItem),options={hash:{},data:data},helper ? helper.call(depth0, (depth0 && depth0.items), options) : helperMissing.call(depth0, "urlForFirstNoneCompletePrincipalItem", (depth0 && depth0.items), options)))
     + "\">";
   if (helper = helpers.name) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.name); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "</a>\r\n        </h2>\r\n        ";
+    + "</a>\n        </h2>\n        ";
   stack1 = helpers['if'].call(depth0, (depth0 && depth0.items), {hash:{},inverse:self.noop,fn:self.program(2, program2, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\r\n    </div>\r\n    ";
+  buffer += "\n    </div>\n    ";
   return buffer;
   }
 function program2(depth0,data) {
   
   var buffer = "", stack1;
-  buffer += "\r\n        <ul class=\"mmooc-module-items-icons\">\r\n            ";
+  buffer += "\n        <ul class=\"mmooc-module-items-icons\">\n            ";
   stack1 = helpers.each.call(depth0, (depth0 && depth0.items), {hash:{},inverse:self.noop,fn:self.program(3, program3, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\r\n        </ul>\r\n        ";
+  buffer += "\n        </ul>\n        ";
   return buffer;
   }
 function program3(depth0,data) {
@@ -7167,7 +7167,7 @@ function program5(depth0,data) {
 function program7(depth0,data) {
   
   var buffer = "", stack1, helper, options;
-  buffer += "\r\n            <li class=\"mmooc-module-item-icon\">\r\n                <div class=\"tooltip\">\r\n                    <a aria-label=\"";
+  buffer += "\n            <li class=\"mmooc-module-item-icon\">\n                <div class=\"tooltip\">\n                    <a aria-label=\"";
   if (helper = helpers.title) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.title); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
@@ -7175,30 +7175,30 @@ function program7(depth0,data) {
   if (helper = helpers.type) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.type); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + " \r\n                                 ";
+    + " \n                                 ";
   stack1 = (helper = helpers.ifItemIsCompleted || (depth0 && depth0.ifItemIsCompleted),options={hash:{},inverse:self.noop,fn:self.program(8, program8, data),data:data},helper ? helper.call(depth0, (depth0 && depth0.completion_requirement), options) : helperMissing.call(depth0, "ifItemIsCompleted", (depth0 && depth0.completion_requirement), options));
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "\" href=\"";
   if (helper = helpers.html_url) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.html_url); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "\">\r\n                        <i aria-hidden=\"true\" class=\"icon-"
+    + "\">\n                        <i aria-hidden=\"true\" class=\"icon-"
     + escapeExpression((helper = helpers.mapItemType || (depth0 && depth0.mapItemType),options={hash:{},data:data},helper ? helper.call(depth0, (depth0 && depth0.type), options) : helperMissing.call(depth0, "mapItemType", (depth0 && depth0.type), options)))
     + escapeExpression((helper = helpers.overrideIconClassByTitle || (depth0 && depth0.overrideIconClassByTitle),options={hash:{},data:data},helper ? helper.call(depth0, (depth0 && depth0.title), options) : helperMissing.call(depth0, "overrideIconClassByTitle", (depth0 && depth0.title), options)))
-    + "\"></i>\r\n                        ";
+    + "\"></i>\n                        ";
   stack1 = (helper = helpers.ifItemTypeDiscussion || (depth0 && depth0.ifItemTypeDiscussion),options={hash:{},inverse:self.noop,fn:self.program(10, program10, data),data:data},helper ? helper.call(depth0, (depth0 && depth0.type), options) : helperMissing.call(depth0, "ifItemTypeDiscussion", (depth0 && depth0.type), options));
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\r\n                        ";
+  buffer += "\n                        ";
   options={hash:{},inverse:self.noop,fn:self.program(12, program12, data),data:data}
   if (helper = helpers.ifIsIndented) { stack1 = helper.call(depth0, options); }
   else { helper = (depth0 && depth0.ifIsIndented); stack1 = typeof helper === functionType ? helper.call(depth0, options) : helper; }
   if (!helpers.ifIsIndented) { stack1 = blockHelperMissing.call(depth0, stack1, {hash:{},inverse:self.noop,fn:self.program(12, program12, data),data:data}); }
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "                    \r\n                    </a>\r\n                    <div class=\"tooltiptext\">";
+  buffer += "                    \n                    </a>\n                    <div class=\"tooltiptext\">";
   if (helper = helpers.title) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.title); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "</div>\r\n                </div>\r\n            </li>\r\n            ";
+    + "</div>\n                </div>\n            </li>\n            ";
   return buffer;
   }
 function program8(depth0,data) {
@@ -7210,41 +7210,41 @@ function program8(depth0,data) {
 function program10(depth0,data) {
   
   var buffer = "", stack1;
-  buffer += "\r\n                        <div class=\"discussion-unread-tag discussion-id-"
+  buffer += "\n                        <div class=\"discussion-unread-tag discussion-id-"
     + escapeExpression(((stack1 = (depth0 && depth0.content_id)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
-    + "\"></div>\r\n                        ";
+    + "\"></div>\n                        ";
   return buffer;
   }
 
 function program12(depth0,data) {
   
   var buffer = "", stack1, helper, options;
-  buffer += "\r\n                            <div class=\"mmooc-icon-principal-tag\r\n                                ";
+  buffer += "\n                            <div class=\"mmooc-icon-principal-tag\n                                ";
   stack1 = (helper = helpers.ifItemIsCompleted || (depth0 && depth0.ifItemIsCompleted),options={hash:{},inverse:self.program(15, program15, data),fn:self.program(13, program13, data),data:data},helper ? helper.call(depth0, (depth0 && depth0.completion_requirement), options) : helperMissing.call(depth0, "ifItemIsCompleted", (depth0 && depth0.completion_requirement), options));
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\r\n                            \">\r\n                                <div class=\"mmooc-icon-principal-symbol\"></div>\r\n                            </div> \r\n                        ";
+  buffer += "\n                            \">\n                                <div class=\"mmooc-icon-principal-symbol\"></div>\n                            </div> \n                        ";
   return buffer;
   }
 function program13(depth0,data) {
   
   
-  return "\r\n                                    done\r\n                                ";
+  return "\n                                    done\n                                ";
   }
 
 function program15(depth0,data) {
   
   
-  return "\r\n                                    not_done\r\n                                ";
+  return "\n                                    not_done\n                                ";
   }
 
-  buffer += "<div class=\"mmooc-modules\">\r\n    <h2 class=\"h3\">";
+  buffer += "<div class=\"mmooc-modules\">\n    <h2 class=\"h3\">";
   if (helper = helpers.coursemodules) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.coursemodules); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "</h2>\r\n    ";
+    + "</h2>\n    ";
   stack1 = helpers.each.call(depth0, (depth0 && depth0.modules), {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\r\n</div>";
+  buffer += "\n</div>";
   return buffer;
   });
 
@@ -7254,11 +7254,11 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   var buffer = "", stack1, helper, functionType="function", escapeExpression=this.escapeExpression;
 
 
-  buffer += "<nav class=\"mmooc-module-items-back-to-course-button mmooc-back-button\">\r\n    <span href=\"#\" onclick=\"mmooc.util.goBack()\">\r\n        ";
+  buffer += "<nav class=\"mmooc-module-items-back-to-course-button mmooc-back-button\">\n    <span href=\"#\" onclick=\"mmooc.util.goBack()\">\n        ";
   if (helper = helpers.linkText) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.linkText); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "\r\n    </span>\r\n</nav>";
+    + "\n    </span>\n</nav>";
   return buffer;
   });
 
@@ -7268,11 +7268,11 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   var buffer = "", stack1, helper, functionType="function", escapeExpression=this.escapeExpression;
 
 
-  buffer += "<div class=\"mmooc-header\">\r\n  <button class=\"mmooc-header__login-button\">";
+  buffer += "<div class=\"mmooc-header\">\n  <button class=\"mmooc-header__login-button\">";
   if (helper = helpers.logInText) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.logInText); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "</button>\r\n</div>\r\n";
+    + "</button>\n</div>\n";
   return buffer;
   });
 
@@ -7286,7 +7286,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   if (helper = helpers.logInText) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.logInText); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "</button>\r\n";
+    + "</button>\n";
   return buffer;
   });
 
@@ -7296,7 +7296,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   
 
 
-  return "<a href=\"/profile/communication?design=udir\" class=\"edit_settings_link btn button-sidebar-wide\">\r\n  <i class=\"icon-edit\"></i> Rediger varslingsinnstillinger</a>";
+  return "<a href=\"/profile/communication?design=udir\" class=\"edit_settings_link btn button-sidebar-wide\">\n  <i class=\"icon-edit\"></i> Rediger varslingsinnstillinger</a>";
   });
 
 this["mmooc"]["templates"]["powerfunctions/account-picker"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
@@ -7307,7 +7307,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
 function program1(depth0,data) {
   
   var buffer = "", stack1, helper;
-  buffer += "\r\n      <option value=\"";
+  buffer += "\n      <option value=\"";
   if (helper = helpers.id) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.id); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
@@ -7315,17 +7315,17 @@ function program1(depth0,data) {
   if (helper = helpers.name) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.name); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "</option>\r\n      ";
+    + "</option>\n      ";
   return buffer;
   }
 
-  buffer += "<div>\r\n  <form>\r\n    <select name=\"account\">\r\n      <option value=\"\">Choose the account...</option>\r\n      ";
+  buffer += "<div>\n  <form>\n    <select name=\"account\">\n      <option value=\"\">Choose the account...</option>\n      ";
   options={hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data}
   if (helper = helpers.accounts) { stack1 = helper.call(depth0, options); }
   else { helper = (depth0 && depth0.accounts); stack1 = typeof helper === functionType ? helper.call(depth0, options) : helper; }
   if (!helpers.accounts) { stack1 = blockHelperMissing.call(depth0, stack1, {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data}); }
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\r\n    </select>\r\n  </form>\r\n</div>";
+  buffer += "\n    </select>\n  </form>\n</div>";
   return buffer;
   });
 
@@ -7337,24 +7337,24 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
 function program1(depth0,data) {
   
   var buffer = "", stack1, helper;
-  buffer += "\r\n    <tr id=\"mmpf-assign-"
+  buffer += "\n    <tr id=\"mmpf-assign-"
     + escapeExpression(((stack1 = (data == null || data === false ? data : data.index)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
-    + "\">\r\n      <td>";
+    + "\">\n      <td>";
   if (helper = helpers.group_id) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.group_id); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "</td>\r\n      <td>";
+    + "</td>\n      <td>";
   if (helper = helpers.user_id) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.user_id); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "</td>\r\n      <td class=\"status waiting\">Waiting</td>\r\n      ";
+    + "</td>\n      <td class=\"status waiting\">Waiting</td>\n      ";
   return buffer;
   }
 
-  buffer += "<table>\r\n  <thead>\r\n    <tr>\r\n      <th>Group ID</th>\r\n      <th>Student ID</th>\r\n      <th>Status</th>\r\n    </tr>\r\n  </thead>\r\n  <tbody>\r\n    ";
+  buffer += "<table>\n  <thead>\n    <tr>\n      <th>Group ID</th>\n      <th>Student ID</th>\n      <th>Status</th>\n    </tr>\n  </thead>\n  <tbody>\n    ";
   stack1 = helpers.each.call(depth0, (depth0 && depth0.assigns), {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\r\n  </tbody>\r\n  <table>";
+  buffer += "\n  </tbody>\n  <table>";
   return buffer;
   });
 
@@ -7364,7 +7364,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   
 
 
-  return "<form>\r\n  <dl>\r\n    <dt>\r\n      <label for=\"csv\">Upload CSV file</label>\r\n    </dt>\r\n    <dd>\r\n      <input type=\"file\" name=\"csv\">\r\n    </dd>\r\n  </dl>\r\n  <input type=\"submit\" />\r\n</form>\r\n\r\n<div class=\"side-information\">\r\n  <h3>Decription of CSV format</h3>\r\n  <p>First line of the file must be the name of the columns. Column separators are commas. Fields optionally encloused by double\r\n    quotes (\").\r\n    <dl>\r\n      <dt>group_id [Integer]\r\n        <dd>The group ID\r\n          <dt>user_id [String]\r\n            <dd>The FEIDE user ID\r\n    </dl>\r\n</div>";
+  return "<form>\n  <dl>\n    <dt>\n      <label for=\"csv\">Upload CSV file</label>\n    </dt>\n    <dd>\n      <input type=\"file\" name=\"csv\">\n    </dd>\n  </dl>\n  <input type=\"submit\" />\n</form>\n\n<div class=\"side-information\">\n  <h3>Decription of CSV format</h3>\n  <p>First line of the file must be the name of the columns. Column separators are commas. Fields optionally encloused by double\n    quotes (\").\n    <dl>\n      <dt>group_id [Integer]\n        <dd>The group ID\n          <dt>user_id [String]\n            <dd>The FEIDE user ID\n    </dl>\n</div>";
   });
 
 this["mmooc"]["templates"]["powerfunctions/course-groups"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
@@ -7375,13 +7375,13 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
 function program1(depth0,data) {
   
   
-  return "\r\n        <option value=\"\">No courses defined for account</option>\r\n        ";
+  return "\n        <option value=\"\">No courses defined for account</option>\n        ";
   }
 
 function program3(depth0,data) {
   
   var buffer = "", stack1;
-  buffer += "\r\n        <option value=\"\">Choose a course</option>\r\n        ";
+  buffer += "\n        <option value=\"\">Choose a course</option>\n        ";
   stack1 = helpers.each.call(depth0, (depth0 && depth0.courses), {hash:{},inverse:self.noop,fn:self.program(4, program4, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += " ";
@@ -7390,7 +7390,7 @@ function program3(depth0,data) {
 function program4(depth0,data) {
   
   var buffer = "", stack1, helper;
-  buffer += "\r\n        <option value=\"";
+  buffer += "\n        <option value=\"";
   if (helper = helpers.id) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.id); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
@@ -7398,14 +7398,14 @@ function program4(depth0,data) {
   if (helper = helpers.name) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.name); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "</option>\r\n        ";
+    + "</option>\n        ";
   return buffer;
   }
 
-  buffer += "<form>\r\n  <ol>\r\n    <li class=\"step-1\">\r\n      <select id=\"mmpf-course-select\">\r\n        ";
+  buffer += "<form>\n  <ol>\n    <li class=\"step-1\">\n      <select id=\"mmpf-course-select\">\n        ";
   stack1 = helpers.unless.call(depth0, (depth0 && depth0.courses), {hash:{},inverse:self.program(3, program3, data),fn:self.program(1, program1, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\r\n      </select>\r\n      <li class=\"step-2\">\r\n        <select name=\"category\" onchange=\"$('.step-3').css('display', 'list-item')\">\r\n          <option value=\"\">No group sets defined for course</option>\r\n        </select>\r\n        <li class=\"step-3\">\r\n          <input type=\"file\" name=\"csv\" onchange=\"$('.step-4').css('display', 'list-item')\">\r\n          <li class=\"step-4\">\r\n            <input type=\"submit\" />\r\n  </ol>\r\n</form>\r\n\r\n<div class=\"side-information\">\r\n  <h3>Decription of CSV format</h3>\r\n  <p>First line of the file must be the name of the columns. Column separators are commas. Fields optionally encloused by double\r\n    quotes (\").\r\n    <dl>\r\n      <dt>name [String]\r\n        <dd>The name of the group\r\n          <dt>description [String]\r\n            <dd>A description of the group\r\n    </dl>\r\n</div>";
+  buffer += "\n      </select>\n      <li class=\"step-2\">\n        <select name=\"category\" onchange=\"$('.step-3').css('display', 'list-item')\">\n          <option value=\"\">No group sets defined for course</option>\n        </select>\n        <li class=\"step-3\">\n          <input type=\"file\" name=\"csv\" onchange=\"$('.step-4').css('display', 'list-item')\">\n          <li class=\"step-4\">\n            <input type=\"submit\" />\n  </ol>\n</form>\n\n<div class=\"side-information\">\n  <h3>Decription of CSV format</h3>\n  <p>First line of the file must be the name of the columns. Column separators are commas. Fields optionally encloused by double\n    quotes (\").\n    <dl>\n      <dt>name [String]\n        <dd>The name of the group\n          <dt>description [String]\n            <dd>A description of the group\n    </dl>\n</div>";
   return buffer;
   });
 
@@ -7417,13 +7417,13 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
 function program1(depth0,data) {
   
   
-  return "\r\n        <option value=\"\">No group sets defined for account</option>\r\n        ";
+  return "\n        <option value=\"\">No group sets defined for account</option>\n        ";
   }
 
 function program3(depth0,data) {
   
   var buffer = "", stack1;
-  buffer += "\r\n        <option value=\"\">Choose a group set</option>\r\n        ";
+  buffer += "\n        <option value=\"\">Choose a group set</option>\n        ";
   stack1 = helpers.each.call(depth0, (depth0 && depth0.categories), {hash:{},inverse:self.noop,fn:self.program(4, program4, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += " ";
@@ -7432,7 +7432,7 @@ function program3(depth0,data) {
 function program4(depth0,data) {
   
   var buffer = "", stack1, helper;
-  buffer += "\r\n        <option value=\"";
+  buffer += "\n        <option value=\"";
   if (helper = helpers.id) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.id); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
@@ -7440,14 +7440,14 @@ function program4(depth0,data) {
   if (helper = helpers.name) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.name); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "</option>\r\n        ";
+    + "</option>\n        ";
   return buffer;
   }
 
-  buffer += "<form>\r\n  <ol>\r\n    <li class=\"step-1\">\r\n      <select name=\"category\" onchange=\"$('.step-2').css('display', 'list-item')\">\r\n        ";
+  buffer += "<form>\n  <ol>\n    <li class=\"step-1\">\n      <select name=\"category\" onchange=\"$('.step-2').css('display', 'list-item')\">\n        ";
   stack1 = helpers.unless.call(depth0, (depth0 && depth0.categories), {hash:{},inverse:self.program(3, program3, data),fn:self.program(1, program1, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\r\n      </select>\r\n      <li class=\"step-2\">\r\n        <input type=\"file\" name=\"csv\" onchange=\"$('.step-3').css('display', 'list-item')\">\r\n        <li class=\"step-3\">\r\n          <input type=\"submit\" />\r\n  </ol>\r\n</form>\r\n\r\n<div class=\"side-information\">\r\n  <h3>Decription of CSV format</h3>\r\n  <p>First line of the file must be the name of the columns. Column separators are commas. Fields optionally encloused by double\r\n    quotes (\").\r\n    <dl>\r\n      <dt>name [String]\r\n        <dd>The name of the group\r\n          <dt>description [String]\r\n            <dd>A description of the group\r\n    </dl>\r\n</div>";
+  buffer += "\n      </select>\n      <li class=\"step-2\">\n        <input type=\"file\" name=\"csv\" onchange=\"$('.step-3').css('display', 'list-item')\">\n        <li class=\"step-3\">\n          <input type=\"submit\" />\n  </ol>\n</form>\n\n<div class=\"side-information\">\n  <h3>Decription of CSV format</h3>\n  <p>First line of the file must be the name of the columns. Column separators are commas. Fields optionally encloused by double\n    quotes (\").\n    <dl>\n      <dt>name [String]\n        <dd>The name of the group\n          <dt>description [String]\n            <dd>A description of the group\n    </dl>\n</div>";
   return buffer;
   });
 
@@ -7459,27 +7459,27 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
 function program1(depth0,data) {
   
   var buffer = "", stack1, helper;
-  buffer += "\r\n    <tr id=\"mmpf-group-"
+  buffer += "\n    <tr id=\"mmpf-group-"
     + escapeExpression(((stack1 = (data == null || data === false ? data : data.index)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
-    + "\">\r\n      <td>";
+    + "\">\n      <td>";
   if (helper = helpers.name) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.name); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "</td>\r\n      <td>";
+    + "</td>\n      <td>";
   if (helper = helpers.description) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.description); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "</td>\r\n      <td class=\"status waiting\">Waiting</td>\r\n      ";
+    + "</td>\n      <td class=\"status waiting\">Waiting</td>\n      ";
   return buffer;
   }
 
-  buffer += "<table>\r\n  <thead>\r\n    <tr>\r\n      <th>Name</th>\r\n      <th>Description</th>\r\n      <th>Status</th>\r\n    </tr>\r\n  </thead>\r\n  <tbody>\r\n    ";
+  buffer += "<table>\n  <thead>\n    <tr>\n      <th>Name</th>\n      <th>Description</th>\n      <th>Status</th>\n    </tr>\n  </thead>\n  <tbody>\n    ";
   options={hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data}
   if (helper = helpers.groups) { stack1 = helper.call(depth0, options); }
   else { helper = (depth0 && depth0.groups); stack1 = typeof helper === functionType ? helper.call(depth0, options) : helper; }
   if (!helpers.groups) { stack1 = blockHelperMissing.call(depth0, stack1, {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data}); }
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\r\n  </tbody>\r\n  <table>";
+  buffer += "\n  </tbody>\n  <table>";
   return buffer;
   });
 
@@ -7489,11 +7489,11 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   var buffer = "", stack1, helper, functionType="function", escapeExpression=this.escapeExpression;
 
 
-  buffer += "<div class=\"mmooc-power-functions\">\r\n  <h1 class=\"xl\">Power Functions</h1>\r\n  <h2>";
+  buffer += "<div class=\"mmooc-power-functions\">\n  <h1 class=\"xl\">Power Functions</h1>\n  <h2>";
   if (helper = helpers.heading) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.heading); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "</h2>\r\n  <p>\r\n    <a href=\"/?mmpf\">Back</a>\r\n  </p>";
+    + "</h2>\n  <p>\n    <a href=\"/?mmpf\">Back</a>\n  </p>";
   return buffer;
   });
 
@@ -7519,34 +7519,34 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
 function program1(depth0,data) {
   
   
-  return "\r\n<p>No groups found for account</p>\r\n";
+  return "\n<p>No groups found for account</p>\n";
   }
 
 function program3(depth0,data) {
   
   var buffer = "", stack1;
-  buffer += "\r\n<table>\r\n  <tr>\r\n    <th>ID</th>\r\n    <th>Name</th>\r\n    <th>Description</th>\r\n  </tr>\r\n  ";
+  buffer += "\n<table>\n  <tr>\n    <th>ID</th>\n    <th>Name</th>\n    <th>Description</th>\n  </tr>\n  ";
   stack1 = helpers.each.call(depth0, (depth0 && depth0.groups), {hash:{},inverse:self.noop,fn:self.program(4, program4, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\r\n</table>\r\n";
+  buffer += "\n</table>\n";
   return buffer;
   }
 function program4(depth0,data) {
   
   var buffer = "", stack1, helper;
-  buffer += "\r\n  <tr>\r\n    <td class=\"right\">";
+  buffer += "\n  <tr>\n    <td class=\"right\">";
   if (helper = helpers.id) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.id); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "</td>\r\n    <td>";
+    + "</td>\n    <td>";
   if (helper = helpers.name) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.name); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "</td>\r\n    <td>";
+    + "</td>\n    <td>";
   if (helper = helpers.description) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.description); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "</td>\r\n  </tr>\r\n  ";
+    + "</td>\n  </tr>\n  ";
   return buffer;
   }
 
@@ -7563,24 +7563,24 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
 function program1(depth0,data) {
   
   var buffer = "", stack1, helper;
-  buffer += "\r\n    <tr id=\"mmpf-logins-"
+  buffer += "\n    <tr id=\"mmpf-logins-"
     + escapeExpression(((stack1 = (data == null || data === false ? data : data.index)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
-    + "\">\r\n      <td>";
+    + "\">\n      <td>";
   if (helper = helpers.user_id) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.user_id); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "</td>\r\n      <td>";
+    + "</td>\n      <td>";
   if (helper = helpers.login_id) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.login_id); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "</td>\r\n      <td class=\"status waiting\">Waiting</td>\r\n      ";
+    + "</td>\n      <td class=\"status waiting\">Waiting</td>\n      ";
   return buffer;
   }
 
-  buffer += "<table>\r\n  <thead>\r\n    <tr>\r\n      <th>User ID</th>\r\n      <th>Login ID</th>\r\n      <th>Status</th>\r\n    </tr>\r\n  </thead>\r\n  <tbody>\r\n    ";
+  buffer += "<table>\n  <thead>\n    <tr>\n      <th>User ID</th>\n      <th>Login ID</th>\n      <th>Status</th>\n    </tr>\n  </thead>\n  <tbody>\n    ";
   stack1 = helpers.each.call(depth0, (depth0 && depth0.logins), {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\r\n  </tbody>\r\n  <table>";
+  buffer += "\n  </tbody>\n  <table>";
   return buffer;
   });
 
@@ -7590,7 +7590,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   
 
 
-  return "<form>\r\n  <dl>\r\n    <dt>\r\n      <label for=\"csv\">Upload CSV file</label>\r\n    </dt>\r\n    <dd>\r\n      <input type=\"file\" name=\"csv\">\r\n    </dd>\r\n  </dl>\r\n  <input type=\"submit\" />\r\n</form>\r\n\r\n<div class=\"side-information\">\r\n  <h3>Decription of CSV format</h3>\r\n  <p>First line of the file must be the name of the columns. Column separators are commas. Fields optionally encloused by double\r\n    quotes (\").\r\n    <dl>\r\n      <dt>current_id [String]\r\n        <dd>The current FEIDE user ID\r\n          <dt>new_id [String]\r\n            <dd>The new FEIDE user ID\r\n    </dl>\r\n</div>";
+  return "<form>\n  <dl>\n    <dt>\n      <label for=\"csv\">Upload CSV file</label>\n    </dt>\n    <dd>\n      <input type=\"file\" name=\"csv\">\n    </dd>\n  </dl>\n  <input type=\"submit\" />\n</form>\n\n<div class=\"side-information\">\n  <h3>Decription of CSV format</h3>\n  <p>First line of the file must be the name of the columns. Column separators are commas. Fields optionally encloused by double\n    quotes (\").\n    <dl>\n      <dt>current_id [String]\n        <dd>The current FEIDE user ID\n          <dt>new_id [String]\n            <dd>The new FEIDE user ID\n    </dl>\n</div>";
   });
 
 this["mmooc"]["templates"]["powerfunctions/main"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
@@ -7599,7 +7599,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   
 
 
-  return "<div class=\"mmooc-pf-main\">\r\n	<h3>Teacher functions</h3>\r\n	<div class=\"mmooc-pf-list\">\r\n		<div id=\"mmooc-pf-peer-review-btn\" class=\"item\">Peer review</div>\r\n		<div id=\"mmooc-pf-student-progress-btn\" class=\"item\">Student progress</div>\r\n	</div>\r\n	<h3>Administrator functions</h3>\r\n	<div class=\"mmooc-pf-list\">\r\n		<div id=\"mmooc-pf-list-group-btn\" class=\"item\">List groups</div>\r\n		<div id=\"mmooc-pf-group-btn\" class=\"item\">Create account groups</div>\r\n		<div id=\"mmooc-pf-course-group-btn\" class=\"item\">Create course groups</div>\r\n		<div id=\"mmooc-pf-assign-btn\" class=\"item\">Assign students to groups</div>\r\n		<div id=\"mmooc-pf-logins-btn\" class=\"item\">Add new logins</div>\r\n	</div>\r\n</div>";
+  return "<div class=\"mmooc-pf-main\">\n	<h3>Teacher functions</h3>\n	<div class=\"mmooc-pf-list\">\n		<div id=\"mmooc-pf-peer-review-btn\" class=\"item\">Peer review</div>\n		<div id=\"mmooc-pf-student-progress-btn\" class=\"item\">Student progress</div>\n	</div>\n	<h3>Administrator functions</h3>\n	<div class=\"mmooc-pf-list\">\n		<div id=\"mmooc-pf-list-group-btn\" class=\"item\">List groups</div>\n		<div id=\"mmooc-pf-group-btn\" class=\"item\">Create account groups</div>\n		<div id=\"mmooc-pf-course-group-btn\" class=\"item\">Create course groups</div>\n		<div id=\"mmooc-pf-assign-btn\" class=\"item\">Assign students to groups</div>\n		<div id=\"mmooc-pf-logins-btn\" class=\"item\">Add new logins</div>\n	</div>\n</div>";
   });
 
 this["mmooc"]["templates"]["powerfunctions/mainteacher"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
@@ -7619,13 +7619,13 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
 function program1(depth0,data) {
   
   
-  return "\r\n        <option value=\"\" disabled>No courses defined for account</option>\r\n        ";
+  return "\n        <option value=\"\" disabled>No courses defined for account</option>\n        ";
   }
 
 function program3(depth0,data) {
   
   var buffer = "", stack1;
-  buffer += "\r\n        <option value=\"\">Choose a course</option>\r\n        ";
+  buffer += "\n        <option value=\"\">Choose a course</option>\n        ";
   stack1 = helpers.each.call(depth0, (depth0 && depth0.courses), {hash:{},inverse:self.noop,fn:self.program(4, program4, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += " ";
@@ -7634,7 +7634,7 @@ function program3(depth0,data) {
 function program4(depth0,data) {
   
   var buffer = "", stack1, helper;
-  buffer += "\r\n        <option value=\"";
+  buffer += "\n        <option value=\"";
   if (helper = helpers.id) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.id); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
@@ -7642,14 +7642,14 @@ function program4(depth0,data) {
   if (helper = helpers.name) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.name); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "</option>\r\n        ";
+    + "</option>\n        ";
   return buffer;
   }
 
-  buffer += "<form>\r\n  <ol>\r\n    <li class=\"step-1\">\r\n      <select id=\"mmpf-course-select\">\r\n        ";
+  buffer += "<form>\n  <ol>\n    <li class=\"step-1\">\n      <select id=\"mmpf-course-select\">\n        ";
   stack1 = helpers.unless.call(depth0, (depth0 && depth0.courses), {hash:{},inverse:self.program(3, program3, data),fn:self.program(1, program1, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\r\n      </select>\r\n      <li class=\"step-2\">\r\n        <select id=\"mmpf-category-select\" name=\"category\">\r\n          <option value=\"\" disabled>No group sets defined for course</option>\r\n        </select>\r\n        <li class=\"step-3\">\r\n          <select id=\"mmpf-group-select\" name=\"group\" multiple>\r\n            <option value=\"\" disabled>No groups defined for course</option>\r\n          </select>\r\n          <li class=\"step-4\">\r\n            <select id=\"mmpf-assignment-select\" name=\"assignment\">\r\n              <option value=\"\" disabled>No assignments defined for course</option>\r\n            </select>\r\n  </ol>\r\n  <div class=\"assignment-info\"></div>\r\n  <div class=\"progress-info\"></div>\r\n  <div id=\"progress\">\r\n    <div id=\"bar\"></div>\r\n  </div>\r\n  <div class=\"peer-review-list\"></div>\r\n  <div class=\"peer-review-create\"></div>\r\n</form>";
+  buffer += "\n      </select>\n      <li class=\"step-2\">\n        <select id=\"mmpf-category-select\" name=\"category\">\n          <option value=\"\" disabled>No group sets defined for course</option>\n        </select>\n        <li class=\"step-3\">\n          <select id=\"mmpf-group-select\" name=\"group\" multiple>\n            <option value=\"\" disabled>No groups defined for course</option>\n          </select>\n          <li class=\"step-4\">\n            <select id=\"mmpf-assignment-select\" name=\"assignment\">\n              <option value=\"\" disabled>No assignments defined for course</option>\n            </select>\n  </ol>\n  <div class=\"assignment-info\"></div>\n  <div class=\"progress-info\"></div>\n  <div id=\"progress\">\n    <div id=\"bar\"></div>\n  </div>\n  <div class=\"peer-review-list\"></div>\n  <div class=\"peer-review-create\"></div>\n</form>";
   return buffer;
   });
 
@@ -7661,13 +7661,13 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
 function program1(depth0,data) {
   
   
-  return "\r\n        <option value=\"\">No courses defined for account</option>\r\n        ";
+  return "\n        <option value=\"\">No courses defined for account</option>\n        ";
   }
 
 function program3(depth0,data) {
   
   var buffer = "", stack1;
-  buffer += "\r\n        <option value=\"\">Choose a course</option>\r\n        ";
+  buffer += "\n        <option value=\"\">Choose a course</option>\n        ";
   stack1 = helpers.each.call(depth0, (depth0 && depth0.courses), {hash:{},inverse:self.noop,fn:self.program(4, program4, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += " ";
@@ -7676,7 +7676,7 @@ function program3(depth0,data) {
 function program4(depth0,data) {
   
   var buffer = "", stack1, helper;
-  buffer += "\r\n        <option value=\"";
+  buffer += "\n        <option value=\"";
   if (helper = helpers.id) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.id); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
@@ -7684,14 +7684,14 @@ function program4(depth0,data) {
   if (helper = helpers.name) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.name); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "</option>\r\n        ";
+    + "</option>\n        ";
   return buffer;
   }
 
-  buffer += "<form>\r\n  <ol>\r\n    <li class=\"step-1\">\r\n      <select id=\"mmpf-course-select\">\r\n        ";
+  buffer += "<form>\n  <ol>\n    <li class=\"step-1\">\n      <select id=\"mmpf-course-select\">\n        ";
   stack1 = helpers.unless.call(depth0, (depth0 && depth0.courses), {hash:{},inverse:self.program(3, program3, data),fn:self.program(1, program1, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\r\n      </select>\r\n      <li class=\"step-2\">\r\n        <select id=\"mmpf-section-select\" name=\"section\">\r\n          <option value=\"\">No sections defined for course</option>\r\n        </select>\r\n        <li class=\"step-3\">\r\n          <select id=\"mmpf-module-select\" name=\"module\">\r\n            <option value=\"\">No modules defined for course</option>\r\n          </select>\r\n  </ol>\r\n  <div id=\"progress\">\r\n    <div id=\"bar\"></div>\r\n  </div>\r\n  <div class=\"student-progress-table\"></div>\r\n</form>";
+  buffer += "\n      </select>\n      <li class=\"step-2\">\n        <select id=\"mmpf-section-select\" name=\"section\">\n          <option value=\"\">No sections defined for course</option>\n        </select>\n        <li class=\"step-3\">\n          <select id=\"mmpf-module-select\" name=\"module\">\n            <option value=\"\">No modules defined for course</option>\n          </select>\n  </ol>\n  <div id=\"progress\">\n    <div id=\"bar\"></div>\n  </div>\n  <div class=\"student-progress-table\"></div>\n</form>";
   return buffer;
   });
 
@@ -7710,11 +7710,11 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   var buffer = "", stack1, helper, functionType="function", escapeExpression=this.escapeExpression;
 
 
-  buffer += "<div id=\"kompetansePortalPrivacyPolicyBox\" class=\"privacyPolicyBox\">\r\n    <div class=\"privacyPolicyBox__upper\">\r\n    <div class=\"privacyPolicyBox__text\">\r\n        <div class=\"privacyPolicyHeading\">Endring i personvern- og brukervilkår</div>\r\n    </div>\r\n    </div>\r\n    <div class=\"privacyPolicyBox__privacyPolicyInfo\">\r\n        Vi har oppdatert våre personvern- og brukervilkår og du må godkjenne disse før du kan fortsette å jobbe i kompetanseportalen.\r\n    </div>\r\n    <div class=\"privacyPolicyBox__privacyPolicyCheck\">\r\n        <input type=\"checkbox\" id=\"kompetansePortalPrivacyPolicy\" name=\"kompetansePortalPrivacyPolicy\" value=\"true\">\r\n        <label for=\"kompetansePortalPrivacyPolicy\"> Jeg godtar\r\n            <a href=\"";
+  buffer += "<div id=\"kompetansePortalPrivacyPolicyBox\" class=\"privacyPolicyBox\">\n    <div class=\"privacyPolicyBox__upper\">\n    <div class=\"privacyPolicyBox__text\">\n        <div class=\"privacyPolicyHeading\">Endring i personvern- og brukervilkår</div>\n    </div>\n    </div>\n    <div class=\"privacyPolicyBox__privacyPolicyInfo\">\n        Vi har oppdatert våre personvern- og brukervilkår og du må godkjenne disse før du kan fortsette å jobbe i kompetanseportalen.\n    </div>\n    <div class=\"privacyPolicyBox__privacyPolicyCheck\">\n        <input type=\"checkbox\" id=\"kompetansePortalPrivacyPolicy\" name=\"kompetansePortalPrivacyPolicy\" value=\"true\">\n        <label for=\"kompetansePortalPrivacyPolicy\"> Jeg godtar\n            <a href=\"";
   if (helper = helpers.privacyPolicyLink) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.privacyPolicyLink); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "\" class=\"external\" target=\"_blank\" rel=\"noreferrer noopener\">\r\n                <span>personvern- og brukervilkårene</span>\r\n                    <span aria-hidden=\"true\" class=\"ui-icon ui-icon-extlink ui-icon-inline\" title=\"Lenker til eit ekstern område.\"></span>\r\n                <span class=\"screenreader-only\">&nbsp;(Lenker til eit ekstern område.)</span>\r\n            </a>      \r\n    </label>\r\n    </div>            \r\n    <div class=\"privacyPolicyBox__lower\">\r\n        <button disabled=\"true\" id=\"kompetansePortalPrivacyPolicyButton\" class=\"btn btn-primary\" type=\"submit\">Lagre</button>\r\n    </div>\r\n        <div class=\"informationPane\">\r\n        Dersom du ikke godtar vilkårene kan du be om å få slettet din bruker ved å sende epost til <a href=\"mailto:kompetansesupport@udir.no\">kompetansesupport@udir.no</a> med \"Slett meg\" i \r\n        tittelfeltet fra epostadressen til brukeren du ønsker å slette.                 \r\n\r\n        </div>\r\n</div>\r\n\r\n";
+    + "\" class=\"external\" target=\"_blank\" rel=\"noreferrer noopener\">\n                <span>personvern- og brukervilkårene</span>\n                    <span aria-hidden=\"true\" class=\"ui-icon ui-icon-extlink ui-icon-inline\" title=\"Lenker til eit ekstern område.\"></span>\n                <span class=\"screenreader-only\">&nbsp;(Lenker til eit ekstern område.)</span>\n            </a>      \n    </label>\n    </div>            \n    <div class=\"privacyPolicyBox__lower\">\n        <button disabled=\"true\" id=\"kompetansePortalPrivacyPolicyButton\" class=\"btn btn-primary\" type=\"submit\">Lagre</button>\n    </div>\n        <div class=\"informationPane\">\n        Dersom du ikke godtar vilkårene kan du be om å få slettet din bruker ved å sende epost til <a href=\"mailto:kompetansesupport@udir.no\">kompetansesupport@udir.no</a> med \"Slett meg\" i \n        tittelfeltet fra epostadressen til brukeren du ønsker å slette.                 \n\n        </div>\n</div>\n\n";
   return buffer;
   });
 
@@ -7726,19 +7726,19 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
 function program1(depth0,data) {
   
   
-  return "\r\n      <div class=\"login-box__close\"></div>\r\n    ";
+  return "\n      <div class=\"login-box__close\"></div>\n    ";
   }
 
 function program3(depth0,data) {
   
   var buffer = "", stack1, helper;
-  buffer += "\r\n      <a aria-label=\"enroll\"  class=\"mmooc-button mmooc-button-primary\" href=\"/search/all_courses?enroll_code=";
+  buffer += "\n      <a aria-label=\"enroll\"  class=\"mmooc-button mmooc-button-primary\" href=\"/search/all_courses?enroll_code=";
   if (helper = helpers.selfRegisterCode) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.selfRegisterCode); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1);
   stack1 = helpers['if'].call(depth0, (depth0 && depth0.forwardTo), {hash:{},inverse:self.noop,fn:self.program(4, program4, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\">&nbsp;\r\n      </a>\r\n    ";
+  buffer += "\">&nbsp;\n      </a>\n    ";
   return buffer;
   }
 function program4(depth0,data) {
@@ -7761,27 +7761,27 @@ function program6(depth0,data) {
   return buffer;
   }
 
-  buffer += "<div class=\"login-box\">\r\n  <div class=\"login-box__upper\">\r\n    <p class=\"login-box__text\">";
+  buffer += "<div class=\"login-box\">\n  <div class=\"login-box__upper\">\n    <p class=\"login-box__text\">";
   if (helper = helpers.RegisterText) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.RegisterText); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "</p>\r\n    ";
+    + "</p>\n    ";
   stack1 = helpers['if'].call(depth0, (depth0 && depth0.closeOption), {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\r\n  </div>\r\n  <div class=\"login-box__lower\">\r\n    ";
+  buffer += "\n  </div>\n  <div class=\"login-box__lower\">\n    ";
   stack1 = helpers.unless.call(depth0, (depth0 && depth0.authenticated), {hash:{},inverse:self.noop,fn:self.program(3, program3, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\r\n    <a class=\"mmooc-button mmooc-button-secondary\" href=\"/enroll/";
+  buffer += "\n    <a class=\"mmooc-button mmooc-button-secondary\" href=\"/enroll/";
   if (helper = helpers.selfRegisterCode) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.selfRegisterCode); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1);
   stack1 = helpers['if'].call(depth0, (depth0 && depth0.forwardTo), {hash:{},inverse:self.noop,fn:self.program(6, program6, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\">\r\n      ";
+  buffer += "\">\n      ";
   if (helper = helpers.RegisterWithCanvasText) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.RegisterWithCanvasText); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "\r\n    </a>\r\n  </div>\r\n</div>\r\n";
+    + "\n    </a>\n  </div>\n</div>\n";
   return buffer;
   });
 
@@ -7795,7 +7795,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   if (helper = helpers.name) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.name); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "</h2>\r\n<div id=\"";
+    + "</h2>\n<div id=\"";
   if (helper = helpers.graphicId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.graphicId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
@@ -7811,26 +7811,26 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
 function program1(depth0,data,depth1) {
   
   var buffer = "", stack1, helper, options;
-  buffer += "\r\n        <option value=\""
+  buffer += "\n        <option value=\""
     + escapeExpression(((stack1 = (depth0 && depth0.language)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
-    + "\" \r\n        ";
+    + "\" \n        ";
   stack1 = (helper = helpers.ifEquals || (depth0 && depth0.ifEquals),options={hash:{},inverse:self.noop,fn:self.program(2, program2, data),data:data},helper ? helper.call(depth0, (depth0 && depth0.language), (depth1 && depth1.selectedLanguage), options) : helperMissing.call(depth0, "ifEquals", (depth0 && depth0.language), (depth1 && depth1.selectedLanguage), options));
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\r\n        >"
+  buffer += "\n        >"
     + escapeExpression(((stack1 = (depth0 && depth0.label)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
-    + "</option>\r\n        ";
+    + "</option>\n        ";
   return buffer;
   }
 function program2(depth0,data) {
   
   
-  return "\r\n            selected\r\n        ";
+  return "\n            selected\n        ";
   }
 
   buffer += "        ";
   stack1 = helpers.each.call(depth0, (depth0 && depth0.languageTracks), {hash:{},inverse:self.noop,fn:self.programWithDepth(1, program1, data, depth0),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\r\n";
+  buffer += "\n";
   return buffer;
   });
 
@@ -7840,7 +7840,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   
 
 
-  return "I denne kompetansepakken benytter vi oss av rollestyring fra UIDP. For å se\r\n dine roller må du logge deg på UIDP.<div>\r\n <button class=\"button\" id=\"uidpPopupLogin\">Login UIDP</button>\r\n </div>\r\n";
+  return "I denne kompetansepakken benytter vi oss av rollestyring fra UIDP. For å se\n dine roller må du logge deg på UIDP.<div>\n <button class=\"button\" id=\"uidpPopupLogin\">Login UIDP</button>\n </div>\n";
   });
 
 this["mmooc"]["templates"]["usermenu"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
@@ -7851,39 +7851,39 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
 function program1(depth0,data) {
   
   var buffer = "", stack1, helper;
-  buffer += "\r\n    <li class=\"mmooc-menu-item\">\r\n        <a href=\"/conversations";
+  buffer += "\n    <li class=\"mmooc-menu-item\">\n        <a href=\"/conversations";
   if (helper = helpers.queryString) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.queryString); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "\" class=\"mmooc-menu-item-title conversations\">\r\n            <span id=\"mmooc-unread-messages-count\"></span>\r\n        </a>\r\n    </li>\r\n    ";
+    + "\" class=\"mmooc-menu-item-title conversations\">\n            <span id=\"mmooc-unread-messages-count\"></span>\n        </a>\n    </li>\n    ";
   return buffer;
   }
 
 function program3(depth0,data) {
   
   
-  return "\r\n        <li class=\"mmooc-menu-item\" id=\"mmooc-menu-item-varsler\">\r\n            <a href=\"#\" class=\"mmooc-menu-item-title notifications\">\r\n                <span id=\"mmooc-notification-count\"></span>\r\n            </a>\r\n            <div class=\"mmooc-menu-item-drop\" id=\"mmooc-activity-stream\">\r\n            </div>\r\n        </li>\r\n    ";
+  return "\n        <li class=\"mmooc-menu-item\" id=\"mmooc-menu-item-varsler\">\n            <a href=\"#\" class=\"mmooc-menu-item-title notifications\">\n                <span id=\"mmooc-notification-count\"></span>\n            </a>\n            <div class=\"mmooc-menu-item-drop\" id=\"mmooc-activity-stream\">\n            </div>\n        </li>\n    ";
   }
 
-  buffer += "<ul id=\"user-menu\">\r\n    ";
+  buffer += "<ul id=\"user-menu\">\n    ";
   stack1 = helpers['if'].call(depth0, (depth0 && depth0.displayInboxMenu), {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\r\n    ";
+  buffer += "\n    ";
   stack1 = helpers['if'].call(depth0, (depth0 && depth0.alertMenuItem), {hash:{},inverse:self.noop,fn:self.program(3, program3, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\r\n    <li class=\"mmooc-menu-item profile-settings\" id=\"mmooc-menu-item-profile-settings\">\r\n        <a href=\"#\" class=\"mmooc-menu-item-title\">\r\n            <div class=\"ic-avatar\" aria-hidden=\"true\">\r\n                <img src=\""
+  buffer += "\n    <li class=\"mmooc-menu-item profile-settings\" id=\"mmooc-menu-item-profile-settings\">\n        <a href=\"#\" class=\"mmooc-menu-item-title\">\n            <div class=\"ic-avatar\" aria-hidden=\"true\">\n                <img src=\""
     + escapeExpression(((stack1 = ((stack1 = (depth0 && depth0.user)),stack1 == null || stack1 === false ? stack1 : stack1.avatar_image_url)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
     + "\" alt=\""
     + escapeExpression(((stack1 = ((stack1 = (depth0 && depth0.user)),stack1 == null || stack1 === false ? stack1 : stack1.display_name)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
-    + "\" />\r\n            </div>\r\n            <i class=\"icon-mini-arrow-down\"></i>\r\n        </a>\r\n        <div class=\"mmooc-menu-item-drop\" id=\"mmooc-profile-settings\">\r\n            <ul>\r\n                <li>\r\n                    <a href=\"/profile/settings";
+    + "\" />\n            </div>\n            <i class=\"icon-mini-arrow-down\"></i>\n        </a>\n        <div class=\"mmooc-menu-item-drop\" id=\"mmooc-profile-settings\">\n            <ul>\n                <li>\n                    <a href=\"/profile/settings";
   if (helper = helpers.queryString) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.queryString); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "\">Innstillinger</a>\r\n                </li>\r\n                <li>\r\n                    <a href=\"/logout";
+    + "\">Innstillinger</a>\n                </li>\n                <li>\n                    <a href=\"/logout";
   if (helper = helpers.queryString) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.queryString); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "\">Logg ut</a>\r\n                </li>\r\n            </ul>\r\n        </div>\r\n    </li>\r\n</ul>";
+    + "\">Logg ut</a>\n                </li>\n            </ul>\n        </div>\n    </li>\n</ul>";
   return buffer;
   });
 
@@ -7901,7 +7901,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   if (helper = helpers.userMergeLtiToolId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.userMergeLtiToolId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "?design=udir\" class=\"edit_settings_link btn button-sidebar-wide\">\r\n  <i class=\"icon-edit\"></i>Slå sammen brukere</a>";
+    + "?design=udir\" class=\"edit_settings_link btn button-sidebar-wide\">\n  <i class=\"icon-edit\"></i>Slå sammen brukere</a>";
   return buffer;
   });
 
@@ -7911,7 +7911,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   
 
 
-  return "<div id=\"fountainG\">\r\n    <div id=\"fountainG_1\" class=\"fountainG\">\r\n    </div>\r\n    <div id=\"fountainG_2\" class=\"fountainG\">\r\n    </div>\r\n    <div id=\"fountainG_3\" class=\"fountainG\">\r\n    </div>\r\n    <div id=\"fountainG_4\" class=\"fountainG\">\r\n    </div>\r\n    <div id=\"fountainG_5\" class=\"fountainG\">\r\n    </div>\r\n    <div id=\"fountainG_6\" class=\"fountainG\">\r\n    </div>\r\n    <div id=\"fountainG_7\" class=\"fountainG\">\r\n    </div>\r\n    <div id=\"fountainG_8\" class=\"fountainG\">\r\n    </div>\r\n</div>";
+  return "<div id=\"fountainG\">\n    <div id=\"fountainG_1\" class=\"fountainG\">\n    </div>\n    <div id=\"fountainG_2\" class=\"fountainG\">\n    </div>\n    <div id=\"fountainG_3\" class=\"fountainG\">\n    </div>\n    <div id=\"fountainG_4\" class=\"fountainG\">\n    </div>\n    <div id=\"fountainG_5\" class=\"fountainG\">\n    </div>\n    <div id=\"fountainG_6\" class=\"fountainG\">\n    </div>\n    <div id=\"fountainG_7\" class=\"fountainG\">\n    </div>\n    <div id=\"fountainG_8\" class=\"fountainG\">\n    </div>\n</div>";
   });
 this.mmooc = this.mmooc || {};
 
@@ -16876,4 +16876,4 @@ $(function() {
   }
 });
 
-//# sourceMappingURL=mmooc-staging_matomo_vakkerheia_3105.js.map
+//# sourceMappingURL=mmooc-willitcompile.js.map
