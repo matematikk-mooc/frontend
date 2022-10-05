@@ -16,6 +16,7 @@ jobs:
     - name: Upload to blob storage
       uses: azure/CLI@v1
       with:
+        azcliversion: 2.33.1
         inlineScript: |
             az storage blob upload-batch --account-name udirdit --auth-mode key -d udirdesign -s dist
   # Azure logout
