@@ -152,7 +152,7 @@ module.exports = function (grunt) {
           },
           {
             from: '$KPASAPIURL',
-            to: 'https://kpas-lti.azurewebsites.net/api'
+            to: 'https://kpas.kompetanse.udir.no/api'
           }
         ]
       },
@@ -205,6 +205,7 @@ module.exports = function (grunt) {
           {
             from: '$KPASAPIURL',
 //            to: 'https://kpas-lti.azurewebsites.net/api'
+//            to: 'https://kpas.kompetanse.udir.no/api'
             to: 'https://4b01-2001-4647-a388-0-d5d0-6375-9e7f-c1a0.ngrok.io/api'
           }
         ]
