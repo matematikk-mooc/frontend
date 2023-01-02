@@ -6,6 +6,7 @@ class MultilangUtils {
         return [
             { code: 'nb', name: "Norsk" },
             { code: 'se', name: "Sápmi" },
+            { code: 'nn', name: "Nynorsk" }
         ];
     }
 
@@ -167,6 +168,9 @@ class MultilangUtils {
                                     }
                                     .language:lang(nb) {
                                     background-color: MISTYROSE;
+                                    }
+                                    .language:lang(nn) {
+                                        background-color: LIGHTGREEN; 
                                     }`;
                 doc.head.appendChild(editorCss);
             } else {
