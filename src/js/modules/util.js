@@ -198,6 +198,8 @@ this.mmooc.util = (function () {
     },
     isPfDKCourse: CourseOptions.hasOptionFunction('PfDK'),
     isMultilangCourse: CourseOptions.hasOptionFunction('lang'),
+    isNynorskCourse: CourseOptions.hasOptionFunction('NN'),
+    isSamiskCourse: CourseOptions.hasOptionFunction('SE'),
     isPrincipal() {
       return (this.isTeacherOrAdmin() || this.isEnrolledWithRole(mmooc.util.course, mmooc.settings.principalRoleType));
     },
