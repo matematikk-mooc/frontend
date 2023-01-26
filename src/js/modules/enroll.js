@@ -152,7 +152,7 @@ this.mmooc.enroll = (function () {
               index: i
             });
             $('.mmooc-all-courses-list').append(html);
-            mmooc.enroll.handleRegisterButtonClick();
+            mmooc.enroll.handleRegisterButtonClick(isAuthenticated);
           }
           
           // Displays information, that there is no current courses available to enroll
@@ -253,11 +253,15 @@ this.mmooc.enroll = (function () {
         });
       });
     },
-    handleRegisterButtonClick : function() {
+    handleRegisterButtonClick : function(authenticated) {
       $('.mmooc-header__register-button').click(function(event) {
-        let closeOption = true;
-        let authenticated = false;
-        mmooc.enroll.displayRegisterPopup(authenticated, closeOption, mmooc.i18n.RegisterPopup, mmooc.i18n.RegisterWithCanvas, event.target.id, mmooc.i18n.RegisterPopup);
+        if(!authenticated) {
+          let closeOption = true;
+          mmooc.enroll.displayRegisterPopup(authenticated, closeOption, mmooc.i18n.RegisterPopup, mmooc.i18n.RegisterWithCanvas, event.target.id, mmooc.i18n.RegisterPopup);
+        }
+        else {
+          window.location = `/enroll/${event.target.id}` 
+        }
       })
     },
     createHashTags: function () {
