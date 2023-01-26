@@ -327,14 +327,14 @@ if(!redirected) {
           this.udirDesignLoaded = true;
           console.log("Root account:Loading udir design.");
 
-          var filename = 'https://kompetanseudirno.azureedge.net/udirdesign-staging/mmooc-min-Hollendaren_staging_1.3.css';
+          var filename = 'https://kompetanseudirno.azureedge.net/udirdesign-staging/mmooc-min-Hollendaren_stagin_1.4.css';
 
           var fileref=document.createElement("link")
           fileref.setAttribute("rel", "stylesheet")
           fileref.setAttribute("type", "text/css")
           fileref.setAttribute("href", filename)
           fileref.onload = (_) => {
-            $.getScript('https://kompetanseudirno.azureedge.net/udirdesign-staging/mmooc-min-Hollendaren_staging_1.3.js');
+            $.getScript('https://kompetanseudirno.azureedge.net/udirdesign-staging/mmooc-min-Hollendaren_stagin_1.4.js');
           }
           document.getElementsByTagName("head")[0].appendChild(fileref)
       } else {
@@ -345,4 +345,4 @@ if(!redirected) {
   }
 }
 
-//# sourceMappingURL=rootaccount-Hollendaren_staging_1.3.js.map
+//# sourceMappingURL=rootaccount-Hollendaren_stagin_1.4.js.map
