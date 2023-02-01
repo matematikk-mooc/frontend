@@ -8,13 +8,20 @@
             {{#if privacyPolicyLink}}
             | <a  target="_blank" class="external_link" href="{{privacyPolicyLink}}">Personvernvilkår</a>
             {{/if}} 
+            {{#if uuStatusNb}}
+            | Universell utforming tilgjengelighetserklæring på 
+            <a target="_blank" class="external_link" href="{{uuStatusNb}}">Bokmål</a>
+                {{#if uuStatusNn}}
+                og 
+                <a target="_blank" class="external_link" href="{{uuStatusNn}}">Nynorsk</a>
+                {{/if}} 
+            {{/if}}
             {{#if contactPoint}}
              | Kontakt oss: <a  target="_blank" class="external_link"  href="mailto:{{contactPoint}}">{{contactPoint}}</a>
             {{/if}} 
             {{#if about}}
              | <a  target="_blank" class="external_link"  href="{{about}}">Om denne plattformen</a>
             {{/if}} 
-            </div>
         </p>
     </div>
 </footer>
