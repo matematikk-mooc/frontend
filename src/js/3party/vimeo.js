@@ -321,7 +321,8 @@ this.mmooc.vimeo = function() {
 				s.setAttribute("id", transcriptSelectId);
 				s.setAttribute("class", "vimeoSelectLanguage");
 				s.setAttribute("style", "display: none;");
-	
+				s.setAttribute("aria-label", "Velg språk");
+
 				var html = mmooc.util.renderTemplateWithData('transcriptMenu', {
 					transcriptSelectId: transcriptSelectId,
 					languageTracks: tracks,
