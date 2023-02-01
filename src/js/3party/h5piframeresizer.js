@@ -126,6 +126,7 @@
   for (var i = 0; i < iframes.length; i++) {
     if (iframes[i].src.indexOf('h5p') !== -1) {
       iframes[i].contentWindow.postMessage(ready, '*');
+      iframes[i].setAttribute("title", "h5p content")
     }
   }
 

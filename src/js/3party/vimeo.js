@@ -567,6 +567,7 @@ this.mmooc.vimeo = function() {
 					if(vimeoId != "") {
 						var vimeoIframeId = mmooc.vimeo.getUniqueIframeId(vimeoId);
 						iframe.setAttribute("id", vimeoIframeId);
+						iframe.setAttribute("title", "Videoplayer");
 
 						noOfVimeoVideos++;
 						var oTranscript = new transcript(vimeoIframeId, vimeoId);
