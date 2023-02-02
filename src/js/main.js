@@ -542,7 +542,11 @@ jQuery(function($) {
   mmooc.routes.addRouteForQueryString(/lang/, () => {
     const language = MultilangUtils.getLanguageParameter()
     console.log(`Language: ${language}`);
-    MultilangUtils.setActiveLanguage(language);
+    if (MultilangUtils.isValidLanguage(language)) {
+      MultilangUtils.setActiveLanguage(language);
+    } else {
+      MultilangUtils.setActiveLanguage('nb');
+    }
   });
 
   try {
