@@ -118,16 +118,17 @@ body.embedded #content {
   @langCurrentWidth: 68px;
 
   &:hover {
-    #mmooc-course-current-language {
+    #mmooc-course-language {
       background-color: #E2E2E2;
     }
-
-    #mmooc-course-language-dropdown {
-      display: flex;
+  }
+  &:focus {
+    #mmooc-course-language {
+      outline: .5em solid black;
     }
   }
 
-  #mmooc-course-current-language {
+  #mmooc-course-language {
     margin-right: 4px;
     margin-left: 4px;
     border: 1px solid #656161;
@@ -144,23 +145,14 @@ body.embedded #content {
     }
   }
 
-  #mmooc-course-language-dropdown {
-    position: absolute;
-    display: none;
-    flex-direction: column;
-    top: @languageHeaderHeight - @langButtonVerticalPadding + 2px;
-    right: 8px;
-    width: @langCurrentWidth + 2 * @langButtonHorizontalPadding - 6px;
-
-    .mmooc-course-language-button {
-      background-color: #656161;
-      color: white;
-      font-family: Roboto;
-      font-size: 16px;
-      border: none;
-      height: @languageHeaderHeight - 2 * @langButtonVerticalPadding;
-      padding-left: 28px;
-    }
+  .mmooc-course-language-option {
+    background-color: #656161;
+    color: white;
+    font-family: Roboto;
+    font-size: 16px;
+    border: none;
+    height: @languageHeaderHeight - 2 * @langButtonVerticalPadding;
+    padding-left: 28px;
   }
 }
 

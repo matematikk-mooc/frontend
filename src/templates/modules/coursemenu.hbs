@@ -6,10 +6,10 @@
             {{#if courseIsMultilanguage}}
             <div id="mmooc-course-language-container" >
                 <span id="mmooc-course-language-text"> Språk / Giella </span>
-                <select id="mmooc-course-current-language" tabindex="" name="language">
-                    <option id="mmooc-course-language-selected" value="{{selectedLanguageCode}}">{{selectedLanguage}}</option>
+                <select id="mmooc-course-language" tabindex="" name="language" aria-label="Velg språk">
+                    <option class="mmooc-course-language-option" value="{{selectedLanguageCode}}">{{selectedLanguage}}</option>
                     {{#each otherLanguages}}
-                        <option class="mmooc-course-language-button" value="{{this.code}}">{{this.name}}</option>
+                        <option class="mmooc-course-language-option" value="{{this.code}}">{{this.name}}</option>
                     {{/each}}
                 </select>
             </div>
