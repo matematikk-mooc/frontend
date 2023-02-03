@@ -280,6 +280,7 @@ this.mmooc.vimeo = function() {
 			transcriptParentDiv.appendChild(e);
 			e.setAttribute("id", transcriptContentId);
 			e.setAttribute("class", "transcript");
+			e.setAttribute("tabindex", 0)
 			e.setAttribute("style", "display: none;");
 
 			var br = document.createElement('br');
