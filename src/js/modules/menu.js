@@ -27,7 +27,7 @@ this.mmooc.menu = (function() {
       });
       document.getElementById('header').insertAdjacentHTML('afterend', html);
 
-      document.getElementById('mmooc-course-current-language').addEventListener('change', event => {
+      document.getElementById('mmooc-course-language').addEventListener('change', event => {
         const newLanguage = event.target.value;
         MultilangUtils.setActiveLanguage(newLanguage);
       });
