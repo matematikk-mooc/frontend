@@ -76,9 +76,12 @@ body.embedded #content {
   }
 }
 
-@languageHeaderHeight: 40px;
+@languageHeaderHeight: 8em;
 #mmooc-course-title-header {
   display: inline-flex;
+  margin: 0 auto;
+  padding-bottom: .5em;
+  padding-top: .5em; 
   width: 100%;
   align-items: center;
   height: @languageHeaderHeight;
@@ -88,12 +91,23 @@ body.embedded #content {
   }
 }
 
+@media screen and (max-width: 800px) {
+  #mmooc-course-title-header {
+    display: block;
+
+    h1 {
+      font-size: 22px !important;
+    }
+  }
+}
+
 #mmooc-course-language-container {
   position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: flex-end;
   height: @languageHeaderHeight;
+  padding-bottom: 0.5em;
 
   #mmooc-course-language-text {
     color: #034961;
