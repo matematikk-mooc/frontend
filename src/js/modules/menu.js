@@ -43,6 +43,20 @@ this.mmooc.menu = (function() {
         }));
     }
 
+    const before_external = document.getElementsByClassName("before_external_content_info_alert screenreader-only-tool");
+    if(before_external != []){
+      Array.from(before_external).forEach(element => {
+          element.removeAttribute("tabindex");
+      });
+    }
+    const after_external = document.getElementsByClassName("after_external_content_info_alert screenreader-only-tool");
+    if(after_external != []){
+      Array.from(after_external).forEach(element => {
+          element.removeAttribute("tabindex");
+      });
+    }
+
+
     var menuItems = [];
 
     var courseId = course.id;
