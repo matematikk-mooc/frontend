@@ -1,6 +1,14 @@
 this.mmooc = this.mmooc || {};
 
 this.mmooc.discussionTopics = (function () {
+
+    const ariaHidden = document.getElementsByClassName("ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only");
+    if(ariaHidden != []){
+      Array.from(ariaHidden).forEach(element => {
+          element.setAttribute("aria-hidden", false);
+      });
+    }
+
     return {
         moveSequenceLinks: function() {
             var sequenceContainer = $('#module_sequence_footer');
