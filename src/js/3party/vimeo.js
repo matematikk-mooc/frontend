@@ -250,7 +250,7 @@ this.mmooc.vimeo = function() {
 				captionText = captions[i].textContent.replace(/</g, '&lt;').replace(/>/g, '&gt;');
 				captionText = this.removeLeadingAndTrailingDash(captionText);
 				var timestampId = getTimeIdFromTimestampIndex(i);
-				srt_output += "<span class='btnVimeoSeek' data-seek='" + start + "' id='" + timestampId + "'>" + captionText + "</span> ";
+				srt_output += "<span role='button' tabindex=0 aria-hidden=false class='btnVimeoSeek' data-seek='" + start + "' id='" + timestampId + "'>" + captionText + "</span> ";
 				noOfSentencesInParagraph++;
 				if((noOfSentencesInParagraph > 10) && captionText.includes(".")) {
 					srt_output += "</p><p>";
@@ -504,7 +504,7 @@ this.mmooc.vimeo = function() {
 
 	//Called when user clicks somewhere in the transcript.
 	$(function() {
-		$(document).on('click', '.btnVimeoSeek', function() {
+		$(document).on('click keypress', '.btnVimeoSeek', function() {
 			var seekToTime = $(this).data('seek');
 			var transcript = mmooc.vimeo.getTranscriptFromTranscriptId($(this).parent().parent().attr("id"));
             try {
