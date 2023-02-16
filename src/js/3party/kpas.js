@@ -50,7 +50,7 @@ this.mmooc.kpas = (function() {
                 return null;
             }
 
-            var html = "<iframe id='kpas' src='" + iframeSrc + "' height='600' width='100%'></iframe>";
+            var html = "<iframe title='kpas-iframe' id='kpas' src='" + iframeSrc + "' height='600' width='100%'></iframe>";
             $("#"+graphicId).html(html);
             return null;
         }

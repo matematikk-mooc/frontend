@@ -135,7 +135,7 @@ jQuery(function($) {
       mmooc.menu.showCourseMenu(courseId, 'Utmerkelser', 'Utmerkelser');
       //Should be refactored to use json api instead
       var canvabadgesForCurrentCourse =
-        '<iframe allowfullscreen="true" height="680" id="tool_content" mozallowfullscreen="true" name="tool_content" src="' +
+        '<iframe title="canvasbadge" allowfullscreen="true" height="680" id="tool_content" mozallowfullscreen="true" name="tool_content" src="' +
         mmooc.settings.CanvaBadgeProtocolAndHost +
         '/badges/course/' +
         courseId +
