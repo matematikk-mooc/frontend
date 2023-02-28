@@ -1,4 +1,4 @@
-.uob-info, .uob-warning {
+.uob-info, .uob-warning, .kpas-lti-info, .kpas-lti-warning {
     margin-top: 1em;
     margin-bottom: 1em;
     padding: 0.5em 0.5em 0.5em 12px;
@@ -10,10 +10,10 @@
     background-position: 4px 4px;
     min-height: 50px;
 }
-.uob-info {
+.uob-info, .kpas-lti-info {
     background-color: #c7d3e1;
 }
-.uob-warning {
+.uob-warning, .kpas-lti-warning {
     background-color: #ffeeee;
 }
 body {

@@ -26,5 +26,6 @@ this.mmooc.settings = {
   platformName: 'UDIR - kompetanseplattform',
   homeOrganization: 'Udir.no',
   aboutThePlatform: 'https://kompetanseudirno.azureedge.net/udirdesign/omkompetanseudirno.html',
+  uuStatusNb: 'https://uustatus.no/nb/erklaringer/publisert/2796ebc6-161f-4dc9-9429-70d7dd136431',
+  uuStatusNn: 'https://uustatus.no/nn/erklaringer/publisert/2796ebc6-161f-4dc9-9429-70d7dd136431',
 };
-

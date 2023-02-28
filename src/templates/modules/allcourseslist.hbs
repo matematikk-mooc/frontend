@@ -22,7 +22,7 @@
             </div>
             <div class="mmooc-accordion-label-closed">
                 <label class="mmooc-accordion-header-label">{{openCoursesGroupText}}</label>
-                <svg width="16" height="9" xmlns="http://www.w3.org/2000/svg">
+                <svg role="img" width="16" height="9" xmlns="http://www.w3.org/2000/svg">
                     <g fill="none" fill-rule="evenodd">
                         <path d="M-8-12h32v32H-8z" />
                         <path fill-opacity=".5" fill="#373737" d="M1.887 0L8 5.565 14.113 0 16 1.717 8 9 0 1.717z" />
@@ -31,7 +31,7 @@
             </div>
             <div class="mmooc-accordion-label-open">
                 <label class="mmooc-accordion-header-label">{{closeCoursesGroupText}}</label>
-                <svg width="16" height="9" xmlns="http://www.w3.org/2000/svg">
+                <svg role="img" width="16" height="9" xmlns="http://www.w3.org/2000/svg">
                     <g fill="none" fill-rule="evenodd">
                         <path d="M-8 21h32v-32H-8z" />
                         <path fill="#24A1B3" d="M1.887 9L8 3.435 14.113 9 16 7.283 8 0 0 7.283z" />
@@ -47,9 +47,9 @@
                     <span class="{{id}}" data-name="course">
                         <button id="mmooc-tab-head-{{id}}" class="mmooc-tab-head mmooc-tab-head-{{@index}}" index="{{id}}">
                             {{#if enrolled}}
-                                <svg width="16" height="16" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><path d="M-4-4h24v24H-4z"/><path d="M8 0c4.416 0 8 3.584 8 8s-3.584 8-8 8-8-3.584-8-8 3.584-8 8-8zM6.4 12l6.43-6.43-1.127-1.137L6.4 9.736 3.528 6.872 2.4 8l4 4z" fill="#00AC18" fill-rule="nonzero"/></g></svg>
+                                <svg role="img" width="16" height="16" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><path d="M-4-4h24v24H-4z"/><path d="M8 0c4.416 0 8 3.584 8 8s-3.584 8-8 8-8-3.584-8-8 3.584-8 8-8zM6.4 12l6.43-6.43-1.127-1.137L6.4 9.736 3.528 6.872 2.4 8l4 4z" fill="#00AC18" fill-rule="nonzero"/></g></svg>
                             {{else}}
-                                <svg width="16" height="16" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><path d="M-4-4h24v24H-4z"/><path d="M8 0c4.416 0 8 3.584 8 8s-3.584 8-8 8-8-3.584-8-8 3.584-8 8-8z" stroke-opaicty="0.0" fill-opacity="0.0" fill-rule="nonzero"/></g></svg>
+                                <svg role="img" width="16" height="16" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><path d="M-4-4h24v24H-4z"/><path d="M8 0c4.416 0 8 3.584 8 8s-3.584 8-8 8-8-3.584-8-8 3.584-8 8-8z" stroke-opaicty="0.0" fill-opacity="0.0" fill-rule="nonzero"/></g></svg>
                             {{/if}}
                             {{name}}
                         </button>
@@ -86,7 +86,7 @@
                             {{#if enrolled}}
                                 <a aria-label="enroll" class="mmooc-button mmooc-button-secondary" href="/courses/{{../id}}">{{../../goToCourse}}</a>
                             {{else}}
-                                <button id="{{self_enrollment_code}}" class="mmooc-header__register-button mmooc-button mmooc-button-secondary">Meld deg på</button>
+                                <button id="registrer-button-{{self_enrollment_code}}" class="mmooc-header__register-button mmooc-button mmooc-button-secondary" self_enrollment_code="{{self_enrollment_code}}">Meld deg på</button>
                             {{/if}}
                         </div>
                     </div>
@@ -100,7 +100,7 @@
                 <button id="mmooc-tabs-mobile-header-{{id}}" class="mmooc-tabs-mobile-header" index={{id}}>
                     {{name}}
                     {{#if enrolled}}
-                        <svg width="16" height="16" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><path d="M-4-4h24v24H-4z"/><path d="M8 0c4.416 0 8 3.584 8 8s-3.584 8-8 8-8-3.584-8-8 3.584-8 8-8zM6.4 12l6.43-6.43-1.127-1.137L6.4 9.736 3.528 6.872 2.4 8l4 4z" fill="#00AC18" fill-rule="nonzero"/></g></svg>
+                        <svg role="img" width="16" height="16" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><path d="M-4-4h24v24H-4z"/><path d="M8 0c4.416 0 8 3.584 8 8s-3.584 8-8 8-8-3.584-8-8 3.584-8 8-8zM6.4 12l6.43-6.43-1.127-1.137L6.4 9.736 3.528 6.872 2.4 8l4 4z" fill="#00AC18" fill-rule="nonzero"/></g></svg>
                     {{/if}}
                 </button>
                 </span>
@@ -133,7 +133,7 @@
                         {{#if enrolled}}
                             <a class="mmooc-button mmooc-button-secondary" href="/courses/{{../id}}">{{../../goToCourse}}</a>
                         {{else}}
-                            <button id="{{self_enrollment_code}}" class="mmooc-header__register-button mmooc-button mmooc-button-secondary">Meld deg på</button>
+                            <button id="registrer-button-{{self_enrollment_code}}" class="mmooc-header__register-button mmooc-button mmooc-button-secondary" self_enrollment_code="{{self_enrollment_code}}">Meld deg på</button>
                         {{/if}}
                     </div>
                 </article>

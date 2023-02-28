@@ -11,7 +11,14 @@ this.mmooc.footer = (function() {
     },
     changeFooter : function() {
       var $parentElementOfOldFooter = $('#application.ic-app #wrapper');
-      var html = mmooc.util.renderTemplateWithData('footer', {privacyPolicyLink: mmooc.settings.privacyPolicyLink, homeOrganization: mmooc.settings.homeOrganization, contactPoint: mmooc.settings.contactPoint, about: mmooc.settings.aboutThePlatform});
+      var html = mmooc.util.renderTemplateWithData('footer', {
+        privacyPolicyLink: mmooc.settings.privacyPolicyLink, 
+        homeOrganization: mmooc.settings.homeOrganization, 
+        contactPoint: mmooc.settings.contactPoint, 
+        about: mmooc.settings.aboutThePlatform, 
+        uuStatusNb: mmooc.settings.uuStatusNb,
+        uuStatusNn: mmooc.settings.uuStatusNn,
+      });
       $parentElementOfOldFooter.append(html);
     }
   };

@@ -1,14 +1,14 @@
 <ul id="user-menu">
     {{#if displayInboxMenu}}
     <li class="mmooc-menu-item">
-        <a href="/conversations{{queryString}}" class="mmooc-menu-item-title conversations">
+        <a href="/conversations{{queryString}}" class="mmooc-menu-item-title conversations" aria-label="meldinger">
             <span id="mmooc-unread-messages-count"></span>
         </a>
     </li>
     {{/if}}
     {{#if alertMenuItem}}
         <li class="mmooc-menu-item" id="mmooc-menu-item-varsler">
-            <a href="#" class="mmooc-menu-item-title notifications">
+            <a href="#" class="mmooc-menu-item-title notifications" aria-label="varsler">
                 <span id="mmooc-notification-count"></span>
             </a>
             <div class="mmooc-menu-item-drop" id="mmooc-activity-stream">
@@ -16,7 +16,7 @@
         </li>
     {{/if}}
     <li class="mmooc-menu-item profile-settings" id="mmooc-menu-item-profile-settings">
-        <a href="#" class="mmooc-menu-item-title">
+        <a href="#" class="mmooc-menu-item-title" aria-label="profilmeny">
             <div class="ic-avatar" aria-hidden="true">
                 <img src="{{user.avatar_image_url}}" alt="{{user.display_name}}" />
             </div>
