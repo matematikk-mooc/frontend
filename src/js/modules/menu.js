@@ -13,6 +13,7 @@ this.mmooc.menu = (function() {
       const languageOptions = {
         courseIsMultilanguage: this.mmooc.util.isMultilangCourse(mmooc.util.course),
         selectedLanguage: MultilangUtils.languagesMap()[selectedLanguageCode].name,
+        selectedLanguageCode,
         otherLanguages: MultilangUtils.languagesExcept(selectedLanguageCode),
       }
 
@@ -26,22 +27,25 @@ this.mmooc.menu = (function() {
       });
       document.getElementById('header').insertAdjacentHTML('afterend', html);
 
-      // Update current language and language selection dropdown
-      document.querySelectorAll('button.mmooc-course-language-button')
-        .forEach(element => element.addEventListener('click', event => {
-          const previousLanguage = MultilangUtils.getLanguageCode();
-          const newLanguage = event.target.value;
-
-          document.getElementById('mmooc-course-language-selected').textContent = event.target.textContent;
-          const button = Array.from(document.querySelectorAll('button.mmooc-course-language-button'))
-            .find(element => element.value === newLanguage);
-
-          button.textContent = MultilangUtils.languagesMap()[previousLanguage].name;
-          button.value = previousLanguage;
-
-          MultilangUtils.setActiveLanguage(newLanguage);
-        }));
+      document.getElementById('mmooc-course-language').addEventListener('change', event => {
+        const newLanguage = event.target.value;
+        MultilangUtils.setActiveLanguage(newLanguage);
+      });
     }
+
+    const before_external = document.getElementsByClassName("before_external_content_info_alert screenreader-only-tool");
+    if(before_external != []){
+      Array.from(before_external).forEach(element => {
+          element.removeAttribute("tabindex");
+      });
+    }
+    const after_external = document.getElementsByClassName("after_external_content_info_alert screenreader-only-tool");
+    if(after_external != []){
+      Array.from(after_external).forEach(element => {
+          element.removeAttribute("tabindex");
+      });
+    }
+
 
     var menuItems = [];
 

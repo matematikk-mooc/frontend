@@ -250,7 +250,7 @@ this.mmooc.vimeo = function() {
 				captionText = captions[i].textContent.replace(/</g, '&lt;').replace(/>/g, '&gt;');
 				captionText = this.removeLeadingAndTrailingDash(captionText);
 				var timestampId = getTimeIdFromTimestampIndex(i);
-				srt_output += "<span class='btnVimeoSeek' data-seek='" + start + "' id='" + timestampId + "'>" + captionText + "</span> ";
+				srt_output += "<span role='button' tabindex=0 aria-hidden=false class='btnVimeoSeek' data-seek='" + start + "' id='" + timestampId + "'>" + captionText + "</span> ";
 				noOfSentencesInParagraph++;
 				if((noOfSentencesInParagraph > 10) && captionText.includes(".")) {
 					srt_output += "</p><p>";
@@ -280,6 +280,7 @@ this.mmooc.vimeo = function() {
 			transcriptParentDiv.appendChild(e);
 			e.setAttribute("id", transcriptContentId);
 			e.setAttribute("class", "transcript");
+			e.setAttribute("tabindex", 0)
 			e.setAttribute("style", "display: none;");
 
 			var br = document.createElement('br');
@@ -320,7 +321,8 @@ this.mmooc.vimeo = function() {
 				s.setAttribute("id", transcriptSelectId);
 				s.setAttribute("class", "vimeoSelectLanguage");
 				s.setAttribute("style", "display: none;");
-	
+				s.setAttribute("aria-label", "Velg språk");
+
 				var html = mmooc.util.renderTemplateWithData('transcriptMenu', {
 					transcriptSelectId: transcriptSelectId,
 					languageTracks: tracks,
@@ -503,7 +505,7 @@ this.mmooc.vimeo = function() {
 
 	//Called when user clicks somewhere in the transcript.
 	$(function() {
-		$(document).on('click', '.btnVimeoSeek', function() {
+		$(document).on('click keypress', '.btnVimeoSeek', function() {
 			var seekToTime = $(this).data('seek');
 			var transcript = mmooc.vimeo.getTranscriptFromTranscriptId($(this).parent().parent().attr("id"));
             try {
@@ -567,6 +569,7 @@ this.mmooc.vimeo = function() {
 					if(vimeoId != "") {
 						var vimeoIframeId = mmooc.vimeo.getUniqueIframeId(vimeoId);
 						iframe.setAttribute("id", vimeoIframeId);
+						iframe.setAttribute("title", "Videoplayer");
 
 						noOfVimeoVideos++;
 						var oTranscript = new transcript(vimeoIframeId, vimeoId);

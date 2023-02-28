@@ -86,7 +86,7 @@
                             {{#if enrolled}}
                                 <a aria-label="enroll" class="mmooc-button mmooc-button-secondary" href="/courses/{{../id}}">{{../../goToCourse}}</a>
                             {{else}}
-                                <button id="{{self_enrollment_code}}" class="mmooc-header__register-button mmooc-button mmooc-button-secondary">Meld deg på</button>
+                                <button id="registrer-button-{{self_enrollment_code}}" class="mmooc-header__register-button mmooc-button mmooc-button-secondary" self_enrollment_code="{{self_enrollment_code}}">Meld deg på</button>
                             {{/if}}
                         </div>
                     </div>
@@ -133,7 +133,7 @@
                         {{#if enrolled}}
                             <a class="mmooc-button mmooc-button-secondary" href="/courses/{{../id}}">{{../../goToCourse}}</a>
                         {{else}}
-                            <button id="{{self_enrollment_code}}" class="mmooc-header__register-button mmooc-button mmooc-button-secondary">Meld deg på</button>
+                            <button id="registrer-button-{{self_enrollment_code}}" class="mmooc-header__register-button mmooc-button mmooc-button-secondary" self_enrollment_code="{{self_enrollment_code}}">Meld deg på</button>
                         {{/if}}
                     </div>
                 </article>

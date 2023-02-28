@@ -178,7 +178,22 @@ class MultilangUtils {
     }
     
     static isValidLanguage(languageCode) {
-        return this.LANGUAGES.some(lang => lang.code === languageCode);
+        if(mmooc.util.isSamiskCourse(mmooc.util.course)){
+            var languages = [
+                { code: 'nb', name: "Bokmål" },
+                { code: 'se', name: "Sápmi" },
+            ];
+        }
+        else if(mmooc.util.isNynorskCourse(mmooc.util.course)){
+            var languages = [
+                { code: 'nb', name: "Bokmål" },
+                { code: 'nn', name: "Nynorsk" }
+            ];
+        }
+        else {
+            var languages = this.LANGUAGES;
+        }
+        return languages.some(lang => lang.code === languageCode);
     }
     
     static createCss(activeLang) {

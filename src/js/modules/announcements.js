@@ -6,6 +6,11 @@ this.mmooc.announcements = (() => {
     mmooc.menu.updateNotificationsForUser();
   };
 
+  const elem = document.getElementById("keyboard-shortcut-modal-info");
+  if (elem != null) {
+    elem.removeAttribute("tabindex");
+  }
+
   return {
     addMarkAsReadButton() {
       const contentId = mmooc.api.getCurrentTypeAndContentId().contentId;

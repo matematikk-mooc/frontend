@@ -257,10 +257,10 @@ this.mmooc.enroll = (function () {
       $('.mmooc-header__register-button').click(function(event) {
         if(!authenticated) {
           let closeOption = true;
-          mmooc.enroll.displayRegisterPopup(authenticated, closeOption, mmooc.i18n.RegisterPopup, mmooc.i18n.RegisterWithCanvas, event.target.id, mmooc.i18n.RegisterPopup);
+          mmooc.enroll.displayRegisterPopup(authenticated, closeOption, mmooc.i18n.RegisterPopup, mmooc.i18n.RegisterWithCanvas, event.target.getAttribute("self_enrollment_code"), mmooc.i18n.RegisterPopup);
         }
         else {
-          window.location = `/enroll/${event.target.id}` 
+          window.location = `/enroll/${event.target.getAttribute("self_enrollment_code")}` 
         }
       })
     },

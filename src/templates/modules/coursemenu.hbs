@@ -18,9 +18,9 @@
                 </span>
                 <div id="mmooc-course-language-dropdown">
                     {{#each otherLanguages}}
-                        <button class="mmooc-course-language-button" value="{{this.code}}">{{this.name}}</button>
+                        <option class="mmooc-course-language-option" value="{{this.code}}">{{this.name}}</option>
                     {{/each}}
-                </div>
+                </select>
             </div>
             {{/if}}
             {{/with}}
