@@ -5426,13 +5426,13 @@ function program5(depth0,data) {
 function program6(depth0,data) {
   
   
-  return "\n                                <svg width=\"16\" height=\"16\" xmlns=\"http://www.w3.org/2000/svg\"><g fill=\"none\" fill-rule=\"evenodd\"><path d=\"M-4-4h24v24H-4z\"/><path d=\"M8 0c4.416 0 8 3.584 8 8s-3.584 8-8 8-8-3.584-8-8 3.584-8 8-8zM6.4 12l6.43-6.43-1.127-1.137L6.4 9.736 3.528 6.872 2.4 8l4 4z\" fill=\"#00AC18\" fill-rule=\"nonzero\"/></g></svg>\n                            ";
+  return "\n                                <svg role=\"img\" width=\"16\" height=\"16\" xmlns=\"http://www.w3.org/2000/svg\"><g fill=\"none\" fill-rule=\"evenodd\"><path d=\"M-4-4h24v24H-4z\"/><path d=\"M8 0c4.416 0 8 3.584 8 8s-3.584 8-8 8-8-3.584-8-8 3.584-8 8-8zM6.4 12l6.43-6.43-1.127-1.137L6.4 9.736 3.528 6.872 2.4 8l4 4z\" fill=\"#00AC18\" fill-rule=\"nonzero\"/></g></svg>\n                            ";
   }
 
 function program8(depth0,data) {
   
   
-  return "\n                                <svg width=\"16\" height=\"16\" xmlns=\"http://www.w3.org/2000/svg\"><g fill=\"none\" fill-rule=\"evenodd\"><path d=\"M-4-4h24v24H-4z\"/><path d=\"M8 0c4.416 0 8 3.584 8 8s-3.584 8-8 8-8-3.584-8-8 3.584-8 8-8z\" stroke-opaicty=\"0.0\" fill-opacity=\"0.0\" fill-rule=\"nonzero\"/></g></svg>\n                            ";
+  return "\n                                <svg role=\"img\" width=\"16\" height=\"16\" xmlns=\"http://www.w3.org/2000/svg\"><g fill=\"none\" fill-rule=\"evenodd\"><path d=\"M-4-4h24v24H-4z\"/><path d=\"M8 0c4.416 0 8 3.584 8 8s-3.584 8-8 8-8-3.584-8-8 3.584-8 8-8z\" stroke-opaicty=\"0.0\" fill-opacity=\"0.0\" fill-rule=\"nonzero\"/></g></svg>\n                            ";
   }
 
 function program10(depth0,data,depth1) {
@@ -5570,7 +5570,7 @@ function program21(depth0,data,depth1) {
 function program22(depth0,data) {
   
   
-  return "\n                        <svg width=\"16\" height=\"16\" xmlns=\"http://www.w3.org/2000/svg\"><g fill=\"none\" fill-rule=\"evenodd\"><path d=\"M-4-4h24v24H-4z\"/><path d=\"M8 0c4.416 0 8 3.584 8 8s-3.584 8-8 8-8-3.584-8-8 3.584-8 8-8zM6.4 12l6.43-6.43-1.127-1.137L6.4 9.736 3.528 6.872 2.4 8l4 4z\" fill=\"#00AC18\" fill-rule=\"nonzero\"/></g></svg>\n                    ";
+  return "\n                        <svg role=\"img\" width=\"16\" height=\"16\" xmlns=\"http://www.w3.org/2000/svg\"><g fill=\"none\" fill-rule=\"evenodd\"><path d=\"M-4-4h24v24H-4z\"/><path d=\"M8 0c4.416 0 8 3.584 8 8s-3.584 8-8 8-8-3.584-8-8 3.584-8 8-8zM6.4 12l6.43-6.43-1.127-1.137L6.4 9.736 3.528 6.872 2.4 8l4 4z\" fill=\"#00AC18\" fill-rule=\"nonzero\"/></g></svg>\n                    ";
   }
 
 function program24(depth0,data) {
@@ -5652,11 +5652,11 @@ function program32(depth0,data) {
   if (helper = helpers.openCoursesGroupText) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.openCoursesGroupText); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "</label>\n                <svg width=\"16\" height=\"9\" xmlns=\"http://www.w3.org/2000/svg\">\n                    <g fill=\"none\" fill-rule=\"evenodd\">\n                        <path d=\"M-8-12h32v32H-8z\" />\n                        <path fill-opacity=\".5\" fill=\"#373737\" d=\"M1.887 0L8 5.565 14.113 0 16 1.717 8 9 0 1.717z\" />\n                    </g>\n                </svg>\n            </div>\n            <div class=\"mmooc-accordion-label-open\">\n                <label class=\"mmooc-accordion-header-label\">";
+    + "</label>\n                <svg role=\"img\" width=\"16\" height=\"9\" xmlns=\"http://www.w3.org/2000/svg\">\n                    <g fill=\"none\" fill-rule=\"evenodd\">\n                        <path d=\"M-8-12h32v32H-8z\" />\n                        <path fill-opacity=\".5\" fill=\"#373737\" d=\"M1.887 0L8 5.565 14.113 0 16 1.717 8 9 0 1.717z\" />\n                    </g>\n                </svg>\n            </div>\n            <div class=\"mmooc-accordion-label-open\">\n                <label class=\"mmooc-accordion-header-label\">";
   if (helper = helpers.closeCoursesGroupText) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.closeCoursesGroupText); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "</label>\n                <svg width=\"16\" height=\"9\" xmlns=\"http://www.w3.org/2000/svg\">\n                    <g fill=\"none\" fill-rule=\"evenodd\">\n                        <path d=\"M-8 21h32v-32H-8z\" />\n                        <path fill=\"#24A1B3\" d=\"M1.887 9L8 3.435 14.113 9 16 7.283 8 0 0 7.283z\" />\n                    </g>\n                </svg>\n            </div>\n        </button>\n        <article id=\"mmooc-accordion-content-";
+    + "</label>\n                <svg role=\"img\" width=\"16\" height=\"9\" xmlns=\"http://www.w3.org/2000/svg\">\n                    <g fill=\"none\" fill-rule=\"evenodd\">\n                        <path d=\"M-8 21h32v-32H-8z\" />\n                        <path fill=\"#24A1B3\" d=\"M1.887 9L8 3.435 14.113 9 16 7.283 8 0 0 7.283z\" />\n                    </g>\n                </svg>\n            </div>\n        </button>\n        <article id=\"mmooc-accordion-content-";
   if (helper = helpers.index) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.index); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
@@ -6153,15 +6153,11 @@ function program3(depth0,data) {
 function program4(depth0,data) {
   
   var buffer = "", stack1, helper;
-  buffer += "\n            <div id=\"mmooc-course-language-container\" >\n                <span id=\"mmooc-course-language-text\"> Språk / Giella </span>\n                <select id=\"mmooc-course-language\" tabindex=\"\" name=\"language\" aria-label=\"Velg språk\">\n                    <option class=\"mmooc-course-language-option\" value=\"";
-  if (helper = helpers.selectedLanguageCode) { stack1 = helper.call(depth0, {hash:{},data:data}); }
-  else { helper = (depth0 && depth0.selectedLanguageCode); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
-  buffer += escapeExpression(stack1)
-    + "\">";
+  buffer += "\n            <div id=\"mmooc-course-language-container\" >\n                <span id=\"mmooc-course-language-text\">Språk / Giella</span>\n                <span id=\"mmooc-course-current-language\">\n                    <svg class=\"mmooc-language-select-globe\" role=\"img\" width=\"22\" height=\"22\" fill=\"none\" version=\"1.1\" viewBox=\"0 0 22 22\" xmlns=\"http://www.w3.org/2000/svg\">\n                        <g stroke=\"#656161\" stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"2\">\n                            <path d=\"m11 21c5.5228 0 10-4.4772 10-10s-4.4772-10-10-10-10 4.4772-10 10 4.4772 10 10 10z\"/>\n                            <path d=\"m1 11h20\"/>\n                            <path d=\"m11 1c2.5013 2.7384 3.9228 6.292 4 10-0.0772 3.708-1.4987 7.2616-4 10-2.5013-2.7384-3.9228-6.292-4-10 0.0772-3.708 1.4987-7.2616 4-10z\"/>\n                        </g>\n                    </svg>\n                    <span id=\"mmooc-course-language-selected\">";
   if (helper = helpers.selectedLanguage) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.selectedLanguage); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "</option>\n                    ";
+    + "</span>\n                </span>\n                <div id=\"mmooc-course-language-dropdown\">\n                    ";
   stack1 = helpers.each.call(depth0, (depth0 && depth0.otherLanguages), {hash:{},inverse:self.noop,fn:self.program(5, program5, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "\n                </select>\n            </div>\n            ";
@@ -16067,7 +16063,7 @@ this.mmooc.settings = {
   removeGroupsLink: true,
   displayProfileLeftMenu: false,
   displayUserMergeButton: true,
-  userMergeLtiToolId: 863,
+  userMergeLtiToolId: 845,
   displayGroupsTab: false,
   displayDiscussionsTab : false,
   displayAlertsMenuItem : false,
