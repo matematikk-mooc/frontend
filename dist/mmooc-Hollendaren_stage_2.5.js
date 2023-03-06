@@ -3013,7 +3013,7 @@ this.mmooc.kpas = (function() {
                 return;
             }
 
-            var iframeSrc = "https://kompetanseudirno.azureedge.net/udirdesign-staging/kpas/kpas.html?version=hollendaren_stage_2.3&courseId=" + courseId;
+            var iframeSrc = "https://kompetanseudirno.azureedge.net/udirdesign-staging/kpas/kpas.html?version=Hollendaren_stage_2.5&courseId=" + courseId;
             if (isTeacherOrAdmin) {
                 iframeSrc+="&show=" + graphicId;
             } else if((groupsInfo.municipalityId === undefined) || (groupsInfo.countyId === undefined)) {
@@ -17010,4 +17010,4 @@ $(function() {
   }
 });
 
-//# sourceMappingURL=mmooc-hollendaren_stage_2.3.js.map
+//# sourceMappingURL=mmooc-Hollendaren_stage_2.5.js.map
