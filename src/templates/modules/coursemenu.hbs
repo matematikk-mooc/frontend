@@ -8,6 +8,7 @@
                 <span id="mmooc-course-language-text"> Språk / Giella </span>
                 <select id="mmooc-course-language" tabindex="" name="language" aria-label="Velg språk">
                     <option class="mmooc-course-language-option" value="{{selectedLanguageCode}}">{{selectedLanguage}}</option>
+
                     {{#each otherLanguages}}
                         <option class="mmooc-course-language-option" value="{{this.code}}">{{this.name}}</option>
                     {{/each}}
