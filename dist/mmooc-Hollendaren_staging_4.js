@@ -3013,7 +3013,7 @@ this.mmooc.kpas = (function() {
                 return;
             }
 
-            var iframeSrc = "https://kompetanseudirno.azureedge.net/udirdesign-staging/kpas/kpas.html?version=Hollendaren_stage_2.5&courseId=" + courseId;
+            var iframeSrc = "https://kompetanseudirno.azureedge.net/udirdesign-staging/kpas/kpas.html?version=Hollendaren_staging_4&courseId=" + courseId;
             if (isTeacherOrAdmin) {
                 iframeSrc+="&show=" + graphicId;
             } else if((groupsInfo.municipalityId === undefined) || (groupsInfo.countyId === undefined)) {
@@ -6161,7 +6161,7 @@ function program4(depth0,data) {
   if (helper = helpers.selectedLanguage) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.selectedLanguage); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "</option>\n                    ";
+    + "</option>\n\n                    ";
   stack1 = helpers.each.call(depth0, (depth0 && depth0.otherLanguages), {hash:{},inverse:self.noop,fn:self.program(5, program5, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "\n                </select>\n            </div>\n            ";
@@ -11588,11 +11588,11 @@ this.mmooc.enroll = (function () {
 
           if (mobileViewport.matches) {
             $([document.documentElement, document.body]).animate({
-              scrollTop: $(el).find('button').offset().top
+              scrollTop: $(el).find('button').offset().top - 200
             }, 500);
           } else {
             $([document.documentElement, document.body]).animate({
-              scrollTop: $("." + currentElementId).offset().top
+              scrollTop: $("." + currentElementId).offset().top - 200
             }, 500);
           }
           var courseTab = $(el).find('button');
@@ -16067,7 +16067,7 @@ this.mmooc.settings = {
   removeGroupsLink: true,
   displayProfileLeftMenu: false,
   displayUserMergeButton: true,
-  userMergeLtiToolId: 845,
+  userMergeLtiToolId: 863,
   displayGroupsTab: false,
   displayDiscussionsTab : false,
   displayAlertsMenuItem : false,
@@ -17010,4 +17010,4 @@ $(function() {
   }
 });
 
-//# sourceMappingURL=mmooc-Hollendaren_stage_2.5.js.map
+//# sourceMappingURL=mmooc-Hollendaren_staging_4.js.map
