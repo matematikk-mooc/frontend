@@ -292,11 +292,11 @@ this.mmooc.enroll = (function () {
 
           if (mobileViewport.matches) {
             $([document.documentElement, document.body]).animate({
-              scrollTop: $(el).find('button').offset().top
+              scrollTop: $(el).find('button').offset().top - 200
             }, 500);
           } else {
             $([document.documentElement, document.body]).animate({
-              scrollTop: $("." + currentElementId).offset().top
+              scrollTop: $("." + currentElementId).offset().top - 200
             }, 500);
           }
           var courseTab = $(el).find('button');

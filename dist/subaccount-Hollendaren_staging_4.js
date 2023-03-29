@@ -9,7 +9,7 @@ this.mmooc.settingsRoot = {
       "enroll_code",
       "kslaring.no"
     ],
-    kpasApiUrl: 'https://kpas.kompetanse.udir.no/api'
+    kpasApiUrl: 'https://kpas-lti-staging-kpas.azurewebsites.net/api'
 };
 
 
@@ -258,13 +258,13 @@ jQuery(document).ready(function($) {
         this.udirDesignLoaded = true;
         console.log("Subaccount: loading design.");
 
-        var filename = 'https://kompetanseudirno.azureedge.net/udirdesign/mmooc-min-Hollendaren_1.2.css';
+        var filename = 'https://kompetanseudirno.azureedge.net/udirdesign-staging/mmooc-min-Hollendaren_staging_4.css';
         var fileref = document.createElement("link")
         fileref.setAttribute("rel", "stylesheet")
         fileref.setAttribute("type", "text/css")
         fileref.setAttribute("href", filename)
         fileref.onload = (_) => {
-          $.getScript('https://kompetanseudirno.azureedge.net/udirdesign/mmooc-min-Hollendaren_1.2.js');
+          $.getScript('https://kompetanseudirno.azureedge.net/udirdesign-staging/mmooc-min-Hollendaren_staging_4.js');
         }
         document.getElementsByTagName("head")[0].appendChild(fileref)
     } else
@@ -273,4 +273,4 @@ jQuery(document).ready(function($) {
     }
 });
 
-//# sourceMappingURL=subaccount-Hollendaren_1.2.js.map
+//# sourceMappingURL=subaccount-Hollendaren_staging_4.js.map

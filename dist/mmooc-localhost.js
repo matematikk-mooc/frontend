@@ -146,6 +146,7 @@ class CourseOptions {
   for (var i = 0; i < iframes.length; i++) {
     if (iframes[i].src.indexOf('h5p') !== -1) {
       iframes[i].contentWindow.postMessage(ready, '*');
+      iframes[i].setAttribute("title", "h5p content")
     }
   }
 
@@ -3012,7 +3013,7 @@ this.mmooc.kpas = (function() {
                 return;
             }
 
-            var iframeSrc = "https://kompetanseudirno.azureedge.net/udirdesign-staging/kpas/kpas.html?version=Hollendaren_staging_1.2&courseId=" + courseId;
+            var iframeSrc = "http://localhost:9000/kpas/kpas.html?version=localhost&courseId=" + courseId;
             if (isTeacherOrAdmin) {
                 iframeSrc+="&show=" + graphicId;
             } else if((groupsInfo.municipalityId === undefined) || (groupsInfo.countyId === undefined)) {
@@ -3025,7 +3026,7 @@ this.mmooc.kpas = (function() {
                 return null;
             }
 
-            var html = "<iframe id='kpas' src='" + iframeSrc + "' height='600' width='100%'></iframe>";
+            var html = "<iframe title='kpas-iframe' id='kpas' src='" + iframeSrc + "' height='600' width='100%'></iframe>";
             $("#"+graphicId).html(html);
             return null;
         }
@@ -3309,7 +3310,22 @@ class MultilangUtils {
     }
     
     static isValidLanguage(languageCode) {
-        return this.LANGUAGES.some(lang => lang.code === languageCode);
+        if(mmooc.util.isSamiskCourse(mmooc.util.course)){
+            var languages = [
+                { code: 'nb', name: "Bokmål" },
+                { code: 'se', name: "Sápmi" },
+            ];
+        }
+        else if(mmooc.util.isNynorskCourse(mmooc.util.course)){
+            var languages = [
+                { code: 'nb', name: "Bokmål" },
+                { code: 'nn', name: "Nynorsk" }
+            ];
+        }
+        else {
+            var languages = this.LANGUAGES;
+        }
+        return languages.some(lang => lang.code === languageCode);
     }
     
     static createCss(activeLang) {
@@ -3472,7 +3488,7 @@ this.mmooc.privacyPolicy = (function() {
             var error = function(error) {
                 displayPrivacyPolicyDialog();
             };
-            var url = "https://kpas-lti-staging-kpas.azurewebsites.net/api" + "/kpasinfo";
+            var url = "https://4b01-2001-4647-a388-0-d5d0-6375-9e7f-c1a0.ngrok.io/api" + "/kpasinfo";
             $.getJSON(url, function(kpasinfo) {
                 currentPrivacyPolicyVersion = kpasinfo.result.privacyPolicyVersion;
                 mmooc.api.loadUserPrivacyPolicyVersion(function(userData) {
@@ -4357,7 +4373,7 @@ this.mmooc=this.mmooc||{};
 
 //https://webapps.stackexchange.com/questions/85517/how-can-i-download-subtitles-for-a-vimeo-video
 this.mmooc.vimeo = function() {
-	var hrefPrefix = "https://kpas-lti-staging-kpas.azurewebsites.net/api/vimeo/";
+	var hrefPrefix = "https://4b01-2001-4647-a388-0-d5d0-6375-9e7f-c1a0.ngrok.io/api/vimeo/";
 	var transcriptContainer = {};
 	var initialized = false;
     var noOfVimeoVideos = 0;
@@ -4605,7 +4621,7 @@ this.mmooc.vimeo = function() {
 				captionText = captions[i].textContent.replace(/</g, '&lt;').replace(/>/g, '&gt;');
 				captionText = this.removeLeadingAndTrailingDash(captionText);
 				var timestampId = getTimeIdFromTimestampIndex(i);
-				srt_output += "<span class='btnVimeoSeek' data-seek='" + start + "' id='" + timestampId + "'>" + captionText + "</span> ";
+				srt_output += "<span role='button' tabindex=0 aria-hidden=false class='btnVimeoSeek' data-seek='" + start + "' id='" + timestampId + "'>" + captionText + "</span> ";
 				noOfSentencesInParagraph++;
 				if((noOfSentencesInParagraph > 10) && captionText.includes(".")) {
 					srt_output += "</p><p>";
@@ -4635,6 +4651,7 @@ this.mmooc.vimeo = function() {
 			transcriptParentDiv.appendChild(e);
 			e.setAttribute("id", transcriptContentId);
 			e.setAttribute("class", "transcript");
+			e.setAttribute("tabindex", 0)
 			e.setAttribute("style", "display: none;");
 
 			var br = document.createElement('br');
@@ -4675,7 +4692,8 @@ this.mmooc.vimeo = function() {
 				s.setAttribute("id", transcriptSelectId);
 				s.setAttribute("class", "vimeoSelectLanguage");
 				s.setAttribute("style", "display: none;");
-	
+				s.setAttribute("aria-label", "Velg språk");
+
 				var html = mmooc.util.renderTemplateWithData('transcriptMenu', {
 					transcriptSelectId: transcriptSelectId,
 					languageTracks: tracks,
@@ -4858,7 +4876,7 @@ this.mmooc.vimeo = function() {
 
 	//Called when user clicks somewhere in the transcript.
 	$(function() {
-		$(document).on('click', '.btnVimeoSeek', function() {
+		$(document).on('click keypress', '.btnVimeoSeek', function() {
 			var seekToTime = $(this).data('seek');
 			var transcript = mmooc.vimeo.getTranscriptFromTranscriptId($(this).parent().parent().attr("id"));
             try {
@@ -4922,6 +4940,7 @@ this.mmooc.vimeo = function() {
 					if(vimeoId != "") {
 						var vimeoIframeId = mmooc.vimeo.getUniqueIframeId(vimeoId);
 						iframe.setAttribute("id", vimeoIframeId);
+						iframe.setAttribute("title", "Videoplayer");
 
 						noOfVimeoVideos++;
 						var oTranscript = new transcript(vimeoIframeId, vimeoId);
@@ -5407,13 +5426,13 @@ function program5(depth0,data) {
 function program6(depth0,data) {
   
   
-  return "\n                                <svg width=\"16\" height=\"16\" xmlns=\"http://www.w3.org/2000/svg\"><g fill=\"none\" fill-rule=\"evenodd\"><path d=\"M-4-4h24v24H-4z\"/><path d=\"M8 0c4.416 0 8 3.584 8 8s-3.584 8-8 8-8-3.584-8-8 3.584-8 8-8zM6.4 12l6.43-6.43-1.127-1.137L6.4 9.736 3.528 6.872 2.4 8l4 4z\" fill=\"#00AC18\" fill-rule=\"nonzero\"/></g></svg>\n                            ";
+  return "\n                                <svg role=\"img\" width=\"16\" height=\"16\" xmlns=\"http://www.w3.org/2000/svg\"><g fill=\"none\" fill-rule=\"evenodd\"><path d=\"M-4-4h24v24H-4z\"/><path d=\"M8 0c4.416 0 8 3.584 8 8s-3.584 8-8 8-8-3.584-8-8 3.584-8 8-8zM6.4 12l6.43-6.43-1.127-1.137L6.4 9.736 3.528 6.872 2.4 8l4 4z\" fill=\"#00AC18\" fill-rule=\"nonzero\"/></g></svg>\n                            ";
   }
 
 function program8(depth0,data) {
   
   
-  return "\n                                <svg width=\"16\" height=\"16\" xmlns=\"http://www.w3.org/2000/svg\"><g fill=\"none\" fill-rule=\"evenodd\"><path d=\"M-4-4h24v24H-4z\"/><path d=\"M8 0c4.416 0 8 3.584 8 8s-3.584 8-8 8-8-3.584-8-8 3.584-8 8-8z\" stroke-opaicty=\"0.0\" fill-opacity=\"0.0\" fill-rule=\"nonzero\"/></g></svg>\n                            ";
+  return "\n                                <svg role=\"img\" width=\"16\" height=\"16\" xmlns=\"http://www.w3.org/2000/svg\"><g fill=\"none\" fill-rule=\"evenodd\"><path d=\"M-4-4h24v24H-4z\"/><path d=\"M8 0c4.416 0 8 3.584 8 8s-3.584 8-8 8-8-3.584-8-8 3.584-8 8-8z\" stroke-opaicty=\"0.0\" fill-opacity=\"0.0\" fill-rule=\"nonzero\"/></g></svg>\n                            ";
   }
 
 function program10(depth0,data,depth1) {
@@ -5484,11 +5503,15 @@ function program17(depth0,data,depth1,depth2) {
 function program19(depth0,data) {
   
   var buffer = "", stack1, helper;
-  buffer += "\n                                <button id=\"";
+  buffer += "\n                                <button id=\"registrer-button-";
   if (helper = helpers.self_enrollment_code) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.self_enrollment_code); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "\" class=\"mmooc-header__register-button mmooc-button mmooc-button-secondary\">Meld deg på</button>\n                            ";
+    + "\" class=\"mmooc-header__register-button mmooc-button mmooc-button-secondary\" self_enrollment_code=\"";
+  if (helper = helpers.self_enrollment_code) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.self_enrollment_code); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "\">Meld deg på</button>\n                            ";
   return buffer;
   }
 
@@ -5547,7 +5570,7 @@ function program21(depth0,data,depth1) {
 function program22(depth0,data) {
   
   
-  return "\n                        <svg width=\"16\" height=\"16\" xmlns=\"http://www.w3.org/2000/svg\"><g fill=\"none\" fill-rule=\"evenodd\"><path d=\"M-4-4h24v24H-4z\"/><path d=\"M8 0c4.416 0 8 3.584 8 8s-3.584 8-8 8-8-3.584-8-8 3.584-8 8-8zM6.4 12l6.43-6.43-1.127-1.137L6.4 9.736 3.528 6.872 2.4 8l4 4z\" fill=\"#00AC18\" fill-rule=\"nonzero\"/></g></svg>\n                    ";
+  return "\n                        <svg role=\"img\" width=\"16\" height=\"16\" xmlns=\"http://www.w3.org/2000/svg\"><g fill=\"none\" fill-rule=\"evenodd\"><path d=\"M-4-4h24v24H-4z\"/><path d=\"M8 0c4.416 0 8 3.584 8 8s-3.584 8-8 8-8-3.584-8-8 3.584-8 8-8zM6.4 12l6.43-6.43-1.127-1.137L6.4 9.736 3.528 6.872 2.4 8l4 4z\" fill=\"#00AC18\" fill-rule=\"nonzero\"/></g></svg>\n                    ";
   }
 
 function program24(depth0,data) {
@@ -5587,11 +5610,15 @@ function program30(depth0,data,depth1,depth2) {
 function program32(depth0,data) {
   
   var buffer = "", stack1, helper;
-  buffer += "\n                            <button id=\"";
+  buffer += "\n                            <button id=\"registrer-button-";
   if (helper = helpers.self_enrollment_code) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.self_enrollment_code); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "\" class=\"mmooc-header__register-button mmooc-button mmooc-button-secondary\">Meld deg på</button>\n                        ";
+    + "\" class=\"mmooc-header__register-button mmooc-button mmooc-button-secondary\" self_enrollment_code=\"";
+  if (helper = helpers.self_enrollment_code) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.self_enrollment_code); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "\">Meld deg på</button>\n                        ";
   return buffer;
   }
 
@@ -5625,11 +5652,11 @@ function program32(depth0,data) {
   if (helper = helpers.openCoursesGroupText) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.openCoursesGroupText); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "</label>\n                <svg width=\"16\" height=\"9\" xmlns=\"http://www.w3.org/2000/svg\">\n                    <g fill=\"none\" fill-rule=\"evenodd\">\n                        <path d=\"M-8-12h32v32H-8z\" />\n                        <path fill-opacity=\".5\" fill=\"#373737\" d=\"M1.887 0L8 5.565 14.113 0 16 1.717 8 9 0 1.717z\" />\n                    </g>\n                </svg>\n            </div>\n            <div class=\"mmooc-accordion-label-open\">\n                <label class=\"mmooc-accordion-header-label\">";
+    + "</label>\n                <svg role=\"img\" width=\"16\" height=\"9\" xmlns=\"http://www.w3.org/2000/svg\">\n                    <g fill=\"none\" fill-rule=\"evenodd\">\n                        <path d=\"M-8-12h32v32H-8z\" />\n                        <path fill-opacity=\".5\" fill=\"#373737\" d=\"M1.887 0L8 5.565 14.113 0 16 1.717 8 9 0 1.717z\" />\n                    </g>\n                </svg>\n            </div>\n            <div class=\"mmooc-accordion-label-open\">\n                <label class=\"mmooc-accordion-header-label\">";
   if (helper = helpers.closeCoursesGroupText) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.closeCoursesGroupText); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "</label>\n                <svg width=\"16\" height=\"9\" xmlns=\"http://www.w3.org/2000/svg\">\n                    <g fill=\"none\" fill-rule=\"evenodd\">\n                        <path d=\"M-8 21h32v-32H-8z\" />\n                        <path fill=\"#24A1B3\" d=\"M1.887 9L8 3.435 14.113 9 16 7.283 8 0 0 7.283z\" />\n                    </g>\n                </svg>\n            </div>\n        </button>\n        <article id=\"mmooc-accordion-content-";
+    + "</label>\n                <svg role=\"img\" width=\"16\" height=\"9\" xmlns=\"http://www.w3.org/2000/svg\">\n                    <g fill=\"none\" fill-rule=\"evenodd\">\n                        <path d=\"M-8 21h32v-32H-8z\" />\n                        <path fill=\"#24A1B3\" d=\"M1.887 9L8 3.435 14.113 9 16 7.283 8 0 0 7.283z\" />\n                    </g>\n                </svg>\n            </div>\n        </button>\n        <article id=\"mmooc-accordion-content-";
   if (helper = helpers.index) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.index); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
@@ -6126,24 +6153,28 @@ function program3(depth0,data) {
 function program4(depth0,data) {
   
   var buffer = "", stack1, helper;
-  buffer += "\n            <div id=\"mmooc-course-language-container\" >\n                <span id=\"mmooc-course-language-text\">Språk / Giella</span>\n                <span id=\"mmooc-course-current-language\">\n                    <svg class=\"mmooc-language-select-globe\" width=\"22\" height=\"22\" fill=\"none\" version=\"1.1\" viewBox=\"0 0 22 22\" xmlns=\"http://www.w3.org/2000/svg\">\n                        <g stroke=\"#656161\" stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"2\">\n                            <path d=\"m11 21c5.5228 0 10-4.4772 10-10s-4.4772-10-10-10-10 4.4772-10 10 4.4772 10 10 10z\"/>\n                            <path d=\"m1 11h20\"/>\n                            <path d=\"m11 1c2.5013 2.7384 3.9228 6.292 4 10-0.0772 3.708-1.4987 7.2616-4 10-2.5013-2.7384-3.9228-6.292-4-10 0.0772-3.708 1.4987-7.2616 4-10z\"/>\n                        </g>\n                    </svg>\n                    <span id=\"mmooc-course-language-selected\">";
+  buffer += "\n            <div id=\"mmooc-course-language-container\" >\n                <span id=\"mmooc-course-language-text\"> Språk / Giella </span>\n                <select id=\"mmooc-course-language\" tabindex=\"\" name=\"language\" aria-label=\"Velg språk\">\n                    <option class=\"mmooc-course-language-option\" value=\"";
+  if (helper = helpers.selectedLanguageCode) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.selectedLanguageCode); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "\">";
   if (helper = helpers.selectedLanguage) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.selectedLanguage); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "</span>\n                </span>\n                <div id=\"mmooc-course-language-dropdown\">\n                    ";
+    + "</option>\n\n                    ";
   stack1 = helpers.each.call(depth0, (depth0 && depth0.otherLanguages), {hash:{},inverse:self.noop,fn:self.program(5, program5, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\n                </div>\n            </div>\n            ";
+  buffer += "\n                </select>\n            </div>\n            ";
   return buffer;
   }
 function program5(depth0,data) {
   
   var buffer = "", stack1;
-  buffer += "\n                        <button class=\"mmooc-course-language-button\" value=\""
+  buffer += "\n                        <option class=\"mmooc-course-language-option\" value=\""
     + escapeExpression(((stack1 = (depth0 && depth0.code)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
     + "\">"
     + escapeExpression(((stack1 = (depth0 && depth0.name)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
-    + "</button>\n                    ";
+    + "</option>\n                    ";
   return buffer;
   }
 
@@ -6396,6 +6427,30 @@ function program3(depth0,data) {
 function program5(depth0,data) {
   
   var buffer = "", stack1, helper;
+  buffer += "\n            | Universell utforming tilgjengelighetserklæring på <a target=\"_blank\" class=\"external_link\" href=\"";
+  if (helper = helpers.uuStatusNb) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.uuStatusNb); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "\">Bokmål</a>\n                ";
+  stack1 = helpers['if'].call(depth0, (depth0 && depth0.uuStatusNn), {hash:{},inverse:self.noop,fn:self.program(6, program6, data),data:data});
+  if(stack1 || stack1 === 0) { buffer += stack1; }
+  buffer += " \n            ";
+  return buffer;
+  }
+function program6(depth0,data) {
+  
+  var buffer = "", stack1, helper;
+  buffer += "\n                og <a target=\"_blank\" class=\"external_link\" href=\"";
+  if (helper = helpers.uuStatusNn) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.uuStatusNn); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "\">Nynorsk</a>\n                ";
+  return buffer;
+  }
+
+function program8(depth0,data) {
+  
+  var buffer = "", stack1, helper;
   buffer += "\n             | Kontakt oss: <a  target=\"_blank\" class=\"external_link\"  href=\"mailto:";
   if (helper = helpers.contactPoint) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.contactPoint); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
@@ -6408,7 +6463,7 @@ function program5(depth0,data) {
   return buffer;
   }
 
-function program7(depth0,data) {
+function program10(depth0,data) {
   
   var buffer = "", stack1, helper;
   buffer += "\n             | <a  target=\"_blank\" class=\"external_link\"  href=\"";
@@ -6426,12 +6481,15 @@ function program7(depth0,data) {
   stack1 = helpers['if'].call(depth0, (depth0 && depth0.privacyPolicyLink), {hash:{},inverse:self.noop,fn:self.program(3, program3, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += " \n            ";
-  stack1 = helpers['if'].call(depth0, (depth0 && depth0.contactPoint), {hash:{},inverse:self.noop,fn:self.program(5, program5, data),data:data});
+  stack1 = helpers['if'].call(depth0, (depth0 && depth0.uuStatusNb), {hash:{},inverse:self.noop,fn:self.program(5, program5, data),data:data});
+  if(stack1 || stack1 === 0) { buffer += stack1; }
+  buffer += "\n            ";
+  stack1 = helpers['if'].call(depth0, (depth0 && depth0.contactPoint), {hash:{},inverse:self.noop,fn:self.program(8, program8, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += " \n            ";
-  stack1 = helpers['if'].call(depth0, (depth0 && depth0.about), {hash:{},inverse:self.noop,fn:self.program(7, program7, data),data:data});
+  stack1 = helpers['if'].call(depth0, (depth0 && depth0.about), {hash:{},inverse:self.noop,fn:self.program(10, program10, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += " \n            </div>\n        </p>\n    </div>\n</footer>";
+  buffer += " \n        </p>\n    </div>\n</footer>";
   return buffer;
   });
 
@@ -7309,11 +7367,11 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   var buffer = "", stack1, helper, functionType="function", escapeExpression=this.escapeExpression;
 
 
-  buffer += "<div class=\"mmooc-header\">\n  <button class=\"mmooc-header__login-button\">";
+  buffer += "<li class=\"mmooc-header\">\n  <button class=\"mmooc-header__login-button\">";
   if (helper = helpers.logInText) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.logInText); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "</button>\n</div>\n";
+    + "</button>\n</li>\n";
   return buffer;
   });
 
@@ -7896,14 +7954,14 @@ function program1(depth0,data) {
   if (helper = helpers.queryString) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.queryString); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "\" class=\"mmooc-menu-item-title conversations\">\n            <span id=\"mmooc-unread-messages-count\"></span>\n        </a>\n    </li>\n    ";
+    + "\" class=\"mmooc-menu-item-title conversations\" aria-label=\"meldinger\">\n            <span id=\"mmooc-unread-messages-count\"></span>\n        </a>\n    </li>\n    ";
   return buffer;
   }
 
 function program3(depth0,data) {
   
   
-  return "\n        <li class=\"mmooc-menu-item\" id=\"mmooc-menu-item-varsler\">\n            <a href=\"#\" class=\"mmooc-menu-item-title notifications\">\n                <span id=\"mmooc-notification-count\"></span>\n            </a>\n            <div class=\"mmooc-menu-item-drop\" id=\"mmooc-activity-stream\">\n            </div>\n        </li>\n    ";
+  return "\n        <li class=\"mmooc-menu-item\" id=\"mmooc-menu-item-varsler\">\n            <a href=\"#\" class=\"mmooc-menu-item-title notifications\" aria-label=\"varsler\">\n                <span id=\"mmooc-notification-count\"></span>\n            </a>\n            <div class=\"mmooc-menu-item-drop\" id=\"mmooc-activity-stream\">\n            </div>\n        </li>\n    ";
   }
 
   buffer += "<ul id=\"user-menu\">\n    ";
@@ -7912,7 +7970,7 @@ function program3(depth0,data) {
   buffer += "\n    ";
   stack1 = helpers['if'].call(depth0, (depth0 && depth0.alertMenuItem), {hash:{},inverse:self.noop,fn:self.program(3, program3, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\n    <li class=\"mmooc-menu-item profile-settings\" id=\"mmooc-menu-item-profile-settings\">\n        <a href=\"#\" class=\"mmooc-menu-item-title\">\n            <div class=\"ic-avatar\" aria-hidden=\"true\">\n                <img src=\""
+  buffer += "\n    <li class=\"mmooc-menu-item profile-settings\" id=\"mmooc-menu-item-profile-settings\">\n        <a href=\"#\" class=\"mmooc-menu-item-title\" aria-label=\"profilmeny\">\n            <div class=\"ic-avatar\" aria-hidden=\"true\">\n                <img src=\""
     + escapeExpression(((stack1 = ((stack1 = (depth0 && depth0.user)),stack1 == null || stack1 === false ? stack1 : stack1.avatar_image_url)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
     + "\" alt=\""
     + escapeExpression(((stack1 = ((stack1 = (depth0 && depth0.user)),stack1 == null || stack1 === false ? stack1 : stack1.display_name)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
@@ -9058,7 +9116,7 @@ this.mmooc.settingsRoot = {
       "enroll_code",
       "kslaring.no"
     ],
-    kpasApiUrl: 'https://kpas-lti-staging-kpas.azurewebsites.net/api'
+    kpasApiUrl: 'https://4b01-2001-4647-a388-0-d5d0-6375-9e7f-c1a0.ngrok.io/api'
 };
 
 
@@ -9262,6 +9320,11 @@ this.mmooc.announcements = (() => {
     $('#markAllAsReadButton').hide();
     mmooc.menu.updateNotificationsForUser();
   };
+
+  const elem = document.getElementById("keyboard-shortcut-modal-info");
+  if (elem != null) {
+    elem.removeAttribute("tabindex");
+  }
 
   return {
     addMarkAsReadButton() {
@@ -9859,7 +9922,7 @@ this.mmooc.coursesettings = (function() {
     $('#' + tableId).append(
       "<tr id='" +
         getWaitIconRowId(tableId) +
-        "'>td><img src='https://kompetanseudirno.azureedge.net/udirdesign-staging/bitmaps/loading.gif'/>"
+        "'>td><img src='http://localhost:9000/bitmaps/loading.gif'/>"
     );
   }
   function clearWaitIcon(tableId) {
@@ -10826,6 +10889,14 @@ this.mmooc.dataporten = function() {
 this.mmooc = this.mmooc || {};
 
 this.mmooc.discussionTopics = (function () {
+
+    const ariaHidden = document.getElementsByClassName("ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only");
+    if(ariaHidden != []){
+      Array.from(ariaHidden).forEach(element => {
+          element.setAttribute("aria-hidden", false);
+      });
+    }
+
     return {
         moveSequenceLinks: function() {
             var sequenceContainer = $('#module_sequence_footer');
@@ -11377,7 +11448,7 @@ this.mmooc.enroll = (function () {
               index: i
             });
             $('.mmooc-all-courses-list').append(html);
-            mmooc.enroll.handleRegisterButtonClick();
+            mmooc.enroll.handleRegisterButtonClick(isAuthenticated);
           }
           
           // Displays information, that there is no current courses available to enroll
@@ -11478,11 +11549,15 @@ this.mmooc.enroll = (function () {
         });
       });
     },
-    handleRegisterButtonClick : function() {
+    handleRegisterButtonClick : function(authenticated) {
       $('.mmooc-header__register-button').click(function(event) {
-        let closeOption = true;
-        let authenticated = false;
-        mmooc.enroll.displayRegisterPopup(authenticated, closeOption, mmooc.i18n.RegisterPopup, mmooc.i18n.RegisterWithCanvas, event.target.id, mmooc.i18n.RegisterPopup);
+        if(!authenticated) {
+          let closeOption = true;
+          mmooc.enroll.displayRegisterPopup(authenticated, closeOption, mmooc.i18n.RegisterPopup, mmooc.i18n.RegisterWithCanvas, event.target.getAttribute("self_enrollment_code"), mmooc.i18n.RegisterPopup);
+        }
+        else {
+          window.location = `/enroll/${event.target.getAttribute("self_enrollment_code")}` 
+        }
       })
     },
     createHashTags: function () {
@@ -12062,7 +12137,14 @@ this.mmooc.footer = (function() {
     },
     changeFooter : function() {
       var $parentElementOfOldFooter = $('#application.ic-app #wrapper');
-      var html = mmooc.util.renderTemplateWithData('footer', {privacyPolicyLink: mmooc.settings.privacyPolicyLink, homeOrganization: mmooc.settings.homeOrganization, contactPoint: mmooc.settings.contactPoint, about: mmooc.settings.aboutThePlatform});
+      var html = mmooc.util.renderTemplateWithData('footer', {
+        privacyPolicyLink: mmooc.settings.privacyPolicyLink, 
+        homeOrganization: mmooc.settings.homeOrganization, 
+        contactPoint: mmooc.settings.contactPoint, 
+        about: mmooc.settings.aboutThePlatform, 
+        uuStatusNb: mmooc.settings.uuStatusNb,
+        uuStatusNn: mmooc.settings.uuStatusNn,
+      });
       $parentElementOfOldFooter.append(html);
     }
   };
@@ -12432,6 +12514,7 @@ this.mmooc.menu = (function() {
       const languageOptions = {
         courseIsMultilanguage: this.mmooc.util.isMultilangCourse(mmooc.util.course),
         selectedLanguage: MultilangUtils.languagesMap()[selectedLanguageCode].name,
+        selectedLanguageCode,
         otherLanguages: MultilangUtils.languagesExcept(selectedLanguageCode),
       }
 
@@ -12445,22 +12528,25 @@ this.mmooc.menu = (function() {
       });
       document.getElementById('header').insertAdjacentHTML('afterend', html);
 
-      // Update current language and language selection dropdown
-      document.querySelectorAll('button.mmooc-course-language-button')
-        .forEach(element => element.addEventListener('click', event => {
-          const previousLanguage = MultilangUtils.getLanguageCode();
-          const newLanguage = event.target.value;
-
-          document.getElementById('mmooc-course-language-selected').textContent = event.target.textContent;
-          const button = Array.from(document.querySelectorAll('button.mmooc-course-language-button'))
-            .find(element => element.value === newLanguage);
-
-          button.textContent = MultilangUtils.languagesMap()[previousLanguage].name;
-          button.value = previousLanguage;
-
-          MultilangUtils.setActiveLanguage(newLanguage);
-        }));
+      document.getElementById('mmooc-course-language').addEventListener('change', event => {
+        const newLanguage = event.target.value;
+        MultilangUtils.setActiveLanguage(newLanguage);
+      });
     }
+
+    const before_external = document.getElementsByClassName("before_external_content_info_alert screenreader-only-tool");
+    if(before_external != []){
+      Array.from(before_external).forEach(element => {
+          element.removeAttribute("tabindex");
+      });
+    }
+    const after_external = document.getElementsByClassName("after_external_content_info_alert screenreader-only-tool");
+    if(after_external != []){
+      Array.from(after_external).forEach(element => {
+          element.removeAttribute("tabindex");
+      });
+    }
+
 
     var menuItems = [];
 
@@ -13282,7 +13368,7 @@ this.mmooc.menu = (function() {
       $('a.ic-app-header__logomark').attr('href', linkToMyCourses); //New UI
 // 20180122ETH Uncommenting the line below to see if we can specify the logo in the theme editor instead.
 //             In any case the logo should not be hardcoded but taken from the variables file instead.      
-      $('a.ic-app-header__logomark').attr('src', 'https://kompetanseudirno.azureedge.net/udirdesign-staging/Ny-Udir-Logo-RGB-Neg.png'); //New UI
+      $('a.ic-app-header__logomark').attr('src', 'http://localhost:9000/Ny-Udir-Logo-RGB-Neg.png'); //New UI
       $('.ic-app-header__logomark-container')
         .detach()
         .prependTo('.ic-app-header__main-navigation');
@@ -15365,7 +15451,7 @@ this.mmooc.util = (function () {
 
     goBack: function (e) {
       //http://stackoverflow.com/questions/9756159/using-javascript-how-to-create-a-go-back-link-that-takes-the-user-to-a-link-i
-      var defaultLocation = 'https://kompetanseudirno.azureedge.net/udirdesign-staging';
+      var defaultLocation = 'http://localhost:9000';
       var oldHash = window.location.hash;
 
       history.back(); // Try to go back
@@ -15981,7 +16067,7 @@ this.mmooc.settings = {
   removeGroupsLink: true,
   displayProfileLeftMenu: false,
   displayUserMergeButton: true,
-  userMergeLtiToolId: 863,
+  userMergeLtiToolId: 845,
   displayGroupsTab: false,
   displayDiscussionsTab : false,
   displayAlertsMenuItem : false,
@@ -15992,8 +16078,9 @@ this.mmooc.settings = {
   platformName: 'UDIR - kompetanseplattform',
   homeOrganization: 'Udir.no',
   aboutThePlatform: 'https://kompetanseudirno.azureedge.net/udirdesign/omkompetanseudirno.html',
+  uuStatusNb: 'https://uustatus.no/nb/erklaringer/publisert/2796ebc6-161f-4dc9-9429-70d7dd136431',
+  uuStatusNn: 'https://uustatus.no/nn/erklaringer/publisert/2796ebc6-161f-4dc9-9429-70d7dd136431',
 };
-
 
 this.mmooc = this.mmooc || {};
 
@@ -16320,7 +16407,7 @@ jQuery(function($) {
       mmooc.menu.showCourseMenu(courseId, 'Utmerkelser', 'Utmerkelser');
       //Should be refactored to use json api instead
       var canvabadgesForCurrentCourse =
-        '<iframe allowfullscreen="true" height="680" id="tool_content" mozallowfullscreen="true" name="tool_content" src="' +
+        '<iframe title="canvasbadge" allowfullscreen="true" height="680" id="tool_content" mozallowfullscreen="true" name="tool_content" src="' +
         mmooc.settings.CanvaBadgeProtocolAndHost +
         '/badges/course/' +
         courseId +
@@ -16727,7 +16814,11 @@ jQuery(function($) {
   mmooc.routes.addRouteForQueryString(/lang/, () => {
     const language = MultilangUtils.getLanguageParameter()
     console.log(`Language: ${language}`);
-    MultilangUtils.setActiveLanguage(language);
+    if (MultilangUtils.isValidLanguage(language)) {
+      MultilangUtils.setActiveLanguage(language);
+    } else {
+      MultilangUtils.setActiveLanguage('nb');
+    }
   });
 
   try {
@@ -16919,4 +17010,4 @@ $(function() {
   }
 });
 
-//# sourceMappingURL=mmooc-Hollendaren_staging_1.2.js.map
+//# sourceMappingURL=mmooc-localhost.js.map
