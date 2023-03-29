@@ -9,7 +9,7 @@ this.mmooc.settingsRoot = {
       "enroll_code",
       "kslaring.no"
     ],
-    kpasApiUrl: 'https://kpas-lti-staging-kpas.azurewebsites.net/api'
+    kpasApiUrl: 'https://kpas.kompetanse.udir.no/api'
 };
 
 
@@ -279,9 +279,9 @@ if(document.location.pathname == "/search/all_courses" && document.location.sear
               <a class="mmooc-button mmooc-button-secondary" onclick="showCanvasLogin();">Ikke Feide</a>
           </div>
           <div class="unitPartners">
-            <a href="https://udir.no" target="_blank"><img class="unitPartnersUdirLogo unitPartnersLogo" src="https://kompetanseudirno.azureedge.net/udirdesign-staging/bitmaps/udirlogo50px.png"/></a>
-            <a href="https://ntnu.no" target="_blank"><img class="unitPartnersSmallLogo" src="https://kompetanseudirno.azureedge.net/udirdesign-staging/bitmaps/logo_ntnu.png"/></a>
-            <a href="https://unit.no" target="_blank"><img class="unitPartnersUnitLogo" src="https://kompetanseudirno.azureedge.net/udirdesign-staging/bitmaps/unit-logo-farge.svg"/></a>
+            <a href="https://udir.no" target="_blank"><img class="unitPartnersUdirLogo unitPartnersLogo" src="https://kompetanseudirno.azureedge.net/udirdesign/bitmaps/udirlogo50px.png"/></a>
+            <a href="https://ntnu.no" target="_blank"><img class="unitPartnersSmallLogo" src="https://kompetanseudirno.azureedge.net/udirdesign/bitmaps/logo_ntnu.png"/></a>
+            <a href="https://unit.no" target="_blank"><img class="unitPartnersUnitLogo" src="https://kompetanseudirno.azureedge.net/udirdesign/bitmaps/unit-logo-farge.svg"/></a>
           </div>
         </div>
         `;
@@ -309,7 +309,7 @@ if(document.location.pathname == "/search/all_courses" && document.location.sear
         <p>Dersom du har valgt å logge inn med Feide og ikke finner innholdet ditt kan det hende det er fordi du 
         vanligvis har logget på med en annen bruker ved å bruke epost og passord. Logg ut og inn igjen ved å benytte "Ikke Feide" - knappen.
         </p>
-        <img src="https://kompetanseudirno.azureedge.net/udirdesign-staging/bitmaps/nyinnlogging.png" width="70%" alt="Ny innloggingsskjerm"/>
+        <img src="https://kompetanseudirno.azureedge.net/udirdesign/bitmaps/nyinnlogging.png" width="70%" alt="Ny innloggingsskjerm"/>
       </div>
       `;
       document.getElementById('dashboard-activity').insertAdjacentHTML('beforebegin', html);
@@ -327,14 +327,14 @@ if(!redirected) {
           this.udirDesignLoaded = true;
           console.log("Root account:Loading udir design.");
 
-          var filename = 'https://kompetanseudirno.azureedge.net/udirdesign-staging/mmooc-min-Hollendaren_stage_2.5.css';
+          var filename = 'https://kompetanseudirno.azureedge.net/udirdesign/mmooc-min-Hollendaren_prod_6.css';
 
           var fileref=document.createElement("link")
           fileref.setAttribute("rel", "stylesheet")
           fileref.setAttribute("type", "text/css")
           fileref.setAttribute("href", filename)
           fileref.onload = (_) => {
-            $.getScript('https://kompetanseudirno.azureedge.net/udirdesign-staging/mmooc-min-Hollendaren_stage_2.5.js');
+            $.getScript('https://kompetanseudirno.azureedge.net/udirdesign/mmooc-min-Hollendaren_prod_6.js');
           }
           document.getElementsByTagName("head")[0].appendChild(fileref)
       } else {
@@ -345,4 +345,4 @@ if(!redirected) {
   }
 }
 
-//# sourceMappingURL=rootaccount-Hollendaren_stage_2.5.js.map
+//# sourceMappingURL=rootaccount-Hollendaren_prod_6.js.map

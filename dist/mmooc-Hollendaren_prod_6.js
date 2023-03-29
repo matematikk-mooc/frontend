@@ -3013,7 +3013,7 @@ this.mmooc.kpas = (function() {
                 return;
             }
 
-            var iframeSrc = "https://kompetanseudirno.azureedge.net/udirdesign-staging/kpas/kpas.html?version=Hollendaren_stage_2.5&courseId=" + courseId;
+            var iframeSrc = "https://kompetanseudirno.azureedge.net/udirdesign/kpas/kpas.html?version=Hollendaren_prod_6&courseId=" + courseId;
             if (isTeacherOrAdmin) {
                 iframeSrc+="&show=" + graphicId;
             } else if((groupsInfo.municipalityId === undefined) || (groupsInfo.countyId === undefined)) {
@@ -3488,7 +3488,7 @@ this.mmooc.privacyPolicy = (function() {
             var error = function(error) {
                 displayPrivacyPolicyDialog();
             };
-            var url = "https://kpas-lti-staging-kpas.azurewebsites.net/api" + "/kpasinfo";
+            var url = "https://kpas.kompetanse.udir.no/api" + "/kpasinfo";
             $.getJSON(url, function(kpasinfo) {
                 currentPrivacyPolicyVersion = kpasinfo.result.privacyPolicyVersion;
                 mmooc.api.loadUserPrivacyPolicyVersion(function(userData) {
@@ -4373,7 +4373,7 @@ this.mmooc=this.mmooc||{};
 
 //https://webapps.stackexchange.com/questions/85517/how-can-i-download-subtitles-for-a-vimeo-video
 this.mmooc.vimeo = function() {
-	var hrefPrefix = "https://kpas-lti-staging-kpas.azurewebsites.net/api/vimeo/";
+	var hrefPrefix = "https://kpas.kompetanse.udir.no/api/vimeo/";
 	var transcriptContainer = {};
 	var initialized = false;
     var noOfVimeoVideos = 0;
@@ -6161,7 +6161,7 @@ function program4(depth0,data) {
   if (helper = helpers.selectedLanguage) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.selectedLanguage); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "</option>\n                    ";
+    + "</option>\n\n                    ";
   stack1 = helpers.each.call(depth0, (depth0 && depth0.otherLanguages), {hash:{},inverse:self.noop,fn:self.program(5, program5, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "\n                </select>\n            </div>\n            ";
@@ -9116,7 +9116,7 @@ this.mmooc.settingsRoot = {
       "enroll_code",
       "kslaring.no"
     ],
-    kpasApiUrl: 'https://kpas-lti-staging-kpas.azurewebsites.net/api'
+    kpasApiUrl: 'https://kpas.kompetanse.udir.no/api'
 };
 
 
@@ -9922,7 +9922,7 @@ this.mmooc.coursesettings = (function() {
     $('#' + tableId).append(
       "<tr id='" +
         getWaitIconRowId(tableId) +
-        "'>td><img src='https://kompetanseudirno.azureedge.net/udirdesign-staging/bitmaps/loading.gif'/>"
+        "'>td><img src='https://kompetanseudirno.azureedge.net/udirdesign/bitmaps/loading.gif'/>"
     );
   }
   function clearWaitIcon(tableId) {
@@ -11588,11 +11588,11 @@ this.mmooc.enroll = (function () {
 
           if (mobileViewport.matches) {
             $([document.documentElement, document.body]).animate({
-              scrollTop: $(el).find('button').offset().top
+              scrollTop: $(el).find('button').offset().top - 200
             }, 500);
           } else {
             $([document.documentElement, document.body]).animate({
-              scrollTop: $("." + currentElementId).offset().top
+              scrollTop: $("." + currentElementId).offset().top - 200
             }, 500);
           }
           var courseTab = $(el).find('button');
@@ -13368,7 +13368,7 @@ this.mmooc.menu = (function() {
       $('a.ic-app-header__logomark').attr('href', linkToMyCourses); //New UI
 // 20180122ETH Uncommenting the line below to see if we can specify the logo in the theme editor instead.
 //             In any case the logo should not be hardcoded but taken from the variables file instead.      
-      $('a.ic-app-header__logomark').attr('src', 'https://kompetanseudirno.azureedge.net/udirdesign-staging/Ny-Udir-Logo-RGB-Neg.png'); //New UI
+      $('a.ic-app-header__logomark').attr('src', 'https://kompetanseudirno.azureedge.net/udirdesign/Ny-Udir-Logo-RGB-Neg.png'); //New UI
       $('.ic-app-header__logomark-container')
         .detach()
         .prependTo('.ic-app-header__main-navigation');
@@ -15451,7 +15451,7 @@ this.mmooc.util = (function () {
 
     goBack: function (e) {
       //http://stackoverflow.com/questions/9756159/using-javascript-how-to-create-a-go-back-link-that-takes-the-user-to-a-link-i
-      var defaultLocation = 'https://kompetanseudirno.azureedge.net/udirdesign-staging';
+      var defaultLocation = 'https://kompetanseudirno.azureedge.net/udirdesign';
       var oldHash = window.location.hash;
 
       history.back(); // Try to go back
@@ -16067,7 +16067,7 @@ this.mmooc.settings = {
   removeGroupsLink: true,
   displayProfileLeftMenu: false,
   displayUserMergeButton: true,
-  userMergeLtiToolId: 845,
+  userMergeLtiToolId: 863,
   displayGroupsTab: false,
   displayDiscussionsTab : false,
   displayAlertsMenuItem : false,
@@ -17010,4 +17010,4 @@ $(function() {
   }
 });
 
-//# sourceMappingURL=mmooc-Hollendaren_stage_2.5.js.map
+//# sourceMappingURL=mmooc-Hollendaren_prod_6.js.map
