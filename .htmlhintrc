@@ -19,7 +19,7 @@
     "input-requires-label": true,
     "tags-check": false,
     "tag-pair": true,
-    "tag-self-close": true,
+    "tag-self-close": false,
     "tagname-lowercase": true,
     "tagname-specialchars": true,
     "empty-tag-not-self-closed": false,
