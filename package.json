@@ -52,6 +52,7 @@
     "test": "grunt test",
     "start": "grunt serve",
     "lint:html": "npx htmlhint --config .htmlhintrc **/*.html",
+    "format:html": "npx prettier --write **/*.html",
     "test:regression": "jest --runInBand",
     "test:regression:update": "jest -u --runInBand",
     "test:regression:course": "jest courses.test.js course.test.js coursePart2.test.js appUnauthenticated.test.js --runInBand",
