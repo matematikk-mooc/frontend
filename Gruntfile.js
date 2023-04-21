@@ -31,6 +31,17 @@ module.exports = function (grunt) {
       }
     },
 
+    prettier: {
+      options: {
+        config: '.prettierrc',
+      },
+      html: {
+        src: ['**/*.html'],
+      },
+    },
+
+    //Formatting tasks
+
     clean: {
       dist: {
         files: [
@@ -442,6 +453,7 @@ module.exports = function (grunt) {
   });
 
   grunt.registerTask('make', [
+    'prettier',
     'htmlhint',
     'less',
     'handlebars',
@@ -454,6 +466,7 @@ module.exports = function (grunt) {
     'copy:main',
   ]);
   grunt.registerTask('make_staging', [
+    'prettier',
     'htmlhint',
     'less',
     'handlebars',
@@ -466,6 +479,7 @@ module.exports = function (grunt) {
     'copy:main',
   ]);
   grunt.registerTask('make_dev', [
+    'prettier',
     'htmlhint',
     'less',
     'handlebars',

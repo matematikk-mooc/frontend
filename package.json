@@ -28,6 +28,7 @@
     "grunt-contrib-watch": "~1.1.0",
     "grunt-htmlhint": "^0.9.13",
     "grunt-karma": "^4.0.2",
+    "grunt-prettier": "^2.2.0",
     "grunt-text-replace": "^0.4.0",
     "htmlhint": "^1.1.4",
     "jasmine-node": "~3.0.0",
