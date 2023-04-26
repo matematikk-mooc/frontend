@@ -6,7 +6,7 @@
   "semi": true,
   "arrowParens": "always",
   "bracketSpacing": true,
-  "jsxBracketSameLine": false,
+  "bracketSameLine": false,
   "htmlWhitespaceSensitivity": "css",
   "overrides": [
     {
@@ -19,7 +19,7 @@
         "semi": true,
         "arrowParens": "avoid",
         "bracketSpacing": true,
-        "jsxBracketSameLine": false
+        "bracketSameLine": false
       }
     },
     {
@@ -32,7 +32,7 @@
         "semi": true,
         "arrowParens": "avoid",
         "bracketSpacing": true,
-        "jsxBracketSameLine": false
+        "bracketSameLine": false
       }
     },
     {
@@ -46,7 +46,7 @@
         "jsxSingleQuote": false,
         "trailingComma": "es5",
         "bracketSpacing": true,
-        "jsxBracketSameLine": false,
+        "bracketSameLine": false,
         "arrowParens": "always",
         "requirePragma": false,
         "insertPragma": false,
@@ -64,7 +64,7 @@
         "semi": true,
         "arrowParens": "avoid",
         "bracketSpacing": true,
-        "jsxBracketSameLine": false
+        "bracketSameLine": false
       }
     }
   ]

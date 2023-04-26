@@ -301,33 +301,33 @@ function init() {
         to = urlParamsObj['to'];
         datesSpecified = true;
     }
-    document.getElementById('fraDato').value = from;
-    document.getElementById('tilDato').value = to;
+    document.getElementById('fra-dato').value = from;
+    document.getElementById('til-dato').value = to;
 
     if(!datesSpecified) {
-        document.getElementById('fraDato').disabled = true;
-        document.getElementById('tilDato').disabled = true;
+        document.getElementById('fra-dato').disabled = true;
+        document.getElementById('til-dato').disabled = true;
     } else {
-        document.getElementById('alleDatoer').checked = false;
+        document.getElementById('alle-datoer').checked = false;
     }
      
     loadGraphic();
 }
 function updateGraphic() {
-    from = document.getElementById('fraDato').value;
-    to = document.getElementById('tilDato').value;
+    from = document.getElementById('fra-dato').value;
+    to = document.getElementById('til-dato').value;
     loadGraphic();
 }
 
 function allDatesClicked() {
-    var allDatesChecked = document.getElementById('alleDatoer').checked;
-    document.getElementById('fraDato').disabled = allDatesChecked;
-    document.getElementById('tilDato').disabled = allDatesChecked;
+    var allDatesChecked = document.getElementById('alle-datoer').checked;
+    document.getElementById('fra-dato').disabled = allDatesChecked;
+    document.getElementById('til-dato').disabled = allDatesChecked;
     if(allDatesChecked) {
         from = "1970-01-01";
         to = getTodaysDate();
-        document.getElementById('fraDato').value = from;
-        document.getElementById('tilDato').value = to;
+        document.getElementById('fra-dato').value = from;
+        document.getElementById('til-dato').value = to;
         loadGraphic();
     }
 }
