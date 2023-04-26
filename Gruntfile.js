@@ -21,26 +21,25 @@ module.exports = function (grunt) {
     subaccountFileName: 'subaccount-' + udv,
     rootaccountFileName: 'rootaccount-' + udv,
 
+    //Formatting tasks
+    prettier: {
+      options: {
+        config: '.prettierrc',
+      },
+      html: {
+        src: ['**/*.html', '!node_modules/**'],
+      },
+    },
+
     //Linting tasks
     htmlhint: {
       options: {
         htmlhintrc: '.htmlhintrc'
       },
       all: {
-        src: grunt.file.expand('**/*.html')
+        src: grunt.file.expand('**/*.html', '!node_modules/**')
       }
     },
-
-    prettier: {
-      options: {
-        config: '.prettierrc',
-      },
-      html: {
-        src: ['**/*.html'],
-      },
-    },
-
-    //Formatting tasks
 
     clean: {
       dist: {
