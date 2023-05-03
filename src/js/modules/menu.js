@@ -109,7 +109,7 @@ this.mmooc.menu = (function() {
       }
 
       var badgeSafe = mmooc.menu.extractBadgesLinkFromPage();
-      
+
       if (badgeSafe.url) {
         //If the url of Badges is found then display this as an additional tab
         menuItems[menuItems.length] = badgeSafe;
@@ -155,7 +155,7 @@ this.mmooc.menu = (function() {
       );
     }
   }
-  
+
   function openHelpDialog(event) {
     event.preventDefault();
     $('#global_nav_help_link').click(); //Do the same as when you are clicking on the original help button (which display the help dialog)
@@ -214,7 +214,7 @@ this.mmooc.menu = (function() {
           }
         }
         if(!tooltipsHandled) {
-          mmooc.multilanguage.performPrevNextTooltip();       
+          mmooc.multilanguage.performPrevNextTooltip();
         }
 
         if (document.getElementById('left-side')) {
@@ -223,7 +223,7 @@ this.mmooc.menu = (function() {
             .insertAdjacentHTML('afterbegin', html);
             mmooc.multilanguage.perform();
         }
-        //Canvas case: Slow loading for group discussions when large number of groups Case # 05035288 
+        //Canvas case: Slow loading for group discussions when large number of groups Case # 05035288
         //Display popup box when loading
         mmooc.util.postModuleMenuProcessing();
 
@@ -255,7 +255,7 @@ this.mmooc.menu = (function() {
       if(moduleItemSequence && moduleItemSequence.items.length && moduleItemSequence.items[0].prev) {
         var prevItem = moduleItemSequence.items[0].prev;
         if(prevItem.indent) {
-          id = prevItem.id; 
+          id = prevItem.id;
           mmooc.api.getModuleItemSequence(courseId, id, mmooc.menu.handlePrevModuleItem);
         } else {
           var prevButton = $(".module-sequence-footer-button--previous");
@@ -271,7 +271,7 @@ this.mmooc.menu = (function() {
       if(moduleItemSequence && moduleItemSequence.items.length && moduleItemSequence.items[0].next) {
         var nextItem = moduleItemSequence.items[0].next;
         if(nextItem.indent) {
-          id = nextItem.id; 
+          id = nextItem.id;
           mmooc.api.getModuleItemSequence(courseId, id, mmooc.menu.handleNextModuleItem);
         } else {
           var nextButton = $(".module-sequence-footer-button--next");
@@ -307,7 +307,7 @@ this.mmooc.menu = (function() {
         if(!item.indent && (item.type != "SubHeader")) {
           if(!firstValidItem) {firstValidItem = item;}
           lastValidItem = item;
-          
+
           if(item.isCurrent) {
             currentFound = true;
           } else if(!currentFound) {
@@ -320,7 +320,7 @@ this.mmooc.menu = (function() {
           }
         }
       }
-      
+
       var prevButton = $(".module-sequence-footer-button--previous");
       var nextButton = $(".module-sequence-footer-button--next");
 
@@ -335,7 +335,7 @@ this.mmooc.menu = (function() {
           mmooc.api.getModuleItemSequence(courseId, id, mmooc.menu.handlePrevModuleItem);
       }
 
-      
+
       if(nextSet) {
           var nextButtonLink = $(".module-sequence-footer-button--next a");
           nextButtonLink.attr("href", nextItem.html_url);
@@ -362,7 +362,6 @@ this.mmooc.menu = (function() {
       // render left header menu only for authenticated users
       if (mmooc.util.isAuthenticated()) {
         // The entire menu is rebuilt because of unwanted popup in the new ui menu
-        insertCustomMenuElementInTopMenu('Kalender', '/calendar' + mmooc.hrefQueryString);
         if (mmooc.settings.removeGlobalGradesLink == false) {
           insertCustomMenuElementInTopMenu('Karakterer', '/grades' + mmooc.hrefQueryString);
         }
@@ -426,7 +425,7 @@ this.mmooc.menu = (function() {
 
         var linkToAvailableCourses = mmooc.util.getLinkToAvailableCourses();
         this.alterHomeLink(linkToAvailableCourses);
-        
+
         let html = mmooc.util.renderTemplateWithData('noLoggedInHeader', {
           logInText: mmooc.i18n.LogIn
         });
@@ -463,7 +462,7 @@ this.mmooc.menu = (function() {
           var notSelectedTabs = $('.mmooc-course-tabs li:not(".selected")');
           var allTabs = $('.mmooc-course-tab');
           var time = 100;
-  
+
           if ($(allTabs).css('display') != 'none') {
             $(notSelectedTabs).slideUp(time);
             selectedTab.insertBefore('.mmooc-course-tab:first-of-type');
@@ -478,13 +477,13 @@ this.mmooc.menu = (function() {
           var desktopViewport = window.matchMedia("(max-width: 1050px)");
           var tabsNotSelected = $('.mmooc-course-tabs li:not(".selected")');
           var tabsHamburger = $('.tabs-hamburger');
-          
+
           if(desktopViewport.matches) {
             $(tabsHamburger).css("display", "block");
           }else {
             $(tabsHamburger).css("display", "none");
           }
-      
+
           if (!desktopViewport.matches) {
             tabsNotSelected.css("display", "flex");
           }else {
@@ -519,10 +518,10 @@ this.mmooc.menu = (function() {
             mobileMenu.slideDown(time);
           }
         });
- 
+
       $(window).on('resize', function(e) {
           var desktopViewport = window.matchMedia("(min-width: 1051px)");
-                   
+
           if (desktopViewport.matches) {
             $('#menu').css("display", "flex");
           }else {
@@ -535,8 +534,8 @@ this.mmooc.menu = (function() {
       var menu = document.getElementById('menu');
       if (menu != null && mmooc.util.isAuthenticated()) {
         var html = mmooc.util.renderTemplateWithData('usermenu', {
-          alertMenuItem: mmooc.settings.displayAlertsMenuItem, 
-          user: mmooc.api.getUser(), 
+          alertMenuItem: mmooc.settings.displayAlertsMenuItem,
+          user: mmooc.api.getUser(),
           queryString: mmooc.hrefQueryString,
           displayInboxMenu: mmooc.settings.displayInboxMenu,
         });
@@ -568,7 +567,7 @@ this.mmooc.menu = (function() {
           }
         });
         this.updateNotificationsForUser();
-        
+
 
         //20180921ETH Vi bruker ikke hjelpemenyen lenger.
         //                $(document).on("click", ".helpMenu", openHelpDialog);
@@ -866,7 +865,7 @@ this.mmooc.menu = (function() {
       $('#header-logo').attr('href', linkToMyCourses);
       $('a.ic-app-header__logomark').attr('href', linkToMyCourses); //New UI
 // 20180122ETH Uncommenting the line below to see if we can specify the logo in the theme editor instead.
-//             In any case the logo should not be hardcoded but taken from the variables file instead.      
+//             In any case the logo should not be hardcoded but taken from the variables file instead.
       $('a.ic-app-header__logomark').attr('src', 'https://server/Ny-Udir-Logo-RGB-Neg.png'); //New UI
       $('.ic-app-header__logomark-container')
         .detach()
