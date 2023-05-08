@@ -82,12 +82,18 @@ this.mmooc.utilRoot = function() {
         if (login !== undefined) {
             return true;
         }
-        return false;    
+        return false;
     },
     triggerForgotPasswordIfParamPassed: function() {
       const params = this.urlParamsToObject();
       if (params['gp'] !== undefined) {
         $('#login_forgot_password').click();
+      }
+    },
+    redirectIfNotAdmin: function(path){
+      if(this.getRoles().indexOf('admin') == -1){
+        const redirectTo = window.location.href.replace(path, '')
+        window.location.href = redirectTo
       }
     },
     redirectToEnrollIfCodeParamPassed: function() {
@@ -104,9 +110,9 @@ this.mmooc.utilRoot = function() {
         if (enrollCode) {
           newHref = "/enroll/" + enrollCode;  // + mmooc.hrefQueryString;
           if(design) {
-            newHref += "?design=" + design; 
+            newHref += "?design=" + design;
           }
-        } 
+        }
 
         var forwardTo = urlParamsObj && urlParamsObj['forwardTo'];
         if(forwardTo) {
@@ -115,7 +121,7 @@ this.mmooc.utilRoot = function() {
           } else {
             newHref += "?";
           }
-          newHref += "forwardTo=" + encodeURIComponent(forwardTo); 
+          newHref += "forwardTo=" + encodeURIComponent(forwardTo);
         }
 
         if(newHref) {

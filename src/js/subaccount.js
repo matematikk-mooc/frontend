@@ -64,3 +64,13 @@ jQuery(document).ready(function($) {
         console.log("Subaccount: design already loaded.");
     }
 });
+
+const currentUrl = '' + document.location.pathname;
+const currentCourseId = mmooc.utilRoot.getCourseIdFromUrl(currentUrl);
+console.log(currentCourseId)
+if(document.location.pathname == '/courses/' + currentCourseId + "/users"){
+  mmooc.utilRoot.redirectIfNotAdmin('/users')
+}
+if(document.location.pathname == '/courses/' + currentCourseId + "/groups"){
+  mmooc.utilRoot.redirectIfNotAdmin('/groups')
+}
