@@ -91,7 +91,7 @@ this.mmooc.utilRoot = function() {
       }
     },
     redirectIfNotAdmin: function(path){
-      if(this.getRoles().indexOf('admin') == -1){
+      if(this.getRoles().indexOf('admin') == -1 && this.getRoles().indexOf('Udir-forvalter') == -1 && this.getRoles().indexOf('Udir-Innholdsprodusent') == -1 ){
         const redirectTo = window.location.href.replace(path, '')
         window.location.href = redirectTo
       }
