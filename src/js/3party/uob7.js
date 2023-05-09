@@ -358,7 +358,10 @@ this.mmooc.uob = (function() {
             } else {
               panel.style.maxHeight = panel.scrollHeight + "px";
             }
-            window.dispatchEvent(new Event('resize'));
+            setTimeout(function () {
+              window.dispatchEvent(new Event('resize'));;
+           }, 200);
+
           });
         }
         // ================================================================================
@@ -447,7 +450,9 @@ this.mmooc.uob = (function() {
               }
 
               $button.button('option', options);
-              window.dispatchEvent(new Event('resize'));
+              setTimeout(function () {
+                window.dispatchEvent(new Event('resize'));;
+             }, 200);
 
               return false;
             });
