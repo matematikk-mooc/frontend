@@ -1,0 +1,53 @@
+name: CICD Frontend Staging
+run-name: ${{ github.actor }} Committed code for azure blob storage
+
+on:
+  push:
+    branches:
+      - staging
+env:
+  ACCOUNT_NAME: udirdit
+  SOURCE: dist
+  DESTINATION: udirdesign-staging
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repo
+        uses: actions/checkout@v3
+
+      - name: Setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+
+      - name: Install dependencies
+        run: yarn install
+
+      - name: Get datetime of latest commit
+        run: |
+          timestamp=$(git log -1 --pretty=format:"%ad" --date=format:'%Y-%m-%dT%H:%M:%S')
+          echo "COMMIT_TIMESTAMP=${timestamp}" >> $GITHUB_ENV
+
+      - name: Run build script
+        run: grunt staging -udv="${{ env.DESTINATION }}-$COMMIT_TIMESTAMP"
+
+      - name: Login to Azure
+        uses: azure/login@v1
+        with:
+            creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Upload files to Azure Blob
+        uses: azure/CLI@v1
+        with:
+          azcliversion: 2.48.1
+          inlineScript: |
+              az storage blob upload-batch --account-name ${{ env.ACCOUNT_NAME }} \
+                --auth-mode key -s ${{ env.SOURCE }} -d ${{ env.DESTINATION }} --overwrite
+      # Azure logout - Force step to always run with 'always()', ensures no hanging logins
+      - name: logout
+        if: always()
+        run: |
+              az logout
+

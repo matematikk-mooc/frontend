@@ -1,11 +1,11 @@
 jQuery(function($) {
-  //KURSP-469 Support embedding of KPAS LTI tool. In general our design should not load in iframes. 
+  //KURSP-469 Support embedding of KPAS LTI tool. In general our design should not load in iframes.
   //The code below detects if we are in an iframe and then returns.
   if(window.self != window.top) {
     return;
   }
   //Multilanguage KURSP-279 Css must be present before javascript is run.
-  //KURSP-376-multilanguage-fix 
+  //KURSP-376-multilanguage-fix
   mmooc.multilanguage.initializeCss();
 
   mmooc.routes.addRouteForPath(/\/$/, function() {
@@ -48,7 +48,7 @@ jQuery(function($) {
     let forwardTo = encodeURIComponent(window.location.href);
     let closeOption = false;
     let authenticated = mmooc.util.isAuthenticated();
-    
+
     if(!authenticated) {
       let registerText = "For å få fullt utbytte av denne siden må du melde deg på med";
       mmooc.enroll.displayRegisterPopup(
@@ -56,7 +56,7 @@ jQuery(function($) {
         closeOption,
         registerText,
         mmooc.i18n.RegisterWithCanvas,
-        mmooc.util.course.self_enrollment_code, 
+        mmooc.util.course.self_enrollment_code,
         mmooc.util.course.name,
         forwardTo);
     } else {
@@ -69,7 +69,7 @@ jQuery(function($) {
             closeOption,
             registerText,
             registerWithCanvasText,
-            mmooc.util.course.self_enrollment_code, 
+            mmooc.util.course.self_enrollment_code,
             mmooc.util.course.name,
             forwardTo);
         } else {
@@ -82,6 +82,7 @@ jQuery(function($) {
   //The logic below should be refactored and cleaned up.
   mmooc.routes.addRouteForPath(/\/courses\/\d+$/, function() {
     mmooc.util.updateRightMenuButtons();
+    mmooc.util.removeRecentFeedback();
     mmooc.groups.interceptLinksToGroupPage();
     mmooc.coursePage.showCourseInvitation();
     // override default view and display all courses list instead
@@ -182,7 +183,7 @@ jQuery(function($) {
     mmooc.enroll.printAllCourses();
     mmooc.enroll.goToAllCourses();
   });
-  
+
   mmooc.routes.addRouteForPath(/\/courses\/\d+\/settings$/, function() {
     mmooc.coursesettings.addSanityCheckButton();
     mmooc.coursesettings.addListSectionsButton();
@@ -431,7 +432,7 @@ jQuery(function($) {
       });
     }
   );
-  
+
   mmooc.routes.addRouteForPath([/\/groups\/\d+\/discussion_topics\/\d+/], function() {
     mmooc.discussionTopics.moveSequenceLinks();
   });
@@ -515,9 +516,9 @@ jQuery(function($) {
       mmooc.greeting.enableNewGreetingButtonIfNecessary);
 
     mmooc.util.callWhenElementIsPresent(
-      ".download-diploma-button", 
+      ".download-diploma-button",
       mmooc.greeting.enableDownloadDiplomaButtonIfNecessary); //This is the newest method which should replace the two old ones.
-  
+
     var courseId = mmooc.api.getCurrentCourseId();
 
     if ($("#kpas-lti-info").length ||

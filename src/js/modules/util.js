@@ -237,7 +237,7 @@ this.mmooc.util = (function () {
         console.log(e);
       }
     },
-  
+
 
     isAlertMsg(course) {
       if (course) {
@@ -618,7 +618,18 @@ this.mmooc.util = (function () {
       $("#course_show_secondary > a").each(function() {
         var $this = $(this);
         var _href = $this.attr("href");
-        $this.attr("href", _href + mmooc.hrefAmpQueryString);
+        if(_href.includes("/calendar?")){
+          $this.remove();
+        }
+        else{
+          $this.attr("href", _href + mmooc.hrefAmpQueryString);
+        }
+      });
+    },
+    removeRecentFeedback: function() {
+      $(".recent_feedback").each(function() {
+        var $this = $(this);
+        $this.remove()
       });
     },
     getLinkToAvailableCourses: function () {

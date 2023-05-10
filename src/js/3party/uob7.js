@@ -64,7 +64,7 @@ this.mmooc.uob = (function() {
         $tooltipElements = $content.first().filter(function() {
           return this.innerHTML.match(re);
         });
-        
+
         $tooltipElements.each(function (i, el) {
             $(this).html($(this).html().replace(
                 re,
@@ -343,7 +343,7 @@ this.mmooc.uob = (function() {
           });
         }
         */
-        
+
         var acc = document.getElementsByClassName("uob-accordion");
         var i;
 
@@ -357,7 +357,11 @@ this.mmooc.uob = (function() {
               panel.style.maxHeight = null;
             } else {
               panel.style.maxHeight = panel.scrollHeight + "px";
-            } 
+            }
+            setTimeout(function () {
+              window.dispatchEvent(new Event('resize'));;
+           }, 200);
+
           });
         }
         // ================================================================================
@@ -446,6 +450,10 @@ this.mmooc.uob = (function() {
               }
 
               $button.button('option', options);
+              setTimeout(function () {
+                window.dispatchEvent(new Event('resize'));;
+             }, 200);
+
               return false;
             });
         }
@@ -612,12 +620,12 @@ this.mmooc.uob = (function() {
               var str = $(this).find("tr:eq(0) > td").text();
               var patt = /\[(.*)\]/i;
               var result = str.match(patt);
-              
+
               if(!found && result && result[1] && (aBoxTags.indexOf(result[1]) > -1)) {
                 strTag = result[1];
                 found = true;
                 return true;
-              } 
+              }
               return false;
             });
 
