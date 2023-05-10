@@ -44,7 +44,7 @@ jobs:
           azcliversion: 2.48.1
           inlineScript: |
               az storage blob upload-batch --account-name ${{ env.ACCOUNT_NAME }} \
-                --auth-mode key -s ${{ env.SOURCE }} -d ${{ env.DESTINATION }}
+                --auth-mode key -s ${{ env.SOURCE }} -d ${{ env.DESTINATION }} --overwrite
       # Azure logout - Force step to always run with 'always()', ensures no hanging logins
       - name: logout
         if: always()
