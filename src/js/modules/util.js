@@ -626,6 +626,12 @@ this.mmooc.util = (function () {
         }
       });
     },
+    removeRecentFeedback: function() {
+      $(".recent_feedback").each(function() {
+        var $this = $(this);
+        $this.remove()
+      });
+    },
     getLinkToAvailableCourses: function () {
       var linkToAvailableCourses = "/search/all_courses" + mmooc.hrefQueryString;
       //ETH20190409 By making sure the root account loads our design, we do not need a front page.
