@@ -361,6 +361,12 @@ this.mmooc.menu = (function() {
     renderLeftHeaderMenu: function() {
       // render left header menu only for authenticated users
       if (mmooc.util.isAuthenticated()) {
+
+        //Remove canvas default buttons in header
+        document.getElementById("global_nav_history_link").remove();
+        document.getElementById("global_nav_courses_link").remove();
+        document.getElementById("global_nav_groups_link").remove();
+
         // The entire menu is rebuilt because of unwanted popup in the new ui menu
         if (mmooc.settings.removeGlobalGradesLink == false) {
           insertCustomMenuElementInTopMenu('Karakterer', '/grades' + mmooc.hrefQueryString);
@@ -407,6 +413,11 @@ this.mmooc.menu = (function() {
 
       var roles = mmooc.api.getRoles();
       if (roles != null && roles.indexOf('admin') != -1) {
+
+        //Remove canvas default buttons  and commons in header
+        document.getElementById("global_nav_accounts_link").remove();
+        document.getElementById("context_external_tool_176_menu_item").remove();
+
         // Admin needs original canvas Course dropdown to access site admin settings
         //$("#courses_menu_item").show(); //Applies only for Old UI. This is the course menu item with a sub menu.
         insertCustomMenuElementInTopMenu('Admin', '/accounts' + mmooc.hrefQueryString);
@@ -420,6 +431,10 @@ this.mmooc.menu = (function() {
 
     renderUnauthenticatedMenu: function() {
       if (!mmooc.util.isAuthenticated()) {
+
+        //Remove canvas default buttons in header
+        document.getElementById("global_nav_history_link").remove();
+
         //Hide standard canvas login button
         $("#global_nav_login_link").hide();
 
