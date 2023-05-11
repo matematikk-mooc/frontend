@@ -51,6 +51,9 @@
   },
   "scripts": {
     "build": "grunt build",
+    "build:localhost": "grunt serve -udv='localhost'",
+    "build:udirdesign": "grunt build -udv=udirdesign-$(git log -1 --pretty=format:'%ad' --date=format:'%Y-%m-%dT%H:%M:%S')",
+    "build:udirdesign-staging": "grunt staging -udv=udirdesign-staging-$(git log -1 --pretty=format:'%ad' --date=format:'%Y-%m-%dT%H:%M:%S')",
     "test": "grunt test",
     "start": "grunt serve",
     "lint:html": "npx htmlhint --config .htmlhintrc **/*.html",
