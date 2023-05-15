@@ -294,18 +294,23 @@ this.mmooc.vimeo = function() {
 				$("#" + transcript.getTranscriptSelectId()).toggle();
 				var body = "#"+transcriptContentId;
 				var iframe = document.getElementById(iframeId);
-				var iFrameParent= iframe.parentElement;
 				if ($(body).css('display') != 'none') {
 					$(body).slideUp(400);
 					$(body).removeClass("uob-box");
 					options = { icons: { secondary: 'ui-icon-triangle-1-e' } };
-					iFrameParent.setAttribute("style", "margin-bottom: 0px")
+					iframeSibling = iframe.nextElementSibling
+					if(iframeSibling != null){
+						iframeSibling.setAttribute("style", "padding-bottom: 0px")
+					}
 
 				} else {
 					$(body).slideDown(400);
-					const transcriptBox = $(body).addClass("uob-box");
+					$(body).addClass("uob-box");
 					options = { icons: { secondary: 'ui-icon-triangle-1-s' } };
-					iFrameParent.setAttribute("style", "margin-bottom: 200px")
+					iframeSibling = iframe.nextElementSibling;
+					if(iframeSibling != null){
+						iframeSibling.setAttribute("style", "padding-bottom: 200px")
+					}
 
 				}
 				$button.button('option', options);
