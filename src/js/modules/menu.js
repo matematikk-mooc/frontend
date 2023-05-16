@@ -363,9 +363,19 @@ this.mmooc.menu = (function() {
       if (mmooc.util.isAuthenticated()) {
 
         //Remove canvas default buttons in header
-        document.getElementById("global_nav_history_link").remove();
-        document.getElementById("global_nav_courses_link").remove();
-        document.getElementById("global_nav_groups_link").remove();
+
+        var history = document.getElementById("global_nav_history_link");
+        if (history != null){
+          history.remove();
+        }
+        var coursesButton = document.getElementById("global_nav_courses_link");
+        if (coursesButton != null){
+          coursesButton.remove();
+        }
+        var groupsButton = document.getElementById("global_nav_groups_link")
+        if (groupsButton != null){
+          groupsButton.remove();
+        }
 
         // The entire menu is rebuilt because of unwanted popup in the new ui menu
         if (mmooc.settings.removeGlobalGradesLink == false) {
@@ -415,8 +425,14 @@ this.mmooc.menu = (function() {
       if (roles != null && roles.indexOf('admin') != -1) {
 
         //Remove canvas default buttons  and commons in header
-        document.getElementById("global_nav_accounts_link").remove();
-        document.getElementById("context_external_tool_176_menu_item").remove();
+        var accountsButton = document.getElementById("global_nav_accounts_link")
+        if(accountsButton != null){
+          accountsButton.remove();
+        }
+        var commonsButton = document.getElementById("context_external_tool_176_menu_item")
+        if (commonsButton != null){
+          commonsButton.remove();
+        }
 
         // Admin needs original canvas Course dropdown to access site admin settings
         //$("#courses_menu_item").show(); //Applies only for Old UI. This is the course menu item with a sub menu.
@@ -433,7 +449,10 @@ this.mmooc.menu = (function() {
       if (!mmooc.util.isAuthenticated()) {
 
         //Remove canvas default buttons in header
-        document.getElementById("global_nav_history_link").remove();
+        var history = document.getElementById("global_nav_history_link")
+        if (history != null){
+          history.remove();
+        }
 
         //Hide standard canvas login button
         $("#global_nav_login_link").hide();
