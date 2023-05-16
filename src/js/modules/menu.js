@@ -377,6 +377,11 @@ this.mmooc.menu = (function() {
           groupsButton.remove();
         }
 
+        var commonsButton = document.getElementById("context_external_tool_176_menu_item")
+        if (commonsButton != null){
+          commonsButton.remove();
+        }
+
         // The entire menu is rebuilt because of unwanted popup in the new ui menu
         if (mmooc.settings.removeGlobalGradesLink == false) {
           insertCustomMenuElementInTopMenu('Karakterer', '/grades' + mmooc.hrefQueryString);
@@ -428,10 +433,6 @@ this.mmooc.menu = (function() {
         var accountsButton = document.getElementById("global_nav_accounts_link")
         if(accountsButton != null){
           accountsButton.remove();
-        }
-        var commonsButton = document.getElementById("context_external_tool_176_menu_item")
-        if (commonsButton != null){
-          commonsButton.remove();
         }
 
         // Admin needs original canvas Course dropdown to access site admin settings
