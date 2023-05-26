@@ -190,6 +190,7 @@ jQuery(function($) {
     mmooc.coursesettings.addListUsersButton();
     mmooc.coursesettings.addListGroupsButton();
     mmooc.coursesettings.addListAssignmentsButton();
+    mmooc.uucheck.addUUButton();
   });
 
   mmooc.routes.addRouteForPath(/\/profile\/settings$/, function() {
