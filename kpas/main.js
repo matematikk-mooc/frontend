@@ -380,9 +380,9 @@ function loadGraphic() {
 
     if(show) {
         if(show == "kommune-statistikk") {
-            document.getElementById("kommune-valg").style.display = "block";
+            document.getElementById("kommuneValg").style.display = "block";
         } else if (show == "fylke-statistikk") {
-            document.getElementById("fylke-valg").style.display = "block";
+            document.getElementById("fylkeValg").style.display = "block";
         }
     } else if(courseId !== undefined) {
         if (municipalityId !== undefined) {

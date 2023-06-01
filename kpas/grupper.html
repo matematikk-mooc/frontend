@@ -1,13 +1,9 @@
 <!DOCTYPE html>
 <html lang="no">
-  <head>
-    <meta
-      name="viewport"
-      charset="utf-8"
-      content="width=device-width, initial-scale=1"
-    />
-    <link href="style.css?version=KPAS_IFRAME_VERSION" rel="stylesheet" />
-    <link href="grupper.css?version=KPAS_IFRAME_VERSION" rel="stylesheet" />
+<head>
+    <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="style.css?version=KPAS_IFRAME_VERSION">
+    <link rel="stylesheet" href="grupper.css?version=KPAS_IFRAME_VERSION">
     <script src="https://d3js.org/d3-fetch.v2.min.js"></script>
     <script src="https://d3js.org/d3-array.v2.min.js"></script>
     <script src="https://d3js.org/d3-color.v2.min.js"></script>
@@ -20,33 +16,28 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="grupper.js?version=KPAS_IFRAME_VERSION"></script>
     <script src="main.js?version=KPAS_IFRAME_VERSION"></script>
-  </head>
-  <body onload="loadFylker()">
-    <h1>Gruppestatistikk kompetanse.udir.no</h1>
-    <div class="uob-info">
-      <h2>Hva viser statistikken?</h2>
-      <p>
-        Statistikken for bruk av kompetansepakken gir ikke nødvendigvis svar på
-        kvaliteten i arbeidet med kompetansepakken, men kan bidra til innsikt
-        for å drive kompetanseutvikling.
-      </p>
-      <p>
-        Tallene i statistikken viser hvor mange som har registrert seg i rolle-
-        og gruppeverktøyet i kompetansepakken, og valgt rolle som lærer eller
-        leder med tilhørende fylke/kommune og arbeidssted. Dersom en deltaker
-        ikke har valgt rolle, blir denne ikke tatt med i statistikken heller.
-      </p>
-    </div>
-    Fylke:<span id="allefylker"></span>
-    <button id="vis-fylke" disabled onclick="visFylkesStatistikk();">
-      Vis statistikk
-    </button>
-    Kommune:<span id="allekommuner"></span>
-    <button id="vis-kommune" disabled onclick="visKommuneStatistikk();">
-      Vis statistikk
-    </button>
-    <h2><span id="graphic-name">&nbsp;</span></h2>
-    <div id="fylkegrafikk"></div>
-    <div id="kommunegrafikk"></div>
-  </body>
-</html>
+</head>
+<body onload="loadFylker()">
+<h1>Gruppestatistikk kompetanse.udir.no</h1>
+<div class="uob-info">
+    <h2>Hva viser statistikken?</h2>
+    <p>Statistikken for bruk av kompetansepakken gir ikke nødvendigvis svar på kvaliteten 
+        i arbeidet med kompetansepakken, men kan bidra til innsikt for å 
+        drive kompetanseutvikling.
+    </p>        
+    <p>
+    Tallene i statistikken viser hvor mange som har registrert seg i 
+    rolle- og gruppeverktøyet i kompetansepakken, og valgt rolle som lærer eller 
+    leder med tilhørende fylke/kommune og arbeidssted.
+     Dersom en deltaker ikke har valgt rolle, 
+     blir denne ikke tatt med i statistikken heller.  
+</p>
+</div>
+Fylke:<span id="allefylker"></span>
+<button id="visFylke" disabled onclick="visFylkesStatistikk();">Vis statistikk</button>
+Kommune:<span id="allekommuner"></span>
+<button id="visKommune" disabled onclick="visKommuneStatistikk();">Vis statistikk</button>
+<h2><span id="graphic-name">&nbsp;</span></h2>
+<div id="fylkegrafikk"></div>
+<div id="kommunegrafikk"></div>
+</body></html>

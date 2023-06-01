@@ -62,10 +62,10 @@ function loadKommuner() {
 }
 
 $(document).on('change', '#fylke', function () {
-    $("#vis-fylke").prop('disabled', false);
+    $("#visFylke").prop('disabled', false);
     loadKommuner();
 });
 
 $(document).on('change', '#kommune', function () {
-    $("#vis-kommune").prop('disabled', false);
+    $("#visKommune").prop('disabled', false);
 });
