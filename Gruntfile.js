@@ -1,46 +1,16 @@
 'use strict';
 
 module.exports = function (grunt) {
-  /*
-  Instead of using grunt.loadNpmTasks('grunt-contrib-uglify')
-  Use require('load-grunt-tasks')(grunt); to load
-  all grunt tasks matching 'grunt-*' from package.json
-  */
+  // Helper function to load pre-defined grunt tasks
   require('load-grunt-tasks')(grunt);
-
-  // Grabs the --udv flag from the command line
-  // Example: grunt build --udv="1.0.0"
   var udv = grunt.option('udv');
-
-  // Configure grunt tasks
+  
+  // Configures grunt tasks
   grunt.initConfig({
-
-    // Project filenames
     outFileName: 'mmooc-min-' + udv,
-    srcFileName: 'mmooc-' + udv,
+    srcFileName: 'mmooc-' +udv,
     subaccountFileName: 'subaccount-' + udv,
     rootaccountFileName: 'rootaccount-' + udv,
-
-    //Formatting tasks
-    prettier: {
-      options: {
-        config: '.prettierrc',
-      },
-      html: {
-        src: ['**/*.html', '!node_modules/**'],
-      },
-    },
-
-    //Linting tasks
-    htmlhint: {
-      options: {
-        htmlhintrc: '.htmlhintrc'
-      },
-      all: {
-        src: grunt.file.expand('**/*.html', '!node_modules/**')
-      }
-    },
-
     clean: {
       dist: {
         files: [
@@ -158,7 +128,7 @@ module.exports = function (grunt) {
         }
       }
     },
-
+    
     replace: {
       production: {
         src: ['tmp/<%= outFileName%>.css', 'tmp/<%= rootaccountFileName%>.css', 'tmp/<%= srcFileName%>.js', 'tmp/<%= rootaccountFileName%>.js', 'tmp/<%= subaccountFileName%>.js'],
@@ -242,8 +212,8 @@ module.exports = function (grunt) {
       },
       production_kpas: {
         src: [
-          'dist/kpas/style.css',
-          'dist/kpas/kpas.html',
+          'dist/kpas/style.css', 
+          'dist/kpas/kpas.html', 
           'dist/kpas/brukere.html',
           'dist/kpas/grupper.html',
           'dist/kpas/main.js'],
@@ -261,9 +231,9 @@ module.exports = function (grunt) {
       },
       stage_kpas: {
         src: [
-          'dist/kpas/style.css',
-          'dist/kpas/kpas.html',
-          'dist/kpas/brukere.html',
+          'dist/kpas/style.css', 
+          'dist/kpas/kpas.html', 
+          'dist/kpas/brukere.html', 
           'dist/kpas/grupper.html',
           'dist/kpas/main.js'],
         dest: 'dist/kpas/',
@@ -280,9 +250,9 @@ module.exports = function (grunt) {
       },
       development_kpas: {
         src: [
-          'dist/kpas/style.css',
-          'dist/kpas/kpas.html',
-          'dist/kpas/brukere.html',
+          'dist/kpas/style.css', 
+          'dist/kpas/kpas.html', 
+          'dist/kpas/brukere.html', 
           'dist/kpas/grupper.html',
           'dist/kpas/main.js'],
         dest: 'dist/kpas/',
@@ -309,7 +279,7 @@ module.exports = function (grunt) {
           {
             from: '$KPAS_MERGE_LTI_ID',
             to: '845'
-          }
+          }        
         ]
       },
       stage_settings: {
@@ -452,34 +422,28 @@ module.exports = function (grunt) {
   });
 
   grunt.registerTask('make', [
-    'prettier',
-    'htmlhint',
     'less',
     'handlebars',
     'concat',
-    'replace:production_settings',
-    'replace:production',
-    'replace:production_kpas',
+    'replace:production_settings', 
+    'replace:production', 
+    'replace:production_kpas', 
     'babel',
     'uglify',
     'copy:main',
   ]);
   grunt.registerTask('make_staging', [
-    'prettier',
-    'htmlhint',
     'less',
     'handlebars',
     'concat',
-    'replace:stage_settings',
-    'replace:stage',
-    'replace:stage_kpas',
+    'replace:stage_settings', 
+    'replace:stage', 
+    'replace:stage_kpas', 
     'babel',
     'uglify',
     'copy:main',
   ]);
   grunt.registerTask('make_dev', [
-    'prettier',
-    'htmlhint',
     'less',
     'handlebars',
     'concat',
@@ -493,22 +457,22 @@ module.exports = function (grunt) {
   ]);
 
 
-  grunt.registerTask('dev_development_mobile', ['replace:development_mobile',]);
-
+  grunt.registerTask('dev_development_mobile', [
+    'replace:development_mobile',
+  ]);
+  
   grunt.registerTask('runTest', ['connect:test', 'karma:unitTest']);
 
   grunt.registerTask('test', ['clean', 'make', 'runTest']);
 
   grunt.registerTask('build', ['make']);
-
   grunt.registerTask('staging', ['make_staging']);
 
   grunt.registerTask('rebuildServe', ['clean:dist', 'make_dev']);
 
-  grunt.registerTask('serve', ['clean', 'make_dev', 'connect:dev', 'watch']);
+  grunt.registerTask('serve',        ['clean', 'make_dev', 'connect:dev', 'watch']);
 
   grunt.registerTask('serveStaging', ['clean', 'make', 'connect:staging', 'watch']);
 
   grunt.registerTask('default', ['clean', 'make']);
 };
-
