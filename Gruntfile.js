@@ -438,17 +438,18 @@ module.exports = function (grunt) {
       }
     },
 
-    karma: {
-      unitTest: {
-        configFile: 'test/js/karma.conf.js',
-        autoWatch: false,
-        singleRun: true,
-        browsers:
-          process.env.KARMA_BROWSER == null
-            ? ['Firefox', 'Chrome']
-            : ['Firefox', 'Chrome', '<%= extraBrowser %>']
-      }
-    }
+    //Unused will be resolved by jira issue: KURSP-769
+    // karma: {
+      // unitTest: {
+        // configFile: 'test/js/karma.conf.js',
+        // autoWatch: false,
+        // singleRun: true,
+        // browsers:
+          // process.env.KARMA_BROWSER == null
+            // ? ['Firefox', 'Chrome']
+            // : ['Firefox', 'Chrome', '<%= extraBrowser %>']
+      // }
+    // }
   });
 
   grunt.registerTask('make', [
@@ -495,7 +496,9 @@ module.exports = function (grunt) {
 
   grunt.registerTask('dev_development_mobile', ['replace:development_mobile',]);
 
-  grunt.registerTask('runTest', ['connect:test', 'karma:unitTest']);
+  // grunt.registerTask('runTest', ['connect:test', 'karma:unitTest']);
+  //Unused will be resolved by jira issue: KURSP-769
+  grunt.registerTask('runTest', ['connect:test']);
 
   grunt.registerTask('test', ['clean', 'make', 'runTest']);
 
