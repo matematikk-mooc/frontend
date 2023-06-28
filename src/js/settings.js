@@ -1,21 +1,21 @@
-this.mmooc = this.mmooc || {};
+
 
 // Course ID for selected course, which frontend page
 // will be swapped with All Courses list
-this.mmooc.settings = {
+var settings = {
   CanvaBadgeProtocolAndHost: 'https://canvabadges-beta-iktsenteret.bibsys.no',
   useCanvaBadge: false,
   defaultNumberOfReviews: 1, // Default number of peer reviews per student in power function
   useDataportenGroups : false,
   filterCourses: true,
-  filterCoursesOnAccountId: [99, 100, 102, 103, 137, 138, 139, 145],
+  filterCoursesOnAccountId: ACCOUNTID,
   disablePeerReviewButton: false,
   principalRoleType: "Skoleleder",
   removeGlobalGradesLink: true,
   removeGroupsLink: true,
   displayProfileLeftMenu: false,
   displayUserMergeButton: true,
-  userMergeLtiToolId: 863,
+  userMergeLtiToolId: KPAS_MERGE_LTI_ID,
   displayGroupsTab: false,
   displayDiscussionsTab : false,
   displayAlertsMenuItem : false,
@@ -29,3 +29,6 @@ this.mmooc.settings = {
   uuStatusNb: 'https://uustatus.no/nb/erklaringer/publisert/2796ebc6-161f-4dc9-9429-70d7dd136431',
   uuStatusNn: 'https://uustatus.no/nn/erklaringer/publisert/2796ebc6-161f-4dc9-9429-70d7dd136431',
 };
+if (typeof module !== 'undefined' && module !== null) {
+  module.exports = settings;
+}

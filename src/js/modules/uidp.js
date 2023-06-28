@@ -1,24 +1,27 @@
-this.mmooc=this.mmooc||{};
+import {JSO} from '../3party/jso'
+import uidpHbs from '../../templates/modules/uidp.hbs'
+
+var mmooc = mmooc||{};
 
 
-this.mmooc.uidp = function() {
+mmooc.uidp = function() {
     var token = null;
 
     let request = ['openid','profile'];
     let uidpCallback = 'https://localhost/courses/1';
     let uidpClientId = 'udir.kompetanseportalen-local';
-    
+
     var opts = {
         scopes: {
             request: request
         },
         response_type: 'id_token token'
     }
-        
-    var client = new jso.JSO({
+
+    var client = new JSO({
                 providerID: "UIDP",
                 client_id: uidpClientId,
-                redirect_uri: uidpCallback, 
+                redirect_uri: uidpCallback,
                 authorization: "https://uidp-dev.udir.no/connect/authorize"
             });
 
@@ -73,7 +76,7 @@ this.mmooc.uidp = function() {
 
                         mmooc.uidp.printLogoutOptions();
                     }
-                });  
+                });
             } else { //Try and see if we can login silently.
                 this.hiddenIframeLogin();
             }
@@ -84,7 +87,7 @@ this.mmooc.uidp = function() {
                 var html = "Du er logget inn på uidp som " + userInfo.user.name;
                 $("#uidpUserInfo").html(html);
             });
-*/        
+*/
         },
         validToken: function() {
             mmooc.uidp.displayUserInfo();
@@ -98,7 +101,7 @@ this.mmooc.uidp = function() {
         },
         //If we want to require that the account used to connect to uidp is the same as the one used
         //to login to Canvas, we could call the code below and perform some checks. Right now the code
-        //compares the Canvas login id with the secondary open id, i.e. Feide id. 
+        //compares the Canvas login id with the secondary open id, i.e. Feide id.
         tokenBelongsToLoggedInUser: function(callback) {
             this.getUserInfo(function(userInfo) {
                 mmooc.api.getUserProfile(function(userProfile) {
@@ -127,7 +130,7 @@ this.mmooc.uidp = function() {
             });
         },
         printLoginOptions : function() {
-            var uidpHtml = mmooc.util.renderTemplateWithData("uidp", {});
+            var uidpHtml = mmooc.util.renderTemplateWithData(uidpHbs, {});
             $("#uidpLoginInfo").html(uidpHtml);
             $(document).off('click', "#uidpPopupLogin");
             $(document).on ("click", "#uidpPopupLogin",function(e) {mmooc.uidp.authorizePopup()});
@@ -155,7 +158,7 @@ this.mmooc.uidp = function() {
                 url: url,
                 beforeSend: function(xhr) {
                     xhr.setRequestHeader("Authorization", "Bearer " + self.token.access_token)
-                }, 
+                },
                 data: data,
                 success: function(result) {
                     callback(result)
@@ -185,7 +188,7 @@ this.mmooc.uidp = function() {
                 response_type: 'id_token token'
             }
 
-            client.setLoader(jso.Popup)
+            client.setLoader(JSO.Popup)
             client.getToken(opts)
                 .then((token) => {
                     console.log("I got the token: " + token.access_token);
@@ -196,11 +199,11 @@ this.mmooc.uidp = function() {
                 .catch((err) => {
                     console.error("Error from popup loader", err)
                 })
-        },        
+        },
         login : function() {
             window.loginType = "login";
             let token = client.getToken(opts);
-            client.setLoader(jso.HTTPRedirect)
+            client.setLoader(JSO.HTTPRedirect)
             client.getToken(opts)
                 .then((token) => {
                     dashboard.dataporten.valideToken();
@@ -213,7 +216,7 @@ this.mmooc.uidp = function() {
 //            window.loginType = "iframeLogin";
             var self = this;
             var silent_opts = this.getSilentOpts();
-            client.setLoader(jso.IFramePassive)
+            client.setLoader(JSO.IFramePassive)
             client.getToken(silent_opts)
                 .then((token) => {
                     console.log("I got the token: ", token)

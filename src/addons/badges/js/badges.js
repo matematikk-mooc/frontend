@@ -1,20 +1,23 @@
-this.mmooc = this.mmooc || {};
+import badgeView from "../templates/badgeView.hbs"
+import constants from "./constants";
+import util from "../../../js/modules/util";
 
-this.mmooc.iframe = {
-  badges: (function() {
+export default (function() {
+
     return {
       initPage: function() {
-        if (!parent.mmooc.util.isTeacherOrAdmin()) {
+        let self = this
+        if (!parent.util.isTeacherOrAdmin()) {
           $('#badge-wrap').addClass('hide');
           var $badges = $(document).find('#badge-wrap .row-fluid .span4');
           var redesignedBadges = [];
 
           $badges.each(function() {
-            redesignedBadges.push(mmooc.iframe.badges.applyNewDesign($(this)));
+            redesignedBadges.push(self.applyNewDesign($(this)));
             $(this).remove();
           });
 
-          mmooc.iframe.badges.displayElements(redesignedBadges);
+          self.displayElements(redesignedBadges);
           $('body').attr('style', 'margin: 0 !important;');
           $('head').append('<base target="_parent"/>');
         } else {
@@ -24,13 +27,14 @@ this.mmooc.iframe = {
       },
 
       applyNewDesign: function($element) {
+        let self = this
         var complete =
           $element
             .find(
               ":contains('You have completed the modules required to achieve this badge.')"
             )
             .size() > 0;
-        var badgeIds = mmooc.iframe.badges.extractIdsFromString(
+        var badgeIds = self.extractIdsFromString(
           $element.find('.thumbnail a').attr('onclick')
         );
         var criteria = $element.find('p:first').html();
@@ -48,7 +52,7 @@ this.mmooc.iframe = {
           complete: complete,
           badgeImage: complete
             ? $element.find('.thumbnail a img').attr('src')
-            : mmooc.constants.BADGE_LOCKED_IMAGE_URL,
+            : constants.BADGE_LOCKED_IMAGE_URL,
           name: $element.find('.thumbnail h3').html(),
           criteria: criteria,
           link: link,
@@ -58,7 +62,7 @@ this.mmooc.iframe = {
       },
 
       displayElements: function(elements) {
-        var templates = mmooc.util.renderTemplateWithData('badgeView', {
+        var templates = util.renderTemplateWithData(badgeView, {
           badges: elements,
           total: elements.length,
           completed_amount: elements.filter(function(e) {
@@ -94,7 +98,7 @@ this.mmooc.iframe = {
       },
 
       notifyParentAndSetSize: function() {
-        parent.mmooc.badges.initPage();
+        this.initPage();
       },
 
       handleBackPackClick: function() {
@@ -131,7 +135,7 @@ this.mmooc.iframe = {
           }
         }
 
-        parent.mmooc.badges.claimBadge(OpenBadges, [badgeUrl], handleResults);
+        this.claimBadge(OpenBadges, [badgeUrl], handleResults);
       },
 
       backpack: function(complete, element) {
@@ -168,5 +172,4 @@ this.mmooc.iframe = {
         }
       }
     };
-  })()
-};
+  })();

@@ -1,4 +1,4 @@
-class CourseOptions {
+export class CourseOptions {
     static delimitor() {
         return '::';
     }

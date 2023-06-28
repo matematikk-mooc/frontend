@@ -1,4 +1,4 @@
-var routes = mmooc.routes;
+import routes from "../src/js/modules/routes";
 
 describe('routes', function() {
   var callbacks;

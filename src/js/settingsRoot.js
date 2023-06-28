@@ -1,14 +1,15 @@
-this.mmooc = this.mmooc || {};
 
-this.mmooc.hrefQueryString = "?design=udir";
-this.mmooc.hrefAmpQueryString = "&design=udir";
+var settingsRoot = {
 
-this.mmooc.settingsRoot = {
+    hrefQueryString: "?design=udir",
+    hrefAmpQueryString: "&design=udir",
     feideEnrollRefferers: [
       "design=udir",
       "enroll_code",
       "kslaring.no"
     ],
-    kpasApiUrl: '$KPASAPIURL'
+    kpasApiUrl: KPASAPIURL
 };
-
+if (typeof module !== 'undefined' && module !== null) {
+  module.exports = settingsRoot;
+}

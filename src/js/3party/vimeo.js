@@ -1,8 +1,9 @@
-this.mmooc=this.mmooc||{};
+import transcriptMenu from "../../templates/modules/transcriptMenu.hbs"
+import util from "../modules/util";
 
 //https://webapps.stackexchange.com/questions/85517/how-can-i-download-subtitles-for-a-vimeo-video
-this.mmooc.vimeo = function() {
-	var hrefPrefix = "$KPASAPIURL/vimeo/";
+export default (function() {
+	var hrefPrefix = KPASAPIURL + "/vimeo/";
 	var transcriptContainer = {};
 	var initialized = false;
     var noOfVimeoVideos = 0;
@@ -10,6 +11,7 @@ this.mmooc.vimeo = function() {
     var noOfInits = 0;
 	function transcript(vimeoIframeId, vimeoVideoId)
 	{
+
 		var playbackRate = 1.0;
 		var transcriptId = "transcript" + vimeoIframeId;
 		var transcriptLoadingId = transcriptId + "loading";
@@ -333,7 +335,7 @@ this.mmooc.vimeo = function() {
 				s.setAttribute("style", "display: none;");
 				s.setAttribute("aria-label", "Velg språk");
 
-				var html = mmooc.util.renderTemplateWithData('transcriptMenu', {
+				var html = util.renderTemplateWithData(transcriptMenu, {
 					transcriptSelectId: transcriptSelectId,
 					languageTracks: tracks,
 					selectedLanguage: selectedLanguage
@@ -367,7 +369,7 @@ this.mmooc.vimeo = function() {
 				if(firstElementChild) {
 					var href = firstElementChild.getAttribute("href");
 					if(href) {
-						var siblingVideoId = mmooc.vimeo.getVimeoVideoIdFromUrl(href);
+						var siblingVideoId = self.getVimeoVideoIdFromUrl(href);
 						if(siblingVideoId == videoId) {
 							insertAfterSibling = nextElementSibling;
 						}
@@ -513,11 +515,12 @@ this.mmooc.vimeo = function() {
 		}
 	}
 
+    let self = this;
 	//Called when user clicks somewhere in the transcript.
 	$(function() {
 		$(document).on('click keypress', '.btnVimeoSeek', function() {
 			var seekToTime = $(this).data('seek');
-			var transcript = mmooc.vimeo.getTranscriptFromTranscriptId($(this).parent().parent().attr("id"));
+			var transcript = self.getTranscriptFromTranscriptId($(this).parent().parent().attr("id"));
             try {
                 transcript.setCurrentTime(seekToTime);
                 transcript.play();
@@ -575,9 +578,9 @@ this.mmooc.vimeo = function() {
 				var iframes = document.getElementsByTagName('iframe');
 				for (var i = 0; i < iframes.length; i++) {
 					var iframe = iframes[i];
-					var vimeoId = mmooc.vimeo.getVimeoVideoIdFromUrl(iframe.src);
+					var vimeoId = getVimeoVideoIdFromUrl(iframe.src);
 					if(vimeoId != "") {
-						var vimeoIframeId = mmooc.vimeo.getUniqueIframeId(vimeoId);
+						var vimeoIframeId = getUniqueIframeId(vimeoId);
 						iframe.setAttribute("id", vimeoIframeId);
 						iframe.setAttribute("title", "Videoplayer");
 
@@ -596,4 +599,4 @@ this.mmooc.vimeo = function() {
 			}
 		}
 	}
-}();
+})();
