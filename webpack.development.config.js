@@ -59,24 +59,24 @@ module.exports = {
             'ACCOUNTID' : [99, 100, 102, 103, 137, 138, 139, 145],
             'KPAS_MERGE_LTI_ID' : 863,
             'KPAS_IFRAME_VERSION' : JSON.stringify('localhost'),
-          }),
+        }),
         new MiniCssExtractPlugin({
             filename: '[name].css', // Output CSS filenames
         }),
         new CopyWebpackPlugin({
             patterns: [
-              {
-                from: 'src/bitmaps/*',
-                to: 'bitmaps/[name][ext]'
-              },
-              {
-                from: 'src/vector_images/*',
-                to: 'vector_images/[name][ext]'
-              },
-              {
-                from: 'kpas/*',
-                to: 'kpas/[name][ext]'
-              }
+                {
+                    from: 'src/bitmaps/*',
+                    to: 'bitmaps/[name][ext]'
+                },
+                {
+                    from: 'src/vector_images/*',
+                    to: 'vector_images/[name][ext]'
+                },
+                {
+                    from: 'kpas/*',
+                    to: 'kpas/[name][ext]'
+                }
             ]
         }),
         new webpack.HotModuleReplacementPlugin(),
@@ -112,21 +112,23 @@ module.exports = {
                 test: /\.less$/,
                 use: [
                     MiniCssExtractPlugin.loader,
-                    {loader: 'css-loader',
-                    options: {
-                        url: false
-                    }
-                    },
-                     {loader: 'less-loader',
-                    options: {
-                        lessOptions: {
-                        relativeUrls: false,
-                        globalVars: {
-                            SERVER: JSON.stringify('http://localhost:9000/'),
-
-                        },
+                    {
+                        loader: 'css-loader',
+                        options: {
+                            url: false
                         }
-                    }
+                    },
+                    {
+                        loader: 'less-loader',
+                        options: {
+                            lessOptions: {
+                                relativeUrls: false,
+                                globalVars: {
+                                    SERVER: JSON.stringify('http://localhost:9000/'),
+
+                                },
+                            }
+                        }
                     },
                 ],
             }
@@ -153,9 +155,9 @@ module.exports = {
     devServer: {
         client: {
             overlay: {
-              errors: true,
-              warnings: false,
-              runtimeErrors: false,
+                errors: true,
+                warnings: false,
+                runtimeErrors: false,
             },
         },
         static: {
@@ -169,10 +171,10 @@ module.exports = {
             'Access-Control-Allow-Origin': '*'
         },
         watchFiles: {
-        paths: ['src'],
-        options: {
-          ignored: '**/*.js', // Exclude JavaScript files from triggering a full reload
+            paths: ['src'],
+            options: {
+                ignored: '**/*.js', // Exclude JavaScript files from triggering a full reload
+            },
         },
-      },
     }
 };

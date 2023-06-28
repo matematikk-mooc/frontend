@@ -60,24 +60,24 @@ module.exports = {
             'ACCOUNTID' : [99, 100, 102, 103, 137, 138, 139, 145],
             'KPAS_MERGE_LTI_ID' : 863,
             'KPAS_IFRAME_VERSION' : JSON.stringify('staging'),
-          }),
+        }),
         new MiniCssExtractPlugin({
             filename: '[name]-' + date +'.css', // Output CSS filenames
         }),
         new CopyWebpackPlugin({
             patterns: [
-              {
-                from: 'src/bitmaps/*',
-                to: 'bitmaps/[name][ext]'
-              },
-              {
-                from: 'src/vector_images/*',
-                to: 'vector_images/[name][ext]'
-              },
-              {
-                from: 'kpas/*',
-                to: 'kpas/[name][ext]'
-              }
+                {
+                    from: 'src/bitmaps/*',
+                    to: 'bitmaps/[name][ext]'
+                },
+                {
+                    from: 'src/vector_images/*',
+                    to: 'vector_images/[name][ext]'
+                },
+                {
+                    from: 'kpas/*',
+                    to: 'kpas/[name][ext]'
+                }
             ]
         }),
         new webpack.HotModuleReplacementPlugin(),
@@ -113,21 +113,23 @@ module.exports = {
                 test: /\.less$/,
                 use: [
                     MiniCssExtractPlugin.loader,
-                    {loader: 'css-loader',
-                    options: {
-                        url: false
-                    }
-                    },
-                     {loader: 'less-loader',
-                    options: {
-                        lessOptions: {
-                        relativeUrls: false,
-                        globalVars: {
-                            SERVER: JSON.stringify('https://kompetanseudirno.azureedge.net/udirdesign-staging/'),
-
-                        },
+                    {
+                        loader: 'css-loader',
+                        options: {
+                            url: false
                         }
-                    }
+                    },
+                    {
+                        loader: 'less-loader',
+                        options: {
+                            lessOptions: {
+                                relativeUrls: false,
+                                globalVars: {
+                                    SERVER: JSON.stringify('https://kompetanseudirno.azureedge.net/udirdesign-staging/'),
+
+                                },
+                            }
+                        }
                     },
                 ],
             }
