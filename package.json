@@ -57,5 +57,8 @@
     "test": "test"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "@vimeo/player": "^2.20.1"
+  }
 }

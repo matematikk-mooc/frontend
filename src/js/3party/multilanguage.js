@@ -310,6 +310,9 @@ class MultilangUtils {
         },
         languagesMap: () => {
             return MultilangUtils.languagesMap()
+        },
+        getPreferredLanguage: () => {
+            return MultilangUtils.getPreferredLanguage()
         }
     }
     })();

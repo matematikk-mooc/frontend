@@ -27,8 +27,7 @@
 // ==========================================================================================
 
 import multilanguage from "./multilanguage";
-
-//import vimeo from "./vimeo";
+import vimeo from "./vimeo";
 
 export default (function() {
   // -----------------------------------------------------------------------------------

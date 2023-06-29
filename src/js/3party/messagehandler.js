@@ -17,9 +17,7 @@ export default (function() {
     return {
         init: function() {
             window.addEventListener('message', function(e) {
-                if (e.type.contains('webpack')){
-                    return;
-                }
+
                 const error = error => console.error('error calling api', error);
                 try {
                     if(e.origin.includes("vimeo")) {
