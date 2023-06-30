@@ -253,10 +253,8 @@ export default (function() {
         }
 
         if (document.getElementById('left-side')) {
-          document
-            .getElementById('left-side')
-            .insertAdjacentHTML('afterbegin', html);
-            multilanguage.perform();
+          document.getElementById('left-side').insertAdjacentHTML('afterbegin', html);
+          multilanguage.perform();
         }
         //Canvas case: Slow loading for group discussions when large number of groups Case # 05035288
         //Display popup box when loading
@@ -320,13 +318,12 @@ export default (function() {
     },
 
     createNewTooltipText : function(oldText, tooltipType, newText) {
-      return oldText.replace(tooltipRegexpPattern, tooltipType + newText)
+      return oldText.replace(this.tooltipRegexpPattern, tooltipType + newText)
     },
     updateButtonTooltip : function(el, item) {
       var tooltip = el.attr("data-html-tooltip-title");
       if(tooltip) {
         el.attr("data-html-tooltip-title", createNewTooltipText(tooltip, "</i>", item.title));
-        multilanguage.update
       }
     },
     updatePrevAndNextButtons : function(courseId, module) {

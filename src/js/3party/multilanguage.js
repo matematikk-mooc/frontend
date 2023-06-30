@@ -3,6 +3,7 @@ import menu from '../modules/menu.js';
 import util from '../modules/util.js'
 // Utility class to keep utility functions out of global scope
 class MultilangUtils {
+
     static get LANGUAGES() {
         return [
             { code: 'nb', name: "Bokmål" },
@@ -242,7 +243,7 @@ class MultilangUtils {
     }
 
     static makeSpansOnPage() {
-        const selectors = [
+        var selectors = [
             '.translate',
             'div.tooltiptext',
             '.show-content.user_content h1.page-title',
@@ -256,15 +257,15 @@ class MultilangUtils {
                 'a.title',
                 'span.name',
                 'span.title',
-                );
-            }
-
-            MultilangUtils.makeSpansForSelectors(selectors);
+            );
         }
-    }
 
-    export default (function () {
-        return {
+        MultilangUtils.makeSpansForSelectors(selectors);
+    }
+}
+
+export default (function () {
+    return {
         perform: () => {
             if (!util.isMultilangCourse(util.course)) {
                 return;
@@ -313,6 +314,9 @@ class MultilangUtils {
         },
         getPreferredLanguage: () => {
             return MultilangUtils.getPreferredLanguage()
+        },
+        applyColorCodingInEditor:() => {
+            return MultilangUtils.applyColorCodingInEditor()
         }
     }
-    })();
+})();
