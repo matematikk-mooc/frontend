@@ -75,7 +75,7 @@ if(document.location.pathname == "/search/all_courses" && document.location.sear
             <a class="feide-button mmooc-button mmooc-button-primary" onclick="window.location.href=\'/login/saml/2\'">
               </a>
               <a class="icon-question unit-help-login" target="_blank" href="https://bibsys.instructure.com/courses/553"></a>
-              <a class="mmooc-button mmooc-button-secondary" onclick="showCanvasLogin();">Ikke Feide</a>
+              <a class="mmooc-button mmooc-button-secondary">Ikke Feide</a>
           </div>
           <div class="unitPartners">
             <a href="https://udir.no" target="_blank"><img class="unitPartnersUdirLogo unitPartnersLogo" src="${SERVER}bitmaps/udirlogo50px.png"/></a>
@@ -89,6 +89,7 @@ if(document.location.pathname == "/search/all_courses" && document.location.sear
           feidLoginBoxPosition = document.getElementById('f1_container');
         }
         feidLoginBoxPosition.insertAdjacentHTML('afterend', html);
+        $(".mmooc-button-secondary").on('click', showCanvasLogin);
         $('#application').before(`<div class="overlay"></div>`);
       }
       else {
