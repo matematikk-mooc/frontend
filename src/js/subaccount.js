@@ -1,4 +1,7 @@
+import '../css/all.less';
+
 import utilRoot from './utilRoot';
+
 // Replace the normal jQuery getScript function with one that supports
 // debugging and which references the script files as external resources
 // rather than inline.

@@ -31,7 +31,7 @@ jobs:
           echo "COMMIT_TIMESTAMP=${timestamp}" >> $GITHUB_ENV
 
       - name: Run build script
-        run: grunt staging -udv="${{ env.DESTINATION }}-$COMMIT_TIMESTAMP"
+        run: npm run buildStaging -- --env timestamp=$COMMIT_TIMESTAMP
 
       - name: Login to Azure
         uses: azure/login@v1
@@ -50,4 +50,3 @@ jobs:
         if: always()
         run: |
               az logout
-

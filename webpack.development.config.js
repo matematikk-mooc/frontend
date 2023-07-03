@@ -23,7 +23,7 @@ module.exports = {
             './src/js/utilRoot.js',
             './src/js/subaccount.js',
         ],
-        'mmooc-min-localhost': [
+        'kompetanseportalen-localhost': [
             './src/js/i18n.js',
             './src/js/main.js',
         ],
@@ -47,8 +47,8 @@ module.exports = {
 
         }),
         new webpack.DefinePlugin({
-            'DESIGNCSS' : JSON.stringify('mmooc-min-localhost.css'),
-            'DESIGNJS' : JSON.stringify('mmooc-min-localhost.js'),
+            'DESIGNCSS' : JSON.stringify('subaccount-localhost.css'),
+            'DESIGNJS' : JSON.stringify('kompetanseportalen-localhost.js'),
             'SERVER': JSON.stringify('http://localhost:9000/'),
             'KPASAPIURL': JSON.stringify('https://kpas.staging.kompetanse.udir.no/api'),
             'ACCOUNTID' : [99, 100, 102, 103, 137, 138, 139, 145],

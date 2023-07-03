@@ -42,8 +42,8 @@
     "url": "git+ssh://git@github.com/matematikk-mooc/frontend.git"
   },
   "scripts": {
-    "buildProduction": "webpack --config webpack.production.config.js --mode production --progress",
-    "buildStaging": "webpack --config webpack.staging.config.js --progress",
+    "buildProduction": "webpack --config webpack.production.config.js --mode production",
+    "buildStaging": "webpack --config webpack.staging.config.js --mode production",
     "buildDevelopment": "webpack --config webpack.development.config.js  --mode development --progress",
     "serveDevelopment": "webpack-dev-server --config webpack.development.config.js --mode development --open",
     "noCache": "webpack --no-cache",

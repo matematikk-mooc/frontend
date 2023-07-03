@@ -1,5 +1,3 @@
-import '../css/all.less';
-
 import announcements from './modules/announcements.js';
 import api from './api/api.js';
 import courselist from './modules/courselist.js';
