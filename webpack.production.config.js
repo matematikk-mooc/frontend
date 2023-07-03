@@ -5,6 +5,7 @@ const glob = require('glob');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const webpack = require('webpack');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin')
 let date = new Date().toISOString()
 
 module.exports = {
@@ -25,15 +26,9 @@ module.exports = {
         'mmooc-min-production': [
             './src/js/i18n.js',
             './src/js/main.js',
-            ...glob.sync('./src/templates/modules/*.hbs'),
-            ...glob.sync('./src/js/3party/*.js'),
-            ...glob.sync('./src/js/api/*.js'),
-            ...glob.sync('./src/js/modules/*.js'),
-            ...glob.sync('./src/js/utilities/*.js'),
         ],
         'badgesave': [
-            'handlebars/dist/handlebars.min.js',
-            ...glob.sync('./src/addons/badges/js/*.js'),
+            './src/addons/badges/js/main.js',
             './src/js/modules/template.js',
             './src/js/modules/util.js',
             './src/js/i18n.js',
@@ -145,10 +140,17 @@ module.exports = {
 
     },
 
+    performance:{
+        maxEntrypointSize: 500000,
+        maxAssetSize: 500000
+
+    },
+
     optimization: {
         minimize: true,
         minimizer: [
             new CssMinimizerPlugin(),
+            new TerserPlugin({ parallel: true })
         ],
     },
 };
