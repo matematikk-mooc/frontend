@@ -146,7 +146,7 @@ module.exports = {
     },
 
     optimization: {
-        // minimize: true,
+        minimize: true,
         minimizer: [
             new CssMinimizerPlugin(),
         ],
