@@ -6,7 +6,6 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const webpack = require('webpack');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin')
-let date = new Date().toISOString()
 
 module.exports = (env) => {
     if(env.timestamp == null){
@@ -154,7 +153,12 @@ module.exports = (env) => {
             minimize: true,
             minimizer: [
                 new CssMinimizerPlugin(),
-                new TerserPlugin({ parallel: true })
+                new TerserPlugin(
+                    {
+                        parallel: true,
+                        extractComments: false
+                    }
+                )
             ],
         },
     }

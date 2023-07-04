@@ -153,7 +153,12 @@ module.exports = (env) => {
             minimize: true,
             minimizer: [
                 new CssMinimizerPlugin(),
-                new TerserPlugin({ parallel: true })
+                new TerserPlugin(
+                    {
+                        parallel: true,
+                        extractComments: false
+                    }
+                )
             ],
         },
     }
