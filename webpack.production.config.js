@@ -8,10 +8,6 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin')
 
 module.exports = (env) => {
-    if(env.timestamp == null){
-        console.log("run with --env --timestamp=<timestamp>")
-        return null;
-    }
     return {
         entry: {
             // ...other entry points...

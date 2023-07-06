@@ -25,13 +25,8 @@ jobs:
       - name: Install dependencies
         run: yarn install
 
-      - name: Get datetime of latest commit
-        run: |
-          timestamp=$(git log -1 --pretty=format:"%ad" --date=format:'%Y-%m-%dT%H:%M:%S')
-          echo "COMMIT_TIMESTAMP=${timestamp}" >> $GITHUB_ENV
-
       - name: Run build script
-        run: npm run buildProduction -- --env timestamp=$COMMIT_TIMESTAMP
+        run: npm run buildProduction
 
       - name: Login to Azure
         uses: azure/login@v1

@@ -65,19 +65,18 @@ All changes in LESS (CSS) and JavaScript will automatically be compiled and are 
 Compile JS and CSS for the staging environment using
 
 ```
-npm run buildStaging -- --env timestamp=<datetime>
-
+npm run buildStaging
 ```
 Compile JS and CSS for the production environment using
 
 ```
-npm run buildProduction -- --env timestamp=<datetime>
-
+npm run buildProduction
 ```
 
 * See scripts section in package.json
 
-The resulting JS and CSS file can be found in the **dist** directory.
+The resulting JS and CSS file can be found in the **dist** directory. These commands will get the timestamp of the latest commit to the given branch, and append to the filenames.
+To test code locally allways use buildDevelopment and serveDevelopment, as buildStaging and buildProduction will use the file already uploaded to Azure, and will not pick up local changes.
 
 # Project structure
 
