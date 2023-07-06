@@ -1,8 +1,9 @@
-this.mmooc = this.mmooc || {};
+import util from "./util";
 
-this.mmooc.badges = (() => {
+export default (function() {
+
   const resizeIframe = () => {
-    mmooc.util.adaptHeightToIframeContentForId(
+    util.adaptHeightToIframeContentForId(
       'tool_content_wrapper',
       'tool_content'
     );

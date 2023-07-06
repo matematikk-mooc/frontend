@@ -1,5 +1,9 @@
-this.mmooc = this.mmooc || {};
-this.mmooc.messageHandler = (function() {
+import api from "../api/api";
+import kpas from "./kpas";
+import uob from "./uob7";
+import util from "../modules/util";
+
+export default (function() {
     var findDomForWindow = function(sourceWindow) {
         const iframes = document.getElementsByTagName('IFRAME');
         for (let i = 0; i < iframes.length; i += 1) {
@@ -13,13 +17,14 @@ this.mmooc.messageHandler = (function() {
     return {
         init: function() {
             window.addEventListener('message', function(e) {
+
                 const error = error => console.error('error calling api', error);
                 try {
                     if(e.origin.includes("vimeo")) {
                         if((e.data.method == undefined) && (e.data.event == undefined)) {
                             var message = JSON.parse(e.data);
                             if(message.event == "ready") {
-                                mmooc.uob.setVimeoPlayerReady();
+                                uob.setVimeoPlayerReady();
                             }
                         }
                     } else {
@@ -31,7 +36,7 @@ this.mmooc.messageHandler = (function() {
                             var sendMsg = JSON.stringify(connectedMsg);
                             e.source.postMessage(sendMsg, e.origin);
                         } else if(message.subject == "kpas-lti.getusergroups") {
-                            mmooc.api.getUserGroups(function(groups) {
+                            api.getUserGroups(function(groups) {
                                 const usergroupsmsg = {
                                     subject: 'kpas-lti.usergroups',
                                     groups: groups
@@ -40,18 +45,18 @@ this.mmooc.messageHandler = (function() {
                                 e.source.postMessage(sendMsg, e.origin);
                             }, error);
                         } else if(message.subject == "kpas-lti.update") {
-                            mmooc.util.updateInformationPane();
+                            util.updateInformationPane();
 
-                            var courseId = mmooc.api.getCurrentCourseId();
+                            var courseId = api.getCurrentCourseId();
 
-                            mmooc.api.getUserGroupsForCourse(courseId, function(groups) {
-                                mmooc.kpas.showInfo(groups);
+                            api.getUserGroupsForCourse(courseId, function(groups) {
+                                kpas.showInfo(groups);
                             }, error);
                         } else if(message.subject == "kpas-lti.getBgColor") {
                             var dom = findDomForWindow(e.source);
                             if(dom) {
                                 var elem = dom.parentElement;
-                                var bgColor = window.getComputedStyle(elem, null).getPropertyValue("background-color");            
+                                var bgColor = window.getComputedStyle(elem, null).getPropertyValue("background-color");
                                 const bgColorMessage = {
                                     subject: 'kpas-lti.ltibgcolor',
                                     bgColor: bgColor

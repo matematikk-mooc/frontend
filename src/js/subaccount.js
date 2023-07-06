@@ -1,6 +1,12 @@
+import '../css/all.less';
+
+import utilRoot from './utilRoot';
+
 // Replace the normal jQuery getScript function with one that supports
 // debugging and which references the script files as external resources
 // rather than inline.
+var udirDesignLoaded;
+
 jQuery.extend({
   getScript: function(url, callback) {
     var head = document.getElementsByTagName('head')[0];
@@ -36,27 +42,27 @@ jQuery.extend({
 });
 
 jQuery(document).ready(function($) {
-    const urlParamsObj = mmooc.utilRoot.urlParamsToObject();
-    var enrollCode = mmooc.utilRoot.isEnrollCodeParamPassed(urlParamsObj);
+    const urlParamsObj = utilRoot.urlParamsToObject();
+    var enrollCode = utilRoot.isEnrollCodeParamPassed(urlParamsObj);
     if (enrollCode) {
       return null;
     }
-    if (mmooc.utilRoot.isLoginParamPassed(urlParamsObj)) {
+    if (utilRoot.isLoginParamPassed(urlParamsObj)) {
       return null;
     }
 
-    if (window.udirDesignLoaded == undefined && this.udirDesignLoaded === undefined) {
+    if (window.udirDesignLoaded == undefined && udirDesignLoaded === undefined) {
         window.udirDesignLoaded = true;
-        this.udirDesignLoaded = true;
+        udirDesignLoaded = true;
         console.log("Subaccount: loading design.");
 
-        var filename = 'https://udirdesigncss';
+        var filename = SERVER + DESIGNCSS;
         var fileref = document.createElement("link")
         fileref.setAttribute("rel", "stylesheet")
         fileref.setAttribute("type", "text/css")
         fileref.setAttribute("href", filename)
         fileref.onload = (_) => {
-          $.getScript('https://udirdesignjs');
+          $.getScript(SERVER + DESIGNJS);
         }
         document.getElementsByTagName("head")[0].appendChild(fileref)
     } else

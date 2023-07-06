@@ -1,3 +1,30 @@
+import announcements from './modules/announcements.js';
+import api from './api/api.js';
+import courselist from './modules/courselist.js';
+import coursepage from './modules/coursepage.js';
+import coursesettings from './modules/coursesettings.js';
+import dataporten from './modules/dataporten';
+import discussionTopics from './modules/discussion-topics.js';
+import enroll from './modules/enroll.js';
+import footer from './modules/footer.js'
+import greeting from './modules/greeting.js';
+import groups from'./modules/groups.js'
+import i18n from './i18n.js';
+import kpas from './3party/kpas.js';
+import login from './modules/login.js';
+import menu from './modules/menu.js';
+import messagehandler from './3party/messagehandler.js';
+import multilanguage from './3party/multilanguage.js'
+import nrk from './3party/nrk.js';
+import pages from './modules/pages.js';
+import privacyPolicy from './3party/privacypolicy.js';
+import routes from './modules/routes.js';
+import settings from './settings.js';
+import tinyMCEEditor from './modules/tinyMCEEditor';
+import uob from './3party/uob7.js';
+import util from './modules/util.js';
+import utilRoot from './utilRoot.js';
+
 jQuery(function($) {
   //KURSP-469 Support embedding of KPAS LTI tool. In general our design should not load in iframes.
   //The code below detects if we are in an iframe and then returns.
@@ -6,9 +33,9 @@ jQuery(function($) {
   }
   //Multilanguage KURSP-279 Css must be present before javascript is run.
   //KURSP-376-multilanguage-fix
-  mmooc.multilanguage.initializeCss();
+  multilanguage.initializeCss();
 
-  mmooc.routes.addRouteForPath(/\/$/, function() {
+  routes.addRouteForPath(/\/$/, function() {
     var parentId = 'wrapper';
 
     if (document.location.search === '?mmpf') {
@@ -18,93 +45,93 @@ jQuery(function($) {
     }
   });
 
-  mmooc.routes.addRouteForQueryString(/invitation=/, function() {});
+  routes.addRouteForQueryString(/invitation=/, function() {});
 
-  mmooc.routes.addRouteForPath(/\/login\/canvas$/, function() {
-    mmooc.utilRoot.redirectFeideAuthIfEnrollReferrer();
-    mmooc.utilRoot.triggerForgotPasswordIfParamPassed();
-    mmooc.login.addInfoMessage();
+  routes.addRouteForPath(/\/login\/canvas$/, function() {
+    utilRoot.redirectFeideAuthIfEnrollReferrer();
+    utilRoot.triggerForgotPasswordIfParamPassed();
+    login.addInfoMessage();
   });
 
   ////KURSP-293-RCE-mister-farge-for-redigering
-  mmooc.routes.addRouteForPath(/\/edit$/, function() {
-    MultilangUtils.applyColorCodingInEditor();
+  routes.addRouteForPath(/\/edit$/, function() {
+    multilanguage.applyColorCodingInEditor();
   });
 
-  mmooc.routes.addRouteForPath(/\/login$/, function() {
+  routes.addRouteForPath(/\/login$/, function() {
     $('#register_link').html('<i>Trenger du en konto?</i><b>Klikk her.</b>');
   });
 
-  mmooc.routes.addRouteForPath(/\/courses$/, function() {
-    mmooc.utilRoot.redirectToEnrollIfCodeParamPassed();
-    mmooc.menu.hideRightMenu();
-    mmooc.courseList.listCourses(
+  routes.addRouteForPath(/\/courses$/, function() {
+    utilRoot.redirectToEnrollIfCodeParamPassed();
+    menu.hideRightMenu();
+    courselist.listCourses(
       'content',
-      mmooc.courseList.showAddCourseButton
+      courselist.showAddCourseButton
     );
   });
 
-  mmooc.routes.addRouteForPath(/\/courses\/\d+/, function() {
+  routes.addRouteForPath(/\/courses\/\d+/, function() {
     let forwardTo = encodeURIComponent(window.location.href);
     let closeOption = false;
-    let authenticated = mmooc.util.isAuthenticated();
+    let authenticated = util.isAuthenticated();
 
     if(!authenticated) {
       let registerText = "For å få fullt utbytte av denne siden må du melde deg på med";
-      mmooc.enroll.displayRegisterPopup(
+      enroll.displayRegisterPopup(
         authenticated,
         closeOption,
         registerText,
-        mmooc.i18n.RegisterWithCanvas,
-        mmooc.util.course.self_enrollment_code,
-        mmooc.util.course.name,
+        i18n.RegisterWithCanvas,
+        util.course.self_enrollment_code,
+        util.course.name,
         forwardTo);
     } else {
-      mmooc.api.getUsersEnrollmentsForCourse(mmooc.util.course.id, function(courses) {
+      api.getUsersEnrollmentsForCourse(util.course.id, function(courses) {
         if(!courses.length) {
           let registerText = "For å få fullt utbytte av denne siden må du melde deg på";
           let registerWithCanvasText = "Meld deg på";
-          mmooc.enroll.displayRegisterPopup(
+          enroll.displayRegisterPopup(
             authenticated,
             closeOption,
             registerText,
             registerWithCanvasText,
-            mmooc.util.course.self_enrollment_code,
-            mmooc.util.course.name,
+            util.course.self_enrollment_code,
+            util.course.name,
             forwardTo);
         } else {
-          mmooc.util.updateInformationPane();
+          util.updateInformationPane();
         }
       });
     }
   });
 
   //The logic below should be refactored and cleaned up.
-  mmooc.routes.addRouteForPath(/\/courses\/\d+$/, function() {
-    mmooc.util.updateRightMenuButtons();
-    mmooc.util.removeRecentFeedback();
-    mmooc.groups.interceptLinksToGroupPage();
-    mmooc.coursePage.showCourseInvitation();
+  routes.addRouteForPath(/\/courses\/\d+$/, function() {
+    util.updateRightMenuButtons();
+    util.removeRecentFeedback();
+    groups.interceptLinksToGroupPage();
+    coursepage.showCourseInvitation();
     // override default view and display all courses list instead
-    var courseView = mmooc.util.isCourseFrontpageForAllCoursesList();
-    if (courseView == mmooc.util.courseListEnum.allCoursesList) {
-      mmooc.menu.hideRightMenu();
-      mmooc.enroll.printAllCoursesContainer();
-      mmooc.enroll.printAllCourses();
+    var courseView = util.isCourseFrontpageForAllCoursesList();
+    if (courseView == util.courseListEnum.allCoursesList) {
+      menu.hideRightMenu();
+      enroll.printAllCoursesContainer();
+      enroll.printAllCourses();
       $('body').removeClass('home');
 
       // skips the rest of this function
       return null;
     }
-    else if (courseView == mmooc.util.courseListEnum.myCoursesList) {
-        mmooc.menu.hideRightMenu();
-        mmooc.courseList.listCourses(
+    else if (courseView == util.courseListEnum.myCoursesList) {
+        menu.hideRightMenu();
+        courselist.listCourses(
           'content',
-          mmooc.courseList.showAddCourseButton
+          courselist.showAddCourseButton
         );
         return null;
     }
-    else if (courseView == mmooc.util.courseListEnum.dataportenCallback) {
+    else if (courseView == util.courseListEnum.dataportenCallback) {
         if(window.opener) {
             $("#application").html('Du er nå logget inn i dataporten.<button id="dataportenLoggedIn">OK</button>');
             window.opener.popupCompleted();
@@ -112,10 +139,9 @@ jQuery(function($) {
                 window.close();
             });
         }
-        console.log(document.location.href);
 		return null;
     }
-    else if (courseView == mmooc.util.courseListEnum.uidpCallback) {
+    else if (courseView == util.courseListEnum.uidpCallback) {
         if(window.opener) {
             $("#application").html('Du er nå logget inn i UIDP.<button id="uidpLoggedIn">OK</button>');
             window.opener.popupCompleted();
@@ -126,85 +152,81 @@ jQuery(function($) {
         console.log(document.location.href);
 		return null;
     }
-    //        mmooc.coursePage.hideCourseInvitationsForAllUsers();
+    //        coursepage.hideCourseInvitationsForAllUsers();
 
-    var courseId = mmooc.api.getCurrentCourseId();
+    var courseId = api.getCurrentCourseId();
     var queryString = document.location.search;
     if (queryString === '?allcanvabadges') {
       //query string = ?allcanvabadges
-      var courseId = mmooc.api.getCurrentCourseId();
-      mmooc.menu.showCourseMenu(courseId, 'Utmerkelser', 'Utmerkelser');
+      var courseId = api.getCurrentCourseId();
+      menu.showCourseMenu(courseId, 'Utmerkelser', 'Utmerkelser');
       //Should be refactored to use json api instead
       var canvabadgesForCurrentCourse =
         '<iframe title="canvasbadge" allowfullscreen="true" height="680" id="tool_content" mozallowfullscreen="true" name="tool_content" src="' +
-        mmooc.settings.CanvaBadgeProtocolAndHost +
+        settings.CanvaBadgeProtocolAndHost +
         '/badges/course/' +
         courseId +
         '" tabindex="0" webkitallowfullscreen="true" width="100%"></iframe>';
       $('#content').append(canvabadgesForCurrentCourse);
     } else {
         var queryString = document.location.search;
-        if ((queryString === '?dataportengroups=1') && mmooc.settings.useDataportenGroups) {
-            mmooc.menu.showCourseMenu(
+        if ((queryString === '?dataportengroups=1') && settings.useDataportenGroups) {
+            menu.showCourseMenu(
               courseId,
               'Grupper',
-              mmooc.util.getPageTitleBeforeColon()
+              util.getPageTitleBeforeColon()
             );
-            mmooc.dataporten.display();
+            dataporten.display();
         } else {
-          mmooc.menu.showCourseMenu(courseId, 'Forside', null);
-
-
-          //20180822ETH If the user has chosen to use a wikipage as front page and the logged in user is teacher, we display that page.
-          //            Otherwise we list the modules.
-          if (mmooc.api.usesFrontPage()) {
-            if (!mmooc.util.isTeacherOrAdmin()) {
+          menu.showCourseMenu(courseId, 'Forside', null);
+          if (api.usesFrontPage()) {
+            if (!util.isTeacherOrAdmin()) {
               var frontPage = $('#wiki_page_show');
               if (frontPage.length) {
                 frontPage.hide();
               }
-              mmooc.coursePage.listModulesAndShowProgressBar();
+              coursepage.listModulesAndShowProgressBar();
             }
           } //Hvis det ikke er wiki som forside så lister vi ut modulene på vanlig måte.
           else {
-            mmooc.coursePage.listModulesAndShowProgressBar();
+            coursepage.listModulesAndShowProgressBar();
           }
         }
     }
-    mmooc.announcements.printAnnouncementsUnreadCount();
-    if(mmooc.coursePage.replaceUpcomingInSidebar()) {
-      mmooc.coursePage.printDeadlinesForCourse();
+    announcements.printAnnouncementsUnreadCount();
+    if(coursepage.replaceUpcomingInSidebar()) {
+      coursepage.printDeadlinesForCourse();
     }
-    mmooc.coursePage.overrideUnregisterDialog();
+    coursepage.overrideUnregisterDialog();
   });
 
-  mmooc.routes.addRouteForPath(/\/search\/all_courses$/, function() {
-    mmooc.enroll.printAllCoursesContainer();
-    mmooc.enroll.printAllCourses();
-    mmooc.enroll.goToAllCourses();
+  routes.addRouteForPath(/\/search\/all_courses$/, function() {
+    enroll.printAllCoursesContainer();
+    enroll.printAllCourses();
+    enroll.goToAllCourses();
   });
 
-  mmooc.routes.addRouteForPath(/\/courses\/\d+\/settings$/, function() {
-    mmooc.coursesettings.addSanityCheckButton();
-    mmooc.coursesettings.addListSectionsButton();
-    mmooc.coursesettings.addListUsersButton();
-    mmooc.coursesettings.addListGroupsButton();
-    mmooc.coursesettings.addListAssignmentsButton();
+  routes.addRouteForPath(/\/courses\/\d+\/settings$/, function() {
+    coursesettings.addSanityCheckButton();
+    coursesettings.addListSectionsButton();
+    coursesettings.addListUsersButton();
+    coursesettings.addListGroupsButton();
+    coursesettings.addListAssignmentsButton();
   });
 
-  mmooc.routes.addRouteForPath(/\/profile\/settings$/, function() {
+  routes.addRouteForPath(/\/profile\/settings$/, function() {
     var elementId = document.getElementById('confirm_email_channel');
-    if(!mmooc.settings.displayProfileLeftMenu) {
+    if(!settings.displayProfileLeftMenu) {
       document.getElementById("section-tabs").style.display = "none";
     }
-    var notificationButtonHTML = mmooc.util.renderTemplateWithData(
+    var notificationButtonHTML = util.renderTemplateWithData(
       'notifications',
       {}
     );
-    if(mmooc.settings.displayUserMergeButton) {
-      var mergeUserButtonHTML = mmooc.util.renderTemplateWithData(
+    if(settings.displayUserMergeButton) {
+      var mergeUserButtonHTML = util.renderTemplateWithData(
         'usermerge',
-        {userId:mmooc.api.getUser().id, userMergeLtiToolId:mmooc.settings.userMergeLtiToolId}
+        {userId:api.getUser().id, userMergeLtiToolId:settings.userMergeLtiToolId}
       );
       elementId.insertAdjacentHTML('beforebegin', mergeUserButtonHTML);
     }
@@ -212,132 +234,132 @@ jQuery(function($) {
     elementId.insertAdjacentHTML('beforebegin', notificationButtonHTML);
   });
 
-  mmooc.routes.addRouteForPath(/\/courses\/\d+\/announcements$/, function() {
-    var courseId = mmooc.api.getCurrentCourseId();
-    mmooc.menu.showCourseMenu(
+  routes.addRouteForPath(/\/courses\/\d+\/announcements$/, function() {
+    var courseId = api.getCurrentCourseId();
+    menu.showCourseMenu(
       courseId,
       'Kunngjøringer',
-      mmooc.util.getPageTitleBeforeColon()
+      util.getPageTitleBeforeColon()
     );
-    mmooc.api.getModulesForCurrentCourse(function(modules) {
-      mmooc.discussionTopics.printDiscussionUnreadCount(modules);
+    api.getModulesForCurrentCourse(function(modules) {
+      discussionTopics.printDiscussionUnreadCount(modules);
     });
-    mmooc.announcements.printAnnouncementsUnreadCount();
-    mmooc.announcements.setAnnouncementsListUnreadClass();
+    announcements.printAnnouncementsUnreadCount();
+    announcements.setAnnouncementsListUnreadClass();
   });
 
-  mmooc.routes.addRouteForPath(
+  routes.addRouteForPath(
     /\/courses\/\d+\/discussion_topics$/,
     function() {
-      var courseId = mmooc.api.getCurrentCourseId();
-      mmooc.menu.showCourseMenu(
+      var courseId = api.getCurrentCourseId();
+      menu.showCourseMenu(
         courseId,
         'Diskusjoner',
-        mmooc.util.getPageTitleBeforeColon()
+        util.getPageTitleBeforeColon()
       );
-      mmooc.discussionTopics.setDiscussionsListUnreadClass();
-      mmooc.discussionTopics.insertSearchButton();
-      mmooc.discussionTopics.hideUnreadCountInDiscussionList();
-      mmooc.api.getModulesForCurrentCourse(function(modules) {
-        mmooc.discussionTopics.printDiscussionUnreadCount(
+      discussionTopics.setDiscussionsListUnreadClass();
+      discussionTopics.insertSearchButton();
+      discussionTopics.hideUnreadCountInDiscussionList();
+      api.getModulesForCurrentCourse(function(modules) {
+        discussionTopics.printDiscussionUnreadCount(
           modules,
           'discussionslist'
         );
       });
-      mmooc.announcements.printAnnouncementsUnreadCount();
+      announcements.printAnnouncementsUnreadCount();
     }
   );
-  mmooc.routes.addRouteForPath(/\/courses\/\d+\/external_tools/, function() {
-    var courseId = mmooc.api.getCurrentCourseId();
-    mmooc.menu.showCourseMenu(courseId, this.path, 'Verktøy');
+  routes.addRouteForPath(/\/courses\/\d+\/external_tools/, function() {
+    var courseId = api.getCurrentCourseId();
+    menu.showCourseMenu(courseId, this.path, 'Verktøy');
   });
 
-  mmooc.routes.addRouteForPath(/\/courses\/\d+\/groups$/, function() {
-    mmooc.groups.interceptLinksToGroupPage();
-    var courseId = mmooc.api.getCurrentCourseId();
-    mmooc.menu.showCourseMenu(
+  routes.addRouteForPath(/\/courses\/\d+\/groups$/, function() {
+    groups.interceptLinksToGroupPage();
+    var courseId = api.getCurrentCourseId();
+    menu.showCourseMenu(
       courseId,
       'Grupper',
-      mmooc.util.getPageTitleBeforeColon()
+      util.getPageTitleBeforeColon()
     );
-    mmooc.api.getModulesForCurrentCourse(function(modules) {
-      mmooc.discussionTopics.printDiscussionUnreadCount(modules);
+    api.getModulesForCurrentCourse(function(modules) {
+      discussionTopics.printDiscussionUnreadCount(modules);
     });
-    mmooc.announcements.printAnnouncementsUnreadCount();
+    announcements.printAnnouncementsUnreadCount();
   });
-  mmooc.routes.addRouteForPath(/\/courses\/\d+\/users$/, function() {
-    var courseId = mmooc.api.getCurrentCourseId();
-    mmooc.menu.showCourseMenu(
+  routes.addRouteForPath(/\/courses\/\d+\/users$/, function() {
+    var courseId = api.getCurrentCourseId();
+    menu.showCourseMenu(
       courseId,
       '',
-      mmooc.util.getPageTitleBeforeColon()
+      util.getPageTitleBeforeColon()
     );
   });
 
-  mmooc.routes.addRouteForPath(/\/groups\/\d+$/, function() {
-    var courseId = mmooc.api.getCurrentCourseId();
-    mmooc.menu.showCourseMenu(
+  routes.addRouteForPath(/\/groups\/\d+$/, function() {
+    var courseId = api.getCurrentCourseId();
+    menu.showCourseMenu(
       courseId,
       'Grupper',
-      mmooc.util.getPageTitleBeforeColon()
+      util.getPageTitleBeforeColon()
     );
   });
 
   //Path for showing all dicussions, i.e. the discussion tab on the course front page.
-  mmooc.routes.addRouteForPath(/\/groups\/\d+\/discussion_topics$/, function() {
-    var courseId = mmooc.api.getCurrentCourseId();
+  routes.addRouteForPath(/\/groups\/\d+\/discussion_topics$/, function() {
+    var courseId = api.getCurrentCourseId();
 
-    if (mmooc.util.isTeacherOrAdmin()) {
-      mmooc.groups.interceptLinksToTeacherGroupPage();
+    if (util.isTeacherOrAdmin()) {
+      groups.interceptLinksToTeacherGroupPage();
     }
 
     if (null == courseId) {
-      var groupId = mmooc.api.getCurrentGroupId();
+      var groupId = api.getCurrentGroupId();
       if (null != groupId) {
-        mmooc.api.getGroup(groupId, function(group) {
+        api.getGroup(groupId, function(group) {
           var courseId = group.course_id;
-          mmooc.menu.showCourseMenu(
+          menu.showCourseMenu(
             courseId,
             'Grupper',
-            mmooc.util.getPageTitleAfterColon()
+            util.getPageTitleAfterColon()
           );
-          mmooc.groups.showGroupHeader(group.id, courseId);
+          groups.showGroupHeader(group.id, courseId);
         });
       }
     } else {
-      mmooc.menu.showCourseMenu(
+      menu.showCourseMenu(
         courseId,
         'Grupper',
-        mmooc.util.getPageTitleAfterColon()
+        util.getPageTitleAfterColon()
       );
-      mmooc.groups.showGroupHeader(groupId, courseId);
+      groups.showGroupHeader(groupId, courseId);
     }
   });
 
-  mmooc.routes.addRouteForPath(
+  routes.addRouteForPath(
     [
       /\/groups\/\d+\/discussion_topics\/\d+$/,
       /\/groups\/\d+\/discussion_topics\/new$/
     ],
     function() {
-      mmooc.menu.showDiscussionGroupMenu();
-      const courseId = mmooc.api.getCurrentCourseId();
+      menu.showDiscussionGroupMenu();
+      const courseId = api.getCurrentCourseId();
 
       //20180911ETH Need to know if I got here from the discussion list or from the module
       //            navigation.
       if (!this.hasQueryString) {
         //If courseId was found, it is a group discussion created by a teacher.
         if (courseId) {
-          mmooc.menu.showBackButton(
+          menu.showBackButton(
             '/courses/' + courseId + '/discussion_topics',
             'Tilbake til diskusjoner'
           );
         } else {
-          var groupId = mmooc.api.getCurrentGroupId();
+          var groupId = api.getCurrentGroupId();
           if (null != groupId) {
-            mmooc.api.getGroup(groupId, function(group) {
+            api.getGroup(groupId, function(group) {
               var courseId = group.course_id;
-              mmooc.menu.showBackButton(
+              menu.showBackButton(
                 '/groups/' + group.id + '/discussion_topics',
                 'Tilbake til gruppeside'
               );
@@ -346,41 +368,41 @@ jQuery(function($) {
         }
       }
 
-      if (!mmooc.util.isTeacherOrAdmin()) {
-        mmooc.menu.hideRightMenu();
-        mmooc.menu.hideSectionTabsHeader();
+      if (!util.isTeacherOrAdmin()) {
+        menu.hideRightMenu();
+        menu.hideSectionTabsHeader();
       } else {
-        mmooc.groups.interceptLinksToTeacherGroupPage();
+        groups.interceptLinksToTeacherGroupPage();
       }
 
-      mmooc.api.getUserGroupsForCourse(courseId, (userGroups) => {
-        mmooc.util.tinyMceEditorIsInDOM(
-          () => mmooc.tinyMCEEditor.injectGroupHashtags(userGroups)
+      api.getUserGroupsForCourse(courseId, (userGroups) => {
+        util.tinyMceEditorIsInDOM(
+          () => tinyMCEEditor.injectGroupHashtags(userGroups)
         );
-        mmooc.discussionTopics.injectReplyButtonAction(userGroups);
+        discussionTopics.injectReplyButtonAction(userGroups);
       });
     }
   );
 
   //Disse rutene gjelder når man går inn på en diskusjon fra diskusjonslisten eller når lærer har redigert en diskusjon.
-  mmooc.routes.addRouteForPath(
+  routes.addRouteForPath(
     [
       /\/courses\/\d+\/discussion_topics\/\d+/,
       /\/courses\/\d+\/discussion_topics\/new/
     ],
     function() {
       // For discussion pages we only want the title to be "<discussion>" instead of "Discussion: <discussion>"
-      var title = mmooc.util.getPageTitleAfterColon();
+      var title = util.getPageTitleAfterColon();
       //If this is a group discussion we do not allow the user to access it because
       //he is apparantly not a member of a group.
-      var courseId = mmooc.api.getCurrentCourseId();
+      var courseId = api.getCurrentCourseId();
 
-      mmooc.util.hasRoleInCourse(courseId, "TeacherEnrollment", function(isTeacher) {
+      util.hasRoleInCourse(courseId, "TeacherEnrollment", function(isTeacher) {
         if(!isTeacher) {
-          var courseId = mmooc.api.getCurrentCourseId();
-          var contentId = mmooc.api.getCurrentTypeAndContentId().contentId;
+          var courseId = api.getCurrentCourseId();
+          var contentId = api.getCurrentTypeAndContentId().contentId;
           if (contentId){
-            mmooc.api.isGroupDiscussion(courseId, contentId, function(result) {
+            api.isGroupDiscussion(courseId, contentId, function(result) {
               if(result) {
                   $(".discussion-section").hide();
                   $("#discussion-toolbar").hide();
@@ -389,55 +411,55 @@ jQuery(function($) {
                   Dette er en gruppediskusjon, men du er ikke medlem i noen gruppe og kan derfor ikke delta.\
                     Gå tilbake til forsiden og velg fanen "Rolle og grupper".</div>');
               } else {
-                mmooc.discussionTopics.moveSequenceLinks();
+                discussionTopics.moveSequenceLinks();
               }
             });
           }
         }
       });
 
-      if (!mmooc.util.isTeacherOrAdmin()) {
-        mmooc.menu.hideRightMenu();
-        var contentId = mmooc.api.getCurrentTypeAndContentId().contentId;
-        mmooc.api.getDiscussionTopic(
+      if (!util.isTeacherOrAdmin()) {
+        menu.hideRightMenu();
+        var contentId = api.getCurrentTypeAndContentId().contentId;
+        api.getDiscussionTopic(
           courseId,
           contentId,
-          mmooc.discussionTopics.setDiscussionTopicPubDate
+          discussionTopics.setDiscussionTopicPubDate
         );
       }
 
       // Announcements are some as type of discussions, must use a hack to determine if this is an announcement
-      if (mmooc.api.currentPageIsAnnouncement()) {
-        mmooc.menu.showCourseMenu(courseId, 'Kunngjøringer', title);
-        mmooc.menu.showBackButton(
+      if (api.currentPageIsAnnouncement()) {
+        menu.showCourseMenu(courseId, 'Kunngjøringer', title);
+        menu.showBackButton(
           '/courses/' + courseId + '/announcements',
           'Tilbake til kunngjøringer'
         );
-        mmooc.announcements.addMarkAsReadButton();
-      } else if (mmooc.api.getCurrentModuleItemId() == null) {
+        announcements.addMarkAsReadButton();
+      } else if (api.getCurrentModuleItemId() == null) {
         // Only show course menu if this discussion is not a module item
         // Note detection if this is a module item is based on precense of query parameter
-        //            mmooc.menu.showCourseMenu(courseId, 'Diskusjoner', title);
-        mmooc.menu.showBackButton(
+        //            menu.showCourseMenu(courseId, 'Diskusjoner', title);
+        menu.showBackButton(
           '/courses/' + courseId + '/discussion_topics',
           'Tilbake til diskusjoner'
         );
       }
 
-      mmooc.api.getUserGroupsForCourse(courseId, (userGroups) => {
-        mmooc.util.tinyMceEditorIsInDOM(
-          () => mmooc.tinyMCEEditor.injectGroupHashtags(userGroups)
+      api.getUserGroupsForCourse(courseId, (userGroups) => {
+        util.tinyMceEditorIsInDOM(
+          () => tinyMCEEditor.injectGroupHashtags(userGroups)
         );
-        mmooc.discussionTopics.injectReplyButtonAction(userGroups);
+        discussionTopics.injectReplyButtonAction(userGroups);
       });
     }
   );
 
-  mmooc.routes.addRouteForPath([/\/groups\/\d+\/discussion_topics\/\d+/], function() {
-    mmooc.discussionTopics.moveSequenceLinks();
+  routes.addRouteForPath([/\/groups\/\d+\/discussion_topics\/\d+/], function() {
+    discussionTopics.moveSequenceLinks();
   });
 
-  mmooc.routes.addRouteForPathOrQueryString(
+  routes.addRouteForPathOrQueryString(
     [
       /\/courses\/\d+\/assignments\/\d+/,
       /\/courses\/\d+\/pages\/.*$/,
@@ -445,32 +467,32 @@ jQuery(function($) {
     ],
     /module_item_id=/,
     function() {
-      mmooc.menu.showLeftMenu();
-      mmooc.menu.listModuleItems();
-      mmooc.pages.modifyMarkAsDoneButton();
+      menu.showLeftMenu();
+      menu.listModuleItems();
+      pages.modifyMarkAsDoneButton();
 
-      if (mmooc.util.isTeacherOrAdmin()) {
-        mmooc.pages.addGotoModuleButton();
-        mmooc.pages.addStudentViewButton();
+      if (util.isTeacherOrAdmin()) {
+        pages.addGotoModuleButton();
+        pages.addStudentViewButton();
       }
     }
   );
 
   // example route: /courses/54/assignments/369 - assignment which may be a peer review (hverandrevurdering)
-  mmooc.routes.addRouteForPath(/\/courses\/\d+\/assignments\/\d+/, function() {
-    mmooc.pages.redesignAssignmentPage();
-    mmooc.util.setGlobalPeerReviewButtonState();
+  routes.addRouteForPath(/\/courses\/\d+\/assignments\/\d+/, function() {
+    pages.redesignAssignmentPage();
+    util.setGlobalPeerReviewButtonState();
   });
 
   // Assignment submission which might be your own or someone else's: Peer review (hverandrevurdering)
-  mmooc.routes.addRouteForPath(
+  routes.addRouteForPath(
     /\/courses\/\d+\/assignments\/\d+\/submissions\/\d+/,
     function() {
-      mmooc.pages.redesignPeerReviewAndOwnSubmissionDetailsPage();
+      pages.redesignPeerReviewAndOwnSubmissionDetailsPage();
     }
   );
 
-  mmooc.routes.addRouteForPath(
+  routes.addRouteForPath(
     /\/courses\/\d+\/external_tools\/\d+$/,
     function() {
       function isBadgesafePage() {
@@ -478,7 +500,7 @@ jQuery(function($) {
           return input.substring(input.lastIndexOf('/') + 1);
         }
 
-        var badgesafeUrl = mmooc.menu.extractBadgesLinkFromPage().url;
+        var badgesafeUrl = menu.extractBadgesLinkFromPage().url;
 
         if(badgesafeUrl) {
           return (
@@ -490,69 +512,68 @@ jQuery(function($) {
       }
 
       if (isBadgesafePage()) {
-        var courseId = mmooc.api.getCurrentCourseId();
-        mmooc.menu.showCourseMenu(courseId, 'Utmerkelser', 'Utmerkelser');
+        var courseId = api.getCurrentCourseId();
+        menu.showCourseMenu(courseId, 'Utmerkelser', 'Utmerkelser');
       }
     }
   );
 
-  mmooc.routes.addRouteForPath(
+  routes.addRouteForPath(
     /\/courses\/\d+\/modules\/items\/\d+$/,
     function() {
       //Canva Badges uses this route for instance
-      mmooc.menu.showLeftMenu();
-      mmooc.menu.listModuleItems();
+      menu.showLeftMenu();
+      menu.listModuleItems();
     }
   );
 
-  mmooc.routes.addRouteForPath([/\/pages/], function() {
-//    mmooc.pages.showBackLinkIfNecessary();
-    mmooc.util.callWhenElementIsPresent(
+  routes.addRouteForPath([/\/pages/], function() {
+    util.callWhenElementIsPresent(
       '.sikt-diploma-button',
-      mmooc.greeting.enableGreetingButtonIfNecessary
+      greeting.enableGreetingButtonIfNecessary
     );
-    mmooc.util.callWhenElementIsPresent(
+    util.callWhenElementIsPresent(
       ".new-sikt-diploma-button",
-      mmooc.greeting.enableNewGreetingButtonIfNecessary);
+      greeting.enableNewGreetingButtonIfNecessary);
 
-    mmooc.util.callWhenElementIsPresent(
+    util.callWhenElementIsPresent(
       ".download-diploma-button",
-      mmooc.greeting.enableDownloadDiplomaButtonIfNecessary); //This is the newest method which should replace the two old ones.
+      greeting.enableDownloadDiplomaButtonIfNecessary); //This is the newest method which should replace the two old ones.
 
-    var courseId = mmooc.api.getCurrentCourseId();
+    var courseId = api.getCurrentCourseId();
 
     if ($("#kpas-lti-info").length ||
         $(".kpas-lti-info").length ||
         $("#kommune-statistikk").length ||
         $("#fylke-statistikk").length) {
       const error = error => console.error('error calling api', error);
-      mmooc.api.getUserGroupsForCourse(courseId, function(groups) {
-        var isTeacherOrAdmin = mmooc.util.isTeacherOrAdmin();
-        mmooc.kpas.showInfo(groups);
-        var groupsInfo = mmooc.util.getGroupsInfo(groups);
-        mmooc.kpas.createDiagram("kommune-statistikk", isTeacherOrAdmin, courseId, groupsInfo);
-        mmooc.kpas.createDiagram("fylke-statistikk", isTeacherOrAdmin, courseId, groupsInfo);
+      api.getUserGroupsForCourse(courseId, function(groups) {
+        var isTeacherOrAdmin = util.isTeacherOrAdmin();
+        kpas.showInfo(groups);
+        var groupsInfo = util.getGroupsInfo(groups);
+        kpas.createDiagram("kommune-statistikk", isTeacherOrAdmin, courseId, groupsInfo);
+        kpas.createDiagram("fylke-statistikk", isTeacherOrAdmin, courseId, groupsInfo);
       }, error);
     }
   });
 
-  mmooc.routes.addRouteForPath(/enroll\/[0-9A-Z]+/, function() {
-    mmooc.enroll.changeEnrollPage();
+  routes.addRouteForPath(/enroll\/[0-9A-Z]+/, function() {
+    enroll.changeEnrollPage();
   });
 
-  mmooc.routes.addRouteForQueryString(/lang/, () => {
-    const language = MultilangUtils.getLanguageParameter()
+  routes.addRouteForQueryString(/lang/, () => {
+    const language = multilanguage.getLanguageParameter()
     console.log(`Language: ${language}`);
-    if (MultilangUtils.isValidLanguage(language)) {
-      MultilangUtils.setActiveLanguage(language);
+    if (multilanguage.isValidLanguage(language)) {
+      multilanguage.setActiveLanguage(language);
     } else {
-      MultilangUtils.setActiveLanguage('nb');
+      multilanguage.setActiveLanguage('nb');
     }
   });
 
   try {
-    const urlParamsObj = mmooc.utilRoot.urlParamsToObject();
-    if(!mmooc.util.onEnrollPage()) {
+    const urlParamsObj = utilRoot.urlParamsToObject();
+    if(!util.onEnrollPage()) {
       let forwardTo = urlParamsObj && urlParamsObj['forwardTo'];
       if(forwardTo) {
         window.location.href = decodeURIComponent(forwardTo);
@@ -560,13 +581,13 @@ jQuery(function($) {
       }
     }
 
-    mmooc.footer.changeFooter();
-    mmooc.menu.renderLeftHeaderMenu();
-    mmooc.menu.showUserMenu();
-    mmooc.menu.renderUnauthenticatedMenu();
-    mmooc.menu.setMenuActiveLink();
-    mmooc.menu.showHamburger();
-    mmooc.menu.showMobileMenu();
+    footer.changeFooter();
+    menu.renderLeftHeaderMenu();
+    menu.showUserMenu();
+    menu.renderUnauthenticatedMenu();
+    menu.setMenuActiveLink();
+    menu.showHamburger();
+    menu.showMobileMenu();
   } catch (e) {
     console.log(e);
   }
@@ -574,53 +595,50 @@ jQuery(function($) {
   //Try to get course information and store it such that routes can use it.
   //Otherwise just handle the route.
   try {
-    var courseId = mmooc.api.getCurrentCourseId();
+    var courseId = api.getCurrentCourseId();
     if(courseId) {
-      mmooc.api.getCourse(
+      api.getCourse(
         courseId,
         function(course) {
-          mmooc.util.course = course;
+          util.course = course;
           //KURSP-376-multilanguage-fix
-          if (course && mmooc.util.isMultilangCourse(course)) {
-            var langCode = MultilangUtils.getLanguageCode();
-            MultilangUtils.setActiveLanguage(langCode);
+          if (course && util.isMultilangCourse(course)) {
+            var langCode = multilanguage.getLanguageCode();
+            multilanguage.setActiveLanguage(langCode);
           }
-          mmooc.routes.performHandlerForUrl(document.location);
+          routes.performHandlerForUrl(document.location);
         },
         function(error) {
           console.error(
-            'error calling mmooc.api.getCourse(' + courseId + ')',
+            'error calling api.getCourse(' + courseId + ')',
             error
           );
         }
       );
     } else {
-      mmooc.routes.performHandlerForUrl(document.location);
+      routes.performHandlerForUrl(document.location);
     }
   } catch (e) {
     console.log(e);
   }
 
-  mmooc.privacyPolicy.init();
+  privacyPolicy.init();
 
   try {
-    mmooc.messageHandler.init();
-    mmooc.uob.init();
-    mmooc.nrk.init();
-//    mmooc.youtube.init();
+    messagehandler.init();
+    uob.init();
+    nrk.init();
   } catch (e) {
     console.log(e);
   }
 
   try {
-    mmooc.menu.injectGroupsPage();
-    //mmooc.multilanguage.displayLanguageSelector();
-    mmooc.groups.changeGroupListURLs(document.location.href);
+    menu.injectGroupsPage();
+    groups.changeGroupListURLs(document.location.href);
 
-    mmooc.pages.updateSidebarWhenMarkedAsDone();
-    mmooc.pages.updateSidebarWhenContributedToDiscussion();
-//    mmooc.menu.alterHomeLink();
-    mmooc.menu.alterCourseLink();
+    pages.updateSidebarWhenMarkedAsDone();
+    pages.updateSidebarWhenContributedToDiscussion();
+    menu.alterCourseLink();
   } catch (e) {
     console.log(e);
   }

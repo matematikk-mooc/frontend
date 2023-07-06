@@ -8,20 +8,20 @@ this.mmooc.dataporten = function() {
     let request = $REQUEST;
     let dataportenCallback = '$DATAPORTENCALLBACK';
     let dataportenClientId = '$DATAPORTENCLIENTID';
-    let kpasapiurl = '$KPASAPIURL';    
+    let kpasapiurl = '$KPASAPIURL';
 
-    
+
     var opts = {
         scopes: {
             request: request
         },
         response_type: 'id_token token'
     }
-        
+
     var client = new jso.JSO({
                 providerID: "Dataporten",
                 client_id: dataportenClientId,
-                redirect_uri: dataportenCallback, 
+                redirect_uri: dataportenCallback,
                 authorization: "https://auth.dataporten.no/oauth/authorization"
             });
 
@@ -76,7 +76,7 @@ this.mmooc.dataporten = function() {
 
                         mmooc.dataporten.printLogoutOptions();
                     }
-                });  
+                });
             } else { //Try and see if we can login silently.
                 this.hiddenIframeLogin();
             }
@@ -100,7 +100,7 @@ this.mmooc.dataporten = function() {
         },
         //If we want to require that the account used to connect to dataporten is the same as the one used
         //to login to Canvas, we could call the code below and perform some checks. Right now the code
-        //compares the Canvas login id with the secondary open id, i.e. Feide id. 
+        //compares the Canvas login id with the secondary open id, i.e. Feide id.
         tokenBelongsToLoggedInUser: function(callback) {
             this.getUserInfo(function(userInfo) {
                 mmooc.api.getUserProfile(function(userProfile) {
@@ -157,7 +157,7 @@ this.mmooc.dataporten = function() {
                 url: url,
                 beforeSend: function(xhr) {
                     xhr.setRequestHeader("Authorization", "Bearer " + self.token.access_token)
-                }, 
+                },
                 data: data,
                 success: function(result) {
                     callback(result)
@@ -204,7 +204,7 @@ this.mmooc.dataporten = function() {
                 description: dataportenGroup.id,
                 membership: dataportenGroup.membership.basic,
                 group_category_id: groupCategory.id,
-                course_id: courseID                            
+                course_id: courseID
             };
 
             var id = "" + dataportenGroup.id;
@@ -219,7 +219,7 @@ this.mmooc.dataporten = function() {
                     mmooc.dataporten.addUserToGroup(j,k);
                 });
             })(group, unenrollmentIds);
-        },        
+        },
         displayGroups: function() {
             mmooc.dataporten.clearContent();
             let url = 'https://groups-api.dataporten.no/groups/me/groups';
@@ -231,9 +231,9 @@ this.mmooc.dataporten = function() {
                   mmooc.dataporten.updateStatus("Henter gruppekategorier fra Canvas...");
                   mmooc.dataporten.getGroupCategoriesForCourse(courseID, function(result) {
                     var categories = result.data;
-                    
+
                     mmooc.dataporten.updateStatus("Sjekker din gruppetilhørighet i Canvas...");
-                    mmooc.api.getUsersEnrollmentsForCourse(courseID, 
+                    mmooc.api.getUsersEnrollmentsForCourse(courseID,
                         (function(courseID, categories) {
                             return function(enrollments) {
                                 var unenrollmentIds = Array();
@@ -243,7 +243,7 @@ this.mmooc.dataporten = function() {
                                 for(var g = 0; g < categories.length; g++) {
                                     let groupCategory = categories[g];
                                     mmooc.dataporten.appendContent("<h1>" + groupCategory.name + "</h1>");
-                        
+
                                     for(var i = 0; i < dataportenGroups.length; i++) {
                                         var dataportenGroup = dataportenGroups[i];
                                         mmooc.dataporten.displayOneGroup(courseID, unenrollmentIds, dataportenGroup, groupCategory, canvasGroups);
@@ -257,7 +257,7 @@ this.mmooc.dataporten = function() {
               }); //end fetched Canvas groups
             }); //end fetched dataporten Groups
         },
-        
+
         wipeToken: function()  {
             client.wipeTokens()
         },
@@ -281,7 +281,7 @@ this.mmooc.dataporten = function() {
                 .catch((err) => {
                     console.error("Error from popup loader", err)
                 })
-        },        
+        },
         hiddenIframeLogin : function()
         {
 //            window.loginType = "iframeLogin";

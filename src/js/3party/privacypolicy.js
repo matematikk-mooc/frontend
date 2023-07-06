@@ -1,16 +1,20 @@
-this.mmooc = this.mmooc || {};
-this.mmooc.privacyPolicy = (function() {
+import api from "../api/api";
+import privacyPolicyChanged from  "../../templates/modules/privacyPolicyChanged.hbs";
+import settings from "../settings";
+import util from "../modules/util";
+
+export default (function() {
     var currentPrivacyPolicyVersion = "";
     var displayPrivacyPolicyDialog = function() {
-        html = mmooc.util.renderTemplateWithData('privacyPolicyChanged', {
-            privacyPolicyLink:mmooc.settings.privacyPolicyLink
+        var html = util.renderTemplateWithData(privacyPolicyChanged, {
+            privacyPolicyLink:settings.privacyPolicyLink
         });
         var privacyPolicyBoxPosition = document.getElementById('wrapper');
         if(!privacyPolicyBoxPosition) {
             privacyPolicyBoxPosition = document.getElementById('f1_container');
         }
         privacyPolicyBoxPosition.insertAdjacentHTML('afterend', html);
-        $('#application').before(`<div class="overlay"></div>`);            
+        $('#application').before(`<div class="overlay"></div>`);
 
         document.getElementById("kompetansePortalPrivacyPolicy").onclick = function() {
             var privacyPolicyCheckbox = document.getElementById('kompetansePortalPrivacyPolicy');
@@ -19,24 +23,24 @@ this.mmooc.privacyPolicy = (function() {
             }
         };
         document.getElementById("kompetansePortalPrivacyPolicyButton").onclick = function() {
-            mmooc.api.saveUserPrivacyPolicyVersion(currentPrivacyPolicyVersion, function(data) {
+            api.saveUserPrivacyPolicyVersion(currentPrivacyPolicyVersion, function(data) {
                 console.log("Privacy policy accepted saved.");
-                $('.privacyPolicyBox, .overlay').remove(); 
+                $('.privacyPolicyBox, .overlay').remove();
             });
         };
     }
     return {
         init: function() {
-            if(!mmooc.util.isAuthenticated()) {
+            if(!util.isAuthenticated()) {
                 return;
             }
             var error = function(error) {
                 displayPrivacyPolicyDialog();
             };
-            var url = "$KPASAPIURL" + "/kpasinfo";
+            var url = KPASAPIURL + "/kpasinfo";
             $.getJSON(url, function(kpasinfo) {
                 currentPrivacyPolicyVersion = kpasinfo.result.privacyPolicyVersion;
-                mmooc.api.loadUserPrivacyPolicyVersion(function(userData) {
+                api.loadUserPrivacyPolicyVersion(function(userData) {
                     if(!userData.data || !userData.data.privacyPolicyVersion || (userData.data.privacyPolicyVersion != currentPrivacyPolicyVersion)) {
                         displayPrivacyPolicyDialog();
                     }

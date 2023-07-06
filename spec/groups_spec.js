@@ -1,4 +1,4 @@
-var groups = mmooc.groups;
+import groups from "../src/js/modules/groups";
 var baseURL = 'http://beta.matematikk.mmooc.no';
 $ = jQuery;
 

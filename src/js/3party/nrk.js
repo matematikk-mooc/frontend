@@ -1,9 +1,9 @@
-this.mmooc = this.mmooc || {};
+import util from "../modules/util";
 
-this.mmooc.nrk = (function() {
+export default (function() {
   return {
     init: function() {
-      mmooc.util.mmoocLoadScript(
+      util.mmoocLoadScript(
         'https://www.nrk.no/serum/latest/js/video_embed.js'
       );
     }

@@ -1,4 +1,4 @@
-var api = mmooc.api;
+import api from "../src/js/api/api";
 
 describe('api', function() {
   var ajax, callback;

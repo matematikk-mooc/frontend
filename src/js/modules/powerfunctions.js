@@ -1,28 +1,35 @@
-this.mmooc = this.mmooc || {};
+import api from "../api/api";
+import head from "../../templates/modules/powerfunctions/head.hbs";
+import mainteacher from "../../templates/modules/powerfunctions/mainteacher.hbs";
+import peerReview from "../../templates/modules/powerfunctions/peer-review.hbs";
+import settings from "../settings";
+import studentprogress from "../../templates/modules/powerfunctions/student-progress.hbs";
+import tail from "../../templates/modules/powerfunctions/tail.hbs";
+import util from "./util";
 
-this.mmooc.powerFunctions = (() => {
+export default (function() {
   let rootId = undefined;
 
   _render = (template, heading, data) => {
     const html =
-      mmooc.util.renderTemplateWithData('powerfunctions/head', {
+      util.renderTemplateWithData(head, {
         heading: heading
       }) +
-      mmooc.util.renderTemplateWithData(template, data) +
-      mmooc.util.renderTemplateWithData('powerfunctions/tail', {});
+      util.renderTemplateWithData(template, data) +
+      util.renderTemplateWithData(tail, {});
     document.getElementById(rootId).innerHTML = html;
   };
 
   AssignPeerReviewsForGroup = () => {
     _renderView = () => {
-      mmooc.api.getCoursesForUser(courses => {
-        _render('powerfunctions/peer-review', 'Assign peer reviews by group', {
+      api.getCoursesForUser(courses => {
+        _render(peerReview, 'Assign peer reviews by group', {
           courses: courses
         });
         let peerReviewAssignments = [];
         $('#mmpf-course-select').change(() => {
           const courseID = $('#mmpf-course-select option:selected').val();
-          mmooc.api.getGroupCategoriesForCourse(courseID, categories => {
+          api.getGroupCategoriesForCourse(courseID, categories => {
             $('.step-2').css('display', 'list-item');
             $('.step-3').css('display', 'none');
             $('.step-4').css('display', 'none');
@@ -40,7 +47,7 @@ this.mmooc.powerFunctions = (() => {
 
         $('#mmpf-category-select').change(() => {
           const categoryID = $('#mmpf-category-select option:selected').val();
-          mmooc.api.getGroupsInCategory(categoryID, groups => {
+          api.getGroupsInCategory(categoryID, groups => {
             $('.step-3').css('display', 'list-item');
             $('.step-4').css('display', 'none');
             let html = `${html}<option value='' disabled>Choose groups</option>`;
@@ -58,7 +65,7 @@ this.mmooc.powerFunctions = (() => {
 
         $('#mmpf-group-select').change(() => {
           const courseID = $('#mmpf-course-select option:selected').val();
-          mmooc.api.getAssignmentsForCourse(courseID, assignments => {
+          api.getAssignmentsForCourse(courseID, assignments => {
             peerReviewAssignments = [];
             assignments.forEach(assignment => {
               if (assignment.peer_reviews)
@@ -136,12 +143,12 @@ this.mmooc.powerFunctions = (() => {
       const allSubmitted = [];
       let noOfAssignedPeerReviewsForStudent = [];
       let noOfPeerReviewersForStudent = [];
-      mmooc.api.getPeerReviewsForAssignment(
+      api.getPeerReviewsForAssignment(
         courseID,
         assignmentID,
         peerReviews => {
           for (var i = 0; i < selectedGroups.length; i++) {
-            mmooc.api.getGroupMembers(selectedGroups[i].value, function(
+            api.getGroupMembers(selectedGroups[i].value, function(
               members
             ) {
               groupsMembers.push(members);
@@ -180,7 +187,7 @@ this.mmooc.powerFunctions = (() => {
             for (let j = 0; j < groupsMembers.length; j++) {
               // Get submissions for users in group and push to array if workflow_state is submitted or graded
               for (let i = 0; i < groupsMembers[j].length; i++) {
-                mmooc.api.getSingleSubmissionForUser(
+                api.getSingleSubmissionForUser(
                   courseID,
                   assignmentID,
                   groupsMembers[j][i].id,
@@ -396,7 +403,7 @@ this.mmooc.powerFunctions = (() => {
             ) {
               noOfAssignedPeerReviewsForStudent[userID]++;
               noOfPeerReviewersForStudent[submitted[i].user_id]++;
-              mmooc.api.createPeerReview(
+              api.createPeerReview(
                 courseID,
                 assignmentID,
                 submitted[i].id,
@@ -446,7 +453,7 @@ this.mmooc.powerFunctions = (() => {
     _showInput = () => {
       $('.peer-review-create').html(
         `<div class='input-wrapper'><input type='text' value='${
-          mmooc.settings.defaultNumberOfReviews
+          settings.defaultNumberOfReviews
         }' style='width:25px;' class='number-of-reviews'>
 				gjennomganger per bruker<br><input type='button' value='Tildel hverandrevurderinger' class='button btn-create-pr'></div>`
       );
@@ -461,16 +468,16 @@ this.mmooc.powerFunctions = (() => {
     const error = error => console.error('error calling api', error);
 
     _renderView = () => {
-      mmooc.api.getCoursesForUser(courses => {
+      api.getCoursesForUser(courses => {
         _render(
-          'powerfunctions/student-progress',
+          studentprogress,
           'List student progress by section',
           { courses: courses }
         );
         $('#mmpf-course-select').change(() => {
           const courseID = $('#mmpf-course-select option:selected').val();
           const params = { per_page: 999 };
-          mmooc.api.getSectionsForCourse(courseID, params, sections => {
+          api.getSectionsForCourse(courseID, params, sections => {
             $('.step-2').css('display', 'list-item');
             $('.step-3').css('display', 'none');
             let html = `${html}<option value=''>Choose a section</option>`;
@@ -484,7 +491,7 @@ this.mmooc.powerFunctions = (() => {
         });
         $('#mmpf-section-select').change(() => {
           const courseID = $('#mmpf-course-select option:selected').val();
-          mmooc.api.getModulesForCourseId(
+          api.getModulesForCourseId(
             modules => {
               $('.step-3').css('display', 'list-item');
               let html = `${html}<option value=''>Choose a module</option>`;
@@ -517,11 +524,11 @@ this.mmooc.powerFunctions = (() => {
       let moduleParams = { per_page: 999 };
       let html = '<table><tr><th>Navn</th>';
       const asyncsDone = 0;
-      mmooc.api.getItemsForModuleId(
+      api.getItemsForModuleId(
         items => {
           items.forEach(item => (html = `${html}<th>${item.title}</th>`));
           html = `${html}</tr>`;
-          mmooc.api.getSectionsForCourse(courseID, sectionParams, sections => {
+          api.getSectionsForCourse(courseID, sectionParams, sections => {
             if (sections[sectionIndex].students.length < 1)
               $('.student-progress-table').html(
                 `Ingen studenter funnet i klasse ${sections[sectionIndex].name}`
@@ -531,7 +538,7 @@ this.mmooc.powerFunctions = (() => {
                 student_id: sections[sectionIndex].students[j].id,
                 per_page: 999
               };
-              mmooc.api.getItemsForModuleId(
+              api.getItemsForModuleId(
                 itemsForStudent => {
                   for (
                     let l = 0;
@@ -607,7 +614,7 @@ this.mmooc.powerFunctions = (() => {
     return {
       run: () => {
         try {
-          _render('powerfunctions/mainteacher', 'Choose function');
+          _render(mainteacher, 'Choose function');
           _setUpClickHandlers();
         } catch (e) {
           alert(e.message);

@@ -1,13 +1,16 @@
-this.mmooc = this.mmooc || {};
+import loginPopup from '../../templates/modules/loginPopup.hbs';
+import loginInfo from '../../templates/modules/loginInfo.hbs';
+import util from './util';
+import i18n from '../i18n';
 
-this.mmooc.login = (() => {
+export default(() => {
   return {
     handleLoginButtonClick : function() {
       $('.mmooc-header__login-button').click(() => {
         if(!$('.login-box').length) {
-          let html = mmooc.util.renderTemplateWithData('loginPopup', {
-            logInText: mmooc.i18n.LogInPopup,
-            logInCanvasText: mmooc.i18n.LogInCanvas,
+          let html = util.renderTemplateWithData(loginPopup, {
+            logInText: i18n.LogInPopup,
+            logInCanvasText: i18n.LogInCanvas,
           });
             document.getElementById('wrapper').insertAdjacentHTML('afterend', html);
             $('#application').before(`<div class="overlay"></div>`)
@@ -18,7 +21,7 @@ this.mmooc.login = (() => {
       })
     },
     addInfoMessage: function() {
-      let html = mmooc.util.renderTemplateWithData('loginInfo');      
+      let html = util.renderTemplateWithData(loginInfo);
       $(".ic-Login-footer").html(html);
       $(".ic-Login-footer").show();
     }

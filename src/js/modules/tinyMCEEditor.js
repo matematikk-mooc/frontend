@@ -1,6 +1,4 @@
-this.mmooc = this.mmooc || {};
-
-this.mmooc.tinyMCEEditor = (function () {
+export default (function () {
 
     function getGroupNames(userGroups) {
         let groupNames = [];
@@ -42,11 +40,11 @@ this.mmooc.tinyMCEEditor = (function () {
             const hashtaggedHyphenatedGroupNames = hashtagGroupNames(hyphenatedGroupNames);
             const joinedNames = hashtaggedHyphenatedGroupNames.join(" ").toString() + "";
             const htmlElementWithGroupNames = "<p>&nbsp;</p><p>&nbsp;</p><p><span style=\"font-size: 10pt; color: gray;\">" + joinedNames + "</span></p>";
-            
-            const rawContent = tinyMCE.activeEditor.getContent();
+
+            const rawContent = getContent();
             const decodedContent = htmlDecode(rawContent);
             if (decodedContent.search(joinedNames) === -1) {
-                tinyMCE.activeEditor.setContent(rawContent + htmlElementWithGroupNames);
+                setContent(rawContent + htmlElementWithGroupNames);
             }
         }
     }
