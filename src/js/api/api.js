@@ -1,6 +1,8 @@
-this.mmooc = this.mmooc || {};
+import settings from "../settings";
+import util from "../modules/util";
+import utilRoot from "../utilRoot";
 
-this.mmooc.api = (function() {
+export default (function() {
   let _urlToTypeMapping = [];
 
   _urlToTypeMapping['quizzes'] = 'Quiz';
@@ -190,7 +192,7 @@ this.mmooc.api = (function() {
       this._get({
         callback: function(courses) {
           const filteredCourses = courses.filter(
-            mmooc.util.filterSearchAllCourse
+            util.filterSearchAllCourse
           );
           callback(filteredCourses);
         },
@@ -204,7 +206,7 @@ this.mmooc.api = (function() {
       this._get({
         callback: function(courses) {
           var filteredCourses = courses.filter(
-            mmooc.util.filterSearchAllCourse
+            util.filterSearchAllCourse
           );
           callback(filteredCourses);
         },
@@ -217,15 +219,15 @@ this.mmooc.api = (function() {
 
     getEnrolledCourses: function(callback, error) {
       // returns empty set if a user is not authenticated
-      if (!mmooc.util.isAuthenticated()) {
+      if (!util.isAuthenticated()) {
         callback([]);
         return false;
       }
 
       this._get({
         callback: function(courses) {
-          if(mmooc.settings.filterCourses) { 
-            const filteredCourses = courses.filter(mmooc.util.filterCourse);
+          if(settings.filterCourses) {
+            const filteredCourses = courses.filter(util.filterCourse);
             callback(filteredCourses);
           } else {
             callback(courses);
@@ -274,7 +276,7 @@ this.mmooc.api = (function() {
 
     getCurrentCourseId() {
       const currentUrl = '' + this._location.pathname;
-      return mmooc.utilRoot.getCourseIdFromUrl(currentUrl);
+      return utilRoot.getCourseIdFromUrl(currentUrl);
     },
     getModuleItemSequence(courseId, moduleItemId, callback, error) {
       this._get({
@@ -296,10 +298,10 @@ this.mmooc.api = (function() {
     //Note that in newer versions of Canvas, worked on 8.2.2019.
     //we can use ENV to check this.
     isGroupDiscussion: function(courseId, contentId, callback) {
-        if (typeof ENV.DISCUSSION.IS_GROUP !== 'undefined') { 
+        if (typeof ENV.DISCUSSION.IS_GROUP !== 'undefined') {
           callback(ENV.DISCUSSION.IS_GROUP);
         } else {
-          //Fallback for older versions.            
+          //Fallback for older versions.
           this.getDiscussionTopic(courseId, contentId, function(discussion) {
             callback(discussion.group_category_id ? true : false);
           });
@@ -1022,7 +1024,7 @@ $canvas.post(uri, {'enrollment[user_id]' => user_id, 'enrollment[type]' => etype
       this._delete({
         callback: callback,
         uri: `/users/self/custom_data`,
-        params: {  
+        params: {
           "ns": "no.udir.kompetanse"
         }
       });
@@ -1032,7 +1034,7 @@ $canvas.post(uri, {'enrollment[user_id]' => user_id, 'enrollment[type]' => etype
       this._put({
         callback: callback,
         uri: `/users/self/custom_data`,
-        params: {  
+        params: {
           "ns": "no.udir.kompetanse",
           "data": {
             "privacyPolicyVersion": privacyPolicyVersion,
@@ -1050,7 +1052,7 @@ $canvas.post(uri, {'enrollment[user_id]' => user_id, 'enrollment[type]' => etype
         callback: callback,
         error: error,
         uri: `/users/self/custom_data`,
-        params: {  
+        params: {
           "ns": "no.udir.kompetanse",
         }
       });
@@ -1086,7 +1088,3 @@ $canvas.post(uri, {'enrollment[user_id]' => user_id, 'enrollment[type]' => etype
     }
   };
 })();
-
-if (typeof module !== 'undefined' && module !== null) {
-  module.exports = this.mmooc.api;
-}

@@ -1,22 +1,23 @@
-this.mmooc = this.mmooc || {};
 
-this.mmooc.routes = (function() {
-  function Route(paths, queryStrings, handler) {
-    if (paths != null) {
-      this.paths = paths instanceof Array ? paths : [paths];
-    } else {
-      this.paths = null;
+var routes = (function() {
+  class Route {
+    constructor(paths, queryStrings, handler) {
+      if (paths != null) {
+        this.paths = paths instanceof Array ? paths : [paths];
+      } else {
+        this.paths = null;
+      }
+
+      if (queryStrings != null) {
+        this.queryStrings =
+          queryStrings instanceof Array ? queryStrings : [queryStrings];
+      } else {
+        this.queryStrings = null;
+      }
+
+      this.handler = handler;
+      this.isAlreadyHandled = false;
     }
-
-    if (queryStrings != null) {
-      this.queryStrings =
-        queryStrings instanceof Array ? queryStrings : [queryStrings];
-    } else {
-      this.queryStrings = null;
-    }
-
-    this.handler = handler;
-    this.isAlreadyHandled = false;
   }
 
   var routes = [];
@@ -70,5 +71,5 @@ this.mmooc.routes = (function() {
 })();
 
 if (typeof module !== 'undefined' && module !== null) {
-  module.exports = this.mmooc.routes;
+  module.exports = routes;
 }

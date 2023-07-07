@@ -1,6 +1,13 @@
+import '../css/allrootaccount.less'
+
+import { hrefQueryString } from './settingsRoot';
+import utilRoot from './utilRoot';
+
 // Replace the normal jQuery getScript function with one that supports
 // debugging and which references the script files as external resources
 // rather than inline.
+var self = this;
+var udirDesignLoaded;
 function getScript(url, callback) {
   var head = document.getElementsByTagName('head')[0];
   var script = document.createElement('script');
@@ -34,7 +41,7 @@ function getScript(url, callback) {
 }
 
 function showCanvasLogin() {
-  $('.login-box, .overlay').remove(); 
+  $('.login-box, .overlay').remove();
   $('.ic-Login').show();
   $("#f1_container").show(); //Small screens
 }
@@ -46,13 +53,13 @@ if(document.location.pathname == "/search/all_courses" && document.location.sear
   window.location.href = '/courses' + document.location.search;
   redirected = true;
 } else if(document.location.pathname == "/login/canvas") {
-  if (document.referrer.endsWith("/logout" + mmooc.hrefQueryString)) {
-    window.location.href = '/search/all_courses' + mmooc.hrefQueryString;
+  if (document.referrer.endsWith("/logout" + hrefQueryString)) {
+    window.location.href = '/search/all_courses' + hrefQueryString;
     redirected = true;
   } else if(!document.referrer.includes("/login/canvas")) {
     $(".ic-Login").hide();
     $("#f1_container").hide(); //Small screens
-    redirected = mmooc.utilRoot.redirectFeideAuthIfEnrollReferrer();
+    redirected = utilRoot.redirectFeideAuthIfEnrollReferrer();
     if(!redirected) {
       if(!document.location.search.includes("normalLogin=1")) {
         let html = `
@@ -68,12 +75,12 @@ if(document.location.pathname == "/search/all_courses" && document.location.sear
             <a class="feide-button mmooc-button mmooc-button-primary" onclick="window.location.href=\'/login/saml/2\'">
               </a>
               <a class="icon-question unit-help-login" target="_blank" href="https://bibsys.instructure.com/courses/553"></a>
-              <a class="mmooc-button mmooc-button-secondary" onclick="showCanvasLogin();">Ikke Feide</a>
+              <a class="mmooc-button mmooc-button-secondary">Ikke Feide</a>
           </div>
           <div class="unitPartners">
-            <a href="https://udir.no" target="_blank"><img class="unitPartnersUdirLogo unitPartnersLogo" src="https://server/bitmaps/udirlogo50px.png"/></a>
-            <a href="https://ntnu.no" target="_blank"><img class="unitPartnersSmallLogo" src="https://server/bitmaps/logo_ntnu.png"/></a>
-            <a href="https://unit.no" target="_blank"><img class="unitPartnersUnitLogo" src="https://server/bitmaps/unit-logo-farge.svg"/></a>
+            <a href="https://udir.no" target="_blank"><img class="unitPartnersUdirLogo unitPartnersLogo" src="${SERVER}bitmaps/udirlogo50px.png"/></a>
+            <a href="https://ntnu.no" target="_blank"><img class="unitPartnersSmallLogo" src="${SERVER}bitmaps/logo_ntnu.png"/></a>
+            <a href="https://unit.no" target="_blank"><img class="unitPartnersUnitLogo" src="${SERVER}bitmaps/unit-logo-farge.svg"/></a>
           </div>
         </div>
         `;
@@ -82,6 +89,7 @@ if(document.location.pathname == "/search/all_courses" && document.location.sear
           feidLoginBoxPosition = document.getElementById('f1_container');
         }
         feidLoginBoxPosition.insertAdjacentHTML('afterend', html);
+        $(".mmooc-button-secondary").on('click', showCanvasLogin);
         $('#application').before(`<div class="overlay"></div>`);
       }
       else {
@@ -91,42 +99,42 @@ if(document.location.pathname == "/search/all_courses" && document.location.sear
     }
   }
 } else if (document.location.pathname == "/courses") {
-  redirected = mmooc.utilRoot.redirectToEnrollIfCodeParamPassed();
+  redirected = utilRoot.redirectToEnrollIfCodeParamPassed();
 } else if (document.location.pathname == "/") {
   setTimeout(function() {
     if(!$(".ic-DashboardCard__header_hero").length) {
       let html = `
       <div class="card card-body">
       <h3>Er det tomt her?</h3>
-        <p>Dersom du har valgt å logge inn med Feide og ikke finner innholdet ditt kan det hende det er fordi du 
+        <p>Dersom du har valgt å logge inn med Feide og ikke finner innholdet ditt kan det hende det er fordi du
         vanligvis har logget på med en annen bruker ved å bruke epost og passord. Logg ut og inn igjen ved å benytte "Ikke Feide" - knappen.
         </p>
-        <img src="https://server/bitmaps/nyinnlogging.png" width="70%" alt="Ny innloggingsskjerm"/>
+        <img src="${SERVER}bitmaps/nyinnlogging.png" width="70%" alt="Ny innloggingsskjerm"/>
       </div>
       `;
       document.getElementById('dashboard-activity').insertAdjacentHTML('beforebegin', html);
     }
-  }, 1000)  
+  }, 1000)
 }
 
 
 if(!redirected) {
-  const urlParamsObj = mmooc.utilRoot.urlParamsToObject();
+  const urlParamsObj = utilRoot.urlParamsToObject();
   const design = urlParamsObj && urlParamsObj['design'];
   if (design !== undefined && design=="udir") {
-      if(this.udirDesignLoaded === undefined)
+      if(window.udirDesignLoaded === undefined)
       {
-          this.udirDesignLoaded = true;
+          udirDesignLoaded = true;
           console.log("Root account:Loading udir design.");
 
-          var filename = 'https://udirdesigncss';
+          var filename = SERVER + DESIGNCSS;
 
           var fileref=document.createElement("link")
           fileref.setAttribute("rel", "stylesheet")
           fileref.setAttribute("type", "text/css")
           fileref.setAttribute("href", filename)
           fileref.onload = (_) => {
-            $.getScript('https://udirdesignjs');
+            $.getScript(SERVER + DESIGNJS);
           }
           document.getElementsByTagName("head")[0].appendChild(fileref)
       } else {

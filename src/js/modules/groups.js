@@ -1,6 +1,8 @@
-this.mmooc = this.mmooc || {};
+import groupheader from '../../templates/modules/groupheader.hbs';
+import api from '../api/api';
+import util from './util';
 
-this.mmooc.groups = (function() {
+export default (function() {
   function interceptLinkToGroupPageForHref(href, event) {
     if (/\/groups\/\d+$/.test(href)) {
       event.preventDefault();
@@ -34,8 +36,8 @@ this.mmooc.groups = (function() {
       });
     },
     showGroupHeader: function(groupId, courseId) {
-      mmooc.api.getGroupMembers(groupId, function(members) {
-        var headerHTML = mmooc.util.renderTemplateWithData('groupheader', {
+      api.getGroupMembers(groupId, function(members) {
+        var headerHTML = util.renderTemplateWithData(groupheader, {
           groupId: groupId,
           courseId: courseId,
           members: members

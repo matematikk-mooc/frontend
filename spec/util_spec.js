@@ -1,3 +1,4 @@
+import util from "../src/js/modules/util";
 describe('util', function() {
   describe('arraySorted', function() {
     var elem1, elem2, unsorted;
@@ -11,7 +12,7 @@ describe('util', function() {
     it('should sort the array based on the given attribute', function() {
       unsorted.push({ name: 'BB003' });
       unsorted.push({ name: 'BB002' });
-      var arraySorted = mmooc.util.arraySorted(unsorted, 'name');
+      var arraySorted = util.arraySorted(unsorted, 'name');
       expect(arraySorted.length).toBe(4);
       expect(arraySorted[0]).toBe(elem1);
       expect(arraySorted[arraySorted.length - 1]).toBe(elem2);
@@ -20,20 +21,20 @@ describe('util', function() {
     it('should sort using norwegian locale', function() {
       var aring = { name: 'AA' };
       unsorted.push(aring);
-      var arraySorted = mmooc.util.arraySorted(unsorted, 'name');
+      var arraySorted = util.arraySorted(unsorted, 'name');
       expect(arraySorted[0]).toBe(elem1);
       expect(arraySorted[arraySorted.length - 1]).toBe(aring);
     });
 
     it('should not sort if element to sort not given', function() {
-      var arraySorted = mmooc.util.arraySorted(unsorted);
+      var arraySorted = util.arraySorted(unsorted);
       expect(arraySorted.length).toBe(2);
       expect(arraySorted[0]).toBe(elem2);
       expect(arraySorted[1]).toBe(elem1);
     });
 
     it('should not sort if element to sort is not existing', function() {
-      var arraySorted = mmooc.util.arraySorted(unsorted, 'notThere');
+      var arraySorted = util.arraySorted(unsorted, 'notThere');
       expect(arraySorted.length).toBe(2);
       expect(arraySorted[0]).toBe(elem2);
       expect(arraySorted[1]).toBe(elem1);

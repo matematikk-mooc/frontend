@@ -1,6 +1,7 @@
-this.mmooc = this.mmooc || {};
+import { hrefQueryString } from "./settingsRoot";
+import settingsRoot from "./settingsRoot";
 
-this.mmooc.utilRoot = function() {
+export default (function() {
   return {
     _env: typeof ENV !== 'undefined' ? ENV : {},
     getRoles : function() {
@@ -10,7 +11,7 @@ this.mmooc.utilRoot = function() {
       return this.getRoles() !== null;
     },
     getLinkToMyCourses: function () {
-        var linkToMyCourses = "/courses" + mmooc.hrefQueryString;
+        var linkToMyCourses = "/courses" + hrefQueryString;
         return linkToMyCourses;
     },
 
@@ -40,17 +41,17 @@ this.mmooc.utilRoot = function() {
       if (document.location.search === '') return {};
 
       const search = location.search.substring(1);
-      return mmooc.utilRoot.parse_query_string(search);
+      return this.parse_query_string(search);
     },
     checkReferrer:function(ref) {
        return document.referrer.includes(ref);
     },
 
     isEnrollReferrer: function() {
-      const permittedReferrers = mmooc.settingsRoot.feideEnrollRefferers;
-      const hasPermittedRefferer = permittedReferrers.some(mmooc.utilRoot.checkReferrer);
+      const permittedReferrers = settingsRoot.feideEnrollRefferers;
+      const hasPermittedRefferer = permittedReferrers.some(this.checkReferrer);
 
-      if( !mmooc.utilRoot.isAuthenticated() && hasPermittedRefferer) {
+      if( !this.isAuthenticated() && hasPermittedRefferer) {
         return true;
       }
       return false;
@@ -59,7 +60,7 @@ this.mmooc.utilRoot = function() {
       // Checks if we hit the /canvas/login from Feide Enroll pages
       // If we go from permitted refferer, we redirect to Feide auth
       // when page user is unauthenticated and does not provide `?normalLogin` param
-      if(mmooc.utilRoot.isEnrollReferrer()) {
+      if(this.isEnrollReferrer()) {
         if(document.location.search.includes("normalLogin=1")) {
             $("#content > div > div > div > div > div.ic-Login-header > div.ic-Login-header__links").hide();
         }
@@ -82,7 +83,7 @@ this.mmooc.utilRoot = function() {
         if (login !== undefined) {
             return true;
         }
-        return false;    
+        return false;
     },
     triggerForgotPasswordIfParamPassed: function() {
       const params = this.urlParamsToObject();
@@ -94,19 +95,19 @@ this.mmooc.utilRoot = function() {
       // If user wanted to enroll a course using Feide auth,
       // then was returned from SAML login view, we redirect to proper enrollment page
       if (document.location.search !== '') {
-        const urlParamsObj = mmooc.utilRoot.urlParamsToObject();
+        const urlParamsObj = this.urlParamsToObject();
 
         var design = urlParamsObj && urlParamsObj['design'];
 
         var newHref = null;
 
-        var enrollCode = mmooc.utilRoot.isEnrollCodeParamPassed(urlParamsObj);
+        var enrollCode = this.isEnrollCodeParamPassed(urlParamsObj);
         if (enrollCode) {
-          newHref = "/enroll/" + enrollCode;  // + mmooc.hrefQueryString;
+          newHref = "/enroll/" + enrollCode;  // + hrefQueryString;
           if(design) {
-            newHref += "?design=" + design; 
+            newHref += "?design=" + design;
           }
-        } 
+        }
 
         var forwardTo = urlParamsObj && urlParamsObj['forwardTo'];
         if(forwardTo) {
@@ -115,7 +116,7 @@ this.mmooc.utilRoot = function() {
           } else {
             newHref += "?";
           }
-          newHref += "forwardTo=" + encodeURIComponent(forwardTo); 
+          newHref += "forwardTo=" + encodeURIComponent(forwardTo);
         }
 
         if(newHref) {
@@ -123,8 +124,8 @@ this.mmooc.utilRoot = function() {
           return true;
         }
 
-        if (mmooc.utilRoot.isLoginParamPassed(urlParamsObj)) {
-          const linkToMyCourses = mmooc.utilRoot.getLinkToMyCourses();
+        if (this.isLoginParamPassed(urlParamsObj)) {
+          const linkToMyCourses = this.getLinkToMyCourses();
           window.location.href = linkToMyCourses;
           return true;
         }
@@ -134,10 +135,10 @@ this.mmooc.utilRoot = function() {
 
     redirectToSamlIfUdirCourse: function(kpasApiUrl){
       try {
-        if(!mmooc.utilRoot.isAuthenticated()) {
+        if(!this.isAuthenticated()) {
           const currentUrl = '' + window.location.pathname;
-          const currentCourseId = mmooc.utilRoot.getCourseIdFromUrl(currentUrl);
-          mmooc.utilRoot.isDeepLinkToUdirCourse(currentCourseId, kpasApiUrl).then( (result) => {
+          const currentCourseId = this.getCourseIdFromUrl(currentUrl);
+          this.isDeepLinkToUdirCourse(currentCourseId, kpasApiUrl).then( (result) => {
                 if (result) {
                   window.location = "/login/saml/2";
                   return true;
@@ -189,4 +190,4 @@ this.mmooc.utilRoot = function() {
       return null;
     }
   }
-}();
+})();

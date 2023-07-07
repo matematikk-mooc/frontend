@@ -1,3 +1,5 @@
+import settings from "../../../js/settings";
+import api from "../../../js/api/api";
 $(function() {
   // console.log("CANVABADGES: Loaded!");
   // NOTE: if pasting this code into another script, you'll need to manually change the
@@ -8,9 +10,9 @@ $(function() {
   // var protocol_and_host = null; Overridden because of the comment above
   //Some small changes has been made to this script so it is displayed also on the about/<user id> page and /profile/settings page.
   //The original is here: https://www.canvabadges.org/canvas_profile_badges.js
-  if (mmooc.settings.useCanvaBadge) {
+  if (settings.useCanvaBadge) {
     //Only run this code if it is set to be used in the settings
-    var protocol_and_host = mmooc.settings.CanvaBadgeProtocolAndHost; //'https://canvabadges-beta-iktsenteret.bibsys.no' - this is where the Canva Badge certificate is stored.;
+    var protocol_and_host = settings.CanvaBadgeProtocolAndHost; //'https://canvabadges-beta-iktsenteret.bibsys.no' - this is where the Canva Badge certificate is stored.;
     var isProfilePage = false;
     var user_id;
     if (!protocol_and_host) {
@@ -40,7 +42,7 @@ $(function() {
     if (match && protocol_and_host) {
       console.log('CANVABADGES: This page shows badges! Loading...');
       if (isProfilePage) {
-        user_id = mmooc.api.getUser().id;
+        user_id = api.getUser().id;
       } else {
         user_id = match[2];
       }

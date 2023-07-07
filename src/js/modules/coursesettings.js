@@ -1,6 +1,6 @@
-this.mmooc = this.mmooc || {};
+import api from "../api/api";
 
-this.mmooc.coursesettings = (function() {
+export default (function() {
   var DISCUSSIONTYPE = 0;
   var ASSIGNMENTTYPE = 1;
   var QUIZTYPE = 2;
@@ -81,10 +81,11 @@ this.mmooc.coursesettings = (function() {
     return 'Wait' + tableId;
   }
   function waitIcon(tableId) {
+    let lodingIcon = SERVER + '/bitmaps/loading.gif'
     $('#' + tableId).append(
       "<tr id='" +
         getWaitIconRowId(tableId) +
-        "'>td><img src='https://server/bitmaps/loading.gif'/>"
+        "'>td><img src='" + lodingIcon + "'/>"
     );
   }
   function clearWaitIcon(tableId) {
@@ -152,7 +153,7 @@ this.mmooc.coursesettings = (function() {
   function postProcessDiscussionTable(courseId, moduleId, item) {
     var tableId = getSanityTableId(courseId, moduleId, item.id);
     var contentId = item.content_id;
-    mmooc.api.getDiscussionTopic(
+    api.getDiscussionTopic(
       courseId,
       contentId,
       (function(tableId) {
@@ -198,7 +199,7 @@ this.mmooc.coursesettings = (function() {
   function postProcessAssignmentTable(courseId, moduleId, item) {
     var contentId = item.content_id;
     var tableId = getSanityTableId(courseId, moduleId, item.id);
-    mmooc.api.getSingleAssignment(
+    api.getSingleAssignment(
       courseId,
       contentId,
       (function(tableId) {
@@ -272,7 +273,7 @@ this.mmooc.coursesettings = (function() {
   function postProcessQuizTable(courseId, moduleId, item) {
     var contentId = item.content_id;
     var tableId = getSanityTableId(courseId, moduleId, item.id);
-    mmooc.api.getQuiz(
+    api.getQuiz(
       courseId,
       contentId,
       (function(tableId) {
@@ -527,8 +528,8 @@ this.mmooc.coursesettings = (function() {
         <div id="resultarea"></div>'
         );
 
-        var courseId = mmooc.api.getCurrentCourseId();
-        mmooc.api.getCourse(
+        var courseId = api.getCurrentCourseId();
+        api.getCourse(
           courseId,
           function(course) {
             contentHtml += '<p><b>Kursnavn:</b> ' + course.name + '</p>';
@@ -543,25 +544,25 @@ this.mmooc.coursesettings = (function() {
             contentHtml += createTable(DISCUSSIONTYPE, 'Løsrevne diskusjoner');
             contentHtml += createTable(QUIZTYPE, 'Løsrevne quizer');
 
-            mmooc.api.getModulesForCurrentCourse(function(modules) {
+            api.getModulesForCurrentCourse(function(modules) {
               contentHtml += processModules(courseId, modules);
               $('#resultarea').html(contentHtml);
               postProcessModules(courseId, modules);
 
-              mmooc.api.getPagesForCourse(courseId, function(pages) {
+              api.getPagesForCourse(courseId, function(pages) {
                 getOrphanItemsTable(pages, PAGETYPE);
               });
-              mmooc.api.getAssignmentsForCourse(courseId, function(
+              api.getAssignmentsForCourse(courseId, function(
                 assignments
               ) {
                 getOrphanItemsTable(assignments, ASSIGNMENTTYPE);
               });
-              mmooc.api.getDiscussionTopicsForCourse(courseId, function(
+              api.getDiscussionTopicsForCourse(courseId, function(
                 discussions
               ) {
                 getOrphanItemsTable(discussions, DISCUSSIONTYPE);
               });
-              mmooc.api.getQuizzesForCourse(courseId, function(quizzes) {
+              api.getQuizzesForCourse(courseId, function(quizzes) {
                 getOrphanItemsTable(quizzes, QUIZTYPE);
               });
             }, error);
@@ -581,9 +582,9 @@ this.mmooc.coursesettings = (function() {
         var contentarea = $('#content');
         contentarea.html('<h1>Seksjoner</h1><div id="resultarea"></div>');
 
-        var courseId = mmooc.api.getCurrentCourseId();
+        var courseId = api.getCurrentCourseId();
         var params = { per_page: 999 };
-        mmooc.api.getSectionsForCourse(courseId, params, function(sections) {
+        api.getSectionsForCourse(courseId, params, function(sections) {
           var resultHtml =
             "<table class='table'><tr><th>Section name</th><th>Section id</th></tr>";
           for (var i = 0; i < sections.length; i++) {
@@ -610,10 +611,10 @@ this.mmooc.coursesettings = (function() {
         var contentarea = $('#content');
         contentarea.html('<h1>Brukere</h1><div id="resultarea"></div>');
 
-        var courseId = mmooc.api.getCurrentCourseId();
+        var courseId = api.getCurrentCourseId();
 
         var params = { per_page: 999 };
-        mmooc.api.getSectionsForCourse(courseId, params, function(sections) {
+        api.getSectionsForCourse(courseId, params, function(sections) {
           var tableHtml = '';
           for (var i = 0; i < sections.length; i++) {
             var section = sections[i];
@@ -630,7 +631,7 @@ this.mmooc.coursesettings = (function() {
             $('#resultarea').append(tableHtml);
 
             var params = { per_page: 999 };
-            mmooc.api.getEnrollmentsForSection(section.id, params, function(
+            api.getEnrollmentsForSection(section.id, params, function(
               enrollments
             ) {
               for (var j = 0; j < enrollments.length; j++) {
@@ -659,10 +660,10 @@ this.mmooc.coursesettings = (function() {
         var contentarea = $('#content');
         contentarea.html('<h1>Oppgaver</h1><div id="resultarea"></div>');
 
-        var courseId = mmooc.api.getCurrentCourseId();
+        var courseId = api.getCurrentCourseId();
 
         var params = { per_page: 999 };
-        mmooc.api.getAssignmentsForCourse(courseId, function(assignments) {
+        api.getAssignmentsForCourse(courseId, function(assignments) {
           if (!assignments.length) {
             $('#resultarea').append('Ingen oppgaver');
           } else {
@@ -705,8 +706,8 @@ this.mmooc.coursesettings = (function() {
         var contentarea = $('#content');
         contentarea.html('<h1>Grupper</h1><div id="resultarea"></div>');
 
-        var courseId = mmooc.api.getCurrentCourseId();
-        mmooc.api.getGroupCategoriesForCourse(courseId, function(categories) {
+        var courseId = api.getCurrentCourseId();
+        api.getGroupCategoriesForCourse(courseId, function(categories) {
           var tableHtml = '';
           for (var i = 0; i < categories.length; i++) {
             var category = categories[i];
@@ -722,7 +723,7 @@ this.mmooc.coursesettings = (function() {
               '<thead><tr><th>Gruppenavn</th><th>Id</th></tr></thead><tbody></tbody></table>';
             $('#resultarea').append(tableHtml);
 
-            mmooc.api.getGroupsInCategory(category.id, function(groups) {
+            api.getGroupsInCategory(category.id, function(groups) {
               for (var j = 0; j < groups.length; j++) {
                 var group = groups[j];
                 var tableId = getGroupCategoryTableId(group.group_category_id);

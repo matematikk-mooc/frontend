@@ -1,9 +1,12 @@
-this.mmooc = this.mmooc || {};
+import actionbutton from "../../templates/modules/actionbutton.hbs"
+import api from "../api/api";
+import menu from "./menu";
+import util from "./util";
 
-this.mmooc.announcements = (() => {
+export default (function() {
   const hideMarkAsReadButton = () => {
     $('#markAllAsReadButton').hide();
-    mmooc.menu.updateNotificationsForUser();
+    menu.updateNotificationsForUser();
   };
 
   const elem = document.getElementById("keyboard-shortcut-modal-info");
@@ -13,11 +16,11 @@ this.mmooc.announcements = (() => {
 
   return {
     addMarkAsReadButton() {
-      const contentId = mmooc.api.getCurrentTypeAndContentId().contentId;
-      const courseId = mmooc.api.getCurrentCourseId();
-      mmooc.api.getDiscussionTopic(courseId, contentId, discussionTopic => {
+      const contentId = api.getCurrentTypeAndContentId().contentId;
+      const courseId = api.getCurrentCourseId();
+      api.getDiscussionTopic(courseId, contentId, discussionTopic => {
         if (discussionTopic.read_state !== 'read') {
-          const buttonHTML = mmooc.util.renderTemplateWithData('actionbutton', {
+          const buttonHTML = util.renderTemplateWithData(actionbutton, {
             id: 'markAllAsReadButton',
             title: 'Marker som lest'
           });
@@ -25,7 +28,7 @@ this.mmooc.announcements = (() => {
             .getElementById('content-wrapper')
             .insertAdjacentHTML('afterbegin', buttonHTML);
           $('#markAllAsReadButton').click(() => {
-            mmooc.api.markDiscussionTopicAsRead(
+            api.markDiscussionTopicAsRead(
               courseId,
               contentId,
               hideMarkAsReadButton
@@ -35,8 +38,8 @@ this.mmooc.announcements = (() => {
       });
     },
     printAnnouncementsUnreadCount() {
-      const courseId = mmooc.api.getCurrentCourseId();
-      mmooc.api.getAnnouncementsForCourse(courseId, announcements => {
+      const courseId = api.getCurrentCourseId();
+      api.getAnnouncementsForCourse(courseId, announcements => {
         let totalUnread = 0;
         announcements.forEach(announcement => {
           if (
@@ -46,7 +49,7 @@ this.mmooc.announcements = (() => {
             totalUnread++;
         });
         totalUnread > 0 &&
-          mmooc.announcements.printUnreadCountInTab(totalUnread);
+          this.printUnreadCountInTab(totalUnread);
       });
     },
     printUnreadCountInTab(totalUnread) {

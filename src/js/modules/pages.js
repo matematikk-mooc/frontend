@@ -1,6 +1,14 @@
-this.mmooc = this.mmooc || {};
+import api from '../api/api';
+import assignmentPageWithPeerReviewRightSide from '../../templates/modules/assignmentPageWithPeerReviewRightSide.hbs';
+import assignmentPageWithPeerReviewSaveRubricButton from '../../templates/modules/assignmentPageWithPeerReviewSaveRubricButton.hbs';
+import assignmentPageWithPeerReviewWarning from '../../templates/modules/assignmentPageWithPeerReviewWarning.hbs';
+import assignmentSubmission from '../../templates/modules/assignmentSubmission.hbs';
+import i18n from '../i18n';
+import informationpane from '../../templates/modules/informationpane.hbs';
+import navigateToPreviousPage from '../../templates/modules/navigateToPreviousPage.hbs';
+import util from './util';
 
-this.mmooc.pages = (function() {
+export default (function() {
   function updateButtonText(container, input, label) {
     if (input.is(':checked')) {
       label.html('Marker som ulest');
@@ -75,8 +83,8 @@ this.mmooc.pages = (function() {
       });
     },
     addGotoModuleButton: function() {
-      var moduleItemId = mmooc.api.getCurrentModuleItemId();
-      var courseId = mmooc.api.getCurrentCourseId();
+      var moduleItemId = api.getCurrentModuleItemId();
+      var courseId = api.getCurrentCourseId();
       var targetHref =
         '/courses/' + courseId + '/modules#context_module_item_' + moduleItemId;
       var buttonHtml =
@@ -84,7 +92,7 @@ this.mmooc.pages = (function() {
       addButton(buttonHtml);
     },
     addStudentViewButton: function() {
-      var courseId = mmooc.api.getCurrentCourseId();
+      var courseId = api.getCurrentCourseId();
       var buttonHtml = '<a class="btn student_view_button" ';
       buttonHtml +=
         'rel="nofollow" data-method="post" href="/courses/' +
@@ -156,7 +164,7 @@ this.mmooc.pages = (function() {
     },
 
     showInformationPane: function(observer, pfdk, unmaintainedSince, alertMsg, isMemberOfExpiredCommunity, notificationtouser, feedback) {
-      var paneHTML = mmooc.util.renderTemplateWithData('informationpane', {observer:observer, pfdk:pfdk, unmaintainedSince:unmaintainedSince, alertMsg:alertMsg, expiredCommunity: isMemberOfExpiredCommunity, notificationtouser: notificationtouser, feedback: feedback});
+      var paneHTML = util.renderTemplateWithData(informationpane, {observer:observer, pfdk:pfdk, unmaintainedSince:unmaintainedSince, alertMsg:alertMsg, expiredCommunity: isMemberOfExpiredCommunity, notificationtouser: notificationtouser, feedback: feedback});
       document
         .getElementById('wrapper')
         .insertAdjacentHTML('afterend', paneHTML);
@@ -166,9 +174,9 @@ this.mmooc.pages = (function() {
     },
     showBackLinkIfNecessary: function() {
       if ($('#left-side').is(':hidden')) {
-        var linkBack = mmooc.util.renderTemplateWithData(
-          'navigateToPreviousPage',
-          { linkText: mmooc.i18n.LinkBack }
+        var linkBack = util.renderTemplateWithData(
+          navigateToPreviousPage,
+          { linkText: i18n.LinkBack }
         );
         $(linkBack).prependTo($('#content'));
       }
@@ -177,7 +185,7 @@ this.mmooc.pages = (function() {
     redesignAssignmentPage: function() {
       function _isAssignmentWithPeerReview() {
         var returnValue = false;
-        var peerReviewer = mmooc.i18n.PeerReviewer;
+        var peerReviewer = i18n.PeerReviewer;
         if (
           $(
             "#right-side .details .content > h4:contains('" +
@@ -233,8 +241,8 @@ this.mmooc.pages = (function() {
       }
 
       function _appendPeerReviewHtmlOnRightSide(submission, peerReview) {
-        var peerReviewHtml = mmooc.util.renderTemplateWithData(
-          'assignmentPageWithPeerReviewRightSide',
+        var peerReviewHtml = util.renderTemplateWithData(
+          assignmentPageWithPeerReviewRightSide,
           { submission: submission, peerReview: peerReview }
         );
         // $("body.assignments #application.ic-app #right-side .details" ).append(peerReviewHtml);
@@ -252,8 +260,8 @@ this.mmooc.pages = (function() {
         );
         if ($peerReviewLinksWarnings.length) {
           //If any warnings display peer review warning in the contents column after the assignment meta data
-          var peerReviewWarningHtml = mmooc.util.renderTemplateWithData(
-            'assignmentPageWithPeerReviewWarning',
+          var peerReviewWarningHtml = util.renderTemplateWithData(
+            assignmentPageWithPeerReviewWarning,
             { submission: submission, peerReview: peerReview }
           );
           $(
@@ -266,19 +274,16 @@ this.mmooc.pages = (function() {
         $('#right-side .details').show();
       }
 
-      var courseId = mmooc.api.getCurrentCourseId();
-      var assignmentId = mmooc.api.getCurrentTypeAndContentId().contentId;
-      var user_id = mmooc.api.getUser().id;
+      var courseId = api.getCurrentCourseId();
+      var assignmentId = api.getCurrentTypeAndContentId().contentId;
+      var user_id = api.getUser().id;
 
       if (_isAssignmentWithPeerReview()) {
-        // console.log('user_id:' + user_id);
-        mmooc.api.getSingleSubmissionForUser(
+        api.getSingleSubmissionForUser(
           courseId,
           assignmentId,
           user_id,
           function(submission) {
-            console.log('submission');
-            console.log(submission);
             var peerReview = _getPeerReviewArray();
             _appendPeerReviewHtmlOnRightSide(submission, peerReview);
             _appendPeerReviewWarningInContentsColumn(submission, peerReview);
@@ -301,14 +306,14 @@ this.mmooc.pages = (function() {
 
       function _getSubmissionTitle() {
         var returnValue;
-        var current_user_id = mmooc.api.getUser().id;
+        var current_user_id = api.getUser().id;
         if (isPeerReview) {
-          returnValue = mmooc.i18n.PeerReview;
+          returnValue = i18n.PeerReview;
         } else {
-          returnValue = mmooc.i18n.DetailsAboutYourDelivery;
+          returnValue = i18n.DetailsAboutYourDelivery;
           if (current_user_id != submission_user_id) {
             //Submission opened by admin or teacher. We don't make any changes in the existing design when this is the case.
-            returnValue = mmooc.i18n.DetailsAboutDelivery;
+            returnValue = i18n.DetailsAboutDelivery;
           }
         }
         return returnValue;
@@ -316,7 +321,7 @@ this.mmooc.pages = (function() {
 
       function _isTeacherViewingStudentsSubmission() {
         var returnValue = false;
-        var current_user_id = mmooc.api.getUser().id;
+        var current_user_id = api.getUser().id;
         if (!isPeerReview && current_user_id != submission_user_id) {
           //Submission opened by admin or teacher. We don't make any changes in the existing design when this is the case.
           returnValue = true;
@@ -372,8 +377,8 @@ this.mmooc.pages = (function() {
             isTeacherViewingStudentsSubmission: isTeacherViewingStudentsSubmission
           };
 
-          var submissionHtml = mmooc.util.renderTemplateWithData(
-            'assignmentSubmission',
+          var submissionHtml = util.renderTemplateWithData(
+            assignmentSubmission,
             submissionObject
           );
 
@@ -390,17 +395,17 @@ this.mmooc.pages = (function() {
         // Unfortunately we don't have any info about the peer review from the API because as a user you don't have access to that data it seems.
         // In order to solve this we check that the user has submitted data by checking the DOM. Then the SubmissionObject used in the template (assignmentSubmission) is changed so the peer review looks completed (which it also is).
 
-        mmooc.api.getSingleAssignment(courseId, assignmentId, function(
+        api.getSingleAssignment(courseId, assignmentId, function(
           assignment
         ) {
-          mmooc.api.getSingleSubmissionForUser(
+          api.getSingleSubmissionForUser(
             courseId,
             assignmentId,
             submission_user_id,
             function(submission) {
               var submission_id = submission.id;
 
-              mmooc.api.getPeerReviewsForSubmissionId(
+              api.getPeerReviewsForSubmissionId(
                 courseId,
                 assignmentId,
                 submission_id,
@@ -420,7 +425,7 @@ this.mmooc.pages = (function() {
 
       function _isPeerReview() {
         var returnValue = false;
-        var peerReviewText = mmooc.i18n.PeerReviewer;
+        var peerReviewText = i18n.PeerReviewer;
         var originalSubmissionHeader =
           'body.assignments #application.ic-app #content .submission_details h2.submission_header';
         if (
@@ -434,7 +439,7 @@ this.mmooc.pages = (function() {
 
       function _isOwnSubmission() {
         var returnValue = false;
-        var deliveryText = mmooc.i18n.Delivery;
+        var deliveryText = i18n.Delivery;
         var originalSubmissionHeader =
           'body.assignments #application.ic-app #content .submission_details h2.submission_header';
         if (
@@ -470,8 +475,8 @@ this.mmooc.pages = (function() {
           isTeacherViewingStudentsSubmission: isTeacherViewingStudentsSubmission
         };
 
-        var submissionHtml = mmooc.util.renderTemplateWithData(
-          'assignmentSubmission',
+        var submissionHtml = util.renderTemplateWithData(
+          assignmentSubmission,
           submissionObject
         );
         $(
@@ -592,8 +597,8 @@ this.mmooc.pages = (function() {
             );
             if ($saveRubricButton.length == 0) {
               console.log('Adding custom save rubric button');
-              var saveRubricButtonHtml = mmooc.util.renderTemplateWithData(
-                'assignmentPageWithPeerReviewSaveRubricButton',
+              var saveRubricButtonHtml = util.renderTemplateWithData(
+                assignmentPageWithPeerReviewSaveRubricButton,
                 {}
               );
 
@@ -614,8 +619,8 @@ this.mmooc.pages = (function() {
       if (_isCodeRunningInIframe()) {
         return false; //The code is running in an iframe. Code should not be running.
       }
-      var courseId = mmooc.api.getCurrentCourseId();
-      var assignmentId = mmooc.api.getCurrentTypeAndContentId().contentId;
+      var courseId = api.getCurrentCourseId();
+      var assignmentId = api.getCurrentTypeAndContentId().contentId;
       var isRubric = _isRubric();
       var isPeerReview = _isPeerReview();
       var isOwnSubmission = _isOwnSubmission();
@@ -624,17 +629,17 @@ this.mmooc.pages = (function() {
       if (isRubric) {
         //Spesial design dersom vi bruker vurderingskriterier.
         if (isPeerReview || isOwnSubmission) {
-          mmooc.api.getSingleAssignment(courseId, assignmentId, function(
+          api.getSingleAssignment(courseId, assignmentId, function(
             assignment
           ) {
-            mmooc.api.getSingleSubmissionForUser(
+            api.getSingleSubmissionForUser(
               courseId,
               assignmentId,
               submission_user_id,
               function(submission) {
                 var submission_id = submission.id;
 
-                mmooc.api.getPeerReviewsForSubmissionId(
+                api.getPeerReviewsForSubmissionId(
                   courseId,
                   assignmentId,
                   submission_id,
