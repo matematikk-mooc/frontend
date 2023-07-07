@@ -124,7 +124,7 @@ if(!redirected) {
   if (design !== undefined && design=="udir") {
       if(window.udirDesignLoaded === undefined)
       {
-          udirDesignLoaded = true;
+          window.udirDesignLoaded = true;
           console.log("Root account:Loading udir design.");
 
           var filename = SERVER + DESIGNCSS;
