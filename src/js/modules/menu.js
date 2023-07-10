@@ -213,6 +213,102 @@ export default (function() {
       });
     }
   }
+  function createNewTooltipText(oldText, tooltipType, newText) {
+    return oldText.replace(new RegExp("(<br>|</i>)(.*$)"), tooltipType + newText)
+  }
+
+  function updateButtonTooltip(el, item) {
+    var tooltip = el.attr("data-html-tooltip-title");
+    if(tooltip) {
+      el.attr("data-html-tooltip-title", createNewTooltipText(tooltip, "</i>", item.title));
+    }
+  }
+  function updatePrevAndNextButtons(courseId, module) {
+    var prevItem = "";
+    var nextItem = "";
+    var firstValidItem = null;
+    var lastValidItem = null;
+    var prevSet = false;
+    var nextSet = false;
+    var currentFound = false;
+    for(var i = 0; i < module.items.length; i++) {
+      var item = module.items[i];
+      if(!item.indent && (item.type != "SubHeader")) {
+        if(!firstValidItem) {firstValidItem = item;}
+        lastValidItem = item;
+
+        if(item.isCurrent) {
+          currentFound = true;
+        } else if(!currentFound) {
+          prevItem = item;
+          prevSet = true;
+        } else if(!nextSet){
+          nextItem = item;
+          nextSet = true;
+          break;
+        }
+      }
+    }
+
+    var prevButton = $(".module-sequence-footer-button--previous");
+    var nextButton = $(".module-sequence-footer-button--next");
+
+    if(prevSet) {
+      var prevButtonLink = $(".module-sequence-footer-button--previous a");
+      prevButtonLink.attr("href", prevItem.html_url);
+      updateButtonTooltip(prevButton, prevItem);
+      multilanguage.performPrevTooltip();
+    } else {
+        prevButton.hide();
+        var id = firstValidItem.id;
+        api.getModuleItemSequence(courseId, id, handlePrevModuleItem);
+    }
+
+    if(nextSet) {
+        var nextButtonLink = $(".module-sequence-footer-button--next a");
+        nextButtonLink.attr("href", nextItem.html_url);
+        updateButtonTooltip(nextButton, nextItem);
+        multilanguage.performNextTooltip();
+    } else {
+        nextButton.hide();
+        var id = lastValidItem.id;
+        api.getModuleItemSequence(courseId, id, handleNextModuleItem);
+    }
+  }
+
+  function handlePrevModuleItem(courseId, moduleItemSequence) {
+    if(moduleItemSequence && moduleItemSequence.items.length && moduleItemSequence.items[0].prev) {
+      var prevItem = moduleItemSequence.items[0].prev;
+      if(prevItem.indent) {
+        id = prevItem.id;
+        api.getModuleItemSequence(courseId, id, handlePrevModuleItem);
+      } else {
+        var prevButton = $(".module-sequence-footer-button--previous");
+        var prevButtonLink = $(".module-sequence-footer-button--previous a");
+        prevButtonLink.attr("href", prevItem.html_url);
+        updateButtonTooltip(prevButton, prevItem);
+        multilanguage.performPrevTooltip();
+        prevButton.show();
+      }
+    }
+  }
+
+  function handleNextModuleItem(courseId, moduleItemSequence) {
+    if(moduleItemSequence && moduleItemSequence.items.length && moduleItemSequence.items[0].next) {
+      var nextItem = moduleItemSequence.items[0].next;
+      if(nextItem.indent) {
+        id = nextItem.id;
+        api.getModuleItemSequence(courseId, id, handleNextModuleItem);
+      } else {
+        var nextButton = $(".module-sequence-footer-button--next");
+        var nextButtonLink = $(".module-sequence-footer-button--next a");
+        nextButtonLink.attr("href", nextItem.html_url);
+        updateButtonTooltip(nextButton, nextItem);
+        multilanguage.performNextTooltip();
+        nextButton.show();
+      }
+    }
+  }
 
   var stylesheet = createStyleSheet();
 
@@ -284,38 +380,6 @@ export default (function() {
         });
       });
     },
-    handlePrevModuleItem : function(courseId, moduleItemSequence) {
-      if(moduleItemSequence && moduleItemSequence.items.length && moduleItemSequence.items[0].prev) {
-        var prevItem = moduleItemSequence.items[0].prev;
-        if(prevItem.indent) {
-          id = prevItem.id;
-          api.getModuleItemSequence(courseId, id, handlePrevModuleItem);
-        } else {
-          var prevButton = $(".module-sequence-footer-button--previous");
-          var prevButtonLink = $(".module-sequence-footer-button--previous a");
-          prevButtonLink.attr("href", prevItem.html_url);
-          updateButtonTooltip(prevButton, prevItem);
-          multilanguage.performPrevTooltip();
-          prevButton.show();
-        }
-      }
-    },
-    handleNextModuleItem : function(courseId, moduleItemSequence) {
-      if(moduleItemSequence && moduleItemSequence.items.length && moduleItemSequence.items[0].next) {
-        var nextItem = moduleItemSequence.items[0].next;
-        if(nextItem.indent) {
-          id = nextItem.id;
-          api.getModuleItemSequence(courseId, id, handleNextModuleItem);
-        } else {
-          var nextButton = $(".module-sequence-footer-button--next");
-          var nextButtonLink = $(".module-sequence-footer-button--next a");
-          nextButtonLink.attr("href", nextItem.html_url);
-          updateButtonTooltip(nextButton, nextItem);
-          multilanguage.performNextTooltip();
-          nextButton.show();
-        }
-      }
-    },
 
     createNewTooltipText : function(oldText, tooltipType, newText) {
       return oldText.replace(this.tooltipRegexpPattern, tooltipType + newText)
@@ -324,59 +388,6 @@ export default (function() {
       var tooltip = el.attr("data-html-tooltip-title");
       if(tooltip) {
         el.attr("data-html-tooltip-title", createNewTooltipText(tooltip, "</i>", item.title));
-      }
-    },
-    updatePrevAndNextButtons : function(courseId, module) {
-      var prevItem = "";
-      var nextItem = "";
-      var firstValidItem = null;
-      var lastValidItem = null;
-      var prevSet = false;
-      var nextSet = false;
-      var currentFound = false;
-      for(var i = 0; i < module.items.length; i++) {
-        var item = module.items[i];
-        if(!item.indent && (item.type != "SubHeader")) {
-          if(!firstValidItem) {firstValidItem = item;}
-          lastValidItem = item;
-
-          if(item.isCurrent) {
-            currentFound = true;
-          } else if(!currentFound) {
-            prevItem = item;
-            prevSet = true;
-          } else if(!nextSet){
-            nextItem = item;
-            nextSet = true;
-            break;
-          }
-        }
-      }
-
-      var prevButton = $(".module-sequence-footer-button--previous");
-      var nextButton = $(".module-sequence-footer-button--next");
-
-      if(prevSet) {
-        var prevButtonLink = $(".module-sequence-footer-button--previous a");
-        prevButtonLink.attr("href", prevItem.html_url);
-        updateButtonTooltip(prevButton, prevItem);
-        multilanguage.performPrevTooltip();
-      } else {
-          prevButton.hide();
-          var id = firstValidItem.id;
-          api.getModuleItemSequence(courseId, id, handlePrevModuleItem);
-      }
-
-
-      if(nextSet) {
-          var nextButtonLink = $(".module-sequence-footer-button--next a");
-          nextButtonLink.attr("href", nextItem.html_url);
-          updateButtonTooltip(nextButton, nextItem);
-          multilanguage.performNextTooltip();
-      } else {
-          nextButton.hide();
-          var id = lastValidItem.id;
-          api.getModuleItemSequence(courseId, id, handleNextModuleItem);
       }
     },
     showLeftMenu: function() {
@@ -521,8 +532,6 @@ export default (function() {
             '<div class="tabs-hamburger">☰</div>'
           );
         }
-
-
 
         $('.tabs-hamburger').click(function(event) {
           var selectedTab = $('.mmooc-course-tab').filter('.selected');
