@@ -190,7 +190,7 @@ export default (function () {
     },
     isObserver: function (course) {
       if (course && course.enrollments) {
-        return isEnrolledAsObserver(course.enrollments);
+        return this.isEnrolledAsObserver(course.enrollments);
       }
     },
     isEnrolledWithRole(course, role) {
@@ -306,12 +306,13 @@ export default (function () {
 
     updateInformationPane() {
       let self = this
-      self.isMemberOfExpiredCommunity(self.course, function (isMemberOfExpiredCommunity) {
-        var observer = (isAuthenticated() && self.isObserver(self.course));
-        var pfdk = isPfDKCourse(self.course);
-        var unmaintainedSince = isUnmaintained(self.course);
-        var alertMsg = self.isAlertMsg(self.course);
-        var notificationtouser= self.isNotificationToUser(self.course);
+      let course = this.course
+      this.isMemberOfExpiredCommunity(course, function (isMemberOfExpiredCommunity) {
+        var observer = (self.isAuthenticated() && self.isObserver(course));
+        var pfdk = self.isPfDKCourse(course);
+        var unmaintainedSince = self.isUnmaintained(course);
+        var alertMsg = self.isAlertMsg(course);
+        var notificationtouser= self.isNotificationToUser(course);
         var feedback= self.isFeedback(self.course);
         if (observer || pfdk || unmaintainedSince || alertMsg || isMemberOfExpiredCommunity || notificationtouser || feedback) {
           pages.showInformationPane(observer, pfdk, unmaintainedSince, alertMsg, isMemberOfExpiredCommunity, notificationtouser, feedback);
