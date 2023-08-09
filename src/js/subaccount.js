@@ -42,12 +42,16 @@ jQuery.extend({
 });
 
 jQuery(document).ready(function($) {
+    console.log("Subaccount:  START.");
     const urlParamsObj = utilRoot.urlParamsToObject();
     var enrollCode = utilRoot.isEnrollCodeParamPassed(urlParamsObj);
     if (enrollCode) {
+
+      console.log("Subaccount:  ENROLLCODE DEFINED.");
       return null;
     }
     if (utilRoot.isLoginParamPassed(urlParamsObj)) {
+      console.log("Subaccount:  LOGINPARAM PASSED.");
       return null;
     }
 
@@ -55,8 +59,9 @@ jQuery(document).ready(function($) {
         window.udirDesignLoaded = true;
         udirDesignLoaded = true;
         console.log("Subaccount: loading design.");
-
+      console.log("before filename")
         var filename = SERVER + DESIGNCSS;
+        console.log(filename)
         var fileref = document.createElement("link")
         fileref.setAttribute("rel", "stylesheet")
         fileref.setAttribute("type", "text/css")
@@ -64,9 +69,12 @@ jQuery(document).ready(function($) {
         fileref.onload = (_) => {
           $.getScript(SERVER + DESIGNJS);
         }
+        console.log("SA: after get script")
         document.getElementsByTagName("head")[0].appendChild(fileref)
     } else
     {
         console.log("Subaccount: design already loaded.");
     }
+
+    console.log("Subaccount:  EOF.")
 });

@@ -6,6 +6,8 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const webpack = require('webpack');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
+const {VueLoaderPlugin} = require('vue-loader')
+
 
 
 module.exports = {
@@ -24,6 +26,7 @@ module.exports = {
             './src/js/subaccount.js',
         ],
         'kompetanseportalen-localhost': [
+            './src/js/app.js',
             './src/js/i18n.js',
             './src/js/main.js',
         ],
@@ -54,6 +57,8 @@ module.exports = {
             'ACCOUNTID' : [99, 100, 102, 103, 137, 138, 139, 145],
             'KPAS_MERGE_LTI_ID' : 863,
             'KPAS_IFRAME_VERSION' : JSON.stringify('localhost'),
+            __VUE_OPTIONS_API__: 'true',
+            __VUE_PROD_DEVTOOLS__: 'false'
         }),
         new MiniCssExtractPlugin({
             filename: '[name].css', // Output CSS filenames
@@ -75,6 +80,7 @@ module.exports = {
             ]
         }),
         new webpack.HotModuleReplacementPlugin(),
+        new VueLoaderPlugin(),
     ],
     module: {
         rules: [
@@ -126,15 +132,21 @@ module.exports = {
                         }
                     },
                 ],
+            },
+            {
+                test: /\.vue$/,
+                loader: "vue-loader",
+                exclude: /node_modules/
             }
         ],
     },
     resolve: {
         alias: {
             setup: path.resolve(__dirname, 'src/css/setup'),
-            Handlebars: path.resolve('src/3party/handlebars-v1.3.0.js')
+            Handlebars: path.resolve('src/3party/handlebars-v1.3.0.js'),
+            vue$: path.resolve("node_modules/vue/dist/vue.esm-bundler.js")
         },
-        extensions: ['.js', '.less', '.hbs'],
+        extensions: ['.js', '.less', '.hbs', '.vue'],
         preferRelative: true,
         modules: ["src", "node_modules"],
 

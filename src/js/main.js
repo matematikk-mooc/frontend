@@ -582,6 +582,13 @@ jQuery(function($) {
     }
 
     footer.changeFooter();
+    console.log("before changefooter")
+    var $parentElementOfOldFooter = $('#wrapper');
+    console.log($parentElementOfOldFooter)
+    $parentElementOfOldFooter.append('<footer-test></footer-test>');
+    console.log("after changefooter")
+
+
     menu.renderLeftHeaderMenu();
     menu.showUserMenu();
     menu.renderUnauthenticatedMenu();

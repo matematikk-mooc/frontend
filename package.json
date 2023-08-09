@@ -11,6 +11,8 @@
   "devDependencies": {
     "@babel/core": "^7.22.1",
     "@babel/preset-env": "^7.22.4",
+    "@vue/cli": "^5.0.8",
+    "@vue/compiler-sfc": "^3.3.4",
     "babel-loader": "^9.1.2",
     "babel-plugin-handlebars-inline-precompile": "^2.1.1",
     "babel-preset-es2015": "^6.24.1",
@@ -31,6 +33,7 @@
     "string-replace-loader": "^3.1.0",
     "style-loader": "^3.3.3",
     "terser-webpack-plugin": "^5.3.9",
+    "vue-loader": "^17.2.2",
     "webpack": "^5.85.1",
     "webpack-cli": "^5.1.3",
     "webpack-config-utils": "^2.3.1",
@@ -60,6 +63,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@vimeo/player": "^2.20.1"
+    "@vimeo/player": "^2.20.1",
+    "vue": "^3.3.4"
   }
 }
