@@ -26,9 +26,9 @@ module.exports = {
             './src/js/subaccount.js',
         ],
         'kompetanseportalen-localhost': [
-            './src/js/app.js',
             './src/js/i18n.js',
             './src/js/main.js',
+            './src/js/app.js',
         ],
         'badges-dev': [
             './src/addons/badges/js/main.js',

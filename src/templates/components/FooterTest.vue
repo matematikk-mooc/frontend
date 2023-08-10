@@ -1,6 +1,8 @@
 <template>
+  <div>
     <div class="example">HELLLO!!!!!!!I AM HERE!!!</div>
-    <button>Click me</button>
+    <button class="testButton">Click me</button>
+  </div>
 </template>
 
 <script>
@@ -18,8 +20,8 @@
     color: green;
     font-size: 150;
   }
-  button {
-    color: blue;
+  .testButton {
+    background-color: blue;
     font-size: 15;
   }
 </style>
