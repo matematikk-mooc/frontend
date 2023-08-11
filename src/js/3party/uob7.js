@@ -391,10 +391,16 @@ export default (function() {
                 context: 'h5p',
                 action: 'ready'
               };
+              var resize = {
+                context: 'h5p',
+                action: 'resize'
+              };
+
               for (var i = 0; i < iframes.length; i++) {
                 if (iframes[i].src.indexOf('h5p') !== -1) {
                   iframes[i].contentWindow.postMessage(ready, '*');
-                }
+                  iframes[i].contentWindow.postMessage(resize, '*');
+                };
               }
             },
             beforeLoad: function(event, ui) {
