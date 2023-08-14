@@ -6,9 +6,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const webpack = require('webpack');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
-const {VueLoaderPlugin} = require('vue-loader')
-
-
+const {VueLoaderPlugin} = require('vue-loader');
 
 module.exports = {
 

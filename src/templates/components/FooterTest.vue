@@ -1,27 +1,53 @@
 <template>
-  <div>
-    <div class="example">HELLLO!!!!!!!I AM HERE!!!</div>
-    <button class="testButton">Click me</button>
+  <div class="footert">
+    <div v-if="licence">
+    <footer-licence prop-example="ABC I AM A PROP"/>
+  </div>
+    <h1>I AM THE FOOTER</h1>
+    <p>prop: {{name }}</p>
+    <div class="example">{{msg}}</div>
+    <button @click="updateText" class="testButton">Trykk på meg</button>
   </div>
 </template>
 
 <script>
   export default {
+    name: 'FooterTest',
+    props: {
+      name: String,
+      licence: Boolean
+    },
     data() {
       return {
-        msg: 'Hello world!'
+        msg: 'Hello world!',
+        count: 0
+      }
+    },
+    created() {
+      console.log("hei" + this.name)
+    },
+    methods: {
+      updateText() {
+        this.count ++
+        this.msg = 'Hello world! I am updated! ' + this.count + ' times'
       }
     }
   }
 </script>
 
+<script setup>
+  import FooterLicence from './subcomponents/FooterLicence.vue';
+</script>
+
 <style>
+  .footert {
+    background-color: red ;
+    width: 100%;
+  }
   .example {
     color: green;
-    font-size: 150;
   }
   .testButton {
     background-color: blue;
-    font-size: 15;
   }
 </style>
