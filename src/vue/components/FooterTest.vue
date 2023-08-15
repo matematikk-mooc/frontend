@@ -1,26 +1,29 @@
 <template>
-  <div class="footert">
+  <footer class="footert">
     <div v-if="licence">
-    <footer-licence prop-example="ABC I AM A PROP"/>
+    <footer-licence prop-example="I AM A PROP"/>
   </div>
     <h1>I AM THE FOOTER</h1>
     <p>prop: {{name }}</p>
     <div class="example">{{msg}}</div>
     <button @click="updateText" class="testButton">Trykk på meg</button>
-  </div>
+</footer>
 </template>
 
 <script>
+
   export default {
     name: 'FooterTest',
     props: {
       name: String,
-      licence: Boolean
+      licence: Boolean,
     },
     data() {
       return {
         msg: 'Hello world!',
-        count: 0
+        count: 0,
+        courses: {}
+
       }
     },
     created() {
@@ -36,13 +39,14 @@
 </script>
 
 <script setup>
-  import FooterLicence from './subcomponents/FooterLicence.vue';
+import FooterLicence from './subcomponents/FooterLicence.vue';
 </script>
 
 <style>
   .footert {
     background-color: red ;
     width: 100%;
+    height: fit-content;
   }
   .example {
     color: green;

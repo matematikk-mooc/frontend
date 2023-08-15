@@ -1,19 +1,17 @@
 <template>
-    <div class="licence">
-      <h1 >I AM THE LICENCE</h1>
+    <div class="sublicence">
+      <h1 >I AM THE SUB LICENCE</h1>
         <p>{{ propExample }}</p>
-      <p>{{ msg }}</p>
-      <p><a href="https://www.vg.no/">VG.no</a></p>
-      <button @click="updateText" class="testButton">Trykk på meg</button>
     </div>
   </template>
 
   <script>
     export default {
-      name: 'FooterLicence',
+      name: 'FooterSubLicence',
       props: {
         propExample: String
       },
+
       data() {
         return {
           msg: 'Hello world!',
@@ -33,10 +31,11 @@
   </script>
 
   <style>
-    .licence {
-      color: green;
-      background-color: yellow;
+    .sublicence {
+      color: pink;
+      background-color: blue;
       display: inline-block;
      width: 100%;
+     height: fit-content;
     }
   </style>
