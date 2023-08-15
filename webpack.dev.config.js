@@ -142,7 +142,7 @@ module.exports = (env) => {
             alias: {
                 setup: path.resolve(__dirname, 'src/css/setup'),
                 Handlebars: path.resolve('src/3party/handlebars-v1.3.0.js'),
-                vue$: path.resolve("node_modules/vue/dist/vue.runtime.esm-browser.prod.js")
+                vue$: path.resolve("node_modules/vue/dist/vue.esm-bundler.js")
             },
             extensions: ['.js', '.less', '.hbs', '.vue'],
             preferRelative: true,
