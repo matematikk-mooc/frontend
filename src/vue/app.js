@@ -20,7 +20,6 @@ try {
         footerComponent.mount('#footer');
 })
 
-
     var header = createApp(TestHeader);
     var headerwrapper = document.getElementById("application").children[0];
     headerwrapper.append(document.createElement("div"));
