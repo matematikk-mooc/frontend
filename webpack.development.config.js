@@ -1,7 +1,6 @@
 const path = require('path');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
-const glob = require('glob');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const webpack = require('webpack');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
@@ -26,7 +25,7 @@ module.exports = {
         'kompetanseportalen-localhost': [
             './src/js/i18n.js',
             './src/js/main.js',
-            './src/js/app.js',
+            './src/vue/app.js',
         ],
         'badges-dev': [
             './src/addons/badges/js/main.js',
@@ -142,7 +141,7 @@ module.exports = {
         alias: {
             setup: path.resolve(__dirname, 'src/css/setup'),
             Handlebars: path.resolve('src/3party/handlebars-v1.3.0.js'),
-            vue$: path.resolve("node_modules/vue/dist/vue.esm-bundler.js")
+            vue$: path.resolve("node_modules/vue/dist/vue.runtime.esm-browser.prod.js")
         },
         extensions: ['.js', '.less', '.hbs', '.vue'],
         preferRelative: true,

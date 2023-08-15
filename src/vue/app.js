@@ -1,5 +1,4 @@
-import FooterTest from '../vue/components/FooterTest.vue';
-import api from './api/api';
+import FooterTest from './components/FooterTest.vue';
 import { createApp } from 'vue/dist/vue.runtime.esm-browser.prod.js'
 
 try {
