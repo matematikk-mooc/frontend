@@ -1,28 +1,31 @@
 import FooterTest from './components/FooterTest.vue';
+import TestHeader from './components/TestHeader.vue';
+import api from '../js/api/api';
 import { createApp } from 'vue/dist/vue.runtime.esm-browser.prod.js'
+import util from '../js/modules/util';
 
 try {
-    let footerProps =  {
-        "name": "NameProp",
-        "licence": true,
-    }
 
-    var footerComponent = createApp(FooterTest, footerProps);
-    var footerWrapper = document.getElementById("wrapper").appendChild(document.createElement("div"));
-    footerWrapper.setAttribute("id", "footer");
-    footerComponent.mount('#footer');
+    api.getCoursesForAccount(138, function(courses) {
+        console.log(courses);
+        let footerProps =  {
+            "name": "NameProp",
+            "licence": util.isMMOOCLicense(),
+            "courses": courses,
+        }
+
+        var footerComponent = createApp(FooterTest, footerProps);
+        var footerWrapper = document.getElementById("wrapper").appendChild(document.createElement("div"));
+        footerWrapper.setAttribute("id", "footer");
+        footerComponent.mount('#footer');
+})
 
 
-    let examp2Props =  {
-        "name": "NameProp",
-        "licence": true,
-    }
-
-    var footerComponent2 = createApp(FooterTest, examp2Props);
-    var footerWrapper2 = document.getElementById("application").children[0];
-    footerWrapper2.append(document.createElement("div"));
-    footerWrapper2.setAttribute("id", "test2");
-    footerComponent2.mount('#test2');
+    var header = createApp(TestHeader);
+    var headerwrapper = document.getElementById("application").children[0];
+    headerwrapper.append(document.createElement("div"));
+    headerwrapper.setAttribute("id", "test2");
+    header.mount('#test2');
 
 } catch (e) {
     console.log(e);
