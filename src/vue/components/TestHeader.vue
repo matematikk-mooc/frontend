@@ -29,12 +29,5 @@
   </script>
 
   <style>
-    .licence {
-      color: green;
-      background-color: yellow;
-      display: inline-block;
-     width: 100%;
-     height: fit-content;
-    }
+
   </style>
-  
