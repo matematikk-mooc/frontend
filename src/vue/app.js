@@ -1,7 +1,8 @@
-import FooterTest from './components/FooterTest.vue';
+import Footer from './components/Footer.vue';
 import TestHeader from './components/TestHeader.vue';
 import api from '../js/api/api';
 import { createApp } from 'vue/dist/vue.runtime.esm-browser.prod.js'
+import settings from '../js/settings';
 import util from '../js/modules/util';
 
 try {
@@ -9,13 +10,17 @@ try {
     api.getCoursesForAccount(138, function(courses) {
         console.log(courses);
         let footerProps =  {
-            "name": "NameProp",
             "licence": util.isMMOOCLicense(),
-            "courses": courses,
+            "privacyLink" : settings.privacyPolicyLink,
+            "homeOrg" : settings.homeOrganization,
+            "contactPoint" : settings.contactPoint,
+            "about" : settings.aboutThePlatform,
+            "uuStatusNb" : settings.uuStatusNb,
+            "uuStatusNn" : settings.uuStatusNn,
         }
 
-        var footerComponent = createApp(FooterTest, footerProps);
-        var footerWrapper = document.getElementById("wrapper").appendChild(document.createElement("div"));
+        var footerComponent = createApp(Footer, footerProps);
+        var footerWrapper = document.getElementById("application").appendChild(document.createElement("div"));
         footerWrapper.setAttribute("id", "footer");
         footerComponent.mount('#footer');
 })

@@ -67,6 +67,10 @@ module.exports = {
                     to: 'bitmaps/[name][ext]'
                 },
                 {
+                    from: 'src/vue/assets/images/*',
+                    to: 'assets/[name][ext]'
+                },
+                {
                     from: 'src/vector_images/*',
                     to: 'vector_images/[name][ext]'
                 },
