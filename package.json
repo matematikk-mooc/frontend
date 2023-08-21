@@ -29,7 +29,9 @@
     "less-loader": "^11.1.2",
     "less-plugin-autoprefix": "^1.5.1",
     "mini-css-extract-plugin": "^2.7.6",
+    "node-sass": "^9.0.0",
     "replace-in-file-webpack-plugin": "^1.0.6",
+    "sass-loader": "^13.3.2",
     "string-replace-loader": "^3.1.0",
     "style-loader": "^3.3.3",
     "terser-webpack-plugin": "^5.3.9",
@@ -65,6 +67,8 @@
   "license": "ISC",
   "dependencies": {
     "@vimeo/player": "^2.20.1",
-    "vue": "^3.3.4"
+    "sass": "^1.66.0",
+    "vue": "^3.3.4",
+    "vue-style-loader": "^4.1.3"
   }
 }
