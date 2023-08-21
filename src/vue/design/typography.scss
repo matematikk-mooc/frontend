@@ -1,7 +1,9 @@
+$font-path: "../assets/fonts/";
+
 @font-face {
     font-family:'Montserrat'; 
-	src: url('MontserratRegular.woff2') format('woff2'),
-	     url('MontserratRegular.woff') format('woff');
+	src: url('#{$font-path}MontserratRegular.woff2') format('woff2'),
+	     url('#{$font-path}MontserratRegular.woff') format('woff');
     font-weight: 400;
     font-style: normal;
     font-stretch: normal;
@@ -9,8 +11,9 @@
 
 @font-face {
     font-family:'Montserrat';
-	src:url('MontserratMedium.woff2') format('woff2'),
-	    url('MontserratMedium.woff') format('woff');
+    
+	src:url('#{$font-path}MontserratMedium.woff2') format('woff2'),
+	    url('#{$font-path}MontserratMedium.woff') format('woff');
     font-weight: 500;
     font-style: normal;
     font-stretch: normal;
@@ -18,18 +21,17 @@
 
 @font-face {
     font-family:'Montserrat';
-	src:url('MontserratSemiBold.woff2') format('woff2'),
-		url('MontserratSemiBold.woff') format('woff');
+	src:url('#{$font-path}MontserratSemiBold.woff2') format('woff2'),
+		url('#{$font-path}MontserratSemiBold.woff') format('woff');
     font-weight: 600;
     font-style: normal;
     font-stretch: normal;
-    unicode-range: U+0020-2044;
 }
 
 @font-face {
     font-family:'Montserrat';
-    src: url('src/vue/assets/MontserratBold.woff2') format('woff2'),
-	     url('src/vue/assets/MontserratBold.woff') format('woff');
+    src: url('#{$font-path}MontserratBold.woff2') format('woff2'),
+	     url('#{$font-path}MontserratBold.woff') format('woff');
     font-weight: 700;
     font-style: normal;
     font-stretch: normal;
@@ -37,8 +39,8 @@
 
 @font-face {
     font-family: 'robotobold';
-    src: url('src/vue/assets/Robotobold.woff2') format('woff2'),
-         url('src/vue/assets/RobotoBold.woff') format('woff');
+    src: url('#{$font-path}Robotobold.woff2') format('woff2'),
+         url('#{$font-path}RobotoBold.woff') format('woff');
     font-weight: 700;
     font-style: normal;
 }
@@ -46,8 +48,8 @@
 
 @font-face {
     font-family: 'Roboto';
-    src: url('src/vue/assets/RobotoMedium.woff2') format('woff2'),
-         url('src/vue/assets/RobotoMedium.woff') format('woff');
+    src: url('#{$font-path}RobotoMedium.woff2') format('woff2'),
+         url('#{$font-path}RobotoMedium.woff') format('woff');
     font-weight: 500;
     font-style: normal;
 
@@ -55,8 +57,8 @@
 
 @font-face {
     font-family: 'Roboto';
-    src: url('src/vue/assets/RobotoRegular.woff2') format('woff2'),
-         url('src/vue/assets/RobotoRegular.woff') format('woff');
+    src: url('#{$font-path}RobotoRegular.woff2') format('woff2'),
+         url('#{$font-path}RobotoRegular.woff') format('woff');
     font-weight: normal;
     font-style: normal;
 
@@ -86,13 +88,13 @@ h3{
     line-height: 2.25rem;
 }
 h4{
-    font-family:'MontSerrat serif';
+    font-family:'MontSerrat';
     font-weight: 500;
     font-size: 1.25rem;
     line-height: 1.75rem;
 }
 h5{
-    font-family:'MontSerrat serif';
+    font-family:'MontSerrat';
     font-weight: 500;
     font-size: 1rem;
     line-height: 1.5rem;
