@@ -63,6 +63,10 @@ module.exports = {
         new CopyWebpackPlugin({
             patterns: [
                 {
+                    from: 'src/vue/assets/fonts/*',
+                    to: 'fonts/[name][ext]'
+                },
+                {
                     from: 'src/bitmaps/*',
                     to: 'bitmaps/[name][ext]'
                 },
@@ -106,6 +110,24 @@ module.exports = {
                 test: /\.css$/,
                 use: ['style-loader', 'css-loader'],
             },
+            {
+                test: /\.scss$/,
+                use: [
+                    MiniCssExtractPlugin.loader,
+                    'style-loader',
+                    'css-loader',
+                    {
+                        loader: "sass-loader",
+                        options: {
+                          implementation: require.resolve("sass"),
+                          sassOptions: {
+                            additionalData: JSON.stringify('http://localhost:9000/') + ';',
+                          },
+                        },
+                      },
+              
+                    ]
+             },
             {
                 test: /\.less$/,
                 use: [
