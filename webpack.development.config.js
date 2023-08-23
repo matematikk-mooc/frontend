@@ -21,6 +21,7 @@ module.exports = {
             './src/js/settingsRoot.js',
             './src/js/utilRoot.js',
             './src/js/subaccount.js',
+            './src/vue/design/colors.scss'
         ],
         'kompetanseportalen-localhost': [
             './src/js/i18n.js',
@@ -42,11 +43,12 @@ module.exports = {
     },
     plugins: [
         new CleanWebpackPlugin({
-            cleanOnceBeforeBuildPatterns: ['dist', 'tmp', 'babel', 'replace'],
+            cleanOnceBeforeBuildPatterns: ['dist', 'tmp', 'babel', 'replace', ],
             cleanAfterEveryBuildPatterns: ['dist/*.js.map'],
 
         }),
         new webpack.DefinePlugin({
+            'VUECSS': JSON.stringify('index.css'),
             'DESIGNCSS' : JSON.stringify('subaccount-localhost.css'),
             'DESIGNJS' : JSON.stringify('kompetanseportalen-localhost.js'),
             'SERVER': JSON.stringify('http://localhost:9000/'),
@@ -63,7 +65,11 @@ module.exports = {
         new CopyWebpackPlugin({
             patterns: [
                 {
-                    from: 'src/vue/assets/fonts/*',
+                    from: 'src/vue/assets/fonts/*.woff',
+                    to: 'fonts/[name][ext]'
+                },
+                {
+                    from: 'src/vue/assets/fonts/*.woff2',
                     to: 'fonts/[name][ext]'
                 },
                 {
@@ -111,17 +117,17 @@ module.exports = {
                 use: ['style-loader', 'css-loader'],
             },
             {
-                test: /\.scss$/,
+                test: /\.s[ac]ss$/i,
                 use: [
                     MiniCssExtractPlugin.loader,
-                    'style-loader',
                     'css-loader',
                     {
                         loader: "sass-loader",
                         options: {
-                          implementation: require.resolve("sass"),
+                          implementation: require("sass"),
                           sassOptions: {
                             additionalData: JSON.stringify('http://localhost:9000/') + ';',
+                            includePaths: ["src/vue/*", "absolute/path/b"],
                           },
                         },
                       },
@@ -155,6 +161,9 @@ module.exports = {
             {
                 test: /\.vue$/,
                 loader: "vue-loader",
+                options: {
+                    extractCSS: true
+                },
                 exclude: /node_modules/
             }
         ],

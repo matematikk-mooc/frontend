@@ -1,11 +1,15 @@
 import FooterTest from './components/FooterTest.vue';
 import TestHeader from './components/TestHeader.vue';
+import { addStylesheet } from './style-injector';
 import api from '../js/api/api';
 import { createApp } from 'vue/dist/vue.runtime.esm-browser.prod.js'
 import util from '../js/modules/util';
+import "./design/index.scss";
+
 
 try {
-
+    console.error('Hello we are adding styles')
+    addStylesheet();
     api.getCoursesForAccount(138, function(courses) {
         console.log(courses);
         let footerProps =  {
