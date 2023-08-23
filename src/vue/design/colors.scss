@@ -1,0 +1,153 @@
+// support colors
+$color-grey-100: #f9f9f9; 
+ $color-grey-200: #f1f1f1;
+$color-grey-300: #eaeaea;
+$color-grey-400: #e6e6e6;
+$color-grey-500: #bfbfbf;
+$color-grey-600: #999999;
+$colorgrey-700: #737373;
+$color-grey-800: #666666;
+$color-grey-900: #303030;
+
+$color-black: #1a1a1a;
+$color-white: #ffffff;
+
+// Color palettes
+$color-palette-green: (
+  background: (
+    200: #e3f2eb,
+    300: #94caae,
+    400: #7dbf9d,
+    500: #3b7858,
+    600: #254b38
+  ),
+  foreground: (
+    200: $color-black,
+    300: $color-black,
+    400: $color-black,
+    500: $color-white,
+    600: $color-white
+  )
+);
+
+$color-palette-eggshell: (
+  background: (
+    300: #f6efe4,
+    400: #f2e8da,
+    500: #d6b689,
+    600: #8c6631,
+    700: #5e4521
+  ),
+  foreground: (
+    300: $color-black,
+    400: $color-black,
+    500: $color-white,
+    600: $color-white,
+    700: $color-white
+  )
+);
+
+$color-palette-peach: (
+  background: (
+    300: #f8ece6,
+    400: #eed0c3,
+    500: #dc9e83,
+    600: #a7532f,
+    700: #63321c
+  ),
+  foreground: (
+    300: $color-black,
+    400: $color-black,
+    500: $color-black,
+    600: $color-white,
+    700: $color-grey-200
+  )
+);
+
+$color-palette-azur: (
+  background: (
+    300: #eaeaf5,
+    400: #e2e3f1,
+    500: #c7c9e3,
+    600: #999cbf,
+    700: #666883
+  ),
+  foreground: (
+    300: #303030,
+    400: #303030,
+    500: #303030,
+    600: #303030,
+    700: #ffffff
+  )
+);
+
+$color-palette-steel: (
+  background: (
+    200: #f5f7f9,
+    300: #ebeef3,
+    400: #bac6d8,
+    500: #99abc5,
+    600: #51698f,
+    700: #2e3c51
+  ),
+  foreground: (
+    200: $color-grey-900,
+    300: $color-grey-900,
+    400: $color-grey-900,
+    500: $color-grey-900,
+    600: $color-white,
+    700: $color-white
+  )
+);
+
+$color-palette-slate: (
+  background: (
+    200: #eceff2,
+    300: #a0b1bf,
+    400: #6d889d,
+    500: #546b7d,
+    600: #191d24
+  ),
+  foreground: (
+    200: $color-grey-900,
+    300: $color-grey-900,
+    400: $color-grey-900,
+    500: $color-white,
+    600: $color-white
+  )
+);
+
+// extra colors
+$color-palette-red: (
+  background: (
+    200: #ffebee,
+    300: #ffcdd2,
+    400: #ef9a9a,
+    500: #ef5350,
+    600: #c62828
+  ),
+  foreground: (
+    200: $color-grey-900,
+    300: $color-black,
+    400: $color-grey-900,
+    500: $color-grey-900,
+    600: $color-white
+  )
+);
+
+$color-palette-orange: (
+  background: (
+    200: #fff3e0,
+    300: #ffcc80,
+    400: #ffa726,
+    500: #fb8c00,s
+    600: #ef6c00
+  ),
+  foreground: (
+    200: $color-grey-900,
+    300: $color-black,
+    400: $color-grey-900,
+    500: $color-grey-900,
+    600: $color-black
+  )
+);

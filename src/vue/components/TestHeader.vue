@@ -28,9 +28,10 @@
     }
   </script>
 
-  <style>
+  <style lang="scss" >
+     @import "src/vue/design/index";
     .licence {
-      color: green;
+      color: map-get($color-palette-eggshell, background, 300);
       background-color: yellow;
       display: inline-block;
      width: 100%;
