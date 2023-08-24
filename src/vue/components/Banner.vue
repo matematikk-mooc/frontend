@@ -1,17 +1,24 @@
-<script setup>
+<script>
 
+export default {
+  data() {
+    return {
+      server: SERVER,
+    }
+  }
+}
 </script>
 
 <template>
   <div class="banner">
     <div class="before-login-image-left">
-       <img :src="`${SERVER}/images/illustrasjonMann_hovedside_Innlogging.svg`" alt="Illustrasjon Dame leser">
+       <img :src="`${server}/images/illustrasjonKvinne_hovedside_Innlogging.svg`" alt="Illustrasjon Dame leser">
     </div>
     <div class="caption">
       <h1> Velkommen til Utdanningsdirektoratets kompetanseportal! </h1>
     </div>
     <div class="before-login-image-right">
-         <img :src="`${SERVER}/images/illustrasjonMann_hovedside_Innlogging.svg`" alt="Illustrasjon Mann leser">
+         <img :src="`${server}/images/illustrasjonMann_hovedside_Innlogging.svg`" alt="Illustrasjon Mann leser">
     </div>
   </div>
 </template>
@@ -21,12 +28,15 @@
 
 .banner {
   position: relative;
+  left: 100px;
+  right: 50px;
   background: map-get($color-palette-green, background, 200);
   color: map-get($color-palette-green, foreground, 200);
   display: flex;
   justify-content: space-between;
   align-items: center;
   width: 100%;
+  max-width: 1600px;
   min-width: 70rem;
   padding: 0rem 0.625rem 0.625rem 0.625rem;
   flex-grow: 0;
