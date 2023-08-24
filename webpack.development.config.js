@@ -6,6 +6,7 @@ const webpack = require('webpack');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const {VueLoaderPlugin} = require('vue-loader');
+const { response } = require("express");
 
 module.exports = {
   entry: {
@@ -20,7 +21,6 @@ module.exports = {
       "./src/js/settingsRoot.js",
       "./src/js/utilRoot.js",
       "./src/js/subaccount.js",
-      "./src/vue/design/colors.scss",
     ],
     "kompetanseportalen-localhost": [
       "./src/js/i18n.js",
@@ -46,7 +46,6 @@ module.exports = {
       cleanAfterEveryBuildPatterns: ["dist/*.js.map"],
     }),
     new webpack.DefinePlugin({
-      VUECSS: JSON.stringify("index.css"),
       DESIGNCSS: JSON.stringify("subaccount-localhost.css"),
       DESIGNJS: JSON.stringify("kompetanseportalen-localhost.js"),
       SERVER: JSON.stringify("http://localhost:9000/"),
@@ -122,11 +121,7 @@ module.exports = {
           {
             loader: "sass-loader",
             options: {
-              implementation: require("sass"),
-              sassOptions: {
-                additionalData: JSON.stringify("http://localhost:9000/") + ";",
-                includePaths: ["src/vue/*"],
-              },
+              additionalData: "$urlToFile: " + `'http://localhost:9000/'` + ";",
             },
           },
         ],

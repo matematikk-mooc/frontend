@@ -127,14 +127,10 @@ module.exports = (env) => {
               {
                 loader: "sass-loader",
                 options: {
-                  implementation: require("sass"),
-                  sassOptions: {
-                    additionalData:
-                      JSON.stringify(
-                        "https://kompetanseudirno.azureedge.net/udirdesign-dev/"
-                      ) + ";",
-                    includePaths: ["src/vue/*"],
-                  },
+                  additionalData:
+                    "$urlToFile: " +
+                    `'https://kompetanseudirno.azureedge.net/udirdesign-dev/'` +
+                    ";",
                 },
               },
             ],
@@ -172,9 +168,7 @@ module.exports = (env) => {
             test: /\.vue$/,
             loader: "vue-loader",
             options: {
-              options: {
-                extractCSS: true,
-              },
+              extractCSS: true,
             },
             exclude: /node_modules/,
           },
