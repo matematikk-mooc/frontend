@@ -1,5 +1,5 @@
-import FooterTest from './components/FooterTest.vue';
-import TestHeader from "./components/TestHeader.vue";
+import FooterTest from "./components/FooterTest.vue";
+import Banner from "./components/Banner.vue";
 import api from "../js/api/api";
 import { createApp } from "vue/dist/vue.runtime.esm-browser.prod.js";
 import util from "../js/modules/util";
@@ -22,11 +22,11 @@ try {
     footerComponent.mount("#footer");
   });
 
-  var header = createApp(TestHeader);
+  var header = createApp(Banner);
   var headerwrapper = document.getElementById("application").children[0];
   headerwrapper.append(document.createElement("div"));
-  headerwrapper.setAttribute("id", "test2");
-  header.mount("#test2");
+  headerwrapper.setAttribute("id", "welcomebanner");
+  header.mount("#welcomebanner");
 } catch (e) {
   console.log(e);
 }

@@ -46,7 +46,7 @@ module.exports = {
       cleanAfterEveryBuildPatterns: ["dist/*.js.map"],
     }),
     new webpack.DefinePlugin({
-      DESIGNCSS: JSON.stringify("subaccount-localhost.css"),
+      DESIGNCSS: JSON.stringify("kompetanseportalen-localhost.css"),
       DESIGNJS: JSON.stringify("kompetanseportalen-localhost.js"),
       SERVER: JSON.stringify("http://localhost:9000/"),
       KPASAPIURL: JSON.stringify("https://kpas.staging.kompetanse.udir.no/api"),
@@ -68,6 +68,10 @@ module.exports = {
         {
           from: "src/vue/assets/fonts/*.woff2",
           to: "fonts/[name][ext]",
+        },
+        {
+          from: "src/vue/assets/images/*",
+          to: "images/[name][ext]",
         },
         {
           from: "src/bitmaps/*",
