@@ -18,7 +18,7 @@ import NotLoggedInIntro from '../components/NotLoggedInIntro.vue'
       </div>
     </div>
     <div class="not-logged-in-page--footer">
-      <slot name="footer"></slot>
+      <!-- <slot name="footer"></slot> -->
     </div>
   </div>
 </template>

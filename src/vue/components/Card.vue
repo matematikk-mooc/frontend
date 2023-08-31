@@ -3,7 +3,7 @@
     <div class="card-illustration-box" :class="theme">
       <img
         class="card-illustration-box-image"
-        :src="`${server}/IllustrasjonerKompetansepakker/Barnehage/DigitalPraksis/digital-praksis-liten.svg`"
+        :src="`${server}IllustrasjonerKompetansepakker/Barnehage/DigitalPraksis/digital-praksis-liten.svg`"
         alt="illustrasjon"
       />
     </div>
@@ -26,10 +26,10 @@
 <script setup lang="js">
 import Button from './Button.vue';
 const props = defineProps(['theme']);
-const server= ref(SERVER)
+const server= SERVER
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 @import '../design/card-themes.scss';
 
 .card {

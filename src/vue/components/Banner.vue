@@ -2,22 +2,22 @@
 
 import { ref } from 'vue'
 
-const server= ref(SERVER)
+const server= SERVER
 
 </script>
 <template>
   <div class="banner">
     <div class="before-login-image-left">
       <img
-        :src ="`${server}/IllustrasjonerHeaderIkkeInnloggetSide/illustrasjon-kvinne-hovedside-innlogging.svg`"
+        :src ="`${server}IllustrasjonerHeaderIkkeInnloggetSide/illustrasjon-kvinne-hovedside-innlogging.svg`"
       />
     </div>
     <div class="caption">
-      <h1>Velcommen til utdanningsdirektoratets kompetanseportal!</h1>
+      <h1>Velkommen til utdanningsdirektoratets kompetanseportal!</h1>
     </div>
     <div class="before-login-image-right">
       <img
-        :src="`${server}/IllustrasjonerHeaderIkkeInnloggetSide/illustrasjon-mann-hovedside-innlogging.svg`"
+        :src="`${server}IllustrasjonerHeaderIkkeInnloggetSide/illustrasjon-mann-hovedside-innlogging.svg`"
       />
     </div>
   </div>

@@ -62,8 +62,8 @@ module.exports = {
     new CopyWebpackPlugin({
       patterns: [
         {
-          from: "src/vue/assets/IllustrasjonerKompetansePakker",
-          to: "IllustrasjonerKompetansePakker/",
+          from: "src/vue/assets/IllustrasjonerKompetansepakker",
+          to: "IllustrasjonerKompetansepakker/",
         },
         {
           from: "src/vue/assets/IllustrasjonerHeaderIkkeInnloggetSide",
