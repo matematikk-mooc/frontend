@@ -1,9 +1,15 @@
-<script setup></script>
+<script setup>
+
+import { ref } from 'vue'
+
+const server= ref(SERVER)
+
+</script>
 <template>
   <div class="banner">
     <div class="before-login-image-left">
       <img
-        src="../assets/IllustrasjonerHeaderIkkeInnloggetSide/illustrasjon-kvinne-hovedside-innlogging.svg"
+        :src ="`${server}/IllustrasjonerHeaderIkkeInnloggetSide/illustrasjon-kvinne-hovedside-innlogging.svg`"
       />
     </div>
     <div class="caption">
@@ -11,7 +17,7 @@
     </div>
     <div class="before-login-image-right">
       <img
-        src="../assets/IllustrasjonerHeaderIkkeInnloggetSide/illustrasjon-mann-hovedside-innlogging.svg"
+        :src="`${server}/IllustrasjonerHeaderIkkeInnloggetSide/illustrasjon-mann-hovedside-innlogging.svg`"
       />
     </div>
   </div>

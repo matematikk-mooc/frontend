@@ -46,7 +46,7 @@ module.exports = {
       cleanAfterEveryBuildPatterns: ["dist/*.js.map"],
     }),
     new webpack.DefinePlugin({
-      DESIGNCSS: JSON.stringify("subaccount-localhost.css"),
+      DESIGNCSS: JSON.stringify("kompetanseportalen-localhost.css"),
       DESIGNJS: JSON.stringify("kompetanseportalen-localhost.js"),
       SERVER: JSON.stringify("http://localhost:9000/"),
       KPASAPIURL: JSON.stringify("https://kpas.staging.kompetanse.udir.no/api"),
@@ -61,6 +61,14 @@ module.exports = {
     }),
     new CopyWebpackPlugin({
       patterns: [
+        {
+          from: "src/vue/assets/IllustrasjonerKompetansePakker",
+          to: "IllustrasjonerKompetansePakker/",
+        },
+        {
+          from: "src/vue/assets/IllustrasjonerHeaderIkkeInnloggetSide",
+          to: "IllustrasjonerHeaderIkkeInnloggetSide/",
+        },
         {
           from: "src/vue/assets/fonts/*.woff",
           to: "fonts/[name][ext]",

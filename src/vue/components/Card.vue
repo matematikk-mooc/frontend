@@ -3,7 +3,7 @@
     <div class="card-illustration-box" :class="theme">
       <img
         class="card-illustration-box-image"
-        src="../assets/IllustrasjonerKompetansepakker/elever-med-stor-laeringspotensial-liten.svg"
+        :src="`${server}/IllustrasjonerKompetansepakker/Barnehage/DigitalPraksis/digital-praksis-liten.svg`"
         alt="illustrasjon"
       />
     </div>
@@ -25,11 +25,12 @@
 
 <script setup lang="js">
 import Button from './Button.vue';
-const props = defineProps(['theme'])
+const props = defineProps(['theme']);
+const server= ref(SERVER)
 </script>
 
 <style lang="scss" scoped>
-@import '../design/colors.scss';
+@import '../design/card-themes.scss';
 
 .card {
   position: relative;
@@ -40,7 +41,7 @@ const props = defineProps(['theme'])
   align-items: flex-start;
   border-radius: 0.5rem;
   box-shadow: 0 0.25rem 0.25rem 0 rgba(0, 0, 0, 0.25);
-  background-color: $color-white;
+  background-color: $card-background-color;
   .card-illustration-box {
     position: relative;
     width: 100%;

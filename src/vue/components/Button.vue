@@ -29,8 +29,8 @@ const props = defineProps(['size', 'type'])
 .btn {
   cursor: pointer;
   position: relative;
-  background: $grey-900;
-  color: #ffffff;
+  background: $color-grey-900;
+  color: $color-white;
   border: none;
   border-radius: 0.1875rem;
   font-weight: 700;
@@ -41,7 +41,7 @@ const props = defineProps(['size', 'type'])
 }
 
 .btn--filled {
-  background: $grey-900;
+  background: $color-grey-900;
   color: $color-white;
   &.btn--sm {
     padding: 0.25rem 0.875rem 0.25rem 0.875rem;
@@ -55,8 +55,8 @@ const props = defineProps(['size', 'type'])
 }
 .btn--outlined {
   background: $color-white;
-  color: $grey-900;
-  border: 0.125rem solid $grey-900;
+  color: $color-grey-900;
+  border: 0.125rem solid $color-grey-900;
   &.btn--sm {
     padding: 0.125rem 0.75rem 0.125rem 0.75rem;
   }
@@ -67,7 +67,7 @@ const props = defineProps(['size', 'type'])
     padding: 0.625rem 1.625rem 0.125rem 1.625rem;
   }
   &:hover {
-    color: #ffffff;
+    color: $color-white;
     border-color: #00468e;
   }
 }
