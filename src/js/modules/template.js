@@ -1,3 +1,10 @@
+import Handlebars from 'handlebars/runtime';
+import util from './util';
+import menu from './menu';
+import settings from '../settings';
+import i18n from '../i18n';
+import courselist from './courselist';
+
 Handlebars.registerHelper('lowercase', function(str) {
   return ('' + str).toLowerCase();
 });
@@ -22,7 +29,7 @@ Handlebars.registerHelper('ifEquals', function(var1, var2, options) {
 });
 
 Handlebars.registerHelper('ifUnmaintained', function(options) {
-  if(mmooc.util.isUnmaintained(this)) {
+  if(util.isUnmaintained(this)) {
     return options.fn(this);
   } else {
     return options.inverse(this);
@@ -30,7 +37,7 @@ Handlebars.registerHelper('ifUnmaintained', function(options) {
 });
 
 Handlebars.registerHelper('ifRoleBased', function(options) {
-  if(mmooc.util.isRoleBasedCourse(this)) {
+  if(util.isRoleBasedCourse(this)) {
     return options.fn(this);
   } else {
     return options.inverse(this);
@@ -38,11 +45,11 @@ Handlebars.registerHelper('ifRoleBased', function(options) {
 });
 
 Handlebars.registerHelper('courseAlert', function() {
-  return mmooc.util.isUnmaintained(this);
+  return util.isUnmaintained(this);
 });
 
 Handlebars.registerHelper('getCourseUrl', function() {
-  if (mmooc.util.isAuthenticated()) {
+  if (util.isAuthenticated()) {
     return '/courses/' + this.id;
   } else {
     return '/enroll/' + this.self_enrollment_code;
@@ -88,12 +95,12 @@ Handlebars.registerHelper('overrideIconClassByTitle', function(title) {
 });
 
 Handlebars.registerHelper('ifIsPrincipal', function(enrollments, options) {
-  if(mmooc.util.isTeacherOrAdmin())
+  if(util.isTeacherOrAdmin())
   {
     return options.fn(this);
   }
   for (var i = 0; i < enrollments.length; i++) {
-    if (enrollments[i].role == mmooc.settings.principalRoleType) {
+    if (enrollments[i].role == settings.principalRoleType) {
       return options.fn(this);
     }
   }
@@ -126,7 +133,7 @@ Handlebars.registerHelper('norwegianDateAndTime', function(timestamp) {
   var day = new Date(timestamp).toString('dd. ');
   var time = new Date(timestamp).toString(' HH:mm');
   var monthNumber = parseInt(new Date(timestamp).toString('M'), 10);
-  var months = mmooc.i18n.Months;
+  var months = i18n.Months;
   var month = months[monthNumber - 1];
 
   return day + month + year + time; //return new Date(timestamp).toString('dd. MMMM yyyy HH:mm'); // yyyy-MM-dd
@@ -145,22 +152,22 @@ Handlebars.registerHelper('getSubmissionAssessmentText', function(peerReview) {
   });
 
   if (numberOfReviews === 0) {
-    submissionAssessmentText = mmooc.i18n.SubmissionIsNotAssessed;
+    submissionAssessmentText = i18n.SubmissionIsNotAssessed;
   } else if (numberOfReviews === numberOfReviewsCompleted) {
     if (numberOfReviewsCompleted == 1) {
-      submissionAssessmentText = mmooc.i18n.SubmissionIsAssessedByOne;
+      submissionAssessmentText = i18n.SubmissionIsAssessedByOne;
     } else {
-      submissionAssessmentText = mmooc.i18n.SubmissionIsAssessedByAll;
+      submissionAssessmentText = i18n.SubmissionIsAssessedByAll;
     }
   } else {
     submissionAssessmentText =
       numberOfReviewsCompleted.toString() +
       ' ' +
-      mmooc.i18n.OutOf +
+      i18n.OutOf +
       ' ' +
       numberOfReviews.toString() +
       ' ' +
-      mmooc.i18n.SubmissionAssessmentsAreReady;
+      i18n.SubmissionAssessmentsAreReady;
   }
 
   return submissionAssessmentText;
@@ -226,8 +233,8 @@ Handlebars.registerHelper('ifItemIsCompleted', function(
 });
 
 Handlebars.registerHelper('localize', function(key, options) {
-  if (mmooc.i18n[key] != null) {
-    return mmooc.i18n[key];
+  if (i18n[key] != null) {
+    return i18n[key];
   } else {
     return key;
   }
@@ -245,7 +252,7 @@ Handlebars.registerHelper('ifAllItemsCompleted', function(items, options) {
 });
 
 Handlebars.registerHelper('ifAllModulesCompleted', function(modules, options) {
-  if (mmooc.courseList.isCourseCompleted(modules)) {
+  if (courselist.isCourseCompleted(modules)) {
     return options.fn(this);
   }
   return options.inverse(this);
@@ -253,7 +260,7 @@ Handlebars.registerHelper('ifAllModulesCompleted', function(modules, options) {
 
 Handlebars.registerHelper('ifAllStudentModulesCompleted', function(modules, options) {
   var bIncludeIndentedItems = false;
-  if (mmooc.util.percentageProgress(modules, bIncludeIndentedItems) == 100)
+  if (util.percentageProgress(modules, bIncludeIndentedItems) == 100)
   {
     return options.fn(this);
   }
@@ -263,23 +270,23 @@ Handlebars.registerHelper('ifAllStudentModulesCompleted', function(modules, opti
 
 Handlebars.registerHelper('percentageForModules', function(modules) {
   var bIncludeIndentedItems = true;
-  return mmooc.util.percentageProgress(modules, bIncludeIndentedItems);
+  return util.percentageProgress(modules, bIncludeIndentedItems);
 });
 
 Handlebars.registerHelper('percentageForStudentModules', function(modules) {
   var bIncludeIndentedItems = false;
-  return mmooc.util.percentageProgress(modules, bIncludeIndentedItems);
+  return util.percentageProgress(modules, bIncludeIndentedItems);
 });
 
 
 Handlebars.registerHelper('urlForFirstNoneCompletePrincipalItem', function(items) {
   var bIncludeIndentedItems = true;
-  return mmooc.util.firstIncompleteItemHtmlUrl(items, bIncludeIndentedItems);
+  return util.firstIncompleteItemHtmlUrl(items, bIncludeIndentedItems);
 });
 
 Handlebars.registerHelper('urlForFirstNoneCompleteItem', function(items) {
   var bIncludeIndentedItems = false;
-  return mmooc.util.firstIncompleteItemHtmlUrl(items, bIncludeIndentedItems);
+  return util.firstIncompleteItemHtmlUrl(items, bIncludeIndentedItems);
 });
 
 
@@ -298,7 +305,7 @@ Handlebars.registerHelper('findRightUrlFor', function(activity) {
 });
 
 Handlebars.registerHelper('checkReadStateFor', function(activity) {
-  return mmooc.menu.checkReadStateFor(activity) ? 'unread' : '';
+  return menu.checkReadStateFor(activity) ? 'unread' : '';
 });
 
 Handlebars.registerHelper('debug', function(optionalValue) {

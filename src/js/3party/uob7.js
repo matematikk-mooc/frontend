@@ -26,8 +26,10 @@
 //
 // ==========================================================================================
 
-this.mmooc = this.mmooc || {};
-this.mmooc.uob = (function() {
+import multilanguage from "./multilanguage";
+import vimeo from "./vimeo";
+
+export default (function() {
   // -----------------------------------------------------------------------------------
   // Declare veriables that are used for multiple tasks.
   // -----------------------------------------------------------------------------------
@@ -61,7 +63,7 @@ this.mmooc.uob = (function() {
         //alle innleggene er lastet inn på. Da kan man kjøre $content.each iterasjon.
 
 
-        $tooltipElements = $content.first().filter(function() {
+        var $tooltipElements = $content.first().filter(function() {
           return this.innerHTML.match(re);
         });
 
@@ -389,10 +391,16 @@ this.mmooc.uob = (function() {
                 context: 'h5p',
                 action: 'ready'
               };
+              var resize = {
+                context: 'h5p',
+                action: 'resize'
+              };
+
               for (var i = 0; i < iframes.length; i++) {
                 if (iframes[i].src.indexOf('h5p') !== -1) {
                   iframes[i].contentWindow.postMessage(ready, '*');
-                }
+                  iframes[i].contentWindow.postMessage(resize, '*');
+                };
               }
             },
             beforeLoad: function(event, ui) {
@@ -584,7 +592,7 @@ this.mmooc.uob = (function() {
         // Create boxes
         // --------------------------------------------------------------------------------
 
-        aBoxTags = [
+        var aBoxTags = [
           'uob-tip',
           'pfdk-tips',
           'uob-read',
@@ -744,14 +752,14 @@ this.mmooc.uob = (function() {
         //KURSP-279 Multilanguage must be run when content is ready
         try {
           // Call multilanguage.perform() last to catch all relevant DOM content
-          mmooc.multilanguage.perform();
+          multilanguage.perform();
         } catch (e) {
           console.log(e);
         }
 
         if(vimeoPlayerReady && !vimeoTranscriptInitialized) {
           vimeoTranscriptInitialized = true;
-          mmooc.vimeo.init();
+          vimeo.init();
         }
         uobInititalized = true;
       }
@@ -868,7 +876,7 @@ this.mmooc.uob = (function() {
     setVimeoPlayerReady: function() {
       vimeoPlayerReady = true;
       if(uobInititalized && !vimeoTranscriptInitialized) {
-        mmooc.vimeo.init();
+        vimeo.init();
         vimeoTranscriptInitialized = true;
       }
     }

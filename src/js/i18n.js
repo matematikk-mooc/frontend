@@ -1,8 +1,8 @@
-this.mmooc = this.mmooc || {};
+import api from './api/api.js';
 
-if (typeof this.mmooc.i18n === 'undefined') {
-  if (mmooc.api.getLocale() == 'nn') {
-    this.mmooc.i18n = {
+
+    if (api.getLocale() == 'nn') {
+    var i18n =  {
       AllAvailableCoursesIngress: "Oversikt over alle kompetansepakker du er meldt på og som du kan melde deg på.",
       DropCourseDialogText: 'Trykk OK for å melde deg av kompetansepakken ',
       NoCoursesInfo: 'Det finst ingen kompetansepakker du kan registrere deg på for augeblikket',
@@ -94,7 +94,7 @@ if (typeof this.mmooc.i18n === 'undefined') {
       ]
     };
   } else {
-    this.mmooc.i18n = {
+    var i18n =  {
       AllAvailableCoursesIngress: "Oversikt over alle kompetansepakker du er meldt på og som du kan melde deg på.",
       DropCourseDialogText: 'Trykk OK for å melde deg av kompetansepakken ',
       NoCoursesInfo: 'Det er ingen kompetansepakker du kan registrere deg på for øyeblikket',
@@ -148,7 +148,7 @@ if (typeof this.mmooc.i18n === 'undefined') {
       //Teksten nedenfor brukes til å gjenkjenne om man er på en hverandrevurderingsside.
       PeerReviewer: 'Hverandrevurdering',
 
-      //Teksten nedenfor brukes til å undersøke om man viser sin egen innlevering
+    //   //Teksten nedenfor brukes til å undersøke om man viser sin egen innlevering
       Delivery: 'innlevering',
 
       DetailsAboutYourDelivery: 'Detaljer om din innlevering',
@@ -184,4 +184,5 @@ if (typeof this.mmooc.i18n === 'undefined') {
       ]
     };
   }
-}
+export default i18n;
+

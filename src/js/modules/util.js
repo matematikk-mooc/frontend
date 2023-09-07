@@ -1,6 +1,13 @@
-this.mmooc = this.mmooc || {};
+import './template.js'
 
-this.mmooc.util = (function () {
+import { hrefAmpQueryString, hrefQueryString } from "../settingsRoot";
+
+import { CourseOptions } from "../utilities/course-options";
+import  api from '../api/api.js'
+import pages from './pages.js'
+import settings from "../settings";
+
+export default (function () {
   return {
     courseListEnum: {
       normalCourse: 1,
@@ -19,7 +26,7 @@ this.mmooc.util = (function () {
     renderTemplateWithData: function (template, data) {
       var html = '';
       try {
-        html = mmooc.templates[template](data);
+        html = template(data);
       } catch (e) {
         console.log(e);
       }
@@ -53,16 +60,16 @@ this.mmooc.util = (function () {
     },
 
     filterCourse: function (course) {
-      if (!this.mmooc.settings.filterCourses) {
+      if (!settings.filterCourses) {
         return true;
       }
-      return this.mmooc.settings.filterCoursesOnAccountId.includes(course.account_id);
+      return settings.filterCoursesOnAccountId.includes(course.account_id);
     },
     filterSearchAllCourse: function (course) {
-      if (!this.mmooc.settings.filterCourses) {
+      if (!settings.filterCourses) {
         return true;
       }
-      return this.mmooc.settings.filterCoursesOnAccountId.includes(course.course.account_id);
+      return settings.filterCoursesOnAccountId.includes(course.course.account_id);
     },
     callWhenElementIsPresent: function (classId, callback) {
       var checkExist = setInterval(function () {
@@ -96,7 +103,7 @@ this.mmooc.util = (function () {
 
     goBack: function (e) {
       //http://stackoverflow.com/questions/9756159/using-javascript-how-to-create-a-go-back-link-that-takes-the-user-to-a-link-i
-      var defaultLocation = 'https://server';
+      var defaultLocation = SERVER;
       var oldHash = window.location.hash;
 
       history.back(); // Try to go back
@@ -169,13 +176,13 @@ this.mmooc.util = (function () {
     },
     hasRoleInCourse: function (courseId, role, callback) {
       return function (callback, role) {
-        mmooc.api.getUsersEnrollmentsForCourse(courseId, function (enrollments) {
-          callback(mmooc.util.enrollmentsHasRoleInCourse(enrollments, role));
+        api.getUsersEnrollmentsForCourse(courseId, function (enrollments) {
+          callback(enrollmentsHasRoleInCourse(enrollments, role));
         });
       }(callback, role)
     },
     isTeacherOrAdmin: function () {
-      var roles = mmooc.api.getRoles();
+      var roles = api.getRoles();
       return (
         roles != null &&
         (roles.indexOf('teacher') != -1 || roles.indexOf('admin') != -1)
@@ -201,11 +208,11 @@ this.mmooc.util = (function () {
     isNynorskCourse: CourseOptions.hasOptionFunction('NN'),
     isSamiskCourse: CourseOptions.hasOptionFunction('SE'),
     isPrincipal() {
-      return (this.isTeacherOrAdmin() || this.isEnrolledWithRole(mmooc.util.course, mmooc.settings.principalRoleType));
+      return (this.isTeacherOrAdmin() || this.isEnrolledWithRole(this.course, settings.principalRoleType));
     },
     isRoleBasedCourse: CourseOptions.hasOptionFunction('role'),
     isMMOOCLicense() {
-      return CourseOptions.hasOption(mmooc.util.course, 'MMOOCLICENSE');
+      return CourseOptions.hasOption(this.course, 'MMOOCLICENSE');
     },
     postModuleProcessing() {
       try {
@@ -222,7 +229,7 @@ this.mmooc.util = (function () {
     postModuleCoursePageProcessing() {
       try {
         $(".mmooc-module-items-icons-Discussion").click(function () {
-          mmooc.util.postModuleProcessing()
+          postModuleProcessing()
         });
       } catch (e) {
         console.log(e);
@@ -231,7 +238,7 @@ this.mmooc.util = (function () {
     postModuleMenuProcessing() {
       try {
         $(".mmooc-module-items-icons-Discussion").parent().click(function () {
-          mmooc.util.postModuleProcessing()
+          postModuleProcessing()
         });
       } catch (e) {
         console.log(e);
@@ -298,17 +305,19 @@ this.mmooc.util = (function () {
     },
 
     updateInformationPane() {
-      mmooc.util.isMemberOfExpiredCommunity(mmooc.util.course, function (isMemberOfExpiredCommunity) {
-        var observer = (mmooc.util.isAuthenticated() && mmooc.util.isObserver(mmooc.util.course));
-        var pfdk = mmooc.util.isPfDKCourse(mmooc.util.course);
-        var unmaintainedSince = mmooc.util.isUnmaintained(mmooc.util.course);
-        var alertMsg = mmooc.util.isAlertMsg(mmooc.util.course);
-        var notificationtouser= mmooc.util.isNotificationToUser(mmooc.util.course);
-        var feedback= mmooc.util.isFeedback(mmooc.util.course);
+      let self = this
+      let course = this.course
+      this.isMemberOfExpiredCommunity(course, function (isMemberOfExpiredCommunity) {
+        var observer = (self.isAuthenticated() && self.isObserver(course));
+        var pfdk = self.isPfDKCourse(course);
+        var unmaintainedSince = self.isUnmaintained(course);
+        var alertMsg = self.isAlertMsg(course);
+        var notificationtouser= self.isNotificationToUser(course);
+        var feedback= self.isFeedback(self.course);
         if (observer || pfdk || unmaintainedSince || alertMsg || isMemberOfExpiredCommunity || notificationtouser || feedback) {
-          mmooc.pages.showInformationPane(observer, pfdk, unmaintainedSince, alertMsg, isMemberOfExpiredCommunity, notificationtouser, feedback);
+          pages.showInformationPane(observer, pfdk, unmaintainedSince, alertMsg, isMemberOfExpiredCommunity, notificationtouser, feedback);
         } else {
-          mmooc.pages.hideInformationPane();
+          pages.hideInformationPane();
         }
       });
     },
@@ -316,12 +325,12 @@ this.mmooc.util = (function () {
       if(!course) {
         return;
       }
-      mmooc.api.getUserGroupsForCourse(course.id, function (groups) {
+      api.getUserGroupsForCourse(course.id, function (groups) {
         var memberOfUtgaattKommune = false;
         if (groups.length) {
           for (var i = 0; i < groups.length; i++) {
             var group = groups[i];
-            var countyOrCommunityNumber = mmooc.util.getCountyOrCommunityNumber(group.description);
+            var countyOrCommunityNumber = getCountyOrCommunityNumber(group.description);
             if (countyOrCommunityNumber) {
               if (utgaatteKommuneNr.indexOf(countyOrCommunityNumber) > -1) {
                 memberOfUtgaattKommune = true;
@@ -334,10 +343,10 @@ this.mmooc.util = (function () {
       });
     },
     isActiveCourseRoleBased() {
-      return mmooc.util.isRoleBasedCourse(mmooc.util.course);
+      return this.isRoleBasedCourse(this.course);
     },
     isAuthenticated: function () {
-      return mmooc.api.getRoles() !== null;
+      return api.getRoles() !== null;
     },
 
     getGroupsInfo(groups) {
@@ -401,14 +410,15 @@ this.mmooc.util = (function () {
     },
     updateProgressForRoleBasedCourses: function (courses) {
       const error = error => console.error('error calling api', error);
+      let self = this;
       for (var i = 0; i < courses.length; i++) {
         var course = courses[i];
-        if (mmooc.util.isRoleBasedCourse(course) && !mmooc.util.isEnrolledWithRole(course, mmooc.settings.principalRoleType)) {
-          mmooc.api.listModulesForCourse(
+        if (this.isRoleBasedCourse(course) && !this.isEnrolledWithRole(course, settings.principalRoleType)) {
+          api.listModulesForCourse(
             (function (courseId) {
               return function (modules) {
                 var bIncludeIndentedItems = false;
-                var p = mmooc.util.percentageProgress(modules, bIncludeIndentedItems);
+                var p = self.percentageProgress(modules, bIncludeIndentedItems);
                 var divId = "#course_" + courseId + "> div > div.mmooc-course-list-progress > div ";
                 $(divId + " > div").attr("style", "width:" + p + "%; -webkit-transition: width 2s; transition: width 2s;");
                 if (p == 100) {
@@ -421,14 +431,14 @@ this.mmooc.util = (function () {
       }
     },
     setGlobalPeerReviewButtonState: function () {
-      if (mmooc.settings.disablePeerReviewButton == true) {
+      if (settings.disablePeerReviewButton == true) {
         $('.assignments #right-side :submit').prop('disabled', true);
       }
     },
 
     formattedDate: function (date) {
       var date = new Date(date);
-      var month = mmooc.util.getMonthShortName(date);
+      var month = getMonthShortName(date);
       return (
         date.getDate() +
         ' ' +
@@ -469,7 +479,7 @@ this.mmooc.util = (function () {
       var categorys = [];
       var hasOther = false;
       for (var i = 0; i < courses.length; i++) {
-        var category = mmooc.util.getCourseCategory(courses[i].course_code);
+        var category = this.getCourseCategory(courses[i].course_code);
         if (categorys.indexOf(category) == -1) {
           if (category == 'Andre') {
             hasOther = true;
@@ -510,9 +520,9 @@ this.mmooc.util = (function () {
         var noOfPersonalBasedCourses = 0;
         for (var j = 0; j < courses.length; j++) {
           var course = courses[j];
-          var category = mmooc.util.getCourseCategory(course.course_code);
+          var category = this.getCourseCategory(course.course_code);
           if (categorys[i] == category) {
-            course.roleBasedCourse = mmooc.util.isRoleBasedCourse(course);
+            course.roleBasedCourse = this.isRoleBasedCourse(course);
             if(course.roleBasedCourse) {
               noOfRoleBasedCourses++;
             } else {
@@ -622,7 +632,7 @@ this.mmooc.util = (function () {
           $this.remove();
         }
         else{
-          $this.attr("href", _href + mmooc.hrefAmpQueryString);
+          $this.attr("href", _href + hrefAmpQueryString);
         }
       });
     },
@@ -633,11 +643,11 @@ this.mmooc.util = (function () {
       });
     },
     getLinkToAvailableCourses: function () {
-      var linkToAvailableCourses = "/search/all_courses" + mmooc.hrefQueryString;
+      var linkToAvailableCourses = "/search/all_courses" + hrefQueryString;
       //ETH20190409 By making sure the root account loads our design, we do not need a front page.
       /*
-              if (this.mmooc.allCoursesFrontpageCourseID > 0) {
-                  linkToAvailableCourses = "/courses/" + this.mmooc.allCoursesFrontpageCourseID + "?coursesList=1";
+              if (allCoursesFrontpageCourseID > 0) {
+                  linkToAvailableCourses = "/courses/" + allCoursesFrontpageCourseID + "?coursesList=1";
               }
       */
       return linkToAvailableCourses;
@@ -645,42 +655,10 @@ this.mmooc.util = (function () {
     //This function can probably be deleted now that we use ?udirDesign
     isCourseFrontpageForAllCoursesList: function () {
       return false;
-      const queryString = document.location.search;
-      const currentCourseID = mmooc.api.getCurrentCourseId();
-
-      const isOverridenCourse = currentCourseID === this.mmooc.allCoursesFrontpageCourseID;
-      const isNotTeacherOrAdmin = !mmooc.util.isTeacherOrAdmin();
-
-      const urlParamsObj = mmooc.utilRoot.urlParamsToObject();
-      const isOverridenAnyCourse = urlParamsObj && urlParamsObj['coursesList'];
-      const isDisabledOverridenCourse = urlParamsObj && !urlParamsObj['skipCoursesList'];
-      const isMyCourses = urlParamsObj && urlParamsObj['myCourses'];
-      const isDataportenCallback = urlParamsObj && urlParamsObj['dataportenCallback'];
-
-      const urlHashObj = mmooc.util.urlHashToObject();
-      const isUidpCallback = urlHashObj && urlHashObj['id_token'];
-
-      var returnCode = mmooc.util.courseListEnum.normalCourse;
-
-      if (isOverridenCourse && isNotTeacherOrAdmin && isDisabledOverridenCourse) {
-        returnCode = mmooc.util.courseListEnum.allCoursesList;
-      }
-      if (isOverridenAnyCourse) {
-        returnCode = mmooc.util.courseListEnum.allCoursesList;
-      }
-      if (isMyCourses) {
-        returnCode = mmooc.util.courseListEnum.myCoursesList;
-      }
-      if (isDataportenCallback) {
-        returnCode = mmooc.util.courseListEnum.dataportenCallback;
-      } else if (isUidpCallback) {
-        returnCode = mmooc.util.courseListEnum.uidpCallback;
-      }
-      return returnCode;
     },
     tinyMceEditorIsInDOM(callback) {
-      this.executeCallbackWhenObjectExists(function () {
-        this.tinyMCE.activeEditor;
+      executeCallbackWhenObjectExists(function () {
+        tinyMCE.activeEditor;
       }, callback);
     },
     executeCallbackWhenObjectExists(functionWithObjectReference, callback) {

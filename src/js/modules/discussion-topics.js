@@ -1,6 +1,8 @@
-this.mmooc = this.mmooc || {};
+import api from "../api/api";
+import tinyMCEEditor from "./tinyMCEEditor";
+import util from "./util";
 
-this.mmooc.discussionTopics = (function () {
+export default (function() {
 
     const ariaHidden = document.getElementsByClassName("ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only");
     if(ariaHidden != []){
@@ -20,12 +22,12 @@ this.mmooc.discussionTopics = (function () {
               cloneSequenceContainer.addClass('module-sequence-top');
               cloneSequenceContainer.insertBefore(discussionContainer);
             } else {
-              setTimeout(mmooc.discussionTopics.moveSequenceLinks, 500);        
+              setTimeout(this.moveSequenceLinks, 500);
             }
         },
         setDiscussionTopicPubDate: function (discussionTopic) {
             if (discussionTopic) {
-                var formattedDate = mmooc.util.formattedDate(discussionTopic.posted_at);
+                var formattedDate = util.formattedDate(discussionTopic.posted_at);
                 var pubDate = $(
                     "<div class='publication-date'>" + formattedDate + '</div>'
                 );
@@ -58,14 +60,14 @@ this.mmooc.discussionTopics = (function () {
             );
         },
         printDiscussionUnreadCount: function (modules, context) {
-            var discussionItems = mmooc.discussionTopics.getDiscussionItems(modules);
-            var courseId = mmooc.api.getCurrentCourseId();
+            var discussionItems = this.getDiscussionItems(modules);
+            var courseId = api.getCurrentCourseId();
             var totalUnread = 0;
             var asyncsDone = 0;
             var groupDiscussionTopics = [];
             for (var i = 0; i < discussionItems.length; i++) {
                 var contentId = discussionItems[i].content_id;
-                mmooc.api.getDiscussionTopic(courseId, contentId, function (
+                api.getDiscussionTopic(courseId, contentId, function (
                     discussionTopic
                 ) {
                     if (discussionTopic) {
@@ -74,7 +76,7 @@ this.mmooc.discussionTopics = (function () {
                         } else {
                             if (discussionTopic.unread_count > 0) {
                                 if (context == 'coursepage') {
-                                    mmooc.discussionTopics.printUnreadCountOnIcon(
+                                    this.printUnreadCountOnIcon(
                                         discussionTopic.unread_count,
                                         discussionTopic.id
                                     );
@@ -86,12 +88,12 @@ this.mmooc.discussionTopics = (function () {
                     asyncsDone++;
                     if (asyncsDone == discussionItems.length) {
                         if (totalUnread > 0 && groupDiscussionTopics.length == 0) {
-                            mmooc.discussionTopics.printUnreadCountInTab(totalUnread);
+                            this.printUnreadCountInTab(totalUnread);
                             if (context == 'discussionslist') {
                                 return;
                             }
                         } else if (groupDiscussionTopics.length > 0) {
-                            mmooc.discussionTopics.printGroupDiscussionUnreadCount(
+                            this.printGroupDiscussionUnreadCount(
                                 courseId,
                                 groupDiscussionTopics,
                                 totalUnread,
@@ -111,21 +113,21 @@ this.mmooc.discussionTopics = (function () {
             context
         ) {
             // if teacher or admin
-            if (mmooc.util.isTeacherOrAdmin()) {
+            if (util.isTeacherOrAdmin()) {
                 var params = {user_id: 'self', per_page: 999};
                 var asyncsDone = 0;
                 var sectionNames = [];
                 // get enrollments and sections for current user
-                mmooc.api.getEnrollmentsForCourse(courseId, params, function (
+                api.getEnrollmentsForCourse(courseId, params, function (
                     enrollments
                 ) {
                     for (var i = 0; i < enrollments.length; i++) {
                         var sectionId = enrollments[i].course_section_id;
-                        mmooc.api.getSingleSection(sectionId, function (section) {
+                        api.getSingleSection(sectionId, function (section) {
                             sectionNames.push(section.name);
                             asyncsDone++;
                             if (asyncsDone == enrollments.length) {
-                                mmooc.api.getGroupsInCourse(courseId, function (groups) {
+                                api.getGroupsInCourse(courseId, function (groups) {
                                     var totalAsyncs = 0;
                                     var allUnreadCounts = [];
                                     asyncsDone = 0;
@@ -135,7 +137,7 @@ this.mmooc.discussionTopics = (function () {
                                             if (groups[j].name == sectionNames[k]) {
                                                 var groupId = groups[j].id;
                                                 totalAsyncs++;
-                                                mmooc.api.getGroupDiscussionTopics(groupId, function (
+                                                api.getGroupDiscussionTopics(groupId, function (
                                                     discussions
                                                 ) {
                                                     for (var l = 0; l < discussions.length; l++) {
@@ -165,7 +167,7 @@ this.mmooc.discussionTopics = (function () {
                                                     }
                                                     asyncsDone++;
                                                     if (asyncsDone == totalAsyncs) {
-                                                        mmooc.discussionTopics.printUnreadCountInTab(
+                                                        this.printUnreadCountInTab(
                                                             totalUnread
                                                         );
                                                         if (
@@ -232,7 +234,7 @@ this.mmooc.discussionTopics = (function () {
                                                                     q < uniqueTotalRootTopicUnreadCounts.length;
                                                                     q++
                                                                 ) {
-                                                                    mmooc.discussionTopics.printUnreadCountOnIcon(
+                                                                    this.printUnreadCountOnIcon(
                                                                         uniqueTotalRootTopicUnreadCounts[q]
                                                                             .unreadCount,
                                                                         uniqueTotalRootTopicUnreadCounts[q]
@@ -241,7 +243,7 @@ this.mmooc.discussionTopics = (function () {
                                                                 }
                                                             }
                                                             if (context == 'discussionslist') {
-                                                                mmooc.discussionTopics.printUnreadCountInDiscussionsList(
+                                                                this.printUnreadCountInDiscussionsList(
                                                                     uniqueTotalRootTopicUnreadCounts
                                                                 );
                                                             } // end if discussions list
@@ -259,9 +261,9 @@ this.mmooc.discussionTopics = (function () {
             } // end if teacher or admin
             // if student
             else {
-                mmooc.api.getUserGroups(function (groups) {
+                api.getUserGroups(function (groups) {
                     if (groups.length == 0 && totalUnread > 0) {
-                        mmooc.discussionTopics.printUnreadCountInTab(totalUnread);
+                        this.printUnreadCountInTab(totalUnread);
                     }
                     for (var i = 0; i < groups.length; i++) {
                         for (var j = 0; j < groupDiscussionTopics.length; j++) {
@@ -271,14 +273,14 @@ this.mmooc.discussionTopics = (function () {
                                 groupDiscussionTopics[j].group_category_id
                             ) {
                                 groupId = groups[i].id;
-                                mmooc.api.getGroupDiscussionTopics(groupId, function (
+                                api.getGroupDiscussionTopics(groupId, function (
                                     discussions
                                 ) {
                                     var totalRootTopicUnreadCounts = [];
                                     for (var k = 0; k < discussions.length; k++) {
                                         if (discussions[k].unread_count > 0) {
                                             if (context == 'coursepage') {
-                                                mmooc.discussionTopics.printUnreadCountOnIcon(
+                                                this.printUnreadCountOnIcon(
                                                     discussions[k].unread_count,
                                                     discussions[k].root_topic_id
                                                 );
@@ -296,10 +298,10 @@ this.mmooc.discussionTopics = (function () {
                                         }
                                     }
                                     if (totalUnread > 0) {
-                                        mmooc.discussionTopics.printUnreadCountInTab(totalUnread);
+                                        this.printUnreadCountInTab(totalUnread);
                                     }
                                     if (context == 'discussionslist') {
-                                        mmooc.discussionTopics.printUnreadCountInDiscussionsList(
+                                        this.printUnreadCountInDiscussionsList(
                                             totalRootTopicUnreadCounts
                                         );
                                     }
@@ -359,7 +361,7 @@ this.mmooc.discussionTopics = (function () {
                             }
                         }
                     });
-                    mmooc.discussionTopics.showUnreadCountInDiscussionList();
+                    this.showUnreadCountInDiscussionList();
                 }
             }, 100);
         },
@@ -388,8 +390,8 @@ this.mmooc.discussionTopics = (function () {
             });
         },
         injectReplyButtonAction(userGroups) {
-            const action = () => mmooc.util.tinyMceEditorIsInDOM(
-                    () => mmooc.tinyMCEEditor.injectGroupHashtags(userGroups)
+            const action = () => util.tinyMceEditorIsInDOM(
+                    () => tinyMCEEditor.injectGroupHashtags(userGroups)
                 );
 
             const button = document.querySelector("#discussion_topic > div.discussion-entry-reply-area.reply-box-container.hide-if-collapsed.hide-if-replying > a");

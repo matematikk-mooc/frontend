@@ -1,6 +1,10 @@
+import '../css/all.less'
+
+import badges from "./badges.js";
+
 $(document).ready(function() {
   try {
-    mmooc.iframe.badges.initPage();
+    badges.initPage();
   } catch (e) {
     console.log('something went wrong!', e);
   }

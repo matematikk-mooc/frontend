@@ -1,17 +1,26 @@
-this.mmooc = this.mmooc || {};
+import allcoursescontainer from '../../templates/modules/allcoursescontainer.hbs'
+import allcourseslist from '../../templates/modules/allcourseslist.hbs'
+import api from "../api/api";
+import { hrefQueryString } from "../settingsRoot";
+import i18n from "../i18n";
+import registerPopup from '../../templates/modules/registerPopup.hbs'
+import settings from "../settings";
+import util from "./util";
+import utilRoot from "../utilRoot";
 
-this.mmooc.enroll = (function () {
+export default (function () {
+
   return {
     displayRegisterPopup: function(authenticated, closeOption, registerText, registerWithCanvasText, selfRegisterCode, courseName, forwardTo) {
       if(!$('.login-box').length) {
-        let html = mmooc.util.renderTemplateWithData('registerPopup', {
+        let html = util.renderTemplateWithData(registerPopup, {
           authenticated: authenticated,
           closeOption: closeOption,
           selfRegisterCode: selfRegisterCode,
           courseName: courseName,
-          queryString: mmooc.hrefQueryString,
+          queryString: hrefQueryString,
           RegisterText: registerText,
-          RegisterWithCanvasText: registerWithCanvasText, 
+          RegisterWithCanvasText: registerWithCanvasText,
           forwardTo: forwardTo,
         });
           document.getElementById('wrapper').insertAdjacentHTML('afterend', html);
@@ -24,9 +33,9 @@ this.mmooc.enroll = (function () {
     changeEnrollInformationPolicyLink: function () {
       var informationPolicy = $('.ic-Self-enrollment-footer__Secondary > a');
       if(informationPolicy) {
-        informationPolicy.attr("href", mmooc.settings.privacyPolicyLink);
+        informationPolicy.attr("href", settings.privacyPolicyLink);
       }
-      
+
       var termsOfService = $('#create_user_info > div.ic-Checkbox-group > div > label');
       if(termsOfService) {
         termsOfService.html("Jeg er enig i personvernspolitikken.");
@@ -55,9 +64,13 @@ this.mmooc.enroll = (function () {
     updateGotoDashboardButton: function() {
       $(".ic-Self-enrollment-footer__Primary > a").each(function() {
         var $this = $(this);
-        var _href = $this.attr("href") + mmooc.hrefQueryString;
+        if ($this.hasClass('btn-primary')){
+          var _href = $this.attr("href");
+        }else {
+          var _href = $this.attr("href") + hrefQueryString;
+        }
 
-        const urlParamsObj = mmooc.utilRoot.urlParamsToObject();
+        const urlParamsObj = utilRoot.urlParamsToObject();
 
         let forwardTo = urlParamsObj && urlParamsObj['forwardTo'];
         if(forwardTo) {
@@ -72,47 +85,73 @@ this.mmooc.enroll = (function () {
       this.updateGotoDashboardButton();
     },
     printAllCoursesContainer: function () {
-      html = mmooc.util.renderTemplateWithData('allcoursescontainer', {
-        courseLabel: mmooc.i18n.CoursePlural.toLowerCase(),
-        allAvailableCoursesIngress: mmooc.i18n.AllAvailableCoursesIngress,
-        linkToMyCourses: mmooc.utilRoot.getLinkToMyCourses(),
-        isAuthenticated: mmooc.util.isAuthenticated(),
-        isMobileOrTablet: mmooc.util.isMobileOrTablet()
+      var label = i18n.CoursePlural
+      var html = util.renderTemplateWithData(allcoursescontainer, {
+        courseLabel: label.toLowerCase(),
+        allAvailableCoursesIngress: i18n.AllAvailableCoursesIngress,
+        linkToMyCourses: utilRoot.getLinkToMyCourses(),
+        isAuthenticated: util.isAuthenticated(),
+        isMobileOrTablet: util.isMobileOrTablet()
       });
-      document.title = 'Tilgjengelige ' + mmooc.i18n.CoursePlural.toLowerCase();
+      document.title = 'Tilgjengelige ' + label.toLowerCase();
       document.getElementById('content').innerHTML = html;
     },
     goToAllCourses() {
       $('#mmooc-all-courses-btn').click(function () {
-        const linkToMyCourses = mmooc.utilRoot.getLinkToMyCourses();
+        const linkToMyCourses = utilRoot.getLinkToMyCourses();
         window.location.href = linkToMyCourses;
+      })
+    },
+    setCourseEnrolledStatus: function (allCourses, enrolledCourses) {
+      var allCoursesWithStatus = [];
+      for (var i = 0; i < allCourses.length; i++) {
+        allCourses[i].course.enrolled = false;
+        for (var j = 0; j < enrolledCourses.length; j++) {
+          if (allCourses[i].course.id == enrolledCourses[j].id) {
+            allCourses[i].course.enrolled = true;
+          }
+        }
+        allCoursesWithStatus.push(allCourses[i].course);
+      }
+      return allCoursesWithStatus;
+    },
+    handleRegisterButtonClick : function(authenticated) {
+      let self = this;
+      $('.mmooc-header__register-button').click(function(event) {
+        if(!authenticated) {
+          let closeOption = true;
+          self.displayRegisterPopup(authenticated, closeOption, i18n.RegisterPopup, i18n.RegisterWithCanvas, event.target.getAttribute("self_enrollment_code"), i18n.RegisterPopup);
+        }
+        else {
+          window.location = `/enroll/${event.target.getAttribute("self_enrollment_code")}`
+        }
       })
     },
     printAllCourses: function () {
       var self = this;
-      html = "<div class='mmooc-loader-wrapper'><span class='loading-gif'></span></div>";
+      var html = "<div class='mmooc-loader-wrapper'><span class='loading-gif'></span></div>";
       $('.mmooc-all-courses-list').append(html);
-      mmooc.api.getAllPublicCourses(function (allCourses) {
-        mmooc.api.getEnrolledCourses(function (enrolledCourses) {
-          var allCoursesWithStatus = mmooc.enroll.setCourseEnrolledStatus(
+      api.getAllPublicCourses(function (allCourses) {
+        api.getEnrolledCourses(function (enrolledCourses) {
+          var allCoursesWithStatus = self.setCourseEnrolledStatus(
             allCourses,
             enrolledCourses
           );
 
-          allCoursesWithStatusSorted = mmooc.util.sortCourses(allCoursesWithStatus);
-          var categorys = mmooc.util.getCourseCategories(allCoursesWithStatusSorted);
+          var allCoursesWithStatusSorted = util.sortCourses(allCoursesWithStatus);
+          var categorys = util.getCourseCategories(allCoursesWithStatusSorted);
 
-          /* If the amount of courses is large, the filter select box and corresponding javascript code in allcoursescontainer.hbs should be enabled 
+          /* If the amount of courses is large, the filter select box and corresponding javascript code in allcoursescontainer.hbs should be enabled
 
-          mmooc.enroll.populateFilter(categorys);
+          this.populateFilter(categorys);
 
           $("#filter").change(function () {
-            mmooc.enroll.applyFilter();
+            this.applyFilter();
           });
 
           */
 
-          var coursesCategorized = mmooc.util.getCoursesCategorized(
+          var coursesCategorized = util.getCoursesCategorized(
             allCoursesWithStatusSorted,
             categorys
           );
@@ -121,20 +160,20 @@ this.mmooc.enroll = (function () {
 
           for (var i = 0; i < coursesCategorized.length; i++) {
             const coursesCategory = coursesCategorized[i];
-            const coursesEnrolledAmount = mmooc.util.filter(
+            const coursesEnrolledAmount = util.filter(
               coursesCategory.courses,
               function (course) {
                 return course.enrolled === true
               }).length;
             const coursesAmount = coursesCategory.courses && coursesCategory.courses.length;
 
-            var isAuthenticated = mmooc.util.isAuthenticated();
-            var courseRegisterText = mmooc.i18n.LogInCanvas;
+            var isAuthenticated = util.isAuthenticated();
+            var courseRegisterText = i18n.LogInCanvas;
             if (isAuthenticated) {
-              courseRegisterText = mmooc.i18n.CourseRegisterWhenAuthenticated;
+              courseRegisterText = i18n.CourseRegisterWhenAuthenticated;
             }
-            html = mmooc.util.renderTemplateWithData('allcourseslist', {
-              queryString: mmooc.hrefQueryString,
+            var html = util.renderTemplateWithData(allcourseslist, {
+              queryString: hrefQueryString,
               title: coursesCategory.title,
               isAuthenticated: isAuthenticated,
               courses: coursesCategory.courses,
@@ -142,27 +181,27 @@ this.mmooc.enroll = (function () {
               coursesAmount: coursesAmount,
               coursesRoleBasedAmount: coursesCategory.noOfRoleBasedCourses,
               coursesPersonalBasedAmount: coursesCategory.noOfPersonalBasedCourses,
-              coursesAmountText: mmooc.i18n.CoursesAmount(coursesAmount),
-              courseLabel: mmooc.i18n.Course.toLowerCase(),
-              goToCourse: mmooc.i18n.GoToCourse,
+              coursesAmountText: i18n.CoursesAmount(coursesAmount),
+              courseLabel: i18n.Course.toLowerCase(),
+              goToCourse: i18n.GoToCourse,
               courseRegister: courseRegisterText,
-              openCoursesGroupText: mmooc.i18n.OpenCoursesGroup,
-              closeCoursesGroupText: mmooc.i18n.CloseCoursesGroup,
-              YouAreRegisteredToXCoursesText: mmooc.i18n.YouAreRegisteredToXCourses(coursesEnrolledAmount),
+              openCoursesGroupText: i18n.OpenCoursesGroup,
+              closeCoursesGroupText: i18n.CloseCoursesGroup,
+              YouAreRegisteredToXCoursesText: i18n.YouAreRegisteredToXCourses(coursesEnrolledAmount),
               index: i
             });
             $('.mmooc-all-courses-list').append(html);
-            mmooc.enroll.handleRegisterButtonClick(isAuthenticated);
+            self.handleRegisterButtonClick(isAuthenticated);
           }
-          
+
           // Displays information, that there is no current courses available to enroll
           if (coursesCategorized.length == 0) {
-            html = '<p class="text-center">' + mmooc.i18n.NoCoursesInfo + '</p>';
+            var html = '<p class="text-center">' + i18n.NoCoursesInfo + '</p>';
             $('.mmooc-all-courses-list').append(html);
           }
 
-          mmooc.enroll.insertModalAndOverlay();
-          mmooc.enroll.setClickHandlers();
+          self.insertModalAndOverlay();
+          self.setClickHandlers();
 
           // TODO: move if there is a better place for this code - it handles course list UI
           // accordion UI
@@ -253,17 +292,7 @@ this.mmooc.enroll = (function () {
         });
       });
     },
-    handleRegisterButtonClick : function(authenticated) {
-      $('.mmooc-header__register-button').click(function(event) {
-        if(!authenticated) {
-          let closeOption = true;
-          mmooc.enroll.displayRegisterPopup(authenticated, closeOption, mmooc.i18n.RegisterPopup, mmooc.i18n.RegisterWithCanvas, event.target.getAttribute("self_enrollment_code"), mmooc.i18n.RegisterPopup);
-        }
-        else {
-          window.location = `/enroll/${event.target.getAttribute("self_enrollment_code")}` 
-        }
-      })
-    },
+
     createHashTags: function () {
       $('span').click(function (e) {
         if ($(this).filter("[data-name='course']")) {
@@ -304,19 +333,19 @@ this.mmooc.enroll = (function () {
         }
       })
     },
-    setCourseEnrolledStatus: function (allCourses, enrolledCourses) {
-      var allCoursesWithStatus = [];
-      for (var i = 0; i < allCourses.length; i++) {
-        allCourses[i].course.enrolled = false;
-        for (var j = 0; j < enrolledCourses.length; j++) {
-          if (allCourses[i].course.id == enrolledCourses[j].id) {
-            allCourses[i].course.enrolled = true;
-          }
-        }
-        allCoursesWithStatus.push(allCourses[i].course);
-      }
-      return allCoursesWithStatus;
-    },
+    // setCourseEnrolledStatus: function (allCourses, enrolledCourses) {
+    //   var allCoursesWithStatus = [];
+    //   for (var i = 0; i < allCourses.length; i++) {
+    //     allCourses[i].course.enrolled = false;
+    //     for (var j = 0; j < enrolledCourses.length; j++) {
+    //       if (allCourses[i].course.id == enrolledCourses[j].id) {
+    //         allCourses[i].course.enrolled = true;
+    //       }
+    //     }
+    //     allCoursesWithStatus.push(allCourses[i].course);
+    //   }
+    //   return allCoursesWithStatus;
+    // },
     insertModalAndOverlay: function () {
       $('body').append("<div class='mmooc-modal-overlay'></div>");
       $('body').append("<div class='mmooc-modal'></div>");
@@ -332,12 +361,13 @@ this.mmooc.enroll = (function () {
       });
     },
     setClickHandlers: function () {
+      let self = this
       $('.notenrolled').click(function (e) {
         e.preventDefault();
         var html = $(this)
           .next()
           .html();
-        mmooc.enroll.handleEnrollClick(e, html);
+        self.handleEnrollClick(e, html);
       });
       $('.all-courses-show-modal').click(function (e) {
         e.preventDefault();
@@ -345,7 +375,7 @@ this.mmooc.enroll = (function () {
           .parent()
           .next()
           .html();
-        mmooc.enroll.handleEnrollClick(e, html);
+        self.handleEnrollClick(e, html);
       });
       $('.mmooc-modal-overlay').click(function (e) {
         e.preventDefault();
@@ -362,7 +392,7 @@ this.mmooc.enroll = (function () {
     populateFilter: function (categorys) {
       var options =
         '<option value="Alle">Alle tilgjengelige ' +
-        mmooc.i18n.CoursePlural.toLowerCase() +
+        i18n.CoursePlural.toLowerCase() +
         '</option>';
       for (var i = 0; i < categorys.length; i++) {
         options +=

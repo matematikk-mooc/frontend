@@ -1,7 +1,24 @@
-this.mmooc = this.mmooc || {};
+import activitystream from '../../templates/modules/activitystream.hbs';
+import api from '../api/api.js';
+import backbutton from '../../templates/modules/backbutton.hbs';
+import coursemenu from '../../templates/modules/coursemenu.hbs';
+import groupdiscussionGetHelpFromTeacher from '../../templates/modules/groupdiscussionGetHelpFromTeacher.hbs';
+import { hrefQueryString } from '../settingsRoot.js';
+import i18n from '../i18n.js';
+import login from './login.js';
+import moduleitems from '../../templates/modules/moduleitems.hbs';
+import moduleitemsprincipal from '../../templates/modules/moduleitemsprincipal.hbs';
+import multilanguage from '../3party/multilanguage.js';
+import noLoggedInHeader from '../../templates/modules/noLoggedInHeader.hbs';
+import noLoggedInHeaderMobile from '../../templates/modules/noLoggedInHeaderMobile.hbs';
+import settings from '../settings.js';
+import usermenu from '../../templates/modules/usermenu.hbs';
+import util from './util.js'
+import utilRoot from '../utilRoot.js';
 
-this.mmooc.menu = (function() {
-  function _renderCourseMenu(course, selectedMenuItem, title, hideTabs) {
+export default (function() {
+  let self = this
+  function _renderCourseMenu(course, selectedMenuItem, title, hideTabs, badgeSafe) {
     function _insertCourseMenuHtml(course, selectedMenuItem, title, menuItems) {
       var subtitle = course.name;
       if (title == null) {
@@ -9,15 +26,16 @@ this.mmooc.menu = (function() {
         subtitle = '';
       }
 
-      const selectedLanguageCode = MultilangUtils.getLanguageCode();
+      const selectedLanguageCode = multilanguage.getLanguageCode();
+      var selectedLanguage = multilanguage.languagesMap()
       const languageOptions = {
-        courseIsMultilanguage: this.mmooc.util.isMultilangCourse(mmooc.util.course),
-        selectedLanguage: MultilangUtils.languagesMap()[selectedLanguageCode].name,
+        courseIsMultilanguage: util.isMultilangCourse(util.course),
+        selectedLanguage: selectedLanguage? selectedLanguage[selectedLanguageCode].name : "",
         selectedLanguageCode,
-        otherLanguages: MultilangUtils.languagesExcept(selectedLanguageCode),
+        otherLanguages: multilanguage.languagesExcept(selectedLanguageCode),
       }
 
-      var html = mmooc.util.renderTemplateWithData('coursemenu', {
+      var html = util.renderTemplateWithData(coursemenu, {
         course: course,
         menuItems: menuItems,
         selectedMenuItem: selectedMenuItem,
@@ -25,12 +43,16 @@ this.mmooc.menu = (function() {
         subtitle: subtitle,
         languageOptions: languageOptions,
       });
+
       document.getElementById('header').insertAdjacentHTML('afterend', html);
 
-      document.getElementById('mmooc-course-language').addEventListener('change', event => {
+      var courseLang = document.getElementById('mmooc-course-language')
+      if(courseLang != null){
+        courseLang.addEventListener('change', event => {
         const newLanguage = event.target.value;
-        MultilangUtils.setActiveLanguage(newLanguage);
+        multilanguage.setActiveLanguage(newLanguage);
       });
+    }
     }
 
     const before_external = document.getElementsByClassName("before_external_content_info_alert screenreader-only-tool");
@@ -60,18 +82,18 @@ this.mmooc.menu = (function() {
         url: '/courses/' + courseId + '/announcements'
       };
       var groupsUrl = '/courses/' + courseId + '/groups';
-      if(mmooc.settings.useDataportenGroups)
+      if(settings.useDataportenGroups)
       {
         groupsUrl = '/courses/' + courseId + '?dataportengroups=1'
       }
-      if(mmooc.settings.displayGroupsTab)
+      if(settings.displayGroupsTab)
       {
         menuItems[menuItems.length] = {
           title: 'Grupper',
           url: groupsUrl
         };
       }
-      if(mmooc.settings.displayDiscussionsTab)
+      if(settings.displayDiscussionsTab)
       {
         menuItems[menuItems.length] = {
           title: 'Diskusjoner',
@@ -80,7 +102,7 @@ this.mmooc.menu = (function() {
       }
 
       //SelectedMenuItem contains the path if we are called by the external path route.
-      var tools = mmooc.util.getToolsInLeftMenu(selectedMenuItem);
+      var tools = util.getToolsInLeftMenu(selectedMenuItem);
 
       //If only one tool in list, make it the active one.
       if(tools.toolList.length == 1)
@@ -101,21 +123,21 @@ this.mmooc.menu = (function() {
         };
       }
 
-      if (mmooc.util.isTeacherOrAdmin()) {
+      if (util.isTeacherOrAdmin()) {
         menuItems[menuItems.length] = {
           title: 'Faglærer',
           url: '/courses/' + courseId + '/?mmpf'
         };
       }
 
-      var badgeSafe = mmooc.menu.extractBadgesLinkFromPage();
+      var badgeSafe = extractBadgesLinkFromPage();
 
       if (badgeSafe.url) {
         //If the url of Badges is found then display this as an additional tab
         menuItems[menuItems.length] = badgeSafe;
         _insertCourseMenuHtml(course, selectedMenuItem, title, menuItems);
-      } else if (mmooc.settings.useCanvaBadge) {
-        mmooc.menu.setCanvaBadgesLink(course, function(canvaBadgeObject) {
+      } else if (settings.useCanvaBadge) {
+        setCanvaBadgesLink(course, function(canvaBadgeObject) {
           //Second parameter is a callback function
           if (canvaBadgeObject.url) {
             menuItems[menuItems.length] = canvaBadgeObject; //check if canva badges is used for the current domain and if it is and the user has any badges then display this additional tab
@@ -129,6 +151,19 @@ this.mmooc.menu = (function() {
         handleMenuClick('#mmooc-menu-item-verktoy', '#mmooc-verktoy-list', 400);
       });
     }
+  }
+  function extractBadgesLinkFromPage() {
+    var href = null;
+    var a = null;
+    var badgeSafe = $('li.section:contains("BadgeSafe")')
+
+    if(badgeSafe) {
+      a = badgeSafe.find('a');
+    }
+    if(a) {
+      href = a.attr('href');
+    }
+    return { title: i18n.Badgesafe, url: href };
   }
 
   function createStyleSheet() {
@@ -178,6 +213,102 @@ this.mmooc.menu = (function() {
       });
     }
   }
+  function createNewTooltipText(oldText, tooltipType, newText) {
+    return oldText.replace(new RegExp("(<br>|</i>)(.*$)"), tooltipType + newText)
+  }
+
+  function updateButtonTooltip(el, item) {
+    var tooltip = el.attr("data-html-tooltip-title");
+    if(tooltip) {
+      el.attr("data-html-tooltip-title", createNewTooltipText(tooltip, "</i>", item.title));
+    }
+  }
+  function updatePrevAndNextButtons(courseId, module) {
+    var prevItem = "";
+    var nextItem = "";
+    var firstValidItem = null;
+    var lastValidItem = null;
+    var prevSet = false;
+    var nextSet = false;
+    var currentFound = false;
+    for(var i = 0; i < module.items.length; i++) {
+      var item = module.items[i];
+      if(!item.indent && (item.type != "SubHeader")) {
+        if(!firstValidItem) {firstValidItem = item;}
+        lastValidItem = item;
+
+        if(item.isCurrent) {
+          currentFound = true;
+        } else if(!currentFound) {
+          prevItem = item;
+          prevSet = true;
+        } else if(!nextSet){
+          nextItem = item;
+          nextSet = true;
+          break;
+        }
+      }
+    }
+
+    var prevButton = $(".module-sequence-footer-button--previous");
+    var nextButton = $(".module-sequence-footer-button--next");
+
+    if(prevSet) {
+      var prevButtonLink = $(".module-sequence-footer-button--previous a");
+      prevButtonLink.attr("href", prevItem.html_url);
+      updateButtonTooltip(prevButton, prevItem);
+      multilanguage.performPrevTooltip();
+    } else {
+        prevButton.hide();
+        var id = firstValidItem.id;
+        api.getModuleItemSequence(courseId, id, handlePrevModuleItem);
+    }
+
+    if(nextSet) {
+        var nextButtonLink = $(".module-sequence-footer-button--next a");
+        nextButtonLink.attr("href", nextItem.html_url);
+        updateButtonTooltip(nextButton, nextItem);
+        multilanguage.performNextTooltip();
+    } else {
+        nextButton.hide();
+        var id = lastValidItem.id;
+        api.getModuleItemSequence(courseId, id, handleNextModuleItem);
+    }
+  }
+
+  function handlePrevModuleItem(courseId, moduleItemSequence) {
+    if(moduleItemSequence && moduleItemSequence.items.length && moduleItemSequence.items[0].prev) {
+      var prevItem = moduleItemSequence.items[0].prev;
+      if(prevItem.indent) {
+        id = prevItem.id;
+        api.getModuleItemSequence(courseId, id, handlePrevModuleItem);
+      } else {
+        var prevButton = $(".module-sequence-footer-button--previous");
+        var prevButtonLink = $(".module-sequence-footer-button--previous a");
+        prevButtonLink.attr("href", prevItem.html_url);
+        updateButtonTooltip(prevButton, prevItem);
+        multilanguage.performPrevTooltip();
+        prevButton.show();
+      }
+    }
+  }
+
+  function handleNextModuleItem(courseId, moduleItemSequence) {
+    if(moduleItemSequence && moduleItemSequence.items.length && moduleItemSequence.items[0].next) {
+      var nextItem = moduleItemSequence.items[0].next;
+      if(nextItem.indent) {
+        id = nextItem.id;
+        api.getModuleItemSequence(courseId, id, handleNextModuleItem);
+      } else {
+        var nextButton = $(".module-sequence-footer-button--next");
+        var nextButtonLink = $(".module-sequence-footer-button--next a");
+        nextButtonLink.attr("href", nextItem.html_url);
+        updateButtonTooltip(nextButton, nextItem);
+        multilanguage.performNextTooltip();
+        nextButton.show();
+      }
+    }
+  }
 
   var stylesheet = createStyleSheet();
 
@@ -185,47 +316,45 @@ this.mmooc.menu = (function() {
     tooltipRegexpPattern : new RegExp("(<br>|</i>)(.*$)"),
 
     listModuleItems: function() {
-      mmooc.api.getCurrentModule(function(module) {
-        var courseId = mmooc.api.getCurrentCourseId();
+      api.getCurrentModule(function(module) {
+        var courseId = api.getCurrentCourseId();
         var html = "";
-        var courseIsRoleBased = mmooc.util.isActiveCourseRoleBased();
+        var courseIsRoleBased = util.isActiveCourseRoleBased();
         var tooltipsHandled = false;
 
-        if(courseIsRoleBased && mmooc.util.isPrincipal()) {
-          html = mmooc.util.renderTemplateWithData('moduleitemsprincipal', {
-            backToCoursePage: mmooc.i18n.BackToCoursePage,
+        if(courseIsRoleBased && util.isPrincipal()) {
+          html = util.renderTemplateWithData(moduleitemsprincipal, {
+            backToCoursePage: i18n.BackToCoursePage,
             module: module,
             courseId: courseId,
-            course: mmooc.util.course
+            course: util.course
           });
         } else {
-          html = mmooc.util.renderTemplateWithData('moduleitems', {
-            backToCoursePage: mmooc.i18n.BackToCoursePage,
+          html = util.renderTemplateWithData(moduleitems, {
+            backToCoursePage: i18n.BackToCoursePage,
             module: module,
             courseId: courseId,
-            course: mmooc.util.course
+            course: util.course
           });
 
           //Need to update previous and next buttons. If the course is role based
           //multilanguage will be handled by that method.
           if(courseIsRoleBased) {
-            mmooc.menu.updatePrevAndNextButtons(courseId, module);
+            updatePrevAndNextButtons(courseId, module);
             tooltipsHandled = true;
           }
         }
         if(!tooltipsHandled) {
-          mmooc.multilanguage.performPrevNextTooltip();
+          multilanguage.performPrevNextTooltip();
         }
 
         if (document.getElementById('left-side')) {
-          document
-            .getElementById('left-side')
-            .insertAdjacentHTML('afterbegin', html);
-            mmooc.multilanguage.perform();
+          document.getElementById('left-side').insertAdjacentHTML('afterbegin', html);
+          multilanguage.perform();
         }
         //Canvas case: Slow loading for group discussions when large number of groups Case # 05035288
         //Display popup box when loading
-        mmooc.util.postModuleMenuProcessing();
+        util.postModuleMenuProcessing();
 
         $('.mmooc-reveal-trigger').click(function(event) {
           var $trigger = $(this);
@@ -251,100 +380,14 @@ this.mmooc.menu = (function() {
         });
       });
     },
-    handlePrevModuleItem : function(courseId, moduleItemSequence) {
-      if(moduleItemSequence && moduleItemSequence.items.length && moduleItemSequence.items[0].prev) {
-        var prevItem = moduleItemSequence.items[0].prev;
-        if(prevItem.indent) {
-          id = prevItem.id;
-          mmooc.api.getModuleItemSequence(courseId, id, mmooc.menu.handlePrevModuleItem);
-        } else {
-          var prevButton = $(".module-sequence-footer-button--previous");
-          var prevButtonLink = $(".module-sequence-footer-button--previous a");
-          prevButtonLink.attr("href", prevItem.html_url);
-          mmooc.menu.updateButtonTooltip(prevButton, prevItem);
-          mmooc.multilanguage.performPrevTooltip();
-          prevButton.show();
-        }
-      }
-    },
-    handleNextModuleItem : function(courseId, moduleItemSequence) {
-      if(moduleItemSequence && moduleItemSequence.items.length && moduleItemSequence.items[0].next) {
-        var nextItem = moduleItemSequence.items[0].next;
-        if(nextItem.indent) {
-          id = nextItem.id;
-          mmooc.api.getModuleItemSequence(courseId, id, mmooc.menu.handleNextModuleItem);
-        } else {
-          var nextButton = $(".module-sequence-footer-button--next");
-          var nextButtonLink = $(".module-sequence-footer-button--next a");
-          nextButtonLink.attr("href", nextItem.html_url);
-          mmooc.menu.updateButtonTooltip(nextButton, nextItem);
-          mmooc.multilanguage.performNextTooltip();
-          nextButton.show();
-        }
-      }
-    },
 
     createNewTooltipText : function(oldText, tooltipType, newText) {
-      return oldText.replace(mmooc.menu.tooltipRegexpPattern, tooltipType + newText)
+      return oldText.replace(this.tooltipRegexpPattern, tooltipType + newText)
     },
     updateButtonTooltip : function(el, item) {
       var tooltip = el.attr("data-html-tooltip-title");
       if(tooltip) {
-        el.attr("data-html-tooltip-title", mmooc.menu.createNewTooltipText(tooltip, "</i>", item.title));
-        mmooc.multilanguage.update
-      }
-    },
-    updatePrevAndNextButtons : function(courseId, module) {
-      var prevItem = "";
-      var nextItem = "";
-      var firstValidItem = null;
-      var lastValidItem = null;
-      var prevSet = false;
-      var nextSet = false;
-      var currentFound = false;
-      for(var i = 0; i < module.items.length; i++) {
-        var item = module.items[i];
-        if(!item.indent && (item.type != "SubHeader")) {
-          if(!firstValidItem) {firstValidItem = item;}
-          lastValidItem = item;
-
-          if(item.isCurrent) {
-            currentFound = true;
-          } else if(!currentFound) {
-            prevItem = item;
-            prevSet = true;
-          } else if(!nextSet){
-            nextItem = item;
-            nextSet = true;
-            break;
-          }
-        }
-      }
-
-      var prevButton = $(".module-sequence-footer-button--previous");
-      var nextButton = $(".module-sequence-footer-button--next");
-
-      if(prevSet) {
-        var prevButtonLink = $(".module-sequence-footer-button--previous a");
-        prevButtonLink.attr("href", prevItem.html_url);
-        mmooc.menu.updateButtonTooltip(prevButton, prevItem);
-        mmooc.multilanguage.performPrevTooltip();
-      } else {
-          prevButton.hide();
-          var id = firstValidItem.id;
-          mmooc.api.getModuleItemSequence(courseId, id, mmooc.menu.handlePrevModuleItem);
-      }
-
-
-      if(nextSet) {
-          var nextButtonLink = $(".module-sequence-footer-button--next a");
-          nextButtonLink.attr("href", nextItem.html_url);
-          mmooc.menu.updateButtonTooltip(nextButton, nextItem);
-          mmooc.multilanguage.performNextTooltip();
-      } else {
-          nextButton.hide();
-          var id = lastValidItem.id;
-          mmooc.api.getModuleItemSequence(courseId, id, mmooc.menu.handleNextModuleItem);
+        el.attr("data-html-tooltip-title", createNewTooltipText(tooltip, "</i>", item.title));
       }
     },
     showLeftMenu: function() {
@@ -360,7 +403,7 @@ this.mmooc.menu = (function() {
     },
     renderLeftHeaderMenu: function() {
       // render left header menu only for authenticated users
-      if (mmooc.util.isAuthenticated()) {
+      if (util.isAuthenticated()) {
 
         //Remove canvas default buttons in header
 
@@ -383,16 +426,16 @@ this.mmooc.menu = (function() {
         }
 
         // The entire menu is rebuilt because of unwanted popup in the new ui menu
-        if (mmooc.settings.removeGlobalGradesLink == false) {
-          insertCustomMenuElementInTopMenu('Karakterer', '/grades' + mmooc.hrefQueryString);
+        if (settings.removeGlobalGradesLink == false) {
+          insertCustomMenuElementInTopMenu('Karakterer', '/grades' + hrefQueryString);
         }
-        if (mmooc.settings.removeGroupsLink == false) {
-          insertCustomMenuElementInTopMenu('Grupper', '/groups' + mmooc.hrefQueryString);
+        if (settings.removeGroupsLink == false) {
+          insertCustomMenuElementInTopMenu('Grupper', '/groups' + hrefQueryString);
         }
-        var linkToMyCourses = mmooc.utilRoot.getLinkToMyCourses();
-        insertCustomMenuElementInTopMenu(mmooc.i18n.CoursePlural, linkToMyCourses);
+        var linkToMyCourses = utilRoot.getLinkToMyCourses();
+        insertCustomMenuElementInTopMenu(i18n.CoursePlural, linkToMyCourses);
 
-        if (mmooc.util.isTeacherOrAdmin()) {
+        if (util.isTeacherOrAdmin()) {
           this.showLeftMenu();
 
           $('#section-tabs-header').show();
@@ -426,7 +469,7 @@ this.mmooc.menu = (function() {
         }
       }
 
-      var roles = mmooc.api.getRoles();
+      var roles = api.getRoles();
       if (roles != null && roles.indexOf('admin') != -1) {
 
         //Remove canvas default buttons  and commons in header
@@ -437,7 +480,7 @@ this.mmooc.menu = (function() {
 
         // Admin needs original canvas Course dropdown to access site admin settings
         //$("#courses_menu_item").show(); //Applies only for Old UI. This is the course menu item with a sub menu.
-        insertCustomMenuElementInTopMenu('Admin', '/accounts' + mmooc.hrefQueryString);
+        insertCustomMenuElementInTopMenu('Admin', '/accounts' + hrefQueryString);
         // Admin needs more profile settings
         $('.add_access_token_link').show();
         $('body.profile_settings')
@@ -447,7 +490,7 @@ this.mmooc.menu = (function() {
     },
 
     renderUnauthenticatedMenu: function() {
-      if (!mmooc.util.isAuthenticated()) {
+      if (!util.isAuthenticated()) {
 
         //Remove canvas default buttons in header
         var history = document.getElementById("global_nav_history_link")
@@ -458,14 +501,14 @@ this.mmooc.menu = (function() {
         //Hide standard canvas login button
         $("#global_nav_login_link").hide();
 
-        var linkToAvailableCourses = mmooc.util.getLinkToAvailableCourses();
+        var linkToAvailableCourses = util.getLinkToAvailableCourses();
         this.alterHomeLink(linkToAvailableCourses);
 
-        let html = mmooc.util.renderTemplateWithData('noLoggedInHeader', {
-          logInText: mmooc.i18n.LogIn
+        let html = util.renderTemplateWithData(noLoggedInHeader, {
+          logInText: i18n.LogIn
         });
-        let htmlMobile = mmooc.util.renderTemplateWithData('noLoggedInHeaderMobile', {
-          logInText: mmooc.i18n.LogIn
+        let htmlMobile = util.renderTemplateWithData(noLoggedInHeaderMobile, {
+          logInText: i18n.LogIn
         });
 
         $('#menu').append(html);
@@ -473,7 +516,7 @@ this.mmooc.menu = (function() {
 
         $("#mobile-header").append(htmlMobile);
 
-        mmooc.login.handleLoginButtonClick();
+        login.handleLoginButtonClick();
       }
     },
     hideRightMenu: function() {
@@ -489,8 +532,6 @@ this.mmooc.menu = (function() {
             '<div class="tabs-hamburger">☰</div>'
           );
         }
-
-
 
         $('.tabs-hamburger').click(function(event) {
           var selectedTab = $('.mmooc-course-tab').filter('.selected');
@@ -530,7 +571,7 @@ this.mmooc.menu = (function() {
       $('#section-tabs-header-subtitle').hide();
     },
     showHamburger: function() {
-      if(mmooc.util.isAuthenticated()) {
+      if(util.isAuthenticated()) {
         var header = document.querySelector(".ic-app-header__main-navigation");
 
         if (header) {
@@ -542,7 +583,7 @@ this.mmooc.menu = (function() {
       }
     },
     showMobileMenu: function() {
-      if(mmooc.util.isAuthenticated) {
+      if(util.isAuthenticated) {
         $('.menu-mobile').click(function(event) {
           var mobileMenu = $('#menu');
           var time = 100;
@@ -567,16 +608,16 @@ this.mmooc.menu = (function() {
     },
     showUserMenu: function() {
       var menu = document.getElementById('menu');
-      if (menu != null && mmooc.util.isAuthenticated()) {
-        var html = mmooc.util.renderTemplateWithData('usermenu', {
-          alertMenuItem: mmooc.settings.displayAlertsMenuItem,
-          user: mmooc.api.getUser(),
-          queryString: mmooc.hrefQueryString,
-          displayInboxMenu: mmooc.settings.displayInboxMenu,
+      if (menu != null && util.isAuthenticated()) {
+        var html = util.renderTemplateWithData(usermenu, {
+          alertMenuItem: settings.displayAlertsMenuItem,
+          user: api.getUser(),
+          queryString: hrefQueryString,
+          displayInboxMenu: settings.displayInboxMenu,
         });
         menu.insertAdjacentHTML('afterend', html);
 
-        if(mmooc.settings.displayAlertsMenuItem) {
+        if(settings.displayAlertsMenuItem) {
           $('#mmooc-menu-item-varsler').click(function(event) {
             handleMenuClick('#mmooc-menu-item-varsler', '#mmooc-activity-stream', 400);
           });
@@ -589,10 +630,10 @@ this.mmooc.menu = (function() {
           );
         });
 
-        var linkToMyCourses = mmooc.utilRoot.getLinkToMyCourses();
+        var linkToMyCourses = utilRoot.getLinkToMyCourses();
         this.alterHomeLink(linkToMyCourses);
 
-        mmooc.api.getUnreadMessageSize(function(conversations) {
+        api.getUnreadMessageSize(function(conversations) {
           var msgBadge = $('#mmooc-unread-messages-count');
           if (conversations.unread_count != '0') {
             msgBadge.html(conversations.unread_count);
@@ -619,16 +660,16 @@ this.mmooc.menu = (function() {
     },
 
     updateNotificationsForUser: function() {
-      if(!mmooc.settings.displayAlertsMenuItem) {
+      if(!settings.displayAlertsMenuItem) {
         return;
       }
-      mmooc.api.getActivityStreamForUser(function(activities) {
+      api.getActivityStreamForUser(function(activities) {
         var unreadNotifications = 0;
         for (var i = 0; i < activities.length; i++) {
-          if (mmooc.menu.checkReadStateFor(activities[i])) {
+          if (checkReadStateFor(activities[i])) {
             unreadNotifications++;
           }
-          activities[i].created_at = mmooc.util.formattedDate(
+          activities[i].created_at = util.formattedDate(
             activities[i].created_at
           );
         }
@@ -643,7 +684,7 @@ this.mmooc.menu = (function() {
 
         document.getElementById(
           'mmooc-activity-stream'
-        ).innerHTML = mmooc.util.renderTemplateWithData('activitystream', {
+        ).innerHTML = util.renderTemplateWithData(activitystream, {
           activities: activities
         });
 
@@ -665,14 +706,14 @@ this.mmooc.menu = (function() {
     showCourseMenu: function(courseId, selectedMenuItem, title, hideTabs) {
       hideTabs = hideTabs || false; //Do not hide tabs if the parameter
       $('body').addClass('with-course-menu');
-      mmooc.api.getCourse(courseId, function(course) {
+      api.getCourse(courseId, function(course) {
         _renderCourseMenu(course, selectedMenuItem, title, hideTabs);
-        mmooc.menu.showMobileTabs();
+        showMobileTabs();
       });
     },
 
     showBackButton: function(url, title) {
-      var buttonHTML = mmooc.util.renderTemplateWithData('backbutton', {
+      var buttonHTML = util.renderTemplateWithData(backbutton, {
         url: url,
         title: title
       });
@@ -682,8 +723,8 @@ this.mmooc.menu = (function() {
     },
 
     showGroupHeader: function() {
-      var groupId = mmooc.api.getCurrentGroupId();
-      var groupHeaderHTML = mmooc.util.renderTemplateWithData('backbutton', {
+      var groupId = api.getCurrentGroupId();
+      var groupHeaderHTML = util.renderTemplateWithData(backbutton, {
         groupId: groupId
       });
       document
@@ -719,8 +760,8 @@ this.mmooc.menu = (function() {
         }
 
         function _sendMessageToSectionTeachers() {
-          var courseId = mmooc.api.getCurrentCourseId();
-          mmooc.api.getUserGroupsForCourse(courseId, function(groups) {
+          var courseId = api.getCurrentCourseId();
+          api.getUserGroupsForCourse(courseId, function(groups) {
             if (groups.length == 0 || groups.length > 1) {
               _tilkallVeilederFeilet();
               alert(
@@ -732,7 +773,7 @@ this.mmooc.menu = (function() {
               var group = groups[0];
               var groupName = group.name;
               var groupCourseId = group.course_id;
-              mmooc.api.getSectionRecipients(
+              api.getSectionRecipients(
                 groupCourseId,
                 (function(courseId) {
                   return function(recipients) {
@@ -750,7 +791,7 @@ this.mmooc.menu = (function() {
                       var sectionRecipientTeachers =
                         sectionRecipient + '_teachers';
                       var subject =
-                        groupName + ' ' + mmooc.i18n.GroupGetInTouchSubject;
+                        groupName + ' ' + i18n.GroupGetInTouchSubject;
                       var discussionUrl = window.location.href;
                       var discussionAndGroupTitle = $(
                         '.discussion-title'
@@ -762,7 +803,7 @@ this.mmooc.menu = (function() {
                       var newLine = '\n';
 
                       var body =
-                        mmooc.i18n.WeHaveAQuestionToTeacherInTheDiscussion +
+                        i18n.WeHaveAQuestionToTeacherInTheDiscussion +
                         ' "' +
                         discussionTitle +
                         '":' +
@@ -771,7 +812,7 @@ this.mmooc.menu = (function() {
 
                       $('#mmooc-get-teachers-help').html('Sender melding...');
 
-                      mmooc.api.postMessageToConversation(
+                      api.postMessageToConversation(
                         courseId,
                         sectionRecipientTeachers,
                         subject,
@@ -808,9 +849,9 @@ this.mmooc.menu = (function() {
         }
 
         // Get help from teacher by clicking a button
-        var getHelpButtonFromteacherButtonHTML = mmooc.util.renderTemplateWithData(
-          'groupdiscussionGetHelpFromTeacher',
-          { hoverOverText: mmooc.i18n.CallForInstructorHoverOverText }
+        var getHelpButtonFromteacherButtonHTML = util.renderTemplateWithData(
+          groupdiscussionGetHelpFromTeacher,
+          { hoverOverText: i18n.CallForInstructorHoverOverText }
         );
         //document.getElementById('content').insertAdjacentHTML('afterbegin', getHelpButtonFromteacherButtonHTML);
         $('#discussion-managebar > div > div > div.pull-right').append(
@@ -819,13 +860,13 @@ this.mmooc.menu = (function() {
         _addClickEventOnGetHelpFromTeacherButton();
       }
 
-      var groupId = mmooc.api.getCurrentGroupId();
+      var groupId = api.getCurrentGroupId();
       if (groupId != null) {
-        mmooc.api.getGroup(groupId, function(group) {
+        api.getGroup(groupId, function(group) {
           // For discussion pages we only want the title to be "<discussion>" instead of "Discussion: <discussion>"
-          var title = mmooc.util.getPageTitleAfterColon();
-          mmooc.menu.showCourseMenu(group.course_id, 'Grupper', title, true); //Group menu in tabs including title - Use optional fourth parameter for hiding tabs
-          if(mmooc.settings.displayCallForAssistanceButtonInGroupDisccussions) {
+          var title = util.getPageTitleAfterColon();
+          showCourseMenu(group.course_id, 'Grupper', title, true); //Group menu in tabs including title - Use optional fourth parameter for hiding tabs
+          if(settings.displayCallForAssistanceButtonInGroupDisccussions) {
             _addGetHelpFromteacherButton(group);
           }
         });
@@ -847,15 +888,15 @@ this.mmooc.menu = (function() {
       if(a) {
         href = a.attr('href');
       }
-      return { title: mmooc.i18n.Badgesafe, url: href };
+      return { title: i18n.Badgesafe, url: href };
     },
     setCanvaBadgesLink: function(course, callback) {
-      var user_id = mmooc.api.getUser().id;
+      var user_id = api.getUser().id;
 
       //This should be refactored to be in an api resource file
       var domain = location.host;
       var urlToCanvaBadgesApi =
-        mmooc.settings.CanvaBadgeProtocolAndHost +
+        settings.CanvaBadgeProtocolAndHost +
         '/api/v1/badges/public/' +
         user_id +
         '/' +
@@ -870,7 +911,7 @@ this.mmooc.menu = (function() {
         success: function(data) {
           if ($.isFunction(callback)) {
             callback({
-              title: mmooc.i18n.Badgesafe,
+              title: i18n.Badgesafe,
               url: '/courses/' + course.id + '?allcanvabadges'
             });
           }
@@ -882,7 +923,7 @@ this.mmooc.menu = (function() {
         error: function(err) {
           if ($.isFunction(callback)) {
             callback({
-              title: mmooc.i18n.Badgesafe,
+              title: i18n.Badgesafe,
               url: undefined
             });
           }
@@ -897,11 +938,12 @@ this.mmooc.menu = (function() {
     },
 
     alterHomeLink: function(linkToMyCourses) {
+      let logo = SERVER + 'Ny-Udir-Logo-RGB-Neg.png'
       $('#header-logo').attr('href', linkToMyCourses);
       $('a.ic-app-header__logomark').attr('href', linkToMyCourses); //New UI
 // 20180122ETH Uncommenting the line below to see if we can specify the logo in the theme editor instead.
 //             In any case the logo should not be hardcoded but taken from the variables file instead.
-      $('a.ic-app-header__logomark').attr('src', 'https://server/Ny-Udir-Logo-RGB-Neg.png'); //New UI
+      $('a.ic-app-header__logomark').attr('src', logo); //New UI
       $('.ic-app-header__logomark-container')
         .detach()
         .prependTo('.ic-app-header__main-navigation');

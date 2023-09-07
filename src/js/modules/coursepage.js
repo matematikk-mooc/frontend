@@ -1,71 +1,78 @@
-this.mmooc = this.mmooc || {};
+import api from "../api/api.js";
+import courseprogress from '../../templates/modules/courseprogress.hbs';
+import courseprogressforstudent from '../../templates/modules/courseprogressforstudent.hbs';
+import discussionTopics from "./discussion-topics.js";
+import footer from "./footer.js";
+import { hrefQueryString } from "../settingsRoot.js";
+import i18n from '../i18n';
+import modulesprincipal from '../../templates/modules/modulesprincipal.hbs';
+import modulesstudent from '../../templates/modules/modulesstudent.hbs';
+import multilanguage from "../3party/multilanguage.js";
+import util from "./util.js";
 
-this.mmooc.coursePage = (function() {
+export default (function() {
   return {
     showCourseInvitation: function () {
-      if (!mmooc.util.isAuthenticated()) {
+      if (!util.isAuthenticated()) {
         var enrollButton = $(".course_enrollment_link");
         var linkToSelectedCourse = window.location.href.split('/');
         var selectedCourseId = linkToSelectedCourse[linkToSelectedCourse.length - 1];
 
         if (enrollButton) {
-          enrollButton.text(mmooc.i18n.EnrollButton);
+          enrollButton.text(i18n.EnrollButton);
           enrollButton.click(function (e) {
             e.preventDefault();
-                  window.location.href = '/search/all_courses' + mmooc.hrefQueryString + '#' + selectedCourseId;
+                  window.location.href = '/search/all_courses' + hrefQueryString + '#' + selectedCourseId;
           })
         }
       }
     },
     listModulesAndShowProgressBar: function() {
-      mmooc.api.getModulesForCurrentCourse(function(modules) {
+      api.getModulesForCurrentCourse(function(modules) {
         var progressHTML = "";
         var modulesHTML = "";
-        if(mmooc.util.isActiveCourseRoleBased() && mmooc.util.isPrincipal())
-        {
-          progressHTML = mmooc.util.renderTemplateWithData('courseprogress', {
-            title: mmooc.i18n.CourseProgressionTitle,
+
+        if(util.isActiveCourseRoleBased() && util.isPrincipal()) {
+          progressHTML = util.renderTemplateWithData(courseprogress, {
+            title: i18n.CourseProgressionTitle,
             modules: modules
           });
-          modulesHTML = mmooc.util.renderTemplateWithData('modulesprincipal', {
-            navname: mmooc.i18n.GoToModule,
-            coursemodules: mmooc.i18n.ModulePlural,
+          modulesHTML = util.renderTemplateWithData(modulesprincipal, {
+            navname: i18n.GoToModule,
+            coursemodules: i18n.ModulePlural,
             modules: modules,
-            course: mmooc.util.course
+            course: util.course
           });
         }
         else {
-          progressHTML = mmooc.util.renderTemplateWithData('courseprogressforstudent', {
-            title: mmooc.i18n.CourseProgressionTitle,
+          progressHTML = util.renderTemplateWithData(courseprogressforstudent, {
+            title: i18n.CourseProgressionTitle,
             modules: modules
           });
-          modulesHTML = mmooc.util.renderTemplateWithData('modules', {
-            navname: mmooc.i18n.GoToModule,
-            coursemodules: mmooc.i18n.ModulePlural,
+
+          modulesHTML = util.renderTemplateWithData(modulesstudent, {
+            navname: i18n.GoToModule,
+            coursemodules: i18n.ModulePlural,
             modules: modules,
-            course: mmooc.util.course
+            course: util.course
           });
         }
-        
-        if(mmooc.util.isMMOOCLicense()) {
-          mmooc.footer.addLicenseInFooter();
+
+        if(util.isMMOOCLicense()) {
+          footer.addLicenseInFooter();
         }
 
-        document
-          .getElementById('course_home_content')
-          .insertAdjacentHTML('beforebegin', progressHTML);
+        document.getElementById('course_home_content').insertAdjacentHTML('beforebegin', progressHTML);
 
-        document
-          .getElementById('course_home_content')
-          .insertAdjacentHTML('beforebegin', modulesHTML);
+        document.getElementById('course_home_content').insertAdjacentHTML('beforebegin', modulesHTML);
 
-        mmooc.multilanguage.perform();
-  
-        //Canvas case: Slow loading for group discussions when large number of groups Case # 05035288 
+        multilanguage.perform();
+
+        //Canvas case: Slow loading for group discussions when large number of groups Case # 05035288
         //Display popup box when loading
-        mmooc.util.postModuleCoursePageProcessing();
+        util.postModuleCoursePageProcessing();
 
-        mmooc.discussionTopics.printDiscussionUnreadCount(
+        discussionTopics.printDiscussionUnreadCount(
           modules,
           'coursepage'
         );
@@ -99,12 +106,12 @@ this.mmooc.coursePage = (function() {
         selfUnenrollmentButton.text(
           selfUnenrollmentButton
             .text()
-            .replace('Slipp dette emnet', mmooc.i18n.DropCourse)
+            .replace('Slipp dette emnet', i18n.DropCourse)
         );
         //                selfUnenrollmentButton.off(); //Prevent default presentation of the dialog with incorrect translation.
         selfUnenrollmentButton.on('click', function(e) {
           setTimeout(function() {
-            $('#ui-id-1').html(mmooc.i18n.DropCourse);
+            $('#ui-id-1').html(i18n.DropCourse);
           }, 200);
         });
       }
@@ -125,9 +132,9 @@ this.mmooc.coursePage = (function() {
         //Add our dialog text
         $('#self_unenrollment_dialog').prepend(
           '<div/><p/><p>' +
-            mmooc.i18n.DropCourseDialogText +
+            i18n.DropCourseDialogText +
             "<span class='unenroll_dialog_sad'></span><p>" +
-            mmooc.i18n.JoinCourseDialogText +
+            i18n.JoinCourseDialogText +
             "<span class='unenroll_dialog_happy'></span></p>"
         );
       }
@@ -141,7 +148,7 @@ this.mmooc.coursePage = (function() {
       coming_up.replaceWith(
         "<div class='deadlines-container'>" +
           '<h2>' +
-          mmooc.i18n.eventsAndDeadlinesTitle +
+          i18n.eventsAndDeadlinesTitle +
           '</h2>' +
           "<div class='deadlines-scroll-up'></div>" +
           "<div class='deadlines-list'></div>" +
@@ -158,7 +165,7 @@ this.mmooc.coursePage = (function() {
       var month = [];
       var html = '<table>';
       for (var i = 0; i < allDeadlines.length; i++) {
-        var monthName = mmooc.util.getMonthShortName(allDeadlines[i].date);
+        var monthName = util.getMonthShortName(allDeadlines[i].date);
         if ('url' in allDeadlines[i]) {
           html +=
             "<tr id='deadline-" +
@@ -189,7 +196,7 @@ this.mmooc.coursePage = (function() {
       }
       html += '</table>';
       $('body.home .deadlines-list').html(html);
-      var upcoming = mmooc.coursePage.findUpcomingDate(allDeadlines);
+      var upcoming = this.findUpcomingDate(allDeadlines);
       $('#deadline-' + upcoming).addClass('upcoming');
       var parent = $('body.home .deadlines-list');
       var row = $('#deadline-' + upcoming);
@@ -219,14 +226,14 @@ this.mmooc.coursePage = (function() {
       });
     },
     printDeadlinesForCourse: function() {
-      var courseId = mmooc.api.getCurrentCourseId();
+      var courseId = api.getCurrentCourseId();
       var allDeadlines = [];
       var params = {
         all_events: 1,
         type: 'event',
         context_codes: ['course_' + courseId]
       };
-      mmooc.api.getCaledarEvents(params, function(events) {
+      api.getCaledarEvents(params, function(events) {
         for (var i = 0; i < events.length; i++) {
           if (events[i].end_at) {
             var date = new Date(events[i].end_at);
@@ -242,7 +249,7 @@ this.mmooc.coursePage = (function() {
           type: 'assignment',
           context_codes: ['course_' + courseId]
         };
-        mmooc.api.getCaledarEvents(params, function(assignments) {
+        api.getCaledarEvents(params, function(assignments) {
           for (var i = 0; i < assignments.length; i++) {
             if (assignments[i].all_day_date) {
               var date = new Date(assignments[i].all_day_date);
@@ -255,7 +262,7 @@ this.mmooc.coursePage = (function() {
             }
           }
           if (allDeadlines.length) {
-            mmooc.coursePage._displayDeadlines(allDeadlines);
+            this._displayDeadlines(allDeadlines);
           }
         });
       });

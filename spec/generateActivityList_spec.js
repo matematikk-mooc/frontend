@@ -1,3 +1,6 @@
+import activitystream from '../src/templates/modules/activitystream.hbs'
+import util from '../src/js/modules/util';
+
 describe('menu', function() {
   describe('generateActivitiesList', function() {
     var activities;
@@ -14,7 +17,7 @@ describe('menu', function() {
     });
 
     it('should generate a unread activity', function() {
-      var toTest = mmooc.util.renderTemplateWithData('activitystream', {
+      var toTest = util.renderTemplateWithData(activitystream, {
         activities: activities
       });
       expect(toTest).toMatch(/class=\"unread\"/);
@@ -22,7 +25,7 @@ describe('menu', function() {
 
     it('should generate a activity that have already been read', function() {
       activities[0].read_state = true;
-      var toTest = mmooc.util.renderTemplateWithData('activitystream', {
+      var toTest = util.renderTemplateWithData(activitystream, {
         activities: activities
       });
       expect(toTest).not.toMatch(/class=\"unread\"/);

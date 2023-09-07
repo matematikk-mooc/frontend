@@ -1,6 +1,4 @@
-this.mmooc = this.mmooc || {};
-
-this.mmooc.kpas = (function() {
+export default (function() {
     return {
         showInfo: function(groups) {
             if(!groups.length) {
@@ -9,8 +7,8 @@ this.mmooc.kpas = (function() {
                 $(".kpas-lti-warning").show();
                 $(".kpas-lti-info").hide();
                 return;
-            }  
-      
+            }
+
             $("#kpas-lti-warning").hide();
             $("#kpas-lti-info").show();
             $(".kpas-lti-warning").hide();
@@ -19,12 +17,12 @@ this.mmooc.kpas = (function() {
         getJsonData : function(url, progressId, name, callback) {
             $(progressId).html("Laster statistikk for " + name + "<span class='loading-gif'></span>");
             d3.json(url)
-            .on("progress", function() { 
+            .on("progress", function() {
                 console.log("progress", d3.event.loaded); })
-            .on("load", function(json) { 
+            .on("load", function(json) {
                 $(progressId).html("");
                 console.log("success!"); callback(json) })
-            .on("error", function(error) { 
+            .on("error", function(error) {
                 progressId.innerHTML = error
                 console.log("failure!", error); })
             .get();
@@ -37,7 +35,7 @@ this.mmooc.kpas = (function() {
                 return;
             }
 
-            var iframeSrc = "https://server/kpas/kpas.html?version=KPAS_IFRAME_VERSION&courseId=" + courseId;
+            var iframeSrc = SERVER + "kpas/kpas.html?version=KPAS_IFRAME_VERSION&courseId=" + courseId;
             if (isTeacherOrAdmin) {
                 iframeSrc+="&show=" + graphicId;
             } else if((groupsInfo.municipalityId === undefined) || (groupsInfo.countyId === undefined)) {
@@ -56,4 +54,3 @@ this.mmooc.kpas = (function() {
         }
     }
 })();
-

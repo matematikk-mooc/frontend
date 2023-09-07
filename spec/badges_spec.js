@@ -1,3 +1,6 @@
+import badges from "../src/addons/badges/js/badges";
+import constants from "../src/addons/badges/js/constants";
+
 describe('badges', function() {
   const name = 'Jasmine test',
     type = 'Course',
@@ -77,7 +80,7 @@ describe('badges', function() {
   describe('initialize', function() {
     it('should return the right ids', function() {
       var stringToParse = 'openmypage(300,40,21,4); return false';
-      var parsed = mmooc.iframe.badges.extractIdsFromString(stringToParse);
+      var parsed = badges.extractIdsFromString(stringToParse);
       expect(parsed.badgeId).toBe('300');
       expect(parsed.clickey).toBe('40');
       expect(parsed.courseId).toBe('21');
@@ -97,7 +100,7 @@ describe('badges', function() {
         completedText,
         false
       );
-      parsed = mmooc.iframe.badges.applyNewDesign(jQuery(template));
+      parsed = badges.applyNewDesign(jQuery(template));
     });
 
     it('should mark as complete', function() {
@@ -123,9 +126,9 @@ describe('badges', function() {
         courseId,
         'not finished yet'
       );
-      parsed = mmooc.iframe.badges.applyNewDesign(jQuery(template));
+      parsed = badges.applyNewDesign(jQuery(template));
       expect(parsed.complete).toBeFalsy();
-      expect(parsed.badgeImage).toBe(mmooc.constants.BADGE_LOCKED_IMAGE_URL);
+      expect(parsed.badgeImage).toBe(constants.BADGE_LOCKED_IMAGE_URL);
     });
 
     it('criteria is the first p element', function() {
@@ -151,14 +154,14 @@ describe('badges', function() {
     });
 
     it('should generate bacpack in case completed', function() {
-      var backpack = mmooc.iframe.badges.backpack(true, template);
+      var backpack = badges.backpack(true, template);
       expect(backpack.active).toBe(true);
       expect(backpack.button).toExist();
       expect(backpack.awardId).toBe(mozilla.awardId);
     });
 
     it('should not generate bacpack when is not completed', function() {
-      var backpack = mmooc.iframe.badges.backpack(false, template);
+      var backpack = badges.backpack(false, template);
       expect(backpack.active).toBe(false);
       expect(backpack.button).not.toExist();
       expect(backpack.awardId).not.toExist();
@@ -168,7 +171,7 @@ describe('badges', function() {
       template = jQuery(
         generateTemplate(name, type, imgSrc, courseId, completedText, false)
       );
-      var backpack = mmooc.iframe.badges.backpack(true, template);
+      var backpack = badges.backpack(true, template);
       expect(backpack.active).toBe(false);
       expect(backpack.button).not.toExist();
       expect(backpack.awardId).not.toExist();

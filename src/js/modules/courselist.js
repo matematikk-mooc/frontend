@@ -1,62 +1,69 @@
-this.mmooc = this.mmooc || {};
+import api from "../api/api";
+import courselist from  "../../templates/modules/courselist.hbs"
+import courselistcontainer from "../../templates/modules/courselistcontainer.hbs"
+import enrollprivacypolicy from "../../templates/modules/enrollprivacypolicy.hbs"
+import { hrefQueryString } from "../settingsRoot";
+import i18n from "../i18n";
+import settings from "../settings";
+import util from "./util";
 
-this.mmooc.courseList = (() => {
+export default (function () {
   return {
     listCourses(parentId, callback) {
       if (document.getElementsByClassName('reaccept_terms').length === 0) {
         let htmlLoading = `<div class='mmooc-loader-wrapper'><span class='loading-gif'></span></div>`;
         $(`#${parentId}`).html(htmlLoading); //overwrite the contents in parentID and display: 'Laster kurs....'
 
-        mmooc.api.getEnrolledCourses(courses => {
+        api.getEnrolledCourses(courses => {
           $('.mmooc-loader-wrapper').remove();
 
           const $oldContent = $(`#${parentId}`).children(); //After an update the 'Add course button' is in #content including a popupform. So we need to move this to another place in the DOM so we don't overwrite it.
           $oldContent.appendTo('#right-side-wrapper #right-side');
           let html = '';
-          let linkToAvailableCourses = mmooc.util.getLinkToAvailableCourses(); 
+          let linkToAvailableCourses = util.getLinkToAvailableCourses();
           if (courses.length == 0) {
-            html = `<h1>Mine ${mmooc.i18n.CoursePlural.toLowerCase()}</h1><p>${
-              mmooc.i18n.NoEnrollments
-            }</p><a class='btn' href='${linkToAvailableCourses}'>Se tilgjengelige ${mmooc.i18n.CoursePlural.toLowerCase()}</a>`;
+            html = `<h1>Mine ${i18n.CoursePlural.toLowerCase()}</h1><p>${
+              i18n.NoEnrollments
+            }</p><a class='btn' href='${linkToAvailableCourses}'>Se tilgjengelige ${i18n.CoursePlural.toLowerCase()}</a>`;
             $(`#${parentId}`).html(html);
           } else {
-            html = mmooc.util.renderTemplateWithData('courselistcontainer', {
-              courseLabel: mmooc.i18n.CoursePlural.toLowerCase(),
-              queryString: mmooc.hrefQueryString
+            html = util.renderTemplateWithData(courselistcontainer, {
+              courseLabel: i18n.CoursePlural.toLowerCase(),
+              queryString: hrefQueryString
             });
             $(`#${parentId}`).html(html);
             /*
-            const sortedCourses = mmooc.util.arraySorted(
+            const sortedCourses = util.arraySorted(
               courses,
               'course_code'
             );
             */
-            const sortedCourses = mmooc.util.sortCourses(courses);
-            const categorys = mmooc.util.getCourseCategories(sortedCourses);
-            const coursesCategorized = mmooc.util.getCoursesCategorized(
+            const sortedCourses = util.sortCourses(courses);
+            const categorys = util.getCourseCategories(sortedCourses);
+            const coursesCategorized = util.getCoursesCategorized(
               sortedCourses,
               categorys
             );
 
             coursesCategorized.forEach(course => {
-              html = mmooc.util.renderTemplateWithData('courselist', {
+              html = util.renderTemplateWithData(courselist, {
                 title: course.title,
                 courses: course.courses,
-                courseLabel: mmooc.i18n.Course.toLowerCase()
+                courseLabel: i18n.Course.toLowerCase()
               });
               $('.mmooc-course-list-container').append(html);
             });
-            mmooc.util.updateProgressForRoleBasedCourses(courses);
+            util.updateProgressForRoleBasedCourses(courses);
           }
-          document.title = mmooc.i18n.CoursePlural;
+          document.title = i18n.CoursePlural;
 
           $.isFunction(callback) && callback();
         });
       } else {
-        html = mmooc.util.renderTemplateWithData('enrollprivacypolicy', {
-          privacypolicylink: mmooc.settings.privacyPolicyLink
+        html = util.renderTemplateWithData(enrollprivacypolicy, {
+          privacypolicylink: settings.privacyPolicyLink
         });
-  
+
         $(".terms_of_service_link").html(html);
       }
     },
@@ -65,7 +72,7 @@ this.mmooc.courseList = (() => {
       const $button = $('#start_new_course');
       if ($button.length) {
         $('#content').append($button);
-        $button.html(mmooc.i18n.AddACourse);
+        $button.html(i18n.AddACourse);
       }
     },
     showFilter(sortedCourses) {

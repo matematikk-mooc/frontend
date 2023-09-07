@@ -1,6 +1,7 @@
-mmooc = mmooc || {};
-
-mmooc.greeting = (function() {
+import api from "../api/api";
+import util from "./util";
+import waitIcon from "../../templates/modules/waitIcon.hbs"
+export default (function() {
   function redesignPage() {
     $('#wrapper').addClass('diploma-page');
   }
@@ -11,7 +12,7 @@ mmooc.greeting = (function() {
     }
 
     redesignPage();
-    mmooc.api.getModulesForCurrentCourse(function(modules) {
+    api.getModulesForCurrentCourse(function(modules) {
       var firstItemPerModule = {};
       for (var i in modules) {
         firstItemPerModule[modules[i].id] = modules[i].items[0];
@@ -51,7 +52,7 @@ mmooc.greeting = (function() {
             return;
           }
 
-          $('#info').html(mmooc.util.renderTemplateWithData('waitIcon', {}));
+          $('#info').html(util.renderTemplateWithData(waitIcon, {}));
 
           var formId = $formIdDiv.text();
           var nameEntryId = $nameEntryIdDiv.text();
@@ -64,7 +65,7 @@ mmooc.greeting = (function() {
           var nameEntry = str1.concat(nameEntryId);
           var emailEntry = str1.concat(emailEntryId);
 
-          mmooc.api.getUserProfile(function(profile) {
+          api.getUserProfile(function(profile) {
             var values = {};
             values[nameEntry] = profile.name;
             values[emailEntry] = profile.primary_email;
@@ -106,13 +107,13 @@ mmooc.greeting = (function() {
       if ($downloadDiplomaButton.length && $scriptUrlDiv.length && $diplomaIdDiv.length) {
         $('body').on('click', '.download-diploma-button', function () {
           $downloadDiplomaButton.attr("disabled", true);
-    
-          $('#info').append(mmooc.util.renderTemplateWithData("waitIcon", {}));
+
+          $('#info').append(util.renderTemplateWithData(waitIcon, {}));
 
           var scriptUrl = $scriptUrlDiv.text();
           var diplomaId = $diplomaIdDiv.text();
 
-          mmooc.api.getUserProfile(function (profile) {
+          api.getUserProfile(function (profile) {
             var values = {};
             values["Navn"] = profile.name;
             values["Epost"] = profile.primary_email;
@@ -138,7 +139,7 @@ mmooc.greeting = (function() {
                             dataType: "json",
               beforeSend: function () {
               },
-          
+
               error: function (jqXHR, textStatus, errorThrown) {
                 console.log(jqXHR);
                 console.log(textStatus);
@@ -146,7 +147,7 @@ mmooc.greeting = (function() {
                 var s = "Diplom ble ikke laget. Følgende gikk galt: " + jqXHR + textStatus + errorThrown;
                 $('#info').html(s);
               },
-          
+
               success: function (response) {
                 if(response.result == "success")
                 {
@@ -166,7 +167,7 @@ mmooc.greeting = (function() {
                 }
                 $(".download-diploma-button").addClass('btn-done');
               },
-          
+
               complete: function () {
                 console.log('Finished all tasks');
               }
@@ -195,11 +196,11 @@ mmooc.greeting = (function() {
               return;
           }
 
-          $('#info').html(mmooc.util.renderTemplateWithData("waitIcon", {}));
+          $('#info').html(util.renderTemplateWithData(waitIcon, {}));
 
           var scriptUrl = $scriptUrlDiv.text();
 
-          mmooc.api.getUserProfile(function (profile) {
+          api.getUserProfile(function (profile) {
             var values = {};
             values["Navn"] = profile.name;
             values["Epost"] = profile.primary_email;
