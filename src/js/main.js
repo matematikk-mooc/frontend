@@ -24,6 +24,7 @@ import tinyMCEEditor from './modules/tinyMCEEditor';
 import uob from './3party/uob7.js';
 import util from './modules/util.js';
 import utilRoot from './utilRoot.js';
+import uucheck from './modules/uucheck.js';
 
 jQuery(function($) {
   //KURSP-469 Support embedding of KPAS LTI tool. In general our design should not load in iframes.
@@ -206,13 +207,13 @@ jQuery(function($) {
     enroll.goToAllCourses();
   });
 
-  mmooc.routes.addRouteForPath(/\/courses\/\d+\/settings$/, function() {
-    mmooc.coursesettings.addSanityCheckButton();
-    mmooc.coursesettings.addListSectionsButton();
-    mmooc.coursesettings.addListUsersButton();
-    mmooc.coursesettings.addListGroupsButton();
-    mmooc.coursesettings.addListAssignmentsButton();
-    mmooc.uucheck.addUUButton();
+  routes.addRouteForPath(/\/courses\/\d+\/settings$/, function() {
+    coursesettings.addSanityCheckButton();
+    coursesettings.addListSectionsButton();
+    coursesettings.addListUsersButton();
+    coursesettings.addListGroupsButton();
+    coursesettings.addListAssignmentsButton();
+    uucheck.addUUButton();
 
   });
 

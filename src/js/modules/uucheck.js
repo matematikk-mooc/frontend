@@ -1,22 +1,21 @@
-class Translated {
-	constructor (words, defaultlang='nb'){
-		this.words = words;
-		this.defaultlang = defaultlang;
-	}
-	toString(){
-		return this.words[ENV.LOCALE]?this.words[ENV.LOCALE]:this.words[this.defaultlang];
-	}
-	use(...values){
-		let returnstring = this.words[ENV.LOCALE]?this.words[ENV.LOCALE]:this.words[this.defaultlang];
-		for (let i=0; i<values.length; i++){
-			returnstring = returnstring.replace(`[${i}]`, values[i]);
+export default (function () {
+	class Translated {
+		constructor (words, defaultlang='nb'){
+			this.words = words;
+			this.defaultlang = defaultlang;
 		}
-		return returnstring;
+		toString(){
+			return this.words[ENV.LOCALE]?this.words[ENV.LOCALE]:this.words[this.defaultlang];
+		}
+		use(...values){
+			let returnstring = this.words[ENV.LOCALE]?this.words[ENV.LOCALE]:this.words[this.defaultlang];
+			for (let i=0; i<values.length; i++){
+				returnstring = returnstring.replace(`[${i}]`, values[i]);
+			}
+			return returnstring;
+		}
 	}
-}
 
-this.mmooc = this.mmooc || {};
-this.mmooc.uucheck = function() {
 
 	function graphql(querydata){
 		//get csrf_token from the pages cookie
@@ -208,4 +207,4 @@ this.mmooc.uucheck = function() {
 			)
 		}
 	}
-}();
+})();

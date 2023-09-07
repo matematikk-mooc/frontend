@@ -1,4 +1,4 @@
-utgaatteKommuneNr = [
+var fknr = { utgaatteKommuneNr : [
     1,
     2,
     4,
@@ -425,4 +425,6 @@ utgaatteKommuneNr = [
     2121,
     2131,
     2111
-]
+]};
+
+export default fknr;
