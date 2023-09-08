@@ -69,6 +69,7 @@
   "dependencies": {
     "@vimeo/player": "^2.20.1",
     "vue": "^3.3.4",
+    "vue-material-design-icons": "^5.2.0",
     "vue-style-loader": "^4.1.3"
   }
 }
