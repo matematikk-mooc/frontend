@@ -12,7 +12,7 @@ import NavBarLinks from './NavBarLinks.vue'
 </script>
 
 <style lang="scss">
-@import '../design/colors.scss';
+@import '../../design/colors.scss';
 .header-nav-container {
   width: 100%;
   flex-grow: 0;

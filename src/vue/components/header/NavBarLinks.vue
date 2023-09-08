@@ -32,7 +32,7 @@
 <script setup></script>
 
 <style lang="scss">
-@import '../design/colors.scss';
+@import '../../design/colors.scss';
 
 .nav-bar__link-list-container {
   display: block;

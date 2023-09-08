@@ -9,7 +9,7 @@ import OpenInNewIcon from 'vue-material-design-icons/OpenInNew.vue'
 const props = defineProps(['type', 'url'])
 </script>
 <style lang="scss">
-@import '../design/colors.scss';
+@import '../../design/colors.scss';
 
 a.page-footer--link {
   text-align: center;

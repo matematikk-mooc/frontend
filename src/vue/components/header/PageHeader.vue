@@ -19,7 +19,7 @@
 
 <script></script>
 <style lang="scss">
-@import '../design/colors.scss';
+@import '../../design/colors.scss';
 .header__content {
   display: flex;
   align-items: center;
@@ -62,7 +62,7 @@
     width: 0;
   }
   &:not(:last-child):after {
-    background-color: $grey-300;
+    background-color: $color-grey-300;
     content: '';
     display: block;
     height: 1.25rem;

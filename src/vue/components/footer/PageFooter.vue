@@ -34,7 +34,7 @@
 import PageFooterLink from './PageFooterLink.vue'
 </script>
 <style lang="scss">
-@import '../design/colors.scss';
+@import '../../design/colors.scss';
 .page-footer--content {
   display: inline-flex;
   flex-direction: column;
