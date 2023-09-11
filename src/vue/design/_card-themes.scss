@@ -1,0 +1,43 @@
+@import './colors.scss';
+
+$card-background-color: $color-white;
+// digital kompetanse i skolen
+$theme_0: (
+  background: map-get($color-palette-green, background, 200)
+);
+// inkludering
+$theme_1: (
+  background: map-get($color-palette-red, background, 400)
+);
+// støtte i arbeid med læreplanverket
+$theme_2: (
+  background: map-get($color-palette-azur, background, 300)
+);
+// innføring av nye læreplaner
+$theme_3: (
+  background: map-get($color-palette-azur, background, 500)
+);
+//støtte til arbeid med regelverk
+$theme_3: (
+  background: map-get($color-palette-steel, background, 200)
+);
+//skolemiljø
+$theme_4: (
+  background: map-get($color-palette-slate, background, 300)
+);
+//SFO
+$theme_5: (
+  background: map-get($color-palette-red, background, 200)
+);
+//barnehage
+$theme_6: (
+  background: map-get($color-palette-red, background, 300)
+);
+// eksamens og prøvesystemet for ungdomstrinnet
+$theme_7: (
+  background: map-get($color-palette-orange, background, 300)
+);
+// programmering valgfag for ungdomstrinnet.
+$theme_8: (
+  background: map-get($color-palette-orange, background, 200)
+);
