@@ -89,7 +89,6 @@
   &::after {
     display: block;
     content: '';
-    height: 1.25;
     position: absolute;
     right: 0.75rem;
     top: 0.5rem;

@@ -50,7 +50,7 @@ import NavBarLinks from './NavBarLinks.vue'
   flex-direction: row;
   justify-content: flex-start;
   text-align: center;
-  width: 40rem;
+  min-width: 40rem;
   cursor: pointer;
 }
 </style>
