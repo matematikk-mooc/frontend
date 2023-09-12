@@ -66,8 +66,8 @@
     "serveDevelopment": "webpack-dev-server --config webpack.development.config.js --mode development --open",
     "noCache": "webpack --no-cache",
     "clean": "rm -rf dist node_modules",
-    "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "storybook": "storybook dev -p 6006 --config-dir src/vue/.storybook",
+    "build-storybook": "storybook build --config-dir src/vue/.storybook"
   },
   "bugs": {
     "url": "https://github.com/matematikk-mooc/frontend/issues"

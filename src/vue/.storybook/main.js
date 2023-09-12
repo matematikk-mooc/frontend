@@ -2,7 +2,7 @@
 const webpack = require("webpack");
 const path = require("path");
 const config = {
-  stories: ["../src/**/*.stories.@(js|jsx|mjs|ts|tsx)"],
+  stories: ["../**/*.stories.@(js|jsx|mjs|ts|tsx)"],
   addons: [
     "storybook-addon-sass-postcss",
     "@storybook/addon-links",
@@ -16,7 +16,7 @@ const config = {
   docs: {
     autodocs: "tag",
   },
-  staticDirs: [path.resolve(__dirname, "../dist")],
+  staticDirs: [path.resolve(__dirname, "../assets")],
   webpackFinal: async (config) => {
     config.plugins.push(
       new webpack.DefinePlugin({
