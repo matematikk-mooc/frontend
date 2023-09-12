@@ -12,6 +12,7 @@ const props = defineProps(['type', 'url'])
 @import '../../design/colors.scss';
 
 a.page-footer--link {
+  cursor: pointer;
   text-align: center;
   color: $color-white;
   font-size: 0.875;

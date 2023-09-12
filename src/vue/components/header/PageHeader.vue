@@ -79,7 +79,7 @@
 .header__link {
   display: block;
   font-size: 1.125rem;
-  color: $grey-900;
+  color: $color-grey-900;
   text-decoration: none;
   border-bottom: 0.125rem solid $color-white;
   &:hover {

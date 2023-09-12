@@ -1,48 +1,70 @@
-import MyButton from './Button.vue';
+import Button from "../components/Button.vue";
 
-// More on how to set up stories at: https://storybook.js.org/docs/vue/writing-stories/introduction
+//👇 This default export determines where your story goes in the story list
 export default {
-  title: 'Example/Button',
-  component: MyButton,
-  tags: ['autodocs'],
-  argTypes: {
-    backgroundColor: {
-      control: 'color',
+  component: Button,
+};
+
+/*
+ *👇 Render functions are a framework specific feature to allow you control on how the component renders.
+ * See https://storybook.js.org/docs/vue/api/csf
+ * to learn how to use render functions.
+ */
+export const PrimaryButton = {
+  render: (args) => ({
+    components: { Button },
+    setup() {
+      return { args };
     },
-    onClick: {},
+    template: '<Button v-bind="args">Button</Button>',
+  }),
+
+  args: {
+    type: "filled",
+    size: "md",
+  },
+  tags: ["autodocs"],
+  argTypes: {
+    type: {
+      control: {
+        type: "select",
+      },
+      options: ["filled", "outlined"],
+    },
     size: {
       control: {
-        type: 'select',
+        type: "select",
       },
-      options: ['small', 'medium', 'large'],
+      options: ["sm", "md", "lg"],
     },
   },
 };
 
-// More on writing stories with args: https://storybook.js.org/docs/vue/writing-stories/args
-export const Primary = {
-  args: {
-    primary: true,
-    label: 'Button',
-  },
-};
+export const SecondaryButton = {
+  render: (args) => ({
+    components: { Button },
+    setup() {
+      return { args };
+    },
+    template: '<Button v-bind="args">Button</Button>',
+  }),
 
-export const Secondary = {
   args: {
-    label: 'Button',
+    type: "outlined",
+    size: "md",
   },
-};
-
-export const Large = {
-  args: {
-    size: 'large',
-    label: 'Button',
-  },
-};
-
-export const Small = {
-  args: {
-    size: 'small',
-    label: 'Button',
+  argTypes: {
+    type: {
+      control: {
+        type: "select",
+      },
+      options: ["filled", "outlined"],
+    },
+    size: {
+      control: {
+        type: "select",
+      },
+      options: ["sm", "md", "lg"],
+    },
   },
 };

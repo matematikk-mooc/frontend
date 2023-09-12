@@ -1,35 +1,5 @@
 import { Meta } from "@storybook/blocks";
 
-import Github from "./assets/github.svg";
-import Discord from "./assets/discord.svg";
-import Youtube from "./assets/youtube.svg";
-import Tutorials from "./assets/tutorials.svg";
-import Styling from "./assets/styling.png";
-import Context from "./assets/context.png";
-import Assets from "./assets/assets.png";
-import Docs from "./assets/docs.png";
-import Share from "./assets/share.png";
-import FigmaPlugin from "./assets/figma-plugin.png";
-import Testing from "./assets/testing.png";
-import Accessibility from "./assets/accessibility.png";
-import Theming from "./assets/theming.png";
-import AddonLibrary from "./assets/addon-library.png";
-
-export const RightArrow = () => <svg 
-    viewBox="0 0 14 14" 
-    width="8px" 
-    height="14px" 
-    style={{ 
-      marginLeft: '4px',
-      display: 'inline-block',
-      shapeRendering: 'inherit',
-      verticalAlign: 'middle',
-      fill: 'currentColor',
-      'path fill': 'currentColor'
-    }}
->
-  <path d="m11.1 7.35-5.5 5.5a.5.5 0 0 1-.7-.7L10.04 7 4.9 1.85a.5.5 0 1 1 .7-.7l5.5 5.5c.2.2.2.5 0 .7Z" />
-</svg>
 
 <Meta title="Configure your project" />
 
@@ -50,7 +20,7 @@ export const RightArrow = () => <svg
       <a
         href="https://storybook.js.org/docs/vue/configure/styling-and-css"
         target="_blank"
-      >Learn more<RightArrow /></a>
+      >Learn more</a>
     </div>
     <div className="sb-section-item">
       <img
@@ -74,7 +44,7 @@ export const RightArrow = () => <svg
         <a
           href="https://storybook.js.org/docs/vue/configure/images-and-assets"
           target="_blank"
-        >Learn more<RightArrow /></a>
+        >Learn more</a>
       </div>
     </div>
   </div>
@@ -96,7 +66,7 @@ export const RightArrow = () => <svg
         <a
           href="https://storybook.js.org/docs/vue/writing-docs/autodocs"
           target="_blank"
-        >Learn more<RightArrow /></a>
+        >Learn more</a>
       </div>
       <div className="sb-grid-item">
         <img src={Share} alt="A browser window showing a Storybook being published to a chromatic.com URL" />
@@ -105,10 +75,9 @@ export const RightArrow = () => <svg
         <a
           href="https://storybook.js.org/docs/vue/sharing/publish-storybook#publish-storybook-with-chromatic"
           target="_blank"
-        >Learn more<RightArrow /></a>
+        >Learn more</a>
       </div>
       <div className="sb-grid-item">
-        <img src={FigmaPlugin} alt="Windows showing the Storybook plugin in Figma" />
         <h4 className="sb-section-item-heading">Figma Plugin</h4>
         <p className="sb-section-item-paragraph">Embed your stories into Figma to cross-reference the design and live
           implementation in one place.</p>
@@ -118,7 +87,6 @@ export const RightArrow = () => <svg
         >Learn more<RightArrow /></a>
       </div>
       <div className="sb-grid-item">
-        <img src={Testing} alt="Screenshot of tests passing and failing" />
         <h4 className="sb-section-item-heading">Testing</h4>
         <p className="sb-section-item-paragraph">Use stories to test a component in all its variations, no matter how
           complex.</p>
@@ -137,7 +105,6 @@ export const RightArrow = () => <svg
         >Learn more<RightArrow /></a>
       </div>
       <div className="sb-grid-item">
-        <img src={Theming} alt="Screenshot of Storybook in light and dark mode" />
         <h4 className="sb-section-item-heading">Theming</h4>
         <p className="sb-section-item-paragraph">Theme Storybook's UI to personalize it to your project.</p>
         <a
@@ -158,13 +125,11 @@ export const RightArrow = () => <svg
       >Discover all addons<RightArrow /></a>
   </div>
   <div className='sb-addon-img'>
-    <img src={AddonLibrary} alt="Integrate your tools with Storybook to connect workflows." />
   </div>
 </div>
 
 <div className="sb-section sb-socials">
     <div className="sb-section-item">
-      <img src={Github} alt="Github logo" className="sb-explore-image"/>
       Join our contributors building the future of UI development.
 
       <a
@@ -173,7 +138,6 @@ export const RightArrow = () => <svg
       >Star on GitHub<RightArrow /></a>
     </div>
     <div className="sb-section-item">
-      <img src={Discord} alt="Discord logo" className="sb-explore-image"/>
       <div>
         Get support and chat with frontend developers.
 
@@ -184,7 +148,6 @@ export const RightArrow = () => <svg
       </div>
     </div>
     <div className="sb-section-item">
-      <img src={Youtube} alt="Youtube logo" className="sb-explore-image"/>
       <div>
         Watch tutorials, feature previews and interviews.
 
@@ -195,7 +158,6 @@ export const RightArrow = () => <svg
       </div>
     </div>
     <div className="sb-section-item">
-      <img src={Tutorials} alt="A book" className="sb-explore-image"/>
       <p>Follow guided walkthroughs on for key workflows.</p>
 
       <a
@@ -216,10 +178,6 @@ export const RightArrow = () => <svg
     display: flex;
     flex-direction: row;
     gap: 20px;
-  }
-
-  img {
-    object-fit: cover;
   }
 
   .sb-section-title {

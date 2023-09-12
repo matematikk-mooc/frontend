@@ -32,6 +32,7 @@
 </template>
 <script setup>
 import PageFooterLink from './PageFooterLink.vue'
+const server = SERVER;
 </script>
 <style lang="scss">
 @import '../../design/colors.scss';
@@ -55,6 +56,9 @@ import PageFooterLink from './PageFooterLink.vue'
     gap: 4rem;
     display: inline-flex;
     .page-footer--logo-wrapper {
+      a{
+          cursor: pointer;
+      }
       height: 100%;
       display: flex;
       flex-direction: column;
