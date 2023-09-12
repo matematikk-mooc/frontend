@@ -16,8 +16,8 @@
         information about other content.
       </div>
       <div class="card-content-button-container">
-        <Button :type="'filled'" :size="'md'"></Button>
-        <Button :type="'outlined'" :size="'md'"></Button>
+        <Button :type="'filled'" :size="'md'">Les mer</Button>
+        <Button :type="'outlined'" :size="'md'">Meld deg på</Button>
       </div>
     </div>
   </div>
@@ -85,6 +85,8 @@ const server= SERVER
     width: 100%;
     height: 100%;
     padding: 0.5rem 1.5rem 0.5rem 1.5rem;
+    font-family: Roboto;
+    font-weight: 400;
   }
 
   .card-content-button-container {
@@ -94,8 +96,11 @@ const server= SERVER
     gap: 0.5rem;
   }
   .card-content-title {
+
     h3 {
       font-size: 1.125;
+      font-family: 'Roboto';
+      font-weight: 600;
     }
   }
 }
