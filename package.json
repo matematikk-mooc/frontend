@@ -11,6 +11,13 @@
   "devDependencies": {
     "@babel/core": "^7.22.1",
     "@babel/preset-env": "^7.22.4",
+    "@storybook/addon-essentials": "^7.4.0",
+    "@storybook/addon-interactions": "^7.4.0",
+    "@storybook/addon-links": "^7.4.0",
+    "@storybook/blocks": "^7.4.0",
+    "@storybook/testing-library": "^0.2.0",
+    "@storybook/vue3": "^7.4.0",
+    "@storybook/vue3-webpack5": "^7.4.0",
     "@vue/cli": "^5.0.8",
     "@vue/compiler-sfc": "^3.3.4",
     "babel-loader": "^9.1.2",
@@ -30,9 +37,13 @@
     "less-plugin-autoprefix": "^1.5.1",
     "mini-css-extract-plugin": "^2.7.6",
     "node-sass": "^9.0.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
     "replace-in-file-webpack-plugin": "^1.0.6",
     "sass": "^1.66.1",
     "sass-loader": "^13.3.2",
+    "storybook": "^7.4.0",
+    "storybook-addon-sass-postcss": "^0.1.3",
     "string-replace-loader": "^3.1.0",
     "style-loader": "^3.3.3",
     "terser-webpack-plugin": "^5.3.9",
@@ -54,7 +65,9 @@
     "buildDevelopment": "webpack --config webpack.development.config.js  --mode development --progress",
     "serveDevelopment": "webpack-dev-server --config webpack.development.config.js --mode development --open",
     "noCache": "webpack --no-cache",
-    "clean": "rm -rf dist node_modules"
+    "clean": "rm -rf dist node_modules",
+    "storybook": "storybook dev -p 6006 --config-dir src/vue/.storybook",
+    "build-storybook": "storybook build --config-dir src/vue/.storybook"
   },
   "bugs": {
     "url": "https://github.com/matematikk-mooc/frontend/issues"

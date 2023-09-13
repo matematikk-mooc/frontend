@@ -170,3 +170,6 @@ plugins: [
   })
 ]
 ```
+
+## Storybook
+  npm run storybook

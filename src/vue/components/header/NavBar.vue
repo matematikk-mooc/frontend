@@ -13,7 +13,7 @@ import NavBarLinks from './NavBarLinks.vue'
 
 <style lang="scss">
 @import '../../design/colors.scss';
-.header-nav-container {
+.header--nav-container {
   width: 100%;
   flex-grow: 0;
   display: flex;
@@ -23,17 +23,6 @@ import NavBarLinks from './NavBarLinks.vue'
   padding: 0;
 }
 
-.header--nav-container {
-  width: 100%;
-  height: 5rem;
-  flex-grow: 0;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0 2.5rem;
-  background-color: $color-white;
-}
 .page--nav-bar {
   width: 100%;
   height: 4rem;
@@ -45,7 +34,6 @@ import NavBarLinks from './NavBarLinks.vue'
 }
 
 .header--links {
-  width: 50%;
   display: flex;
   flex-direction: row;
   justify-content: flex-start;

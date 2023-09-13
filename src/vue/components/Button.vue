@@ -12,7 +12,7 @@ const props = defineProps(['size', 'type'])
       { 'btn--lg': size === 'lg' }
     ]"
   >
-    Button
+    <slot></slot>
   </button>
 </template>
 
