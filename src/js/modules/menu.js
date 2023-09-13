@@ -1,7 +1,9 @@
+import NavBar from '../../vue/components/header/NavBar.vue';
 import activitystream from '../../templates/modules/activitystream.hbs';
 import api from '../api/api.js';
 import backbutton from '../../templates/modules/backbutton.hbs';
 import coursemenu from '../../templates/modules/coursemenu.hbs';
+import { createApp } from 'vue/dist/vue.runtime.esm-bundler.js';
 import groupdiscussionGetHelpFromTeacher from '../../templates/modules/groupdiscussionGetHelpFromTeacher.hbs';
 import { hrefQueryString } from '../settingsRoot.js';
 import i18n from '../i18n.js';
@@ -492,29 +494,38 @@ export default (function() {
     renderUnauthenticatedMenu: function() {
       if (!util.isAuthenticated()) {
 
+        $('#header').hide();
+        var headerwrapper = document.getElementById("application").children[0];
+        headerwrapper.append(document.createElement("div"));
+        headerwrapper.setAttribute("id", "notLoggedInHeader");
+        let customHeader = createApp(NavBar);
+        customHeader.mount("#notLoggedInHeader");
+
+
+
         //Remove canvas default buttons in header
-        var history = document.getElementById("global_nav_history_link")
-        if (history != null){
-          history.remove();
-        }
+        // var history = document.getElementById("global_nav_history_link")
+        // if (history != null){
+        //   history.remove();
+        // }
 
-        //Hide standard canvas login button
-        $("#global_nav_login_link").hide();
+        // //Hide standard canvas login button
+        // $("#global_nav_login_link").hide();
 
-        var linkToAvailableCourses = util.getLinkToAvailableCourses();
-        this.alterHomeLink(linkToAvailableCourses);
+        // var linkToAvailableCourses = util.getLinkToAvailableCourses();
+        // this.alterHomeLink(linkToAvailableCourses);
 
-        let html = util.renderTemplateWithData(noLoggedInHeader, {
-          logInText: i18n.LogIn
-        });
-        let htmlMobile = util.renderTemplateWithData(noLoggedInHeaderMobile, {
-          logInText: i18n.LogIn
-        });
+        // let html = util.renderTemplateWithData(noLoggedInHeader, {
+        //   logInText: i18n.LogIn
+        // });
+        // let htmlMobile = util.renderTemplateWithData(noLoggedInHeaderMobile, {
+        //   logInText: i18n.LogIn
+        // });
 
-        $('#menu').append(html);
-        $('.ic-app-header__main-navigation').append(html);
+        // $('#menu').append(html);
+        // $('.ic-app-header__main-navigation').append(html);
 
-        $("#mobile-header").append(htmlMobile);
+        // $("#mobile-header").append(htmlMobile);
 
         login.handleLoginButtonClick();
       }

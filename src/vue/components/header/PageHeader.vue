@@ -1,6 +1,6 @@
 <template>
   <header class="header__content">
-    <div class="header-brand">Kompetanse portalen</div>
+    <div class="header-brand">Kompetanseportalen</div>
     <ul class="header__link-list">
       <li class="header__list-item">
         <span>

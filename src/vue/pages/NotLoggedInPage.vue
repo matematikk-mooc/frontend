@@ -1,27 +1,31 @@
-<script setup>
-import CardList from '../components/CardList.vue'
-import CardFilter from '../components/CardFilter.vue'
-import Banner from '../components/Banner.vue'
-import NotLoggedInIntro from '../components/NotLoggedInIntro.vue'
-</script>
+
 <template>
   <div class="not-logged-in-page">
     <div class="not-logged-in-page--header">
       <Banner></Banner>
-      <NotLoggedInIntro></NotLoggedInIntro>
+      <NotLoggedInIntro :newestCourse="courses[0].course"></NotLoggedInIntro>
     </div>
     <div class="not-logged-in-page--content">
       <h2>Alle tilgjengelige kompetansepakker</h2>
       <div class="not-logged-in-page--layout">
         <CardFilter></CardFilter>
-        <CardList></CardList>
+        <CardList :courses="courses"></CardList>
       </div>
-    </div>
-    <div class="not-logged-in-page--footer">
-      <!-- <slot name="footer"></slot> -->
     </div>
   </div>
 </template>
+
+<script setup>
+import CardList from '../components/CardList.vue'
+import CardFilter from '../components/CardFilter.vue'
+import Banner from '../components/Banner.vue'
+import NotLoggedInIntro from '../components/NotLoggedInIntro.vue'
+
+console.log("blabla")
+const { courses } = defineProps(['courses']);
+
+
+</script>
 
 <style lang="scss">
 .not-logged-in-page {

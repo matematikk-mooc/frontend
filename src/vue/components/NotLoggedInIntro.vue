@@ -9,13 +9,22 @@
 
     <div class="intro-news">
       <h2>Vår nyeste kompetansepakke</h2>
-      <Card :theme="'theme_2'"></Card>
+      <Card
+        :theme="newestCourse.course_settings.course_category.category.color_code"
+        :courseIllustration="newestCourse.course_settings? newestCourse.course_settings.image.path: ''"
+        >
+        <template v-slot:title> {{ newestCourse.name }} </template>
+        <template v-slot:description> {{ newestCourse.public_description }} </template>
+        <template v-slot:registrerButton>Meld deg på</template>
+        <template v-slot:readMoreButton>Les mer</template>
+      </Card>
     </div>
   </div>
 </template>
 
 <script setup>
 import Card from './Card.vue'
+const {newestCourse} = defineProps(['newestCourse']);
 </script>
 <style>
 .intro-container {

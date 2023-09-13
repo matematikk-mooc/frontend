@@ -1,8 +1,11 @@
+import NotLoggedInPage from "../../vue/pages/NotLoggedInPage.vue";
 import allcoursescontainer from '../../templates/modules/allcoursescontainer.hbs'
 import allcourseslist from '../../templates/modules/allcourseslist.hbs'
 import api from "../api/api";
+import { createApp } from "vue/dist/vue.runtime.esm-bundler.js";
 import { hrefQueryString } from "../settingsRoot";
 import i18n from "../i18n";
+import kpasApi from "../api/kpas-api";
 import registerPopup from '../../templates/modules/registerPopup.hbs'
 import settings from "../settings";
 import util from "./util";
@@ -171,26 +174,46 @@ export default (function () {
             var courseRegisterText = i18n.LogInCanvas;
             if (isAuthenticated) {
               courseRegisterText = i18n.CourseRegisterWhenAuthenticated;
+              var html = util.renderTemplateWithData(allcourseslist, {
+                queryString: hrefQueryString,
+                title: coursesCategory.title,
+                isAuthenticated: isAuthenticated,
+                courses: coursesCategory.courses,
+                coursesEnrolledAmount: coursesEnrolledAmount,
+                coursesAmount: coursesAmount,
+                coursesRoleBasedAmount: coursesCategory.noOfRoleBasedCourses,
+                coursesPersonalBasedAmount: coursesCategory.noOfPersonalBasedCourses,
+                coursesAmountText: i18n.CoursesAmount(coursesAmount),
+                courseLabel: i18n.Course.toLowerCase(),
+                goToCourse: i18n.GoToCourse,
+                courseRegister: courseRegisterText,
+                openCoursesGroupText: i18n.OpenCoursesGroup,
+                closeCoursesGroupText: i18n.CloseCoursesGroup,
+                YouAreRegisteredToXCoursesText: i18n.YouAreRegisteredToXCourses(coursesEnrolledAmount),
+                index: i
+              });
+              $('.mmooc-all-courses-list').append(html);
             }
-            var html = util.renderTemplateWithData(allcourseslist, {
-              queryString: hrefQueryString,
-              title: coursesCategory.title,
-              isAuthenticated: isAuthenticated,
-              courses: coursesCategory.courses,
-              coursesEnrolledAmount: coursesEnrolledAmount,
-              coursesAmount: coursesAmount,
-              coursesRoleBasedAmount: coursesCategory.noOfRoleBasedCourses,
-              coursesPersonalBasedAmount: coursesCategory.noOfPersonalBasedCourses,
-              coursesAmountText: i18n.CoursesAmount(coursesAmount),
-              courseLabel: i18n.Course.toLowerCase(),
-              goToCourse: i18n.GoToCourse,
-              courseRegister: courseRegisterText,
-              openCoursesGroupText: i18n.OpenCoursesGroup,
-              closeCoursesGroupText: i18n.CloseCoursesGroup,
-              YouAreRegisteredToXCoursesText: i18n.YouAreRegisteredToXCourses(coursesEnrolledAmount),
-              index: i
+            else {
+              try {
+              let wrapper = document.getElementById("wrapper");
+              if(wrapper != null){
+                kpasApi.getAllCourseSettings(function (allCoursesSettings) {
+                  var allCoursesWithSettings = util.mapCourseSettings(allCourses, allCoursesSettings.result);
+                wrapper.appendChild(document.createElement("div"));
+                let props = {
+                  courses : allCoursesWithSettings
+                };
+                let page = createApp(NotLoggedInPage, props);
+                wrapper.setAttribute("id", "notLoggedInPage");
+                page.mount("#notLoggedInPage");
+
             });
-            $('.mmooc-all-courses-list').append(html);
+          }
+              } catch (e) {
+                console.log(e);
+              }
+            }
             self.handleRegisterButtonClick(isAuthenticated);
           }
 

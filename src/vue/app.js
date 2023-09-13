@@ -1,34 +1,29 @@
+// import "./design/index.scss";
+
 // import FooterTest from './components/FooterTest.vue';
 // import TestHeader from "./components/TestHeader.vue";
 // import api from "../js/api/api";
 // import { createApp } from "vue/dist/vue.runtime.esm-browser.prod.js";
 // import util from "../js/modules/util";
-// import "./design/index.scss";
 
 // try {
-//   api.getCoursesForAccount(138, function (courses) {
+//   api.getAllPublicCourses( function (courses) {
 //     console.log(courses);
 //     let footerProps = {
-//       name: "NameProp",
-//       licence: util.isMMOOCLicense(),
-//       courses: courses,
-//     };
+//         courses: courses,
+//       };
 
-//     var footerComponent = createApp(FooterTest, footerProps);
-//     var footerWrapper = document
-//       .getElementById("wrapper")
-//       .appendChild(document.createElement("div"));
-//     footerWrapper.setAttribute("id", "footer");
-//     footerComponent.mount("#footer");
+//       console.log(footerProps);
+//       var header = createApp(TestHeader, footerProps);
+//       var headerwrapper = document.getElementById("application").children[0];
+//       headerwrapper.append(documen  t.createElement("div"));
+//       headerwrapper.setAttribute("id", "test2");
+//       header.mount("#test2");
 //   });
 
-//   var header = createApp(TestHeader);
-//   var headerwrapper = document.getElementById("application").children[0];
-//   headerwrapper.append(document.createElement("div"));
-//   headerwrapper.setAttribute("id", "test2");
-//   header.mount("#test2");
+
 // } catch (e) {
 //   console.log(e);
 // }
 
-//export default app;
+// export default app;

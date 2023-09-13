@@ -1,6 +1,3 @@
-<script setup>
-const props = defineProps(['size', 'type'])
-</script>
 <template>
   <button
     :class="[
@@ -12,9 +9,14 @@ const props = defineProps(['size', 'type'])
       { 'btn--lg': size === 'lg' }
     ]"
   >
-    <slot></slot>
-  </button>
+  <slot></slot>
+</button>
 </template>
+
+<script setup>
+const props = defineProps(['size', 'type', 'text', 'link'])
+
+</script>
 
 <style lang="scss">
 @import '../design/colors.scss';

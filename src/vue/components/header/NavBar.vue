@@ -23,6 +23,17 @@ import NavBarLinks from './NavBarLinks.vue'
   padding: 0;
 }
 
+// .header--nav-container {
+//   width: 100%;
+//   height: 5rem;
+//   flex-grow: 0;
+//   display: flex;
+//   flex-direction: row;
+//   justify-content: space-between;
+//   align-items: center;
+//   padding: 0 2.5rem;
+//   background-color: $color-white;
+// }
 .page--nav-bar {
   width: 100%;
   height: 4rem;
