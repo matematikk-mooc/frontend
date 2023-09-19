@@ -23,7 +23,6 @@ export default (function () {
         var cc = courseSettings.find(x => x.course_id === course.course.id)
         if(cc) {
           course.course.course_settings = cc
-          console.log(course.course)
         }
       });
       return courses

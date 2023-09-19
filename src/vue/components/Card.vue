@@ -17,12 +17,12 @@
       <div class="card-content-button-container">
         <Button :type="'filled'" :size="'md'">
           <template v-slot:default>
-            <slot name="registrerButton"></slot>
+            <slot name="leftButton"></slot>
           </template>
         </Button>
         <Button :type="'outlined'" :size="'md'">
           <template v-slot:default>
-            <slot name="readMoreButton"></slot>
+            <slot name="rightButton"></slot>
           </template>
         </Button>
       </div>

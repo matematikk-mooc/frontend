@@ -8,6 +8,8 @@
       :courseIllustration="course.course.course_settings? course.course.course_settings.image.path : ''">
       <template v-slot:title> {{ course.course.name }} </template>
       <template v-slot:description> {{ course.course.public_description }} </template>
+      <template v-slot:leftButton>Meld deg på</template>
+      <template v-slot:rightButton>Les mer</template>
     </Card>
   </div>
   </div>
@@ -15,7 +17,6 @@
 
 <script setup>
 import Card from './Card.vue'
-import { defineProps } from 'vue';
 const { courses } = defineProps(['courses']);
 const themes = ['theme_0', 'theme_1', 'theme_2', 'theme_3', 'theme_4', 'theme_5', 'theme_6', 'theme_7', 'theme_8']
 console.log(courses)

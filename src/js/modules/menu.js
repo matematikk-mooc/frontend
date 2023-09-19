@@ -498,7 +498,10 @@ export default (function() {
         var headerwrapper = document.getElementById("application").children[0];
         headerwrapper.append(document.createElement("div"));
         headerwrapper.setAttribute("id", "notLoggedInHeader");
-        let customHeader = createApp(NavBar);
+        const headerProps = {
+          logged_in: false
+        }
+        let customHeader = createApp(NavBar, headerProps);
         customHeader.mount("#notLoggedInHeader");
 
 

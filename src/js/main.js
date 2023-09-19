@@ -580,14 +580,14 @@ jQuery(function($) {
         return;
       }
     }
-
+    footer.changeFooter();
     menu.renderLeftHeaderMenu();
     menu.showUserMenu();
     menu.renderUnauthenticatedMenu();
     menu.setMenuActiveLink();
     menu.showHamburger();
     menu.showMobileMenu();
-  } catch (e) { 
+  } catch (e) {
     console.log(e);
   }
 

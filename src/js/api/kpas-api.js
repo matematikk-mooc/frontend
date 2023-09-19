@@ -7,7 +7,7 @@ export default (function() {
     _ajax: typeof $ !== 'undefined' ? $ : {},
     _env: typeof ENV !== 'undefined' ? ENV : {},
     _location: 'https://udir-kpas-api.eu.ngrok.io',
-    _uriPrefix: '/api/courses/settings',
+    _uriPrefix: '/api',
     _defaultError(event, jqxhr, settings, thrownError) {
       console.log(event, jqxhr, settings, thrownError);
     },
@@ -16,7 +16,8 @@ export default (function() {
     _get(options) {
 
 
-      const uri = this._location + this._uriPrefix;
+      const uri = this._location + this._uriPrefix + options.uri;
+      console.log(uri)
       const params = options.params || {};
       const callback = options.callback;
       const customError = options.error;
@@ -57,5 +58,16 @@ export default (function() {
           params: {}
         });
       },
+
+    getAllFilters: function(callback, error) {
+        this._get({
+          callback: function(filters) {
+            callback(filters);
+          },
+          error: error,
+          uri: '/filters',
+          params: {}
+        });
+    }
 }
 })();

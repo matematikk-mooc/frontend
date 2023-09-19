@@ -1,14 +1,17 @@
 <template>
   <a :href="url" class="page-footer--link">
-    <slot></slot> <OpenInNew-Icon class="icon-size" v-if="type === 'open-in-new'"></OpenInNew-Icon>
+    <slot></slot> <SvgIcon v-if="type == 'open-in-new'" :size="16" :path="mdiOpenInNew" />
   </a>
 </template>
 <script setup>
-import OpenInNewIcon from 'vue-material-design-icons/OpenInNew.vue'
-
+// import OpenInAppIcon from 'vue-material-design-icons/OpenInApp.vue'
+import SvgIcon from 'vue3-icon';
+import {mdiOpenInNew} from '@mdi/js'
 const props = defineProps(['type', 'url'])
 </script>
+
 <style lang="scss">
+
 @import '../../design/colors.scss';
 
 a.page-footer--link {

@@ -15,8 +15,8 @@
         >
         <template v-slot:title> {{ newestCourse.name }} </template>
         <template v-slot:description> {{ newestCourse.public_description }} </template>
-        <template v-slot:registrerButton>Meld deg på</template>
-        <template v-slot:readMoreButton>Les mer</template>
+        <template v-slot:leftButton>Meld deg på</template>
+        <template v-slot:rightButton>Les mer</template>
       </Card>
     </div>
   </div>

@@ -4,7 +4,7 @@
     <div class="page-footer--content">
       <div class="page-footer--content-wrapper">
         <div class="page-footer--logo-wrapper">
-          <a :href="'url'" alt="udir.no">
+          <a :href="'https://www.udir.no/'" alt="udir.no">
             <img class="page-footer--logo" :src="`${server}/logo-white.png`" />
           </a>
         </div>
@@ -14,9 +14,9 @@
           </div>
 
           <div class="page-footer--link-container">
-            <PageFooterLink>Om kompetanskepakker</PageFooterLink>
+            <PageFooterLink :url="'https://kompetanseudirno.azureedge.net/udirdesign/omkompetanseudirno.html'">Om kompetanskepakker</PageFooterLink>
             <div class="page-footer--divider"></div>
-            <PageFooterLink>Personvernerklæring</PageFooterLink>
+            <PageFooterLink :url="'https://kompetanseudirno.azureedge.net/udirdesign/privacypolicy.html?v=1_0'">Personvernerklæring</PageFooterLink>
             <div class="page-footer--divider"></div>
             <span class="page-footer--accessibility-declaration">
               Tilgjengelighetserklæring på
@@ -51,7 +51,7 @@ const server = SERVER;
     padding-top: 2rem;
     padding-bottom: 2rem;
     background: map-get($color-palette-steel, background, 700);
-    justify-content: flex-start;
+    justify-content: center;
     align-items: flex-end;
     gap: 4rem;
     display: inline-flex;

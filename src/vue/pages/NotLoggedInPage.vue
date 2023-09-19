@@ -8,8 +8,8 @@
     <div class="not-logged-in-page--content">
       <h2>Alle tilgjengelige kompetansepakker</h2>
       <div class="not-logged-in-page--layout">
-        <CardFilter></CardFilter>
-        <CardList :courses="courses"></CardList>
+        <CardFilter @update:selectedFilters="onSelectedFiltersUpdate" :allFilters="allFilters"></CardFilter>
+        <CardList :courses="coursesToView"></CardList>
       </div>
     </div>
   </div>
@@ -21,10 +21,17 @@ import CardFilter from '../components/CardFilter.vue'
 import Banner from '../components/Banner.vue'
 import NotLoggedInIntro from '../components/NotLoggedInIntro.vue'
 
-console.log("blabla")
-const { courses } = defineProps(['courses']);
+const { courses, allFilters } = defineProps(['courses', 'allFilters']);
+const coursesToView = courses.map(item => item)
+console.log("in page")
+console.log(allFilters)
 
 
+
+const onSelectedFiltersUpdate = (updatedFilters) => {
+ console.log("updated filters")
+  console.log(updatedFilters)
+}
 </script>
 
 <style lang="scss">

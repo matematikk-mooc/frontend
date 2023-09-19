@@ -10,6 +10,7 @@ import registerPopup from '../../templates/modules/registerPopup.hbs'
 import settings from "../settings";
 import util from "./util";
 import utilRoot from "../utilRoot";
+import { wrap } from "@vimeo/player";
 
 export default (function () {
 
@@ -88,6 +89,7 @@ export default (function () {
       this.updateGotoDashboardButton();
     },
     printAllCoursesContainer: function () {
+      if(util.isAuthenticated()) {
       var label = i18n.CoursePlural
       var html = util.renderTemplateWithData(allcoursescontainer, {
         courseLabel: label.toLowerCase(),
@@ -98,6 +100,7 @@ export default (function () {
       });
       document.title = 'Tilgjengelige ' + label.toLowerCase();
       document.getElementById('content').innerHTML = html;
+    }
     },
     goToAllCourses() {
       $('#mmooc-all-courses-btn').click(function () {
@@ -132,6 +135,7 @@ export default (function () {
     },
     printAllCourses: function () {
       var self = this;
+      document.getElementById('content').innerHTML = "";
       var html = "<div class='mmooc-loader-wrapper'><span class='loading-gif'></span></div>";
       $('.mmooc-all-courses-list').append(html);
       api.getAllPublicCourses(function (allCourses) {
@@ -144,35 +148,22 @@ export default (function () {
           var allCoursesWithStatusSorted = util.sortCourses(allCoursesWithStatus);
           var categorys = util.getCourseCategories(allCoursesWithStatusSorted);
 
-          /* If the amount of courses is large, the filter select box and corresponding javascript code in allcoursescontainer.hbs should be enabled
-
-          this.populateFilter(categorys);
-
-          $("#filter").change(function () {
-            this.applyFilter();
-          });
-
-          */
-
           var coursesCategorized = util.getCoursesCategorized(
             allCoursesWithStatusSorted,
             categorys
           );
 
-          $('.mmooc-loader-wrapper').remove();
-
-          for (var i = 0; i < coursesCategorized.length; i++) {
-            const coursesCategory = coursesCategorized[i];
-            const coursesEnrolledAmount = util.filter(
-              coursesCategory.courses,
-              function (course) {
-                return course.enrolled === true
-              }).length;
-            const coursesAmount = coursesCategory.courses && coursesCategory.courses.length;
-
             var isAuthenticated = util.isAuthenticated();
             var courseRegisterText = i18n.LogInCanvas;
             if (isAuthenticated) {
+              for (var i = 0; i < coursesCategorized.length; i++) {
+                const coursesCategory = coursesCategorized[i];
+                const coursesEnrolledAmount = util.filter(
+                  coursesCategory.courses,
+                  function (course) {
+                    return course.enrolled === true
+                  }).length;
+                const coursesAmount = coursesCategory.courses && coursesCategory.courses.length;
               courseRegisterText = i18n.CourseRegisterWhenAuthenticated;
               var html = util.renderTemplateWithData(allcourseslist, {
                 queryString: hrefQueryString,
@@ -194,28 +185,37 @@ export default (function () {
               });
               $('.mmooc-all-courses-list').append(html);
             }
+            }
             else {
               try {
-              let wrapper = document.getElementById("wrapper");
+              let wrapper = document.getElementById("application");
               if(wrapper != null){
                 kpasApi.getAllCourseSettings(function (allCoursesSettings) {
+                  kpasApi.getAllFilters(function (allFilters) {
+                  var allFiltersList = allFilters.result;
                   var allCoursesWithSettings = util.mapCourseSettings(allCourses, allCoursesSettings.result);
-                wrapper.appendChild(document.createElement("div"));
+                const customContent = document.createElement("div");
                 let props = {
-                  courses : allCoursesWithSettings
+                  courses : allCoursesWithSettings,
+                  allFilters : allFiltersList,
                 };
                 let page = createApp(NotLoggedInPage, props);
-                wrapper.setAttribute("id", "notLoggedInPage");
+                customContent.setAttribute("id", "notLoggedInPage");
+                customContent.setAttribute("style", "width: 100%; justify-content: center; display: flex;");
+                let footerNode = document.getElementById("wrapper");
+                footerNode.parentNode.insertBefore(customContent, footerNode)
+                $('#wrapper').hide();
                 page.mount("#notLoggedInPage");
-
+              });
             });
+
           }
               } catch (e) {
                 console.log(e);
               }
             }
             self.handleRegisterButtonClick(isAuthenticated);
-          }
+
 
           // Displays information, that there is no current courses available to enroll
           if (coursesCategorized.length == 0) {
