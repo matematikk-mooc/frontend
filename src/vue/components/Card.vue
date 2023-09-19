@@ -32,7 +32,6 @@
 
 <script setup lang="js">
 import Button from './Button.vue';
-import { defineProps } from 'vue';
 
 const server= SERVER
 defineProps(['theme', 'courseIllustration'])
