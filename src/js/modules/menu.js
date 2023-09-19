@@ -280,8 +280,7 @@ export default (function() {
     if(moduleItemSequence && moduleItemSequence.items.length && moduleItemSequence.items[0].prev) {
       var prevItem = moduleItemSequence.items[0].prev;
       if(prevItem.indent) {
-        id = prevItem.id;
-        api.getModuleItemSequence(courseId, id, handlePrevModuleItem);
+        api.getModuleItemSequence(courseId, prevItem.id, handlePrevModuleItem);
       } else {
         var prevButton = $(".module-sequence-footer-button--previous");
         var prevButtonLink = $(".module-sequence-footer-button--previous a");
@@ -297,8 +296,7 @@ export default (function() {
     if(moduleItemSequence && moduleItemSequence.items.length && moduleItemSequence.items[0].next) {
       var nextItem = moduleItemSequence.items[0].next;
       if(nextItem.indent) {
-        var id = nextItem.id;
-        api.getModuleItemSequence(courseId, id, handleNextModuleItem);
+        api.getModuleItemSequence(courseId, nextItem.id, handleNextModuleItem);
       } else {
         var nextButton = $(".module-sequence-footer-button--next");
         var nextButtonLink = $(".module-sequence-footer-button--next a");
