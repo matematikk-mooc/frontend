@@ -188,6 +188,7 @@ export default (function () {
             }
             else {
               try {
+                document.getElementById('content').innerHTML = "";
               let wrapper = document.getElementById("application");
               if(wrapper != null){
                 kpasApi.getAllCourseSettings(function (allCoursesSettings) {

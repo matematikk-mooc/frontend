@@ -18,7 +18,6 @@ export default (function() {
 
     changeFooter : function() {
       var parentElementOfOldFooter = document.getElementById('application');
-
       var footerElement = parentElementOfOldFooter.appendChild(document.createElement('div'));
       footerElement.setAttribute('id', 'customFooter');
       const customFooter = createApp(PageFooter);

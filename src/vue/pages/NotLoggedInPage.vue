@@ -20,17 +20,34 @@ import CardList from '../components/CardList.vue'
 import CardFilter from '../components/CardFilter.vue'
 import Banner from '../components/Banner.vue'
 import NotLoggedInIntro from '../components/NotLoggedInIntro.vue'
+import {ref} from 'vue'
 
 const { courses, allFilters } = defineProps(['courses', 'allFilters']);
-const coursesToView = courses.map(item => item)
-console.log("in page")
-console.log(allFilters)
-
+const coursesToView = ref([...courses]);
 
 
 const onSelectedFiltersUpdate = (updatedFilters) => {
- console.log("updated filters")
-  console.log(updatedFilters)
+  if(updatedFilters.length == 0){
+    coursesToView.value = [...courses]
+    return
+  }
+  coursesToView.value = []
+  courses.forEach(course =>{
+    if(course.course.course_settings){
+      course.course.course_settings.course_filter.forEach(courseFilter => {
+        for (const item of updatedFilters) {
+          if (item.id === courseFilter.filter.id) {
+            if(!coursesToView.value.includes(course)){
+              coursesToView.value.push(course);
+            }
+            break;
+          }
+        }
+      }
+      )
+    }
+  }
+  )
 }
 </script>
 
@@ -44,6 +61,7 @@ const onSelectedFiltersUpdate = (updatedFilters) => {
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
+  min-height: 100vh;
 }
 
 .not-logged-in-page--header {

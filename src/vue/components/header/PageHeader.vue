@@ -9,8 +9,8 @@
       </li>
 
       <li class="header__list-item">
-        <span v-if="!loggedIn">
-          <a class="link header__link" :href="loginLink">Login</a>
+        <span v-if="!logged_in">
+          <a class="header__link" :href="loginLink">Login</a>
         </span>
       </li>
     </ul>
@@ -19,7 +19,6 @@
 
 <script setup>
   const props = defineProps(['logged_in'])
-  console.log("logged inn: " + props.logged_in)
   const domain = window.location.origin;
   const loginLink = domain + "/login/canvas"
 

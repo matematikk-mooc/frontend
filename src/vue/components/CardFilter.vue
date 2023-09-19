@@ -1,5 +1,6 @@
 <template>
   <div class="filter-container">
+    <Button :type="'outlined'" :size="'md'" @click="clearFilters">Tilbakestill filter</Button>
     <div class="filter-group" v-for="item in filters">
       <div class="filter-title">
         {{ item.name }}
@@ -21,14 +22,13 @@
 
 <script setup lang="js">
 import { ref, watch } from 'vue'
-
+import Button from './Button.vue'
 
 const {allFilters} = defineProps(['allFilters'])
 
 const data = [
   {
     name: 'Målgruppe',
-    // allFilters items where type == 'TARGET' as objects
     filter: allFilters.filter(item => item.type == 'TARGET').map(item => item)
 
   },
@@ -37,9 +37,6 @@ const data = [
     filter: allFilters.filter(item => item.type == 'CATEGORY').map(item => item)
   }
 ]
-console.log("data")
-console.log(data)
-
 
 const filters = ref(data)
 const selectedFilters = ref([])
@@ -49,12 +46,15 @@ defineExpose({
   selectedFilters
 })
 
+const emit = defineEmits(['update:selectedFilters'])
+
 watch(selectedFilters, (newValue, oldValue) => {
-  console.log('Selected Filters Updated:')
-  console.log(newValue)
-  // Emit an event to notify the parent component of the update
-  defineEmits('update:selectedFilters', newValue)
+  emit('update:selectedFilters', newValue)
 })
+
+const clearFilters = () => {
+  selectedFilters.value = []
+}
 
 </script>
 

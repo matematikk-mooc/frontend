@@ -40,7 +40,7 @@ defineProps(['theme', 'courseIllustration'])
 </script>
 
 <style lang="scss">
-@import '../design/card-themes.scss';
+@import '../design/_card-themes.scss';
 
 .card {
   position: relative;
@@ -108,9 +108,10 @@ defineProps(['theme', 'courseIllustration'])
   .card-content-title {
 
     h3 {
-      font-size: 1.125;
+      font-size: 1;
       font-family: 'Roboto';
       font-weight: 600;
+      line-height: 150%;
     }
   }
 }

@@ -36,6 +36,7 @@ const server = SERVER;
 </script>
 <style lang="scss">
 @import '../../design/colors.scss';
+
 .page-footer--content {
   display: inline-flex;
   flex-direction: column;
@@ -43,6 +44,7 @@ const server = SERVER;
   align-items: flex-start;
   width: 100%;
   height: 100%;
+  // bottom: 0;
 
   .page-footer--content-wrapper {
     width: 100%;

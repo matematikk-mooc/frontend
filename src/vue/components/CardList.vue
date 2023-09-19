@@ -17,9 +17,8 @@
 
 <script setup>
 import Card from './Card.vue'
+
 const { courses } = defineProps(['courses']);
-const themes = ['theme_0', 'theme_1', 'theme_2', 'theme_3', 'theme_4', 'theme_5', 'theme_6', 'theme_7', 'theme_8']
-console.log(courses)
 </script>
 
 <style lang="scss">
