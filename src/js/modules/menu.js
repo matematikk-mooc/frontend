@@ -297,7 +297,7 @@ export default (function() {
     if(moduleItemSequence && moduleItemSequence.items.length && moduleItemSequence.items[0].next) {
       var nextItem = moduleItemSequence.items[0].next;
       if(nextItem.indent) {
-        id = nextItem.id;
+        var id = nextItem.id;
         api.getModuleItemSequence(courseId, id, handleNextModuleItem);
       } else {
         var nextButton = $(".module-sequence-footer-button--next");
