@@ -16,6 +16,8 @@
           <div class="page-footer--link-container">
             <PageFooterLink :url="'https://kompetanseudirno.azureedge.net/udirdesign/omkompetanseudirno.html'">Om kompetanskepakker</PageFooterLink>
             <div class="page-footer--divider"></div>
+            <PageFooterLink :url="'mailto:kompetansesupport@udir.no'">Kontakt</PageFooterLink>
+            <div class="page-footer--divider"></div>
             <PageFooterLink :url="'https://kompetanseudirno.azureedge.net/udirdesign/privacypolicy.html?v=1_0'">Personvernerklæring</PageFooterLink>
             <div class="page-footer--divider"></div>
             <span class="page-footer--accessibility-declaration">
