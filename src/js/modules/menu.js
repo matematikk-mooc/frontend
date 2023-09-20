@@ -11,8 +11,6 @@ import login from './login.js';
 import moduleitems from '../../templates/modules/moduleitems.hbs';
 import moduleitemsprincipal from '../../templates/modules/moduleitemsprincipal.hbs';
 import multilanguage from '../3party/multilanguage.js';
-import noLoggedInHeader from '../../templates/modules/noLoggedInHeader.hbs';
-import noLoggedInHeaderMobile from '../../templates/modules/noLoggedInHeaderMobile.hbs';
 import settings from '../settings.js';
 import usermenu from '../../templates/modules/usermenu.hbs';
 import util from './util.js'
@@ -503,32 +501,6 @@ export default (function() {
         }
         let customHeader = createApp(NavBar, headerProps);
         customHeader.mount("#notLoggedInHeader");
-
-
-
-        //Remove canvas default buttons in header
-        // var history = document.getElementById("global_nav_history_link")
-        // if (history != null){
-        //   history.remove();
-        // }
-
-        // //Hide standard canvas login button
-        // $("#global_nav_login_link").hide();
-
-        // var linkToAvailableCourses = util.getLinkToAvailableCourses();
-        // this.alterHomeLink(linkToAvailableCourses);
-
-        // let html = util.renderTemplateWithData(noLoggedInHeader, {
-        //   logInText: i18n.LogIn
-        // });
-        // let htmlMobile = util.renderTemplateWithData(noLoggedInHeaderMobile, {
-        //   logInText: i18n.LogIn
-        // });
-
-        // $('#menu').append(html);
-        // $('.ic-app-header__main-navigation').append(html);
-
-        // $("#mobile-header").append(htmlMobile);
 
         login.handleLoginButtonClick();
       }

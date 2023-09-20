@@ -22,8 +22,8 @@
               Tilgjengelighetserklæring på
             </span>
 
-            <PageFooterLink :type="'open-in-new'">Bokmål</PageFooterLink>
-            <PageFooterLink :type="'open-in-new'">Nynorsk</PageFooterLink>
+            <PageFooterLink :type="'open-in-new'" :url="'https://uustatus.no/nb/erklaringer/publisert/2796ebc6-161f-4dc9-9429-70d7dd136431'">Bokmål</PageFooterLink>
+            <PageFooterLink :type="'open-in-new'" :url="'https://uustatus.no/nn/erklaringer/publisert/2796ebc6-161f-4dc9-9429-70d7dd136431'">Nynorsk</PageFooterLink>
           </div>
         </div>
       </div>

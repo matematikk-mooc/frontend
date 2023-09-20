@@ -10,7 +10,6 @@ import registerPopup from '../../templates/modules/registerPopup.hbs'
 import settings from "../settings";
 import util from "./util";
 import utilRoot from "../utilRoot";
-import { wrap } from "@vimeo/player";
 
 export default (function () {
 
@@ -189,28 +188,27 @@ export default (function () {
             else {
               try {
                 document.getElementById('content').innerHTML = "";
-              let wrapper = document.getElementById("application");
-              if(wrapper != null){
-                kpasApi.getAllCourseSettings(function (allCoursesSettings) {
-                  kpasApi.getAllFilters(function (allFilters) {
-                  var allFiltersList = allFilters.result;
-                  var allCoursesWithSettings = util.mapCourseSettings(allCourses, allCoursesSettings.result);
-                const customContent = document.createElement("div");
-                let props = {
-                  courses : allCoursesWithSettings,
-                  allFilters : allFiltersList,
-                };
-                let page = createApp(NotLoggedInPage, props);
-                customContent.setAttribute("id", "notLoggedInPage");
-                customContent.setAttribute("style", "width: 100%; justify-content: center; display: flex;");
-                let footerNode = document.getElementById("wrapper");
-                footerNode.parentNode.insertBefore(customContent, footerNode)
-                $('#wrapper').hide();
-                page.mount("#notLoggedInPage");
-              });
-            });
-
-          }
+                let wrapper = document.getElementById("application");
+                if(wrapper != null){
+                  kpasApi.getAllCourseSettings(function (allCoursesSettings) {
+                    kpasApi.getAllFilters(function (allFilters) {
+                    var allFiltersList = allFilters.result;
+                    var allCoursesWithSettings = util.mapCourseSettings(allCourses, allCoursesSettings.result);
+                    const customContent = document.createElement("div");
+                    let props = {
+                      courses : allCoursesWithSettings,
+                      allFilters : allFiltersList,
+                    };
+                    let page = createApp(NotLoggedInPage, props);
+                    customContent.setAttribute("id", "notLoggedInPage");
+                    customContent.setAttribute("style", "width: 100%; justify-content: center; display: flex;");
+                    let footerNode = document.getElementById("wrapper");
+                    footerNode.parentNode.insertBefore(customContent, footerNode)
+                    $('#wrapper').hide();
+                    page.mount("#notLoggedInPage");
+                    });
+                  });
+                }
               } catch (e) {
                 console.log(e);
               }
@@ -357,19 +355,6 @@ export default (function () {
         }
       })
     },
-    // setCourseEnrolledStatus: function (allCourses, enrolledCourses) {
-    //   var allCoursesWithStatus = [];
-    //   for (var i = 0; i < allCourses.length; i++) {
-    //     allCourses[i].course.enrolled = false;
-    //     for (var j = 0; j < enrolledCourses.length; j++) {
-    //       if (allCourses[i].course.id == enrolledCourses[j].id) {
-    //         allCourses[i].course.enrolled = true;
-    //       }
-    //     }
-    //     allCoursesWithStatus.push(allCourses[i].course);
-    //   }
-    //   return allCoursesWithStatus;
-    // },
     insertModalAndOverlay: function () {
       $('body').append("<div class='mmooc-modal-overlay'></div>");
       $('body').append("<div class='mmooc-modal'></div>");
