@@ -24,17 +24,17 @@
 import { ref, watch } from 'vue'
 import Button from './Button.vue'
 
-const {allFilters} = defineProps(['allFilters'])
+const {filterData} = defineProps(['filterData'])
 
 const data = [
   {
     name: 'Målgruppe',
-    filter: allFilters.filter(item => item.type == 'TARGET').map(item => item)
+    filter: filterData.filter(item => item.type == 'TARGET').map(item => item)
 
   },
   {
     name: 'Kategori',
-    filter: allFilters.filter(item => item.type == 'CATEGORY').map(item => item)
+    filter: filterData.filter(item => item.type == 'CATEGORY').map(item => item)
   }
 ]
 

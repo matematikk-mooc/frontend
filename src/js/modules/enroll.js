@@ -197,7 +197,7 @@ export default (function () {
                     const customContent = document.createElement("div");
                     let props = {
                       courses : allCoursesWithSettings,
-                      allFilters : allFiltersList,
+                      filterData : allFiltersList,
                     };
                     let page = createApp(NotLoggedInPage, props);
                     customContent.setAttribute("id", "notLoggedInPage");

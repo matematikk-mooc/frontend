@@ -8,7 +8,7 @@
     <div class="not-logged-in-page--content">
       <h2>Alle tilgjengelige kompetansepakker</h2>
       <div class="not-logged-in-page--layout">
-        <CardFilter @update:selectedFilters="onSelectedFiltersUpdate" :allFilters="allFilters"></CardFilter>
+        <CardFilter @update:selectedFilters="onSelectedFiltersUpdate" :filterData="filterData"></CardFilter>
         <CardList :courses="coursesToView"></CardList>
       </div>
     </div>
@@ -22,7 +22,7 @@ import Banner from '../components/Banner.vue'
 import NotLoggedInIntro from '../components/NotLoggedInIntro.vue'
 import {ref} from 'vue'
 
-const { courses, allFilters } = defineProps(['courses', 'allFilters']);
+const { courses, filterData } = defineProps(['courses', 'filterData']);
 const coursesToView = ref([...courses]);
 
 

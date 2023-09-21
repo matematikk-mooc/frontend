@@ -39,6 +39,7 @@ const props = defineProps(['size', 'type', 'text', 'link'])
   line-height: 1;
   &:hover {
     background: #00468e;
+    color: $color-white;
   }
 }
 
@@ -67,10 +68,6 @@ const props = defineProps(['size', 'type', 'text', 'link'])
   }
   &.btn--lg {
     padding: 0.625rem 1.625rem 0.125rem 1.625rem;
-  }
-  &:hover {
-    color: $color-white;
-    border-color: #00468e;
   }
 }
 </style>

@@ -5,7 +5,7 @@
       <div class="page-footer--content-wrapper">
         <div class="page-footer--logo-wrapper">
           <a :href="'https://www.udir.no/'" alt="udir.no">
-            <img class="page-footer--logo" :src="`${server}/logo-white.png`" />
+            <img aria-label="udir-logo" class="page-footer--logo" :src="`${server}/logo-white.png`" />
           </a>
         </div>
         <div class="page-footer--main-content">
@@ -24,8 +24,8 @@
               Tilgjengelighetserklæring på
             </span>
 
-            <PageFooterLink :type="'open-in-new'" :url="'https://uustatus.no/nb/erklaringer/publisert/2796ebc6-161f-4dc9-9429-70d7dd136431'">Bokmål</PageFooterLink>
-            <PageFooterLink :type="'open-in-new'" :url="'https://uustatus.no/nn/erklaringer/publisert/2796ebc6-161f-4dc9-9429-70d7dd136431'">Nynorsk</PageFooterLink>
+            <PageFooterLink aria-label="Tilgjengelighetserklæring på bokmål" :type="'open-in-new'" :url="'https://uustatus.no/nb/erklaringer/publisert/2796ebc6-161f-4dc9-9429-70d7dd136431'">Bokmål</PageFooterLink>
+            <PageFooterLink aria-label="Tilgjengelighetserklæring på nynorsk" :type="'open-in-new'" :url="'https://uustatus.no/nn/erklaringer/publisert/2796ebc6-161f-4dc9-9429-70d7dd136431'">Nynorsk</PageFooterLink>
           </div>
         </div>
       </div>

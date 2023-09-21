@@ -1,6 +1,6 @@
 <template>
   <a :href="url" class="page-footer--link">
-    <slot></slot> <SvgIcon v-if="type == 'open-in-new'" :size="16" :path="mdiOpenInNew" />
+    <slot></slot> <SvgIcon v-if="type == 'open-in-new'" :aria-label="type" :size="16" :path="mdiOpenInNew" />
   </a>
 </template>
 <script setup>
