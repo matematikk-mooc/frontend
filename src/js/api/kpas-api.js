@@ -28,9 +28,6 @@ export default (function() {
         data: params,
         crossDomain: true,
         success(response) {
-            console.log(response)
-            // response.__setitem__("Content-type", "application/json")
-            // response.__setitem__("Access-Control-Allow-Origin", "*")
           callback(response);
         },
         error(XMLHttpRequest, textStatus, errorThrown) {
@@ -47,13 +44,9 @@ export default (function() {
     getAllCourseSettings: function(callback, error) {
         this._get({
           callback: function(courses) {
-            // var filteredCourses = courses.filter(
-            //   util.filterSearchAllCourse
-            // );
             callback(courses);
           },
           error: error,
-          // if not authenticated, it displays only courses with Open Enrollment enabled
           uri: '/courses/settings',
           params: {}
         });
