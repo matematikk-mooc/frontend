@@ -107,7 +107,7 @@ defineProps(['theme', 'courseIllustration'])
   .card-content-title {
 
     h3 {
-      font-size: 1.125rem;
+      font-size: 1.125;
       font-family: 'Roboto';
       font-weight: 600;
       line-height: 150%;
