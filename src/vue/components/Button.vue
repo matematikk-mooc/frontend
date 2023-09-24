@@ -5,7 +5,7 @@ const props = defineProps(['size', 'type'])
   <button
     :class="[
       { btn: true },
-      { 'btn--filled': type === undefined || type === 'filled' },
+      { 'btn--filled': type === undefined || type === 'submit' || type === 'filled' },
       { 'btn--outlined': type === 'outlined' },
       { 'btn--sm': size === 'sm' },
       { 'btn--md': size === undefined || size === 'md' },

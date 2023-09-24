@@ -1,0 +1,25 @@
+@mixin shake-effect() {
+ animation: shake 0.25s ease-in-out;
+
+        @keyframes shake {
+          0% {
+            transform: translateX(0);
+          }
+
+          25% {
+            transform: translateX(-0.313rem);
+          }
+
+          50% {
+            transform: translateX(0.313rem);
+          }
+
+          75% {
+            transform: translateX(-0.313rem);
+          }
+
+          100% {
+          transform: translateX(0);
+          }
+        }
+}

@@ -1,7 +1,8 @@
 /** @type { import('@storybook/vue3-webpack5').StorybookConfig } */
 const webpack = require("webpack");
 const path = require("path");
-const config = {
+
+module.exports = {
   stories: ["../**/*.stories.@(js|jsx|mjs|ts|tsx)"],
   addons: [
     "storybook-addon-sass-postcss",
@@ -18,13 +19,14 @@ const config = {
   },
   staticDirs: [path.resolve(__dirname, "../assets")],
   webpackFinal: async (config) => {
+    // Define global constants that can be accessed in your stories
     config.plugins.push(
       new webpack.DefinePlugin({
         SERVER: JSON.stringify("http://localhost:6006/"),
       })
     );
+    
     return config;
   },
 };
 
-export default config;
