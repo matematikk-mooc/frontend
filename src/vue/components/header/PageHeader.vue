@@ -8,9 +8,19 @@
         </span>
       </li>
 
-      <li class="header__list-item">
-        <span v-if="!logged_in">
-          <a class="header__link" :href="loginLink">Login</a>
+      <li class="header__list-item" v-if="!logged_in">
+        <span>
+          <a class="header__link" :href="loginLink">Logg inn</a>
+        </span>
+      </li>
+      <li class="header__list-item" v-if="logged_in">
+        <span>
+          <a class="header__link" :href="settingsLink">Innstillinger</a>
+        </span>
+      </li>
+      <li class="header__list-item" v-if="logged_in">
+        <span>
+          <a class="header__link" :href="logoutLink">Logg ut</a>
         </span>
       </li>
     </ul>
@@ -21,6 +31,8 @@
   const props = defineProps(['logged_in'])
   const domain = window.location.origin;
   const loginLink = domain + "/login/canvas"
+  const settingsLink = domain + "/profile/settings"
+  const logoutLink = domain + "/logout?design=udir"
 
 </script>
 <style lang="scss">

@@ -3,13 +3,13 @@
   <div class="not-logged-in-page">
     <div class="not-logged-in-page--header">
       <Banner></Banner>
-      <NotLoggedInIntro :newestCourse="courses[0].course"></NotLoggedInIntro>
+      <NotLoggedInIntro :newestCourse="courses[0]"></NotLoggedInIntro>
     </div>
     <div class="not-logged-in-page--content">
       <h2>Alle tilgjengelige kompetansepakker</h2>
       <div class="not-logged-in-page--layout">
         <CardFilter @update:selectedFilters="onSelectedFiltersUpdate" :filterData="filterData"></CardFilter>
-        <CardList :courses="coursesToView"></CardList>
+        <CardList :authorized="false" :courses="coursesToView"></CardList>
       </div>
     </div>
   </div>
@@ -25,7 +25,6 @@ import {ref} from 'vue'
 const { courses, filterData } = defineProps(['courses', 'filterData']);
 const coursesToView = ref([...courses]);
 
-
 const onSelectedFiltersUpdate = (updatedFilters) => {
   if(updatedFilters.length == 0){
     coursesToView.value = [...courses]
@@ -33,8 +32,8 @@ const onSelectedFiltersUpdate = (updatedFilters) => {
   }
   coursesToView.value = []
   courses.forEach(course =>{
-    if(course.course.course_settings){
-      course.course.course_settings.course_filter.forEach(courseFilter => {
+    if(course.course_settings){
+      course.course_settings.course_filter.forEach(courseFilter => {
         for (const item of updatedFilters) {
           if (item.id === courseFilter.filter.id) {
             if(!coursesToView.value.includes(course)){

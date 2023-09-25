@@ -1,10 +1,4 @@
-<script setup>
 
-import { ref } from 'vue'
-
-const server= SERVER
-
-</script>
 <template>
   <div class="banner">
     <div class="before-login-image-left">
@@ -13,7 +7,7 @@ const server= SERVER
       />
     </div>
     <div class="caption">
-      <h1>Velkommen til utdanningsdirektoratets kompetanseportal!</h1>
+      <h1>Velkommen til Utdanningsdirektoratets kompetanseportal!</h1>
     </div>
     <div class="before-login-image-right">
       <img
@@ -22,6 +16,11 @@ const server= SERVER
     </div>
   </div>
 </template>
+
+<script setup>
+const server= SERVER
+
+</script>
 
 <style lang="scss">
 @import '../design/colors.scss';

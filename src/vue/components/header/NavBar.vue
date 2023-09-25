@@ -2,7 +2,7 @@
   <div class="header--nav-container">
     <PageHeader :logged_in="$props.logged_in"></PageHeader>
     <nav class="page--nav-bar">
-      <NavBarLinks></NavBarLinks>
+      <NavBarLinks :logged_in="$props.logged_in"></NavBarLinks>
     </nav>
   </div>
 </template>

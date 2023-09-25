@@ -14,15 +14,29 @@
       <div class="card-content-description">
         <slot name="description"></slot>
       </div>
+      <div>
+          <slot name="filtername"></slot>
+      </div>
+      <div v-if="hasGoToCourse" class="card-content-enrolled">
+        <img class="card-content-enrolled-icon" :src="server +'enrolled-green-circle.svg'"/>
+        <p class="card-content-enrolled-text">
+          <slot name="enrolled"></slot>
+        </p>
+      </div>
       <div class="card-content-button-container">
-        <Button :type="'filled'" :size="'md'">
+        <Button v-if="hasLeftButton" :type="'filled'" :size="'md'">
           <template v-slot:default>
             <slot name="leftButton"></slot>
           </template>
         </Button>
-        <Button :type="'outlined'" :size="'md'">
+        <Button v-if="hasRightButton" :type="'outlined'" :size="'md'">
           <template v-slot:default>
             <slot name="rightButton"></slot>
+          </template>
+        </Button>
+        <Button v-if="hasGoToCourse" :type="'outlined'" :size="'md'" v-on:click="goToCourse">
+          <template v-slot:default>
+            <slot name="goToCourse"></slot>
           </template>
         </Button>
       </div>
@@ -32,9 +46,20 @@
 
 <script setup lang="js">
 import Button from './Button.vue';
+import { useSlots } from 'vue';
 
 const server= SERVER
-defineProps(['theme', 'courseIllustration'])
+const {theme, courseIllustration, courseId} = defineProps(['theme', 'courseIllustration', 'courseId'])
+
+const slots = useSlots();
+const hasRightButton = slots['rightButton'] !== undefined;
+const hasLeftButton = slots['leftButton'] !== undefined;
+const hasGoToCourse = slots['goToCourse'] !== undefined;
+const domain = window.location.origin;
+
+const goToCourse = function () {
+  window.location.href = domain + '/courses/' + courseId
+}
 
 </script>
 
@@ -113,5 +138,26 @@ defineProps(['theme', 'courseIllustration'])
       line-height: 150%;
     }
   }
+.card-content-enrolled {
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+
+  }
+  .card-content-enrolled-text {
+    font-size: 0.875rem;
+    font-family: 'Roboto';
+    font-weight: 400;
+    color: black;
+
+  }
+  .card-content-enrolled-icon {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+  }
+
 }
 </style>
