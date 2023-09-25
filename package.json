@@ -50,6 +50,7 @@
     "terser-webpack-plugin": "^5.3.9",
     "vue": "^3.3.4",
     "vue-loader": "^17.2.2",
+    "vee-validate": "^4.5.8",
     "vue-material-design-icons": "^5.2.0",
     "vue3-icon": "^2.1.0",
     "webpack": "^5.88.2",

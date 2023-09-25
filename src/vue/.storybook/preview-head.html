@@ -1,11 +1,12 @@
-<!-- .storybook/preview-head.html -->
 
-<!-- Pull in static files served from your Static directory or the internet -->
-<!-- Example: `main.js|ts` is configured with staticDirs: ['../public'] and your font is located in the `fonts` directory inside your `public` directory -->
-<link rel="preload" href="/fonts/MontserratBold.woff2" />
-<link rel="preload" href="/fonts/MontserratRegular.woff2" />
-<link rel="preload" href="/fonts/MontserratMedium.woff2" />
+<!-- Preload fonts for better performance -->
+<link rel="preload" href="/fonts/MontserratBold.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
+<link rel="preload" href="/fonts/MontserratRegular.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
+<link rel="preload" href="/fonts/MontserratMedium.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
 
-<link rel="preload" href="/fonts/RobotoBold.woff2" />
-<link rel="preload" href="/fonts/RobotoRegular.woff2" />
-<link rel="preload" href="/fonts/RobotoMedium.woff2" />
+<link rel="preload" href="/fonts/RobotoBold.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
+<link rel="preload" href="/fonts/RobotoRegular.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
+<link rel="preload" href="/fonts/RobotoMedium.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
+
+<!-- Include custom fonts stylesheet -->
+<link rel="stylesheet" href="/fonts.css">
