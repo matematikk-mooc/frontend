@@ -1,7 +1,9 @@
+import NavBar from '../../vue/components/header/NavBar.vue';
 import activitystream from '../../templates/modules/activitystream.hbs';
 import api from '../api/api.js';
 import backbutton from '../../templates/modules/backbutton.hbs';
 import coursemenu from '../../templates/modules/coursemenu.hbs';
+import { createApp } from 'vue/dist/vue.runtime.esm-bundler.js';
 import groupdiscussionGetHelpFromTeacher from '../../templates/modules/groupdiscussionGetHelpFromTeacher.hbs';
 import { hrefQueryString } from '../settingsRoot.js';
 import i18n from '../i18n.js';
@@ -9,8 +11,6 @@ import login from './login.js';
 import moduleitems from '../../templates/modules/moduleitems.hbs';
 import moduleitemsprincipal from '../../templates/modules/moduleitemsprincipal.hbs';
 import multilanguage from '../3party/multilanguage.js';
-import noLoggedInHeader from '../../templates/modules/noLoggedInHeader.hbs';
-import noLoggedInHeaderMobile from '../../templates/modules/noLoggedInHeaderMobile.hbs';
 import settings from '../settings.js';
 import usermenu from '../../templates/modules/usermenu.hbs';
 import util from './util.js'
@@ -492,29 +492,15 @@ export default (function() {
     renderUnauthenticatedMenu: function() {
       if (!util.isAuthenticated()) {
 
-        //Remove canvas default buttons in header
-        var history = document.getElementById("global_nav_history_link")
-        if (history != null){
-          history.remove();
+        $('#header').hide();
+        var headerwrapper = document.getElementById("application").children[0];
+        headerwrapper.append(document.createElement("div"));
+        headerwrapper.setAttribute("id", "notLoggedInHeader");
+        const headerProps = {
+          logged_in: false
         }
-
-        //Hide standard canvas login button
-        $("#global_nav_login_link").hide();
-
-        var linkToAvailableCourses = util.getLinkToAvailableCourses();
-        this.alterHomeLink(linkToAvailableCourses);
-
-        let html = util.renderTemplateWithData(noLoggedInHeader, {
-          logInText: i18n.LogIn
-        });
-        let htmlMobile = util.renderTemplateWithData(noLoggedInHeaderMobile, {
-          logInText: i18n.LogIn
-        });
-
-        $('#menu').append(html);
-        $('.ic-app-header__main-navigation').append(html);
-
-        $("#mobile-header").append(htmlMobile);
+        let customHeader = createApp(NavBar, headerProps);
+        customHeader.mount("#notLoggedInHeader");
 
         login.handleLoginButtonClick();
       }

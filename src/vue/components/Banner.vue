@@ -9,7 +9,7 @@ const server= SERVER
   <div class="banner">
     <div class="before-login-image-left">
       <img
-        :src ="`${server}IllustrasjonerHeaderIkkeInnloggetSide/illustrasjon-kvinne-hovedside-innlogging.svg`"
+        aria-label="illustrasjon-banner" :src ="`${server}IllustrasjonerHeaderIkkeInnloggetSide/illustrasjon-kvinne-hovedside-innlogging.svg`"
       />
     </div>
     <div class="caption">
@@ -17,7 +17,7 @@ const server= SERVER
     </div>
     <div class="before-login-image-right">
       <img
-        :src="`${server}IllustrasjonerHeaderIkkeInnloggetSide/illustrasjon-mann-hovedside-innlogging.svg`"
+      aria-label="illustrasjon-banner" :src="`${server}IllustrasjonerHeaderIkkeInnloggetSide/illustrasjon-mann-hovedside-innlogging.svg`"
       />
     </div>
   </div>

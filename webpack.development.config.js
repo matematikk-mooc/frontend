@@ -15,17 +15,19 @@ module.exports = {
       "./src/js/settingsRoot.js",
       "./src/js/utilRoot.js",
       "./src/js/rootaccount.js",
+      "./src/vue/design/index.scss",
     ],
 
     "subaccount-localhost": [
       "./src/js/settingsRoot.js",
       "./src/js/utilRoot.js",
       "./src/js/subaccount.js",
+      "./src/vue/design/index.scss",
     ],
     "kompetanseportalen-localhost": [
       "./src/js/i18n.js",
       "./src/js/main.js",
-      "./src/vue/app.js",
+      // "./src/vue/app.js",
     ],
     "badges-dev": [
       "./src/addons/badges/js/main.js",
@@ -172,10 +174,11 @@ module.exports = {
     ],
   },
   resolve: {
+    symlinks: false,
     alias: {
       setup: path.resolve(__dirname, "src/css/setup"),
       Handlebars: path.resolve("src/3party/handlebars-v1.3.0.js"),
-      vue$: path.resolve("node_modules/vue/dist/vue.esm-bundler.js"),
+      vue$: path.resolve("node_modules/vue/dist/vue.runtime.esm-bundler.js"),
     },
     extensions: [".js", ".less", ".hbs", ".vue"],
     preferRelative: true,

@@ -1,6 +1,3 @@
-<script setup>
-const props = defineProps(['size', 'type'])
-</script>
 <template>
   <button
     :class="[
@@ -12,9 +9,14 @@ const props = defineProps(['size', 'type'])
       { 'btn--lg': size === 'lg' }
     ]"
   >
-    <slot></slot>
-  </button>
+  <slot></slot>
+</button>
 </template>
+
+<script setup>
+const props = defineProps(['size', 'type', 'text', 'link'])
+
+</script>
 
 <style lang="scss">
 @import '../design/colors.scss';
@@ -37,6 +39,7 @@ const props = defineProps(['size', 'type'])
   line-height: 1;
   &:hover {
     background: #00468e;
+    color: $color-white;
   }
 }
 
@@ -65,10 +68,6 @@ const props = defineProps(['size', 'type'])
   }
   &.btn--lg {
     padding: 0.625rem 1.625rem 0.125rem 1.625rem;
-  }
-  &:hover {
-    color: $color-white;
-    border-color: #00468e;
   }
 }
 </style>

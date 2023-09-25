@@ -1,7 +1,7 @@
 <template>
     <div class="licence">
       <h1 >I AM THE HEADER</h1>
-      <p>{{ msg }}</p>
+      <p>{{ allC }}</p>
       <button @click="updateText" class="testButton">Trykk på meg</button>
     </div>
   </template>
@@ -9,11 +9,14 @@
   <script>
     export default {
       name: 'TestHeader',
-
+      props: {
+        courses: Object
+      },
       data() {
         return {
           msg: 'Hello world!',
-          count: 0
+          count: 0,
+          allC : this.courses
         }
       },
       created() {

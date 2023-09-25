@@ -4,8 +4,8 @@
     <div class="page-footer--content">
       <div class="page-footer--content-wrapper">
         <div class="page-footer--logo-wrapper">
-          <a :href="'url'" alt="udir.no">
-            <img class="page-footer--logo" :src="`${server}/logo-white.png`" />
+          <a :href="'https://www.udir.no/'" alt="udir.no">
+            <img aria-label="udir-logo" class="page-footer--logo" :src="`${server}/logo-white.png`" />
           </a>
         </div>
         <div class="page-footer--main-content">
@@ -14,16 +14,18 @@
           </div>
 
           <div class="page-footer--link-container">
-            <PageFooterLink>Om kompetanskepakker</PageFooterLink>
+            <PageFooterLink :url="'https://kompetanseudirno.azureedge.net/udirdesign/omkompetanseudirno.html'">Om kompetanskepakker</PageFooterLink>
             <div class="page-footer--divider"></div>
-            <PageFooterLink>Personvernerklæring</PageFooterLink>
+            <PageFooterLink :url="'mailto:kompetansesupport@udir.no'">Kontakt</PageFooterLink>
+            <div class="page-footer--divider"></div>
+            <PageFooterLink :url="'https://kompetanseudirno.azureedge.net/udirdesign/privacypolicy.html?v=1_0'">Personvernerklæring</PageFooterLink>
             <div class="page-footer--divider"></div>
             <span class="page-footer--accessibility-declaration">
               Tilgjengelighetserklæring på
             </span>
 
-            <PageFooterLink :type="'open-in-new'">Bokmål</PageFooterLink>
-            <PageFooterLink :type="'open-in-new'">Nynorsk</PageFooterLink>
+            <PageFooterLink aria-label="Tilgjengelighetserklæring på bokmål" :type="'open-in-new'" :url="'https://uustatus.no/nb/erklaringer/publisert/2796ebc6-161f-4dc9-9429-70d7dd136431'">Bokmål</PageFooterLink>
+            <PageFooterLink aria-label="Tilgjengelighetserklæring på nynorsk" :type="'open-in-new'" :url="'https://uustatus.no/nn/erklaringer/publisert/2796ebc6-161f-4dc9-9429-70d7dd136431'">Nynorsk</PageFooterLink>
           </div>
         </div>
       </div>
@@ -36,6 +38,7 @@ const server = SERVER;
 </script>
 <style lang="scss">
 @import '../../design/colors.scss';
+
 .page-footer--content {
   display: inline-flex;
   flex-direction: column;
@@ -43,6 +46,7 @@ const server = SERVER;
   align-items: flex-start;
   width: 100%;
   height: 100%;
+  // bottom: 0;
 
   .page-footer--content-wrapper {
     width: 100%;
@@ -51,7 +55,7 @@ const server = SERVER;
     padding-top: 2rem;
     padding-bottom: 2rem;
     background: map-get($color-palette-steel, background, 700);
-    justify-content: flex-start;
+    justify-content: center;
     align-items: flex-end;
     gap: 4rem;
     display: inline-flex;

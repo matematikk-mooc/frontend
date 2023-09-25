@@ -3,21 +3,28 @@
     <div class="card-illustration-box" :class="theme">
       <img
         class="card-illustration-box-image"
-        :src="`${server}IllustrasjonerKompetansepakker/Barnehage/DigitalPraksis/digital-praksis-liten.svg`"
+        :src="courseIllustration"
         alt="illustrasjon"
       />
     </div>
     <div class="card-content-container">
       <div class="card-content-title">
-        <h3>What everything is about.</h3>
+        <h3> <slot name="title"></slot></h3>
       </div>
       <div class="card-content-description">
-        Here is some content for the card content. The card is very useful to display key
-        information about other content.
+        <slot name="description"></slot>
       </div>
       <div class="card-content-button-container">
-        <Button :type="'filled'" :size="'md'">Les mer</Button>
-        <Button :type="'outlined'" :size="'md'">Meld deg på</Button>
+        <Button :type="'filled'" :size="'md'">
+          <template v-slot:default>
+            <slot name="leftButton"></slot>
+          </template>
+        </Button>
+        <Button :type="'outlined'" :size="'md'">
+          <template v-slot:default>
+            <slot name="rightButton"></slot>
+          </template>
+        </Button>
       </div>
     </div>
   </div>
@@ -25,12 +32,14 @@
 
 <script setup lang="js">
 import Button from './Button.vue';
-const props = defineProps(['theme']);
+
 const server= SERVER
+defineProps(['theme', 'courseIllustration'])
+
 </script>
 
 <style lang="scss">
-@import '../design/card-themes.scss';
+@import '../design/_card-themes.scss';
 
 .card {
   position: relative;
@@ -101,6 +110,7 @@ const server= SERVER
       font-size: 1.125;
       font-family: 'Roboto';
       font-weight: 600;
+      line-height: 150%;
     }
   }
 }

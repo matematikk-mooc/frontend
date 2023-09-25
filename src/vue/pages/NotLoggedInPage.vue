@@ -1,27 +1,55 @@
+
+<template>
+  <div class="not-logged-in-page">
+    <div class="not-logged-in-page--header">
+      <Banner></Banner>
+      <NotLoggedInIntro :newestCourse="courses[0].course"></NotLoggedInIntro>
+    </div>
+    <div class="not-logged-in-page--content">
+      <h2>Alle tilgjengelige kompetansepakker</h2>
+      <div class="not-logged-in-page--layout">
+        <CardFilter @update:selectedFilters="onSelectedFiltersUpdate" :filterData="filterData"></CardFilter>
+        <CardList :courses="coursesToView"></CardList>
+      </div>
+    </div>
+  </div>
+</template>
+
 <script setup>
 import CardList from '../components/CardList.vue'
 import CardFilter from '../components/CardFilter.vue'
 import Banner from '../components/Banner.vue'
 import NotLoggedInIntro from '../components/NotLoggedInIntro.vue'
+import {ref} from 'vue'
+
+const { courses, filterData } = defineProps(['courses', 'filterData']);
+const coursesToView = ref([...courses]);
+
+
+const onSelectedFiltersUpdate = (updatedFilters) => {
+  if(updatedFilters.length == 0){
+    coursesToView.value = [...courses]
+    return
+  }
+  coursesToView.value = []
+  courses.forEach(course =>{
+    if(course.course.course_settings){
+      course.course.course_settings.course_filter.forEach(courseFilter => {
+        for (const item of updatedFilters) {
+          if (item.id === courseFilter.filter.id) {
+            if(!coursesToView.value.includes(course)){
+              coursesToView.value.push(course);
+            }
+            break;
+          }
+        }
+      }
+      )
+    }
+  }
+  )
+}
 </script>
-<template>
-  <div class="not-logged-in-page">
-    <div class="not-logged-in-page--header">
-      <Banner></Banner>
-      <NotLoggedInIntro></NotLoggedInIntro>
-    </div>
-    <div class="not-logged-in-page--content">
-      <h2>Alle tilgjengelige kompetansepakker</h2>
-      <div class="not-logged-in-page--layout">
-        <CardFilter></CardFilter>
-        <CardList></CardList>
-      </div>
-    </div>
-    <div class="not-logged-in-page--footer">
-      <!-- <slot name="footer"></slot> -->
-    </div>
-  </div>
-</template>
 
 <style lang="scss">
 .not-logged-in-page {
@@ -33,6 +61,7 @@ import NotLoggedInIntro from '../components/NotLoggedInIntro.vue'
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
+  min-height: 100vh;
 }
 
 .not-logged-in-page--header {

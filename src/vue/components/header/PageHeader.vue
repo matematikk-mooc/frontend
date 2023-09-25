@@ -1,23 +1,28 @@
 <template>
   <header class="header__content">
-    <div class="header-brand">Kompetanse portalen</div>
+    <div class="header-brand">Kompetanseportalen</div>
     <ul class="header__link-list">
       <li class="header__list-item">
         <span>
-          <a class="header__link" :href="'url'">FAQ</a>
+          <a class="header__link" :href="'url'">Ofte stilte spørsmål</a>
         </span>
       </li>
 
       <li class="header__list-item">
-        <span>
-          <a class="link header__link" :href="'url'">Login</a>
+        <span v-if="!logged_in">
+          <a class="header__link" :href="loginLink">Login</a>
         </span>
       </li>
     </ul>
   </header>
 </template>
 
-<script></script>
+<script setup>
+  const props = defineProps(['logged_in'])
+  const domain = window.location.origin;
+  const loginLink = domain + "/login/canvas"
+
+</script>
 <style lang="scss">
 @import '../../design/colors.scss';
 .header__content {

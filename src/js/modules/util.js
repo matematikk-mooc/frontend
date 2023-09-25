@@ -4,6 +4,7 @@ import { hrefAmpQueryString, hrefQueryString } from "../settingsRoot";
 
 import { CourseOptions } from "../utilities/course-options";
 import  api from '../api/api.js'
+import kpasApi from "../api/kpas-api.js";
 import pages from './pages.js'
 import settings from "../settings";
 
@@ -15,6 +16,16 @@ export default (function () {
       myCoursesList: 3,
       dataportenCallback: 4,
       uidpCallback: 5
+    },
+
+    mapCourseSettings: function (courses, courseSettings) {
+      courses.forEach(course => {
+        var cc = courseSettings.find(x => x.course_id === course.course.id)
+        if(cc) {
+          course.course.course_settings = cc
+        }
+      });
+      return courses
     },
     mmoocLoadScript: function (mmoocScript) {
       var mmoocScriptElement = document.createElement('script');
