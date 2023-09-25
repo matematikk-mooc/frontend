@@ -1,49 +1,16 @@
-<script setup lang="js">
-const data = [
-  {
-    name: 'Målgruppe',
-    filter: ['Barnehage', 'Grunnskole', 'SFO', 'VGS', 'Fagopplæring', 'PPT']
-  },
-  {
-    name: 'Tema',
-    filter: [
-      'Mobbing',
-      'Personvern',
-      'KI',
-      'Inkludering',
-      'Læreplan',
-      'Skolemiljø',
-      'Barnehagemiljø',
-      'UU',
-      'Digitalisering',
-      'Regelverk'
-    ]
-  },
-  {
-    name: 'Annet',
-    filter: ['Nyeste kompetansepakke', 'Inaktiv']
-  }
-]
-import { ref } from 'vue'
-
-const filters = ref(data)
-
-defineExpose({
-  filters
-})
-</script>
 <template>
   <div class="filter-container">
+    <Button :type="'outlined'" :size="'md'" @click="clearFilters">Tilbakestill filter</Button>
     <div class="filter-group" v-for="item in filters">
       <div class="filter-title">
         {{ item.name }}
       </div>
 
       <ul>
-        <li v-for="filter in item.filter">
-          <label class="checkbox-label" :for="filter">
-            {{ filter }}
-            <input :id="filter" :value="filter" :name="filter" type="checkbox" /><span
+        <li v-for="filter in item.filter" :key="filter.id">
+          <label class="checkbox-label" :for="filter.id">
+            {{ filter.filter_name }}
+            <input :id="filter.id" :value="filter" :name="filter" type="checkbox" v-model="selectedFilters" /><span
               class="checkmark"
             ></span
           ></label>
@@ -52,6 +19,44 @@ defineExpose({
     </div>
   </div>
 </template>
+
+<script setup lang="js">
+import { ref, watch } from 'vue'
+import Button from './Button.vue'
+
+const {filterData} = defineProps(['filterData'])
+
+const data = [
+  {
+    name: 'Målgruppe',
+    filter: filterData.filter(item => item.type == 'TARGET').map(item => item)
+
+  },
+  {
+    name: 'Kategori',
+    filter: filterData.filter(item => item.type == 'CATEGORY').map(item => item)
+  }
+]
+
+const filters = ref(data)
+const selectedFilters = ref([])
+
+defineExpose({
+  filters,
+  selectedFilters
+})
+
+const emit = defineEmits(['update:selectedFilters'])
+
+watch(selectedFilters, (newValue, oldValue) => {
+  emit('update:selectedFilters', newValue)
+})
+
+const clearFilters = () => {
+  selectedFilters.value = []
+}
+
+</script>
 
 <style lang="scss">
 .filter-container {

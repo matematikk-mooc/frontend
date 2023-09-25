@@ -2,7 +2,7 @@ import NotLoggedInPage from "../../vue/pages/NotLoggedInPage.vue";
 import api from "../api/api";
 import courselist from "../../templates/modules/courselist.hbs";
 import courselistcontainer from "../../templates/modules/courselistcontainer.hbs";
-import { createApp } from "vue/dist/vue.runtime.esm-browser.prod.js";
+import { createApp } from "vue/dist/vue.runtime.esm-bundler.js";
 import enrollprivacypolicy from "../../templates/modules/enrollprivacypolicy.hbs";
 import { hrefQueryString } from "../settingsRoot";
 import i18n from "../i18n";
@@ -23,50 +23,34 @@ export default (function () {
           $oldContent.appendTo("#right-side-wrapper #right-side");
           let html = "";
           let linkToAvailableCourses = util.getLinkToAvailableCourses();
-          // if (courses.length == 0) {
-          //   html = `<h1>Mine ${i18n.CoursePlural.toLowerCase()}</h1><p>${
-          //     i18n.NoEnrollments
-          //   }</p><a class='btn' href='${linkToAvailableCourses}'>Se tilgjengelige ${i18n.CoursePlural.toLowerCase()}</a>`;
-          //   $(`#${parentId}`).html(html);
-          // } else {
-            // html = util.renderTemplateWithData(courselistcontainer, {
-            //   courseLabel: i18n.CoursePlural.toLowerCase(),
-            //   queryString: hrefQueryString
-            // });
-            // $(document).ready(function() {
-            let id = document
-              .getElementById("wrapper")
-              .appendChild(document.createElement("div"));
-            let page = createApp(NotLoggedInPage);
-            console.error(id);
-            console.error(page);
-            id.setAttribute("id", "notLoggedInPage");
-            id.setAttribute("style", "height: 100vh");
-            page.mount("#notLoggedInPage");
-            // });
-            /*
-            const sortedCourses = util.arraySorted(
-              courses,
-              'course_code'
-            );
-            */
-            // const sortedCourses = util.sortCourses(courses);
-            // const categorys = util.getCourseCategories(sortedCourses);
-            // const coursesCategorized = util.getCoursesCategorized(
-            //   sortedCourses,
-            //   categorys
-            // );
+          if (courses.length == 0) {
+            html = `<h1>Mine ${i18n.CoursePlural.toLowerCase()}</h1><p>${
+              i18n.NoEnrollments
+            }</p><a class='btn' href='${linkToAvailableCourses}'>Se tilgjengelige ${i18n.CoursePlural.toLowerCase()}</a>`;
+            $(`#${parentId}`).html(html);
+          } else {
+            html = util.renderTemplateWithData(courselistcontainer, {
+              courseLabel: i18n.CoursePlural.toLowerCase(),
+              queryString: hrefQueryString
+            });
 
-            // coursesCategorized.forEach((course) => {
-            //   html = util.renderTemplateWithData(courselist, {
-            //     title: course.title,
-            //     courses: course.courses,
-            //     courseLabel: i18n.Course.toLowerCase(),
-            //   });
-            //   $(".mmooc-course-list-container").append(html);
-            // });
-            // util.updateProgressForRoleBasedCourses(courses);
-          // }
+            const sortedCourses = util.sortCourses(courses);
+            const categorys = util.getCourseCategories(sortedCourses);
+            const coursesCategorized = util.getCoursesCategorized(
+              sortedCourses,
+              categorys
+            );
+
+            coursesCategorized.forEach((course) => {
+              html = util.renderTemplateWithData(courselist, {
+                title: course.title,
+                courses: course.courses,
+                courseLabel: i18n.Course.toLowerCase(),
+              });
+              $(".mmooc-course-list-container").append(html);
+            });
+            util.updateProgressForRoleBasedCourses(courses);
+          }
           document.title = i18n.CoursePlural;
 
           $.isFunction(callback) && callback();

@@ -1,7 +1,7 @@
 <template>
   <div class="nav-bar__link-list-container">
     <ul class="nav-bar__link-list">
-      <li class="nav-bar__list-item">
+      <!-- <li class="nav-bar__list-item">
         <span>
           <a class="nav-bar__link" :href="'url'">Eventer</a>
         </span>
@@ -25,7 +25,7 @@
         <span>
           <a class="nav-bar__link" :href="'url'">Artikler</a>
         </span>
-      </li>
+      </li> -->
     </ul>
   </div>
 </template>

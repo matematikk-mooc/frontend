@@ -1,19 +1,25 @@
-<script setup>
-import Card from './Card.vue'
-</script>
+
 <template>
   <div class="card-container">
-    <Card class="card-item" :theme="'theme_0'"></Card>
-    <Card class="card-item" :theme="'theme_1'"></Card>
-    <Card class="card-item" :theme="'theme_2'"></Card>
-    <Card class="card-item" :theme="'theme_3'"></Card>
-    <Card class="card-item" :theme="'theme_4'"></Card>
-    <Card class="card-item" :theme="'theme_5'"></Card>
-    <Card class="card-item" :theme="'theme_6'"></Card>
-    <Card class="card-item" :theme="'theme_7'"></Card>
-    <Card class="card-item" :theme="'theme_8'"></Card>
+    <div v-for="course in courses">
+
+    <Card class="card-item"
+      :theme="course.course.course_settings? course.course.course_settings.course_category.category.color_code : 'theme_0'"
+      :courseIllustration="course.course.course_settings? course.course.course_settings.image.path : ''">
+      <template v-slot:title> {{ course.course.name }} </template>
+      <template v-slot:description> {{ course.course.public_description }} </template>
+      <template v-slot:leftButton>Meld deg på</template>
+      <template v-slot:rightButton>Les mer</template>
+    </Card>
+  </div>
   </div>
 </template>
+
+<script setup>
+import Card from './Card.vue'
+
+const { courses } = defineProps(['courses']);
+</script>
 
 <style lang="scss">
 .card-container {
