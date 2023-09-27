@@ -15,19 +15,16 @@ module.exports = {
       "./src/js/settingsRoot.js",
       "./src/js/utilRoot.js",
       "./src/js/rootaccount.js",
-      "./src/vue/design/index.scss",
     ],
 
     "subaccount-localhost": [
       "./src/js/settingsRoot.js",
       "./src/js/utilRoot.js",
       "./src/js/subaccount.js",
-      "./src/vue/design/index.scss",
     ],
     "kompetanseportalen-localhost": [
       "./src/js/i18n.js",
       "./src/js/main.js",
-      // "./src/vue/app.js",
     ],
     "badges-dev": [
       "./src/addons/badges/js/main.js",
