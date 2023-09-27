@@ -5,12 +5,12 @@
       'form-field__input': true,
       'form-field__input--error': hasError,
     }">
-        <div class="error-icon" v-if="hasError">
-          <AlertCircle-Icon></AlertCircle-Icon>
-        </div>
-        <input autocomplete="off" :id="name" :type="type" :class="{ 'input-error': hasError }" v-model="modelValue"
-          :placeholder="placeHolder" @input="$emit('update:modelValue', $event)" />
-      </div>
+                          <div class="error-icon" v-if="hasError">
+                              <Icon :name="'error'" :size="'1em'"/>
+                          </div>
+                          <input autocomplete="off" :id="name" :type="type" :class="{ 'input-error': hasError }" v-model="modelValue"
+                                    :placeholder="placeHolder" @input="$emit('update:modelValue', $event)" />
+                      </div>
         <div class="form-field__error" v-if="hasError">{{ errors[0] }}</div>
   </div>
 </template>
@@ -18,7 +18,7 @@
 <script>
 import { ref, watch } from "vue"
 import { useField } from "vee-validate"
-import AlertCircleIcon from 'vue-material-design-icons/AlertCircle.vue'
+import Icon from "../icon/Icon.vue"
 
 export default {
   props: {
@@ -29,7 +29,7 @@ export default {
     rules: Object,
   },
   components: {
-    AlertCircleIcon
+    Icon
   },
   setup(props, { emit }) {
     const modelValue = ref("")
@@ -107,6 +107,7 @@ export default {
 
       .error-icon {
         color: map-get($semantic-colors, error, foreground);
+        font-size: 1.5rem;
         display: flex;
         place-content: center;
         margin-top: 0.25rem;
