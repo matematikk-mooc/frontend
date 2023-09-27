@@ -26,7 +26,6 @@ module.exports = (env) => {
         "kompetanseportal-udirdesign-dev": [
           "./src/js/i18n.js",
           "./src/js/main.js",
-          "./src/vue/app.js",
         ],
         badgesafe: [
           "./src/addons/badges/js/main.js",
