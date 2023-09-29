@@ -1,11 +1,18 @@
-/** @type { import('@storybook/vue3-webpack5').StorybookConfig } */
 const webpack = require("webpack");
 const path = require("path");
 
 module.exports = {
   stories: ["../**/*.stories.@(js|jsx|mjs|ts|tsx)"],
   addons: [
-    "storybook-addon-sass-postcss",
+    "@storybook/addon-essentials",
+    {
+      name: "@storybook/addon-styling",
+      options: {
+        sass: {
+          implementation: require("sass"),
+        },
+      },
+    },
     "@storybook/addon-links",
     "@storybook/addon-essentials",
     "@storybook/addon-interactions",
@@ -26,7 +33,7 @@ module.exports = {
       })
     );
     
-    return config;
+   return(config);
   },
 };
 
