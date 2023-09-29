@@ -46,7 +46,6 @@ const server = SERVER;
   align-items: flex-start;
   width: 100%;
   height: 100%;
-  // bottom: 0;
 
   .page-footer--content-wrapper {
     width: 100%;

@@ -7,7 +7,7 @@ on:
     paths:
       - "src/vue/**"
   workflow_dispatch:
-   
+
 jobs:
   build-deploy:
     runs-on: ubuntu-latest
@@ -16,8 +16,11 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
+      - name: Install Node.js
+        uses: actions/setup-node@v2
+
       - name: Install dependencies
-        run: npm install
+        run: npm ci
 
       - name: Build Storybook
         run: npm run build-storybook
@@ -26,4 +29,5 @@ jobs:
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.STORY_BOOK }}
-          publish_dir: ./storybook-static
+          publish_dir: storybook-static
+
