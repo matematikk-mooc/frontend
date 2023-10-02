@@ -75,6 +75,10 @@ module.exports = (env) => {
               to: "[name][ext]",
             },
             {
+          from: "src/vue/assets/logo-black.svg",
+          to: ".",
+        },
+            {
               from: "src/vue/assets/fonts/*.woff",
               to: "fonts/[name][ext]",
             },

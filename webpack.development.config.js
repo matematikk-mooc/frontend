@@ -65,6 +65,10 @@ module.exports = {
           to: ".",
         },
         {
+          from: "src/vue/assets/logo-black.svg",
+          to: ".",
+        },
+        {
           from: "src/vue/assets/IllustrasjonerKompetansepakker",
           to: "IllustrasjonerKompetansepakker/",
         },
