@@ -16,6 +16,7 @@ module.exports = {
     "@storybook/addon-links",
     "@storybook/addon-essentials",
     "@storybook/addon-interactions",
+    'storybook-addon-vue-slots',
   ],
   framework: {
     name: "@storybook/vue3-webpack5",
