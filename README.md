@@ -170,3 +170,8 @@ plugins: [
   })
 ]
 ```
+
+
+## You can find the components for the frontend design in the storybook:
+
+http://matematikk-mooc.github.io/frontend/?path=/docs/stories-navbar--docs
