@@ -173,3 +173,5 @@ plugins: [
 
 ## Storybook
   npm run storybook
+  Visit storbook:
+http://matematikk-mooc.github.io/frontend/
