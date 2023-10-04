@@ -115,15 +115,6 @@ export default {
     font-weight: 400;
   }
 
-  .card-content-description-text {
-    display: -webkit-box;
-    /*! autoprefixer: off */
-    -webkit-box-orient: vertical;
-  /* autoprefixer: on */
-    -webkit-line-clamp: 3;
-    overflow: hidden;
-}
-
   .card-content-button-container {
     margin-top: 1.5rem;
     display: inline-grid;
