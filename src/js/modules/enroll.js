@@ -198,12 +198,6 @@ export default (function () {
           });
         });
 
-          // Displays information, that there is no current courses available to enroll
-          // if (coursesCategorized.length == 0) {
-          //   var html = '<p class="text-center">' + i18n.NoCoursesInfo + '</p>';
-          //   $('.mmooc-all-courses-list').append(html);
-          // }
-
           self.insertModalAndOverlay();
           self.setClickHandlers();
 
