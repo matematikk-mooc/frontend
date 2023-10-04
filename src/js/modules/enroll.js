@@ -144,85 +144,37 @@ export default (function () {
             enrolledCourses
           );
 
-          // var allCoursesWithStatusSorted = util.sortCourses(allCoursesWithStatus);
-          // var categorys = util.getCourseCategories(allCoursesWithStatusSorted);
-
-          // var coursesCategorized = util.getCoursesCategorized(
-          //   allCoursesWithStatusSorted,
-          //   categorys
-          // );
           kpasApi.getAllCourseSettings(function (allCoursesSettings) {
             kpasApi.getAllFilters(function (allFilters) {
               var allFiltersList = allFilters.result;
               var allCoursesWithSettings = util.mapCourseSettings(allCoursesWithStatus, allCoursesSettings.result);
 
             var isAuthenticated = util.isAuthenticated();
-            // var courseRegisterText = i18n.LogInCanvas;
             if (isAuthenticated) {
-
+              document.getElementById('content').innerHTML = "";
+              let wrapper = document.getElementById("application");
               try {
-                document.getElementById('content').innerHTML = "";
-                let wrapper = document.getElementById("application");
                 if(wrapper != null){
-                  // kpasApi.getAllCourseSettings(function (allCoursesSettings) {
-                  //   kpasApi.getAllFilters(function (allFilters) {
-                    // var allFiltersList = allFilters.result;
-                    // var allCoursesWithSettings = util.mapCourseSettings(allCourses, allCoursesSettings.result);
                     const customContent = document.createElement("div");
                     let props = {
                       courses : allCoursesWithSettings,
                       filterData : allFiltersList,
                     };
                     let page = createApp(LoggedInLandingPage, props);
-                    customContent.setAttribute("id", "notLoggedInPage");
+                    customContent.setAttribute("id", "loggedInLandingPage");
                     customContent.setAttribute("style", "width: 100%; justify-content: center; display: flex;");
                     let footerNode = document.getElementById("wrapper");
                     footerNode.parentNode.insertBefore(customContent, footerNode)
                     $('#wrapper').hide();
-                    page.mount("#notLoggedInPage");
-                  //   });
-                  // });
+                    page.mount("#loggedInLandingPage");
                 }
               } catch (e) {
                 console.log(e);
               }
-              // for (var i = 0; i < coursesCategorized.length; i++) {
-              //   const coursesCategory = coursesCategorized[i];
-              //   const coursesEnrolledAmount = util.filter(
-              //     coursesCategory.courses,
-              //     function (course) {
-              //       return course.enrolled === true
-              //     }).length;
-              //   const coursesAmount = coursesCategory.courses && coursesCategory.courses.length;
-              // courseRegisterText = i18n.CourseRegisterWhenAuthenticated;
-              // var html = util.renderTemplateWithData(allcourseslist, {
-              //   queryString: hrefQueryString,
-              //   title: coursesCategory.title,
-              //   isAuthenticated: isAuthenticated,
-              //   courses: coursesCategory.courses,
-              //   coursesEnrolledAmount: coursesEnrolledAmount,
-              //   coursesAmount: coursesAmount,
-              //   coursesRoleBasedAmount: coursesCategory.noOfRoleBasedCourses,
-              //   coursesPersonalBasedAmount: coursesCategory.noOfPersonalBasedCourses,
-              //   coursesAmountText: i18n.CoursesAmount(coursesAmount),
-              //   courseLabel: i18n.Course.toLowerCase(),
-              //   goToCourse: i18n.GoToCourse,
-              //   courseRegister: courseRegisterText,
-              //   openCoursesGroupText: i18n.OpenCoursesGroup,
-              //   closeCoursesGroupText: i18n.CloseCoursesGroup,
-              //   YouAreRegisteredToXCoursesText: i18n.YouAreRegisteredToXCourses(coursesEnrolledAmount),
-              //   index: i
-              // });
-              // $('.mmooc-all-courses-list').append(html);
-            // }
             }
             else {
               try {
-                document.getElementById('content').innerHTML = "";
-                let wrapper = document.getElementById("application");
                 if(wrapper != null){
-                  // kpasApi.getAllCourseSettings(function (allCoursesSettings) {
-                  //   kpasApi.getAllFilters(function (allFilters) {
                     var allFiltersList = allFilters.result;
                     var allCoursesWithSettings = util.mapCourseSettings(allCoursesWithStatus, allCoursesSettings.result);
                     const customContent = document.createElement("div");
@@ -237,8 +189,6 @@ export default (function () {
                     footerNode.parentNode.insertBefore(customContent, footerNode)
                     $('#wrapper').hide();
                     page.mount("#notLoggedInPage");
-                  //   });
-                  // });
                 }
               } catch (e) {
                 console.log(e);
@@ -247,9 +197,6 @@ export default (function () {
             self.handleRegisterButtonClick(isAuthenticated);
           });
         });
-
-
-
 
           // Displays information, that there is no current courses available to enroll
           // if (coursesCategorized.length == 0) {

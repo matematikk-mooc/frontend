@@ -31,7 +31,7 @@
   const props = defineProps(['logged_in'])
   const domain = window.location.origin;
   const loginLink = domain + "/login/canvas"
-  const settingsLink = domain + "/profile/settings"
+  const settingsLink = domain + "/profile/settings?design=udir"
   const logoutLink = domain + "/logout?design=udir"
 
 </script>

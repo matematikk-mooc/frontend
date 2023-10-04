@@ -2,65 +2,57 @@
   <div class="card">
     <div class="card-illustration-box" :class="theme">
       <img
-        class="card-illustration-box-image"
-        :src="courseIllustration"
-        alt="illustrasjon"
+      class="card-illustration-box-image"
+      :src="courseIllustration"
+      alt="illustrasjon"
       />
+      <slot name="closeModalButton"></slot>
     </div>
     <div class="card-content-container">
       <div class="card-content-title">
         <h3> <slot name="title"></slot></h3>
       </div>
       <div class="card-content-description">
+        <p card="card-content-description-text">
         <slot name="description"></slot>
+        <slot name="moduleList"></slot>
+      </p>
       </div>
       <div>
-          <slot name="filtername"></slot>
+        <slot name="filtername"></slot>
       </div>
-      <div v-if="hasGoToCourse" class="card-content-enrolled">
+      <div class="card-content-enrolled" v-if="hasGoToCourse">
         <img class="card-content-enrolled-icon" :src="server +'enrolled-green-circle.svg'"/>
         <p class="card-content-enrolled-text">
           <slot name="enrolled"></slot>
         </p>
       </div>
       <div class="card-content-button-container">
-        <Button v-if="hasLeftButton" :type="'filled'" :size="'md'">
-          <template v-slot:default>
-            <slot name="leftButton"></slot>
-          </template>
-        </Button>
-        <Button v-if="hasRightButton" :type="'outlined'" :size="'md'">
-          <template v-slot:default>
-            <slot name="rightButton"></slot>
-          </template>
-        </Button>
-        <Button v-if="hasGoToCourse" :type="'outlined'" :size="'md'" v-on:click="goToCourse">
-          <template v-slot:default>
-            <slot name="goToCourse"></slot>
-          </template>
-        </Button>
+        <slot name="leftButton"></slot>
+        <slot name="rightButton"></slot>
+        <slot name="goToCourse"></slot>
       </div>
     </div>
   </div>
 </template>
 
-<script setup lang="js">
-import Button from './Button.vue';
-import { useSlots } from 'vue';
+<script lang="js">
 
-const server= SERVER
-const {theme, courseIllustration, courseId} = defineProps(['theme', 'courseIllustration', 'courseId'])
-
-const slots = useSlots();
-const hasRightButton = slots['rightButton'] !== undefined;
-const hasLeftButton = slots['leftButton'] !== undefined;
-const hasGoToCourse = slots['goToCourse'] !== undefined;
-const domain = window.location.origin;
-
-const goToCourse = function () {
-  window.location.href = domain + '/courses/' + courseId
+export default {
+  name: 'Card',
+  components: {
+  },
+  props: {
+    theme: String,
+    courseIllustration: String,
+  },
+  data(){
+    return {
+      server: SERVER,
+      hasGoToCourse: this.$slots.goToCourse !== undefined,
+    }
+  }
 }
-
 </script>
 
 <style lang="scss">
@@ -123,6 +115,15 @@ const goToCourse = function () {
     font-weight: 400;
   }
 
+  .card-content-description-text {
+    display: -webkit-box;
+    /*! autoprefixer: off */
+    -webkit-box-orient: vertical;
+  /* autoprefixer: on */
+    -webkit-line-clamp: 3;
+    overflow: hidden;
+}
+
   .card-content-button-container {
     margin-top: 1.5rem;
     display: inline-grid;
@@ -138,12 +139,12 @@ const goToCourse = function () {
       line-height: 150%;
     }
   }
-.card-content-enrolled {
-  margin-top: 1rem;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 10px;
+  .card-content-enrolled {
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.25rem;
 
   }
   .card-content-enrolled-text {
@@ -154,8 +155,8 @@ const goToCourse = function () {
 
   }
   .card-content-enrolled-icon {
-    width: 20px;
-    height: 20px;
+    width: 1.25rem;
+    height: 1.25rem;
     flex-shrink: 0;
   }
 

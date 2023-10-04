@@ -15,17 +15,20 @@
         >
         <template v-slot:title> {{ newestCourse.name }} </template>
         <template v-slot:description> {{ newestCourse.public_description }} </template>
-        <template v-slot:leftButton>Meld deg på</template>
-        <template v-slot:rightButton>Les mer</template>
+        <template v-slot:leftButton>
+          <Button :type="'filled'" :size="'md'" @click="enrollToCourse(newestCourse.self_enrollment_code)">Meld deg på</Button>
+        </template>
       </Card>
     </div>
   </div>
 </template>
 
-<script setup>
+<script setup lang="js">
 import Card from './Card.vue'
+import Button from './Button.vue';
 const {newestCourse} = defineProps(['newestCourse']);
 </script>
+
 <style>
 .intro-container {
   width: 100%;
