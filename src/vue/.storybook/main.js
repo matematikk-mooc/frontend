@@ -29,7 +29,7 @@ module.exports = {
     // Define global constants that can be accessed in your stories
     config.plugins.push(
       new webpack.DefinePlugin({
-        SERVER: JSON.stringify("http://localhost:6006/"),
+        SERVER: JSON.stringify("/"),
       })
     );
     
