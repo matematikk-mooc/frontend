@@ -15,7 +15,6 @@ export default {
 export const Login = {
   render: () => ({
     components: {LoginPage, LoginForm },
-    setup() {},
     template: "<LoginPage><LoginForm/></LoginPage>",
   }),
 };
