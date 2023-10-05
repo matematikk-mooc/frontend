@@ -25,7 +25,6 @@ export default {
     const iconPath = computed(() => {
       const selected = IconPaths[props.name]
       if (selected) {
-        console.error('Hi the path is selected, ', props.name)
         return selected
       }
       // return 'M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z'
