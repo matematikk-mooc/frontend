@@ -1,15 +1,17 @@
 <template>
- <button class="icon-button">
+ <button  @click="handleClick" class="icon-button">
   <Icon name="close" class="icon-button__icon"/>
  </button>
 </template>
-<script>
+<script setup>
 import Icon from "../icon/Icon.vue"
-export default {
-  components: {
-    Icon,
-  },
-  setup() {},
+
+import { defineEmits } from 'vue'
+
+const emits = defineEmits(['handleClick'])
+
+const handleClick = () => {
+  emits('handleClick')
 }
 </script>
 <style lang="scss">
