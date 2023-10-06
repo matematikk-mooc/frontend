@@ -4,6 +4,7 @@
     <div v-for="course in courses">
 
     <Card class="card-item" :class="{ modal_card: course.isModalOpen }"
+      :isModalOpen="course.isModalOpen"
       :theme="course.course_settings? course.course_settings.course_category.category.color_code : 'theme_0'"
       :courseIllustration="course.course_settings? course.course_settings.image.path : ''"
       >
@@ -54,6 +55,7 @@ export default {
       domain: window.location.origin,
       selectedCourse : {},
       modules: [],
+      kpasApiUrl: KPASAPIURL
     }
   },
   methods: {
@@ -73,12 +75,31 @@ export default {
     async viewModules (courseId) {
       let self = this;
       self.modules = [];
-      await fetch(self.domain + '/api/v1/courses/' + courseId + '/modules', {
+      if(this.authorized){
+        await fetch(self.domain + '/api/v1/courses/' + courseId + '/modules', {
+          method: 'GET',
+          headers: {
+          }
+        }).then(response => response.json() ) .then(response => {
+
+          response.forEach(module => {
+            if(module.published === true){
+              if(module.name.includes("nb:")){
+                self.handleMultilangModules(module)
+              }
+              self.modules.push(module)
+            }
+          })
+
+        })
+    }
+    else{
+      await fetch(this.kpasApiUrl + '/course/' + courseId + '/moduletitles', {
         method: 'GET',
         headers: {
         }
       }).then(response => response.json() ) .then(response => {
-
+        response = response.result
         response.forEach(module => {
           if(module.published === true){
             if(module.name.includes("nb:")){
@@ -89,6 +110,7 @@ export default {
         })
 
       })
+    }
     },
 
     handleMultilangModules(module){

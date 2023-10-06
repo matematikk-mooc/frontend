@@ -13,7 +13,7 @@
         <h3> <slot name="title"></slot></h3>
       </div>
       <div class="card-content-description">
-        <p card="card-content-description-text">
+        <p :class="{ description_text: !isModalOpen}">
         <slot name="description"></slot>
         <slot name="moduleList"></slot>
       </p>
@@ -45,6 +45,7 @@ export default {
   props: {
     theme: String,
     courseIllustration: String,
+    isModalOpen: Boolean,
   },
   data(){
     return {
@@ -149,6 +150,14 @@ export default {
     width: 1.25rem;
     height: 1.25rem;
     flex-shrink: 0;
+  }
+
+  .description_text {
+    overflow:hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    text-overflow: ellipsis;
   }
 
 }

@@ -10,7 +10,7 @@
     <div class="intro-news">
       <h2>Vår nyeste kompetansepakke</h2>
       <Card
-        :theme="newestCourse.course_settings.course_category.category.color_code"
+        :theme="newestCourse.course_settings? newestCourse.course_settings.course_category.category.color_code : 'theme_0'"
         :courseIllustration="newestCourse.course_settings? newestCourse.course_settings.image.path: ''"
         >
         <template v-slot:title> {{ newestCourse.name }} </template>
