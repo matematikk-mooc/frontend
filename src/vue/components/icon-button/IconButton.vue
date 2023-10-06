@@ -1,6 +1,6 @@
 <template>
  <button  @click="handleClick" class="icon-button">
-  <Icon name="close" class="icon-button__icon"/>
+  <Icon name="close"/>
  </button>
 </template>
 <script setup>
