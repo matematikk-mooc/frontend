@@ -1,37 +1,99 @@
-
 import Modal from './Modal.vue';
+import Button from '../Button.vue';
 
 export default {
-  title: 'Components/Modal', // The title of your story
-  component: Modal, // The Vue component you want to showcase
+  title: 'Components/Modal',
+  component: Modal,
 };
 
 const Template = (args) => ({
-  components: { Modal },
+  components: { Modal, Button },
   setup() {
-    // This function should return the template for your component
     return () => (
       <Modal {...args}>
-        <template v-slot:header>
-          <div>This is the header content</div>
-        </template>
-        <template v-slot:main>
-          <div>This is the main content</div>
-        </template>
-        <template v-slot:actions>
-          <div>This is the actions content</div>
-        </template>
+        {{
+          header: () => <h2>This is the header content</h2>,
+          main: () => <div>This is the main content</div>,
+          actions: () => (
+            <>
+              <Button type="filled">Hello</Button>
+              <Button type="outlined">Goodbye</Button>
+            </>
+          ),
+        }}
       </Modal>
     );
   },
 });
 
-// Export the Template as a Story
+const TemplateWithoutHeader = (args) => ({
+  components: { Modal, Button },
+  setup() {
+    return () => (
+      <Modal {...args}>
+        {{
+          main: () => <div>This is the main content</div>,
+          actions: () => (
+            <>
+              <Button type="filled">Hello</Button>
+              <Button type="outlined">Goodbye</Button>
+            </>
+          ),
+        }}
+      </Modal>
+    );
+  },
+});
+
+const TemplateWithoutActions = (args) => ({
+  components: { Modal, Button },
+  setup() {
+    return () => (
+      <Modal {...args}>
+        {{
+          header: () => <h2>This is the header content</h2>,
+          main: () => <div>This is the main content</div>,
+        }}
+      </Modal>
+    );
+  },
+});
+
+const TemplateWithoutMainContent = (args) => ({
+  components: { Modal, Button },
+  setup() {
+    return () => (
+      <Modal {...args}>
+        {{
+          header: () => <h2>This is the header content</h2>,
+          actions: () => (
+            <>
+              <Button type="filled">Hello</Button>
+              <Button type="outlined">Goodbye</Button>
+            </>
+          ),
+        }}
+      </Modal>
+    );
+  },
+});
+
 export const Default = Template.bind({});
 Default.args = {
-<<<<<<< Updated upstream
-  isOpen: true, // Provide any necessary props here
-=======
   isOpen: true,
->>>>>>> Stashed changes
+};
+
+export const WithoutHeader =TemplateWithoutHeader.bind({});
+WithoutHeader.args = {
+  isOpen: true,
+};
+
+export const WithoutActions =TemplateWithoutActions.bind({});
+WithoutActions.args = {
+  isOpen: true,
+};
+
+export const WithoutMainContent =TemplateWithoutMainContent.bind({});
+WithoutMainContent.args = {
+  isOpen: true,
 };
