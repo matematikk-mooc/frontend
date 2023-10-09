@@ -1,19 +1,33 @@
-// Modal.stories.js (assuming it's in the same directory as Modal.vue)
 
-import Modal from './Modal.vue'; // Adjust the import path accordingly
+import Modal from './Modal.vue';
 
 export default {
-  title: 'Components/Modal',
-  component: Modal,
+  title: 'Components/Modal', // The title of your story
+  component: Modal, // The Vue component you want to showcase
 };
 
-const Template = (args, { argTypes }) => ({
+const Template = (args) => ({
   components: { Modal },
-  props: Object.keys(argTypes),
-  template: '<Modal v-bind="$props">Modal Content Goes Here</Modal>',
+  setup() {
+    // This function should return the template for your component
+    return () => (
+      <Modal {...args}>
+        <template v-slot:header>
+          <div>This is the header content</div>
+        </template>
+        <template v-slot:main>
+          <div>This is the main content</div>
+        </template>
+        <template v-slot:actions>
+          <div>This is the actions content</div>
+        </template>
+      </Modal>
+    );
+  },
 });
 
+// Export the Template as a Story
 export const Default = Template.bind({});
 Default.args = {
-
+  isOpen: true, // Provide any necessary props here
 };
