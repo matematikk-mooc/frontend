@@ -1,8 +1,6 @@
 <script setup>
 
-import { ref } from 'vue'
-
-const server= SERVER
+const server = SERVER
 
 </script>
 <template>
