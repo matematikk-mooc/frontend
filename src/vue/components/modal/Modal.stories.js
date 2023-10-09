@@ -29,5 +29,9 @@ const Template = (args) => ({
 // Export the Template as a Story
 export const Default = Template.bind({});
 Default.args = {
+<<<<<<< Updated upstream
   isOpen: true, // Provide any necessary props here
+=======
+  isOpen: true,
+>>>>>>> Stashed changes
 };
