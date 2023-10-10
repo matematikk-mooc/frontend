@@ -26,7 +26,7 @@ module.exports = {
   },
   staticDirs: [path.resolve(__dirname, "../assets")],
   webpackFinal: async (config) => {
-    // Define global constants that can be accessed in your stories
+    // Define global constants that can be accessed in your stories/ components
     config.plugins.push(
       new webpack.DefinePlugin({
         SERVER: process.env.GH_PAGES ? JSON.stringify('/frontend/') : JSON.stringify('/'),
