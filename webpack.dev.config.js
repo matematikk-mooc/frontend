@@ -26,7 +26,6 @@ module.exports = (env) => {
         "kompetanseportal-udirdesign-dev": [
           "./src/js/i18n.js",
           "./src/js/main.js",
-          "./src/vue/app.js",
         ],
         badgesafe: [
           "./src/addons/badges/js/main.js",
@@ -73,6 +72,10 @@ module.exports = (env) => {
           patterns: [
             {
               from: "src/vue/assets/",
+              to: ".",
+            },
+            {
+              from: "src/vue/assets/logo-black.svg",
               to: ".",
             },
             {

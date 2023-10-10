@@ -1,4 +1,3 @@
-
 <template>
   <div class="banner">
     <div class="before-login-image-left">
