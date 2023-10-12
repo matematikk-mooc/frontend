@@ -1,21 +1,6 @@
 const webpack = require("webpack");
 const path = require("path");
-const fs = require("fs");
 
-// Define possible base directories
-const possibleBaseDirectories = ["/frontend/", "/"];
-
-// Function to find the first existing base directory
-function findExistingBaseDirectory() {
-  for (const baseDir of possibleBaseDirectories) {
-    if (fs.existsSync(baseDir)) {
-      console.error('base dir is: ', baseDir);
-      return baseDir;
-    }
-  }
-  // If none of the directories exist, default to "/"
-  return "/";
-}
 module.exports = {
   stories: ["../**/*.stories.@(js|jsx|mjs|ts|tsx)"],
   addons: [
@@ -41,11 +26,12 @@ module.exports = {
   },
   staticDirs: [path.resolve(__dirname, "../assets")],
   webpackFinal: async (config) => {
-    // Define global constants that can be accessed in your stories
+    // Define global constants that can be accessed in your stories/ components
     config.plugins.push(
       new webpack.DefinePlugin({
-        SERVER: JSON.stringify(findExistingBaseDirectory()),
+        SERVER: process.env.GH_PAGES ? JSON.stringify('/frontend/') : JSON.stringify('/'),
       })
+       
     );
     
    return(config);
