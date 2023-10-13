@@ -33,20 +33,5 @@ export const testData = [
   },
 ]
 
-const treeData = [
-  {
-    label: 'box1',
-    nodes: [
-      {
-        label: 'box_1.2',
-        nodes: [{ label: 'box_1.2.1', nodes: [] }, { label: 'box_1.2.2', nodes: [] }, { label: 'box_1.2.3', nodes: [] }, { label: 'box_1.2.4', nodes: [] }]
-      }
-    ]
-  }, {
-    label: 'box2',
-    nodes: [{ label: 'box_2.2.1', nodes: [] }, { label: 'box_2.2.2', nodes: [] }, { label: 'box_2.2.3', nodes: [] }, { label: 'box_2.2.4', nodes: [] }]
-  }, {
-    label: 'box3',
-    nodes: [{ label: 'box_3.2.1', nodes: [] }, { label: 'box_3.2.2', nodes: [] }, { label: 'box_3.2.3', nodes: [] }, { label: 'box_1.2.4', nodes: [] }]
-  }
-]
+
+
