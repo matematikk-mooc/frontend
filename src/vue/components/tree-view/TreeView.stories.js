@@ -4,6 +4,7 @@ import { defineComponent } from 'vue';
 const treeData = [
   {
     label: 'box1',
+    type:'module',
     nodes: [
       {
         label: 'box_1.2',
@@ -11,11 +12,14 @@ const treeData = [
       }
     ]
   }, {
+    
     label: 'box2',
-    nodes: [{ label: 'box_2.2.1', nodes: [] }, { label: 'box_2.2.2', nodes: [] }, { label: 'box_2.2.3', nodes: [] }, { label: 'box_2.2.4', nodes: [] }]
+    type:'module',
+    nodes: [{ label: 'box_2.2.1',isCompleted:true, type:'page', nodes: [] }, { label: 'box_2.2.2',type:'page',isCompleted:false, nodes: [] }, { label: 'box_2.2.3',type:'page',isCompleted:true, nodes: [] }, { label: 'box_2.2.4',isCompleted:false,type:'page', nodes: [] }]
   }, {
     label: 'box3',
-    nodes: [{ label: 'box_3.2.1', nodes: [] }, { label: 'box_3.2.2', nodes: [] }, { label: 'box_3.2.3', nodes: [] }, { label: 'box_1.2.4', nodes: [] }]
+    type:'module',
+    nodes: [{ label: 'box_3.2.1', isCompleted:true, type:'page',nodes: [] }, { label: 'box_3.2.2',isCompleted:false, nodes: [] }, { label: 'box_3.2.3', nodes: [] }, { label: 'box_1.2.4',type:'page', nodes: [] }]
   }
 ]
 
@@ -40,12 +44,13 @@ Basic.args = {
   nodes: [
     {
       label: 'Child 1',
+      type: 'module',
       nodes: [
-        { label: 'Grandchild 1.1', nodes: [] },
-        { label: 'Grandchild 1.2', nodes: [] },
+        { label: 'Grandchild 1.1', isCompleted:true,type: 'page', nodes: [] },
+        { label: 'Grandchild 1.2',isCompleted:true,type: 'page', nodes: [] },
       ],
     },
-    { label: 'Child 2', nodes: [] },
+    { label: 'Child 2', isCompleted:true,type: 'page',nodes: [] },
   ],
 };
 

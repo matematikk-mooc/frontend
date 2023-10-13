@@ -1,0 +1,15 @@
+@mixin hide-show-effect() {
+  animation-name: hideshow;
+  animation-duration: 0.5s;
+  animation-iteration-count: 1;
+  animation-direction: alternate;
+
+  @keyframes hideshow {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+}

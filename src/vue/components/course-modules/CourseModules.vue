@@ -1,26 +1,29 @@
 <template>
   <div class="courses">
     <div class="courses__header-section">
-      <h3 class="courses__header-section__header"><Icon name="format_list_numbered" size="1em" /><span class="courses__header-section__header__title">Moduler</span></h3>
+      <h3 class="courses__header-section__header">
+        <Icon name="format_list_numbered" size="1em" />
+        <span class="courses__header-section__header__title">Moduler</span>
+      </h3>
     </div>
     <div class="courses__treeview">
-      <div class="courses__treeview___item"  v-for="(module, index) in treestructure"
-        :key="index">
-     <TreeView
-       
-        :label="module.label"
-        :nodes="module.nodes"
-      />
+      <div class="courses__treeview__item" v-for="(module, index) in treestructure" :key="index">
+       <CourseModule
+          :type="module.type"
+          :label="module.label"
+          :nodes="module.nodes"
+          :isActive="isActiveModule(module.label)"
+          @toggleActiveModule="toggleActiveModule(module.label)"
+        />
       </div>
- 
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref } from 'vue'
-import TreeView from '../tree-view/TreeView.vue'
-import Icon from '../icon/Icon.vue'
+import { ref } from 'vue';
+import Icon from '../icon/Icon.vue';
+import CourseModule from './CourseModule.vue';
 
 const treeData = [
   {
@@ -28,42 +31,62 @@ const treeData = [
     nodes: [
       {
         label: 'box_1.2',
+        type:'module',
         nodes: [
           {
-            label: 'box_1.2.1', nodes: [{
-            label: 'box_1.2.2.1', nodes: []
+            label: 'box_1.2.1', type:'page',  isCompleted: true ,nodes: [{
+            label: 'box_1.2.2.1',type:'page',isCompleted: true , nodes: []
             }
             
           ] },
-          { label: 'box_1.2.2', nodes: [] },
-          { label: 'box_1.2.3', nodes: [] },
-          { label: 'box_1.2.4', nodes: [] }
+          { label: 'box_1.2.2',type:'page', nodes: [] },
+          { label: 'box_1.2.3',type:'page', nodes: [] },
+          { label: 'box_1.2.4', type:'page',nodes: [] }
         ]
       }
     ]
   },
   {
     label: 'box2',
+    type:'module',
     nodes: [
-      { label: 'box_2.2.1', nodes: [] },
-      { label: 'box_2.2.2', nodes: [] },
-      { label: 'box_2.2.3', nodes: [] },
-      { label: 'box_2.2.4', nodes: [] }
+      { label: 'box_2.2.1',type:'page', nodes: [] },
+      { label: 'box_2.2.2',type:'page', nodes: [] },
+      { label: 'box_2.2.3',type:'page', nodes: [] },
+      { label: 'box_2.2.4',type:'page', nodes: [] }
     ]
   },
   {
     label: 'box3',
+    type:'module',
     nodes: [
-      { label: 'box_3.2.1', nodes: [] },
-      { label: 'box_3.2.2', nodes: [] },
-      { label: 'box_3.2.3', nodes: [] },
-      { label: 'box_3.2.4', nodes: [] }
+      { label: 'box_3.2.1',type:'page', nodes: [] },
+      { label: 'box_3.2.2', type:'page',nodes: [] },
+      { label: 'box_3.2.3',type:'page', nodes: [] },
+      { label: 'box_3.2.4',type:'page', nodes: [] }
     ]
   }
 ]
 
-const treestructure = ref(treeData)
+const treestructure = ref(treeData);
+
+const selectedNode = ref(null);
+
+const toggleActiveModule = (nodeLabel) => {
+  if (selectedNode.value === nodeLabel) {
+    selectedNode.value = null; 
+  } else {
+    selectedNode.value = nodeLabel; 
+  }
+};
+
+
+const isActiveModule = (nodeLabel) => {
+  return nodeLabel === selectedNode.value;
+};
+
 </script>
+
 
 <style lang="scss">
 @import '../../design/box-shadow';
@@ -74,6 +97,7 @@ const treestructure = ref(treeData)
   border: 1px solid #E6E6E6; 
   background: #FFF;
   margin: 0 1rem 0 1rem;
+  padding: 0 0 0.75rem 0;
   @include box-shadow(medium); 
 
   &__header-section {
@@ -102,9 +126,6 @@ const treestructure = ref(treeData)
     flex-direction: column;
     justify-content: flex-start;
     padding-bottom:1rem;
-    &___item{
-       border-top: 1px solid #E6E6E6; 
-    }
   }
 }
 </style>
