@@ -70,7 +70,7 @@ const toggleActive = (nodeLabel) => {
     color: #000;
     font-family: Roboto;
     font-size: 1.125rem;
-    margin-left: 0.5rem;
+    margin-left: 0.25rem;
     vertical-align: center;
 
     h4 {
@@ -100,7 +100,7 @@ const toggleActive = (nodeLabel) => {
   &__child-nodes {
     list-style-type: none;
     background: #ECEFF2;
-    padding: 0.2rem 0 0.2rem 2rem;
+    padding: 0.2rem 0 0.2rem 0.5rem;
     margin:0;
     @include hide-show-effect;
   }

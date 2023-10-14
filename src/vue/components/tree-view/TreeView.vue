@@ -101,7 +101,7 @@ const toggleActive = (nodeLabel) => {
   &__label {
     display: flex;
     font-size: 0.875rem;
-    width: 19.5rem;
+    width: 100%;
     height: 1.5rem;
     padding: 0.125rem 0.5rem;
     align-items: center;
@@ -134,7 +134,7 @@ const toggleActive = (nodeLabel) => {
     list-style-type: none;
     padding: 0;
     margin-bottom: 0.125rem;
-    padding: 0.2rem 0 0.5rem 1rem;
+    padding: 0.2rem 0 0.5rem 0.5rem;
     @include hide-show-effect
   }
 }
