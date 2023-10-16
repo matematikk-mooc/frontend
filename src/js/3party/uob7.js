@@ -135,58 +135,7 @@ export default (function() {
           $table.remove();
         }
 
-        // ================================================================================
-        // Tabs (Part 1/2)
-        //
-        // Convert up to 10 uob-tabs tables to format required for tabs.
-        // --------------------------------------------------------------------------------
 
-        strSetNum = 0;
-
-        for (i = 0; i < 10; i++) {
-          // Locate the next uob-tabs table.
-          $table = $content
-            .find('table')
-            .has('table > tbody > tr > td:contains([uob-tabs])')
-            .last();
-
-          // Break loop if no more tabs are to be displayed.
-          if ($table.length != 1) break;
-
-          // Convert table into a set of tabs.
-          $table.before("<div class='uob-tabs'><ul></ul></div>");
-          strSetNum++;
-
-          $table.find('tbody:first > tr:gt(0) > td').each(function(_idx, _item) {
-            var strAnchor = 'set' + strSetNum + 'tab' + (_idx - (_idx % 2)) / 2;
-
-            if ((_idx + 1) % 2) {
-              // Add list item for the tab label.
-              var strHTML =
-                '<li><a href="#' +
-                strAnchor +
-                '">' +
-                $(_item)
-                  .text()
-                  .trim() +
-                '</a></li>';
-              $table
-                .prev()
-                .find('ul')
-                .first()
-                .append(strHTML);
-            }
-
-            if (_idx % 2) {
-              // Add div for the tab content.
-              $table.prev().append('<div id="' + strAnchor + '"></div>');
-              $('#' + strAnchor).append($(_item).contents());
-            }
-          });
-
-          // Remove original table from the DOM
-          $table.remove();
-        }
 
         // ================================================================================
         // Reveal (Part 1/2)
@@ -366,60 +315,7 @@ export default (function() {
 
           });
         }
-        // ================================================================================
-        // Tabs (Part 2/2)
-        //
-        // Tabs will be contained within elements with a uob-tabs class.
-        // --------------------------------------------------------------------------------
 
-        // Initialise tabs
-        var $tabs = $content.find('.uob-tabs');
-
-        if ($tabs.length > 0) {
-          $tabs.tabs({
-            active: 0,
-            collapsible: false,
-            heightStyle: 'content',
-            beforeActivate: function(event, ui) {
-              ui.oldPanel.find('.hide_youtube_embed_link').click();
-            },
-            activate: function(event, ui) {
-              console.log("Tab activate");
-              // Let h5p iframes know we're ready!
-              var iframes = document.getElementsByTagName('iframe');
-              var ready = {
-                context: 'h5p',
-                action: 'ready'
-              };
-              var resize = {
-                context: 'h5p',
-                action: 'resize'
-              };
-
-              for (var i = 0; i < iframes.length; i++) {
-                if (iframes[i].src.indexOf('h5p') !== -1) {
-                  iframes[i].contentWindow.postMessage(ready, '*');
-                  iframes[i].contentWindow.postMessage(resize, '*');
-                };
-              }
-            },
-            beforeLoad: function(event, ui) {
-              console.log("Tab beforeLoad");
-            },
-            create: function(event, ui) {
-              console.log("Tab create");
-            },
-            load: function(event, ui) {
-              console.log("Tab load");
-            }
-          });
-        }
-
-        // ================================================================================
-        // Reveal (Part 2/2)
-        //
-        // The uob-reveal-button and uob-reveal-content classes are required for reveals.
-        // ................................................................................
 
         // Initialise reveal contents.
         var $revealBody = $content.find('.uob-reveal');
