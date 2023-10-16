@@ -1,12 +1,12 @@
 <template>
   <div class="nav-bar__link-list-container">
     <ul class="nav-bar__link-list">
-      <li class="nav-bar__list-item">
+      <li class="nav-bar__list-item" v-if="logged_in">
         <span>
           <a class="nav-bar__link" :href="myCourses">Mine kompetansepakker</a>
         </span>
       </li>
-      <li class="nav-bar__list-item">
+      <li class="nav-bar__list-item" v-if="logged_in">
         <span>
           <a class="nav-bar__link" :href="allCourses">Alle tilgjengelige kompetansepakker</a>
         </span>
@@ -15,7 +15,8 @@
   </div>
 </template>
 <script setup>
-  defineProps(['logged_in'])
+  const {logged_in} = defineProps(['logged_in'])
+  console.log("LOGGED", logged_in)
 
   const domain = window.location.origin;
   const myCourses = domain + "/courses?design=udir"

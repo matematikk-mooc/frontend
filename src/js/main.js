@@ -34,7 +34,6 @@ jQuery(function($) {
   //Multilanguage KURSP-279 Css must be present before javascript is run.
   //KURSP-376-multilanguage-fix
   multilanguage.initializeCss();
-
   routes.addRouteForPath(/\/$/, function() {
     var parentId = 'wrapper';
 
