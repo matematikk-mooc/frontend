@@ -77,6 +77,7 @@ const toggleActive = (nodeLabel) => {
       font-weight: 400;
       line-height: normal;
       margin: 0;
+      letter-spacing:0.063rem ;
       padding: 0.25rem 0 0.25rem 0;
     }
 

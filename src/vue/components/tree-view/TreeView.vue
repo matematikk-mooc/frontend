@@ -1,12 +1,12 @@
 <template>
   <div class="tree-node" :class="{ 'tree-node--collapsed': !isLeaf && collapsed, 'tree-node--active': isActive }">
     <span class="tree-node__label" @click="toggleCollapse">
-      <span class="label-text">
+      <span class="tree-node__label__text">
         <span v-if="!isLeaf" class="dropdown-indicator" :class="{ 'dropdown-indicator--collapsed': collapsed }">
           <Icon name="expand_more" size="1.25em" />
         </span>
-        <Icon class="tree-node__page-icon" v-if="type === 'page'" name="description" size="1em"></Icon>
-        <Icon class="tree-node__done-icon" v-if="type === 'page' && isCompleted" name="check_circle_filled" size="1em"></Icon>
+        <Icon class="tree-node__label__text__done-icon" v-if="type === 'page' && isCompleted" name="check_circle_filled" size="1.25em"></Icon>
+        <Icon class="tree-node__label__text__page-icon" v-if="type === 'page'" name="description" size="1.25em"></Icon>
         <template v-if="type === 'page'">
           <a :href="'url'">{{ label }}</a>
         </template>
@@ -76,6 +76,8 @@ const toggleActive = (nodeLabel) => {
   font-style: normal;
   font-weight: 400;
   line-height: normal;
+  margin-left: 2rem;
+  letter-spacing:0.063rem ;
 
   &--active {
     color: #000;
@@ -85,22 +87,8 @@ const toggleActive = (nodeLabel) => {
     line-height: normal;
   }
 
-  &__page-icon {
-    display: inline-block;
-    font-size: 1em;
-    vertical-align: middle;
-  }
-
-  &__done-icon {
-    color: #3B7858;
-    display: inline-block;
-    font-size: 1em;
-    vertical-align: middle;
-  }
-
   &__label {
     display: flex;
-    font-size: 0.875rem;
     width: 100%;
     height: 1.5rem;
     padding: 0.125rem 0.5rem;
@@ -112,12 +100,29 @@ const toggleActive = (nodeLabel) => {
       text-decoration: none;
       color: inherit;
     }
+
+    &__text{
+      font-size: 0.875rem;
+      position:relative;
+
+    &__page-icon {
+    display: inline-block;
+    font-size: 1em;
+    margin-right: 0.125rem;
+    vertical-align: middle;
   }
 
-  .label-text {
-    flex: 1;
-    margin-right: 0.75rem;
+    &__done-icon {
+      position:absolute;
+      left: -1rem;
+      bottom: 0rem;
+      color: #3B7858;
+      display: inline-block;
+      font-size: 1em;
+      vertical-align: middle;
+    }
   }
+}
 
   .dropdown-indicator {
     display: inline-block;
