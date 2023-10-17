@@ -1,13 +1,12 @@
 .custom-segments {
   position: relative;
   overflow-x: auto;
-  white-space: nowrap;
 }
 
 .custom-segments__segments {
   border-bottom: 0.5rem solid #E6E6E6;
   display: inline-block;
-  width: 100%;
+  white-space: nowrap;
 }
 
 .custom-segments__segment {
@@ -44,7 +43,7 @@
 
 .custom-segments__pane {
   display: none;
-  padding: 20px;
+  padding-top: 20px;
   border: none;
   height: fit-content;
   background-color: #f0f0f0;
