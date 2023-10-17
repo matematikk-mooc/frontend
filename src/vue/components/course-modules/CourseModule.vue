@@ -1,11 +1,14 @@
 <template>
   <div class="module-package">
+    <div :class="{ 'module-package--active': isActive }"></div>
     <div  class="module-package__title" :class="{ 'module-package__title--active': isActive }" @click="toggleCollapse">
       <h4>
           <span class="module-package__dropdown-indicator" :class="{ 'module-package__dropdown-indicator--collapsed': collapsed }">
-          <Icon name="expand_more" size="1em" />
+          <Icon name="expand_more" size="2em" />
           </span>
-        {{ label }}
+          <span class="title">
+              {{ label }}
+          </span>
       </h4>
     </div>
     
@@ -61,12 +64,24 @@ const toggleActive = (nodeLabel) => {
 
 .module-package {
   border-top: 1px solid #E6E6E6;
-  overflow: hidden;
+  position:relative;
+  &--active{
+    position: absolute;
+    z-index:10;
+    border-radius: 0rem 0.4375rem 0.4375rem 0rem;
+    background: #3B7858;
+    width: 0.875rem;
+    height: 4.375rem;
+    right: -0.875rem;
+     @include hide-show-effect;
+  }
 
   &__title {
     cursor: pointer;
     display: flex;
     align-items: center;
+    padding: 0.75rem 0 0.75rem 0;
+    height: 4.375rem;
     color: #000;
     font-family: Roboto;
     font-size: 1.125rem;
@@ -75,10 +90,12 @@ const toggleActive = (nodeLabel) => {
 
     h4 {
       font-weight: 400;
+      font-size: 1.125rem;
       line-height: normal;
-      margin: 0;
       letter-spacing:0.063rem ;
       padding: 0.25rem 0 0.25rem 0;
+      display:flex;
+      align-items: center;
     }
 
     &--active {

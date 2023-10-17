@@ -1,5 +1,5 @@
 <template>
-  <div class="tree-node" :class="{ 'tree-node--collapsed': !isLeaf && collapsed, 'tree-node--active': isActive }">
+  <div class="tree-node" :class="{'tree-node__leaf':isLeaf, 'tree-node--collapsed': !isLeaf && collapsed, 'tree-node--active': isActive || isActiveLeaf }">
     <span class="tree-node__label" @click="toggleCollapse">
       <span class="tree-node__label__text">
         <span v-if="!isLeaf" class="dropdown-indicator" :class="{ 'dropdown-indicator--collapsed': collapsed }">
@@ -29,6 +29,7 @@
             :isCompleted="node.isCompleted"
             :isActive="false"
             @toggle-active="toggleActive(node.label)"
+            @toggle-active-leaf="toggleActiveLeaf(node.label)"
           />
         </transition>
       </li>
@@ -48,9 +49,10 @@ const props = defineProps({
   isActive: Boolean,
 });
 
-const emits = defineEmits(['toggleActive']);
+const emits = defineEmits(['toggleActive', 'toggleActiveLeaf']);
 
 const active = ref(false);
+const activeLeaf= ref(false)
 const collapsed = ref(true);
 
 const isLeaf = computed(() => props.nodes.length === 0);
@@ -65,6 +67,9 @@ const toggleCollapse = () => {
 const toggleActive = (nodeLabel) => {
   emits('toggleActive', nodeLabel);
 };
+const toggleActiveLeaf = (nodeLabel) => {
+  emits('toggleActiveLeaf', nodeLabel);
+};
 </script>
 
 <style lang="scss">
@@ -78,13 +83,17 @@ const toggleActive = (nodeLabel) => {
   line-height: normal;
   margin-left: 2rem;
   letter-spacing:0.063rem ;
-
-  &--active {
+&--active {
     color: #000;
     font-family: Roboto;
     font-style: normal;
     font-weight: 700;
     line-height: normal;
+  }
+  &__leaf{
+    &--active{
+      background:white;
+    }
   }
 
   &__label {
