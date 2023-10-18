@@ -13,6 +13,7 @@ import i18n from './i18n.js';
 import kpas from './3party/kpas.js';
 import login from './modules/login.js';
 import menu from './modules/menu.js';
+import infoboxes from './modules/infoboxes.js'
 import messagehandler from './3party/messagehandler.js';
 import multilanguage from './3party/multilanguage.js'
 import nrk from './3party/nrk.js';
@@ -627,6 +628,7 @@ jQuery(function($) {
     messagehandler.init();
     uob.init();
     nrk.init();
+    infoboxes.init();
   } catch (e) {
     console.log(e);
   }
