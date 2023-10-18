@@ -36,6 +36,9 @@
   font-weight: 500;
   line-height: normal;
   text-decoration: none !important;
+  &:focus {
+    outline: none;
+  }
 }
 
 .custom-segments__segment.active {
