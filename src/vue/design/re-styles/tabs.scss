@@ -1,11 +1,13 @@
 .custom-segments {
   position: relative;
+}
+.custom-segments__tabHeaders{
   overflow-x: auto;
+  margin-bottom: 1rem;
 }
 
 .custom-segments__segments {
   border-bottom: 0.5rem solid #E6E6E6;
-  display: inline-block;
   white-space: nowrap;
   width: 100%;
 }
@@ -34,7 +36,6 @@
   font-weight: 500;
   line-height: normal;
   text-decoration: none !important;
-
 }
 
 .custom-segments__segment.active {

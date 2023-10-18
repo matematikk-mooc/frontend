@@ -29,8 +29,11 @@ export default (function () {
           customSegments.className = 'custom-segments';
           customSegments.setAttribute('id', 'custom-segments' + i);
           var ul = document.createElement('ul');
+          var div = document.createElement('div');
+          div.className = 'custom-segments__tabHeaders';
           ul.className = 'custom-segments__segments';
-          customSegments.appendChild(ul);
+          div.appendChild(ul);
+          customSegments.appendChild(div);
           strSetNum++;
 
           var tds = table.querySelectorAll('td');
@@ -126,9 +129,7 @@ export default (function () {
       }
     return {
         init: function() {
-          // -----------------------------------------------------------------------------------
           // Add UoB enhancements to rich content displayed in courses.
-          // -----------------------------------------------------------------------------------
           onPage(/\/(courses|groups)\/\d+/, function() {
             transformTabs();
           });
