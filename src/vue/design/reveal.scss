@@ -1,0 +1,49 @@
+.custom-reveal-wrapper{
+    flex-direction: column;
+    width: fit-content;
+    align-items: flex-start;
+    flex: 1 0 0;
+    border-radius: 3px;
+    background: #FFF;
+    box-shadow: 0px 4px 30px 0px rgba(0, 0, 0, 0.25);
+    margin: 1rem 0 1rem 0;
+}
+
+.custom-reveal-button {
+    display: inline-flex;
+    width:fit-content;
+    align-items: center;
+    justify-content: center;
+    font-family: Roboto;
+    padding: 0.5rem;
+    border: solid 2px black;
+    background: #FFF;
+    text-decoration: none !important;
+    cursor: pointer;
+    color: black;
+
+    &:hover {
+        color: black;
+    }
+    &:focus {
+        color: black;
+        outline: none !important;
+    }
+}
+
+
+.custom-reveal-button-img {
+    width: 1.5rem;
+    height: 1.5rem;
+}
+
+.custom-reveal-content {
+    flex: 1 0 0;
+    color: #000;
+    font-family: Roboto;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 150%;
+    padding: 0 .5rem 0 .5rem;
+}
