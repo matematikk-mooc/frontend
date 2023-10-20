@@ -1,0 +1,61 @@
+@import './colors.scss';
+
+.udir-info{
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  padding: 1rem 1.5rem 1rem 1.5rem;
+  border-radius: 0.25rem;
+  min-height: 4rem;
+  overflow-y: visible;
+  border: none;
+  display:flex;
+  align-items: center;
+  gap: 2rem;
+  width: 100%;
+
+  .udir-info__icon-container{
+    display:inline-block;
+    font-size: 2rem;
+    vertical-align: center;
+    width: fit-content;
+  }
+
+  &__general {
+    background: $color-white;
+    gap:0;
+  }
+
+  &__info, &__warning, &_important{
+  background: map-get($color-palette-red, background, 200);
+  }
+  &__verktoy {
+    background: map-get($color-palette-orange, background, 200);
+  }
+  &__tid {
+    background: map-get($color-palette-steel, background, 200);;
+  }
+
+  &__maal {
+    background: map-get($color-palette-green, background, 200);
+  }
+  &__important {
+    background: map-get($color-palette-red, background, 200);
+  }
+  &__tip {
+    background: map-get($color-palette-eggshell, background, 400);
+    .udir-info__icon-container{
+      transform: rotate(180deg);
+    }
+  }
+  &__read , &__question{
+    background: map-get($color-palette-azur, background, 400);
+  }
+  &__quote{
+    background: $color-white;
+  }
+
+  &__skoleleder{
+    background: map-get($color-palette-green, background, 400);
+  }
+
+}
