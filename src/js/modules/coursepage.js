@@ -27,7 +27,7 @@ export default (function() {
         }
       }
     },
-    listModulesAndShowProgressBar: function() {
+    listModulesAndShowProgressBar: function() { // this is where it feeds modules depending on role.
       api.getModulesForCurrentCourse(function(modules) {
         var progressHTML = "";
         var modulesHTML = "";

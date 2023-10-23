@@ -21,10 +21,10 @@ const handleClick = () => {
   background-color: map-get($color-palette-peach,background, 400);
   color: $color-black;
   border: none;
-  padding: 0.25rem;
-  font-size: 1.5rem;
-  height: 2rem;
-  width: 2rem;
+  padding: 0.125rem;
+  font-size: 1rem;
+  height: 1.25rem;
+  width: 1.25rem;
   cursor: pointer;
   transition: all 0.2s ease;
    border-radius: 70%;
