@@ -65,9 +65,8 @@ const isLeaf = computed(() => props.nodes.length === 0);
 const toggleCollapse = () => {
   if (!isLeaf.value) {
     collapsed.value = !collapsed.value;
+    emits('toggleActiveModule', { module: props.label, isOpen: !collapsed.value });
   }
-  console.log('emitting value', props.label)
-  emits('toggleActiveModule', props.label);
 };
 
 const toggleActive = (nodeLabel) => {

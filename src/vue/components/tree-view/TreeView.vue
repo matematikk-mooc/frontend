@@ -1,8 +1,8 @@
 <template>
   <div
     class="tree-node"
-    :class="{'tree-node__leaf': isLeaf, 'tree-node--collapsed': !isLeaf && collapsed, 'tree-node--active': isActive || activeLeaf }"
-    tabindex="0"
+    :class="{'tree-node__leaf': isLeaf, 'tree-node--collapsed': !isLeaf && collapsed, 'tree-node--active': isActive }"
+    :tabindex=" isLeaf ? -1 : 0"
     @keydown.enter="toggleCollapse"
     @keydown.space="toggleCollapse"
   >
@@ -21,8 +21,8 @@
         </template>
       </span>
     </span>
-    <ul class="tree-node__child-nodes" tabindex="0" v-if="!collapsed && !isLeaf">
-      <li tabindex="0" v-for="node in nodes" :key="node.label" class="tree-node__child-nodes__node">
+    <ul class="tree-node__child-nodes" v-if="!collapsed && !isLeaf">
+      <li v-for="node in nodes" :key="node.label" class="tree-node__child-nodes__node">
         <TreeView
           :type="node.type"
           :label="node.label"
@@ -37,7 +37,6 @@
   </div>
 </template>
 
-
 <script setup>
 import { ref, computed, defineProps, defineEmits } from 'vue';
 import Icon from '../icon/Icon.vue';
@@ -50,9 +49,8 @@ const props = defineProps({
   isActive: Boolean,
 });
 
-const emits = defineEmits(['toggleActive', 'toggleActiveLeaf']);
+const emits = defineEmits(['toggleActive']);
 
-const activeLeaf= ref(false)
 const collapsed = ref(true);
 
 const isLeaf = computed(() => props.nodes.length === 0);
@@ -62,13 +60,13 @@ const toggleCollapse = () => {
     collapsed.value = !collapsed.value;
   }
   emits('toggleActive', props.label);
+  if (isLeaf.value) {
+      window.location.href = 'your_url_here';
+  }
 };
 
 const toggleActive = (nodeLabel) => {
   emits('toggleActive', nodeLabel);
-};
-const toggleActiveLeaf = (nodeLabel) => {
-  emits('toggleActiveLeaf', nodeLabel);
 };
 </script>
 
@@ -83,26 +81,31 @@ const toggleActiveLeaf = (nodeLabel) => {
   line-height: normal;
   margin-left: 0.5rem;
   padding-left: 1rem;
-  letter-spacing:0.063rem ;
-&--active {
+  letter-spacing: 0.063rem;
+
+  &--active {
     color: #000;
     font-family: Roboto;
     font-style: normal;
     font-weight: 700;
     line-height: normal;
   }
-  &__leaf{
-      margin:0.5rem 0 0.5rem 1.5rem;
-      border-radius: 1.0652rem 0 0 1.0652rem;
-      font-weight: 400;
-    &--active{
-      background:white;
+
+  &__leaf {
+    margin: 0.5rem 0 0.5rem 1.5rem;
+    border-radius: 1.0652rem 0 0 1.0652rem;
+    font-weight: 400;
+
+    &--active {
+      background: white;
       font-weight: 700;
     }
-    &:hover{
-       background:white;
+
+    &:hover {
+      background: white;
     }
   }
+
   &__label {
     display: flex;
     width: 100%;
@@ -111,31 +114,34 @@ const toggleActiveLeaf = (nodeLabel) => {
     align-items: center;
     gap: 0.75rem;
     cursor: pointer;
+
     a {
       text-decoration: none;
       color: inherit;
     }
-    &__text{
-      font-size: 0.875rem;
-      position:relative;
 
-    &__page-icon {
-    display: inline-block;
-    font-size: 1em;
-    margin-right: 0.125rem;
-    vertical-align: middle;
-  }
-    &__done-icon {
-      position:absolute;
-      left: -1rem;
-      bottom: -.0.5rem;
-      color: #3B7858;
-      display: inline-block;
-      font-size: 1em;
-      vertical-align: middle;
+    &__text {
+      font-size: 0.875rem;
+      position: relative;
+
+      &__page-icon {
+        display: inline-block;
+        font-size: 1em;
+        margin-right: 0.125rem;
+        vertical-align: middle; 
+      }
+
+      &__done-icon {
+        position: absolute;
+        left: -1.25rem;
+        color: #3B7858;
+        display: inline-block;
+        font-size: 1em;
+        vertical-align: middle;
+      }
     }
   }
-}
+
   .dropdown-indicator {
     display: inline-block;
     font-size: 1em;
@@ -152,17 +158,19 @@ const toggleActiveLeaf = (nodeLabel) => {
     padding: 0;
     margin-bottom: 0.125rem;
     padding: 0.2rem 0 0.5rem 0.2rem;
-    @include hide-show-effect
+
+    @include hide-show-effect;
   }
+
   .tree-node__child-nodes:focus > ul,
   .tree-node__child-nodes:hover > ul {
-  visibility: visible;
-  opacity: 1;
-  display: block;
-}
-
+    visibility: visible;
+    opacity: 1;
+    display: block;
+  }
 }
 </style>
+
 
 
 

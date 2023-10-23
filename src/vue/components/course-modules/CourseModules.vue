@@ -17,7 +17,7 @@
           :label="module.label"
           :nodes="module.nodes"
           :isActive="isActiveModule(module.label)"
-          @toggleActiveModule="toggleActiveModule(module.label)"
+          @toggleActiveModule="toggleActiveModule"
         />
       </div>
     </div>
@@ -37,14 +37,23 @@ const treestructure = props.nodes; // Assign nodes prop to treestructure
 
 const selectedNode = ref(null);
 
-const toggleActiveModule = (nodeLabel) => {
-  if (selectedNode.value === nodeLabel) {
-    selectedNode.value = null;
-  } else {
-    selectedNode.value = nodeLabel;
+const toggleActiveModule = ({module, isOpen}) => {
+  if (selectedNode.value === module) {
+    if (isOpen) {
+      selectedNode.value = module;
+    } else {
+      selectedNode.value = null;
   }
-};
+  } else {
+    if (isOpen) {
+      selectedNode.value = module;
+    } else {
+      selectedNode.value = null;
+    }
+  }
 
+};
+  
 const isActiveModule = (nodeLabel) => {
   return nodeLabel === selectedNode.value;
 };
