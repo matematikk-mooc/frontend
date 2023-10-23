@@ -89,9 +89,10 @@ const toggleActiveModule = ({module, isOpen}) => {
 
 <style lang="scss">
 @import '../../design/hide-show-effect';
+@import '../../design/colors.scss';
 
 .module-package {
-  border-top: 1px solid #E6E6E6;
+  border-top: 0.0625rem solid $color-grey-400;
   position:relative;
 
   &__title {
@@ -100,7 +101,7 @@ const toggleActiveModule = ({module, isOpen}) => {
     align-items: center;
     padding:0.5rem 1.5rem 0.5rem 1.5rem;
     height: 4.375rem;
-    color: #000;
+    color: $color-black;
     font-family: Roboto;
     font-size: 1.125rem;
     vertical-align: center;
@@ -108,7 +109,7 @@ const toggleActiveModule = ({module, isOpen}) => {
       position: absolute;
       z-index:2;
       border-radius: 0rem 0.4375rem 0.4375rem 0rem;
-      background: #3B7858;
+      background: map-get($color-palette-green, background, 500);
       width: 0.875rem;
       height: 4.375rem;
       right: -0.875rem;
@@ -142,8 +143,8 @@ const toggleActiveModule = ({module, isOpen}) => {
 
   &__child-nodes {
     list-style-type: none;
-    background: #ECEFF2;
-padding: 0.2rem 0 0.2rem 1.5rem;  
+    background: map-get($color-palette-slate, background, 200);
+    padding: 0.2rem 0 0.2rem 1.5rem;  
     margin:0;
     @include hide-show-effect;
     &--hidden{

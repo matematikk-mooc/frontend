@@ -83,9 +83,10 @@ const toggleActiveModule = ({module, isOpen}) => {
 </script>
 
 <style lang="scss">
+@import '../../design/colors';
 @import '../../design/hide-show-effect';
 .tree-node {
-  color: #000;
+  color: $color-black;
   font-family: Roboto;
   font-size: 0.875rem;
   font-style: normal;
@@ -96,7 +97,7 @@ const toggleActiveModule = ({module, isOpen}) => {
   letter-spacing: 0.063rem;
 
   &--active {
-    color: #000;
+    color: $color-black;
     font-family: Roboto;
     font-style: normal;
     font-weight: 700;
@@ -109,12 +110,12 @@ const toggleActiveModule = ({module, isOpen}) => {
     font-weight: 400;
 
     &--active {
-      background: white;
+      background: $color-white;
       font-weight: 700;
     }
 
     &:hover {
-      background: white;
+      background:$color-white;
     }
   }
 
@@ -146,7 +147,7 @@ const toggleActiveModule = ({module, isOpen}) => {
       &__done-icon {
         position: absolute;
         left: -1.25rem;
-        color: #3B7858;
+        color: map-get($color-palette-green, backround, 500);
         display: inline-block;
         font-size: 1em;
         vertical-align: middle;

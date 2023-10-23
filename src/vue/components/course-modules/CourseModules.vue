@@ -62,12 +62,13 @@ const isActiveModule = (nodeLabel) => {
 
 <style lang="scss">
 @import '../../design/box-shadow';
+@import '../../design/colors.scss';
 .courses {
   width: 100%;
   max-width: 35rem;
   border-radius: 1.6875rem 0rem 0rem 1.6875rem;
-  border: 1px solid #E6E6E6; 
-  background: #FFF;
+  border: 0.0625rem solid $color-grey-400; 
+  background: $color-white;
   margin: 0 1rem 0 1rem;
   padding: 0 0 0.75rem 0;
   @include box-shadow(medium); 
@@ -75,7 +76,7 @@ const isActiveModule = (nodeLabel) => {
   &__header-section {
     color: black;
     word-wrap: break-word;
-    border-bottom: 0.125rem solid #E6E6E6; /* Adjusted border thickness */
+    border-bottom: 0.125rem solid $color-grey-400; 
     padding: 1.75rem 1rem 0.625rem 1.5rem;
     &__header{
       display:flex;
