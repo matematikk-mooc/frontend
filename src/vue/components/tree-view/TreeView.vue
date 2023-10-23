@@ -29,8 +29,7 @@
           :nodes="node.nodes"
           :isCompleted="node.isCompleted"
           :isActive="false"
-          @toggle-active="toggleActive(node.label)"
-          @toggle-active-leaf="toggleActiveLeaf(node.label)"
+          @toggleActiveModule="toggleActiveModule"
         />
       </li>
     </ul>
@@ -58,15 +57,28 @@ const isLeaf = computed(() => props.nodes.length === 0);
 const toggleCollapse = () => {
   if (!isLeaf.value) {
     collapsed.value = !collapsed.value;
+    emits('toggleActiveModule', { module: props.label, isOpen: !collapsed.value });
   }
-  emits('toggleActive', props.label);
   if (isLeaf.value) {
       window.location.href = 'your_url_here';
   }
 };
 
-const toggleActive = (nodeLabel) => {
-  emits('toggleActive', nodeLabel);
+const toggleActiveModule = ({module, isOpen}) => {
+  if (selectedNode.value === module) {
+    if (isOpen) {
+      selectedNode.value = module;
+    } else {
+      selectedNode.value = null;
+  }
+  } else {
+    if (isOpen) {
+      selectedNode.value = module;
+    } else {
+      selectedNode.value = null;
+    }
+  }
+
 };
 </script>
 

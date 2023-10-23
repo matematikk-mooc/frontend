@@ -36,7 +36,7 @@
           :nodes="course.nodes"
           :isCompleted="course.isCompleted"
           :isActive="isActive && course.label === selectedNode"
-          @toggleActive="toggleActive(course.label)"
+          @toggleActiveModule="toggleActiveModule"
         />
       </li>
     </ul>
@@ -69,13 +69,21 @@ const toggleCollapse = () => {
   }
 };
 
-const toggleActive = (nodeLabel) => {
-  if (selectedNode.value === nodeLabel) {
-    selectedNode.value = null;
-  } else {
-     selectedNode.value = nodeLabel;
+const toggleActiveModule = ({module, isOpen}) => {
+  if (selectedNode.value === module) {
+    if (isOpen) {
+      selectedNode.value = module;
+    } else {
+      selectedNode.value = null;
   }
- 
+  } else {
+    if (isOpen) {
+      selectedNode.value = module;
+    } else {
+      selectedNode.value = null;
+    }
+  }
+
 };
 </script>
 
