@@ -147,7 +147,7 @@ const toggleActiveModule = ({module, isOpen}) => {
       &__done-icon {
         position: absolute;
         left: -1.25rem;
-        color: map-get($color-palette-green, backround, 500);
+        color: map-get($color-palette-green, background, 500);
         display: inline-block;
         font-size: 1em;
         vertical-align: middle;

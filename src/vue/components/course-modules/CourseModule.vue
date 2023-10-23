@@ -105,14 +105,16 @@ const toggleActiveModule = ({module, isOpen}) => {
     font-family: Roboto;
     font-size: 1.125rem;
     vertical-align: center;
+    position: relative;
     .module-package__indicator--active{
       position: absolute;
       z-index:2;
       border-radius: 0rem 0.4375rem 0.4375rem 0rem;
       background: map-get($color-palette-green, background, 500);
       width: 0.875rem;
-      height: 4.375rem;
+      height: 100%;
       right: -0.875rem;
+      pointer-events: none;
      @include hide-show-effect;
     }
     h4 {
