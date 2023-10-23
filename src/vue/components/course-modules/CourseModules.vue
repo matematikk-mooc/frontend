@@ -1,14 +1,18 @@
 <template>
   <div class="courses">
     <div class="courses__header-section">
-      <h3 class="courses__header-section__header">
+      <h3 tabindex="0" class="courses__header-section__header" @keydown.enter="toggleActiveModule(null)">
         <Icon name="format_list_numbered" size="1em" />
         <span class="courses__header-section__header__title">Moduler</span>
       </h3>
     </div>
     <div class="courses__treeview">
-      <div class="courses__treeview__item" v-for="(module, index) in treestructure" :key="index">
-       <CourseModule
+      <div
+        class="courses__treeview__item"
+        v-for="(module, index) in treestructure"
+        :key="index"
+      >
+        <CourseModule
           :type="module.type"
           :label="module.label"
           :nodes="module.nodes"
@@ -51,7 +55,7 @@ const isActiveModule = (nodeLabel) => {
 @import '../../design/box-shadow';
 .courses {
   width: 100%;
-  max-width: 40rem;
+  max-width: 35rem;
   border-radius: 1.6875rem 0rem 0rem 1.6875rem;
   border: 1px solid #E6E6E6; 
   background: #FFF;
@@ -62,8 +66,8 @@ const isActiveModule = (nodeLabel) => {
   &__header-section {
     color: black;
     word-wrap: break-word;
-    border-bottom: 1px solid #E6E6E6; /* Adjusted border thickness */
-    padding: 10px 0; /* Added padding for spacing */
+    border-bottom: 0.125rem solid #E6E6E6; /* Adjusted border thickness */
+    padding: 1.75rem 1rem 0.625rem 1.5rem;
     &__header{
       display:flex;
       align-items: center;

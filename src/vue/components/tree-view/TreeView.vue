@@ -1,6 +1,12 @@
 <template>
-  <div class="tree-node" :class="{'tree-node__leaf':isLeaf, 'tree-node--collapsed': !isLeaf && collapsed, 'tree-node--active': isActive || isActiveLeaf }">
-    <span class="tree-node__label" @click="toggleCollapse">
+  <div
+    class="tree-node"
+    :class="{'tree-node__leaf': isLeaf, 'tree-node--collapsed': !isLeaf && collapsed, 'tree-node--active': isActive || activeLeaf }"
+    tabindex="0"
+    @keydown.enter="toggleCollapse"
+    @keydown.space="toggleCollapse"
+  >
+    <span class="tree-node__label" @click="toggleCollapse" @keydown.enter="toggleCollapse" @keydown.space="toggleCollapse">
       <span class="tree-node__label__text">
         <span v-if="!isLeaf" class="dropdown-indicator" :class="{ 'dropdown-indicator--collapsed': collapsed }">
           <Icon name="expand_more" size="1.25em" />
@@ -15,27 +21,22 @@
         </template>
       </span>
     </span>
-    <ul class="tree-node__child-nodes" v-if="!collapsed && !isLeaf">
-      <li
-        v-for="node in nodes"
-        :key="node.label"
-        class="tree-node__child-nodes__node"
-      >
-        <transition name="fade" mode="out-in">
-          <TreeView
-            :type="node.type"
-            :label="node.label"
-            :nodes="node.nodes"
-            :isCompleted="node.isCompleted"
-            :isActive="false"
-            @toggle-active="toggleActive(node.label)"
-            @toggle-active-leaf="toggleActiveLeaf(node.label)"
-          />
-        </transition>
+    <ul class="tree-node__child-nodes" tabindex="0" v-if="!collapsed && !isLeaf">
+      <li tabindex="0" v-for="node in nodes" :key="node.label" class="tree-node__child-nodes__node">
+        <TreeView
+          :type="node.type"
+          :label="node.label"
+          :nodes="node.nodes"
+          :isCompleted="node.isCompleted"
+          :isActive="false"
+          @toggle-active="toggleActive(node.label)"
+          @toggle-active-leaf="toggleActiveLeaf(node.label)"
+        />
       </li>
     </ul>
   </div>
 </template>
+
 
 <script setup>
 import { ref, computed, defineProps, defineEmits } from 'vue';
@@ -51,7 +52,6 @@ const props = defineProps({
 
 const emits = defineEmits(['toggleActive', 'toggleActiveLeaf']);
 
-const active = ref(false);
 const activeLeaf= ref(false)
 const collapsed = ref(true);
 
@@ -81,7 +81,8 @@ const toggleActiveLeaf = (nodeLabel) => {
   font-style: normal;
   font-weight: 400;
   line-height: normal;
-  margin-left: 2rem;
+  margin-left: 0.5rem;
+  padding-left: 1rem;
   letter-spacing:0.063rem ;
 &--active {
     color: #000;
@@ -91,25 +92,29 @@ const toggleActiveLeaf = (nodeLabel) => {
     line-height: normal;
   }
   &__leaf{
+      margin:0.5rem 0 0.5rem 1.5rem;
+      border-radius: 1.0652rem 0 0 1.0652rem;
+      font-weight: 400;
     &--active{
       background:white;
+      font-weight: 700;
+    }
+    &:hover{
+       background:white;
     }
   }
-
   &__label {
     display: flex;
     width: 100%;
-    height: 1.5rem;
-    padding: 0.125rem 0.5rem;
+    height: 2rem;
+    padding: 0.125rem 0 0.125rem 0.5rem;
     align-items: center;
     gap: 0.75rem;
     cursor: pointer;
-
     a {
       text-decoration: none;
       color: inherit;
     }
-
     &__text{
       font-size: 0.875rem;
       position:relative;
@@ -120,11 +125,10 @@ const toggleActiveLeaf = (nodeLabel) => {
     margin-right: 0.125rem;
     vertical-align: middle;
   }
-
     &__done-icon {
       position:absolute;
       left: -1rem;
-      bottom: 0rem;
+      bottom: -.0.5rem;
       color: #3B7858;
       display: inline-block;
       font-size: 1em;
@@ -132,7 +136,6 @@ const toggleActiveLeaf = (nodeLabel) => {
     }
   }
 }
-
   .dropdown-indicator {
     display: inline-block;
     font-size: 1em;
@@ -148,9 +151,16 @@ const toggleActiveLeaf = (nodeLabel) => {
     list-style-type: none;
     padding: 0;
     margin-bottom: 0.125rem;
-    padding: 0.2rem 0 0.5rem 0.5rem;
+    padding: 0.2rem 0 0.5rem 0.2rem;
     @include hide-show-effect
   }
+  .tree-node__child-nodes:focus > ul,
+  .tree-node__child-nodes:hover > ul {
+  visibility: visible;
+  opacity: 1;
+  display: block;
+}
+
 }
 </style>
 
