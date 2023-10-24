@@ -15,29 +15,25 @@ export default (function() {
                 elements.forEach(($content) => {
                     let strSetNum = 0;
                     let tableFound = false;
-                    do {
                         // Locate the next uob-reveal table
                         const tables = Array.from($content.querySelectorAll('table'));
                         let $table = null;
+                        let tableCells = null;
                         for (let i = tables.length - 1; i >= 0; i--) {
+                            $table = null;
                             const table = tables[i];
-                            const tableCell = table.querySelector('td');
-                            if (tableCell.textContent.includes('[uob-reveal]')) {
+                            tableCells = table.querySelectorAll('tbody > tr > td');
+                            if (tableCells[0].textContent.includes('[uob-reveal]')) {
                                 $table = table;
-                                break;
                             }
-                        }
 
-                        // Break loop if no more reveal tables are to be converted.
                         tableFound = $table !== null;
                         if (tableFound) {
                             strSetNum++;
                             let div = document.createElement('div');
                             div.classList.add('custom-reveal-wrapper');
-                            const tableCells = Array.from($table.querySelectorAll('tbody > tr > td'));
-                            for (let _idx = 1; _idx < tableCells.length; _idx++) {
+                            for (let _idx = 1; _idx < Array.from(tableCells).length; _idx++) {
                                 var strAnchor = 'set' + strSetNum + 'reveal';
-
                                 if (_idx % 2) {
                                     const button = document.createElement('p');
                                     button.innerHTML = '<a href="#' + strAnchor + '" class="custom-reveal-button"></a>';
@@ -54,10 +50,8 @@ export default (function() {
                                     contentDiv.id = strAnchor;
                                     contentDiv.className = 'custom-reveal-content';
                                     div.appendChild(contentDiv);
-                                    let children = tableCells[_idx].cloneNode(true).children;
-                                    Array.from(children).forEach((child) => {
-                                        contentDiv.appendChild(child);
-                                    });
+                                    let children = tableCells[_idx].cloneNode(true)
+                                    contentDiv.appendChild(children);
                                 }
                             }
                             $table.parentNode.insertBefore(div, $table);
@@ -65,7 +59,7 @@ export default (function() {
                             // Remove original table
                             $table.remove();
                         }
-                    } while (tableFound);
+                    }
 
                     // Initialize reveal contents
                     var $revealBody = $content.querySelectorAll('.custom-reveal-button');
