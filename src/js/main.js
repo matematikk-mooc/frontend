@@ -1,5 +1,6 @@
 import announcements from './modules/announcements.js';
 import api from './api/api.js';
+import coursePageButtons from './modules/coursePageButtons.js';
 import courselist from './modules/courselist.js';
 import coursepage from './modules/coursepage.js';
 import coursesettings from './modules/coursesettings.js';
@@ -21,6 +22,7 @@ import pages from './modules/pages.js';
 import privacyPolicy from './3party/privacypolicy.js';
 import routes from './modules/routes.js';
 import settings from './settings.js';
+import tabs from './modules/tabs.js';
 import tinyMCEEditor from './modules/tinyMCEEditor';
 import uob from './3party/uob7.js';
 import util from './modules/util.js';
@@ -542,6 +544,7 @@ jQuery(function($) {
       greeting.enableDownloadDiplomaButtonIfNecessary); //This is the newest method which should replace the two old ones.
 
     var courseId = api.getCurrentCourseId();
+    coursePageButtons.replaceMarkAsDone();
 
     if ($("#kpas-lti-info").length ||
         $(".kpas-lti-info").length ||
@@ -628,7 +631,9 @@ jQuery(function($) {
     messagehandler.init();
     uob.init();
     nrk.init();
+    tabs.init();
     infoboxes.init();
+
   } catch (e) {
     console.log(e);
   }
