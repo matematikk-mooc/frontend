@@ -1,0 +1,104 @@
+<template>
+  <div class="courses">
+    <div class="courses__header-section">
+      <h3 tabindex="0" class="courses__header-section__header" @keydown.enter="toggleActiveModule(null)">
+        <Icon name="format_list_numbered" size="1em" />
+        <span class="courses__header-section__header__title">Moduler</span>
+      </h3>
+    </div>
+    <div class="courses__treeview">
+      <div
+        class="courses__treeview__item"
+        v-for="(module, index) in treestructure"
+        :key="index"
+      >
+        <CourseModule
+          :type="module.type"
+          :label="module.label"
+          :nodes="module.nodes"
+          :isActive="isActiveModule(module.label)"
+          @toggleActiveModule="toggleActiveModule"
+        />
+      </div>
+    </div>
+  </div>
+</template>
+
+<script setup>
+import { defineProps, ref } from 'vue';
+import Icon from '../icon/Icon.vue';
+import CourseModule from './CourseModule.vue';
+
+const props = defineProps({
+  nodes: Array,
+});
+
+const treestructure = props.nodes; // Assign nodes prop to treestructure
+
+const selectedNode = ref(null);
+
+const toggleActiveModule = ({module, isOpen}) => {
+  if (selectedNode.value === module) {
+    if (isOpen) {
+      selectedNode.value = module;
+    } else {
+      selectedNode.value = null;
+  }
+  } else {
+    if (isOpen) {
+      selectedNode.value = module;
+    } else {
+      selectedNode.value = null;
+    }
+  }
+
+};
+  
+const isActiveModule = (nodeLabel) => {
+  return nodeLabel === selectedNode.value;
+};
+</script>
+
+
+<style lang="scss">
+@import '../../design/box-shadow';
+@import '../../design/colors.scss';
+.courses {
+  width: 100%;
+  max-width: 35rem;
+  border-radius: 1.6875rem 0rem 0rem 1.6875rem;
+  border: 0.0625rem solid $color-grey-400; 
+  background: $color-white;
+  margin: 0 1rem 0 1rem;
+  padding: 0 0 0.75rem 0;
+  @include box-shadow(medium); 
+
+  &__header-section {
+    color: black;
+    word-wrap: break-word;
+    border-bottom: 0.125rem solid $color-grey-400; 
+    padding: 1.75rem 1rem 0.625rem 1.5rem;
+    &__header{
+      display:flex;
+      align-items: center;
+      justify-content: flex-start;
+      font-size: 1.25rem;
+      font-family: Roboto;
+      font-weight: 600;
+      margin-left: 1rem;
+      &__title{
+        margin-left:1.5rem;
+        margin-top: -0.5rem;
+      }
+    }
+   
+  }
+
+  &__treeview {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding-bottom:1rem;
+  }
+}
+</style>
