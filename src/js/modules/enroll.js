@@ -1,3 +1,5 @@
+import '../css/loader.css';
+
 import LoggedInLandingPage from "../../vue/pages/LoggedInLandingPage.vue";
 import NotLoggedInPage from "../../vue/pages/NotLoggedInPage.vue";
 import allcoursescontainer from '../../templates/modules/allcoursescontainer.hbs'
@@ -134,9 +136,8 @@ export default (function () {
     },
     printAllCourses: function () {
       var self = this;
-      document.getElementById('content').innerHTML = "";
-      var html = "<div class='mmooc-loader-wrapper'><span class='loading-gif'></span></div>";
-      $('.mmooc-all-courses-list').append(html);
+      var html = "<div class='loading-gif-wrapper'><span class='loading-gif'></span></div>";
+      document.getElementById('content').innerHTML = html; //Show loader whhil loading courses'
       api.getAllPublicCourses(function (allCourses) {
         api.getEnrolledCourses(function (enrolledCourses) {
           var allCoursesWithStatus = self.setCourseEnrolledStatus(
@@ -152,7 +153,7 @@ export default (function () {
             var isAuthenticated = util.isAuthenticated();
             if (isAuthenticated) {
               document.getElementById('content').innerHTML = "";
-              let wrapper = document.getElementById("application");
+              let wrapper = document.getElementById("content");
               try {
                 if(wrapper != null){
                     const customContent = document.createElement("div");
@@ -165,6 +166,7 @@ export default (function () {
                     customContent.setAttribute("style", "width: 100%; justify-content: center; display: flex;");
                     let footerNode = document.getElementById("wrapper");
                     footerNode.parentNode.insertBefore(customContent, footerNode)
+                    document.getElementById('wrapper').innerHTML = '';
                     $('#wrapper').hide();
                     page.mount("#loggedInLandingPage");
                 }
@@ -187,6 +189,7 @@ export default (function () {
                     customContent.setAttribute("style", "width: 100%; justify-content: center; display: flex;");
                     let footerNode = document.getElementById("wrapper");
                     footerNode.parentNode.insertBefore(customContent, footerNode)
+                    document.getElementById('wrapper').innerHTML = '';
                     $('#wrapper').hide();
                     page.mount("#notLoggedInPage");
                 }
@@ -373,44 +376,6 @@ export default (function () {
           $('.mmooc-modal').hide();
         }
       });
-    },
-    populateFilter: function (categorys) {
-      var options =
-        '<option value="Alle">Alle tilgjengelige ' +
-        i18n.CoursePlural.toLowerCase() +
-        '</option>';
-      for (var i = 0; i < categorys.length; i++) {
-        options +=
-          '<option value="' + categorys[i] + '">' + categorys[i] + '</option>';
-      }
-      $('#filter').append(options);
-    },
-    applyFilter: function () {
-      var value = $('#filter').val();
-      if (value == 'Alle') {
-        $('.mmooc-all-courses-list').removeClass('filter-active');
-        $('.mmooc-all-courses-list h2').each(function () {
-          $(this).show();
-          $(this)
-            .next()
-            .show();
-        });
-      } else {
-        $('.mmooc-all-courses-list').addClass('filter-active');
-        $('.mmooc-all-courses-list h2').each(function () {
-          if ($(this).text() == value) {
-            $(this).show();
-            $(this)
-              .next()
-              .show();
-          } else {
-            $(this).hide();
-            $(this)
-              .next()
-              .hide();
-          }
-        });
-      }
     }
   };
 })();

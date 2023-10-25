@@ -57,13 +57,6 @@
     min-height: 85vh;
   }
 
-  .landing-page--header {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-  }
   .landing-page--content {
     width: 100%;
     display: flex;

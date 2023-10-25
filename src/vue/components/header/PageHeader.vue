@@ -28,7 +28,7 @@
 </template>
 
 <script setup>
-  const props = defineProps(['logged_in'])
+  const {logged_in} = defineProps(['logged_in'])
   const domain = window.location.origin;
   const loginLink = domain + "/login/canvas"
   const settingsLink = domain + "/profile/settings?design=udir"

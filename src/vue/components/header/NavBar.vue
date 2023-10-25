@@ -1,19 +1,22 @@
 <template>
   <div class="header--nav-container">
-    <PageHeader :logged_in="$props.logged_in"></PageHeader>
+    <PageHeader :logged_in="logged_in"></PageHeader>
     <nav class="page--nav-bar">
-      <NavBarLinks :logged_in="$props.logged_in"></NavBarLinks>
+      <NavBarLinks :logged_in="logged_in"></NavBarLinks>
     </nav>
   </div>
 </template>
 <script setup>
 import PageHeader from './PageHeader.vue'
 import NavBarLinks from './NavBarLinks.vue'
-const loggedIn = defineProps(['logged_in'])
+
+const {logged_in} = defineProps(['logged_in'])
+
 </script>
 
 <style lang="scss">
 @import '../../design/colors.scss';
+
 .header--nav-container {
   width: 100%;
   flex-grow: 0;

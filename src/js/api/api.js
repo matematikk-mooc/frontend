@@ -234,7 +234,7 @@ export default (function() {
           }
         },
         error: error,
-        uri: '/courses',
+        uri: '/courses?include[]=public_description',
         params: {
           include: ['syllabus_body', 'course_progress'],
           per_page: '100'
