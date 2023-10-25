@@ -2,40 +2,58 @@
   <div class="card">
     <div class="card-illustration-box" :class="theme">
       <img
-        class="card-illustration-box-image"
-        :src="courseIllustration"
-        alt="illustrasjon"
+      class="card-illustration-box-image"
+      :src="courseIllustration"
+      alt="illustrasjon"
       />
+      <slot name="closeModalButton"></slot>
     </div>
     <div class="card-content-container">
       <div class="card-content-title">
         <h3> <slot name="title"></slot></h3>
       </div>
       <div class="card-content-description">
+        <p :class="{ description_text: !isModalOpen}">
         <slot name="description"></slot>
+        <slot name="moduleList"></slot>
+      </p>
+      </div>
+      <div>
+        <slot name="filtername"></slot>
+      </div>
+      <div class="card-content-enrolled" v-if="hasGoToCourse">
+        <img class="card-content-enrolled-icon" :src="server +'enrolled-green-circle.svg'"/>
+        <p class="card-content-enrolled-text">
+          <slot name="enrolled"></slot>
+        </p>
       </div>
       <div class="card-content-button-container">
-        <Button :type="'filled'" :size="'md'">
-          <template v-slot:default>
-            <slot name="leftButton"></slot>
-          </template>
-        </Button>
-        <Button :type="'outlined'" :size="'md'">
-          <template v-slot:default>
-            <slot name="rightButton"></slot>
-          </template>
-        </Button>
+        <slot name="leftButton"></slot>
+        <slot name="rightButton"></slot>
+        <slot name="goToCourse"></slot>
       </div>
     </div>
   </div>
 </template>
 
-<script setup lang="js">
-import Button from './Button.vue';
+<script lang="js">
 
-const server= SERVER
-defineProps(['theme', 'courseIllustration'])
-
+export default {
+  name: 'Card',
+  components: {
+  },
+  props: {
+    theme: String,
+    courseIllustration: String,
+    isModalOpen: Boolean,
+  },
+  data(){
+    return {
+      server: SERVER,
+      hasGoToCourse: this.$slots.goToCourse !== undefined,
+    }
+  }
+}
 </script>
 
 <style lang="scss">
@@ -113,5 +131,34 @@ defineProps(['theme', 'courseIllustration'])
       line-height: 150%;
     }
   }
+  .card-content-enrolled {
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.25rem;
+
+  }
+  .card-content-enrolled-text {
+    font-size: 0.875rem;
+    font-family: 'Roboto';
+    font-weight: 400;
+    color: black;
+
+  }
+  .card-content-enrolled-icon {
+    width: 1.25rem;
+    height: 1.25rem;
+    flex-shrink: 0;
+  }
+
+  .description_text {
+    overflow:hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    text-overflow: ellipsis;
+  }
+
 }
 </style>

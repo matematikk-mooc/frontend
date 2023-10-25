@@ -6,8 +6,7 @@ export default (function() {
   return {
     _ajax: typeof $ !== 'undefined' ? $ : {},
     _env: typeof ENV !== 'undefined' ? ENV : {},
-    _location: 'https://udir-kpas-api.eu.ngrok.io',
-    _uriPrefix: '/api',
+    _location: KPASAPIURL,
     _defaultError(event, jqxhr, settings, thrownError) {
       console.log(event, jqxhr, settings, thrownError);
     },
@@ -16,7 +15,7 @@ export default (function() {
     _get(options) {
 
 
-      const uri = this._location + this._uriPrefix + options.uri;
+      const uri = this._location + options.uri;
       console.log(uri)
       const params = options.params || {};
       const callback = options.callback;

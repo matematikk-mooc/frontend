@@ -71,8 +71,8 @@ module.exports = (env) => {
         new CopyWebpackPlugin({
           patterns: [
             {
-              from: "src/vue/assets/logo-white.png",
-              to: "[name][ext]",
+              from: "src/vue/assets/",
+              to: ".",
             },
             {
               from: "src/vue/assets/logo-black.svg",

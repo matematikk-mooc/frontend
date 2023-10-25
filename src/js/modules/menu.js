@@ -504,6 +504,17 @@ export default (function() {
 
         login.handleLoginButtonClick();
       }
+      else {
+        $('#header').hide();
+        var headerwrapper = document.getElementById("application").children[0];
+        headerwrapper.append(document.createElement("div"));
+        headerwrapper.setAttribute("id", "loggedInHeader");
+        const headerProps = {
+          logged_in: true
+        }
+        let customHeader = createApp(NavBar, headerProps);
+        customHeader.mount("#loggedInHeader");
+      }
     },
     hideRightMenu: function() {
       $('#right-side').hide();

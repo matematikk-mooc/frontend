@@ -1,35 +1,26 @@
 <template>
   <div class="nav-bar__link-list-container">
     <ul class="nav-bar__link-list">
-      <!-- <li class="nav-bar__list-item">
+      <li class="nav-bar__list-item">
         <span>
-          <a class="nav-bar__link" :href="'url'">Eventer</a>
+          <a class="nav-bar__link" :href="myCourses">Mine kompetansepakker</a>
         </span>
       </li>
       <li class="nav-bar__list-item">
         <span>
-          <a class="nav-bar__link" :href="'url'">Blog</a>
+          <a class="nav-bar__link" :href="allCourses">Alle tilgjengelige kompetansepakker</a>
         </span>
       </li>
-      <li class="nav-bar__list-item">
-        <span>
-          <a class="nav-bar__link" :href="'url'">Kurskatalog</a>
-        </span>
-      </li>
-      <li class="nav-bar__list-item">
-        <span>
-          <a class="nav-bar__link" :href="'url'">Nyheter</a>
-        </span>
-      </li>
-      <li class="nav-bar__list-item">
-        <span>
-          <a class="nav-bar__link" :href="'url'">Artikler</a>
-        </span>
-      </li> -->
     </ul>
   </div>
 </template>
-<script setup></script>
+<script setup>
+  defineProps(['logged_in'])
+
+  const domain = window.location.origin;
+  const myCourses = domain + "/courses?design=udir"
+  const allCourses = domain + "/search/all_courses?design=udir"
+</script>
 
 <style lang="scss">
 @import '../../design/colors.scss';

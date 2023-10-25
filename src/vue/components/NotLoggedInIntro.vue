@@ -10,22 +10,25 @@
     <div class="intro-news">
       <h2>Vår nyeste kompetansepakke</h2>
       <Card
-        :theme="newestCourse.course_settings.course_category.category.color_code"
+        :theme="newestCourse.course_settings? newestCourse.course_settings.course_category.category.color_code : 'theme_0'"
         :courseIllustration="newestCourse.course_settings? newestCourse.course_settings.image.path: ''"
         >
         <template v-slot:title> {{ newestCourse.name }} </template>
         <template v-slot:description> {{ newestCourse.public_description }} </template>
-        <template v-slot:leftButton>Meld deg på</template>
-        <template v-slot:rightButton>Les mer</template>
+        <template v-slot:leftButton>
+          <Button :type="'filled'" :size="'md'" @click="enrollToCourse(newestCourse.self_enrollment_code)">Meld deg på</Button>
+        </template>
       </Card>
     </div>
   </div>
 </template>
 
-<script setup>
+<script setup lang="js">
 import Card from './Card.vue'
+import Button from './Button.vue';
 const {newestCourse} = defineProps(['newestCourse']);
 </script>
+
 <style>
 .intro-container {
   width: 100%;

@@ -20,9 +20,9 @@ export default (function () {
 
     mapCourseSettings: function (courses, courseSettings) {
       courses.forEach(course => {
-        var cc = courseSettings.find(x => x.course_id === course.course.id)
+        var cc = courseSettings.find(x => x.course_id === course.id)
         if(cc) {
-          course.course.course_settings = cc
+          course.course_settings = cc
         }
       });
       return courses
