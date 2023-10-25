@@ -20,6 +20,7 @@ import multilanguage from './3party/multilanguage.js'
 import nrk from './3party/nrk.js';
 import pages from './modules/pages.js';
 import privacyPolicy from './3party/privacypolicy.js';
+import reveal from './modules/reveal';
 import routes from './modules/routes.js';
 import settings from './settings.js';
 import tabs from './modules/tabs.js';
@@ -631,6 +632,7 @@ jQuery(function($) {
     messagehandler.init();
     uob.init();
     nrk.init();
+    reveal.init();
     tabs.init();
     infoboxes.init();
 

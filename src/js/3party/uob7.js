@@ -133,57 +133,6 @@ export default (function() {
         }
 
         // ================================================================================
-        // Reveal (Part 1/2)
-        //
-        // Convert up to 10 uob-reveal tables to format required for reveals.
-        // ................................................................................
-
-        strSetNum = 0;
-        do {
-          // Locate the next uob-reveal table
-          var $table = $content
-            .find("table")
-            .has("table > tbody > tr > td:contains([uob-reveal])")
-            .last();
-
-          // Break loop if no more reveal tables are to be converted.
-          var tableFound = $table.length;
-          if (tableFound) {
-            // Convert table into a reveal
-            strSetNum++;
-
-            $table
-              .find("tbody:first > tr:gt(0) > td")
-              .each(function (_idx, _item) {
-                var strAnchor =
-                  "set" + strSetNum + "reveal" + (_idx - (_idx % 2)) / 2;
-
-                if ((_idx + 1) % 2) {
-                  // Add new reveal button immediately before table
-                  $table.before(
-                    '<p><a href="#' +
-                      strAnchor +
-                      '" class="uob-reveal-button"></a></p>'
-                  );
-                  $table.prev().children().append($(_item).text().trim());
-                }
-
-                if (_idx % 2) {
-                  // Add new reveal content immediately before table
-                  $table.before(
-                    '<div id="' +
-                      strAnchor +
-                      '" class="uob-reveal-content"></div>'
-                  );
-                  $table.prev().append($(_item).contents());
-                }
-              });
-
-            // Remove original table
-            $table.remove();
-          }
-        } while (tableFound);
-        // ================================================================================
         // RegExp (Part 1/1)
         //
         // Convert up to 10 uob-regexp tables to format required for regexps.
@@ -309,48 +258,6 @@ export default (function() {
           });
         }
 
-        // Initialise reveal contents.
-        var $revealBody = $content.find(".uob-reveal");
-
-        if ($revealBody.length) {
-          for (i = 0; i < $revealBody.length; i++) {
-            var strSelector = $revealBody[i].href;
-            var iHashPos = strSelector.lastIndexOf("#");
-
-            if (iHashPos >= 0) {
-              $(strSelector.slice(iHashPos + 1)).css("display", "none");
-            }
-          }
-        }
-
-        // Initialise reveal buttons.
-        var $revealButton = $content.find(".uob-reveal-button");
-
-        if ($revealButton.length) {
-          $revealButton
-            .button({ icons: { secondary: "ui-icon-triangle-1-e" } })
-            .click(function (event) {
-              var $button = $(this);
-              var body = $button.attr("href");
-              var options;
-
-              if ($(body).css("display") != "none") {
-                $(body).slideUp(400);
-                $(body).find(".hide_youtube_embed_link").click();
-                options = { icons: { secondary: "ui-icon-triangle-1-e" } };
-              } else {
-                $(body).slideDown(400);
-                options = { icons: { secondary: "ui-icon-triangle-1-s" } };
-              }
-
-              $button.button("option", options);
-              setTimeout(function () {
-                window.dispatchEvent(new Event("resize"));
-              }, 200);
-
-              return false;
-            });
-        }
 
         // ================================================================================
         // RegExp (Part 2/2)
