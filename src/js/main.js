@@ -630,12 +630,12 @@ jQuery(function($) {
 
   try {
     messagehandler.init();
-    uob.init();
-    nrk.init();
-    reveal.init();
-    tabs.init();
     infoboxes.init();
+    nrk.init();
+    tabs.init();
+    reveal.init();
     accordion.init();
+    uob.init();
 
   } catch (e) {
     console.log(e);
