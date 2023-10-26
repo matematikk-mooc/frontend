@@ -14,18 +14,18 @@
           </div>
 
           <div class="page-footer--link-container">
-            <PageFooterLink :url="'https://kompetanseudirno.azureedge.net/udirdesign/omkompetanseudirno.html'">Om kompetanskepakker</PageFooterLink>
+            <PageFooterLink :url="'https://kompetanseudirno.azureedge.net/udirdesign/omkompetanseudirno.html'"><template v-slot:footerlink>Om kompetanskepakker</template></PageFooterLink>
             <div class="page-footer--divider"></div>
-            <PageFooterLink :url="'mailto:kompetansesupport@udir.no'">Kontakt</PageFooterLink>
+            <PageFooterLink :url="'mailto:kompetansesupport@udir.no'"><template v-slot:footerlink>Kontakt</template></PageFooterLink>
             <div class="page-footer--divider"></div>
-            <PageFooterLink :url="'https://kompetanseudirno.azureedge.net/udirdesign/privacypolicy.html?v=1_0'">Personvernerklæring</PageFooterLink>
+            <PageFooterLink :url="'https://kompetanseudirno.azureedge.net/udirdesign/privacypolicy.html?v=1_0'"><template v-slot:footerlink>Personvernerklæring</template></PageFooterLink>
             <div class="page-footer--divider"></div>
             <span class="page-footer--accessibility-declaration">
               Tilgjengelighetserklæring på
             </span>
 
-            <PageFooterLink aria-label="Tilgjengelighetserklæring på bokmål" :type="'open-in-new'" :url="'https://uustatus.no/nb/erklaringer/publisert/2796ebc6-161f-4dc9-9429-70d7dd136431'">Bokmål</PageFooterLink>
-            <PageFooterLink aria-label="Tilgjengelighetserklæring på nynorsk" :type="'open-in-new'" :url="'https://uustatus.no/nn/erklaringer/publisert/2796ebc6-161f-4dc9-9429-70d7dd136431'">Nynorsk</PageFooterLink>
+            <PageFooterLink aria-label="Tilgjengelighetserklæring på bokmål" :type="'open-in-new'" :url="'https://uustatus.no/nb/erklaringer/publisert/2796ebc6-161f-4dc9-9429-70d7dd136431'"><template v-slot:footerlink>Bokmål</template></PageFooterLink>
+            <PageFooterLink aria-label="Tilgjengelighetserklæring på nynorsk" :type="'open-in-new'" :url="'https://uustatus.no/nn/erklaringer/publisert/2796ebc6-161f-4dc9-9429-70d7dd136431'"><template v-slot:footerlink>Nynorsk</template></PageFooterLink>
           </div>
         </div>
       </div>

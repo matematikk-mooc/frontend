@@ -1,6 +1,7 @@
 <template>
   <a :href="url" class="page-footer--link">
-                <Icon v-if="type == 'open-in-new'" :name="'open_in_new'"/>
+    <slot name="footerlink"></slot>
+    <Icon v-if="type == 'open-in-new'" :name="'open_in_new'"/>
   </a>
 </template>
 <script setup>
