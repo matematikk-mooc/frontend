@@ -55,7 +55,7 @@ export default (function() {
               for (let i = 0; i < customAccordions.length; i++) {
                 customAccordions[i].addEventListener('click', function() {
                   let img = this.querySelector('img');
-                  // img.src = img.src === expandMore ? expandLess : expandMore;
+                  img.src = img.src === expandMore ? expandLess : expandMore;
                   this.classList.toggle('active');
                   console.log(this.nextElementSibling)
                   let panel = this.nextElementSibling;
