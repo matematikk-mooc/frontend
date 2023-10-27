@@ -52,7 +52,7 @@ export default (function() {
                                     contentDiv.id = strAnchor;
                                     contentDiv.className = 'custom-reveal-content';
                                     div.appendChild(contentDiv);
-                                    let children = tableCells[_idx].cloneNode(true)
+                                    let children = tableCells[_idx]
                                     contentDiv.appendChild(children);
                                 }
                                 }

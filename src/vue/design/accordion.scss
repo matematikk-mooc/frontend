@@ -1,36 +1,52 @@
 @import './colors.scss';
+@import './typography.scss';
 
 .custom-accordion {
     display: flex;
     width: 100%;
     height: fit-content;
-    padding-right: 0px;
+    padding: .5rem 0.5rem 0.5rem 0.5rem;
     justify-content: space-between;
     align-items: flex-start;
     border-bottom: 1px solid var(--stttefarger-gr-600, #999);
+    border-top: none;
+    border-left: none;
+    border-right: none;
     color: var(--stttefarger-svart, #1A1A1A);
     background-color: #FFF ;
-    /* Vanlig/Brødtekst - uthevet */
     font-family: Roboto;
-    font-size: 16px;
+    font-size: 1rem;
     font-style: normal;
     font-weight: 500;
-    line-height: 24px; /* 150% */
 
+}
 
+.custom-accordion.active {
+    border-bottom: 1px solid var(--fargepalett-link-hover, #00468E);
+    color: var(--fargepalett-link-hover, #00468E);
 }
 
 .custom-accordion-panel {
     color: #000;
     font-family: Roboto;
-    font-size: 16px;
+    font-size: 1rem;
     font-style: normal;
     font-weight: 400;
-    line-height: 150%; /* 24px */
+    line-height: 150%;
     display: none;
-
+    align-content: center;
+    justify-content: center;
+    padding: 1rem 0.5rem 1rem 0.5rem;
 }
 
-.active {
+.custom-accordion-panel.active {
     display: inline;
+}
+
+
+
+.custom-accordion-img {
+    width: 1.5rem;
+    height: 1.5rem;
+    color: var(--fargepalett-link-hover, #00468E);
 }

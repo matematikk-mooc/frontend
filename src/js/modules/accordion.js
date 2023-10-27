@@ -6,72 +6,69 @@ export default (function() {
             '#content .user_content.enhanced,#content .show-content.enhanced',
             function($content) {
 
-                for (i = 0; i < 10; i++) {
-                    // Locate the next uob-accordion table.
-                    let $table = $content
-                      .find('table')
-                      .has('table > tbody > tr > td:contains([uob-accordion])')
-                      .last();
+              const expandMore = SERVER + 'vector_images/expand_more.svg';
+              const expandLess = SERVER + 'vector_images/expand_less_blue.svg';
 
-                    // Break loop if no more accordions are to be displayed.
-                    if ($table.length != 1) break;
+              let tables = document.querySelectorAll('table');
+              let $table = null;
 
-                    // Convert table into HTML for an accordian.
-                    $table.before("<div class='custom-accordions'></div>");
-
-                    $table.find('tbody:first > tr:gt(0) > td').each(function(_idx, _item) {
-                      if ((_idx + 1) % 2) {
-                        // Add heading 4 for accordion bar.
-                        $table.prev().append('<button class="custom-accordion"><i class="uob-arrow-down"></i></button>');
-                        $table
-                          .prev()
-                          .children()
-                          .last()
-                          .append(
-                            $(_item)
-                              .text()
-                              .trim()
-                          );
-                      }
-
-                      if (_idx % 2) {
-                        // Add div for accordion content.
-                        $table.prev().append('<div class="custom-accordion-panel"></div>');
-                        $table
-                          .prev()
-                          .children()
-                          .last()
-                          .append($(_item).contents());
-                      }
-                    });
-
-                    // Remove original table from the DOM
-                    $table.remove();
-                  }
-
-                var acc = document.getElementsByClassName("custom-accordion");
-                var i;
-
-                for (i = 0; i < acc.length; i++) {
-                  acc[i].addEventListener("click", function() {
-                    this.classList.toggle("active");
-                    this.firstElementChild.classList.toggle("active");
-                    var panel = this.nextElementSibling;
-                    panel.classList.toggle("active");
-                    // if (panel.style.maxHeight){
-                    //   panel.style.maxHeight = null;
-                    // } else {
-                    //   panel.style.maxHeight = panel.scrollHeight + "px";
-                    // }
-                    setTimeout(function () {
-                      window.dispatchEvent(new Event('resize'));;
-                   }, 200);
-
-                  });
+              for (let j = tables.length - 1; j >= 0; j--) {
+                $table = null
+                if (tables[j].textContent.includes('[uob-accordion]')) {
+                  $table = tables[j];
                 }
 
+                  // Break loop if no more accordions are to be displayed.
+                if ($table){
+
+
+                // Create a div for the custom accordion.
+                let customAccordion = document.createElement('div');
+                customAccordion.className = 'custom-accordions';
+                $table.parentNode.insertBefore(customAccordion, $table);
+
+                let rows = $table.querySelectorAll('tbody tr');
+                for (let j = 1; j < rows.length; j ++) {
+                  let columns = rows[j].querySelectorAll('td');
+                  // Add a button for accordion header.
+                  let button = document.createElement('button');
+                  button.className = 'custom-accordion';
+                  customAccordion.appendChild(button);
+                  button.appendChild(document.createTextNode(columns[0].textContent.trim()));
+                  let buttonImg = document.createElement('img');
+                  buttonImg.classList.add('custom-accordion-img');
+                  buttonImg.src = expandMore;
+                  button.appendChild(buttonImg);
+
+                  // Add a div for accordion content.
+                  let panel = document.createElement('div');
+                  panel.className = 'custom-accordion-panel';
+                  customAccordion.appendChild(panel);
+                  panel.appendChild(columns[1]);
+                }
+
+                // Remove the original table from the DOM
+                $table.parentNode.removeChild($table);
+              }
+
+              let customAccordions = document.querySelectorAll('.custom-accordion');
+              for (let i = 0; i < customAccordions.length; i++) {
+                customAccordions[i].addEventListener('click', function() {
+                  let img = this.querySelector('img');
+                  // img.src = img.src === expandMore ? expandLess : expandMore;
+                  this.classList.toggle('active');
+                  console.log(this.nextElementSibling)
+                  let panel = this.nextElementSibling;
+                  panel.classList.toggle('active');
+
+                  setTimeout(function () {
+                    window.dispatchEvent(new Event('resize'));
+                  }, 200);
+                });
+              }
             }
-        );
+            }
+          );
     }
 
     function onElementRendered(selector, cb, _attempts) {
