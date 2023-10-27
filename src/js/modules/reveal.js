@@ -26,12 +26,15 @@ export default (function() {
                             if (tableCells.length > 0 && tableCells[0].textContent.includes('[uob-reveal]')) {
                                 $table = table;
                             }
+
                         tableFound = $table !== null;
                         if (tableFound) {
+                            let tbody = Array.from($table.getElementsByTagName('tbody'))[0];
                             strSetNum++;
                             let div = document.createElement('div');
                             div.classList.add('custom-reveal-wrapper');
                             for (let _idx = 1; _idx < Array.from(tableCells).length; _idx++) {
+                                if (tableCells[_idx].parentNode.parentNode == tbody) {
                                 var strAnchor = 'set' + strSetNum + 'reveal';
                                 if (_idx % 2) {
                                     const button = document.createElement('p');
@@ -51,6 +54,7 @@ export default (function() {
                                     div.appendChild(contentDiv);
                                     let children = tableCells[_idx].cloneNode(true)
                                     contentDiv.appendChild(children);
+                                }
                                 }
                             }
                             $table.parentNode.insertBefore(div, $table);
