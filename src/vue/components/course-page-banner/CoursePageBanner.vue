@@ -44,6 +44,7 @@ export default {
   padding: 0 1rem 0 1rem;
   display: flex;
   align-items: center;
+  justify-content: space-between;
 
   &__illustration {
     width: 26rem;
