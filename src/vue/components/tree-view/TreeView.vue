@@ -11,8 +11,8 @@
         <span v-if="!isLeaf" class="dropdown-indicator" :class="{ 'dropdown-indicator--collapsed': collapsed }">
           <Icon name="expand_more" size="1.25em" />
         </span>
-        <Icon class="tree-node__label__text__done-icon" v-if="type === 'Page' && isCompleted" name="check_circle_filled" size="1.25em"></Icon>
-        <Icon class="tree-node__label__text__page-icon" v-if="type === 'Page'" name="description" size="1.25em"></Icon>
+        <Icon class="tree-node__label__text__done-icon" v-if="type === 'page' && isCompleted" name="check_circle_filled" size="1.25em"></Icon>
+        <Icon class="tree-node__label__text__page-icon" v-if="type === 'page'" name="description" size="1.25em"></Icon>
         <template v-if="type === 'page'">
           <a :href="url">{{ label }}</a>
         </template>

@@ -27,57 +27,6 @@ export default (function() {
         }
       }
     },
-    listModulesAndShowProgressBar: function() { // this is where it feeds modules depending on role.
-      api.getModulesForCurrentCourse(function(modules) {
-        var progressHTML = "";
-        var modulesHTML = "";
-
-        if(util.isActiveCourseRoleBased() && util.isPrincipal()) {
-          progressHTML = util.renderTemplateWithData(courseprogress, {
-            title: i18n.CourseProgressionTitle,
-            modules: modules
-          });
-          modulesHTML = util.renderTemplateWithData(modulesprincipal, {
-            navname: i18n.GoToModule,
-            coursemodules: i18n.ModulePlural,
-            modules: modules,
-            course: util.course
-          });
-        }
-        else {
-          progressHTML = util.renderTemplateWithData(courseprogressforstudent, {
-            title: i18n.CourseProgressionTitle,
-            modules: modules
-          });
-
-          modulesHTML = util.renderTemplateWithData(modulesstudent, {
-            navname: i18n.GoToModule,
-            coursemodules: i18n.ModulePlural,
-            modules: modules,
-            course: util.course
-          });
-        }
-
-        if(util.isMMOOCLicense()) {
-          footer.addLicenseInFooter();
-        }
-
-        document.getElementById('course_home_content').insertAdjacentHTML('beforebegin', progressHTML);
-
-        document.getElementById('course_home_content').insertAdjacentHTML('beforebegin', modulesHTML);
-
-        multilanguage.perform();
-
-        //Canvas case: Slow loading for group discussions when large number of groups Case # 05035288
-        //Display popup box when loading
-        util.postModuleCoursePageProcessing();
-
-        discussionTopics.printDiscussionUnreadCount(
-          modules,
-          'coursepage'
-        );
-      });
-    },
     hideCourseInvitationsForAllUsers: function() {
       var acceptanceTextToSearchFor = 'invitert til å delta';
       //If .ic-notification__message contains 'Invitert til å delta' så skjul nærmeste parent .ic-notification
