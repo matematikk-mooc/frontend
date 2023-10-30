@@ -319,8 +319,7 @@ export default (function() {
 
         const leftSideElement = document.getElementById('left-side')
       if (leftSideElement) {
-           console.log("Hello from the left side", leftSideElement);
-           renderCourseModules("left-side");
+          renderCourseModules("left-side");
           //Canvas case: Slow loading for group discussions when large number of groups Case # 05035288
           //Display popup box when loading
           util.postModuleMenuProcessing()
