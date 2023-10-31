@@ -4,7 +4,7 @@
  * @param {string} param - The language code ('nb' or 'nn') to match.
  * @returns {string} The extracted content based on the specified language code.
  */
-function cleanString(label, param) {
+function extractLabelForSelectedLanguage(label, param) {
   // Define a regular expression pattern to match the desired language code and text.
   const pattern = new RegExp(`${param}: (.+?)(?:\\||$)`);
 
