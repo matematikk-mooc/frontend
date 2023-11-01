@@ -8,8 +8,7 @@ import groupdiscussionGetHelpFromTeacher from '../../templates/modules/groupdisc
 import { hrefQueryString } from '../settingsRoot.js';
 import i18n from '../i18n.js';
 import login from './login.js';
-import moduleitems from '../../templates/modules/moduleitems.hbs';
-import moduleitemsprincipal from '../../templates/modules/moduleitemsprincipal.hbs';
+import { renderCourseModules } from "../../vue/components/course-modules/index"
 import multilanguage from '../3party/multilanguage.js';
 import settings from '../settings.js';
 import usermenu from '../../templates/modules/usermenu.hbs';
@@ -315,70 +314,42 @@ export default (function() {
   return {
     tooltipRegexpPattern : new RegExp("(<br>|</i>)(.*$)"),
 
-    listModuleItems: function() {
-      api.getCurrentModule(function(module) {
-        var courseId = api.getCurrentCourseId();
-        var html = "";
-        var courseIsRoleBased = util.isActiveCourseRoleBased();
-        var tooltipsHandled = false;
+    listModuleItems: function () {
+ 
 
-        if(courseIsRoleBased && util.isPrincipal()) {
-          html = util.renderTemplateWithData(moduleitemsprincipal, {
-            backToCoursePage: i18n.BackToCoursePage,
-            module: module,
-            courseId: courseId,
-            course: util.course
-          });
-        } else {
-          html = util.renderTemplateWithData(moduleitems, {
-            backToCoursePage: i18n.BackToCoursePage,
-            module: module,
-            courseId: courseId,
-            course: util.course
-          });
+        const leftSideElement = document.getElementById('left-side')
+      if (leftSideElement) {
+          renderCourseModules("left-side");
+          //Canvas case: Slow loading for group discussions when large number of groups Case # 05035288
+          //Display popup box when loading
+          util.postModuleMenuProcessing()
 
-          //Need to update previous and next buttons. If the course is role based
-          //multilanguage will be handled by that method.
-          if(courseIsRoleBased) {
-            updatePrevAndNextButtons(courseId, module);
-            tooltipsHandled = true;
-          }
-        }
-        if(!tooltipsHandled) {
-          multilanguage.performPrevNextTooltip();
-        }
+          $('.mmooc-reveal-trigger').click(function (event) {
+            var $trigger = $(this)
+            var body = $trigger.attr('href')
+            var i = $trigger.find('i')
 
-        if (document.getElementById('left-side')) {
-          document.getElementById('left-side').insertAdjacentHTML('afterbegin', html);
-          multilanguage.perform();
-        }
-        //Canvas case: Slow loading for group discussions when large number of groups Case # 05035288
-        //Display popup box when loading
-        util.postModuleMenuProcessing();
-
-        $('.mmooc-reveal-trigger').click(function(event) {
-          var $trigger = $(this);
-          var body = $trigger.attr('href');
-          var i = $trigger.find('i');
-
-          //Hvis elementet vises så lukker vi det
-          if ($(body).css('display') != 'none') {
-            $(body).slideUp(400);
-            //Hvis det inneholder det aktive elementet så må vi vise det.
-            if ($trigger.attr('id') == 'mmooc-module-item-active-header') {
-              $trigger.attr('class', 'active mmooc-reveal-trigger');
+            //Hvis elementet vises så lukker vi det
+            if ($(body).css('display') != 'none') {
+              $(body).slideUp(400)
+              //Hvis det inneholder det aktive elementet så må vi vise det.
+              if ($trigger.attr('id') == 'mmooc-module-item-active-header') {
+                $trigger.attr('class', 'active mmooc-reveal-trigger')
+              }
+              i.attr('class', 'icon-mini-arrow-right')
+            } else {
+              $(body).slideDown(400)
+              if ($trigger.attr('id') == 'mmooc-module-item-active-header') {
+                $trigger.attr('class', 'mmooc-reveal-trigger')
+              }
+              i.attr('class', 'icon-mini-arrow-down')
             }
-            i.attr('class', 'icon-mini-arrow-right');
-          } else {
-            $(body).slideDown(400);
-            if ($trigger.attr('id') == 'mmooc-module-item-active-header') {
-              $trigger.attr('class', 'mmooc-reveal-trigger');
-            }
-            i.attr('class', 'icon-mini-arrow-down');
-          }
-          return false;
-        });
-      });
+            return false
+          
+          })
+        }
+   
+    
     },
 
     createNewTooltipText : function(oldText, tooltipType, newText) {
@@ -392,7 +363,7 @@ export default (function() {
     },
     showLeftMenu: function() {
       stylesheet.insertRule(
-        'body.with-left-side #main { margin-left: 305px !important }',
+        'body.with-left-side #main { width: 100% !important, minWidth: 1600px; }',
         stylesheet.cssRules.length
       );
       stylesheet.insertRule(
