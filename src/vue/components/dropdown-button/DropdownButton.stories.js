@@ -7,7 +7,7 @@ export default {
 
 const Template = () => ({
   components: { DropdownButton },
-  template: '<DropdownButton/>',
+  template: '<DropdownButton />',
 });
 
 export const Default = Template.bind({});

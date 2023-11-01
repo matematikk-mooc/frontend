@@ -1,6 +1,6 @@
 <template>
   <div class="dropdown">
-    <Button type="outlined" @click="toggleDropdown">
+    <Button type="dropdown" size="lg" @click="toggleDropdown">
       <span :class="['dropdown-button__content', { 'dropdown-button__content--open': isOpen }]">
         {{ selectedOption ?? options[0] }}
         <Icon class="toggle-icon" size="1.5em" name="expand_more" />
@@ -51,16 +51,17 @@ export default {
 
 <style lang="scss">
 @import "../../design/hide-show-effect";
+@import "../../design/box-shadow";
 @import "../../design/colors.scss";
-.dropdown {
-  display: relative;
 
+.dropdown {
+  position: relative;
+  width: fit-content;
   .dropdown-button__content {
     display: flex;
     justify-content: flex-start;
     align-items: center;
     position: relative;
-
     .toggle-icon {
       position: relative;
       bottom: -0.15rem;
@@ -77,16 +78,18 @@ export default {
   }
 
   &__content {
+    width: 100%;
     position: absolute;
-    top: 3.5rem;
+    top: 3rem;
     list-style: none;
     padding: 0;
     margin: 0;
     overflow: hidden;
-    background-color: map-get($color-palette-azur, background, 300);
+    background-color:$color-white;
     border-top: none;
     border-radius: 0.25rem;
     display: hidden;
+    @include box-shadow(medium);
     @include hide-show-effect;
 
     &.show {
@@ -100,7 +103,8 @@ export default {
     min-width: 6rem;
 
     &:hover {
-      background-color: map-get($color-palette-azur, background, 500);
+      background-color: $color-grey-900;
+      color:$color-white;
     }
   }
 }

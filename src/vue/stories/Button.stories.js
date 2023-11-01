@@ -58,7 +58,7 @@ export const SecondaryButton = {
       control: {
         type: "select",
       },
-      options: ["filled", "outlined"],
+      options: ["filled", "outlined", "dropdown"],
     },
     size: {
       control: {
