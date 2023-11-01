@@ -8,13 +8,14 @@
     </h1>
     <div class="course-page__banner__actions">
       <Button type="outlined">Meld deg av</Button>
-      <Button type="outlined">Velg språk</Button>
+     <DropdownButton></DropdownButton>
     </div>
   </div>
 </template>
 
 <script>
 import Button from '../Button.vue';
+import DropdownButton from '../dropdown-button/DropdownButton.vue';
 
 export default {
   props: {
@@ -31,6 +32,7 @@ export default {
   },
   components: {
     Button,
+    DropdownButton
   },
 };
 </script>
@@ -74,6 +76,7 @@ export default {
     gap: 1rem;
     justify-content: center;
     align-items: flex-end;
+    margin-right: 1rem;
   }
 
   &.theme_0 {
