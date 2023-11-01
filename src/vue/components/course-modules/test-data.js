@@ -375,3 +375,31 @@ export const tree_data_3_levels = [
     ],
   },
 ];
+
+export function addPropertiesToTreeData(data) {
+  data.forEach((module, moduleIndex) => {
+    const moduleId = `${moduleIndex + 1}`;
+    const moduleUrl = module.label.replace(/ /g, "-");
+    module.id = moduleId;
+
+    if (module.nodes && module.nodes.length > 0) {
+      module.nodes.forEach((node, nodeIndex) => {
+        const nodeId = `${moduleId}-${nodeIndex + 1}`;
+        const nodeUrl = `${moduleUrl}/${node.label.replace(/ /g, "-")}`;
+        node.id = nodeId;
+
+        if (node.nodes && node.nodes.length > 0) {
+          // Add properties to third-level nodes
+          node.nodes.forEach((subNode, subNodeIndex) => {
+            const subNodeId = `${nodeId}-${subNodeIndex + 1}`;
+            const subNodeUrl = `${nodeUrl}/${subNode.label.replace(/ /g, "-")}`;
+            subNode.id = subNodeId;
+            subNode.url = subNodeUrl;
+          });
+        }
+      });
+    }
+  });
+ console.log('Hello the data looks like that:', data)
+  return data;
+}

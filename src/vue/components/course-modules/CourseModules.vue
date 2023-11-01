@@ -9,14 +9,15 @@
     <div class="courses__treeview">
       <div
         class="courses__treeview__item"
-        v-for="(module, index) in treestructure"
-        :key="index"
+        v-for="(module) in treestructure"
+        :key="module.id"
       >
         <CourseModule
           :type="module.type"
-          :label="module.label"
+          :label="extractLabelForSelectedLanguage(module.label, 'nb')"
+          :id="module.id"
           :nodes="module.nodes"
-          :isActive="isActiveModule(module.label)"
+          :isActive="isActiveModule(module.id)"
           @toggleActiveModule="toggleActiveModule"
         />
       </div>
@@ -28,6 +29,8 @@
 import { defineProps, ref } from 'vue';
 import Icon from '../icon/Icon.vue';
 import CourseModule from './CourseModule.vue';
+import { extractLabelForSelectedLanguage } from '../../utils/lang-utils';
+
 
 const props = defineProps({
   nodes: Array,
@@ -35,27 +38,27 @@ const props = defineProps({
 
 const treestructure = props.nodes; // Assign nodes prop to treestructure
 
-const selectedNode = ref(null);
+const selectedNode = ref(-1);
 
-const toggleActiveModule = ({module, isOpen}) => {
-  if (selectedNode.value === module) {
+const toggleActiveModule = ({moduleId, isOpen}) => {
+  if (selectedNode.value === moduleId) {
     if (isOpen) {
-      selectedNode.value = module;
+      selectedNode.value = moduleId;
     } else {
-      selectedNode.value = null;
+      selectedNode.value = -1;
   }
   } else {
     if (isOpen) {
-      selectedNode.value = module;
+      selectedNode.value = moduleId;
     } else {
-      selectedNode.value = null;
+      selectedNode.value = -1;
     }
   }
 
 };
   
-const isActiveModule = (nodeLabel) => {
-  return nodeLabel === selectedNode.value;
+const isActiveModule = (nodeId) => {
+  return nodeId === selectedNode.value;
 };
 </script>
 
