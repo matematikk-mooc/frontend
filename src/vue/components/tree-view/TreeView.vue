@@ -14,7 +14,7 @@
         <Icon class="tree-node__label__text__done-icon" v-if="type === 'page' && isCompleted" name="check_circle_filled" size="1.25em"></Icon>
         <Icon class="tree-node__label__text__page-icon" v-if="type === 'page'" name="description" size="1.25em"></Icon>
         <template v-if="type === 'page'">
-          <a :href="'url'">{{ label }}</a>
+          <a :href="url">{{ label }}</a>
         </template>
         <template v-else>
           {{ label }}
@@ -27,6 +27,7 @@
           :type="node.type"
           :label="node.label"
           :nodes="node.nodes"
+          :url = "node.url? node.url : ''"
           :isCompleted="node.isCompleted"
           :isActive="false"
           @toggleActiveModule="toggleActiveModule"
@@ -43,6 +44,7 @@ import Icon from '../icon/Icon.vue';
 const props = defineProps({
   type: String,
   label: String,
+  url: String,
   nodes: Array,
   isCompleted: Boolean,
   isActive: Boolean,
@@ -60,7 +62,7 @@ const toggleCollapse = () => {
     emits('toggleActiveModule', { module: props.label, isOpen: !collapsed.value });
   }
   if (isLeaf.value) {
-      window.location.href = 'your_url_here';
+      window.location.href = url;
   }
 };
 
