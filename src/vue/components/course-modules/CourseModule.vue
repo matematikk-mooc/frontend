@@ -33,6 +33,7 @@
         <TreeView
           :type="course.type"
           :label="course.label"
+          :url="course.url? course.url : ''"
           :nodes="course.nodes"
           :isCompleted="course.isCompleted"
           :isActive="isActive && course.label === selectedNode"

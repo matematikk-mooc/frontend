@@ -1,3 +1,4 @@
+import accordion from './modules/accordion.js';
 import announcements from './modules/announcements.js';
 import api from './api/api.js';
 import coursePageButtons from './modules/coursePageButtons.js';
@@ -11,10 +12,10 @@ import footer from './modules/footer.js'
 import greeting from './modules/greeting.js';
 import groups from'./modules/groups.js'
 import i18n from './i18n.js';
+import infoboxes from './modules/infoboxes.js'
 import kpas from './3party/kpas.js';
 import login from './modules/login.js';
 import menu from './modules/menu.js';
-import infoboxes from './modules/infoboxes.js'
 import messagehandler from './3party/messagehandler.js';
 import multilanguage from './3party/multilanguage.js'
 import nrk from './3party/nrk.js';
@@ -630,10 +631,11 @@ jQuery(function($) {
   try {
     messagehandler.init();
     uob.init();
-    nrk.init();
-    reveal.init();
-    tabs.init();
     infoboxes.init();
+    nrk.init();
+    tabs.init();
+    reveal.init();
+    accordion.init();
 
   } catch (e) {
     console.log(e);

@@ -23,16 +23,18 @@ export default (function() {
                             $table = null;
                             const table = tables[i];
                             tableCells = table.querySelectorAll('tbody > tr > td');
-                            if (tableCells[0].textContent.includes('[uob-reveal]')) {
+                            if (tableCells.length > 0 && tableCells[0].textContent.includes('[uob-reveal]')) {
                                 $table = table;
                             }
 
                         tableFound = $table !== null;
                         if (tableFound) {
+                            let tbody = Array.from($table.getElementsByTagName('tbody'))[0];
                             strSetNum++;
                             let div = document.createElement('div');
                             div.classList.add('custom-reveal-wrapper');
                             for (let _idx = 1; _idx < Array.from(tableCells).length; _idx++) {
+                                if (tableCells[_idx].parentNode.parentNode == tbody) {
                                 var strAnchor = 'set' + strSetNum + 'reveal';
                                 if (_idx % 2) {
                                     const button = document.createElement('p');
@@ -50,8 +52,9 @@ export default (function() {
                                     contentDiv.id = strAnchor;
                                     contentDiv.className = 'custom-reveal-content';
                                     div.appendChild(contentDiv);
-                                    let children = tableCells[_idx].cloneNode(true)
+                                    let children = tableCells[_idx]
                                     contentDiv.appendChild(children);
+                                }
                                 }
                             }
                             $table.parentNode.insertBefore(div, $table);
