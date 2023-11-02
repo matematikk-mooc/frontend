@@ -1,3 +1,5 @@
+import "../vue/design/override-base-Canvas-elements.scss";
+
 import accordion from './modules/accordion.js';
 import announcements from './modules/announcements.js';
 import api from './api/api.js';

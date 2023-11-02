@@ -1,0 +1,96 @@
+@import "colors.scss";
+
+.ic-app-course-menu {
+    width: fit-content !important;
+    position: relative !important;
+}
+
+#left-side {
+    width: fit-content !important;
+    padding-right: 2rem !important;
+    padding-top: 1rem !important;
+    border: none !important;
+
+}
+
+body.with-left-side:not(.useFullWidth) {
+    #application.ic-app {
+      #main {
+        min-width: auto;
+        margin: 0 auto;
+      }
+    }
+  }
+
+#right-side {
+    display: none !important;
+}
+
+.ic-Layout-wrapper {
+    margin-left: auto !important;
+    display: flex !important;
+    flex-direction: column !important;
+    max-width: 60% !important;
+    min-height: 0;
+
+}
+
+.ic-Layout-watermark {
+    display: none !important;
+}
+
+
+#application.ic-app {
+    .ic-app-nav-toggle-and-crumbs {
+      display: none; // Hide toggling of menu
+    }
+    margin-left: auto !important;
+    margin-right: auto !important;
+    justify-content: center !important;
+
+    display: flex !important;
+    flex-direction: column !important;
+  }
+
+.ic-app-main-content {
+    margin-top: 1rem !important;
+    width: fit-content !important;
+    min-height: 85vh !important;
+}
+
+.ic-Layout-columns{
+    width: 100% !important;
+    display: flex!important;
+    flex-direction: row-reverse;
+    align-content: flex-start;
+}
+#right-side.ic-app-main-content__secondary{
+    display: hidden !important;
+}
+.ic-Layout-contentWrapper{
+    min-width:1000px !important;
+    max-width: 85% !important;
+    padding-right: 4rem !important;
+
+}
+
+.with-left-side {
+    #main {
+      margin-left: 0;
+    }
+
+    #wrapper {
+      margin-left: auto;
+    }
+  }
+
+  @media screen and (max-width: 1240px) {
+    #wrapper {
+      margin: 10px;
+    }
+
+    .with-left-side #wrapper {
+
+      margin-left: 10px;
+    }
+  }

@@ -129,6 +129,8 @@ const toggleActiveModule = ({moduleId, isOpen}) => {
       letter-spacing:0.063rem ;
       display:flex;
       align-items: center;
+      white-space: normal !important;
+      word-wrap: break-word !important;
     }
 
     &--active {
@@ -151,7 +153,7 @@ const toggleActiveModule = ({moduleId, isOpen}) => {
   &__child-nodes {
     list-style-type: none;
     background: map-get($color-palette-slate, background, 200);
-    padding: 0.2rem 0 0.2rem 1.5rem;  
+    padding: 0.2rem 0 0.2rem 1.5rem;
     margin:0;
     @include hide-show-effect;
     &--hidden{
@@ -160,8 +162,3 @@ const toggleActiveModule = ({moduleId, isOpen}) => {
   }
 }
 </style>
-
-
-
-
-
