@@ -29,14 +29,15 @@
       :aria-hidden="collapsed || isLeaf"
       :role="collapsed || isLeaf ? 'presentation' : 'group'"
     >
-      <li v-for="course in nodes" :key="course.label">
+      <li v-for="course in nodes" :key="course.id">
         <TreeView
           :type="course.type"
-          :label="course.label"
+          :label="extractLabelForSelectedLanguage(course.label, 'nb')"
+          :id="course.id"
           :url="course.url? course.url : ''"
           :nodes="course.nodes"
           :isCompleted="course.isCompleted"
-          :isActive="isActive && course.label === selectedNode"
+          :isActive="isActive && course.id === selectedNode"
           @toggleActiveModule="toggleActiveModule"
         />
       </li>
@@ -48,10 +49,13 @@
 import { ref, computed, defineProps, defineEmits } from 'vue';
 import Icon from '../icon/Icon.vue';
 import TreeView from '../tree-view/TreeView.vue';
+import { extractLabelForSelectedLanguage } from '../../utils/lang-utils';
+
 
 const props = defineProps({
   type: String,
   label: String,
+  id: Number,
   nodes: Array,
   isActive: Boolean,
 });
@@ -59,29 +63,29 @@ const props = defineProps({
 const emits = defineEmits(['toggleActiveModule']);
 
 const collapsed = ref(true);
-const selectedNode = ref(null);
+const selectedNode = ref(-1);
 
 const isLeaf = computed(() => props.nodes.length === 0);
 
 const toggleCollapse = () => {
   if (!isLeaf.value) {
     collapsed.value = !collapsed.value;
-    emits('toggleActiveModule', { module: props.label, isOpen: !collapsed.value });
+    emits('toggleActiveModule', { moduleId: props.id, isOpen: !collapsed.value });
   }
 };
 
-const toggleActiveModule = ({module, isOpen}) => {
-  if (selectedNode.value === module) {
+const toggleActiveModule = ({moduleId, isOpen}) => {
+  if (selectedNode.value === moduleId) {
     if (isOpen) {
-      selectedNode.value = module;
+      selectedNode.value = moduleId;
     } else {
-      selectedNode.value = null;
+      selectedNode.value = -1;
   }
   } else {
     if (isOpen) {
-      selectedNode.value = module;
+      selectedNode.value = moduleId;
     } else {
-      selectedNode.value = null;
+      selectedNode.value = -1;
     }
   }
 

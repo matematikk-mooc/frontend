@@ -22,10 +22,11 @@
       </span>
     </span>
     <ul class="tree-node__child-nodes" v-if="!collapsed && !isLeaf">
-      <li v-for="node in nodes" :key="node.label" class="tree-node__child-nodes__node">
+      <li v-for="node in nodes" :key="node.id" class="tree-node__child-nodes__node">
         <TreeView
           :type="node.type"
-          :label="node.label"
+          :label="extractLabelForSelectedLanguage(node.label, 'nb')"
+          :id="node.id"
           :nodes="node.nodes"
           :url = "node.url? node.url : ''"
           :isCompleted="node.isCompleted"
@@ -40,11 +41,13 @@
 <script setup>
 import { ref, computed, defineProps, defineEmits } from 'vue';
 import Icon from '../icon/Icon.vue';
+import { extractLabelForSelectedLanguage } from '../../utils/lang-utils';
 
 const props = defineProps({
   type: String,
   label: String,
   url: String,
+  id: Number,
   nodes: Array,
   isCompleted: Boolean,
   isActive: Boolean,
@@ -59,23 +62,23 @@ const isLeaf = computed(() => props.nodes.length === 0);
 const toggleCollapse = () => {
   if (!isLeaf.value) {
     collapsed.value = !collapsed.value;
-    emits('toggleActiveModule', { module: props.label, isOpen: !collapsed.value });
+    emits('toggleActiveModule', { moduleId: props.id, isOpen: !collapsed.value });
   }
   if (isLeaf.value) {
       window.location.href = url;
   }
 };
 
-const toggleActiveModule = ({module, isOpen}) => {
-  if (selectedNode.value === module) {
+const toggleActiveModule = ({moduleId, isOpen}) => {
+  if (selectedNode.value === moduleId) {
     if (isOpen) {
-      selectedNode.value = module;
+      selectedNode.value = moduleId;
     } else {
       selectedNode.value = null;
   }
   } else {
     if (isOpen) {
-      selectedNode.value = module;
+      selectedNode.value = moduleId;
     } else {
       selectedNode.value = null;
     }
