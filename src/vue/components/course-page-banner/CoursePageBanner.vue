@@ -44,6 +44,7 @@ export default {
   width: 100%;
   height: 12rem;
   padding: 0 1rem 0 1rem;
+  margin: 2.5rem 0 2.5rem 0;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -108,5 +109,3 @@ export default {
   }
 }
 </style>
-
-
