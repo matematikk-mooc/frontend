@@ -146,10 +146,10 @@ export default {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  width: 110rem;
+  width: 140rem;
   align-items: flex-start;
   justify-content: flex-start;
-  @media (min-width:1025px){
+  @media (max-width:1025px){
     width: 64rem;
   }
   @media (max-width: 768px) {
