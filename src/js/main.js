@@ -6,6 +6,7 @@ import api from './api/api.js';
 import coursePageButtons from './modules/coursePageButtons.js';
 import courselist from './modules/courselist.js';
 import coursepage from './modules/coursepage.js';
+import coursepagebanner from "./modules/coursepagebanner";
 import coursesettings from './modules/coursesettings.js';
 import dataporten from './modules/dataporten';
 import discussionTopics from './modules/discussion-topics.js';
@@ -78,6 +79,7 @@ jQuery(function($) {
   });
 
   routes.addRouteForPath(/\/courses\/\d+/, function() {
+    coursepagebanner.insertCourseBanner();
     let forwardTo = encodeURIComponent(window.location.href);
     let closeOption = false;
     let authenticated = util.isAuthenticated();
@@ -114,6 +116,7 @@ jQuery(function($) {
 
   //The logic below should be refactored and cleaned up.
   routes.addRouteForPath(/\/courses\/\d+$/, function() {
+    coursepagebanner.insertCourseBanner();
     util.updateRightMenuButtons();
     util.removeRecentFeedback();
     groups.interceptLinksToGroupPage();

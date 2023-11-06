@@ -60,6 +60,16 @@ export default (function() {
           uri: '/filters',
           params: {}
         });
+    },
+    getSettingsCurrentCourse: function(courseId, callback, error) {
+      this._get({
+        callback: function(settings) {
+          callback(settings.result);
+        },
+        error: error,
+        uri: '/course/' + courseId + '/settings',
+        params: {}
+      });
     }
 }
 })();
