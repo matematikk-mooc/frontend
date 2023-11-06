@@ -1,3 +1,4 @@
+import multilanguage from "../../js/3party/multilanguage";
 /**
  * Cleans a string to extract content based on a specified language code.
  * @param {string} label - The input string containing language-specific content.
@@ -31,4 +32,9 @@ export function extractLabelForSelectedLanguage(label, param) {
 
   // If there's no language codes or matches, return the label as is.
   return label;
+}
+
+export function getSelectedLanguage() {
+  return multilanguage.getLanguageParameter();
+  
 }

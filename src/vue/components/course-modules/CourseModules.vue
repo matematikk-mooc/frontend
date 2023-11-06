@@ -14,7 +14,7 @@
       >
         <CourseModule
           :type="module.type"
-          :label="extractLabelForSelectedLanguage(module.label, 'nb')"
+          :label="extractLabelForSelectedLanguage(module.label,getSelectedLanguage())"
           :id="module.id"
           :nodes="module.nodes"
           :isActive="isActiveModule(module.id)"
@@ -29,7 +29,7 @@
 import { defineProps, ref } from 'vue';
 import Icon from '../icon/Icon.vue';
 import CourseModule from './CourseModule.vue';
-import { extractLabelForSelectedLanguage } from '../../utils/lang-utils';
+import { extractLabelForSelectedLanguage, getSelectedLanguage } from '../../utils/lang-utils';
 
 
 const props = defineProps({
@@ -39,6 +39,7 @@ const props = defineProps({
 const treestructure = props.nodes; // Assign nodes prop to treestructure
 
 const selectedNode = ref(-1);
+
 
 const toggleActiveModule = ({moduleId, isOpen}) => {
   if (selectedNode.value === moduleId) {

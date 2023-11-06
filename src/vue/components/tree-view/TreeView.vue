@@ -25,7 +25,7 @@
       <li v-for="node in nodes" :key="node.id" class="tree-node__child-nodes__node">
         <TreeView
           :type="node.type"
-          :label="extractLabelForSelectedLanguage(node.label, 'nb')"
+          :label="extractLabelForSelectedLanguage(node.label, getSelectedLanguage())"
           :id="node.id"
           :nodes="node.nodes"
           :url = "node.url? node.url : ''"
@@ -41,7 +41,7 @@
 <script setup>
 import { ref, computed, defineProps, defineEmits } from 'vue';
 import Icon from '../icon/Icon.vue';
-import { extractLabelForSelectedLanguage } from '../../utils/lang-utils';
+import { extractLabelForSelectedLanguage, getSelectedLanguage } from '../../utils/lang-utils';
 
 const props = defineProps({
   type: String,
