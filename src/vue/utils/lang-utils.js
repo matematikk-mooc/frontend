@@ -1,4 +1,4 @@
-import multilanguage from "../../js/3party/multilanguage";
+import multilanguage from "./previous-lang-utils";
 /**
  * Cleans a string to extract content based on a specified language code.
  * @param {string} label - The input string containing language-specific content.
