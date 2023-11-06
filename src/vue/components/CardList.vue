@@ -146,9 +146,16 @@ export default {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  width: 64rem;
+  width: 140rem;
   align-items: flex-start;
   justify-content: flex-start;
+  @media (max-width:1025px){
+    width: 64rem;
+  }
+  @media (max-width: 768px) {
+    flex-direction: column;
+    width: 100%;
+  }
 }
 .card-item {
   margin: 0.25rem 1.5rem 2rem 0;
