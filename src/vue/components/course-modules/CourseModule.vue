@@ -32,7 +32,7 @@
       <li v-for="course in nodes" :key="course.id">
         <TreeView
           :type="course.type"
-          :label="extractLabelForSelectedLanguage(course.label, 'nb')"
+          :label="extractLabelForSelectedLanguage(course.label,getSelectedLanguage())"
           :id="course.id"
           :url="course.url? course.url : ''"
           :nodes="course.nodes"
@@ -46,10 +46,10 @@
 </template>
 
 <script setup>
-import { ref, computed, defineProps, defineEmits } from 'vue';
+import { ref, computed, defineProps, defineEmits} from 'vue';
 import Icon from '../icon/Icon.vue';
 import TreeView from '../tree-view/TreeView.vue';
-import { extractLabelForSelectedLanguage } from '../../utils/lang-utils';
+import { extractLabelForSelectedLanguage, getSelectedLanguage } from '../../utils/lang-utils';
 
 
 const props = defineProps({
@@ -61,7 +61,6 @@ const props = defineProps({
 });
 
 const emits = defineEmits(['toggleActiveModule']);
-
 const collapsed = ref(true);
 const selectedNode = ref(-1);
 
