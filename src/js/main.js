@@ -21,6 +21,7 @@ import login from './modules/login.js';
 import menu from './modules/menu.js';
 import messagehandler from './3party/messagehandler.js';
 import multilanguage from './3party/multilanguage.js'
+import nextPrevButtons from "./modules/next-prev-buttons";
 import nrk from './3party/nrk.js';
 import pages from './modules/pages.js';
 import privacyPolicy from './3party/privacypolicy.js';
@@ -479,6 +480,7 @@ jQuery(function($) {
       menu.showLeftMenu();
       menu.listModuleItems();
       pages.modifyMarkAsDoneButton();
+      nextPrevButtons.getPrevAndNextItems();
 
       if (util.isTeacherOrAdmin()) {
         pages.addGotoModuleButton();
