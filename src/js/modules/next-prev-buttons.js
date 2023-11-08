@@ -1,6 +1,7 @@
-import NextPrevButton from "../../vue/components/next-prev-button/NextPrevButton.vue";
+import { createApp, h } from "vue";
+
+import Button from "../../vue/components/Button.vue";
 import api from "../api/api";
-import { createApp } from "vue";
 import util from "./util";
 
 export default (function() {
@@ -37,14 +38,17 @@ export default (function() {
         hideNextButton();
         let parent = document.getElementById("custom-nav-buttons-wrapper");
         let nextButton = document.createElement("div");
-        let app = createApp(NextPrevButton, {
-            type: "outlined",
-            text: "Neste",
-            size: 'lg',
-            url: nextModuleItem.html_url,
+
+        const app = createApp({
+            render() {
+                return h(Button, {type: 'next', size: 'lg' }, "Neste");
+            }
+        });
+        nextButton.id = "custom-next-button";
+        nextButton.addEventListener("click", function() {
+            window.location.href = nextModuleItem.html_url;
         });
 
-        nextButton.id = "custom-next-button";
         parent.appendChild(nextButton);
         app.mount("#custom-next-button");
     }
@@ -53,13 +57,17 @@ export default (function() {
         hidePrevButton();
         let parent = document.getElementById("custom-nav-buttons-wrapper");
         let prevButton = document.createElement("div");
-        let app = createApp(NextPrevButton, {
-            type: "outlined",
-            text: "Forrige",
-            size: 'lg',
-            url: prevModuleItem.html_url,
+
+        const app = createApp({
+            render() {
+                return h(Button, {type: 'previous', size: 'lg' }, "Forrige");
+            }
         });
         prevButton.id = "custom-prev-button";
+
+        prevButton.addEventListener("click", function() {
+            window.location.href = prevModuleItem.html_url;
+        });
         parent.appendChild(prevButton);
         app.mount("#custom-prev-button");
     }

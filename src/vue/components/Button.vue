@@ -10,18 +10,21 @@
       { 'btn--lg': size === 'lg' }
     ]"
   >
+    <Icon v-if="type === 'previous'" name="chevron_left" size="1.5em" />
     <slot></slot>
+    <Icon v-if="type === 'next'" name="chevron_right" size="1.5em" />
   </button>
 </template>
 
 <script setup>
+import Icon from './icon/Icon.vue';
 const props = defineProps({
   size: String,
   type: String,
 });
 
 const isFilled = !props.type || props.type === 'submit' || props.type === 'filled';
-const isOutlined = props.type === 'outlined';
+const isOutlined = props.type === 'outlined' || props.type === 'previous' || props.type === 'next';
 const isDropdown = props.type === 'dropdown';
 </script>
 
@@ -37,6 +40,9 @@ const isDropdown = props.type === 'dropdown';
   border-radius: 0.1875rem;
   font-weight: 700;
   line-height: 1;
+  display: flex;
+  text-align: center;
+  align-items: center;
 
   &:hover {
     background: #00468e;
@@ -100,4 +106,3 @@ const isDropdown = props.type === 'dropdown';
   }
 }
 </style>
-
