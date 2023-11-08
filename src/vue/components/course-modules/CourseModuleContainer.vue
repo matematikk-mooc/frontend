@@ -1,7 +1,6 @@
 <template>
     <CourseModules :nodes="data" v-if="!loading" />
 </template>
-
 <script>
 import { defineComponent, ref, onMounted } from 'vue';
 import { fetchModulesForCourse } from '../../../js/modules/module-selector/index.js';
@@ -35,5 +34,3 @@ export default defineComponent({
   }
 });
 </script>
-
-
