@@ -25,6 +25,7 @@ import nextPrevButtons from "./modules/next-prev-buttons";
 import nrk from './3party/nrk.js';
 import pages from './modules/pages.js';
 import privacyPolicy from './3party/privacypolicy.js';
+import {renderCourseModules} from '../vue/components/course-modules/index.js'
 import reveal from './modules/reveal';
 import routes from './modules/routes.js';
 import settings from './settings.js';
@@ -120,6 +121,7 @@ jQuery(function($) {
   routes.addRouteForPath(/\/courses\/\d+$/, function() {
     coursepagebanner.insertCourseBanner();
     nextPrevButtons.getFrontpageNextPage();
+    renderCourseModules("left-side");
     util.updateRightMenuButtons();
     util.removeRecentFeedback();
     groups.interceptLinksToGroupPage();
