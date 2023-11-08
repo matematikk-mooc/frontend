@@ -1,4 +1,4 @@
-import Announcements from './announcements.vue';
+import Announcements from './Announcements.vue';
 
 export default {
   title: 'Components/Announcements',
@@ -6,5 +6,10 @@ export default {
 
 export const Default = () => ({
   components: { Announcements },
-  template: '<Announcements :count="3" />',
+  template: '<Announcements :count="3" :url=" " />',
+});
+
+export const NoNewAnnouncements = () => ({
+  components: { Announcements },
+  template: '<Announcements :count="0" :url=" " />',
 });

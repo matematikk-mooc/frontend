@@ -1,16 +1,40 @@
 <template>
-<a href="link-to-announcements" class="course-page-announcements__container">
-  <h3 class="course-page-announcements__title">
-    <Icon aria-hidden="true" class="announcements-icon" name="campaign" size="2em" />
-    <span>Kunngjøringer</span>
-  </h3>
-  <div class="course-page-announcements__count">{{ count }}</div>
-</a>
+  <a :href="concatenatedUrl" class="course-page-announcements__container">
+    <h3 class="course-page-announcements__title">
+      <Icon aria-hidden="true" class="announcements-icon" name="campaign" size="2em" />
+      <span>Kunngjøringer</span>
+    </h3>
+    <div class="course-page-announcements__count" v-if="count > 0">{{ count }}</div>
+  </a>
 </template>
+
 <script setup>
-import Icon from '../icon/Icon.vue'
-const { props } = defineProps(['count']);
+import Icon from '../icon/Icon.vue';
+import { computed } from 'vue';
+
+const props = defineProps({
+  count: Number,
+  url: String,
+});
+
+const concatenatedUrl = computed(() => {
+  try {
+    const currentLocation = window.location.href;
+    const baseUrlMatch = currentLocation.match(/^(https?:\/\/[^/]+)/);
+    const baseUrl = baseUrlMatch ? baseUrlMatch[1] : '';
+    return baseUrl + props.url;
+  } catch (error) {
+    // Handle any errors, e.g., invalid URLs
+    console.error('Error:', error);
+    // Use a default URL or an empty string if an error occurs
+    return '';
+  }
+});
 </script>
+
+
+
+
 
 <style lang="scss">
 @import '../../design/box-shadow';
@@ -33,6 +57,11 @@ const { props } = defineProps(['count']);
   gap: 0.5rem;
   background-color: map-get($color-palette-steel, background, 200);
   @include box-shadow(medium); 
+  margin: 0 1rem 1.25rem 1rem;
+  &:hover{
+    text-decoration: none;
+    color: $primary-hover-color;
+  }
   }
   &__title {
     font-size: 1.125rem;
@@ -50,7 +79,7 @@ const { props } = defineProps(['count']);
     justify-content: center;
     align-items: center;
     position: relative;
-    top: -0.25rem;
+    top: 0.065rem;
     width: 1rem;
     height: 1rem;
     font-size: 0.875rem;

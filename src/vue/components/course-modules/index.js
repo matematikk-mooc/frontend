@@ -1,21 +1,36 @@
-// Import the necessary Vue and component
 import { createApp } from "vue";
-import  CourseModuleContainer from "./CourseModuleContainer";
-
+import AnnouncementsContainer from "../announcements/index";
+import CourseModuleContainer from "./CourseModuleContainer";
 
 export function renderCourseModules(id) {
- // Create a Vue app instance
-  const app = createApp(CourseModuleContainer);
-  const appContainer = document.createElement('div');
-  appContainer.id= 'moduleSelector'
-  // Mount the Vue app to a specific HTML element with an ID
+  // Get the parent element
   const parentElement = document.getElementById(id);
-  parentElement.insertBefore(appContainer, parentElement.firstChild);
 
-  // Mount the Vue app to the element
-  app.mount(appContainer);
+  // Create a Vue app instance for Announcements
+  const announcementsApp = createApp(AnnouncementsContainer);
+  const announcementsContainer = document.createElement("div");
+  announcementsContainer.id = "announcementsContainer";
 
+  // Create a Vue app instance for CourseModuleContainer
+  const courseModuleApp = createApp(CourseModuleContainer);
+  const courseModuleContainer = document.createElement("div");
+  courseModuleContainer.id = "moduleSelector";
+
+  // Mount the Announcements app to its container
+  announcementsApp.mount(announcementsContainer);
+
+  // Mount the CourseModuleContainer app to its container
+  courseModuleApp.mount(courseModuleContainer);
+
+  // Insert courseModuleContainer before any other content
+  parentElement.insertBefore(courseModuleContainer, parentElement.firstChild);
+  
+  // Insert announcementsContainer before any other content
+  parentElement.insertBefore(announcementsContainer, parentElement.firstChild);
+
+  
 }
+
 
 
 
