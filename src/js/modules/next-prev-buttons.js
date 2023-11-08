@@ -74,12 +74,16 @@ export default (function() {
 
     function hidePrevButton() {
         let currentPrev = $(".module-sequence-footer-button--previous")[0];
-        currentPrev.remove();
+        if(currentPrev){
+            currentPrev.remove();
+        }
     }
 
     function hideNextButton() {
         let currentNext = $(".module-sequence-footer-button--next")[0];
-        currentNext.remove();
+        if (currentNext){
+            currentNext.remove();
+        }
     }
 
     function getPrevAndNextItems() {
