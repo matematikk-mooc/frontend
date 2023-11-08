@@ -81,6 +81,7 @@ jQuery(function($) {
 
   routes.addRouteForPath(/\/courses\/\d+/, function() {
     coursepagebanner.insertCourseBanner();
+    // nextPrevButtons.getPrevAndNextItems();
     let forwardTo = encodeURIComponent(window.location.href);
     let closeOption = false;
     let authenticated = util.isAuthenticated();
@@ -118,6 +119,7 @@ jQuery(function($) {
   //The logic below should be refactored and cleaned up.
   routes.addRouteForPath(/\/courses\/\d+$/, function() {
     coursepagebanner.insertCourseBanner();
+    nextPrevButtons.getFrontpageNextPage();
     util.updateRightMenuButtons();
     util.removeRecentFeedback();
     groups.interceptLinksToGroupPage();

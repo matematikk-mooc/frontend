@@ -41,8 +41,8 @@ const isDropdown = props.type === 'dropdown';
   font-weight: 700;
   line-height: 1;
   display: flex;
-  text-align: center;
   align-items: center;
+  bottom: -0.05rem;
 
   &:hover {
     background: #00468e;

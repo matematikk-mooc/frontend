@@ -95,17 +95,19 @@ body.with-left-side:not(.useFullWidth) {
     }
   }
 
+.custom-next-button-wrapper{
+    justify-content: center !important;
+    display: flex !important;
+}
+
 .module-sequence-footer {
-    flex-direction: column !important;
     justify-content: center !important;
     padding-bottom: 2rem !important;
     height:  fit-content !important;
-    // margin: 1rem !important;
 }
 
 #custom-nav-buttons-wrapper {
     display: flex !important;
-    flex-direction: row !important;
     justify-content: center !important;
     align-items: center !important;
     margin: 2rem !important;

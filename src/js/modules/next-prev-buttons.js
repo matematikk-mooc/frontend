@@ -86,6 +86,53 @@ export default (function() {
         }
     }
 
+    function insertNextButtonFrontpage(nextModuleItem) {
+        let parent = document.getElementsByClassName("show-content")[0];
+        let buttonWrapper = document.createElement("div");
+        buttonWrapper.setAttribute('class', "custom-next-button-wrapper")
+        let nextButton = document.createElement("div");
+        const app = createApp({
+            render() {
+                return h(Button, {type: 'next', size: 'lg' }, "Neste");
+            }
+        });
+        nextButton.id = "custom-next-button";
+        nextButton.addEventListener("click", function() {
+            window.location.href = nextModuleItem.html_url;
+        });
+        buttonWrapper.append(nextButton);
+
+        parent.appendChild(buttonWrapper);
+        app.mount("#custom-next-button");
+
+    }
+
+    function getFrontpageNextPage(){
+        let currentCourseId  = ENV.COURSE_ID? ENV.COURSE_ID : ENV.COURSE.id;
+        api.getModulesForCourseIdIncludeItems(currentCourseId, function(modules) {
+            let firstModule = modules[0];
+            let firstModuleItems = firstModule.items;
+            firstModuleItems = removeSubHeaders(firstModuleItems);
+            if (isStudent()) {
+                firstModuleItems = mapStudentItems(firstModuleItems);
+            }
+            let firstItem = null;
+            if(firstModuleItems.length > 1){
+                firstItem = firstModuleItems[1];
+            }
+            else {
+                firstModule = modules[1]
+                firstModuleItems = removeSubHeaders(firstModule.items);
+                if(isStudent()){
+                    firstModuleItems = mapStudentItems(firstModuleItems);
+                }
+                firstItem = firstModuleItems[0];
+            }
+            insertNextButtonFrontpage(firstItem);
+        })
+
+    }
+
     function getPrevAndNextItems() {
         let currentCourseId  = ENV.COURSE_ID? ENV.COURSE_ID : ENV.COURSE.id;
         api.getCurrentModule(function(currentModule) {
@@ -160,7 +207,8 @@ export default (function() {
     }
 
     return {
-        getPrevAndNextItems: getPrevAndNextItems
+        getPrevAndNextItems: getPrevAndNextItems,
+        getFrontpageNextPage: getFrontpageNextPage
     };
 
 })();
