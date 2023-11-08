@@ -8,8 +8,8 @@ import groupdiscussionGetHelpFromTeacher from '../../templates/modules/groupdisc
 import { hrefQueryString } from '../settingsRoot.js';
 import i18n from '../i18n.js';
 import login from './login.js';
-import { renderCourseModules } from "../../vue/components/course-modules/index"
 import multilanguage from '../3party/multilanguage.js';
+import { renderCourseModules } from "../../vue/components/course-modules/index"
 import settings from '../settings.js';
 import usermenu from '../../templates/modules/usermenu.hbs';
 import util from './util.js'
@@ -222,92 +222,6 @@ export default (function() {
       el.attr("data-html-tooltip-title", createNewTooltipText(tooltip, "</i>", item.title));
     }
   }
-  function updatePrevAndNextButtons(courseId, module) {
-    var prevItem = "";
-    var nextItem = "";
-    var firstValidItem = null;
-    var lastValidItem = null;
-    var prevSet = false;
-    var nextSet = false;
-    var currentFound = false;
-    for(var i = 0; i < module.items.length; i++) {
-      var item = module.items[i];
-      if(!item.indent && (item.type != "SubHeader")) {
-        if(!firstValidItem) {firstValidItem = item;}
-        lastValidItem = item;
-
-        if(item.isCurrent) {
-          currentFound = true;
-        } else if(!currentFound) {
-          prevItem = item;
-          prevSet = true;
-        } else if(!nextSet){
-          nextItem = item;
-          nextSet = true;
-          break;
-        }
-      }
-    }
-
-    var prevButton = $(".module-sequence-footer-button--previous");
-    var nextButton = $(".module-sequence-footer-button--next");
-
-    if(prevSet) {
-      var prevButtonLink = $(".module-sequence-footer-button--previous a");
-      prevButtonLink.attr("href", prevItem.html_url);
-      updateButtonTooltip(prevButton, prevItem);
-      multilanguage.performPrevTooltip();
-    } else {
-        prevButton.hide();
-        var id = firstValidItem.id;
-        api.getModuleItemSequence(courseId, id, handlePrevModuleItem);
-    }
-
-    if(nextSet) {
-        var nextButtonLink = $(".module-sequence-footer-button--next a");
-        nextButtonLink.attr("href", nextItem.html_url);
-        updateButtonTooltip(nextButton, nextItem);
-        multilanguage.performNextTooltip();
-    } else {
-        nextButton.hide();
-        var id = lastValidItem.id;
-        api.getModuleItemSequence(courseId, id, handleNextModuleItem);
-    }
-  }
-
-  function handlePrevModuleItem(courseId, moduleItemSequence) {
-    if(moduleItemSequence && moduleItemSequence.items.length && moduleItemSequence.items[0].prev) {
-      var prevItem = moduleItemSequence.items[0].prev;
-      if(prevItem.indent) {
-        id = prevItem.id;
-        api.getModuleItemSequence(courseId, id, handlePrevModuleItem);
-      } else {
-        var prevButton = $(".module-sequence-footer-button--previous");
-        var prevButtonLink = $(".module-sequence-footer-button--previous a");
-        prevButtonLink.attr("href", prevItem.html_url);
-        updateButtonTooltip(prevButton, prevItem);
-        multilanguage.performPrevTooltip();
-        prevButton.show();
-      }
-    }
-  }
-
-  function handleNextModuleItem(courseId, moduleItemSequence) {
-    if(moduleItemSequence && moduleItemSequence.items.length && moduleItemSequence.items[0].next) {
-      var nextItem = moduleItemSequence.items[0].next;
-      if(nextItem.indent) {
-        id = nextItem.id;
-        api.getModuleItemSequence(courseId, id, handleNextModuleItem);
-      } else {
-        var nextButton = $(".module-sequence-footer-button--next");
-        var nextButtonLink = $(".module-sequence-footer-button--next a");
-        nextButtonLink.attr("href", nextItem.html_url);
-        updateButtonTooltip(nextButton, nextItem);
-        multilanguage.performNextTooltip();
-        nextButton.show();
-      }
-    }
-  }
 
   var stylesheet = createStyleSheet();
 
@@ -315,9 +229,8 @@ export default (function() {
     tooltipRegexpPattern : new RegExp("(<br>|</i>)(.*$)"),
 
     listModuleItems: function () {
- 
 
-        const leftSideElement = document.getElementById('left-side')
+      const leftSideElement = document.getElementById('left-side')
       if (leftSideElement) {
           renderCourseModules("left-side");
           //Canvas case: Slow loading for group discussions when large number of groups Case # 05035288
@@ -345,11 +258,11 @@ export default (function() {
               i.attr('class', 'icon-mini-arrow-down')
             }
             return false
-          
+
           })
         }
-   
-    
+
+
     },
 
     createNewTooltipText : function(oldText, tooltipType, newText) {

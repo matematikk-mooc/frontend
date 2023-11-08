@@ -6,7 +6,7 @@
         {{ item.name }}
       </div>
 
-      <ul>
+      <ul class="cardfilter-list">
         <li v-for="filter in item.filter" :key="filter.id">
           <label class="checkbox-label" :for="filter.id">
             {{ filter.filter_name }}
@@ -65,7 +65,7 @@ const clearFilters = () => {
 .filter-group {
   margin: 1rem 0 1rem 0;
 }
-ul {
+.cardfilter-list {
   list-style-type: none;
   margin: 0;
   padding: 0;

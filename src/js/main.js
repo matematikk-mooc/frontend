@@ -21,9 +21,11 @@ import login from './modules/login.js';
 import menu from './modules/menu.js';
 import messagehandler from './3party/messagehandler.js';
 import multilanguage from './3party/multilanguage.js'
+import nextPrevButtons from "./modules/next-prev-buttons";
 import nrk from './3party/nrk.js';
 import pages from './modules/pages.js';
 import privacyPolicy from './3party/privacypolicy.js';
+import {renderCourseModules} from '../vue/components/course-modules/index.js'
 import reveal from './modules/reveal';
 import routes from './modules/routes.js';
 import settings from './settings.js';
@@ -80,6 +82,7 @@ jQuery(function($) {
 
   routes.addRouteForPath(/\/courses\/\d+/, function() {
     coursepagebanner.insertCourseBanner();
+    // nextPrevButtons.getPrevAndNextItems();
     let forwardTo = encodeURIComponent(window.location.href);
     let closeOption = false;
     let authenticated = util.isAuthenticated();
@@ -117,6 +120,8 @@ jQuery(function($) {
   //The logic below should be refactored and cleaned up.
   routes.addRouteForPath(/\/courses\/\d+$/, function() {
     coursepagebanner.insertCourseBanner();
+    nextPrevButtons.getFrontpageNextPage();
+    renderCourseModules("left-side");
     util.updateRightMenuButtons();
     util.removeRecentFeedback();
     groups.interceptLinksToGroupPage();
@@ -479,6 +484,7 @@ jQuery(function($) {
       menu.showLeftMenu();
       menu.listModuleItems();
       pages.modifyMarkAsDoneButton();
+      nextPrevButtons.getPrevAndNextItems();
 
       if (util.isTeacherOrAdmin()) {
         pages.addGotoModuleButton();

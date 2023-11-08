@@ -265,6 +265,16 @@ export default (function() {
       });
     },
 
+    getModulesForCourseIdIncludeItems(courseId, callback, error) {
+      this._get({
+        callback: callback,
+        error: error,
+        uri: `/courses/${courseId}/modules?include[]=items`,
+        params: { per_page: 999 }
+      });
+    },
+
+
     getItemsForModuleId(callback, error, courseId, moduleId, params) {
       this._get({
         callback: callback,
