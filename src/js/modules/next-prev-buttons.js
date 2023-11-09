@@ -35,40 +35,32 @@ export default (function() {
     }
 
     function insertNextButton(nextModuleItem) {
-        hideNextButton();
-        let parent = document.getElementById("custom-nav-buttons-wrapper");
-        let nextButton = document.createElement("div");
+        let nextButton = document.getElementById("custom-next-button");
 
         const app = createApp({
             render() {
                 return h(Button, {type: 'next', size: 'lg' }, "Neste");
             }
         });
-        nextButton.id = "custom-next-button";
         nextButton.addEventListener("click", function() {
             window.location.href = nextModuleItem.html_url;
         });
 
-        parent.appendChild(nextButton);
         app.mount("#custom-next-button");
     }
 
     function insertPrevButton(prevModuleItem) {
-        hidePrevButton();
-        let parent = document.getElementById("custom-nav-buttons-wrapper");
-        let prevButton = document.createElement("div");
+        let prevButton = document.getElementById("custom-prev-button");
 
         const app = createApp({
             render() {
                 return h(Button, {type: 'previous', size: 'lg' }, "Forrige");
             }
         });
-        prevButton.id = "custom-prev-button";
 
         prevButton.addEventListener("click", function() {
             window.location.href = prevModuleItem.html_url;
         });
-        parent.appendChild(prevButton);
         app.mount("#custom-prev-button");
     }
 
@@ -136,15 +128,28 @@ export default (function() {
     function getPrevAndNextItems() {
         let currentCourseId  = ENV.COURSE_ID? ENV.COURSE_ID : ENV.COURSE.id;
         api.getCurrentModule(function(currentModule) {
+            hideNextButton();
+            hidePrevButton();
+
             let path = new URL(document.location).searchParams;
             let currentItemId = path.get("module_item_id");
             let previousItem = null;
             let nextItem = null;
             let moduleItems = currentModule.items;
-            let navButtonsWrapperParent = $(".module-sequence-footer-content")[0];
+
             let navButtonsWrapper = document.createElement("div");
             navButtonsWrapper.id = "custom-nav-buttons-wrapper";
-            navButtonsWrapperParent.appendChild(navButtonsWrapper);
+
+            let prevButton = document.createElement("div");
+            prevButton.id = "custom-prev-button";
+
+            let nextButton = document.createElement("div");
+            nextButton.id = "custom-next-button";
+
+            navButtonsWrapper.appendChild(prevButton);
+            navButtonsWrapper.appendChild(nextButton);
+            $(".module-sequence-footer-content")[0].appendChild(navButtonsWrapper);
+
             moduleItems = removeSubHeaders(moduleItems);
             if (isStudent()){
                 moduleItems = mapStudentItems(moduleItems);
@@ -164,10 +169,6 @@ export default (function() {
                         }
                         previousItem = previousModuleItems[previousModuleItems.length - 1];
                         insertPrevButton(previousItem);
-                    }
-                    else {
-                        //Første side i første modul, skjul forrige knapp
-                        hidePrevButton();
                     }
 
                 });
@@ -190,10 +191,6 @@ export default (function() {
                         }
                         nextItem = nextModuleItems[0];
                         insertNextButton(nextItem);
-                    }
-                    else {
-                        //Siste side i siste modul, skjul neste knapp
-                        hideNextButton();
                     }
 
                 });
