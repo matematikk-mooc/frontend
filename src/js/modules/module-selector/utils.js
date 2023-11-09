@@ -34,7 +34,7 @@ export function itemIsPage(item) {
 export function mapModules(modules) {
   try {
     return modules.map((module) => ({
-      id: module.id,
+      id: Number(module.id),
       label: module.name,
       isCompleted: module.completed_at !== null,
       type: "module",
@@ -50,7 +50,7 @@ export function mapModules(modules) {
 
 function mapToPage(item) {
   return {
-    id: item.id,
+    id: Number(item.id),
     label: item.title,
     type: "page",
     nodes: [],
@@ -60,7 +60,7 @@ function mapToPage(item) {
 
 function mapToSubHeader(item) {
   return {
-    id: item.id,
+    id: Number(item.id),
     type: "module", // You are using a fixed type 'module' here
     label: item.title,
     nodes: [],
