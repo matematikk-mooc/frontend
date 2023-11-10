@@ -101,7 +101,24 @@ export default (function() {
       buttonHtml += '<i class="icon-student-view"></i>Studentvisning</a>';
       addButton(buttonHtml);
     },
-
+    removeItemsInStudentView: function() {
+      const userIsStudent = !util.isTeacherOrAdmin();
+      if (userIsStudent) {
+        // Get the element with the ID "sticky-container"
+      var adminNavigation = document.getElementById('sticky-container');  
+      // Check if the element is found
+      if (adminNavigation) {
+      // Remove the element from the DOM
+      adminNavigation.parentNode.removeChild(adminNavigation);
+    } 
+      var adminHeader = document.querySelector('.header-bar-outer-container');
+      // Check if the element is found
+      if (adminHeader) {
+        // Remove the element from the DOM
+        adminHeader.parentNode.removeChild(adminHeader);
+      } 
+      }
+  },
     updateSidebarWhenMarkedAsDone: function() {
       $('body').on('click', '#mark-as-done-checkbox', function() {
         var icon = $('ul.mmooc-module-items .active span:last-child');

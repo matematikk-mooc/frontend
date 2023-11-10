@@ -126,6 +126,7 @@ jQuery(function($) {
     util.removeRecentFeedback();
     groups.interceptLinksToGroupPage();
     coursepage.showCourseInvitation();
+    pages.removeItemsInStudentView();
     // override default view and display all courses list instead
     var courseView = util.isCourseFrontpageForAllCoursesList();
     if (courseView == util.courseListEnum.allCoursesList) {
@@ -655,7 +656,7 @@ jQuery(function($) {
   try {
     menu.injectGroupsPage();
     groups.changeGroupListURLs(document.location.href);
-
+     pages.removeItemsInStudentView();
     pages.updateSidebarWhenMarkedAsDone();
     pages.updateSidebarWhenContributedToDiscussion();
     menu.alterCourseLink();
