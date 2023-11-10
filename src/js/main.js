@@ -118,7 +118,8 @@ jQuery(function($) {
   });
 
   //The logic below should be refactored and cleaned up.
-  routes.addRouteForPath(/\/courses\/\d+$/, function() {
+  routes.addRouteForPath(/\/courses\/\d+$/, function () {
+    coursepage.hideElementsFromUsers();
     coursepagebanner.insertCourseBanner();
     nextPrevButtons.getFrontpageNextPage();
     renderCourseModules("left-side");
@@ -192,20 +193,6 @@ jQuery(function($) {
               util.getPageTitleBeforeColon()
             );
             dataporten.display();
-        } else {
-          menu.showCourseMenu(courseId, 'Forside', null);
-          if (api.usesFrontPage()) {
-            if (!util.isTeacherOrAdmin()) {
-              var frontPage = $('#wiki_page_show');
-              if (frontPage.length) {
-                frontPage.hide();
-              }
-              coursepage.listModulesAndShowProgressBar();
-            }
-          } //Hvis det ikke er wiki som forside så lister vi ut modulene på vanlig måte.
-          else {
-            coursepage.listModulesAndShowProgressBar();
-          }
         }
     }
     announcements.printAnnouncementsUnreadCount();
