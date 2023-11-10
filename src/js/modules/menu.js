@@ -246,7 +246,8 @@ export default (function() {
         headerwrapper.append(document.createElement("div"));
         headerwrapper.setAttribute("id", "notLoggedInHeader");
         const headerProps = {
-          logged_in: false
+          logged_in: false,
+          admin: false
         }
         let customHeader = createApp(NavBar, headerProps);
         customHeader.mount("#notLoggedInHeader");
@@ -255,11 +256,16 @@ export default (function() {
       }
       else {
         $('#header').hide();
+        let admin = false;
+        if(util.isTeacherOrAdmin()){
+          admin = true;
+        }
         var headerwrapper = document.getElementById("application").children[0];
         headerwrapper.append(document.createElement("div"));
         headerwrapper.setAttribute("id", "loggedInHeader");
         const headerProps = {
-          logged_in: true
+          logged_in: true,
+          admin: admin
         }
         let customHeader = createApp(NavBar, headerProps);
         customHeader.mount("#loggedInHeader");
