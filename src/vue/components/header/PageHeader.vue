@@ -43,7 +43,7 @@
   justify-content: space-between;
   flex-grow: 1;
   font-family: 'Montserrat', 'Helvetica Neue', 'sans-serif';
-  padding: 1.25rem 0.725rem;
+  padding: 1.25rem 0 1.25rem 0;
   width: 100%;
 }
 .header-brand {
@@ -58,6 +58,7 @@
   letter-spacing: normal;
   text-align: left;
   color: $color-black;
+  margin-left: .75rem;
 }
 
 .header__link-list {

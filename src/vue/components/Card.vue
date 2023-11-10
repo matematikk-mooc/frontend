@@ -109,7 +109,6 @@ export default {
     object-position: right bottom;
   }
   .card-content-container {
-    width: 100%;
     height: 100%;
     padding: 0.5rem 1.5rem 0.5rem 1.5rem;
     font-family: Roboto;

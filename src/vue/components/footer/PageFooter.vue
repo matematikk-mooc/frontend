@@ -5,7 +5,7 @@
       <div class="page-footer--content-wrapper">
         <div class="page-footer--logo-wrapper">
           <a :href="'https://www.udir.no/'" alt="udir.no">
-            <img aria-label="udir-logo" class="page-footer--logo" :src="`${server}/logo-white.png`" />
+            <img aria-label="udir-logo" class="page-footer--logo" :src="`${server}logo-white.png`" />
           </a>
         </div>
         <div class="page-footer--main-content">
@@ -49,8 +49,6 @@ const server = SERVER;
 
   .page-footer--content-wrapper {
     width: 100%;
-    padding-left: 2.5rem;
-    padding-right: 2.5rem;
     padding-top: 2rem;
     padding-bottom: 2rem;
     background: map-get($color-palette-steel, background, 700);
