@@ -48,7 +48,7 @@ module.exports = (env) => {
         new webpack.DefinePlugin({
           VUECSS: JSON.stringify("index.css"),
           DESIGNCSS: JSON.stringify(
-            "subaccount-udirdesign-dev-" + env.timestamp + ".css"
+            "kompetanseportal-udirdesign-dev-" + env.timestamp + ".css"
           ),
           DESIGNJS: JSON.stringify(
             "kompetanseportal-udirdesign-dev-" + env.timestamp + ".js"

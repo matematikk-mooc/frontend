@@ -88,12 +88,12 @@ export default (function() {
       var targetHref =
         '/courses/' + courseId + '/modules#context_module_item_' + moduleItemId;
       var buttonHtml =
-        "<a class='btn' href='" + targetHref + "'>Gå til modul</a>";
+        "<a class='btn admin-button' href='" + targetHref + "'>Gå til modul</a>";
       addButton(buttonHtml);
     },
     addStudentViewButton: function() {
       var courseId = api.getCurrentCourseId();
-      var buttonHtml = '<a class="btn student_view_button" ';
+      var buttonHtml = '<a class="btn admin-button" ';
       buttonHtml +=
         'rel="nofollow" data-method="post" href="/courses/' +
         ENV.COURSE_ID +

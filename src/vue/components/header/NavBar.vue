@@ -33,7 +33,7 @@ const {logged_in} = defineProps(['logged_in'])
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 0.75rem 26.75rem;
+  padding: 0.75rem 0;
   background-color: $color-grey-900;
 }
 

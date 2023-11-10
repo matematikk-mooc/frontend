@@ -7,7 +7,6 @@
 
 #left-side {
     width: fit-content !important;
-    padding-right: 2rem !important;
     padding-top: 1rem !important;
     border: none !important;
 
@@ -35,10 +34,17 @@ body.with-left-side:not(.useFullWidth) {
 
 }
 
+.admin-button {
+    width: fit-content !important;
+}
+
 .ic-Layout-watermark {
     display: none !important;
 }
 
+.pages.show,  .show-content, .user_content, .mceContentBody {
+    overflow-x: visible !important;
+}
 
 #application.ic-app {
     .ic-app-nav-toggle-and-crumbs {
@@ -69,9 +75,7 @@ body.with-left-side:not(.useFullWidth) {
 }
 .ic-Layout-contentWrapper{
     min-width:1000px !important;
-    max-width: 85% !important;
-    padding-right: 4rem !important;
-
+    max-width: 100% !important;
 }
 
 .with-left-side {
@@ -110,7 +114,6 @@ body.with-left-side:not(.useFullWidth) {
     display: flex !important;
     justify-content: center !important;
     align-items: center !important;
-    margin: 2rem !important;
     padding-bottom: 2rem !important;
     gap: 4rem !important;
 
@@ -119,7 +122,6 @@ body.with-left-side:not(.useFullWidth) {
     display: block !important;
     justify-content: center!important;
     align-items: center !important;
-    margin: 1rem !important;
     padding-bottom: 2rem !important;
     gap: 4rem !important;
 }
