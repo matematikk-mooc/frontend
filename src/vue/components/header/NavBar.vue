@@ -1,6 +1,6 @@
 <template>
   <div class="header--nav-container">
-    <PageHeader :logged_in="logged_in"></PageHeader>
+    <PageHeader :logged_in="logged_in" :admin="admin"></PageHeader>
     <nav class="page--nav-bar">
       <NavBarLinks :logged_in="logged_in"></NavBarLinks>
     </nav>
@@ -10,7 +10,7 @@
 import PageHeader from './PageHeader.vue'
 import NavBarLinks from './NavBarLinks.vue'
 
-const {logged_in} = defineProps(['logged_in'])
+const {logged_in, admin} = defineProps(['logged_in', 'admin'])
 
 </script>
 
