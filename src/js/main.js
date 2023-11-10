@@ -118,7 +118,9 @@ jQuery(function($) {
   });
 
   //The logic below should be refactored and cleaned up.
-  routes.addRouteForPath(/\/courses\/\d+$/, function() {
+  routes.addRouteForPath(/\/courses\/\d+$/, function () {
+      coursepage.hideElementsFromUsers();
+    
     coursepagebanner.insertCourseBanner();
     nextPrevButtons.getFrontpageNextPage();
     renderCourseModules("left-side");

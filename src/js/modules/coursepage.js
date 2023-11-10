@@ -46,6 +46,31 @@ export default (function() {
           "')"
       ).hide();
     },
+    hideElementsFromUsers:function() {
+    // Remove elements with class "public-license"
+   var publicLicenseElements = document.getElementsByClassName('public-license')[0];
+   if (publicLicenseElements) {
+            publicLicenseElements.parentNode.removeChild(publicLicenseElements);
+        }
+
+    // Check if the user is a student or if teacher/admin is in student mode.
+    var userIsStudent = !util.isTeacherOrAdmin(); 
+    // Conditionally remove elements based on userIsStudent
+    if (userIsStudent) {
+        // Remove element with class "header-bar-outer-container"
+        var headerBarContainer = document.getElementsByClassName('header-bar-outer-container')[0];
+        if (headerBarContainer) {
+            headerBarContainer.parentNode.removeChild(headerBarContainer);
+        }
+    } else {
+        // Remove element with class "page-heading"
+        var pageHeadingElement = document.getElementsByClassName('page-heading')[0];
+        if (pageHeadingElement) {
+            pageHeadingElement.parentNode.removeChild(pageHeadingElement);
+        }
+    }
+},
+
 
     //Until Canvas has corrected the translation of drop course to something else than "slipp emnet", we override the functionality.
     overrideUnregisterDialog: function() {
