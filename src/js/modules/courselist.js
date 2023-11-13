@@ -5,6 +5,7 @@ import api from "../api/api";
 import { createApp } from "vue/dist/vue.runtime.esm-bundler.js";
 import enrollprivacypolicy from "../../templates/modules/enrollprivacypolicy.hbs";
 import i18n from "../i18n";
+import kpasApi from '../api/kpas-api';
 import settings from "../settings";
 import util from "./util";
 
@@ -13,39 +14,43 @@ export default (function () {
     listCourses(parentId, callback) {
       if (document.getElementsByClassName("reaccept_terms").length === 0) {
         let htmlLoading = `<div class='loading-gif-wrapper'><span class='loading-gif'></span></div>`;
-        document.getElementById('wrapper').innerHTML = htmlLoading; //Show loader whhil loading courses'
+        document.getElementById('content').innerHTML = htmlLoading; //Show loader whhil loading courses'
 
         api.getEnrolledCourses((courses) => {
-          if (courses.length == 0) {
-            // TODO: Insert not assigned to any courses component
-          } else {
+          kpasApi.getAllCourseSettings(function (allCoursesSettings) {
+            var myCoursesWithSettings = util.mapCourseSettings(courses, allCoursesSettings.result);
+
+            if (myCoursesWithSettings.length == 0) {
+              // TODO: Insert not assigned to any courses component
+            } else {
 
 
-            let wrapper = document.getElementById("application");
-            try {
-              if(wrapper != null){
-                courses.forEach(course => {
-                  course.enrolled = true;
-                });
-                const app = createApp(MyCoursesPage, {courses: courses});
+              let wrapper = document.getElementById("application");
+              try {
+                if(wrapper != null){
+                  myCoursesWithSettings.forEach(course => {
+                    course.enrolled = true;
+                  });
+                  const app = createApp(MyCoursesPage, {courses: myCoursesWithSettings});
 
-                let myCourses = wrapper.appendChild(document.createElement("div"));
-                myCourses.setAttribute("id", "my-courses-container");
-                myCourses.setAttribute("style", "width: 100%; justify-content: center; display: flex;");
-                let footerNode = document.getElementById("wrapper");
-                footerNode.parentNode.insertBefore(myCourses, footerNode);
-                document.getElementById('wrapper').innerHTML = ''
-                $('#wrapper').hide();
-                app.mount("#my-courses-container");
+                  let myCourses = wrapper.appendChild(document.createElement("div"));
+                  myCourses.setAttribute("id", "my-courses-container");
+                  myCourses.setAttribute("style", "width: 100%; justify-content: center; display: flex; min-height: 85vh;");
+                  let footerNode = document.getElementById("wrapper");
+                  footerNode.parentNode.insertBefore(myCourses, footerNode);
+                  document.getElementById('wrapper').innerHTML = ''
+                  $('#wrapper').remove();
+                  app.mount("#my-courses-container");
 
+                }
               }
-            }
-            catch(err) {
-              console.error(err);
-            }
+              catch(err) {
+                console.error(err);
+              }
 
-          }
-          $.isFunction(callback) && callback();
+            }
+            $.isFunction(callback) && callback();
+          });
         });
       } else {
         html = util.renderTemplateWithData(enrollprivacypolicy, {

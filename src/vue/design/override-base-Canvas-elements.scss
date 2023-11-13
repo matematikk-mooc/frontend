@@ -78,6 +78,10 @@ body.with-left-side:not(.useFullWidth) {
     max-width: 100% !important;
 }
 
+#wrapper {
+    min-height: 85vh !important;
+}
+
 .with-left-side {
     #main {
       margin-left: 0;
