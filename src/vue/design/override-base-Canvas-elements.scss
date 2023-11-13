@@ -36,6 +36,7 @@ body.with-left-side:not(.useFullWidth) {
 
 .admin-button {
     width: fit-content !important;
+    margin-left: 20px;
 }
 
 .ic-Layout-watermark {
@@ -79,7 +80,8 @@ body.with-left-side:not(.useFullWidth) {
 }
 
 #wrapper {
-    min-height: 85vh !important;
+    min-height: 70vh !important;
+    padding: 0 !important;
 }
 
 .with-left-side {
