@@ -128,6 +128,9 @@ jQuery(function($) {
     groups.interceptLinksToGroupPage();
     coursepage.showCourseInvitation();
     pages.removeItemsInStudentView();
+    if(!util.isTeacherOrAdmin()) {
+      document.getElementById("right-side").remove();
+    }
     // override default view and display all courses list instead
     var courseView = util.isCourseFrontpageForAllCoursesList();
     if (courseView == util.courseListEnum.allCoursesList) {

@@ -48,7 +48,7 @@ module.exports = {
       DESIGNCSS: JSON.stringify("kompetanseportalen-localhost.css"),
       DESIGNJS: JSON.stringify("kompetanseportalen-localhost.js"),
       SERVER: JSON.stringify("http://localhost:9000/"),
-      KPASAPIURL: JSON.stringify("https://kpas.staging.kompetanse.udir.no/api"),
+      KPASAPIURL: JSON.stringify("https://kpas.kompetanse.udir.no/api"),
       ACCOUNTID: [99, 100, 102, 103, 137, 138, 139, 145],
       KPAS_MERGE_LTI_ID: 863,
       KPAS_IFRAME_VERSION: JSON.stringify("localhost"),
