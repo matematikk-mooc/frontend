@@ -1,18 +1,19 @@
 <template>
   <div
     class="tree-node"
-    :class="{'tree-node__leaf': isLeaf, 'tree-node--collapsed': !isLeaf && collapsed, 'tree-node--active': isActive }"
-    :tabindex=" isLeaf ? -1 : 0"
+    :class="{'tree-node__leaf': isLeaf, 'tree-node--collapsed': !isLeaf && collapsed, 'tree-node__leaf--active': isActive && isLeaf, 'tree-node--active': isActive && !isLeaf}"
+    :tabindex="0"
+    @click="toggleCollapse"
     @keydown.enter="toggleCollapse"
     @keydown.space="toggleCollapse"
   >
-    <span class="tree-node__label" @click="toggleCollapse" @keydown.enter="toggleCollapse" @keydown.space="toggleCollapse">
+    <span class="tree-node__label">
       <span class="tree-node__label__text">
         <span v-if="!isLeaf" class="dropdown-indicator" :class="{ 'dropdown-indicator--collapsed': collapsed }">
           <Icon name="expand_more" size="1.25em" />
         </span>
-        <Icon class="tree-node__label__text__done-icon" v-if="type === 'page' && isCompleted" name="check_circle_filled" size="1.25em"></Icon>
-        <Icon class="tree-node__label__text__page-icon" v-if="type === 'page'" name="description" size="1.25em"></Icon>
+        <Icon class="tree-node__label__text__done-icon" v-if="type === 'page' && isCompleted" name="check_circle_filled" size="1em"></Icon>
+        <Icon class="tree-node__label__text__page-icon" v-if="type === 'page'" name="description" size="1em"></Icon>
         <template v-if="type === 'page'">
           <a :href="url">{{ label }}</a>
         </template>
@@ -30,8 +31,7 @@
           :nodes="node.nodes"
           :url = "node.url? node.url : ''"
           :isCompleted="node.isCompleted"
-          :isActive="false"
-          @toggleActiveModule="toggleActiveModule"
+          :isActive="node.isActive"
         />
       </li>
     </ul>
@@ -39,10 +39,9 @@
 </template>
 
 <script setup>
-import { ref, computed, defineProps, defineEmits } from 'vue';
-import Icon from '../icon/Icon.vue';
-import { extractLabelForSelectedLanguage, getSelectedLanguage } from '../../utils/lang-utils';
-
+import { ref, computed, defineProps } from 'vue';
+import Icon from '../icon/Icon.vue'
+import { getSelectedLanguage, extractLabelForSelectedLanguage } from '../../utils/lang-utils';
 const props = defineProps({
   type: String,
   label: String,
@@ -53,39 +52,24 @@ const props = defineProps({
   isActive: Boolean,
 });
 
-const emits = defineEmits(['toggleActive']);
-
 const collapsed = ref(true);
-
+const initialIsActive = ref(props.isActive);
 const isLeaf = computed(() => props.nodes.length === 0);
 
 const toggleCollapse = () => {
   if (!isLeaf.value) {
     collapsed.value = !collapsed.value;
-    emits('toggleActiveModule', { moduleId: props.id, isOpen: !collapsed.value });
   }
   if (isLeaf.value) {
-      window.location.href = url;
+    window.location.href = props.url;
   }
 };
 
-const toggleActiveModule = ({moduleId, isOpen}) => {
-  if (selectedNode.value === moduleId) {
-    if (isOpen) {
-      selectedNode.value = moduleId;
-    } else {
-      selectedNode.value = null;
-  }
-  } else {
-    if (isOpen) {
-      selectedNode.value = moduleId;
-    } else {
-      selectedNode.value = null;
-    }
-  }
-
-};
+if (initialIsActive.value && !isLeaf.value) {
+  collapsed.value = false;
+}
 </script>
+
 
 <style lang="scss">
 @import '../../design/colors';
@@ -162,7 +146,7 @@ const toggleActiveModule = ({moduleId, isOpen}) => {
 
   .dropdown-indicator {
     display: inline-block;
-    font-size: 1em;
+    font-size: 1rem;
     transition: transform 0.3s;
     vertical-align: middle;
   }
@@ -173,7 +157,6 @@ const toggleActiveModule = ({moduleId, isOpen}) => {
 
   &__child-nodes {
     list-style-type: none;
-    padding: 0;
     margin-bottom: 0.125rem;
     padding: 0.2rem 0 0.5rem 0.2rem;
 

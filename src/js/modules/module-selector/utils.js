@@ -33,18 +33,24 @@ export function itemIsPage(item) {
  */
 export function mapModules(modules) {
   try {
-    return modules.map((module) => ({
-      id: Number(module.id),
-      label: module.name,
-      isCompleted: module.completed_at !== null,
-      type: "module",
-      nodes: mapCoursesInSubDirectory(module.items),
-    }));
+    return modules.map((module) => {
+      const activePage = getModuleItemIdFromUrl();
+      const isActive = findNodeById(activePage, module.items);
+      return {
+        id: Number(module.id),
+        label: module.name,
+        isCompleted: module.completed_at !== null,
+        type: "module",
+        isActive: isActive!== null,
+        nodes: mapCoursesInSubDirectory(module.items),
+      };
+    });
   } catch (error) {
     console.error("Error mapping modules:", error);
     return []; // Return an empty array or handle the error as needed
   }
 }
+
 
 // Define functions for mapping Page and SubHeader items
 
@@ -55,6 +61,7 @@ function mapToPage(item) {
     type: "page",
     nodes: [],
     url: item.html_url,
+    isActive: item.isActive
   };
 }
 
@@ -64,25 +71,39 @@ function mapToSubHeader(item) {
     type: "module", // You are using a fixed type 'module' here
     label: item.title,
     nodes: [],
+    isActive:false
   };
 }
-
+export function getModuleItemIdFromUrl() {
+  var urlSearchParams = new URLSearchParams(location.search);
+  var moduleItemId = urlSearchParams.get('module_item_id');
+  return moduleItemId ? decodeURIComponent(moduleItemId) : null;
+}
 /**
  * Maps courses within a module into a nested structure of subdirectories and course pages.
  * @param {array} items - The array of modules within a course.
  * @returns {array} An array of nested items, which can be subdirectories or course pages.
  */
 function mapCoursesInSubDirectory(items) {
+  const activePage = getModuleItemIdFromUrl();
   const userIsPrincipal = isPrincipal();
   const nestedItems = [];
   let currentSubheader = null;
   items.forEach((item) => {
+    if (item.id === activePage) {
+      item.isActive = true;
+    } else {
+      item.isActive = false;
+    }
     if (userIsPrincipal) {
       if (item.type === "SubHeader") {
         currentSubheader = mapToSubHeader(item);
         nestedItems.push(currentSubheader);
       } else if (item.type === "Page") {
         if (currentSubheader) {
+           if (item.isActive) {
+            currentSubheader.isActive = true;
+          }
           currentSubheader.nodes.push(mapToPage(item));
         } else {
           nestedItems.push(mapToPage(item));
@@ -94,6 +115,9 @@ function mapCoursesInSubDirectory(items) {
         nestedItems.push(currentSubheader);
       } else if (item.type === "Page") {
         if (currentSubheader) {
+          if (item.isActive) {
+            currentSubheader.isActive = true;
+          }
           currentSubheader.nodes.push(mapToPage(item));
         } else {
           nestedItems.push(mapToPage(item));
@@ -104,3 +128,35 @@ function mapCoursesInSubDirectory(items) {
 
   return nestedItems;
 }
+
+/**
+ * Recursively finds a node by its ID within a nested structure.
+ * @param {string} targetId - The ID to search for.
+ * @param {array} nodes - The array of nodes to search within.
+ * @returns {string|null} The ID of the found node or null if not found.
+ */
+function findNodeById(targetId, nodes) {
+  // Loop through each node in the array
+  for (const node of nodes) {
+    // Check if the current node's ID matches the target ID
+    if (node.id === targetId) {
+      // Return the ID if found
+      return node.id;
+    }
+
+    // If the current node has child nodes
+    if (node.nodes && node.nodes.length > 0) {
+      // Recursively call findNodeById on the child nodes
+      const foundNode = findNodeById(targetId, node.nodes);
+
+      // If the node is found in the child nodes, return the current node's ID
+      if (foundNode) {
+        return node.id;
+      }
+    }
+  }
+
+  // If the target ID is not found in the entire structure, return null
+  return null;
+}
+

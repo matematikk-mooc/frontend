@@ -18,7 +18,7 @@
         >
           <Icon name="expand_more" size="2em" />
         </span>
-        <span class="title">{{ label }}</span>
+        <span class="title">{{ label +' : ' + isActive }}</span>
       </h4>
     </div>
 
@@ -37,7 +37,7 @@
           :url="course.url? course.url : ''"
           :nodes="course.nodes"
           :isCompleted="course.isCompleted"
-          :isActive="isActive && course.id === selectedNode"
+          :isActive="course.isActive"
           @toggleActiveModule="toggleActiveModule"
         />
       </li>
@@ -46,7 +46,7 @@
 </template>
 
 <script setup>
-import { ref, computed, defineProps, defineEmits} from 'vue';
+import { ref, computed, defineProps, defineEmits, onMounted} from 'vue';
 import Icon from '../icon/Icon.vue';
 import TreeView from '../tree-view/TreeView.vue';
 import { extractLabelForSelectedLanguage, getSelectedLanguage } from '../../utils/lang-utils';
@@ -89,6 +89,15 @@ const toggleActiveModule = ({moduleId, isOpen}) => {
   }
 
 };
+
+
+onMounted(() => {
+  // Set collapsed.value to false if isActive prop is true
+  if (props.isActive) {
+    collapsed.value = false;
+  }
+});
+
 </script>
 
 <style lang="scss">
