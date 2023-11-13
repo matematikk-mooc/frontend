@@ -40,11 +40,11 @@ const concatenatedUrl = computed(() => {
     text-decoration: none;
     display: flex;
     width: 100%;
+    min-width: 30rem;
     position: relative;
+    box-sizing: border-box;
     font-family: Roboto;
     color: map-get($color-palette-steel, foreground, 200);
-    max-width: 35rem;
-    min-width: 30rem;
     align-items: center;
     justify-content: flex-start;
     padding: 1rem;
@@ -53,11 +53,11 @@ const concatenatedUrl = computed(() => {
     gap: 0.5rem;
     background-color: map-get($color-palette-steel, background, 200);
     @include box-shadow(medium);
-    margin: 0 1rem 1.25rem 1rem;
 
     .course-page-announcements-title {
       font-size: 1.125rem;
       letter-spacing: 0.05em;
+      box-sizing: border-box;
       font-style: normal;
       font-weight: 400;
       line-height: normal;

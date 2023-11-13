@@ -69,12 +69,9 @@ const isActiveModule = (nodeId) => {
 @import '../../design/colors.scss';
 .courses {
   width: 100%;
-  max-width: 35rem;
-  min-width: 30rem;
   border-radius: 1.6875rem 0rem 0rem 1.6875rem;
   border: 0.0625rem solid $color-grey-400; 
   background: $color-white;
-  margin: 0 1rem 0 1rem;
   padding: 0 0 0.75rem 0;
   @include box-shadow(medium); 
 
