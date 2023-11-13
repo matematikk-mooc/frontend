@@ -18,7 +18,7 @@
         >
           <Icon name="expand_more" size="2em" />
         </span>
-        <span class="title">{{ label +' : ' + isActive }}</span>
+        <span class="title">{{ label }}</span>
       </h4>
     </div>
 
