@@ -54,7 +54,7 @@ export default (function() {
         }
 
     // Check if the user is a student or if teacher/admin is in student mode.
-    var userIsStudent = !util.isTeacherOrAdmin(); 
+    var userIsStudent = !util.isTeacherOrAdmin();
     // Conditionally remove elements based on userIsStudent
     if (userIsStudent) {
         // Remove element with class "header-bar-outer-container"
@@ -74,44 +74,52 @@ export default (function() {
 
     //Until Canvas has corrected the translation of drop course to something else than "slipp emnet", we override the functionality.
     overrideUnregisterDialog: function() {
-      var selfUnenrollmentButton = $('.self_unenrollment_link');
+      console.log('overrideUnregisterDialog')
+      var selfUnenrollmentButton = document.getElementById('self-unenroll-button');
+      console.log(selfUnenrollmentButton)
       var selfUnenrollmentDialog = $('#self_unenrollment_dialog');
-      if (selfUnenrollmentButton.length) {
-        selfUnenrollmentButton.text(
-          selfUnenrollmentButton
-            .text()
-            .replace('Slipp dette emnet', i18n.DropCourse)
-        );
+      // if (selfUnenrollmentButton.length) {
+      //   selfUnenrollmentButton.text(
+      //     selfUnenrollmentButton
+      //       .text()
+      //       .replace('Slipp dette emnet', i18n.DropCourse)
+      //   );
         //                selfUnenrollmentButton.off(); //Prevent default presentation of the dialog with incorrect translation.
-        selfUnenrollmentButton.on('click', function(e) {
-          setTimeout(function() {
-            $('#ui-id-1').html(i18n.DropCourse);
-          }, 200);
-        });
-      }
-      if (selfUnenrollmentDialog.length) {
-        selfUnenrollmentDialog.find('h2').hide();
-        selfUnenrollmentDialog.find('.button-container a span').text('OK');
-        selfUnenrollmentDialog.find('.button-container a i').hide(); //Hide x at beginning of OK button
+        selfUnenrollmentButton.addEventListener('click', function(e) {
+          // setTimeout(function() {
+          //   $('#ui-id-1').html(i18n.DropCourse);
+          // }, 200);
+          console.log('unregiserr click')
+          console.log(selfUnenrollmentDialog.parentElement)
+          // document.getElementById("self_unenrollment_dialog").parentElement.style.display = "block"
+          // document.getElementsByClassName("ui-dialog")[0].d
+          // document.getElementById("self_unenrollment_dialog").removeAttribute("style")
+          // document.getElementById("self_unenrollment_dialog").classList.add("ui-dialog-content")
+          // document.getElementById("self_unenrollment_dialog").classList.add("ui-widget-content")
+      })
+      // if (selfUnenrollmentDialog.length) {
+      //   selfUnenrollmentDialog.find('h2').hide();
+      //   selfUnenrollmentDialog.find('.button-container a span').text('OK');
+      //   selfUnenrollmentDialog.find('.button-container a i').hide(); //Hide x at beginning of OK button
 
-        //Hide default dialog text
-        $('#self_unenrollment_dialog')
-          .contents()
-          .filter(function() {
-            return this.nodeType == 3;
-          })
-          .each(function() {
-            this.textContent = '';
-          });
-        //Add our dialog text
-        $('#self_unenrollment_dialog').prepend(
-          '<div/><p/><p>' +
-            i18n.DropCourseDialogText +
-            "<span class='unenroll_dialog_sad'></span><p>" +
-            i18n.JoinCourseDialogText +
-            "<span class='unenroll_dialog_happy'></span></p>"
-        );
-      }
+      //   //Hide default dialog text
+      //   $('#self_unenrollment_dialog')
+      //     .contents()
+      //     .filter(function() {
+      //       return this.nodeType == 3;
+      //     })
+      //     .each(function() {
+      //       this.textContent = '';
+      //     });
+      //   //Add our dialog text
+      //   $('#self_unenrollment_dialog').prepend(
+      //     '<div/><p/><p>' +
+      //       i18n.DropCourseDialogText +
+      //       "<span class='unenroll_dialog_sad'></span><p>" +
+      //       i18n.JoinCourseDialogText +
+      //       "<span class='unenroll_dialog_happy'></span></p>"
+      //   );
+      // }
     },
 
     replaceUpcomingInSidebar: function() {

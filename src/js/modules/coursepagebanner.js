@@ -1,5 +1,6 @@
 import CoursePageBanner from "../../vue/components/course-page-banner/CoursePageBanner.vue";
 import api from "../api/api";
+import coursepage from "./coursepage";
 import { createApp } from "vue";
 import kpasApi from "../api/kpas-api";
 
@@ -22,6 +23,7 @@ export default (function() {
                 coursePageBannerWrapper.id =  "course-page-banner-wrapper";
                 parent.insertBefore(coursePageBannerWrapper, wrapper);
                 app.mount("#course-page-banner-wrapper");
+                coursepage.overrideUnregisterDialog();
 
             });
 
