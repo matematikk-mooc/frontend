@@ -22,7 +22,7 @@ body.with-left-side:not(.useFullWidth) {
   }
 
 #right-side {
-    display: none !important;
+    min-width: 200px !important;
 }
 
 .ic-Layout-wrapper {
@@ -36,6 +36,7 @@ body.with-left-side:not(.useFullWidth) {
 
 .admin-button {
     width: fit-content !important;
+    margin-left: 20px;
 }
 
 .ic-Layout-watermark {
@@ -70,12 +71,15 @@ body.with-left-side:not(.useFullWidth) {
     flex-direction: row-reverse;
     align-content: flex-start;
 }
-#right-side.ic-app-main-content__secondary{
-    display: hidden !important;
-}
+
 .ic-Layout-contentWrapper{
     min-width:1000px !important;
     max-width: 100% !important;
+}
+
+#wrapper {
+    min-height: 70vh !important;
+    padding: 0 !important;
 }
 
 .with-left-side {

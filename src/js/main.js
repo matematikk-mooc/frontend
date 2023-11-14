@@ -25,7 +25,7 @@ import nextPrevButtons from "./modules/next-prev-buttons";
 import nrk from './3party/nrk.js';
 import pages from './modules/pages.js';
 import privacyPolicy from './3party/privacypolicy.js';
-import {renderCourseModules} from '../vue/components/course-modules/index.js'
+import { renderCourseModules } from "../vue/components/course-page-left-side-view/index"
 import reveal from './modules/reveal';
 import routes from './modules/routes.js';
 import settings from './settings.js';
@@ -128,6 +128,9 @@ jQuery(function($) {
     groups.interceptLinksToGroupPage();
     coursepage.showCourseInvitation();
     pages.removeItemsInStudentView();
+    if(!util.isTeacherOrAdmin()) {
+      document.getElementById("right-side").remove();
+    }
     // override default view and display all courses list instead
     var courseView = util.isCourseFrontpageForAllCoursesList();
     if (courseView == util.courseListEnum.allCoursesList) {

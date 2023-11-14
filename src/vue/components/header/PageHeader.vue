@@ -2,9 +2,9 @@
   <header class="header__content">
     <div class="header-brand">Kompetanseportalen</div>
     <ul class="header__link-list">
-      <li class="header__list-item">
+      <li class="header__list-item" v-if="admin">
         <span>
-          <a class="header__link" :href="'url'">Ofte stilte spørsmål</a>
+          <a class="header__link" :href="adminLink">Administrator</a>
         </span>
       </li>
 
@@ -28,11 +28,12 @@
 </template>
 
 <script setup>
-  const {logged_in} = defineProps(['logged_in'])
+  const {logged_in, admin} = defineProps(['logged_in', 'admin'])
   const domain = window.location.origin;
   const loginLink = domain + "/login/canvas"
   const settingsLink = domain + "/profile/settings?design=udir"
   const logoutLink = domain + "/logout?design=udir"
+  const adminLink = domain + "/accounts"
 
 </script>
 <style lang="scss">

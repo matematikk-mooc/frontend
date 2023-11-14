@@ -48,6 +48,7 @@ export default {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  box-sizing: border-box;
 
   &__illustration {
     width: 26rem;

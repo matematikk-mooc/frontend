@@ -167,7 +167,7 @@ export default (function () {
                     let footerNode = document.getElementById("wrapper");
                     footerNode.parentNode.insertBefore(customContent, footerNode)
                     document.getElementById('wrapper').innerHTML = '';
-                    $('#wrapper').hide();
+                    $('#wrapper').remove();
                     page.mount("#loggedInLandingPage");
                 }
               } catch (e) {
@@ -190,7 +190,7 @@ export default (function () {
                     let footerNode = document.getElementById("wrapper");
                     footerNode.parentNode.insertBefore(customContent, footerNode)
                     document.getElementById('wrapper').innerHTML = '';
-                    $('#wrapper').hide();
+                    $('#wrapper').remove();
                     page.mount("#notLoggedInPage");
                 }
               } catch (e) {

@@ -8,7 +8,7 @@ import { hrefQueryString } from '../settingsRoot.js';
 import i18n from '../i18n.js';
 import login from './login.js';
 import multilanguage from '../3party/multilanguage.js';
-import { renderCourseModules } from "../../vue/components/course-modules/index"
+import { renderCourseModules } from "../../vue/components/course-page-left-side-view/index"
 import settings from '../settings.js';
 import usermenu from '../../templates/modules/usermenu.hbs';
 import util from './util.js'
@@ -246,7 +246,8 @@ export default (function() {
         headerwrapper.append(document.createElement("div"));
         headerwrapper.setAttribute("id", "notLoggedInHeader");
         const headerProps = {
-          logged_in: false
+          logged_in: false,
+          admin: false
         }
         let customHeader = createApp(NavBar, headerProps);
         customHeader.mount("#notLoggedInHeader");
@@ -255,11 +256,16 @@ export default (function() {
       }
       else {
         $('#header').hide();
+        let admin = false;
+        if(util.isTeacherOrAdmin()){
+          admin = true;
+        }
         var headerwrapper = document.getElementById("application").children[0];
         headerwrapper.append(document.createElement("div"));
         headerwrapper.setAttribute("id", "loggedInHeader");
         const headerProps = {
-          logged_in: true
+          logged_in: true,
+          admin: admin
         }
         let customHeader = createApp(NavBar, headerProps);
         customHeader.mount("#loggedInHeader");
