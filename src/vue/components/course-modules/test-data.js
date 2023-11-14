@@ -381,12 +381,14 @@ export function addPropertiesToTreeData(data) {
     const moduleId = `${moduleIndex + 1}`;
     const moduleUrl = module.label.replace(/ /g, "-");
     module.id = moduleId;
+    module.isActive = false;
 
     if (module.nodes && module.nodes.length > 0) {
       module.nodes.forEach((node, nodeIndex) => {
         const nodeId = `${moduleId}-${nodeIndex + 1}`;
         const nodeUrl = `${moduleUrl}/${node.label.replace(/ /g, "-")}`;
         node.id = nodeId;
+        node.isActive = false;
 
         if (node.nodes && node.nodes.length > 0) {
           // Add properties to third-level nodes
@@ -395,6 +397,7 @@ export function addPropertiesToTreeData(data) {
             const subNodeUrl = `${nodeUrl}/${subNode.label.replace(/ /g, "-")}`;
             subNode.id = subNodeId;
             subNode.url = subNodeUrl;
+            subNode.isActive = false;
           });
         }
       });

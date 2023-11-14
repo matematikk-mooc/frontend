@@ -17,7 +17,7 @@
           :label="extractLabelForSelectedLanguage(module.label,getSelectedLanguage())"
           :id="module.id"
           :nodes="module.nodes"
-          :isActive="isActiveModule(module.id)"
+          :isActive="module.isActive"
           @toggleActiveModule="toggleActiveModule"
         />
       </div>
