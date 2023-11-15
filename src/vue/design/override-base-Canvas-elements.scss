@@ -7,6 +7,7 @@
 
 #left-side {
     width: fit-content !important;
+    max-width: 40rem !important;
     padding-top: 1rem !important;
     border: none !important;
 
@@ -26,7 +27,7 @@ body.with-left-side:not(.useFullWidth) {
 }
 
 .ic-Layout-wrapper {
-    margin-left: auto !important;
+    margin-left: 35% !important;
     display: flex !important;
     flex-direction: column !important;
     max-width: 60% !important;
