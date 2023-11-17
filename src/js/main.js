@@ -25,7 +25,7 @@ import multilanguage from './3party/multilanguage.js'
 import nextPrevButtons from "./modules/next-prev-buttons";
 import nrk from './3party/nrk.js';
 import pages from './modules/pages.js';
-import privacyPolicy from './3party/privacypolicy.js';
+// import privacyPolicy from './3party/privacypolicy.js';
 import { renderCourseModules } from "../vue/pages/course-page/left-menu"
 import reveal from './modules/reveal';
 import routes from './modules/routes.js';
@@ -42,6 +42,7 @@ jQuery(function($) {
   if(window.self != window.top) {
     return;
   }
+  console.log(ENV);
   //Multilanguage KURSP-279 Css must be present before javascript is run.
   //KURSP-376-multilanguage-fix
   multilanguage.initializeCss();
@@ -630,7 +631,8 @@ jQuery(function($) {
     console.log(e);
   }
 
-  privacyPolicy.init();
+  //Disabling privacy policy for now
+  // privacyPolicy.init();
 
   try {
     messagehandler.init();
