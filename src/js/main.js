@@ -4,6 +4,7 @@ import accordion from './modules/accordion.js';
 import announcements from './modules/announcements.js';
 import api from './api/api.js';
 import coursePageButtons from './modules/coursePageButtons.js';
+import { renderCourseModulesOnAnnouncementsPage } from "../vue/pages/announcements-page";
 import courselist from './modules/courselist.js';
 import coursepage from './modules/coursepage.js';
 import coursepagebanner from "./modules/coursepagebanner";
@@ -25,7 +26,7 @@ import nextPrevButtons from "./modules/next-prev-buttons";
 import nrk from './3party/nrk.js';
 import pages from './modules/pages.js';
 import privacyPolicy from './3party/privacypolicy.js';
-import { renderCourseModules } from "../vue/components/course-page-left-side-view/index"
+import { renderCourseModules } from "../vue/pages/course-page/left-menu"
 import reveal from './modules/reveal';
 import routes from './modules/routes.js';
 import settings from './settings.js';
@@ -251,6 +252,7 @@ jQuery(function($) {
     });
     announcements.printAnnouncementsUnreadCount();
     announcements.setAnnouncementsListUnreadClass();
+      renderCourseModulesOnAnnouncementsPage('left-side');
   });
 
   routes.addRouteForPath(

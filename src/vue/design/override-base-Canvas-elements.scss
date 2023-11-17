@@ -1,131 +1,136 @@
 @import "colors.scss";
 
 .ic-app-course-menu {
-    width: fit-content !important;
-    position: relative !important;
+  width: fit-content !important;
+  position: relative !important;
 }
 
 #left-side {
-    width: fit-content !important;
-    padding-top: 1rem !important;
-    border: none !important;
+  width: fit-content !important;
+  padding-top: 1rem !important;
+  border: none !important;
 
 }
 
 body.with-left-side:not(.useFullWidth) {
-    #application.ic-app {
-      #main {
-        min-width: auto;
-        margin: 0 auto;
-      }
+  #application.ic-app {
+    #main {
+      min-width: auto;
+      margin: 0 auto;
     }
   }
+}
 
 #right-side {
-    min-width: 200px !important;
+  min-width: 200px !important;
 }
 
 .ic-Layout-wrapper {
-    margin-left: auto !important;
-    display: flex !important;
-    flex-direction: column !important;
-    max-width: 60% !important;
-    min-height: 0;
+  margin-left: auto !important;
+  display: flex !important;
+  flex-direction: column !important;
+  max-width: 60% !important;
+  min-height: 0;
 
 }
 
 .admin-button {
-    width: fit-content !important;
-    margin-left: 20px;
+  width: fit-content !important;
+  margin-left: 20px;
 }
 
 .ic-Layout-watermark {
-    display: none !important;
+  display: none !important;
 }
 
-.pages.show,  .show-content, .user_content, .mceContentBody {
-    overflow-x: visible !important;
+.pages.show,
+.show-content,
+.user_content,
+.mceContentBody {
+  overflow-x: visible !important;
 }
 
 #application.ic-app {
-    .ic-app-nav-toggle-and-crumbs {
-      display: none; // Hide toggling of menu
-    }
-    margin-left: auto !important;
-    margin-right: auto !important;
-    justify-content: center !important;
-
-    display: flex !important;
-    flex-direction: column !important;
+  .ic-app-nav-toggle-and-crumbs {
+    display: none; // Hide toggling of menu
   }
 
+  margin-left: auto !important;
+  margin-right: auto !important;
+  justify-content: center !important;
+
+  display: flex !important;
+  flex-direction: column !important;
+}
+
 .ic-app-main-content {
-    margin-top: 1rem !important;
-    width: fit-content !important;
-    min-height: 85vh !important;
+  margin-top: 1rem !important;
+  width: fit-content !important;
+  min-height: 85vh !important;
 }
 
-.ic-Layout-columns{
-    width: 100% !important;
-    display: flex!important;
-    flex-direction: row-reverse;
-    align-content: flex-start;
+.ic-Layout-columns {
+  width: 100% !important;
+  display: flex !important;
+  flex-direction: row-reverse;
+  align-content: flex-start;
 }
 
-.ic-Layout-contentWrapper{
-    min-width:1000px !important;
-    max-width: 100% !important;
+.ic-Layout-contentWrapper {
+  min-width: 1000px !important;
+  max-width: 100% !important;
 }
 
 #wrapper {
-    min-height: 70vh !important;
-    padding: 0 !important;
+  min-height: 70vh !important;
+  padding: 0 !important;
 }
 
 .with-left-side {
-    #main {
-      margin-left: 0;
-    }
-
-    #wrapper {
-      margin-left: auto;
-    }
+  #main {
+    margin-left: 0;
   }
 
-  @media screen and (max-width: 1240px) {
-    #wrapper {
-      margin: 10px;
-    }
+  #wrapper {
+    margin-left: auto;
+  }
+}
 
-    .with-left-side #wrapper {
-
-      margin-left: 10px;
-    }
+@media screen and (max-width: 1240px) {
+  #wrapper {
+    margin: 10px;
   }
 
-.custom-next-button-wrapper{
-    justify-content: center !important;
-    display: flex !important;
+  .with-left-side #wrapper {
+
+    margin-left: 10px;
+  }
+}
+
+.custom-next-button-wrapper {
+  justify-content: center !important;
+  display: flex !important;
 }
 
 .module-sequence-footer {
-    justify-content: center !important;
-    padding-bottom: 2rem !important;
-    height:  fit-content !important;
+  justify-content: center !important;
+  padding-bottom: 2rem !important;
+  height: fit-content !important;
 }
 
 #custom-nav-buttons-wrapper {
-    display: flex !important;
-    justify-content: center !important;
-    align-items: center !important;
-    padding-bottom: 2rem !important;
-    gap: 4rem !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  padding-bottom: 2rem !important;
+  gap: 4rem !important;
 
 }
+
 .module-sequence-footer-content {
-    display: block !important;
-    justify-content: center!important;
-    align-items: center !important;
-    padding-bottom: 2rem !important;
-    gap: 4rem !important;
+  display: block !important;
+  justify-content: center !important;
+  align-items: center !important;
+  padding-bottom: 2rem !important;
+  gap: 4rem !important;
 }

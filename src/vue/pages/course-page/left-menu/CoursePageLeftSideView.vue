@@ -6,8 +6,8 @@
 </div>
 </template>
 <script setup>
-import AnnouncementContainer from "../announcements" 
-import CourseModuleContainer from "../course-modules"
+import AnnouncementContainer from "../../../components/announcements" 
+import CourseModuleContainer from "../../../components/course-modules"
 </script>
 <style lang="scss">
   .course-page-left-side-view-container{
