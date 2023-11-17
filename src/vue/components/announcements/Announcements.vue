@@ -51,6 +51,7 @@ const concatenatedUrl = computed(() => {
     border-radius: 1.6875rem 0 0 1.6875rem;
     border: 0.0625rem solid $color-grey-400;
     gap: 0.5rem;
+    margin-bottom: 1rem;
     background-color: map-get($color-palette-steel, background, 200);
     @include box-shadow(medium);
 
