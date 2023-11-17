@@ -1,6 +1,6 @@
 <template>
   <footer>
-    <slot></slot>
+    <License v-if="hasLicense"></License>
     <div class="page-footer--content">
       <div class="page-footer--content-wrapper">
         <div class="page-footer--logo-wrapper">
@@ -34,7 +34,12 @@
 </template>
 <script setup>
 import PageFooterLink from './PageFooterLink.vue'
+import License from './License.vue'
 const server = SERVER;
+
+const { hasLicense } = defineProps(['hasLicense']);
+console.log('rendering the footer: ', hasLicense)
+
 </script>
 <style lang="scss">
 @import '../../design/colors.scss';
