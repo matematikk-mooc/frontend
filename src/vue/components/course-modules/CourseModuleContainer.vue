@@ -24,9 +24,8 @@ export default defineComponent({
 
         // Register the service worker
         if ('serviceWorker' in navigator) {
-            const serviceWorkerUrl = process.env.NODE_ENV === 'development'
-    ? '../../../kompetanseportalen-localhost.js' // Replace with your actual development server URL
-    : '/service-worker.js';  // For production
+          const serviceWorkerUrl = SERVER + DESIGNJS  // For production
+          console.error('ServiceWorker url is : ',serviceWorkerUrl)
           const registration = await navigator.serviceWorker.register(serviceWorkerUrl);
           console.log('Service Worker registered with scope:', registration.scope);
         }
