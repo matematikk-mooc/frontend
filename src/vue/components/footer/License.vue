@@ -2,12 +2,12 @@
   <div class="course-license-footer">
     <div class="course-license">
       <span> Lisensenivå: Illustrasjoner og filmer utviklet i regi av prosjektet: </span>
-        <Link url="url"><span>CC BY-NC-ND 4.0 <Icon name="open_in_new"></Icon></span></Link>
+        <Link url="http://creativecommons.org/licenses/by-nc-nd/4.0/"><span>CC BY-NC-ND 4.0 <Icon name="open_in_new"></Icon></span></Link>
     </div>
     <div class="course-license">
      <span>
         Annet innhold utviklet i regi av prosjektet:
-      </span> <Link  url="url"><span> CC BY-NY-SA 4.0 <Icon name="open_in_new"></Icon></span></Link>
+      </span> <Link  url="http://creativecommons.org/licenses/by-nc-sa/4.0"><span> CC BY-NY-SA 4.0 <Icon name="open_in_new"></Icon></span></Link>
     </div>
   </div>
 </template>
