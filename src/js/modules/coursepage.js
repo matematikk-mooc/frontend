@@ -72,80 +72,43 @@ export default (function() {
     }
 },
 
-
-    //Until Canvas has corrected the translation of drop course to something else than "slipp emnet", we override the functionality.
     overrideUnregisterDialog: function() {
-      console.log('overrideUnregisterDialog')
       var selfUnenrollmentButton = document.getElementsByClassName('self_unenrollment_link')[0];
-      console.log(selfUnenrollmentButton)
-      var selfUnenrollmentDialog = $('#self_unenrollment_dialog');
-      console.log(selfUnenrollmentDialog)
-      var parent = selfUnenrollmentDialog.parent();
-      console.log(parent)
-      selfUnenrollmentButton.addEventListener('click', function(e) {
-        console.log('i was clicked');
+      if(selfUnenrollmentButton){
+        selfUnenrollmentButton.addEventListener('click', function(e) {
 
         var popup = document.getElementById("self_unenrollment_dialog");
         popup.classList.add("ui-dialog-content");
         popup.classList.add("ui-widget-content");
-        document.getElementById("application").appendChild(popup);
 
-        popup.classList.add(["ui-corner-all", "ui-draggable",  "ui-resizable", "ui-dialog-buttons"]);
-        popup.setAttribute("style", "outline: 0px; z-index: 1002; height: auto; width: 300px; top: 1114px; left: auto; display: block;")
+        var application = document.getElementById("application")
+        var overlay = document.createElement("div");
+        overlay.classList.add("ui-widget-overlay");
+        overlay.setAttribute("style", "z-index: 1001; width: 100%; height: 100%; top: 0px; left: 0px; display: block;")
+        application.appendChild(overlay);
+
+        popup.setAttribute("style", "outline: 0px; z-index: 1002; position: absolute; height: auto; width: 300px; top: 50%; left: 50%; display: block;")
         popup.style.display = "block";
-        console.log(popup)
+        application.appendChild(popup);
 
-        var close = document.getElementsByClassName("btn dialog_close")[0];
+        var close = popup.getElementsByClassName("btn dialog_closer")[0];
         if(close){
-        close.addEventListener('click', function(e) {
-          console.log('close was clicked');
-          popup.style.display = "none";
-        })
+          close.addEventListener('click', function(e) {
+            popup.style.display = "none";
+            overlay.remove();
+          });
         }
-
       });
-      // if (selfUnenrollmentButton.length) {
-      //   selfUnenrollmentButton.text(
-      //     selfUnenrollmentButton
-      //       .text()
-      //       .replace('Slipp dette emnet', i18n.DropCourse)
-      //   );
-        //                selfUnenrollmentButton.off(); //Prevent default presentation of the dialog with incorrect translation.
-      //   selfUnenrollmentButton.addEventListener('click', function(e) {
-      //     // setTimeout(function() {
-      //     //   $('#ui-id-1').html(i18n.DropCourse);
-      //     // }, 200);
-      //     console.log('unregiserr click')
-      //     console.log(selfUnenrollmentDialog.parentElement)
-      //     // document.getElementById("self_unenrollment_dialog").parentElement.style.display = "block"
-      //     // document.getElementsByClassName("ui-dialog")[0].d
-      //     // document.getElementById("self_unenrollment_dialog").removeAttribute("style")
-      //     // document.getElementById("self_unenrollment_dialog").classList.add("ui-dialog-content")
-      //     // document.getElementById("self_unenrollment_dialog").classList.add("ui-widget-content")
-      // })
-      // if (selfUnenrollmentDialog.length) {
-      //   selfUnenrollmentDialog.find('h2').hide();
-      //   selfUnenrollmentDialog.find('.button-container a span').text('OK');
-      //   selfUnenrollmentDialog.find('.button-container a i').hide(); //Hide x at beginning of OK button
+    }
+    },
 
-      //   //Hide default dialog text
-      //   $('#self_unenrollment_dialog')
-      //     .contents()
-      //     .filter(function() {
-      //       return this.nodeType == 3;
-      //     })
-      //     .each(function() {
-      //       this.textContent = '';
-      //     });
-      //   //Add our dialog text
-      //   $('#self_unenrollment_dialog').prepend(
-      //     '<div/><p/><p>' +
-      //       i18n.DropCourseDialogText +
-      //       "<span class='unenroll_dialog_sad'></span><p>" +
-      //       i18n.JoinCourseDialogText +
-      //       "<span class='unenroll_dialog_happy'></span></p>"
-      //   );
-      // }
+    saveUnenrollDialog: function() {
+      var selfUnenrollmentDialog = document.getElementById("self_unenrollment_dialog");
+      console.log("self unenroll dialog", selfUnenrollmentDialog)
+      if(selfUnenrollmentDialog){
+        var application = document.getElementById("application");
+        application.appendChild(selfUnenrollmentDialog);
+      }
     },
 
     replaceUpcomingInSidebar: function() {

@@ -131,6 +131,7 @@ jQuery(function($) {
     coursepage.showCourseInvitation();
     pages.removeItemsInStudentView();
     if(!util.isTeacherOrAdmin()) {
+      coursepage.saveUnenrollDialog();
       document.getElementById("right-side").remove();
     }
     // override default view and display all courses list instead
