@@ -7,7 +7,7 @@
       {{ title }}
     </h1>
     <div class="course-page__banner__actions">
-      <Button type="outlined">Meld deg av</Button>
+      <Button type="outlined" class="self_unenrollment_link">Meld deg av</Button>
      <DropdownButton></DropdownButton>
     </div>
   </div>

@@ -8,6 +8,7 @@ import i18n from '../i18n';
 import modulesprincipal from '../../templates/modules/modulesprincipal.hbs';
 import modulesstudent from '../../templates/modules/modulesstudent.hbs';
 import multilanguage from "../3party/multilanguage.js";
+import { privacyPolicyLink } from "../settings.js";
 import util from "./util.js";
 
 export default (function() {
@@ -75,9 +76,34 @@ export default (function() {
     //Until Canvas has corrected the translation of drop course to something else than "slipp emnet", we override the functionality.
     overrideUnregisterDialog: function() {
       console.log('overrideUnregisterDialog')
-      var selfUnenrollmentButton = document.getElementById('self-unenroll-button');
+      var selfUnenrollmentButton = document.getElementsByClassName('self_unenrollment_link')[0];
       console.log(selfUnenrollmentButton)
       var selfUnenrollmentDialog = $('#self_unenrollment_dialog');
+      console.log(selfUnenrollmentDialog)
+      var parent = selfUnenrollmentDialog.parent();
+      console.log(parent)
+      selfUnenrollmentButton.addEventListener('click', function(e) {
+        console.log('i was clicked');
+
+        var popup = document.getElementById("self_unenrollment_dialog");
+        popup.classList.add("ui-dialog-content");
+        popup.classList.add("ui-widget-content");
+        document.getElementById("application").appendChild(popup);
+
+        popup.classList.add(["ui-corner-all", "ui-draggable",  "ui-resizable", "ui-dialog-buttons"]);
+        popup.setAttribute("style", "outline: 0px; z-index: 1002; height: auto; width: 300px; top: 1114px; left: auto; display: block;")
+        popup.style.display = "block";
+        console.log(popup)
+
+        var close = document.getElementsByClassName("btn dialog_close")[0];
+        if(close){
+        close.addEventListener('click', function(e) {
+          console.log('close was clicked');
+          popup.style.display = "none";
+        })
+        }
+
+      });
       // if (selfUnenrollmentButton.length) {
       //   selfUnenrollmentButton.text(
       //     selfUnenrollmentButton
@@ -85,18 +111,18 @@ export default (function() {
       //       .replace('Slipp dette emnet', i18n.DropCourse)
       //   );
         //                selfUnenrollmentButton.off(); //Prevent default presentation of the dialog with incorrect translation.
-        selfUnenrollmentButton.addEventListener('click', function(e) {
-          // setTimeout(function() {
-          //   $('#ui-id-1').html(i18n.DropCourse);
-          // }, 200);
-          console.log('unregiserr click')
-          console.log(selfUnenrollmentDialog.parentElement)
-          // document.getElementById("self_unenrollment_dialog").parentElement.style.display = "block"
-          // document.getElementsByClassName("ui-dialog")[0].d
-          // document.getElementById("self_unenrollment_dialog").removeAttribute("style")
-          // document.getElementById("self_unenrollment_dialog").classList.add("ui-dialog-content")
-          // document.getElementById("self_unenrollment_dialog").classList.add("ui-widget-content")
-      })
+      //   selfUnenrollmentButton.addEventListener('click', function(e) {
+      //     // setTimeout(function() {
+      //     //   $('#ui-id-1').html(i18n.DropCourse);
+      //     // }, 200);
+      //     console.log('unregiserr click')
+      //     console.log(selfUnenrollmentDialog.parentElement)
+      //     // document.getElementById("self_unenrollment_dialog").parentElement.style.display = "block"
+      //     // document.getElementsByClassName("ui-dialog")[0].d
+      //     // document.getElementById("self_unenrollment_dialog").removeAttribute("style")
+      //     // document.getElementById("self_unenrollment_dialog").classList.add("ui-dialog-content")
+      //     // document.getElementById("self_unenrollment_dialog").classList.add("ui-widget-content")
+      // })
       // if (selfUnenrollmentDialog.length) {
       //   selfUnenrollmentDialog.find('h2').hide();
       //   selfUnenrollmentDialog.find('.button-container a span').text('OK');
