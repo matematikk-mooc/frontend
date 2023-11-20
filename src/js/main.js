@@ -84,7 +84,6 @@ jQuery(function($) {
 
   routes.addRouteForPath(/\/courses\/\d+/, function() {
     coursepagebanner.insertCourseBanner();
-    // nextPrevButtons.getPrevAndNextItems();
     let forwardTo = encodeURIComponent(window.location.href);
     let closeOption = false;
     let authenticated = util.isAuthenticated();
@@ -131,6 +130,7 @@ jQuery(function($) {
     coursepage.showCourseInvitation();
     pages.removeItemsInStudentView();
     if(!util.isTeacherOrAdmin()) {
+      coursepage.saveUnenrollDialog();
       document.getElementById("right-side").remove();
     }
     // override default view and display all courses list instead
@@ -204,8 +204,7 @@ jQuery(function($) {
     if(coursepage.replaceUpcomingInSidebar()) {
       coursepage.printDeadlinesForCourse();
     }
-    coursepage.overrideUnregisterDialog();
-  });
+   });
 
   routes.addRouteForPath(/\/search\/all_courses$/, function() {
     enroll.printAllCoursesContainer();

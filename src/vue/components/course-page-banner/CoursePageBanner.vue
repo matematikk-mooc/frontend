@@ -7,7 +7,7 @@
       {{ title }}
     </h1>
     <div class="course-page__banner__actions">
-      <Button type="outlined">Meld deg av</Button>
+      <Button v-if="isEnrolled && isFrontPage" type="outlined" class="self_unenrollment_link">Meld deg av</Button>
      <DropdownButton></DropdownButton>
     </div>
   </div>
@@ -22,12 +22,16 @@ export default {
     imageUrl: String,
     theme: String,
     title: String,
+    isEnrolled: Boolean,
+    isFrontPage: Boolean,
   },
   setup(props) {
     return {
       imageUrl: props.imageUrl,
       theme: props.theme,
       title: props.title,
+      isEnrolled: props.isEnrolled,
+      isFrontPage: props.isFrontPage,
     };
   },
   components: {

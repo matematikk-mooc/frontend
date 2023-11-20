@@ -8,6 +8,7 @@ import i18n from '../i18n';
 import modulesprincipal from '../../templates/modules/modulesprincipal.hbs';
 import modulesstudent from '../../templates/modules/modulesstudent.hbs';
 import multilanguage from "../3party/multilanguage.js";
+import { privacyPolicyLink } from "../settings.js";
 import util from "./util.js";
 
 export default (function() {
@@ -54,7 +55,7 @@ export default (function() {
         }
 
     // Check if the user is a student or if teacher/admin is in student mode.
-    var userIsStudent = !util.isTeacherOrAdmin(); 
+    var userIsStudent = !util.isTeacherOrAdmin();
     // Conditionally remove elements based on userIsStudent
     if (userIsStudent) {
         // Remove element with class "header-bar-outer-container"
@@ -71,46 +72,42 @@ export default (function() {
     }
 },
 
-
-    //Until Canvas has corrected the translation of drop course to something else than "slipp emnet", we override the functionality.
     overrideUnregisterDialog: function() {
-      var selfUnenrollmentButton = $('.self_unenrollment_link');
-      var selfUnenrollmentDialog = $('#self_unenrollment_dialog');
-      if (selfUnenrollmentButton.length) {
-        selfUnenrollmentButton.text(
-          selfUnenrollmentButton
-            .text()
-            .replace('Slipp dette emnet', i18n.DropCourse)
-        );
-        //                selfUnenrollmentButton.off(); //Prevent default presentation of the dialog with incorrect translation.
-        selfUnenrollmentButton.on('click', function(e) {
-          setTimeout(function() {
-            $('#ui-id-1').html(i18n.DropCourse);
-          }, 200);
-        });
-      }
-      if (selfUnenrollmentDialog.length) {
-        selfUnenrollmentDialog.find('h2').hide();
-        selfUnenrollmentDialog.find('.button-container a span').text('OK');
-        selfUnenrollmentDialog.find('.button-container a i').hide(); //Hide x at beginning of OK button
+      var selfUnenrollmentButton = document.getElementsByClassName('self_unenrollment_link')[0];
+      if(selfUnenrollmentButton){
+        selfUnenrollmentButton.addEventListener('click', function(e) {
 
-        //Hide default dialog text
-        $('#self_unenrollment_dialog')
-          .contents()
-          .filter(function() {
-            return this.nodeType == 3;
-          })
-          .each(function() {
-            this.textContent = '';
+        var popup = document.getElementById("self_unenrollment_dialog");
+        popup.classList.add("ui-dialog-content");
+        popup.classList.add("ui-widget-content");
+
+        var application = document.getElementById("application")
+        var overlay = document.createElement("div");
+        overlay.classList.add("ui-widget-overlay");
+        overlay.setAttribute("style", "z-index: 1001; width: 100%; height: 100%; top: 0px; left: 0px; display: block;")
+        application.appendChild(overlay);
+
+        popup.setAttribute("style", "outline: 0px; z-index: 1002; position: absolute; height: auto; width: 300px; top: 50%; left: 50%; display: block;")
+        popup.style.display = "block";
+        application.appendChild(popup);
+
+        var close = popup.getElementsByClassName("btn dialog_closer")[0];
+        if(close){
+          close.addEventListener('click', function(e) {
+            popup.style.display = "none";
+            overlay.remove();
           });
-        //Add our dialog text
-        $('#self_unenrollment_dialog').prepend(
-          '<div/><p/><p>' +
-            i18n.DropCourseDialogText +
-            "<span class='unenroll_dialog_sad'></span><p>" +
-            i18n.JoinCourseDialogText +
-            "<span class='unenroll_dialog_happy'></span></p>"
-        );
+        }
+      });
+    }
+    },
+
+    saveUnenrollDialog: function() {
+      var selfUnenrollmentDialog = document.getElementById("self_unenrollment_dialog");
+      console.log("self unenroll dialog", selfUnenrollmentDialog)
+      if(selfUnenrollmentDialog){
+        var application = document.getElementById("application");
+        application.appendChild(selfUnenrollmentDialog);
       }
     },
 
