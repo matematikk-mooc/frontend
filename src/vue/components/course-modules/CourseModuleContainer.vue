@@ -26,7 +26,7 @@ export default defineComponent({
         if ('serviceWorker' in navigator) {
           const serviceWorkerUrl = SERVER + DESIGNJS  // For production
           console.error('ServiceWorker url is : ',serviceWorkerUrl)
-          const registration = await navigator.serviceWorker.register(serviceWorkerUrl);
+          const registration = await navigator.serviceWorker.register(serviceWorkerUrl, { scope: '/' });
           console.log('Service Worker registered with scope:', registration.scope);
         }
       } catch (error) {
