@@ -1,5 +1,8 @@
 
-
+/**
+ * Utility function to make API calls with callback support.
+ * @return {Object} An object with utility functions.
+ */
 export default (function() {
 
 
@@ -73,3 +76,69 @@ export default (function() {
     }
 }
 })();
+
+
+/**
+ * Utility function to make API calls with promise-based result.
+ * @return {Object} An object with utility functions.
+ */
+export const apiWithResultOnly = (function() {
+  return {
+    _ajax: typeof $ !== 'undefined' ? $ : {},
+    _env: typeof ENV !== 'undefined' ? ENV : {},
+    _location: KPASAPIURL,
+    _defaultError(event, jqxhr, settings, thrownError) {
+      console.log(event, jqxhr, settings, thrownError);
+    },
+
+    _get(options) {
+      const uri = this._location + options.uri;
+      console.log(uri);
+      const params = options.params || {};
+      const customError = options.error;
+
+      return new Promise((resolve, reject) => {
+        $.ajax({
+          url: uri,
+          type: 'GET',
+          data: params,
+          crossDomain: true,
+          success(response) {
+            resolve(response);
+          },
+          error(XMLHttpRequest, textStatus, errorThrown) {
+            console.log('Error during GET');
+            console.error(XMLHttpRequest);
+            if (customError) {
+              reject(XMLHttpRequest.responseText);
+            } else {
+              reject(XMLHttpRequest);
+            }
+          }
+        });
+      });
+    },
+
+    getAllCourseSettings() {
+      return this._get({
+        uri: '/courses/settings',
+        params: {}
+      });
+    },
+
+    getAllFilters() {
+      return this._get({
+        uri: '/filters',
+        params: {}
+      });
+    },
+
+    getSettingsCurrentCourse(courseId) {
+      return this._get({
+        uri: '/course/' + courseId + '/settings',
+        params: {}
+      });
+    }
+  };
+})();
+

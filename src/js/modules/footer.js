@@ -1,27 +1,25 @@
-import PageFooter from '../../vue/components/footer/PageFooter.vue';
-import { createApp } from 'vue/dist/vue.runtime.esm-bundler.js';
-import  footerLicence from '../../templates/modules/footer-license.hbs';
-import settings from  '../settings'
-import util from './util';
+import api from '../api/api'
+import {apiWithResultOnly} from '../api/kpas-api';
+import{ renderFooter } from '../../vue/pages/course-page/footer'
 
-export default (function() {
+export default (function () {
   return {
-    addLicenseInFooter : function() {
-      $(".public-license").hide()
-      var $mmoocLicenseElement = $('#mmoocLicense');
-
-      var html = util.renderTemplateWithData(footerLicence, {});
-      $mmoocLicenseElement.html(html);
+    changeFooter: async function () {
+      const id = api.getCurrentCourseId();
+      let license = false;
+      if (id) {
+        try {
+          const result = await apiWithResultOnly.getSettingsCurrentCourse(id);
+          if (result.licence === 1) {
+            license = true;
+          }
+        } catch (error) {
+          // Handle errors
+          console.error('Error fetching course settings:', error);
+        }
+      }
+      renderFooter(license);
     },
-
-
-    changeFooter : function() {
-      var parentElementOfOldFooter = document.getElementById('application');
-      var footerElement = parentElementOfOldFooter.appendChild(document.createElement('div'));
-      footerElement.setAttribute('id', 'customFooter');
-      const customFooter = createApp(PageFooter);
-      customFooter.mount('#customFooter');
-
-    }
   };
 })();
+
