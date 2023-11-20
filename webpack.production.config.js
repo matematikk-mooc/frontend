@@ -27,7 +27,6 @@ module.exports = (env) => {
                 './src/js/main.js',
             ],
             'badgesave': [
-                './src/addons/badges/js/main.js',
                 './src/js/modules/template.js',
                 './src/js/modules/util.js',
                 './src/js/i18n.js',
@@ -102,30 +101,6 @@ module.exports = (env) => {
                     test: /\.css$/,
                     use: ['style-loader', 'css-loader'],
                 },
-                {
-                    test: /\.less$/,
-                    use: [
-                        MiniCssExtractPlugin.loader,
-                        {
-                            loader: 'css-loader',
-                            options: {
-                                url: false
-                            }
-                        },
-                        {
-                            loader: 'less-loader',
-                            options: {
-                                lessOptions: {
-                                    relativeUrls: false,
-                                    globalVars: {
-                                        SERVER: JSON.stringify('https://kompetanseudirno.azureedge.net/udirdesign/'),
-
-                                    },
-                                }
-                            }
-                        },
-                    ],
-                }
             ],
         },
         resolve: {
@@ -133,7 +108,7 @@ module.exports = (env) => {
                 setup: path.resolve(__dirname, 'src/css/setup'),
                 Handlebars: path.resolve('src/3party/handlebars-v1.3.0.js')
             },
-            extensions: ['.js', '.less', '.hbs'],
+            extensions: ['.js', '.hbs'],
             preferRelative: true,
             modules: ["src", "node_modules"],
 
