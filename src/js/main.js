@@ -122,7 +122,6 @@ jQuery(function($) {
   routes.addRouteForPath(/\/courses\/\d+$/, function () {
     coursepage.hideElementsFromUsers();
     coursepagebanner.insertCourseBanner();
-    // coursepage.overrideUnregisterDialog();
     nextPrevButtons.getFrontpageNextPage();
     renderCourseModules("left-side");
     util.updateRightMenuButtons();
@@ -205,8 +204,7 @@ jQuery(function($) {
     if(coursepage.replaceUpcomingInSidebar()) {
       coursepage.printDeadlinesForCourse();
     }
-    // coursepage.overrideUnregisterDialog();
-  });
+   });
 
   routes.addRouteForPath(/\/search\/all_courses$/, function() {
     enroll.printAllCoursesContainer();
