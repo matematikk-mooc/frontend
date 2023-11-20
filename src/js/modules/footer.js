@@ -1,5 +1,5 @@
 import api from '../api/api'
-import kpasApi from '../api/kpas-api';
+import {apiWithResultOnly} from '../api/kpas-api';
 import{ renderFooter } from '../../vue/pages/course-page/footer'
 
 export default (function () {
@@ -9,7 +9,7 @@ export default (function () {
       let license = false;
       if (id) {
         try {
-          const result = await kpasApi.getSettingsCurrentCourse(id);
+          const result = await apiWithResultOnly.getSettingsCurrentCourse(id);
           if (result.licence === 1) {
             license = true;
           }
@@ -18,7 +18,6 @@ export default (function () {
           console.error('Error fetching course settings:', error);
         }
       }
-      console.error('Currently the license is : ', license)
       renderFooter(license);
     },
   };
