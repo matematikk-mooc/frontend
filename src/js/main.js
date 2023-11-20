@@ -83,7 +83,6 @@ jQuery(function($) {
 
   routes.addRouteForPath(/\/courses\/\d+/, function() {
     coursepagebanner.insertCourseBanner();
-    // coursepage.overrideUnregisterDialog();
     let forwardTo = encodeURIComponent(window.location.href);
     let closeOption = false;
     let authenticated = util.isAuthenticated();
