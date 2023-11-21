@@ -26,13 +26,6 @@ module.exports = {
       "./src/js/i18n.js",
       "./src/js/main.js",
     ],
-    "badges-dev": [
-      "./src/addons/badges/js/main.js",
-      "./src/js/modules/template.js",
-      "./src/js/modules/util.js",
-      "./src/js/i18n.js",
-      "./src/js/settings.js",
-    ],
   },
 
   output: {
@@ -142,29 +135,6 @@ module.exports = {
         ],
       },
       {
-        test: /\.less$/,
-        use: [
-          MiniCssExtractPlugin.loader,
-          {
-            loader: "css-loader",
-            options: {
-              url: false,
-            },
-          },
-          {
-            loader: "less-loader",
-            options: {
-              lessOptions: {
-                relativeUrls: false,
-                globalVars: {
-                  SERVER: JSON.stringify("http://localhost:9000/"),
-                },
-              },
-            },
-          },
-        ],
-      },
-      {
         test: /\.vue$/,
         loader: "vue-loader",
         options: {
@@ -181,7 +151,7 @@ module.exports = {
       Handlebars: path.resolve("src/3party/handlebars-v1.3.0.js"),
       vue$: path.resolve("node_modules/vue/dist/vue.runtime.esm-bundler.js"),
     },
-    extensions: [".js", ".less", ".hbs", ".vue"],
+    extensions: [".js", ".hbs", ".vue"],
     preferRelative: true,
     modules: ["src", "node_modules"],
   },

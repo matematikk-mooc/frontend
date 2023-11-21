@@ -1,5 +1,3 @@
-import '../css/loader.css';
-
 import MyCoursesPage from "../../vue/pages/MyCoursesPage.vue";
 import api from "../api/api";
 import { createApp } from "vue/dist/vue.runtime.esm-bundler.js";

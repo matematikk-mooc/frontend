@@ -57,8 +57,6 @@ All changes in LESS (CSS) and JavaScript will automatically be compiled and are 
 - [http://localhost:9000/subaccount-localhost.js](http://localhost:9000/subaccount-localhost.js)
 - [http://localhost:9000/rootaccount-localhost.js](http://localhost:9000/rootaccount-localhost.js)
 - [http://localhost:9000/kompetanseportalen-localhost.js](http://localhost:9000/kompetanseportalen-localhost.js)
-- [http://localhost:9000/badges-dev.js](http://localhost:9000/badges-dev.js)
-- [http://localhost:9000/badges-dev.css](http://localhost:9000/badges-dev.css)
 
 ## Build JS and CSS files for staging and production environment
 

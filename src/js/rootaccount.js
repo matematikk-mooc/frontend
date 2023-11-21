@@ -1,5 +1,3 @@
-import '../css/allrootaccount.less';
-
 import { hrefQueryString } from './settingsRoot';
 import utilRoot from './utilRoot';
 
