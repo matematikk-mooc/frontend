@@ -46,11 +46,9 @@ export default {
       this.modalOpen = false
     },
     goToFeide() {
-        console.log(window.location.origin)
         window.location.href = window.location.origin + "/courses?login=1&design=udir"
     },
     goToCanvas() {
-        console.log(window.location.origin)
         window.location.href = window.location.origin + "/login/canvas?normalLogin=1&design=udir"
     }
   }
