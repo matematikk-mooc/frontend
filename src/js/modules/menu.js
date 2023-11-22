@@ -464,15 +464,6 @@ export default (function() {
       });
     },
 
-    showBackButton: function(url, title) {
-      var buttonHTML = util.renderTemplateWithData(backbutton, {
-        url: url,
-        title: title
-      });
-      document
-        .getElementById('content-wrapper')
-        .insertAdjacentHTML('afterbegin', buttonHTML);
-    },
 
     showGroupHeader: function() {
       var groupId = api.getCurrentGroupId();

@@ -8,7 +8,7 @@ export default (function() {
     return {
     insertCourseBanner: function () {
         let currentCourseId  = ENV.COURSE_ID? ENV.COURSE_ID : ENV.COURSE.id;
-        let isEnrolled = ENV.current_user_is_student? ENV.current_user_is_student : ENV.COURSE.is_student;
+        let isEnrolled = ENV.current_user_is_student? ENV.current_user_is_student || ENV.COURSE.is_student : false;
         let isFrontPage = false;
         if(window.location.pathname ==  "/courses/" + currentCourseId){
             isFrontPage = true;
