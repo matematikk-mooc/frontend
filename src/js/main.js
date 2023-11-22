@@ -353,6 +353,8 @@ jQuery(function($) {
       menu.showDiscussionGroupMenu();
       const courseId = api.getCurrentCourseId();
       removeCanvasAnnouncementElements();
+      renderCourseModulesOnAnnouncementsPage('left-side');
+
 
       if (!util.isTeacherOrAdmin()) {
         menu.hideRightMenu();
@@ -383,6 +385,8 @@ jQuery(function($) {
       //he is apparantly not a member of a group.
       var courseId = api.getCurrentCourseId();
       removeCanvasAnnouncementElements();
+      renderCourseModulesOnAnnouncementsPage('left-side');
+
 
       util.hasRoleInCourse(courseId, "TeacherEnrollment", function(isTeacher) {
         if(!isTeacher) {
