@@ -11,6 +11,7 @@
     ]"
   >
     <Icon v-if="type === 'previous'" name="chevron_left" size="1.5em" />
+    <img class="feide-symbol" v-if="type === 'feideLogin'" :src="`${server}feide_white-symbol.svg`"/>
     <slot></slot>
     <Icon v-if="type === 'next'" name="chevron_right" size="1.5em" />
   </button>
@@ -22,8 +23,9 @@ const props = defineProps({
   size: String,
   type: String,
 });
+const server = SERVER;
 
-const isFilled = !props.type || props.type === 'submit' || props.type === 'filled';
+const isFilled = !props.type || props.type === 'submit' || props.type === 'filled' || props.type === 'feideLogin';
 const isOutlined = props.type === 'outlined' || props.type === 'previous' || props.type === 'next';
 const isDropdown = props.type === 'dropdown';
 </script>
@@ -104,5 +106,12 @@ const isDropdown = props.type === 'dropdown';
       padding: 0.625rem 1.625rem 0.625rem 1.625rem;
     }
   }
+}
+
+.feide-symbol{
+  width: 1.5em;
+  height: 1.5em;
+  margin-right: 0.5em;
+  margin-bottom: 0.5em;
 }
 </style>

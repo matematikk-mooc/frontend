@@ -10,7 +10,7 @@
 
       <li class="header__list-item" v-if="!logged_in">
         <span>
-          <a class="header__link" :href="loginLink">Logg inn</a>
+          <LoginChoice></LoginChoice>
         </span>
       </li>
       <li class="header__list-item" v-if="logged_in">
@@ -28,6 +28,8 @@
 </template>
 
 <script setup>
+  import LoginChoice from '../login-choice/LoginChoice.vue';
+
   const {logged_in, admin} = defineProps(['logged_in', 'admin'])
   const domain = window.location.origin;
   const loginLink = domain + "/login/canvas"
