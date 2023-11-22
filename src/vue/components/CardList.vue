@@ -15,8 +15,11 @@
       <template class="card-content-description-text" v-slot:description> {{ course.public_description }} </template>
 
       <template v-if="course.enrolled" v-slot:enrolled>Påmeldt</template>
-      <template v-if="!authorized || !course.enrolled" v-slot:leftButton>
+      <template v-if="authorized && !course.enrolled" v-slot:leftButton>
         <Button :type="'filled'" :size="'md'" @click="enrollToCourse(course.self_enrollment_code)">Meld deg på</Button>
+      </template>
+      <template v-if="!authorized" v-slot:leftButton>
+        <RegisterChoice :selfEnrollmentCode="course.self_enrollment_code"></RegisterChoice>
       </template>
       <template v-slot:rightButton v-if="!course.isModalOpen && (!authorized || !course.enrolled)">
         <Button :type="'outlined'" :size="'md'" @click="handleModal(course)">Les mer</Button>
@@ -37,13 +40,15 @@
 import Card from './Card.vue'
 import Button from './Button.vue';
 import ModulesList from './ModulesList.vue';
+import RegisterChoice from './login-choice/RegisterChoice.vue';
 
 export default {
   name: 'CardList',
   components: {
     Card,
     Button,
-    ModulesList
+    ModulesList,
+    RegisterChoice,
   },
   props: {
     courses: Array,
@@ -55,7 +60,7 @@ export default {
       domain: window.location.origin,
       selectedCourse : {},
       modules: [],
-      kpasApiUrl: KPASAPIURL
+      kpasApiUrl: KPASAPIURL,
     }
   },
   methods: {
