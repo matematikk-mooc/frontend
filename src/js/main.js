@@ -4,7 +4,6 @@ import accordion from './modules/accordion.js';
 import announcements from './modules/announcements.js';
 import api from './api/api.js';
 import coursePageButtons from './modules/coursePageButtons.js';
-import { renderCourseModulesOnAnnouncementsPage } from "../vue/pages/announcements-page";
 import courselist from './modules/courselist.js';
 import coursepage from './modules/coursepage.js';
 import coursepagebanner from "./modules/coursepagebanner";
@@ -25,8 +24,10 @@ import multilanguage from './3party/multilanguage.js'
 import nextPrevButtons from "./modules/next-prev-buttons";
 import nrk from './3party/nrk.js';
 import pages from './modules/pages.js';
+import { removeCanvasAnnouncementElements } from "./modules/announcements/utils";
 // import privacyPolicy from './3party/privacypolicy.js';
 import { renderCourseModules } from "../vue/pages/course-page/left-menu"
+import { renderCourseModulesOnAnnouncementsPage } from "../vue/pages/announcements-page";
 import reveal from './modules/reveal';
 import routes from './modules/routes.js';
 import settings from './settings.js';
@@ -351,29 +352,7 @@ jQuery(function($) {
     function() {
       menu.showDiscussionGroupMenu();
       const courseId = api.getCurrentCourseId();
-
-      //20180911ETH Need to know if I got here from the discussion list or from the module
-      //            navigation.
-      if (!this.hasQueryString) {
-        //If courseId was found, it is a group discussion created by a teacher.
-        if (courseId) {
-          menu.showBackButton(
-            '/courses/' + courseId + '/discussion_topics',
-            'Tilbake til diskusjoner'
-          );
-        } else {
-          var groupId = api.getCurrentGroupId();
-          if (null != groupId) {
-            api.getGroup(groupId, function(group) {
-              var courseId = group.course_id;
-              menu.showBackButton(
-                '/groups/' + group.id + '/discussion_topics',
-                'Tilbake til gruppeside'
-              );
-            });
-          }
-        }
-      }
+      removeCanvasAnnouncementElements();
 
       if (!util.isTeacherOrAdmin()) {
         menu.hideRightMenu();
@@ -403,6 +382,7 @@ jQuery(function($) {
       //If this is a group discussion we do not allow the user to access it because
       //he is apparantly not a member of a group.
       var courseId = api.getCurrentCourseId();
+      removeCanvasAnnouncementElements();
 
       util.hasRoleInCourse(courseId, "TeacherEnrollment", function(isTeacher) {
         if(!isTeacher) {
@@ -435,23 +415,6 @@ jQuery(function($) {
         );
       }
 
-      // Announcements are some as type of discussions, must use a hack to determine if this is an announcement
-      if (api.currentPageIsAnnouncement()) {
-        menu.showCourseMenu(courseId, 'Kunngjøringer', title);
-        menu.showBackButton(
-          '/courses/' + courseId + '/announcements',
-          'Tilbake til kunngjøringer'
-        );
-        announcements.addMarkAsReadButton();
-      } else if (api.getCurrentModuleItemId() == null) {
-        // Only show course menu if this discussion is not a module item
-        // Note detection if this is a module item is based on precense of query parameter
-        //            menu.showCourseMenu(courseId, 'Diskusjoner', title);
-        menu.showBackButton(
-          '/courses/' + courseId + '/discussion_topics',
-          'Tilbake til diskusjoner'
-        );
-      }
 
       api.getUserGroupsForCourse(courseId, (userGroups) => {
         util.tinyMceEditorIsInDOM(
