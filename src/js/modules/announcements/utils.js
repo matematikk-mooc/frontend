@@ -1,7 +1,5 @@
 
-
 export function removeCanvasAnnouncementElements() {
-    console.log("in remove canvas announcement elements")
     let toolbar = document.getElementById("discussion-toolbar");
     if (toolbar) {
         toolbar.remove();
