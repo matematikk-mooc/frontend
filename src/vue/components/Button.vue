@@ -62,7 +62,7 @@ const isDropdown = props.type === 'dropdown';
       padding: 0.5rem 1.375rem 0.5rem 1.375rem;
     }
     &.btn--lg {
-      padding: 0.75rem 1.75rem 0.25rem 1.75rem;
+      padding: 0.75rem 1.75rem 0.75rem 1.75rem;
     }
   }
 
@@ -109,9 +109,9 @@ const isDropdown = props.type === 'dropdown';
 }
 
 .feide-symbol{
-  width: 1.5em;
-  height: 1.5em;
+  width: 1em;
+  height: 1em;
   margin-right: 0.5em;
-  margin-bottom: 0.5em;
+  margin-top: -0.5em;
 }
 </style>

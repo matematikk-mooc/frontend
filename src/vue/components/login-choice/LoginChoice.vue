@@ -30,9 +30,6 @@ export default {
     Modal,
     Button,
   },
-  props: {
-
-  },
   data () {
     return {
         modalOpen: false
