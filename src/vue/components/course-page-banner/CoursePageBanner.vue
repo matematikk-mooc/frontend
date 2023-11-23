@@ -8,14 +8,14 @@
     </h1>
     <div class="course-page__banner__actions">
       <Button v-if="isEnrolled && isFrontPage" type="outlined" class="self_unenrollment_link">Meld deg av</Button>
-     <DropdownButton></DropdownButton>
+     <LanguageSelectorContainer :languages="languages"></LanguageSelectorContainer>
     </div>
   </div>
 </template>
 
 <script>
 import Button from '../Button.vue';
-import DropdownButton from '../dropdown-button/DropdownButton.vue';
+import LanguageSelectorContainer from '../language-selector-container/LanguageSelectorContainer.vue';
 
 export default {
   props: {
@@ -24,6 +24,7 @@ export default {
     title: String,
     isEnrolled: Boolean,
     isFrontPage: Boolean,
+    languages: String,
   },
   setup(props) {
     return {
@@ -32,11 +33,12 @@ export default {
       title: props.title,
       isEnrolled: props.isEnrolled,
       isFrontPage: props.isFrontPage,
+      languages: props.languages
     };
   },
   components: {
     Button,
-    DropdownButton
+    LanguageSelectorContainer
   },
 };
 </script>
@@ -55,7 +57,6 @@ export default {
   box-sizing: border-box;
 
   &__illustration {
-    width: 26rem;
     height: 100%;
     width: auto;
     display: flex;
