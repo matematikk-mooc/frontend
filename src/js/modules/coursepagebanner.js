@@ -25,6 +25,7 @@ export default (function() {
                     title: course.name,
                     isEnrolled: isEnrolled,
                     isFrontPage: isFrontPage,
+                    languages: settings.multilang.toLowerCase()
                 });
                 let coursePageBannerWrapper = document.createElement("div");
                 coursePageBannerWrapper.id =  "course-page-banner-wrapper";

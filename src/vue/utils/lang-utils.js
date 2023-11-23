@@ -38,3 +38,13 @@ export function getSelectedLanguage() {
   return multilanguage.getLanguageParameter();
   
 }
+
+export function getLanguageCode() {
+   multilanguage.getLanguageCode() ?? 'nb'
+  
+}
+
+export function setLanguageParameter(lang) {
+  multilanguage.setActiveLanguage(lang)
+}
+

@@ -37,7 +37,8 @@ export const CoursePageBannerComponent = {
   args: {
     theme: "theme_0",
     imageUrl: images[1],
-    title: 'Inkludering og universell utforming i praksis.'
+    title: 'Inkludering og universell utforming i praksis.',
+    languages: 'all'
   },
   tags: ["autodocs"],
   argTypes: {

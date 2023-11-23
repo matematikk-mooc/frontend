@@ -1,13 +1,31 @@
-import DropdownButton from './DropdownButton.vue'; // Adjust the import path
+import DropdownButton from './DropdownButton.vue';
 
 export default {
   title: 'Components/DropdownButton',
   component: DropdownButton,
 };
 
-const Template = () => ({
+export const DropdownButtonComponent = (args) => ({
   components: { DropdownButton },
-  template: '<DropdownButton />',
+  setup() {
+    return { args };
+  },
+  template: '<DropdownButton v-bind="args" />',
 });
 
-export const Default = Template.bind({});
+DropdownButtonComponent.argTypes = {
+  options: {
+    control: 'object',
+  },
+};
+
+DropdownButtonComponent.args = {
+  options: [
+    { key: 'nb', value: 'Bokmål' },
+    { key: 'nn', value: 'Nynorsk' },
+    { key: 'se', value: 'Sápmi' },
+  ],
+  preselect: 'se',
+};
+
+

@@ -2,28 +2,32 @@
   <div class="dropdown">
     <Button type="dropdown" size="lg" @click="toggleDropdown">
       <span :class="['dropdown-button__content', { 'dropdown-button__content--open': isOpen }]">
-        {{ selectedOption ?? options[0] }}
+        {{ selectedOption?.value ? selectedOption.value : 'Bokmål' }}
         <Icon class="toggle-icon" size="1.5em" name="expand_more" />
       </span>
     </Button>
     <ul v-if="isOpen" class="dropdown__content">
-      <li v-for="option in options" :key="option" @click="selectOption(option)" class="dropdown__item">
-        {{ option }}
+      <li v-for="option in filteredOptions" :key="option.key" @click="selectOption(option)" class="dropdown__item">
+        {{ option.value }}
       </li>
     </ul>
   </div>
 </template>
 
 <script>
-import { ref } from 'vue';
+import { ref, computed, emit } from 'vue';
 import Button from '../Button.vue';
 import Icon from '../icon/Icon.vue';
 
 export default {
-  setup() {
-    const isOpen = ref(0);
-    const selectedOption = ref(null);
-    const options = ['Bokmål', 'Nynorsk', 'Samisk'];
+  props: {
+    options: Array,
+    preselect: String
+  },
+  emits: ['selected'],
+  setup(props, { emit }) {
+    const isOpen = ref(false);
+    const selectedOption = ref(props.preselect ? props.options.find((item) => item.key === props.preselect) : props.options[0]);
 
     const toggleDropdown = () => {
       isOpen.value = !isOpen.value;
@@ -32,14 +36,19 @@ export default {
     const selectOption = (option) => {
       selectedOption.value = option;
       isOpen.value = false;
+      emit('selected', option.key);
     };
+
+    const filteredOptions = computed(() => {
+      return props.options.filter(option => option.key !== selectedOption.value.key);
+    });
 
     return {
       isOpen,
       selectedOption,
-      options,
       toggleDropdown,
       selectOption,
+      filteredOptions
     };
   },
   components: {
@@ -48,6 +57,8 @@ export default {
   },
 };
 </script>
+
+
 
 <style lang="scss">
 @import "../../design/hide-show-effect";

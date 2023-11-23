@@ -4,9 +4,9 @@ class MultilangUtils {
 
   static get LANGUAGES() {
     return [
-      { code: 'nb', name: "Bokmål" },
-      { code: 'se', name: "Sápmi" },
-      { code: 'nn', name: "Nynorsk" }
+      { key: 'nb', name: "Bokmål" },
+      { key: 'se', name: "Sápmi" },
+      { key: 'nn', name: "Nynorsk" }
     ]
   }
 
@@ -14,23 +14,6 @@ class MultilangUtils {
     return 'lang'
   }
 
-  static languagesExcept(language) {
-    if (util.isSamiskCourse(util.course)) {
-      var languages = [
-        { code: 'nb', name: "Bokmål" },
-        { code: 'se', name: "Sápmi" },
-      ]
-      return languages.filter(lang => lang.code !== language)
-    }
-    else if (util.isNynorskCourse(util.course)) {
-      var languages = [
-        { code: 'nb', name: "Bokmål" },
-        { code: 'nn', name: "Nynorsk" }
-      ]
-      return languages.filter(lang => lang.code !== language)
-    }
-    return MultilangUtils.LANGUAGES.filter(lang => lang.code !== language)
-  }
 
   static getLanguageParameter() {
     const params = new URLSearchParams(location.search)
@@ -38,10 +21,6 @@ class MultilangUtils {
   }
 
   static setLanguageParameter(languageCode) {
-    if (!this.isValidLanguage(languageCode)) {
-      return
-    }
-
     const params = new URLSearchParams(location.search)
     params.set(this.COOKIE_NAME, languageCode)
     window.history.replaceState({}, '', `${location.pathname}?${params}`)
@@ -52,10 +31,6 @@ class MultilangUtils {
   }
 
   static setLanguageCookie(languageCode) {
-    if (!this.isValidLanguage(languageCode)) {
-      return
-    }
-
     document.cookie = `courselanguage=${languageCode}; SameSite=Strict; path=/`
   }
 
@@ -72,44 +47,17 @@ class MultilangUtils {
     }
   }
   static getPreferredLanguage() {
-    if (!util.isMultilangCourse) {
-      return api.getLocale()
-    }
     if (MultilangUtils.getLanguageCode == "nb") {
-      return api.getLocale()
+      return _env.LOCALE;
     }
     return MultilangUtils.getLanguageCode()
   }
 
   static setActiveLanguage(activeLang) {
-    if (!this.isValidLanguage(activeLang)) {
-      return
-    }
-
     MultilangUtils.setLanguageCookie(activeLang)
     MultilangUtils.setLanguageParameter(activeLang)
-    const styleElement = document.getElementById('language-style')
-    styleElement.innerHTML = MultilangUtils.createCss(activeLang)
   }
 
-  static isValidLanguage(languageCode) {
-    if (util.isSamiskCourse(util.course)) {
-      var languages = [
-        { code: 'nb', name: "Bokmål" },
-        { code: 'se', name: "Sápmi" },
-      ]
-    }
-    else if (util.isNynorskCourse(util.course)) {
-      var languages = [
-        { code: 'nb', name: "Bokmål" },
-        { code: 'nn', name: "Nynorsk" }
-      ]
-    }
-    else {
-      var languages = this.LANGUAGES
-    }
-    return languages.some(lang => lang.code === languageCode)
-  }
 }
 
 export default (function () {
@@ -128,9 +76,6 @@ export default (function () {
         },
         getLanguageParameter: () => {
             return MultilangUtils.getLanguageParameter()
-        },
-        isValidLanguage: (language) => {
-            return MultilangUtils.isValidLanguage(language)
         },
         languagesMap: () => {
             return MultilangUtils.languagesMap()
