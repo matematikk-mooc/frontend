@@ -56,7 +56,7 @@ module.exports = (env) => {
             "https://kompetanseudirno.azureedge.net/udirdesign-dev/"
           ),
           KPASAPIURL: JSON.stringify(
-            "https://kpas.kompetanse.udir.no/api"
+            "https://kpas.staging.kompetanse.udir.no/api"
           ),
           ACCOUNTID: [99, 100, 102, 103, 137, 138, 139, 145],
           KPAS_MERGE_LTI_ID: 863,
