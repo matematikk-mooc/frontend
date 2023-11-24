@@ -18,27 +18,22 @@ export default {
   props: {
     languages: String,
   },
-  setup(props) {
-    const languageOptions = ref(getLanguageOptions(props.languages));
-    const initialLanguage = ref(null)
-    
-    onMounted(() => {
-      languageOptions.value = getLanguageOptions(props.languages);
-      initialLanguage.value = getLanguageCode() ?? 'nb';
-
-    });
-
-    const handleSelectedLanguage = (key) => {
-      setLanguageParameter(key);
-    };
-    
-
+  data() {
     return {
-      languageOptions,
-      initialLanguage, 
-      handleSelectedLanguage
+      languageOptions: null,
+      initialLanguage: null,
     };
   },
+  methods:{
+    handleSelectedLanguage(key) {
+      setLanguageParameter(key);
+    }
+
+  },
+  created() {
+      this.languageOptions = getLanguageOptions(this.languages);
+      this.initialLanguage = getLanguageCode() ?? 'nb';
+  },
+
 };
 </script>
-

@@ -15,7 +15,6 @@
 </template>
 
 <script>
-import { ref, computed, emit } from 'vue';
 import Button from '../Button.vue';
 import Icon from '../icon/Icon.vue';
 
@@ -24,32 +23,29 @@ export default {
     options: Array,
     preselect: String
   },
-  emits: ['selected'],
-  setup(props, { emit }) {
-    const isOpen = ref(false);
-    const selectedOption = ref(props.preselect ? props.options.find((item) => item.key === props.preselect) : props.options[0]);
-
-    const toggleDropdown = () => {
-      isOpen.value = !isOpen.value;
-    };
-
-    const selectOption = (option) => {
-      selectedOption.value = option;
-      isOpen.value = false;
-      emit('selected', option.key);
-    };
-
-    const filteredOptions = computed(() => {
-      return props.options.filter(option => option.key !== selectedOption.value.key);
-    });
-
+  data() {
     return {
-      isOpen,
-      selectedOption,
-      toggleDropdown,
-      selectOption,
-      filteredOptions
+      isOpen: false,
+      selectedOption: this.preselect ? this.options.find((item) => item.key === this.preselect) : this.options[0],
+
     };
+  },
+  emits: ['selected'],
+
+  methods: {
+    toggleDropdown() {
+      this.isOpen = !this.isOpen;
+    },
+    selectOption(option) {
+      this.selectedOption = option;
+      this.isOpen = false;
+      this.$emit('selected', option.key);
+    }
+  },
+  computed: {
+    filteredOptions() {
+      return this.options.filter(option => option.key !== this.selectedOption.key);
+    }
   },
   components: {
     Button,
@@ -120,4 +116,3 @@ export default {
   }
 }
 </style>
-
