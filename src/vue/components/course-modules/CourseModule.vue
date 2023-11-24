@@ -18,7 +18,7 @@
         >
           <Icon name="expand_more" size="2em" />
         </span>
-        <span class="title">{{ label }}</span>
+        <span class="title">{{ localizedLabel }}</span>
       </h4>
     </div>
 
@@ -46,7 +46,7 @@
 </template>
 
 <script setup>
-import { ref, computed, defineProps, defineEmits, onMounted} from 'vue';
+import { ref, computed, defineProps, defineEmits, onMounted, watchEffect} from 'vue';
 import Icon from '../icon/Icon.vue';
 import TreeView from '../tree-view/TreeView.vue';
 import { extractLabelForSelectedLanguage, getSelectedLanguage } from '../../utils/lang-utils';
@@ -65,6 +65,17 @@ const collapsed = ref(true);
 const selectedNode = ref(-1);
 
 const isLeaf = computed(() => props.nodes.length === 0);
+
+const selectedLang = ref(getSelectedLanguage()); // Initialize with the current language
+const localizedLabel = computed(() => extractLabelForSelectedLanguage(props.label, selectedLang));
+    const updateSelectedLang = () => {
+      selectedLang.value = getSelectedLanguage(); // Update selectedLang based on the URL
+    };
+
+    const handleLangChange = () => {
+      // This function will be called when the "lang" parameter changes
+      updateSelectedLang();
+    };
 
 const toggleCollapse = () => {
   if (!isLeaf.value) {
@@ -87,7 +98,6 @@ const toggleActiveModule = ({moduleId, isOpen}) => {
       selectedNode.value = -1;
     }
   }
-
 };
 
 
@@ -96,6 +106,17 @@ onMounted(() => {
   if (props.isActive) {
     collapsed.value = false;
   }
+
+  updateSelectedLang();
+
+  watchEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const langParam = params.get('lang');
+    console.error('The currently selected language is : ', langParam);
+      if (langParam !== selectedLang.value) {
+          handleLangChange();
+        }
+      });
 });
 
 </script>

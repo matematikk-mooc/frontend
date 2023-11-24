@@ -39,7 +39,7 @@
 </template>
 
 <script setup>
-import { ref, computed, defineProps } from 'vue';
+import { ref, computed, defineProps, watchEffect, onMounted } from 'vue';
 import Icon from '../icon/Icon.vue'
 import { getSelectedLanguage, extractLabelForSelectedLanguage } from '../../utils/lang-utils';
 const props = defineProps({
@@ -68,6 +68,34 @@ const toggleCollapse = () => {
 if (initialIsActive.value && !isLeaf.value) {
   collapsed.value = false;
 }
+
+const selectedLang = ref(getSelectedLanguage()); // Initialize with the current language
+const localizedLabel = computed(() => extractLabelForSelectedLanguage(props.label, selectedLang));
+    const updateSelectedLang = () => {
+      selectedLang.value = getSelectedLanguage(); // Update selectedLang based on the URL
+    };
+
+    const handleLangChange = () => {
+      // This function will be called when the "lang" parameter changes
+      updateSelectedLang();
+    };
+
+    onMounted(() => {
+      // Set collapsed.value to false if isActive prop is true
+      if (props.isActive) {
+        collapsed.value = false;
+      }
+
+      updateSelectedLang();
+
+      watchEffect(() => {
+        const params = new URLSearchParams(window.location.search);
+        const langParam = params.get('lang');
+        if (langParam !== selectedLang.value) {
+            handleLangChange();
+        }
+      });
+});
 </script>
 
 

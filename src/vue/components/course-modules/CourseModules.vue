@@ -14,7 +14,7 @@
       >
         <CourseModule
           :type="module.type"
-          :label="extractLabelForSelectedLanguage(module.label,getSelectedLanguage())"
+          :label="module.label"
           :id="module.id"
           :nodes="module.nodes"
           :isActive="module.isActive"
@@ -29,8 +29,6 @@
 import { defineProps, ref } from 'vue';
 import Icon from '../icon/Icon.vue';
 import CourseModule from './CourseModule.vue';
-import { extractLabelForSelectedLanguage, getSelectedLanguage } from '../../utils/lang-utils';
-
 
 const props = defineProps({
   nodes: Array,
@@ -57,10 +55,7 @@ const toggleActiveModule = ({moduleId, isOpen}) => {
   }
 
 };
-  
-const isActiveModule = (nodeId) => {
-  return nodeId === selectedNode.value;
-};
+
 </script>
 
 
