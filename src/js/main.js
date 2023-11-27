@@ -20,7 +20,7 @@ import kpas from './3party/kpas.js';
 import login from './modules/login.js';
 import menu from './modules/menu.js';
 import messagehandler from './3party/messagehandler.js';
-import multilanguage from './3party/multilanguage.js'
+import multilanguage from '../vue/utils/previous-lang-utils.js'
 import nextPrevButtons from "./modules/next-prev-buttons";
 import nrk from './3party/nrk.js';
 import pages from './modules/pages.js';
@@ -47,6 +47,7 @@ jQuery(function($) {
   //Multilanguage KURSP-279 Css must be present before javascript is run.
   //KURSP-376-multilanguage-fix
   multilanguage.initializeCss();
+
   routes.addRouteForPath(/\/$/, function() {
     var parentId = 'wrapper';
 
