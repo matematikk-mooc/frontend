@@ -15,10 +15,10 @@
         <Icon class="tree-node__label__text__done-icon" v-if="type === 'page' && isCompleted" name="check_circle_filled" size="1em"></Icon>
         <Icon class="tree-node__label__text__page-icon" v-if="type === 'page'" name="description" size="1em"></Icon>
         <template v-if="type === 'page'">
-          <a :href="url">{{ label }}</a>
+          <a :href="url">{{ localizedLabel }}</a>
         </template>
         <template v-else>
-          {{ label }}
+          {{ localizedLabel }}
         </template>
       </span>
     </span>
@@ -29,6 +29,7 @@
           :label="extractLabelForSelectedLanguage(node.label, getSelectedLanguage())"
           :id="node.id"
           :nodes="node.nodes"
+          :lang=" lang"
           :url = "node.url? node.url : ''"
           :isCompleted="node.isCompleted"
           :isActive="node.isActive"
@@ -39,12 +40,13 @@
 </template>
 
 <script setup>
-import { ref, computed, defineProps } from 'vue';
+import { ref, computed, defineProps, watchEffect, onMounted } from 'vue';
 import Icon from '../icon/Icon.vue'
 import { getSelectedLanguage, extractLabelForSelectedLanguage } from '../../utils/lang-utils';
 const props = defineProps({
   type: String,
   label: String,
+  lang: String,
   url: String,
   id: Number,
   nodes: Array,
@@ -68,9 +70,21 @@ const toggleCollapse = () => {
 if (initialIsActive.value && !isLeaf.value) {
   collapsed.value = false;
 }
+
+const localizedLabel = computed(() => extractLabelForSelectedLanguage(props.label, props.lang));
+ 
+
+    onMounted(() => {
+      // Set collapsed.value to false if isActive prop is true
+      if (props.isActive) {
+        collapsed.value = false;
+      }
+
+    
+
+  
+});
 </script>
-
-
 <style lang="scss">
 @import '../../design/colors';
 @import '../../design/hide-show-effect';
