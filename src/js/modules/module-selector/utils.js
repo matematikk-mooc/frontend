@@ -55,13 +55,15 @@ export function mapModules(modules) {
 // Define functions for mapping Page and SubHeader items
 
 function mapToPage(item) {
+  console.log(item)
   return {
     id: Number(item.id),
     label: item.title,
     type: "page",
     nodes: [],
     url: item.html_url,
-    isActive: item.isActive
+    isActive: item.isActive,
+    isCompleted: item.completion_requirement?.completed
   };
 }
 
