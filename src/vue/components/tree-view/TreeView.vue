@@ -10,7 +10,7 @@
     <span class="tree-node__label">
       <span class="tree-node__label__text">
         <span v-if="!isLeaf" class="dropdown-indicator" :class="{ 'dropdown-indicator--collapsed': collapsed }">
-          <Icon name="expand_more" size="1.25em" />
+          <Icon name="expand_more" size="2em" />
         </span>
         <Icon class="tree-node__label__text__done-icon" v-if="type === 'page' && isCompleted" name="check_circle_filled" size="1em"></Icon>
         <Icon class="tree-node__label__text__page-icon" v-if="type === 'page'" name="description" size="1em"></Icon>
@@ -40,7 +40,7 @@
 </template>
 
 <script setup>
-import { ref, computed, defineProps, watchEffect, onMounted } from 'vue';
+import { ref, computed, defineProps, onMounted } from 'vue';
 import Icon from '../icon/Icon.vue'
 import { getSelectedLanguage, extractLabelForSelectedLanguage } from '../../utils/lang-utils';
 const props = defineProps({
@@ -142,7 +142,7 @@ const localizedLabel = computed(() => extractLabelForSelectedLanguage(props.labe
 
       &__page-icon {
         display: inline-block;
-        font-size: 1em;
+        font-size: 1.25rem;
         margin-right: 0.125rem;
         vertical-align: middle; 
       }
@@ -152,7 +152,7 @@ const localizedLabel = computed(() => extractLabelForSelectedLanguage(props.labe
         left: -1.25rem;
         color: map-get($color-palette-green, background, 500);
         display: inline-block;
-        font-size: 1em;
+        font-size: 1.25em;
         vertical-align: middle;
       }
     }
