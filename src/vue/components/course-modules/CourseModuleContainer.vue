@@ -1,6 +1,5 @@
 <template>
   <CourseModules :nodes="data" v-if="!loading" :lang="lang" />
-  <div>{{ lang }}</div>
 </template>
 
 <script>
