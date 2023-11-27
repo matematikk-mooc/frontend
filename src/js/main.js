@@ -63,7 +63,15 @@ jQuery(function($) {
     utilRoot.redirectFeideAuthIfEnrollReferrer();
     utilRoot.triggerForgotPasswordIfParamPassed();
     login.addInfoMessage();
+    let loginLogo = document.getElementsByClassName('ic-Login-header__logo');
+    if (loginLogo) {
+      loginLogo[0].children[0].src = SERVER + 'logo-white.png';
+    }
+    document.getElementById('wrapper').classList.add('canvas-login-page');
+
+
   });
+
 
   ////KURSP-293-RCE-mister-farge-for-redigering
   routes.addRouteForPath(/\/edit$/, function() {
