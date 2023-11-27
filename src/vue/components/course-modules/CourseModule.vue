@@ -32,8 +32,9 @@
       <li v-for="course in nodes" :key="course.id">
         <TreeView
           :type="course.type"
-          :label="extractLabelForSelectedLanguage(course.label,getSelectedLanguage())"
+          :label="course.label"
           :id="course.id"
+          :lang="lang"
           :url="course.url? course.url : ''"
           :nodes="course.nodes"
           :isCompleted="course.isCompleted"
@@ -46,10 +47,10 @@
 </template>
 
 <script setup>
-import { ref, computed, defineProps, defineEmits, onMounted, watchEffect} from 'vue';
+import { ref, computed, defineProps, defineEmits, onMounted} from 'vue';
 import Icon from '../icon/Icon.vue';
 import TreeView from '../tree-view/TreeView.vue';
-import { extractLabelForSelectedLanguage, getSelectedLanguage } from '../../utils/lang-utils';
+import { extractLabelForSelectedLanguage } from '../../utils/lang-utils';
 
 
 const props = defineProps({
@@ -57,6 +58,7 @@ const props = defineProps({
   label: String,
   id: Number,
   nodes: Array,
+  lang: String,
   isActive: Boolean,
 });
 
@@ -65,17 +67,7 @@ const collapsed = ref(true);
 const selectedNode = ref(-1);
 
 const isLeaf = computed(() => props.nodes.length === 0);
-
-const selectedLang = ref(getSelectedLanguage()); // Initialize with the current language
-const localizedLabel = computed(() => extractLabelForSelectedLanguage(props.label, selectedLang));
-    const updateSelectedLang = () => {
-      selectedLang.value = getSelectedLanguage(); // Update selectedLang based on the URL
-    };
-
-    const handleLangChange = () => {
-      // This function will be called when the "lang" parameter changes
-      updateSelectedLang();
-    };
+const localizedLabel =  computed(() => extractLabelForSelectedLanguage(props.label, props.lang));
 
 const toggleCollapse = () => {
   if (!isLeaf.value) {
@@ -106,17 +98,6 @@ onMounted(() => {
   if (props.isActive) {
     collapsed.value = false;
   }
-
-  updateSelectedLang();
-
-  watchEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    const langParam = params.get('lang');
-    console.error('The currently selected language is : ', langParam);
-      if (langParam !== selectedLang.value) {
-          handleLangChange();
-        }
-      });
 });
 
 </script>

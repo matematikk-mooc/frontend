@@ -14,6 +14,7 @@
       >
         <CourseModule
           :type="module.type"
+          :lang="lang"
           :label="module.label"
           :id="module.id"
           :nodes="module.nodes"
@@ -32,6 +33,7 @@ import CourseModule from './CourseModule.vue';
 
 const props = defineProps({
   nodes: Array,
+  lang:String,
 });
 
 const treestructure = props.nodes; // Assign nodes prop to treestructure
