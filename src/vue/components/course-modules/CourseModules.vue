@@ -6,6 +6,7 @@
         <span class="courses__header-section__header__title">Moduler</span>
       </h3>
     </div>
+    <ModulesProgressIndicator :modulesProgressionData="modulesProgressionData"></ModulesProgressIndicator>
     <div class="courses__treeview">
       <div
         class="courses__treeview__item"
@@ -27,14 +28,21 @@
 </template>
 
 <script setup>
-import { defineProps, ref } from 'vue';
+import { defineProps, ref, computed} from 'vue';
 import Icon from '../icon/Icon.vue';
 import CourseModule from './CourseModule.vue';
+import ModulesProgressIndicator from '../module-progress-indicator/ModulesProgressIndicator.vue'
+import {completedPagesForAllModules } from './completed-utils';
 
 const props = defineProps({
   nodes: Array,
-  lang:String,
+  lang: String,
+  moduleProgressions: Array
 });
+
+const modulesProgressionData = computed(() => {
+  return  completedPagesForAllModules(props.moduleProgressions)
+})
 
 const treestructure = props.nodes; // Assign nodes prop to treestructure
 
