@@ -36,20 +36,21 @@ export default (function () {
                 }
             }
 
-            newMarkAsDoneButton.onclick = ((event) => {
-                console.log(event)
-                if(newMarkAsDoneButton.getAttribute('completed') === 'true') {
+            newMarkAsDoneButton.onclick = (event) => {
+                setTimeout(() => { //Setting timeout to allow Canvas to update their database before we update our UI
+                  if (newMarkAsDoneButton.getAttribute('completed') === 'true') {
                     newMarkAsDoneButton.setAttribute('completed', 'false');
                     newMarkAsDoneButton.classList.remove('custom-mark-as-done-completed');
-                    newMarkAsDoneButton.innerHTML = notCompletedContent
-                }
-                else{
+                    newMarkAsDoneButton.innerHTML = notCompletedContent;
+                    newMarkAsDoneButton.setAttribute('style', "outline: unset !important;")
+                  } else {
                     newMarkAsDoneButton.setAttribute('completed', 'true');
                     newMarkAsDoneButton.classList.add('custom-mark-as-done-completed');
-                    newMarkAsDoneButton.innerHTML = completedContent
-
-                }
-            })
+                    newMarkAsDoneButton.innerHTML = completedContent;
+                    newMarkAsDoneButton.setAttribute('style', "outline: unset !important;")
+                  }
+                }, 500); // Set the timeout duration in milliseconds (adjust as needed)
+            };
             originalMarkAsDoneButton.parentNode.replaceChild(newMarkAsDoneButton, originalMarkAsDoneButton);
 
     },
@@ -58,12 +59,3 @@ export default (function () {
 }
 
 })();
-
-            //Rediger
-            // let editButton = document.getElementsByClassName("btn edit-wiki")[0];
-            //Publisert
-            // let publishButton = document.getElementsByClassName("btn btn-published")[0];
-            //Avpublisert
-            // let unpublishButton = document.getElementsByClassName("btn btn-unpublished")[0];
-            //Studentvisning
-            // const studentViewButton = document.getElementById('easy_student_view');
