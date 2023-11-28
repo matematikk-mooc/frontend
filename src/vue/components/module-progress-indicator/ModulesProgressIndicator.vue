@@ -1,5 +1,6 @@
 <template>
   <div class="modules-progress-indicator-container">
+    <h5>Progresjon</h5>
     <div class="progress-indicator">
       <div class="progress-bar" :style="{ width: percentageCompleted + '%' }"></div>
     </div>
@@ -29,6 +30,12 @@ export default {
   display:flex;
   flex-direction: column;
   width: 100%;
+  padding-left: 1.5rem;
+  box-sizing: border-box;
+  h5{
+    font-family: Montserrat;
+    font-weight: 500;
+  }
 
 .progress-indicator {
   width: 100%;

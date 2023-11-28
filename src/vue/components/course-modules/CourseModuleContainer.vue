@@ -1,5 +1,8 @@
 <template>
-  <CourseModules :nodes="data" v-if="!loading" :lang="lang"  :moduleProgressions="completed"/>
+  <div class="course-modules-container-with-progression">
+      <CourseModules :nodes="data" v-if="!loading" :lang="lang"  :moduleProgressions="completed"/>
+  </div>
+  
 </template>
 
 <script>
@@ -94,5 +97,12 @@ export default defineComponent({
   },
 });
 </script>
+<style lang="scss">
+.course-modules-container-with-progression{
+  width: 100%;
+  max-width: 26rem;
+  padding-bottom: 3rem;
+}
+</style>
 
 
