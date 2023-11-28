@@ -1,7 +1,7 @@
 import "../../vue/design/reveal.scss";
 
 import Player from '@vimeo/player'
-import multilanguage from "./multilanguage.js";
+import multilanguage from '../../vue/utils/previous-lang-utils.js'
 import transcriptMenu from "../../templates/modules/transcriptMenu.hbs"
 import util from "../modules/util.js";
 
