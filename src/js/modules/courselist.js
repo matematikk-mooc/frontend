@@ -2,7 +2,6 @@ import MyCoursesPage from "../../vue/pages/MyCoursesPage.vue";
 import api from "../api/api";
 import { createApp } from "vue/dist/vue.runtime.esm-bundler.js";
 import enrollprivacypolicy from "../../templates/modules/enrollprivacypolicy.hbs";
-import i18n from "../i18n";
 import kpasApi from '../api/kpas-api';
 import settings from "../settings";
 import util from "./util";

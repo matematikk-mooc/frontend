@@ -7,7 +7,6 @@ import groupdiscussionGetHelpFromTeacher from '../../templates/modules/groupdisc
 import { hrefQueryString } from '../settingsRoot.js';
 import i18n from '../i18n.js';
 import login from './login.js';
-import multilanguage from '../3party/multilanguage.js';
 import { renderCourseModules } from "../../vue/pages/course-page/left-menu"
 import settings from '../settings.js';
 import usermenu from '../../templates/modules/usermenu.hbs';

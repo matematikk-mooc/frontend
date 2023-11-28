@@ -1,16 +1,7 @@
 import api from "../api/api.js";
-import courseprogress from '../../templates/modules/courseprogress.hbs';
-import courseprogressforstudent from '../../templates/modules/courseprogressforstudent.hbs';
-import discussionTopics from "./discussion-topics.js";
-import footer from "./footer.js";
 import { hrefQueryString } from "../settingsRoot.js";
 import i18n from '../i18n';
-import modulesprincipal from '../../templates/modules/modulesprincipal.hbs';
-import modulesstudent from '../../templates/modules/modulesstudent.hbs';
-import multilanguage from "../3party/multilanguage.js";
-import { privacyPolicyLink } from "../settings.js";
 import util from "./util.js";
-
 export default (function() {
   return {
     showCourseInvitation: function () {

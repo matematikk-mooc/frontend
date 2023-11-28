@@ -26,7 +26,6 @@
 //
 // ==========================================================================================
 
-import multilanguage from "./multilanguage";
 import vimeo from "./vimeo";
 
 export default (function() {
@@ -385,14 +384,7 @@ export default (function() {
         // ================================================================================
         // --------------------------------------------------------------------------------
 
-        //KURSP-279 Multilanguage must be run when content is ready
-        try {
-          // Call multilanguage.perform() last to catch all relevant DOM content
-          // multilanguage.perform();
-        } catch (e) {
-          console.log(e);
-        }
-
+  
         if (vimeoPlayerReady && !vimeoTranscriptInitialized) {
           vimeoTranscriptInitialized = true;
           vimeo.init();

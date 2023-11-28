@@ -38,14 +38,12 @@ import util from './modules/util.js';
 import utilRoot from './utilRoot.js';
 
 jQuery(function($) {
-  //KURSP-469 Support embedding of KPAS LTI tool. In general our design should not load in iframes.
-  //The code below detects if we are in an iframe and then returns.
+
   if(window.self != window.top) {
     return;
   }
   console.log(ENV);
-  //Multilanguage KURSP-279 Css must be present before javascript is run.
-  //KURSP-376-multilanguage-fix
+
   multilanguage.initializeCss();
 
   routes.addRouteForPath(/\/$/, function() {
