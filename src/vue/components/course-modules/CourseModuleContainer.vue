@@ -1,5 +1,8 @@
 <template>
-  <CourseModules :nodes="data" v-if="!loading" :lang="lang" />
+  <div class="course-modules-container-with-progression">
+      <CourseModules :nodes="data" v-if="!loading" :lang="lang"  :moduleProgressions="completed"/>
+  </div>
+  
 </template>
 
 <script>
@@ -8,6 +11,7 @@ import CourseModules from './CourseModules.vue';
 import { fetchModulesForCourse } from '../../../js/modules/module-selector/index.js';
 import { Subject } from 'rxjs';
 import { getLanguageCode } from '../../utils/lang-utils';
+import {countPagesAndCompleted} from './completed-utils'
 
 
 
@@ -21,6 +25,8 @@ export default defineComponent({
     const urlChangeSubject = new Subject();
     const previousUrl = ref(window.location.href);
     const lang = ref(getLanguageCode());
+    const completed = ref([]);
+
 
     let observer = null;
 
@@ -69,6 +75,8 @@ export default defineComponent({
         // Fetch modules for the course
         const response = await fetchModulesForCourse();
         data.value = response;
+        completed.value = data.value.map(item => countPagesAndCompleted(item));
+        console.error('completed courses: ', completed.value)
       } catch (error) {
         console.error('Error fetching data:', error);
       } finally {
@@ -83,10 +91,18 @@ export default defineComponent({
     return {
       data,
       loading,
-      lang
+      lang,
+      completed
     };
   },
 });
 </script>
+<style lang="scss">
+.course-modules-container-with-progression{
+  width: 100%;
+  max-width: 26rem;
+  padding-bottom: 3rem;
+}
+</style>
 
 

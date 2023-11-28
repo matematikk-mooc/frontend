@@ -18,7 +18,7 @@
           <a :href="url">{{ localizedLabel }}</a>
         </template>
         <template v-else>
-          {{ localizedLabel }}
+          <span> {{ localizedLabel }}</span>
         </template>
       </span>
     </span>
@@ -98,6 +98,7 @@ const localizedLabel = computed(() => extractLabelForSelectedLanguage(props.labe
   margin-left: 0.5rem;
   padding-left: 1rem;
   letter-spacing: 0.063rem;
+  box-sizing: border-box;
 
   &--active {
     color: $color-black;
@@ -108,7 +109,8 @@ const localizedLabel = computed(() => extractLabelForSelectedLanguage(props.labe
   }
 
   &__leaf {
-    margin: 0.5rem 0 0.5rem 1.5rem;
+    //margin: 0.5rem 0 0.5rem 1rem;
+    padding: 0.2rem 1rem 0.2rem 1.5rem;
     border-radius: 1.0652rem 0 0 1.0652rem;
     font-weight: 400;
 
@@ -176,13 +178,23 @@ const localizedLabel = computed(() => extractLabelForSelectedLanguage(props.labe
 
     @include hide-show-effect;
   }
+   .tree-node__child-nodes__node{
+    box-sizing: border-box;
+   }
 
   .tree-node__child-nodes:focus > ul,
   .tree-node__child-nodes:hover > ul {
     visibility: visible;
     opacity: 1;
     display: block;
+    box-sizing: border-box;
   }
+}
+.tree-node__label__text{
+  span, a{
+    word-break: break-all;
+  }
+ 
 }
 </style>
 

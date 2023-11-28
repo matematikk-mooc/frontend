@@ -1,5 +1,8 @@
 <template>
+  <div class="announcements-fetch-container">
     <Announcements :count="data.count" :url="data.url" v-if="!loading" />
+  </div>
+    
 </template>
 
 <script>
@@ -41,3 +44,9 @@ export default defineComponent({
   }
 });
 </script>
+<style lang="scss">
+ .announcements-fetch-container{
+  width: 100%;
+  max-width: 28rem;
+ }
+</style>

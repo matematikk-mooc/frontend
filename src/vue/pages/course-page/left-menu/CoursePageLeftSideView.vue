@@ -2,7 +2,6 @@
 <div class="course-page-left-side-view-container">
 <AnnouncementContainer></AnnouncementContainer>
 <CourseModuleContainer></CourseModuleContainer>
-
 </div>
 </template>
 <script setup>
@@ -12,9 +11,8 @@ import CourseModuleContainer from "../../../components/course-modules"
 <style lang="scss">
   .course-page-left-side-view-container{
     width: 100%;
-    min-width: 30rem;
+    max-width: 27rem;
     min-height: 600px;
-    margin-right: 1rem;
     height: 100%;
     display:flex;
     flex-direction: column;

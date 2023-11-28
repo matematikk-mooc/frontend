@@ -6,6 +6,9 @@
         <span class="courses__header-section__header__title">Moduler</span>
       </h3>
     </div>
+     <div class="courses__progress-indicator">
+        <ModulesProgressIndicator :modulesProgressionData="modulesProgressionData"></ModulesProgressIndicator>
+     </div>
     <div class="courses__treeview">
       <div
         class="courses__treeview__item"
@@ -27,14 +30,21 @@
 </template>
 
 <script setup>
-import { defineProps, ref } from 'vue';
+import { defineProps, ref, computed} from 'vue';
 import Icon from '../icon/Icon.vue';
 import CourseModule from './CourseModule.vue';
+import ModulesProgressIndicator from '../module-progress-indicator/ModulesProgressIndicator.vue'
+import {completedPagesForAllModules } from './completed-utils';
 
 const props = defineProps({
   nodes: Array,
-  lang:String,
+  lang: String,
+  moduleProgressions: Array
 });
+
+const modulesProgressionData = computed(() => {
+  return  completedPagesForAllModules(props.moduleProgressions)
+})
 
 const treestructure = props.nodes; // Assign nodes prop to treestructure
 
@@ -65,12 +75,19 @@ const toggleActiveModule = ({moduleId, isOpen}) => {
 @import '../../design/box-shadow';
 @import '../../design/colors.scss';
 .courses {
+  box-sizing: border-box;
   width: 100%;
-  border-radius: 1.6875rem 0rem 0rem 1.6875rem;
+  border-radius: 1.6875rem 0 0 1.6875rem;
   border: 0.0625rem solid $color-grey-400; 
   background: $color-white;
   padding: 0 0 0.75rem 0;
   @include box-shadow(medium); 
+
+  &__progress-indicator{
+    box-sizing: border-box;
+    padding: 1rem;
+    width: 100%;
+  }
 
   &__header-section {
     color: black;
