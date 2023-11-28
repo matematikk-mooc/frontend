@@ -56,6 +56,16 @@ jQuery(function($) {
     }
   });
 
+  routes.addRouteForPath(/\/logout$/, function() {
+    document.getElementById('wrapper').classList.add('canvas-login-page');
+    let loginLogo = document.getElementsByClassName('ic-Login-header__logo');
+    if (loginLogo) {
+      let logo = loginLogo[0].children[0]
+      logo.src  = SERVER + 'logo-white.png';
+      logo.setAttribute("style", "height: 4rem;");
+    }
+  });
+
   routes.addRouteForQueryString(/invitation=/, function() {});
 
   routes.addRouteForPath(/\/login\/canvas$/, function() {
