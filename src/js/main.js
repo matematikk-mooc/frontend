@@ -1,4 +1,5 @@
 import "../vue/design/override-base-Canvas-elements.scss";
+import "../vue/design/override-login-logout-Canvas-elements.scss";
 
 import accordion from './modules/accordion.js';
 import announcements from './modules/announcements.js';
@@ -551,6 +552,11 @@ jQuery(function($) {
   });
 
   routes.addRouteForPath(/enroll\/[0-9A-Z]+/, function() {
+    if(!util.isAuthenticated()){
+      let loginLogo = document.getElementsByClassName('ic-Login-confirmation__logo')[0];
+      loginLogo.src = SERVER + 'logo-black.svg';
+      loginLogo.setAttribute("style", "height: 4rem !important; width: auto !important");
+    }
     enroll.changeEnrollPage();
   });
 
