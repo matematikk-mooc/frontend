@@ -1,4 +1,4 @@
-
+import EnrollToCourse from "../../vue/components/enroll/EnrollToCourse.vue";
 import LoggedInLandingPage from "../../vue/pages/LoggedInLandingPage.vue";
 import NotLoggedInPage from "../../vue/pages/NotLoggedInPage.vue";
 import allcoursescontainer from '../../templates/modules/allcoursescontainer.hbs'
@@ -7,7 +7,6 @@ import { createApp } from "vue/dist/vue.runtime.esm-bundler.js";
 import { hrefQueryString } from "../settingsRoot";
 import i18n from "../i18n";
 import kpasApi from "../api/kpas-api";
-import registerPopup from '../../templates/modules/registerPopup.hbs'
 import settings from "../settings";
 import util from "./util";
 import utilRoot from "../utilRoot";
@@ -15,24 +14,15 @@ import utilRoot from "../utilRoot";
 export default (function () {
 
   return {
-    displayRegisterPopup: function(authenticated, closeOption, registerText, registerWithCanvasText, selfRegisterCode, courseName, forwardTo) {
-      if(!$('.login-box').length) {
-        let html = util.renderTemplateWithData(registerPopup, {
-          authenticated: authenticated,
-          closeOption: closeOption,
-          selfRegisterCode: selfRegisterCode,
-          courseName: courseName,
-          queryString: hrefQueryString,
-          RegisterText: registerText,
-          RegisterWithCanvasText: registerWithCanvasText,
-          forwardTo: forwardTo,
-        });
-          document.getElementById('wrapper').insertAdjacentHTML('afterend', html);
-          $('#application').before(`<div class="overlay"></div>`)
-          $('.login-box__close, .overlay').click(() => {
-            $('.login-box, .overlay').remove()
-          })
-      }
+
+    displayRegisterPopup: function(authenticated, selfRegisterCode) {
+      let wrapper = document.getElementById("wrapper");
+      let enrollPopup = document.createElement("div");
+      enrollPopup.setAttribute("id", "enrollPopup");
+      let enrollPopupComponent = createApp(EnrollToCourse, {authenticated: authenticated, selfEnrollmentCode: selfRegisterCode});
+      wrapper.appendChild(enrollPopup);
+      enrollPopupComponent.mount("#enrollPopup");
+
     },
     changeEnrollInformationPolicyLink: function () {
       var informationPolicy = $('.ic-Self-enrollment-footer__Secondary > a');
@@ -121,18 +111,6 @@ export default (function () {
       }
       return allCoursesWithStatus;
     },
-    handleRegisterButtonClick : function(authenticated) {
-      let self = this;
-      $('.mmooc-header__register-button').click(function(event) {
-        if(!authenticated) {
-          let closeOption = true;
-          self.displayRegisterPopup(authenticated, closeOption, i18n.RegisterPopup, i18n.RegisterWithCanvas, event.target.getAttribute("self_enrollment_code"), i18n.RegisterPopup);
-        }
-        else {
-          window.location = `/enroll/${event.target.getAttribute("self_enrollment_code")}`
-        }
-      })
-    },
     printAllCourses: function () {
       var self = this;
       var html = "<div class='loading-gif-wrapper'><span class='loading-gif'></span></div>";
@@ -196,7 +174,6 @@ export default (function () {
                 console.log(e);
               }
             }
-            self.handleRegisterButtonClick(isAuthenticated);
           });
         });
 
