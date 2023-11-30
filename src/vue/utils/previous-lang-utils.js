@@ -54,7 +54,7 @@ class MultilangUtils {
   // Get the preferred language code, falling back to the default if not set
   static getPreferredLanguage() {
     if (MultilangUtils.getLanguageCode() === "nb") {
-      return _env.LOCALE; // Return the locale if the language code is Bokmål
+      return ENV.LOCALE; // Return the locale if the language code is Bokmål
     }
     return MultilangUtils.getLanguageCode(); // Return the active language code
   }
