@@ -103,33 +103,14 @@ jQuery(function($) {
 
   routes.addRouteForPath(/\/courses\/\d+/, function() {
     coursepagebanner.insertCourseBanner();
-    let forwardTo = encodeURIComponent(window.location.href);
-    let closeOption = false;
     let authenticated = util.isAuthenticated();
 
     if(!authenticated) {
-      let registerText = "For å få fullt utbytte av denne siden må du melde deg på med";
-      enroll.displayRegisterPopup(
-        authenticated,
-        closeOption,
-        registerText,
-        i18n.RegisterWithCanvas,
-        util.course.self_enrollment_code,
-        util.course.name,
-        forwardTo);
+      enroll.displayRegisterPopup(authenticated, util.course.self_enrollment_code);
     } else {
       api.getUsersEnrollmentsForCourse(util.course.id, function(courses) {
         if(!courses.length) {
-          let registerText = "For å få fullt utbytte av denne siden må du melde deg på";
-          let registerWithCanvasText = "Meld deg på";
-          enroll.displayRegisterPopup(
-            authenticated,
-            closeOption,
-            registerText,
-            registerWithCanvasText,
-            util.course.self_enrollment_code,
-            util.course.name,
-            forwardTo);
+          enroll.displayRegisterPopup( authenticated, util.course.self_enrollment_code);
         } else {
           util.updateInformationPane();
         }
