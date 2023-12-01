@@ -6,7 +6,6 @@ import { createApp } from 'vue/dist/vue.runtime.esm-bundler.js';
 import groupdiscussionGetHelpFromTeacher from '../../templates/modules/groupdiscussionGetHelpFromTeacher.hbs';
 import { hrefQueryString } from '../settingsRoot.js';
 import i18n from '../i18n.js';
-import login from './login.js';
 import { renderCourseModules } from "../../vue/pages/course-page/left-menu"
 import settings from '../settings.js';
 import usermenu from '../../templates/modules/usermenu.hbs';
@@ -250,8 +249,6 @@ export default (function() {
         }
         let customHeader = createApp(NavBar, headerProps);
         customHeader.mount("#notLoggedInHeader");
-
-        login.handleLoginButtonClick();
       }
       else {
         $('#header').hide();
