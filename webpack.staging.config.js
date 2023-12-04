@@ -24,13 +24,11 @@ module.exports = (env) => {
                 './src/js/subaccount.js',
             ],
             'kompetanseportal-udirdesign-staging': [
-                './src/js/i18n.js',
                 './src/js/main.js',
             ],
             'badgesafe': [
                 './src/js/modules/template.js',
                 './src/js/modules/util.js',
-                './src/js/i18n.js',
                 './src/js/settings.js',
             ],
         },

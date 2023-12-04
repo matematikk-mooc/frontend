@@ -3,7 +3,6 @@ import assignmentPageWithPeerReviewRightSide from '../../templates/modules/assig
 import assignmentPageWithPeerReviewSaveRubricButton from '../../templates/modules/assignmentPageWithPeerReviewSaveRubricButton.hbs';
 import assignmentPageWithPeerReviewWarning from '../../templates/modules/assignmentPageWithPeerReviewWarning.hbs';
 import assignmentSubmission from '../../templates/modules/assignmentSubmission.hbs';
-import i18n from '../i18n';
 import informationpane from '../../templates/modules/informationpane.hbs';
 import navigateToPreviousPage from '../../templates/modules/navigateToPreviousPage.hbs';
 import util from './util';
@@ -193,7 +192,7 @@ export default (function() {
       if ($('#left-side').is(':hidden')) {
         var linkBack = util.renderTemplateWithData(
           navigateToPreviousPage,
-          { linkText: i18n.LinkBack }
+          { linkText: 'Tilbake til forrige side'  }
         );
         $(linkBack).prependTo($('#content'));
       }
@@ -202,7 +201,7 @@ export default (function() {
     redesignAssignmentPage: function() {
       function _isAssignmentWithPeerReview() {
         var returnValue = false;
-        var peerReviewer = i18n.PeerReviewer;
+        var peerReviewer = 'Hverandrevurdering';
         if (
           $(
             "#right-side .details .content > h4:contains('" +
@@ -325,12 +324,12 @@ export default (function() {
         var returnValue;
         var current_user_id = api.getUser().id;
         if (isPeerReview) {
-          returnValue = i18n.PeerReview;
+          returnValue = 'Hverandrevurdering';
         } else {
-          returnValue = i18n.DetailsAboutYourDelivery;
+          returnValue = 'Detaljer om din innlevering';
           if (current_user_id != submission_user_id) {
             //Submission opened by admin or teacher. We don't make any changes in the existing design when this is the case.
-            returnValue = i18n.DetailsAboutDelivery;
+            returnValue = 'Detaljer om innlevering';
           }
         }
         return returnValue;
@@ -442,7 +441,7 @@ export default (function() {
 
       function _isPeerReview() {
         var returnValue = false;
-        var peerReviewText = i18n.PeerReviewer;
+        var peerReviewText = 'Hverandrevurdering';
         var originalSubmissionHeader =
           'body.assignments #application.ic-app #content .submission_details h2.submission_header';
         if (
@@ -456,7 +455,7 @@ export default (function() {
 
       function _isOwnSubmission() {
         var returnValue = false;
-        var deliveryText = i18n.Delivery;
+        var deliveryText = 'Innlevering';
         var originalSubmissionHeader =
           'body.assignments #application.ic-app #content .submission_details h2.submission_header';
         if (

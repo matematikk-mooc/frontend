@@ -15,7 +15,6 @@ import enroll from './modules/enroll.js';
 import footer from './modules/footer.js'
 import greeting from './modules/greeting.js';
 import groups from'./modules/groups.js'
-import i18n from './i18n.js';
 import infoboxes from './modules/infoboxes.js'
 import kpas from './3party/kpas.js';
 import login from './modules/login.js';

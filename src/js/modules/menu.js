@@ -5,7 +5,7 @@ import backbutton from '../../templates/modules/backbutton.hbs';
 import { createApp } from 'vue/dist/vue.runtime.esm-bundler.js';
 import groupdiscussionGetHelpFromTeacher from '../../templates/modules/groupdiscussionGetHelpFromTeacher.hbs';
 import { hrefQueryString } from '../settingsRoot.js';
-import i18n from '../i18n.js';
+
 import { renderCourseModules } from "../../vue/pages/course-page/left-menu"
 import settings from '../settings.js';
 import usermenu from '../../templates/modules/usermenu.hbs';
@@ -25,7 +25,7 @@ export default (function() {
     if(a) {
       href = a.attr('href');
     }
-    return { title: i18n.Badgesafe, url: href };
+    return { title: 'Utmerkelser', url: href };
   }
 
   function createStyleSheet() {
@@ -180,7 +180,7 @@ export default (function() {
           insertCustomMenuElementInTopMenu('Grupper', '/groups' + hrefQueryString);
         }
         var linkToMyCourses = utilRoot.getLinkToMyCourses();
-        insertCustomMenuElementInTopMenu(i18n.CoursePlural, linkToMyCourses);
+        insertCustomMenuElementInTopMenu('Kompetansepakker', linkToMyCourses);
 
         if (util.isTeacherOrAdmin()) {
           this.showLeftMenu();
@@ -530,7 +530,7 @@ export default (function() {
                       var sectionRecipientTeachers =
                         sectionRecipient + '_teachers';
                       var subject =
-                        groupName + ' ' + i18n.GroupGetInTouchSubject;
+                        groupName + ' ' + 'ønsker kontakt';
                       var discussionUrl = window.location.href;
                       var discussionAndGroupTitle = $(
                         '.discussion-title'
@@ -542,7 +542,7 @@ export default (function() {
                       var newLine = '\n';
 
                       var body =
-                        i18n.WeHaveAQuestionToTeacherInTheDiscussion +
+                        'Vi har et spørsmål til veileder i diskusjonen' +
                         ' "' +
                         discussionTitle +
                         '":' +
@@ -590,7 +590,7 @@ export default (function() {
         // Get help from teacher by clicking a button
         var getHelpButtonFromteacherButtonHTML = util.renderTemplateWithData(
           groupdiscussionGetHelpFromTeacher,
-          { hoverOverText: i18n.CallForInstructorHoverOverText }
+          { hoverOverText:'Sender en melding til veileder om at dere trenger hjelp i denne konkrete gruppediskusjonen. Trenger du personlig veiledning: send melding til din veileder i innboks.'}
         );
         //document.getElementById('content').insertAdjacentHTML('afterbegin', getHelpButtonFromteacherButtonHTML);
         $('#discussion-managebar > div > div > div.pull-right').append(
@@ -627,7 +627,7 @@ export default (function() {
       if(a) {
         href = a.attr('href');
       }
-      return { title: i18n.Badgesafe, url: href };
+      return { title: 'Utmerkelser', url: href };
     },
     setCanvaBadgesLink: function(course, callback) {
       var user_id = api.getUser().id;
@@ -650,7 +650,7 @@ export default (function() {
         success: function(data) {
           if ($.isFunction(callback)) {
             callback({
-              title: i18n.Badgesafe,
+              title: 'Utmerkelser',
               url: '/courses/' + course.id + '?allcanvabadges'
             });
           }
@@ -662,7 +662,7 @@ export default (function() {
         error: function(err) {
           if ($.isFunction(callback)) {
             callback({
-              title: i18n.Badgesafe,
+              title: 'Utmerkelser',
               url: undefined
             });
           }

@@ -5,7 +5,6 @@ import allcoursescontainer from '../../templates/modules/allcoursescontainer.hbs
 import api from "../api/api";
 import { createApp } from "vue/dist/vue.runtime.esm-bundler.js";
 import { hrefQueryString } from "../settingsRoot";
-import i18n from "../i18n";
 import kpasApi from "../api/kpas-api";
 import settings from "../settings";
 import util from "./util";
@@ -80,10 +79,10 @@ export default (function () {
     },
     printAllCoursesContainer: function () {
       if(util.isAuthenticated()) {
-      var label = i18n.CoursePlural
+      var label = 'Kompetansepakker'
       var html = util.renderTemplateWithData(allcoursescontainer, {
         courseLabel: label.toLowerCase(),
-        allAvailableCoursesIngress: i18n.AllAvailableCoursesIngress,
+        allAvailableCoursesIngress:'Oversikt over alle kompetansepakker du er meldt på og som du kan melde deg på.',
         linkToMyCourses: utilRoot.getLinkToMyCourses(),
         isAuthenticated: util.isAuthenticated(),
         isMobileOrTablet: util.isMobileOrTablet()

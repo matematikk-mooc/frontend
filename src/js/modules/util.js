@@ -2,7 +2,6 @@ import './template.js'
 
 import { hrefAmpQueryString, hrefQueryString } from "../settingsRoot";
 
-import { CourseOptions } from "../utilities/course-options";
 import  api from '../api/api.js'
 import pages from './pages.js'
 import settings from "../settings";
