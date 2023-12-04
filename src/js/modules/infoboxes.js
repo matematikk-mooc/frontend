@@ -31,7 +31,16 @@ export default (function () {
           'pfdk-verktoy',
           'udir-skoleleder',
           'udir-kommentar',
-          'udir-eksempel'
+          'udir-eksempel',
+          'udir-general',
+          'udir-importantinfo',
+          'udir-tools',
+          'udir-time',
+          'udir-goals',
+          'udir-tip',
+          'udir-read',
+          'udir-quote',
+          'udir-schoolprincipal'
         ]
 
         do {
@@ -139,12 +148,13 @@ export default (function () {
 
 
 function getIcon(iconType) {
+  iconType
   const icon = "udir-info__";
-  if (iconType === icon + "verktoy") {
+  if (iconType === icon + "verktoy" || iconType === icon + "tools") {
     return IconPaths['devices'];
-  } else if (iconType === icon + "tid") {
+  } else if (iconType === icon + "tid" || iconType === icon + "time") {
     return IconPaths['alarm'];
-  } else if (iconType === icon + "maal") {
+  } else if (iconType === icon + "maal" || iconType === icon + "goals") {
     return IconPaths['flag'];
   }else if (iconType === icon + "tip") {
     return IconPaths['light_bulb'];
@@ -152,12 +162,13 @@ function getIcon(iconType) {
     return IconPaths["article"];
   } else if (iconType === icon + "quote") {
     return IconPaths["quote"];
-  } else if (iconType === icon + "skoleleder") {
+  } else if (iconType === icon + "skoleleder" || iconType === icon + "schoolprincipal") {
     return IconPaths["face"];
   } else if (
     iconType === icon + "info" ||
     iconType === icon + "warning" ||
-    iconType === icon + "important"
+    iconType === icon + "important" ||
+    iconType === icon + "importantinfo"
   ) {
     return IconPaths["star"];
   } 
