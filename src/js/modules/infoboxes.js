@@ -40,7 +40,8 @@ export default (function () {
           'udir-tip',
           'udir-read',
           'udir-quote',
-          'udir-schoolprincipal'
+          'udir-leader',
+          'udir-link'
         ]
 
         do {
@@ -162,8 +163,10 @@ function getIcon(iconType) {
     return IconPaths["article"];
   } else if (iconType === icon + "quote") {
     return IconPaths["quote"];
-  } else if (iconType === icon + "skoleleder" || iconType === icon + "schoolprincipal") {
+  } else if (iconType === icon + "skoleleder" || iconType === icon + "leader") {
     return IconPaths["face"];
+  } else if (iconType === icon + 'link') {
+    return IconPaths["link"]
   } else if (
     iconType === icon + "info" ||
     iconType === icon + "warning" ||
