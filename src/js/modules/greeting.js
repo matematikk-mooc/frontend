@@ -1,6 +1,5 @@
 import api from "../api/api";
 import util from "./util";
-import waitIcon from "../../templates/modules/waitIcon.hbs"
 export default (function() {
   function redesignPage() {
     $('#wrapper').addClass('diploma-page');
@@ -52,7 +51,6 @@ export default (function() {
             return;
           }
 
-          $('#info').html(util.renderTemplateWithData(waitIcon, {}));
 
           var formId = $formIdDiv.text();
           var nameEntryId = $nameEntryIdDiv.text();
@@ -107,8 +105,6 @@ export default (function() {
       if ($downloadDiplomaButton.length && $scriptUrlDiv.length && $diplomaIdDiv.length) {
         $('body').on('click', '.download-diploma-button', function () {
           $downloadDiplomaButton.attr("disabled", true);
-
-          $('#info').append(util.renderTemplateWithData(waitIcon, {}));
 
           var scriptUrl = $scriptUrlDiv.text();
           var diplomaId = $diplomaIdDiv.text();
@@ -195,8 +191,6 @@ export default (function() {
           if ($newDiplomaButton.hasClass('btn-done')) {
               return;
           }
-
-          $('#info').html(util.renderTemplateWithData(waitIcon, {}));
 
           var scriptUrl = $scriptUrlDiv.text();
 

@@ -1,4 +1,3 @@
-import actionbutton from "../../templates/modules/actionbutton.hbs"
 import api from "../api/api";
 import menu from "./menu";
 import util from "./util";

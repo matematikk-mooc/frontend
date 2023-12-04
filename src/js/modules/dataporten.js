@@ -1,6 +1,5 @@
 import {JSO} from '../3party/jso'
 import api from '../api/api';
-import dataporten from "../../templates/modules/dataporten.hbs"
 import dataportenGroups from "../../templates/modules/dataportenGroups.hbs"
 import util from './util';
 

@@ -105,15 +105,6 @@ Handlebars.registerHelper('ifIsPrincipal', function(enrollments, options) {
   }
 });
 
-
-Handlebars.registerHelper('ifIsIndented', function(options) {
-  if(this.indent) {
-    return options.fn(this);
-  } else {
-    return options.inverse(this);
-  }
-});
-
 Handlebars.registerHelper('norwegianDateAndTime', function(timestamp) {
   var year = new Date(timestamp).toString(' yyyy');
   var day = new Date(timestamp).toString('dd. ');
@@ -144,99 +135,8 @@ Handlebars.registerHelper('getPathFromUrl', function(url) {
   return url.split('?')[0]; //returns an array even if there is no '?' so no need for extra checks
 });
 
-Handlebars.registerHelper('urlForCourseId', function(courseId) {
-  return '/courses/' + courseId;
-});
-
-Handlebars.registerHelper('urlForGroupId', function(groupId) {
-  return '/groups/' + groupId + '/discussion_topics';
-});
-
-Handlebars.registerHelper('ifItemIsCompleted', function(
-  completion_requirement,
-  options
-) {
-  if (completion_requirement && completion_requirement.completed) {
-    return options.fn(this);
-  } else {
-    return options.inverse(this);
-  }
-});
-
-Handlebars.registerHelper('localize', function(key, options) {
-  if (i18n[key] != null) {
-    return i18n[key];
-  } else {
-    return key;
-  }
-});
-
-Handlebars.registerHelper('ifAllItemsCompleted', function(items, options) {
-  for (var i = 0; i < items.length; i++) {
-    var item = items[i];
-    if (item.completion_requirement && !item.completion_requirement.completed) {
-      return options.inverse(this);
-    }
-  }
-
-  return options.fn(this);
-});
-
-Handlebars.registerHelper('ifAllModulesCompleted', function(modules, options) {
-  if (courselist.isCourseCompleted(modules)) {
-    return options.fn(this);
-  }
-  return options.inverse(this);
-});
-
-Handlebars.registerHelper('ifAllStudentModulesCompleted', function(modules, options) {
-  var bIncludeIndentedItems = false;
-  if (util.percentageProgress(modules, bIncludeIndentedItems) == 100)
-  {
-    return options.fn(this);
-  }
-  return options.inverse(this);
-});
-
-
-Handlebars.registerHelper('percentageForModules', function(modules) {
-  var bIncludeIndentedItems = true;
-  return util.percentageProgress(modules, bIncludeIndentedItems);
-});
-
-Handlebars.registerHelper('percentageForStudentModules', function(modules) {
-  var bIncludeIndentedItems = false;
-  return util.percentageProgress(modules, bIncludeIndentedItems);
-});
-
-
-Handlebars.registerHelper('urlForFirstNoneCompletePrincipalItem', function(items) {
-  var bIncludeIndentedItems = true;
-  return util.firstIncompleteItemHtmlUrl(items, bIncludeIndentedItems);
-});
-
-Handlebars.registerHelper('urlForFirstNoneCompleteItem', function(items) {
-  var bIncludeIndentedItems = false;
-  return util.firstIncompleteItemHtmlUrl(items, bIncludeIndentedItems);
-});
-
-
-Handlebars.registerHelper('ifItemTypeDiscussion', function(type, options) {
-  if (type == 'Discussion') {
-    return options.fn(this);
-  } else {
-    return options.inverse(this);
-  }
-});
-
-Handlebars.registerHelper('findRightUrlFor', function(activity) {
-  return activity.type === 'Submission'
-    ? '/courses/' + activity.course_id + '/grades'
-    : activity.html_url;
-});
-
-Handlebars.registerHelper('checkReadStateFor', function(activity) {
-  return menu.checkReadStateFor(activity) ? 'unread' : '';
+Handlebars.registerHelper('urlForCourseId', function (courseId) {
+  return '/courses/' + courseId
 });
 
 Handlebars.registerHelper('debug', function(optionalValue) {

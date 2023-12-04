@@ -6,6 +6,27 @@ import  api from '../api/api.js'
 import pages from './pages.js'
 import settings from "../settings";
 
+class CourseOptions {
+    static delimitor() {
+        return '::';
+    }
+
+    static hasOption(course, option) {
+        if (course) {
+            const code = course.course_code.toUpperCase();
+            const upperCaseOption = option.toUpperCase();
+            const delimitor = this.delimitor();
+
+            return code.indexOf(delimitor + upperCaseOption + delimitor) > -1;
+        }
+        return false;
+    }
+
+    static hasOptionFunction(option) {
+        return (course) => this.hasOption(course, option);
+    }
+}
+
 export default (function () {
   return {
     courseListEnum: {
@@ -244,15 +265,7 @@ export default (function () {
         console.log(e);
       }
     },
-    postModuleMenuProcessing() {
-      try {
-        $(".mmooc-module-items-icons-Discussion").parent().click(function () {
-          postModuleProcessing()
-        });
-      } catch (e) {
-        console.log(e);
-      }
-    },
+
 
 
     isAlertMsg(course) {
@@ -311,24 +324,6 @@ export default (function () {
     },
     onEnrollPage() {
       return window.location.href.includes('/enroll/');
-    },
-
-    updateInformationPane() {
-      let self = this
-      let course = this.course
-      this.isMemberOfExpiredCommunity(course, function (isMemberOfExpiredCommunity) {
-        var observer = (self.isAuthenticated() && self.isObserver(course));
-        var pfdk = self.isPfDKCourse(course);
-        var unmaintainedSince = self.isUnmaintained(course);
-        var alertMsg = self.isAlertMsg(course);
-        var notificationtouser= self.isNotificationToUser(course);
-        var feedback= self.isFeedback(self.course);
-        if (observer || pfdk || unmaintainedSince || alertMsg || isMemberOfExpiredCommunity || notificationtouser || feedback) {
-          pages.showInformationPane(observer, pfdk, unmaintainedSince, alertMsg, isMemberOfExpiredCommunity, notificationtouser, feedback);
-        } else {
-          pages.hideInformationPane();
-        }
-      });
     },
     isMemberOfExpiredCommunity(course, callback) {
       if(!course) {
@@ -692,3 +687,4 @@ export default (function () {
     }
   };
 })();
+

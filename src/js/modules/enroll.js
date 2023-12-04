@@ -1,7 +1,6 @@
 import EnrollToCourse from "../../vue/components/enroll/EnrollToCourse.vue";
 import LoggedInLandingPage from "../../vue/pages/LoggedInLandingPage.vue";
 import NotLoggedInPage from "../../vue/pages/NotLoggedInPage.vue";
-import allcoursescontainer from '../../templates/modules/allcoursescontainer.hbs'
 import api from "../api/api";
 import { createApp } from "vue/dist/vue.runtime.esm-bundler.js";
 import { hrefQueryString } from "../settingsRoot";
@@ -76,20 +75,6 @@ export default (function () {
       this.changeEnrollInformationPolicyLink();
       this.addForgotPasswordLink();
       this.updateGotoDashboardButton();
-    },
-    printAllCoursesContainer: function () {
-      if(util.isAuthenticated()) {
-      var label = 'Kompetansepakker'
-      var html = util.renderTemplateWithData(allcoursescontainer, {
-        courseLabel: label.toLowerCase(),
-        allAvailableCoursesIngress:'Oversikt over alle kompetansepakker du er meldt på og som du kan melde deg på.',
-        linkToMyCourses: utilRoot.getLinkToMyCourses(),
-        isAuthenticated: util.isAuthenticated(),
-        isMobileOrTablet: util.isMobileOrTablet()
-      });
-      document.title = 'Tilgjengelige ' + label.toLowerCase();
-      document.getElementById('content').innerHTML = html;
-    }
     },
     goToAllCourses() {
       $('#mmooc-all-courses-btn').click(function () {
