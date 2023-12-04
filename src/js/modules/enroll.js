@@ -1,11 +1,9 @@
 import EnrollToCourse from "../../vue/components/enroll/EnrollToCourse.vue";
 import LoggedInLandingPage from "../../vue/pages/LoggedInLandingPage.vue";
 import NotLoggedInPage from "../../vue/pages/NotLoggedInPage.vue";
-import allcoursescontainer from '../../templates/modules/allcoursescontainer.hbs'
 import api from "../api/api";
 import { createApp } from "vue/dist/vue.runtime.esm-bundler.js";
 import { hrefQueryString } from "../settingsRoot";
-import i18n from "../i18n";
 import kpasApi from "../api/kpas-api";
 import settings from "../settings";
 import util from "./util";
@@ -77,20 +75,6 @@ export default (function () {
       this.changeEnrollInformationPolicyLink();
       this.addForgotPasswordLink();
       this.updateGotoDashboardButton();
-    },
-    printAllCoursesContainer: function () {
-      if(util.isAuthenticated()) {
-      var label = i18n.CoursePlural
-      var html = util.renderTemplateWithData(allcoursescontainer, {
-        courseLabel: label.toLowerCase(),
-        allAvailableCoursesIngress: i18n.AllAvailableCoursesIngress,
-        linkToMyCourses: utilRoot.getLinkToMyCourses(),
-        isAuthenticated: util.isAuthenticated(),
-        isMobileOrTablet: util.isMobileOrTablet()
-      });
-      document.title = 'Tilgjengelige ' + label.toLowerCase();
-      document.getElementById('content').innerHTML = html;
-    }
     },
     goToAllCourses() {
       $('#mmooc-all-courses-btn').click(function () {

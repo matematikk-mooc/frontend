@@ -23,7 +23,6 @@ module.exports = {
       "./src/js/subaccount.js",
     ],
     "kompetanseportalen-localhost": [
-      "./src/js/i18n.js",
       "./src/js/main.js",
     ],
   },

@@ -2,7 +2,6 @@ import Handlebars from 'handlebars/runtime';
 import util from './util';
 import menu from './menu';
 import settings from '../settings';
-import i18n from '../i18n';
 import courselist from './courselist';
 
 Handlebars.registerHelper('lowercase', function(str) {
@@ -106,206 +105,38 @@ Handlebars.registerHelper('ifIsPrincipal', function(enrollments, options) {
   }
 });
 
-
-Handlebars.registerHelper('ifIsIndented', function(options) {
-  if(this.indent) {
-    return options.fn(this);
-  } else {
-    return options.inverse(this);
-  }
-});
-
-
-Handlebars.registerHelper('getPeerReviewWorkflowIconClass', function(
-  workflow_state
-) {
-  if (workflow_state == 'assigned') {
-    return ' warning';
-  } else if (workflow_state == 'completed') {
-    return ' pass';
-  } else {
-    return '';
-  }
-});
-
 Handlebars.registerHelper('norwegianDateAndTime', function(timestamp) {
   var year = new Date(timestamp).toString(' yyyy');
   var day = new Date(timestamp).toString('dd. ');
   var time = new Date(timestamp).toString(' HH:mm');
   var monthNumber = parseInt(new Date(timestamp).toString('M'), 10);
-  var months = i18n.Months;
+  var months =  [
+        'januar',
+        'februar',
+        'mars',
+        'april',
+        'mai',
+        'juni',
+        'juli',
+        'august',
+        'september',
+        'oktober',
+        'november',
+        'desember'
+      ];
   var month = months[monthNumber - 1];
 
   return day + month + year + time; //return new Date(timestamp).toString('dd. MMMM yyyy HH:mm'); // yyyy-MM-dd
 });
 
-Handlebars.registerHelper('getSubmissionAssessmentText', function(peerReview) {
-  var submissionText = '';
-  var numberOfReviews = peerReview.length;
-  var numberOfReviewsCompleted = 0;
-  var submissionAssessmentText = '';
 
-  $.each(peerReview, function(index, singlePeerReview) {
-    if (singlePeerReview.workflow_state == 'completed') {
-      numberOfReviewsCompleted = numberOfReviewsCompleted + 1;
-    }
-  });
-
-  if (numberOfReviews === 0) {
-    submissionAssessmentText = i18n.SubmissionIsNotAssessed;
-  } else if (numberOfReviews === numberOfReviewsCompleted) {
-    if (numberOfReviewsCompleted == 1) {
-      submissionAssessmentText = i18n.SubmissionIsAssessedByOne;
-    } else {
-      submissionAssessmentText = i18n.SubmissionIsAssessedByAll;
-    }
-  } else {
-    submissionAssessmentText =
-      numberOfReviewsCompleted.toString() +
-      ' ' +
-      i18n.OutOf +
-      ' ' +
-      numberOfReviews.toString() +
-      ' ' +
-      i18n.SubmissionAssessmentsAreReady;
-  }
-
-  return submissionAssessmentText;
-});
-
-Handlebars.registerHelper('ifAtLeastOnePeerReviewIsComplete', function(
-  peerReview,
-  options
-) {
-  var atLeastOnePeerReviewComplete = false;
-  $.each(peerReview, function(index, singlePeerReview) {
-    if (singlePeerReview.workflow_state == 'completed') {
-      atLeastOnePeerReviewComplete = true;
-    }
-  });
-  if (atLeastOnePeerReviewComplete) {
-    return options.fn(this);
-  } else {
-    return options.inverse(this);
-  }
-});
-
-Handlebars.registerHelper('ifAllPeerReviewsAreComplete', function(
-  peerReview,
-  options
-) {
-  var allPeerReviewsAreComplete = true;
-
-  $.each(peerReview, function(index, singlePeerReview) {
-    if (singlePeerReview.workflow_state != 'completed') {
-      allPeerReviewsAreComplete = false;
-    }
-  });
-
-  if (allPeerReviewsAreComplete) {
-    return options.fn(this);
-  } else {
-    return options.inverse(this);
-  }
-});
 
 Handlebars.registerHelper('getPathFromUrl', function(url) {
   return url.split('?')[0]; //returns an array even if there is no '?' so no need for extra checks
 });
 
-Handlebars.registerHelper('urlForCourseId', function(courseId) {
-  return '/courses/' + courseId;
-});
-
-Handlebars.registerHelper('urlForGroupId', function(groupId) {
-  return '/groups/' + groupId + '/discussion_topics';
-});
-
-Handlebars.registerHelper('ifItemIsCompleted', function(
-  completion_requirement,
-  options
-) {
-  if (completion_requirement && completion_requirement.completed) {
-    return options.fn(this);
-  } else {
-    return options.inverse(this);
-  }
-});
-
-Handlebars.registerHelper('localize', function(key, options) {
-  if (i18n[key] != null) {
-    return i18n[key];
-  } else {
-    return key;
-  }
-});
-
-Handlebars.registerHelper('ifAllItemsCompleted', function(items, options) {
-  for (var i = 0; i < items.length; i++) {
-    var item = items[i];
-    if (item.completion_requirement && !item.completion_requirement.completed) {
-      return options.inverse(this);
-    }
-  }
-
-  return options.fn(this);
-});
-
-Handlebars.registerHelper('ifAllModulesCompleted', function(modules, options) {
-  if (courselist.isCourseCompleted(modules)) {
-    return options.fn(this);
-  }
-  return options.inverse(this);
-});
-
-Handlebars.registerHelper('ifAllStudentModulesCompleted', function(modules, options) {
-  var bIncludeIndentedItems = false;
-  if (util.percentageProgress(modules, bIncludeIndentedItems) == 100)
-  {
-    return options.fn(this);
-  }
-  return options.inverse(this);
-});
-
-
-Handlebars.registerHelper('percentageForModules', function(modules) {
-  var bIncludeIndentedItems = true;
-  return util.percentageProgress(modules, bIncludeIndentedItems);
-});
-
-Handlebars.registerHelper('percentageForStudentModules', function(modules) {
-  var bIncludeIndentedItems = false;
-  return util.percentageProgress(modules, bIncludeIndentedItems);
-});
-
-
-Handlebars.registerHelper('urlForFirstNoneCompletePrincipalItem', function(items) {
-  var bIncludeIndentedItems = true;
-  return util.firstIncompleteItemHtmlUrl(items, bIncludeIndentedItems);
-});
-
-Handlebars.registerHelper('urlForFirstNoneCompleteItem', function(items) {
-  var bIncludeIndentedItems = false;
-  return util.firstIncompleteItemHtmlUrl(items, bIncludeIndentedItems);
-});
-
-
-Handlebars.registerHelper('ifItemTypeDiscussion', function(type, options) {
-  if (type == 'Discussion') {
-    return options.fn(this);
-  } else {
-    return options.inverse(this);
-  }
-});
-
-Handlebars.registerHelper('findRightUrlFor', function(activity) {
-  return activity.type === 'Submission'
-    ? '/courses/' + activity.course_id + '/grades'
-    : activity.html_url;
-});
-
-Handlebars.registerHelper('checkReadStateFor', function(activity) {
-  return menu.checkReadStateFor(activity) ? 'unread' : '';
+Handlebars.registerHelper('urlForCourseId', function (courseId) {
+  return '/courses/' + courseId
 });
 
 Handlebars.registerHelper('debug', function(optionalValue) {

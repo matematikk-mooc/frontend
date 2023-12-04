@@ -1,6 +1,5 @@
 import api from "../api/api.js";
 import { hrefQueryString } from "../settingsRoot.js";
-import i18n from '../i18n';
 import util from "./util.js";
 export default (function() {
   return {
@@ -11,7 +10,7 @@ export default (function() {
         var selectedCourseId = linkToSelectedCourse[linkToSelectedCourse.length - 1];
 
         if (enrollButton) {
-          enrollButton.text(i18n.EnrollButton);
+          enrollButton.text('Enroll this course');
           enrollButton.click(function (e) {
             e.preventDefault();
                   window.location.href = '/search/all_courses' + hrefQueryString + '#' + selectedCourseId;
@@ -110,7 +109,7 @@ export default (function() {
       coming_up.replaceWith(
         "<div class='deadlines-container'>" +
           '<h2>' +
-          i18n.eventsAndDeadlinesTitle +
+          'Viktige datoer' +
           '</h2>' +
           "<div class='deadlines-scroll-up'></div>" +
           "<div class='deadlines-list'></div>" +

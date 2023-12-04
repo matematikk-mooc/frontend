@@ -9,13 +9,10 @@ import courselist from './modules/courselist.js';
 import coursepage from './modules/coursepage.js';
 import coursepagebanner from "./modules/coursepagebanner";
 import coursesettings from './modules/coursesettings.js';
-import dataporten from './modules/dataporten';
-import discussionTopics from './modules/discussion-topics.js';
 import enroll from './modules/enroll.js';
 import footer from './modules/footer.js'
 import greeting from './modules/greeting.js';
 import groups from'./modules/groups.js'
-import i18n from './i18n.js';
 import infoboxes from './modules/infoboxes.js'
 import kpas from './3party/kpas.js';
 import login from './modules/login.js';
@@ -95,7 +92,6 @@ jQuery(function($) {
 
   routes.addRouteForPath(/\/courses$/, function() {
     utilRoot.redirectToEnrollIfCodeParamPassed();
-    menu.hideRightMenu();
     courselist.listCourses(
       'content',
       courselist.showAddCourseButton
@@ -112,8 +108,6 @@ jQuery(function($) {
       api.getUsersEnrollmentsForCourse(util.course.id, function(courses) {
         if(!courses.length) {
           enroll.displayRegisterPopup( authenticated, util.course.self_enrollment_code);
-        } else {
-          util.updateInformationPane();
         }
       });
     }
@@ -134,73 +128,10 @@ jQuery(function($) {
       coursepage.saveUnenrollDialog();
       document.getElementById("right-side").remove();
     }
-    // override default view and display all courses list instead
-    var courseView = util.isCourseFrontpageForAllCoursesList();
-    if (courseView == util.courseListEnum.allCoursesList) {
-      menu.hideRightMenu();
-      enroll.printAllCoursesContainer();
-      enroll.printAllCourses();
-      $('body').removeClass('home');
-
-      // skips the rest of this function
-      return null;
-    }
-    else if (courseView == util.courseListEnum.myCoursesList) {
-        menu.hideRightMenu();
-        courselist.listCourses(
-          'content',
-          courselist.showAddCourseButton
-        );
-        return null;
-    }
-    else if (courseView == util.courseListEnum.dataportenCallback) {
-        if(window.opener) {
-            $("#application").html('Du er nå logget inn i dataporten.<button id="dataportenLoggedIn">OK</button>');
-            window.opener.popupCompleted();
-            $(document).on("click","#dataportenLoggedIn",function(e) {
-                window.close();
-            });
-        }
-		return null;
-    }
-    else if (courseView == util.courseListEnum.uidpCallback) {
-        if(window.opener) {
-            $("#application").html('Du er nå logget inn i UIDP.<button id="uidpLoggedIn">OK</button>');
-            window.opener.popupCompleted();
-            $(document).on("click","#uidpLoggedIn",function(e) {
-                window.close();
-            });
-        }
-        console.log(document.location.href);
-		return null;
-    }
     //        coursepage.hideCourseInvitationsForAllUsers();
 
     var courseId = api.getCurrentCourseId();
     var queryString = document.location.search;
-    if (queryString === '?allcanvabadges') {
-      //query string = ?allcanvabadges
-      var courseId = api.getCurrentCourseId();
-      menu.showCourseMenu(courseId, 'Utmerkelser', 'Utmerkelser');
-      //Should be refactored to use json api instead
-      var canvabadgesForCurrentCourse =
-        '<iframe title="canvasbadge" allowfullscreen="true" height="680" id="tool_content" mozallowfullscreen="true" name="tool_content" src="' +
-        settings.CanvaBadgeProtocolAndHost +
-        '/badges/course/' +
-        courseId +
-        '" tabindex="0" webkitallowfullscreen="true" width="100%"></iframe>';
-      $('#content').append(canvabadgesForCurrentCourse);
-    } else {
-        var queryString = document.location.search;
-        if ((queryString === '?dataportengroups=1') && settings.useDataportenGroups) {
-            menu.showCourseMenu(
-              courseId,
-              'Grupper',
-              util.getPageTitleBeforeColon()
-            );
-            dataporten.display();
-        }
-    }
     announcements.printAnnouncementsUnreadCount();
     if(coursepage.replaceUpcomingInSidebar()) {
       coursepage.printDeadlinesForCourse();
@@ -208,7 +139,6 @@ jQuery(function($) {
    });
 
   routes.addRouteForPath(/\/search\/all_courses$/, function() {
-    enroll.printAllCoursesContainer();
     enroll.printAllCourses();
     enroll.goToAllCourses();
   });
@@ -226,31 +156,22 @@ jQuery(function($) {
     if(!settings.displayProfileLeftMenu) {
       document.getElementById("section-tabs").style.display = "none";
     }
-    var notificationButtonHTML = util.renderTemplateWithData(
-      'notifications',
-      {}
-    );
-    if(settings.displayUserMergeButton) {
-      var mergeUserButtonHTML = util.renderTemplateWithData(
-        'usermerge',
-        {userId:api.getUser().id, userMergeLtiToolId:settings.userMergeLtiToolId}
-      );
-      elementId.insertAdjacentHTML('beforebegin', mergeUserButtonHTML);
-    }
+    // var notificationButtonHTML = util.renderTemplateWithData(
+    //   'notifications',
+    //   {}
+    // );
+    // if(settings.displayUserMergeButton) {
+    //   var mergeUserButtonHTML = util.renderTemplateWithData(
+    //     'usermerge',
+    //     {userId:api.getUser().id, userMergeLtiToolId:settings.userMergeLtiToolId}
+    //   );
+    //   elementId.insertAdjacentHTML('beforebegin', mergeUserButtonHTML);
+    // }
 
-    elementId.insertAdjacentHTML('beforebegin', notificationButtonHTML);
+    // elementId.insertAdjacentHTML('beforebegin', notificationButtonHTML);
   });
 
   routes.addRouteForPath(/\/courses\/\d+\/announcements$/, function() {
-    var courseId = api.getCurrentCourseId();
-    menu.showCourseMenu(
-      courseId,
-      'Kunngjøringer',
-      util.getPageTitleBeforeColon()
-    );
-    api.getModulesForCurrentCourse(function(modules) {
-      discussionTopics.printDiscussionUnreadCount(modules);
-    });
     announcements.printAnnouncementsUnreadCount();
     announcements.setAnnouncementsListUnreadClass();
       renderCourseModulesOnAnnouncementsPage('left-side');
@@ -259,29 +180,9 @@ jQuery(function($) {
   routes.addRouteForPath(
     /\/courses\/\d+\/discussion_topics$/,
     function() {
-      var courseId = api.getCurrentCourseId();
-      menu.showCourseMenu(
-        courseId,
-        'Diskusjoner',
-        util.getPageTitleBeforeColon()
-      );
-      discussionTopics.setDiscussionsListUnreadClass();
-      discussionTopics.insertSearchButton();
-      discussionTopics.hideUnreadCountInDiscussionList();
-      api.getModulesForCurrentCourse(function(modules) {
-        discussionTopics.printDiscussionUnreadCount(
-          modules,
-          'discussionslist'
-        );
-      });
       announcements.printAnnouncementsUnreadCount();
     }
   );
-  routes.addRouteForPath(/\/courses\/\d+\/external_tools/, function() {
-    var courseId = api.getCurrentCourseId();
-    menu.showCourseMenu(courseId, this.path, 'Verktøy');
-  });
-
   routes.addRouteForPath(/\/courses\/\d+\/groups$/, function() {
     groups.interceptLinksToGroupPage();
     var courseId = api.getCurrentCourseId();
@@ -290,9 +191,6 @@ jQuery(function($) {
       'Grupper',
       util.getPageTitleBeforeColon()
     );
-    api.getModulesForCurrentCourse(function(modules) {
-      discussionTopics.printDiscussionUnreadCount(modules);
-    });
     announcements.printAnnouncementsUnreadCount();
   });
   routes.addRouteForPath(/\/courses\/\d+\/users$/, function() {
@@ -447,7 +345,6 @@ jQuery(function($) {
       nextPrevButtons.getPrevAndNextItems();
 
       if (util.isTeacherOrAdmin()) {
-        pages.addGotoModuleButton();
         pages.addStudentViewButton();
       }
     }
@@ -467,31 +364,6 @@ jQuery(function($) {
     }
   );
 
-  routes.addRouteForPath(
-    /\/courses\/\d+\/external_tools\/\d+$/,
-    function() {
-      function isBadgesafePage() {
-        function extractPluginNumber(input) {
-          return input.substring(input.lastIndexOf('/') + 1);
-        }
-
-        var badgesafeUrl = menu.extractBadgesLinkFromPage().url;
-
-        if(badgesafeUrl) {
-          return (
-            extractPluginNumber(badgesafeUrl) ===
-            extractPluginNumber(window.location.pathname)
-          );
-        }
-        return false;
-      }
-
-      if (isBadgesafePage()) {
-        var courseId = api.getCurrentCourseId();
-        menu.showCourseMenu(courseId, 'Utmerkelser', 'Utmerkelser');
-      }
-    }
-  );
 
   routes.addRouteForPath(
     /\/courses\/\d+\/modules\/items\/\d+$/,
@@ -544,8 +416,7 @@ jQuery(function($) {
 
   routes.addRouteForQueryString(/lang/, () => {
     const language = multilanguage.getLanguageParameter()
-    console.log(`Language: ${language}`);
-    if (multilanguage.isValidLanguage(language)) {
+    if (language === 'se' || language === 'nn') {
       multilanguage.setActiveLanguage(language);
     } else {
       multilanguage.setActiveLanguage('nb');
@@ -562,12 +433,7 @@ jQuery(function($) {
       }
     }
     footer.changeFooter();
-    menu.renderLeftHeaderMenu();
-    menu.showUserMenu();
     menu.renderUnauthenticatedMenu();
-    menu.setMenuActiveLink();
-    menu.showHamburger();
-    menu.showMobileMenu();
   } catch (e) {
     console.log(e);
   }
@@ -620,12 +486,8 @@ jQuery(function($) {
   }
 
   try {
-    menu.injectGroupsPage();
     groups.changeGroupListURLs(document.location.href);
-     pages.removeItemsInStudentView();
-    pages.updateSidebarWhenMarkedAsDone();
-    pages.updateSidebarWhenContributedToDiscussion();
-    menu.alterCourseLink();
+    pages.removeItemsInStudentView();
   } catch (e) {
     console.log(e);
   }
