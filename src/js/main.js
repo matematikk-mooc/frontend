@@ -34,6 +34,7 @@ import routes from './modules/routes.js';
 import settings from './settings.js';
 import tabs from './modules/tabs.js';
 import tinyMCEEditor from './modules/tinyMCEEditor';
+import tooltip from "./modules/tooltip";
 import uob from './3party/uob7.js';
 import util from './modules/util.js';
 import utilRoot from './utilRoot.js';
@@ -612,6 +613,7 @@ jQuery(function($) {
     tabs.init();
     reveal.init();
     accordion.init();
+    tooltip.init();
 
   } catch (e) {
     console.log(e);
