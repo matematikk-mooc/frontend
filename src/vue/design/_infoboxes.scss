@@ -76,8 +76,12 @@
 
   // skoleleder can be deleted after the design is done.
   &__skoleleder,
-  &__schoolprincipal {
+  &__leader {
     background: map-get($color-palette-green, background, 400);
+  }
+
+  &__link {
+    background: map-get($color-palette-peach, background, 400);
   }
 
 }
