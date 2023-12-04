@@ -66,12 +66,16 @@
     background: map-get($color-palette-azur, background, 400);
   }
 
-  &__quote {
-    background: $color-white;
+  &__law {
+    background: map-get($color-palette-azur, background, 400);
 
     .udir-info__icon-container {
-      transform: rotate(180deg);
+      font-size: 2rem;
     }
+  }
+
+  &__quote {
+    background: $color-white;
   }
 
   // skoleleder can be deleted after the design is done.
