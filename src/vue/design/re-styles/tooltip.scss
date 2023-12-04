@@ -1,0 +1,38 @@
+.tooltip {
+    position: relative;
+    display: inline-block;
+    align-content: center;
+}
+
+
+.tooltip-underline {
+    border-bottom: 0.5px dashed #00468E;
+    margin-right: 2px;
+    cursor: pointer;
+}
+.question-mark {
+    border-bottom: none;
+    cursor: pointer;
+}
+
+.tooltiptext-box {
+    border-radius: 4px;
+    background: #ECEFF2;
+    color: black;
+    border-radius: 6px;
+    display: none;
+    padding: 1rem;
+    margin: 0.5rem 0 0.5rem 0;
+    gap: 1rem;
+    position: absolute;
+    z-index: 1;
+    width: 100%;
+    min-width: 40rem;
+
+    .close-tooltip {
+        cursor: pointer;
+        float: right;
+        background: #ECEFF2;
+    }
+
+}
