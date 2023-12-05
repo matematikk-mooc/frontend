@@ -60,8 +60,9 @@
     }
   }
 
-  // question can be deleted when the design is done.
+  // question and read can be deleted when the design is done.
   &__read,
+  &__task,
   &__question {
     background: map-get($color-palette-azur, background, 400);
   }

@@ -38,7 +38,7 @@ export default (function () {
           'udir-time',
           'udir-goals',
           'udir-tip',
-          'udir-read',
+          'udir-task',
           'udir-quote',
           'udir-leader',
           'udir-link', 
@@ -78,7 +78,7 @@ export default (function () {
                 }
 
                 className= strTag.replace(/.*-/, "udir-info__");
-
+           
                 found = true
                 return true
               }
@@ -170,7 +170,6 @@ export default (function () {
 
 
 function getIcon(iconType) {
-  iconType
   const icon = "udir-info__";
   if (iconType === icon + "verktoy" || iconType === icon + "tools") {
     return IconPaths['devices'];
@@ -180,7 +179,7 @@ function getIcon(iconType) {
     return IconPaths['flag'];
   }else if (iconType === icon + "tip") {
     return IconPaths['light_bulb'];
-  } else if (iconType === icon + "read" || iconType === icon + "question") {
+  } else if (iconType === icon + "task" || iconType === icon + "read" || iconType === icon + "question") {
     return IconPaths["article"];
   } else if (iconType === icon + "quote") {
     return IconPaths["quote"];
