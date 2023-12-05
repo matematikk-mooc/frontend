@@ -1,9 +1,8 @@
 import './template.js'
-
+import pages from './pages.js'
 import { hrefAmpQueryString, hrefQueryString } from "../settingsRoot";
 
 import  api from '../api/api.js'
-import pages from './pages.js'
 import settings from "../settings";
 
 class CourseOptions {
