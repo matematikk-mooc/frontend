@@ -1,5 +1,5 @@
 import './template.js'
-
+import pages from './pages.js'
 import { hrefAmpQueryString, hrefQueryString } from "../settingsRoot";
 
 import  api from '../api/api.js'
