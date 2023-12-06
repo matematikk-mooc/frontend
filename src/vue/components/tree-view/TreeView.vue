@@ -8,19 +8,18 @@
     @keydown.space="toggleCollapse"
   >
     <span class="tree-node__label">
-      <span class="tree-node__label__text">
+      <div class="tree-node__label__text">
         <span v-if="!isLeaf" class="dropdown-indicator" :class="{ 'dropdown-indicator--collapsed': collapsed }">
           <Icon name="expand_more" size="2em" />
         </span>
         <Icon class="tree-node__label__text__done-icon" v-if="type === 'page' && isCompleted" name="check_circle_filled" size="1em"></Icon>
-        <Icon class="tree-node__label__text__page-icon" v-if="type === 'page'" name="description" size="1em"></Icon>
         <template v-if="type === 'page'">
           <a :href="url">{{ localizedLabel }}</a>
         </template>
         <template v-else>
-          <span> {{ localizedLabel }}</span>
+          <div class="dropdown-title"> {{ localizedLabel }}</div>
         </template>
-      </span>
+      </div>
     </span>
     <ul class="tree-node__child-nodes" v-if="!collapsed && !isLeaf">
       <li v-for="node in nodes" :key="node.id" class="tree-node__child-nodes__node">
@@ -95,9 +94,7 @@ const localizedLabel = computed(() => extractLabelForSelectedLanguage(props.labe
   font-style: normal;
   font-weight: 400;
   line-height: normal;
-  margin-left: 0.5rem;
-  padding-left: 1rem;
-  letter-spacing: 0.063rem;
+  margin-bottom: .5rem;
   box-sizing: border-box;
 
   &--active {
@@ -109,10 +106,10 @@ const localizedLabel = computed(() => extractLabelForSelectedLanguage(props.labe
   }
 
   &__leaf {
-    //margin: 0.5rem 0 0.5rem 1rem;
-    padding: 0.2rem 1rem 0.2rem 1.5rem;
-    border-radius: 1.0652rem 0 0 1.0652rem;
-    font-weight: 400;
+    width:100%;
+    font-weight:400;
+    padding-left: 1.5rem;
+    margin: 0.2rem 0 0.2rem 0;
 
     &--active {
       background: $color-white;
@@ -125,57 +122,59 @@ const localizedLabel = computed(() => extractLabelForSelectedLanguage(props.labe
   }
 
   &__label {
+    position: relative;
     display: flex;
     width: 100%;
-    height: 2rem;
-    padding: 0.125rem 0 0.125rem 0.5rem;
+    min-height: 2rem;
+    padding: 0.2rem 0.2rem 0.2rem 0.5rem;
     align-items: center;
+    justify-content: flex-start;
     gap: 0.75rem;
     cursor: pointer;
 
     a {
       text-decoration: none;
       color: inherit;
+      width: 100%;
     }
 
     &__text {
-      font-size: 0.875rem;
+      font-size: 1rem;
       position: relative;
-
-      &__page-icon {
-        display: inline-block;
-        font-size: 1.25rem;
-        margin-right: 0.125rem;
-        vertical-align: middle; 
+      box-sizing: border-box;
+      display:flex;
+      justify-content: flex-start;
+      align-items: center;
+      .dropdown-title{
+        font-weight: 500;
       }
 
       &__done-icon {
         position: absolute;
-        left: -1.25rem;
+        left: -1.7rem;
         color: map-get($color-palette-green, background, 500);
-        display: inline-block;
-        font-size: 1.25em;
-        vertical-align: middle;
+        font-size: 1.5rem;
       }
-    }
-  }
 
-  .dropdown-indicator {
-    display: inline-block;
-    font-size: 1rem;
-    transition: transform 0.3s;
-    vertical-align: middle;
-  }
+      .dropdown-indicator {
+        position: relative;
+        font-size: 1rem;
+        width: 1.75rem;
+        height: 1.75rem;
+        transition: transform 0.3s;
+      }
 
-  .dropdown-indicator--collapsed {
-    transform: rotate(-90deg);
+      .dropdown-indicator--collapsed {
+        transform: rotate(-90deg);
+        top: 0.25rem;
+      }
   }
+}
 
   &__child-nodes {
     list-style-type: none;
     margin-bottom: 0.125rem;
-    padding: 0.2rem 0 0.5rem 0.2rem;
-
+    margin-left: 0;
     @include hide-show-effect;
   }
    .tree-node__child-nodes__node{
@@ -192,7 +191,7 @@ const localizedLabel = computed(() => extractLabelForSelectedLanguage(props.labe
 }
 .tree-node__label__text{
   span, a{
-    word-break: break-all;
+    word-break: break-word;
   }
  
 }

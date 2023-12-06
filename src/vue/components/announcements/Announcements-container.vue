@@ -46,7 +46,9 @@ export default defineComponent({
 </script>
 <style lang="scss">
  .announcements-fetch-container{
+  box-sizing: border-box;
   width: 100%;
-  max-width: 28rem;
+  max-width: 27rem;
+  overflow-x: hidden;
  }
 </style>

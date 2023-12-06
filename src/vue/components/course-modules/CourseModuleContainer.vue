@@ -102,6 +102,7 @@ export default defineComponent({
   width: 100%;
   max-width: 26rem;
   padding-bottom: 3rem;
+  margin-right: 1rem;
 }
 </style>
 

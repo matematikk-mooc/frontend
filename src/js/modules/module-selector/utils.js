@@ -55,7 +55,6 @@ export function mapModules(modules) {
 // Define functions for mapping Page and SubHeader items
 
 function mapToPage(item) {
-  console.log(item)
   return {
     id: Number(item.id),
     label: item.title,
