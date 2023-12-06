@@ -6,27 +6,6 @@ import  api from '../api/api.js'
 import pages from './pages.js'
 import settings from "../settings";
 
-class CourseOptions {
-    static delimitor() {
-        return '::';
-    }
-
-    static hasOption(course, option) {
-        if (course) {
-            const code = course.course_code.toUpperCase();
-            const upperCaseOption = option.toUpperCase();
-            const delimitor = this.delimitor();
-
-            return code.indexOf(delimitor + upperCaseOption + delimitor) > -1;
-        }
-        return false;
-    }
-
-    static hasOptionFunction(option) {
-        return (course) => this.hasOption(course, option);
-    }
-}
-
 export default (function () {
   return {
     courseListEnum: {
@@ -240,7 +219,7 @@ export default (function () {
     isPrincipal() {
       return (this.isTeacherOrAdmin() || this.isEnrolledWithRole(this.course, settings.principalRoleType));
     },
-    isRoleBasedCourse: CourseOptions.hasOptionFunction('role'),
+    isRoleBasedCourse() {return this.course.kpas.role_support == 1},
     isMMOOCLicense() {
       return this.course.kpas.licence == 1;
     },
