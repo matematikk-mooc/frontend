@@ -2,7 +2,7 @@
   <div class="courses">
     <div class="courses__header-section">
       <h3 tabindex="0" class="courses__header-section__header" @keydown.enter="toggleActiveModule(null)">
-        <Icon name="format_list_numbered" size="1em" />
+        <Icon name="format_list_numbered" size="2em" />
         <span class="courses__header-section__header__title">Moduler</span>
       </h3>
     </div>

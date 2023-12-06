@@ -114,7 +114,7 @@ onMounted(() => {
     cursor: pointer;
     display: flex;
     align-items: center;
-    padding:0.5rem 1.5rem 0.5rem 1.5rem;
+    padding:0.5rem 1.5rem 0.5rem 0;
     height: 4.375rem;
     color: $color-black;
     font-family: Roboto;
@@ -124,7 +124,7 @@ onMounted(() => {
     .module-package__indicator--active{
       position: absolute;
       z-index:2;
-      border-radius: 0rem 0.4375rem 0.4375rem 0rem;
+      border-radius: 0 0.4375rem 0.4375rem 0;
       background: map-get($color-palette-green, background, 500);
       width: 0.875rem;
       height: 100%;
@@ -163,7 +163,7 @@ onMounted(() => {
   &__child-nodes {
     list-style-type: none;
     background: map-get($color-palette-slate, background, 200);
-    padding: 0.2rem 0 0.2rem 1.5rem;
+    padding: 0.2rem 0 0.2rem 0;
     margin:0;
     @include hide-show-effect;
     &--hidden{
