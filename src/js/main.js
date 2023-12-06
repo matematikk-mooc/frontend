@@ -472,6 +472,7 @@ jQuery(function($) {
   // privacyPolicy.init();
 
   try {
+    tooltip.init();
     messagehandler.init();
     uob.init();
     infoboxes.init();
@@ -479,7 +480,6 @@ jQuery(function($) {
     tabs.init();
     reveal.init();
     accordion.init();
-    tooltip.init();
 
   } catch (e) {
     console.log(e);
