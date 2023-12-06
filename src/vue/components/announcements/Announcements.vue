@@ -47,6 +47,7 @@ const concatenatedUrl = computed(() => {
   border-radius: 1.6875rem 0 0 1.6875rem;
   border: 0.0625rem solid $color-grey-400;
   margin-bottom: 1rem;
+  box-sizing: border-box;
   @include box-shadow(medium);
 
 }
