@@ -21,7 +21,7 @@ import Link from '../link/Link.vue'
   width: 100%;
   height: 3.125rem;
   display:flex;
-  justify-content: flex-start;
+  justify-content: center;
   align-items: center;
   flex-wrap:wrap;
   .course-license{

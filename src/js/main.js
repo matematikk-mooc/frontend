@@ -15,6 +15,7 @@ import greeting from './modules/greeting.js';
 import groups from'./modules/groups.js'
 import infoboxes from './modules/infoboxes.js'
 import kpas from './3party/kpas.js';
+import kpasApi from "./api/kpas-api.js";
 import login from './modules/login.js';
 import menu from './modules/menu.js';
 import messagehandler from './3party/messagehandler.js';
@@ -446,13 +447,16 @@ jQuery(function($) {
       api.getCourse(
         courseId,
         function(course) {
-          util.course = course;
-          //KURSP-376-multilanguage-fix
-          if (course && util.isMultilangCourse(course)) {
-            var langCode = multilanguage.getLanguageCode();
-            multilanguage.setActiveLanguage(langCode);
-          }
-          routes.performHandlerForUrl(document.location);
+          kpasApi.getSettingsCurrentCourse(courseId, function (courseSettings) {
+            course ={ ...course, kpas: { ...courseSettings}}
+            util.course = course;
+            //KURSP-376-multilanguage-fix
+            if (course && util.isMultilangCourse(course)) {
+              var langCode = multilanguage.getLanguageCode();
+              multilanguage.setActiveLanguage(langCode);
+            }
+            routes.performHandlerForUrl(document.location);
+        });
         },
         function(error) {
           console.error(
