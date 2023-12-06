@@ -1,30 +1,10 @@
 import './template.js'
-import pages from './pages.js'
+
 import { hrefAmpQueryString, hrefQueryString } from "../settingsRoot";
 
 import  api from '../api/api.js'
+import pages from './pages.js'
 import settings from "../settings";
-
-class CourseOptions {
-    static delimitor() {
-        return '::';
-    }
-
-    static hasOption(course, option) {
-        if (course) {
-            const code = course.course_code.toUpperCase();
-            const upperCaseOption = option.toUpperCase();
-            const delimitor = this.delimitor();
-
-            return code.indexOf(delimitor + upperCaseOption + delimitor) > -1;
-        }
-        return false;
-    }
-
-    static hasOptionFunction(option) {
-        return (course) => this.hasOption(course, option);
-    }
-}
 
 export default (function () {
   return {
@@ -232,16 +212,16 @@ export default (function () {
       }
       return false;
     },
-    isPfDKCourse: CourseOptions.hasOptionFunction('PfDK'),
-    isMultilangCourse: CourseOptions.hasOptionFunction('lang'),
-    isNynorskCourse: CourseOptions.hasOptionFunction('NN'),
-    isSamiskCourse: CourseOptions.hasOptionFunction('SE'),
+
+    isMultilangCourse() { return this.course.kpas.multilang != "NONE"},
+    isNynorskCourse() { return this.course.kpas.multilang == "NN"},
+    isSamiskCourse() { return this.course.kpas.multilang == "SE"},
     isPrincipal() {
       return (this.isTeacherOrAdmin() || this.isEnrolledWithRole(this.course, settings.principalRoleType));
     },
-    isRoleBasedCourse: CourseOptions.hasOptionFunction('role'),
+    isRoleBasedCourse() {return this.course.kpas.role_support == 1},
     isMMOOCLicense() {
-      return CourseOptions.hasOption(this.course, 'MMOOCLICENSE');
+      return this.course.kpas.licence == 1;
     },
     postModuleProcessing() {
       try {
@@ -686,4 +666,3 @@ export default (function () {
     }
   };
 })();
-

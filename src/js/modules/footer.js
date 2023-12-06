@@ -10,7 +10,7 @@ export default (function () {
       if (id) {
         try {
           const result = await apiWithResultOnly.getSettingsCurrentCourse(id);
-          if (result.licence === 1) {
+          if (result.result.licence == 1) {
             license = true;
           }
         } catch (error) {
@@ -22,4 +22,3 @@ export default (function () {
     },
   };
 })();
-
