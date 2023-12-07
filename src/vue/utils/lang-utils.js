@@ -9,7 +9,7 @@ export function extractLabelForSelectedLanguage(label, param) {
   // Check if the label contains language codes or separators.
   if (/\w\w:/.test(label)) {
     // Define a regular expression pattern to match the desired language code and text.
-    const pattern = new RegExp(`${param}: (.+?)(?:\\||$)`);
+    const pattern = new RegExp(`${param}:(.+?)(?:\\||$)`);
 
     // Execute the regular expression to find the matching content.
     const match = pattern.exec(label);
