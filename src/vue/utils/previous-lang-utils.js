@@ -1,4 +1,5 @@
 // MultilangUtils class for managing multilingual functionality
+import util from '../../js/modules/util';
 class MultilangUtils {
 
   // Array of supported languages with keys and names
@@ -9,6 +10,26 @@ class MultilangUtils {
       { key: 'nn', name: "Nynorsk" }
     ];
   }
+
+  static isValidLanguage(languageCode) {
+    if(util.isSamiskCourse(util.course)){
+        var languages = [
+            { key: 'nb', name: "Bokmål" },
+            { key: 'se', name: "Sápmi" },
+        ];
+    }
+    else if(util.isNynorskCourse(util.course)){
+        var languages = [
+            { key: 'nb', name: "Bokmål" },
+            { key: 'nn', name: "Nynorsk" }
+        ];
+    }
+    else {
+        var languages = this.LANGUAGES;
+    }
+    return languages.some(lang => lang.key === languageCode);
+  }
+
 
   // Name of the cookie used to store the language preference
   static get COOKIE_NAME() {
@@ -23,6 +44,12 @@ class MultilangUtils {
 
   // Set the language parameter in the URL
   static setLanguageParameter(languageCode) {
+    if(!this.isValidLanguage(languageCode)){
+      const params = new URLSearchParams(location.search);
+      params.set(this.COOKIE_NAME, 'nb');
+      window.history.replaceState({}, '', `${location.pathname}?${params}`);
+      return;
+    }
     const params = new URLSearchParams(location.search);
     params.set(this.COOKIE_NAME, languageCode);
     window.history.replaceState({}, '', `${location.pathname}?${params}`);
@@ -35,6 +62,10 @@ class MultilangUtils {
 
   // Set the language code in the cookie
   static setLanguageCookie(languageCode) {
+    if(!this.isValidLanguage(languageCode)){
+      document.cookie = `courselanguage=nb; SameSite=Strict; path=/`;
+      return;
+    }
     document.cookie = `courselanguage=${languageCode}; SameSite=Strict; path=/`;
   }
 
