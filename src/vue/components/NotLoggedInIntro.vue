@@ -8,7 +8,7 @@
     </div>
 
     <div class="intro-news">
-      <h2>Vår nyeste kompetansepakke</h2>
+      <h1>Vår nyeste kompetansepakke</h1>
       <Card
         :theme="newestCourse.course_settings? newestCourse.course_settings.course_category.category.color_code : 'theme_0'"
         :courseIllustration="newestCourse.course_settings? newestCourse.course_settings.image.path: ''"

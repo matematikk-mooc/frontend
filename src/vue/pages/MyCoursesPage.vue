@@ -1,7 +1,7 @@
 <template>
   <div class="my-courses-page">
     <div class="my-courses-page--content">
-      <h2>Mine kompetansepakker</h2>
+      <h1>Mine kompetansepakker</h1>
       <div class="my-courses-page--layout">
         <CardList :authorized="true" :courses="courses"></CardList>
       </div>
