@@ -2,12 +2,14 @@
   <div
     class="tree-node"
     :class="{'tree-node__leaf': isLeaf, 'tree-node--collapsed': !isLeaf && collapsed, 'tree-node__leaf--active': isActive && isLeaf, 'tree-node--active': isActive && !isLeaf}"
-    :tabindex="0"
+    :aria-hidden="collapsed || isLeaf"
+    :tabIndex="isLeaf ? -1 : 0"
+    :role=" isLeaf ? 'presentation' : 'group'"
     @click="toggleCollapse"
     @keydown.enter="toggleCollapse"
     @keydown.space="toggleCollapse"
   >
-    <span class="tree-node__label">
+    <span class="tree-node__label" tabIndex="-1">
       <div class="tree-node__label__text">
         <span v-if="!isLeaf" class="dropdown-indicator" :class="{ 'dropdown-indicator--collapsed': collapsed }">
           <Icon name="expand_more" size="2em" />

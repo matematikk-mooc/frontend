@@ -5,7 +5,7 @@
         <Icon aria-hidden="true" class="announcements-icon" name="campaign" size="2em" />
         <span>Kunngjøringer</span>
       </h3>
-      <div class="course-page-announcements-count" v-if="count > 0">{{ count }}</div>
+      <div class="course-page-announcements-count" aria-label="Antall kunngjøringer" v-if="count > 0">{{ count }}</div>
     </a>
   </div>
   

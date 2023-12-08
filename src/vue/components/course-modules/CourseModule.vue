@@ -6,7 +6,7 @@
       @click="toggleCollapse"
       @keydown.enter="toggleCollapse"
       @keydown.space="toggleCollapse"
-      tabindex="0"
+      :tabIndex="isLeaf ? -1 : 0"
       :aria-expanded="!collapsed"
       :role="isLeaf ? 'button' : 'treeitem'"
     >
@@ -25,9 +25,7 @@
     <ul
       class="module-package__child-nodes"
       :class="{ 'module-package__child-nodes--hidden': collapsed }"
-      tabindex="0"
-      :aria-hidden="collapsed || isLeaf"
-      :role="collapsed || isLeaf ? 'presentation' : 'group'"
+      :role="isLeaf ? 'presentation' : 'group'"
     >
       <li v-for="course in nodes" :key="course.id">
         <TreeView

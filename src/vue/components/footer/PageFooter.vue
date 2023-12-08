@@ -4,8 +4,8 @@
     <div class="page-footer--content">
       <div class="page-footer--content-wrapper">
         <div class="page-footer--logo-wrapper">
-          <a :href="'https://www.udir.no/'" alt="udir.no">
-            <img aria-label="udir-logo" class="page-footer--logo" :src="`${server}logo-white.png`" />
+          <a :href="'https://www.udir.no/'">
+            <img aria-label="forside utdanningsdirektoratet" class="page-footer--logo" :src="`${server}logo-white.png`" />
           </a>
         </div>
         <div class="page-footer--main-content">

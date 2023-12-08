@@ -1,6 +1,6 @@
 <template>
   <div class="course-page__banner" :class="theme">
-    <div class="course-page__banner__illustration">
+    <div class="course-page__banner__illustration" ariaHidden="true">
       <img :src="imageUrl" />
     </div>
     <h1 class="course-page__banner__title">

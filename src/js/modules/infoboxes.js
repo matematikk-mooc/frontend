@@ -96,7 +96,7 @@ export default (function () {
 
             // Create two child containers and append them to the parent container
             const $container = $table.prev();
-            $container.append('<div class="udir-info__icon-container"></div>');
+            $container.append('<div class="udir-info__icon-container" aria-hidden="true"></div>');
             const $contentContainer = $(
               '<div class="udir-info__content-container"></div>'
             );
