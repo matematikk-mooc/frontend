@@ -2,7 +2,7 @@
 <template>
     <div class="landing-page">
       <div class="landing-page--content">
-        <h2>Alle tilgjengelige kompetansepakker</h2>
+        <h1>Alle tilgjengelige kompetansepakker</h1>
         <div class="landing-page--layout">
           <CardFilter @update:selectedFilters="onSelectedFiltersUpdate" :filterData="filterData"></CardFilter>
           <CardList :authorized="true" :courses="coursesToView"></CardList>

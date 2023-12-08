@@ -49,11 +49,6 @@
   font-family: 'Montserrat', 'Helvetica Neue', 'sans-serif';
   padding: 1.25rem 0 1.25rem 0;
   width: 100%;
-  .skip-to-content-link {
-    left: 50%;
-    position: absolute;
-    transform: translateY(-100%);
-  }
 }
 
 .header-brand {

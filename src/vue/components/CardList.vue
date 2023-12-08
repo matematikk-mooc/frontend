@@ -7,11 +7,12 @@
       :isModalOpen="course.isModalOpen"
       :theme="course.course_settings? course.course_settings.course_category.category.color_code : 'theme_0'"
       :courseIllustration="course.course_settings? course.course_settings.image.path : ''"
+      :label="course.name"
       >
       <template v-slot:closeModalButton v-if="course.isModalOpen">
         <span class="close" @click="closeModal(course)">&times;</span>
       </template>
-      <template v-slot:title> {{ course.name }} </template>
+      <template  v-slot:title> {{ course.name }} </template>
       <template class="card-content-description-text" v-slot:description> {{ course.public_description }} </template>
 
       <template v-if="course.enrolled" v-slot:enrolled>Påmeldt</template>

@@ -3,7 +3,7 @@
     <!-- this gives users using screenreader, the opportunity to skip all navigation and go right to content -->
      <a class="skip-to-content-link" href="#wiki_page_show">
       Gå til hovedinnhold
-    </a>
+</a>
     <PageHeader :logged_in="logged_in" :admin="admin"></PageHeader>
     <nav class="page--nav-bar">
       <NavBarLinks :logged_in="logged_in"></NavBarLinks>

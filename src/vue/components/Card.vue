@@ -1,28 +1,29 @@
 <template>
-  <div class="card">
+  <article tabIndex="0"  :aria-label="label" class="card">
     <div class="card-illustration-box" :class="theme">
       <img
       class="card-illustration-box-image"
       :src="courseIllustration"
-      alt="illustrasjon"
+      alt=""
       />
       <slot name="closeModalButton"></slot>
     </div>
     <div class="card-content-container">
-      <div class="card-content-title">
-        <h3> <slot name="title"></slot></h3>
-      </div>
-      <div class="card-content-description">
+      <header class="card-content-title">
+        <h2> <slot name="title"></slot></h2>
+      </header>
+      <section class="card-content-description">
         <p :class="{ description_text: !isModalOpen}">
         <slot name="description"></slot>
         <slot name="moduleList"></slot>
       </p>
-      </div>
-      <div>
+     
+     
+   <div>
         <slot name="filtername"></slot>
       </div>
       <div class="card-content-enrolled" v-if="hasGoToCourse">
-        <img class="card-content-enrolled-icon" :src="server +'enrolled-green-circle.svg'"/>
+        <img class="card-content-enrolled-icon" alt="" :src="server +'enrolled-green-circle.svg'"/>
         <p class="card-content-enrolled-text">
           <slot name="enrolled"></slot>
         </p>
@@ -32,8 +33,10 @@
         <slot name="rightButton"></slot>
         <slot name="goToCourse"></slot>
       </div>
+   </section>
+   
     </div>
-  </div>
+  </article>
 </template>
 
 <script lang="js">
@@ -46,13 +49,14 @@ export default {
     theme: String,
     courseIllustration: String,
     isModalOpen: Boolean,
+    label: String
   },
-  data(){
-    return {
-      server: SERVER,
-      hasGoToCourse: this.$slots.goToCourse !== undefined,
+   data() {
+      return {
+        server: SERVER,
+        hasGoToCourse: this.$slots.goToCourse !== undefined,
+      }
     }
-  }
 }
 </script>
 
