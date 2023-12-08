@@ -63,7 +63,7 @@ export default {
 
 .dropdown {
   position: relative;
-  width: fit-content;
+  width: 9rem;
   .dropdown-button__content {
     display: flex;
     justify-content: flex-start;

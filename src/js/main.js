@@ -153,6 +153,9 @@ jQuery(function($) {
   });
 
   routes.addRouteForPath(/\/profile\/settings$/, function() {
+    document.getElementById("wrapper").classList.add("user-settings-wrapper");
+    document.getElementById("main").classList.add("user-settings-main");
+    document.getElementById("left-side").remove();
     var elementId = document.getElementById('confirm_email_channel');
     if(!settings.displayProfileLeftMenu) {
       document.getElementById("section-tabs").style.display = "none";
@@ -170,6 +173,11 @@ jQuery(function($) {
     // }
 
     // elementId.insertAdjacentHTML('beforebegin', notificationButtonHTML);
+  });
+
+  routes.addRouteForPath(/\/theme_editor$/, function() {
+    console.log("in theme editor")
+    document.getElementById("main").classList.add("theme-editor");
   });
 
   routes.addRouteForPath(/\/courses\/\d+\/announcements$/, function() {
