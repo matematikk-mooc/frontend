@@ -2,7 +2,7 @@
   <div class="modules-progress-indicator-container">
     <h5>Progresjon</h5>
     <div class="progress-indicator">
-      <div class="progress-bar" :style="{ width: percentageCompleted + '%' }"></div>
+      <div class="progress-bar" :style="{ width: percentageCompleted + '%' }" :aria-label="modulesProgressionData.completedPages + ' av ' + modulesProgressionData.totalPages + 'er gjennomført.'"></div>
     </div>
     <div class="progress-label">{{ modulesProgressionData.completedModules }} av {{ modulesProgressionData.totalModules }} moduler gjennomført </div>
   </div>
@@ -17,7 +17,8 @@ export default {
   data() {
     return {
       percentageCompleted: Math.round((this.modulesProgressionData.completedPages / this.modulesProgressionData.totalPages) * 100),
-      modulesProgressionData: this.modulesProgressionData
+      modulesProgressionData: this.modulesProgressionData,
+
     };
   },
 };

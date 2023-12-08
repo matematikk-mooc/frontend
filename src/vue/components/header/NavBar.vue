@@ -1,5 +1,9 @@
 <template>
   <div class="header--nav-container">
+    <!-- this gives users using screenreader, the opportunity to skip all navigation and go right to content -->
+     <a class="skip-to-content-link" href="#wiki_page_show">
+      Gå til hovedinnhold
+    </a>
     <PageHeader :logged_in="logged_in" :admin="admin"></PageHeader>
     <nav class="page--nav-bar">
       <NavBarLinks :logged_in="logged_in"></NavBarLinks>
@@ -25,6 +29,11 @@ const {logged_in, admin} = defineProps(['logged_in', 'admin'])
   justify-content: flex-start;
   align-items: flex-start;
   padding: 0;
+  .skip-to-content-link {
+  left: 50%;
+  position: absolute;
+  transform: translateY(-100%);
+}
 }
 
 .page--nav-bar {
