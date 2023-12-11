@@ -24,7 +24,6 @@ import nextPrevButtons from "./modules/next-prev-buttons";
 import nrk from './3party/nrk.js';
 import pages from './modules/pages.js';
 import { removeCanvasAnnouncementElements } from "./modules/announcements/utils";
-// import privacyPolicy from './3party/privacypolicy.js';
 import { renderCourseModules } from "../vue/pages/course-page/left-menu"
 import { renderCourseModulesOnAnnouncementsPage } from "../vue/pages/announcements-page";
 import reveal from './modules/reveal';
@@ -42,7 +41,6 @@ jQuery(function($) {
   if(window.self != window.top) {
     return;
   }
-  console.log(ENV);
 
   multilanguage.initializeCss();
 
@@ -153,23 +151,17 @@ jQuery(function($) {
   });
 
   routes.addRouteForPath(/\/profile\/settings$/, function() {
+    document.getElementById("wrapper").classList.add("user-settings-wrapper");
+    document.getElementById("main").classList.add("user-settings-main");
+    document.getElementById("left-side").remove();
     var elementId = document.getElementById('confirm_email_channel');
     if(!settings.displayProfileLeftMenu) {
       document.getElementById("section-tabs").style.display = "none";
     }
-    // var notificationButtonHTML = util.renderTemplateWithData(
-    //   'notifications',
-    //   {}
-    // );
-    // if(settings.displayUserMergeButton) {
-    //   var mergeUserButtonHTML = util.renderTemplateWithData(
-    //     'usermerge',
-    //     {userId:api.getUser().id, userMergeLtiToolId:settings.userMergeLtiToolId}
-    //   );
-    //   elementId.insertAdjacentHTML('beforebegin', mergeUserButtonHTML);
-    // }
+  });
 
-    // elementId.insertAdjacentHTML('beforebegin', notificationButtonHTML);
+  routes.addRouteForPath(/\/theme_editor$/, function() {
+    document.getElementById("main").classList.add("theme-editor");
   });
 
   routes.addRouteForPath(/\/courses\/\d+\/announcements$/, function() {
@@ -471,9 +463,6 @@ jQuery(function($) {
   } catch (e) {
     console.log(e);
   }
-
-  //Disabling privacy policy for now
-  // privacyPolicy.init();
 
   try {
     tooltip.init();
