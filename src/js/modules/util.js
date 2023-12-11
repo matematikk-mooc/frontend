@@ -1,4 +1,3 @@
-import './template.js'
 
 import { hrefAmpQueryString, hrefQueryString } from "../settingsRoot";
 
@@ -31,16 +30,6 @@ export default (function () {
       document.body.appendChild(mmoocScriptElement);
     },
 
-    renderTemplateWithData: function (template, data) {
-      var html = '';
-      try {
-        html = template(data);
-      } catch (e) {
-        console.log(e);
-      }
-
-      return html;
-    },
 
     //Kilde: https://stackoverflow.com/questions/11381673/detecting-a-mobile-browser
     isMobileOrTablet: function() {
