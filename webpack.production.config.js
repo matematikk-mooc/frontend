@@ -25,11 +25,6 @@ module.exports = (env) => {
             'kompetanseportal-udirdesign': [
                 './src/js/main.js',
             ],
-            'badgesave': [
-                './src/js/modules/template.js',
-                './src/js/modules/util.js',
-                './src/js/settings.js',
-            ],
         },
 
         output: {
@@ -86,16 +81,6 @@ module.exports = (env) => {
                     },
                 },
                 {
-                    test: /\.hbs$/,
-                    loader:'handlebars-loader',
-                    options: {
-                        helperDirs: path.resolve(__dirname, 'src/js/modules/template.js'),
-                        precompileOptions: {
-                            knownHelpersOnly: false
-                        },
-                    }
-                },
-                {
                     test: /\.css$/,
                     use: ['style-loader', 'css-loader'],
                 },
@@ -104,9 +89,8 @@ module.exports = (env) => {
         resolve: {
             alias: {
                 setup: path.resolve(__dirname, 'src/css/setup'),
-                Handlebars: path.resolve('src/3party/handlebars-v1.3.0.js')
             },
-            extensions: ['.js', '.hbs'],
+            extensions: ['.js'],
             preferRelative: true,
             modules: ["src", "node_modules"],
 

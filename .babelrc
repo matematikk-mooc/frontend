@@ -1,11 +1,3 @@
 {
-    "presets": ["@babel/preset-env"],
-    "plugins": ["handlebars-inline-precompile",
-    [
-      "@vue/babel-plugin-jsx",
-      {
-        "mergeProps": false
-      }
-    ]
-  ]
-  }
+    "presets": ["@babel/preset-env"]
+}

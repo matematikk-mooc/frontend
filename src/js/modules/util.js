@@ -1,9 +1,7 @@
-import './template.js'
 
 import { hrefAmpQueryString, hrefQueryString } from "../settingsRoot";
 
 import  api from '../api/api.js'
-import pages from './pages.js'
 import settings from "../settings";
 
 export default (function () {
@@ -32,16 +30,6 @@ export default (function () {
       document.body.appendChild(mmoocScriptElement);
     },
 
-    renderTemplateWithData: function (template, data) {
-      var html = '';
-      try {
-        html = template(data);
-      } catch (e) {
-        console.log(e);
-      }
-
-      return html;
-    },
 
     //Kilde: https://stackoverflow.com/questions/11381673/detecting-a-mobile-browser
     isMobileOrTablet: function() {

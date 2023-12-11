@@ -5,7 +5,6 @@
 </template>
 
 <script>
-import { ref, onMounted } from 'vue';
 import DropdownButton from '../dropdown-button/DropdownButton.vue';
 import { getLanguageOptions,  } from './util';
 import { getLanguageCode, setLanguageParameter } from '../../utils/lang-utils';

@@ -44,6 +44,7 @@ export const CardComponent = {
   args: {
     theme: "theme_0",
     courseIllustration: images[1],
+    label: 'the title of the card'
   },
   tags: ["autodocs"],
   argTypes: {
