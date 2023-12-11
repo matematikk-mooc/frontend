@@ -26,11 +26,6 @@ module.exports = (env) => {
             'kompetanseportal-udirdesign-staging': [
                 './src/js/main.js',
             ],
-            'badgesafe': [
-                './src/js/modules/template.js',
-                './src/js/modules/util.js',
-                './src/js/settings.js',
-            ],
         },
 
         output: {

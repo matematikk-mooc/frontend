@@ -25,11 +25,6 @@ module.exports = (env) => {
             'kompetanseportal-udirdesign': [
                 './src/js/main.js',
             ],
-            'badgesave': [
-                './src/js/modules/template.js',
-                './src/js/modules/util.js',
-                './src/js/settings.js',
-            ],
         },
 
         output: {
