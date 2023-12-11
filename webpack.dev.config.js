@@ -114,16 +114,6 @@ module.exports = (env) => {
             },
           },
           {
-            test: /\.hbs$/,
-            loader: "handlebars-loader",
-            options: {
-              helperDirs: path.resolve(__dirname, "src/js/modules/template.js"),
-              precompileOptions: {
-                knownHelpersOnly: false,
-              },
-            },
-          },
-          {
             test: /\.s[ac]ss$/i,
             use: [
               MiniCssExtractPlugin.loader,
@@ -156,10 +146,9 @@ module.exports = (env) => {
       resolve: {
         alias: {
           setup: path.resolve(__dirname, "src/css/setup"),
-          Handlebars: path.resolve("src/3party/handlebars-v1.3.0.js"),
           vue$: path.resolve("node_modules/vue/dist/vue.esm-bundler.js"),
         },
-        extensions: [".js", ".hbs", ".vue"],
+        extensions: [".js", ".vue"],
         preferRelative: true,
         modules: ["src", "node_modules"],
       },
