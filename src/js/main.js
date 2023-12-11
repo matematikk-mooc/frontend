@@ -24,7 +24,6 @@ import nextPrevButtons from "./modules/next-prev-buttons";
 import nrk from './3party/nrk.js';
 import pages from './modules/pages.js';
 import { removeCanvasAnnouncementElements } from "./modules/announcements/utils";
-// import privacyPolicy from './3party/privacypolicy.js';
 import { renderCourseModules } from "../vue/pages/course-page/left-menu"
 import { renderCourseModulesOnAnnouncementsPage } from "../vue/pages/announcements-page";
 import reveal from './modules/reveal';
@@ -160,19 +159,6 @@ jQuery(function($) {
     if(!settings.displayProfileLeftMenu) {
       document.getElementById("section-tabs").style.display = "none";
     }
-    // var notificationButtonHTML = util.renderTemplateWithData(
-    //   'notifications',
-    //   {}
-    // );
-    // if(settings.displayUserMergeButton) {
-    //   var mergeUserButtonHTML = util.renderTemplateWithData(
-    //     'usermerge',
-    //     {userId:api.getUser().id, userMergeLtiToolId:settings.userMergeLtiToolId}
-    //   );
-    //   elementId.insertAdjacentHTML('beforebegin', mergeUserButtonHTML);
-    // }
-
-    // elementId.insertAdjacentHTML('beforebegin', notificationButtonHTML);
   });
 
   routes.addRouteForPath(/\/theme_editor$/, function() {
@@ -478,9 +464,6 @@ jQuery(function($) {
   } catch (e) {
     console.log(e);
   }
-
-  //Disabling privacy policy for now
-  // privacyPolicy.init();
 
   try {
     tooltip.init();
