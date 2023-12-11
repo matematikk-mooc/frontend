@@ -1,9 +1,8 @@
 import MyCoursesPage from "../../vue/pages/MyCoursesPage.vue";
 import api from "../api/api";
 import { createApp } from "vue/dist/vue.runtime.esm-bundler.js";
-import enrollprivacypolicy from "../../templates/modules/enrollprivacypolicy.hbs";
+import { renderPrivacyPolicyLink } from "../../vue/pages/courselist-page";
 import kpasApi from '../api/kpas-api';
-import settings from "../settings";
 import util from "./util";
 
 export default (function () {
@@ -50,11 +49,7 @@ export default (function () {
           });
         });
       } else {
-        html = util.renderTemplateWithData(enrollprivacypolicy, {
-          privacypolicylink: settings.privacyPolicyLink,
-        });
-
-        $(".terms_of_service_link").html(html);
+        renderPrivacyPolicyLink('terms_of_service_link');
       }
 
     },

@@ -1,5 +1,4 @@
 import api from "../api/api.js";
-import { hrefQueryString } from "../settingsRoot.js";
 import util from "./util.js";
 export default (function() {
   return {
@@ -13,7 +12,7 @@ export default (function() {
           enrollButton.text('Enroll this course');
           enrollButton.click(function (e) {
             e.preventDefault();
-                  window.location.href = '/search/all_courses' + hrefQueryString + '#' + selectedCourseId;
+                  window.location.href = '/search/all_courses' + '?design=udir' + '#' + selectedCourseId;
           })
         }
       }
