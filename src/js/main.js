@@ -41,7 +41,6 @@ jQuery(function($) {
   if(window.self != window.top) {
     return;
   }
-  console.log(ENV);
 
   multilanguage.initializeCss();
 

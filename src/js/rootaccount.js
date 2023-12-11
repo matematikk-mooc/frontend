@@ -74,6 +74,8 @@ if(document.location.pathname == "/search/all_courses" && document.location.sear
   }
 } else if (document.location.pathname == "/courses") {
   redirected = utilRoot.redirectToEnrollIfCodeParamPassed();
+} else if (document.location.href.indexOf('?login_success=1') != -1  ){
+  window.location.href = '/search/all_courses?design=udir';
 } else if (document.location.pathname == "/") {
   setTimeout(function() {
     if(!$(".ic-DashboardCard__header_hero").length) {
@@ -90,6 +92,7 @@ if(document.location.pathname == "/search/all_courses" && document.location.sear
     }
   }, 1000)
 }
+
 
 
 if(!redirected) {
