@@ -176,7 +176,6 @@ jQuery(function($) {
   });
 
   routes.addRouteForPath(/\/theme_editor$/, function() {
-    console.log("in theme editor")
     document.getElementById("main").classList.add("theme-editor");
   });
 

@@ -31,15 +31,14 @@ body.with-left-side:not(.useFullWidth) {
   min-width: 200px !important;
 }
 
-@media not all and (min-width: 768px) {
+@media not all and (min-width: 750px) {
   #left-side {
     display: unset!important;
 
   }
 }
 
-
-@media ((max-width: 800px)) {
+@media ((max-width: 750px)) {
   .ic-Layout-wrapper {
     flex-direction: column !important;
   }
@@ -190,11 +189,9 @@ body.with-left-side:not(.useFullWidth) {
 
 .user-settings-main {
   width: unset !important;
-  // margin: 0 !important;
 }
 
 #wiki_page_show {
-  // box-sizing: border-box !important;
   width: fit-content !important;
   max-width: 1400px !important;
 
