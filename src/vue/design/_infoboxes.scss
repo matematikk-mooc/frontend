@@ -25,9 +25,17 @@
     gap: 0;
   }
 
+  &__warning {
+    background: map-get($color-palette-red, background, 200);
+    border: 0.125rem solid map-get($color-palette-red, background, 600);
+
+    .udir-info__icon-container {
+      color: map-get($color-palette-red, background, 600);
+    }
+  }
+
   &__info,
-  // info, warning and important can be deleted when the new design is implemented
-  &__warning,
+  // info, and important can be deleted when the new design is implemented
   &__important,
   &__importantinfo {
     background: map-get($color-palette-red, background, 200);

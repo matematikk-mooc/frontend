@@ -42,7 +42,9 @@ export default (function () {
           'udir-quote',
           'udir-leader',
           'udir-link', 
-          'udir-law'
+          'udir-law',
+          'udir-header',
+          'udir-warning',
         ]
 
         do {
@@ -189,11 +191,12 @@ function getIcon(iconType) {
     return IconPaths["link"]
   } else if (
     iconType === icon + "info" ||
-    iconType === icon + "warning" ||
     iconType === icon + "important" ||
     iconType === icon + "importantinfo"
   ) {
     return IconPaths["star"];
+  } else if (iconType === icon + "warning") {
+    return IconPaths["cancel"];
   } 
 }
   function onElementRendered(selector, cb, _attempts) {
