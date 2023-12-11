@@ -35,7 +35,7 @@
   const loginLink = domain + "/login/canvas"
   const settingsLink = domain + "/profile/settings?design=udir"
   const logoutLink = domain + "/logout?design=udir"
-  const adminLink = domain + "/accounts"
+  const adminLink = domain + "/accounts?design=udir"
 
 </script>
 <style lang="scss">
