@@ -17,8 +17,8 @@
         <slot name="description"></slot>
         <slot name="moduleList"></slot>
       </p>
-     
-     
+
+
    <div>
         <slot name="filtername"></slot>
       </div>
@@ -34,7 +34,7 @@
         <slot name="goToCourse"></slot>
       </div>
    </section>
-   
+
     </div>
   </article>
 </template>
@@ -105,6 +105,9 @@ export default {
   }
   .theme_8 {
     background: map-get($theme_8, background);
+  }
+  .theme_9 {
+    background: map-get($theme_9, background);
   }
 
   .card-illustration-box-image {
