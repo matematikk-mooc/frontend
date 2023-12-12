@@ -113,5 +113,8 @@ export default {
   &.theme_8 {
     background: map-get($theme_8, background);
   }
+  &.theme_9 {
+    background: map-get($theme_9, background);
+  }
 }
 </style>
