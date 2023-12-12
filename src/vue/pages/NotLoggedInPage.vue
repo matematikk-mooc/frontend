@@ -3,7 +3,7 @@
   <div class="not-logged-in-page">
     <div class="not-logged-in-page--header">
       <Banner></Banner>
-      <NotLoggedInIntro :newestCourse="courses[0]"></NotLoggedInIntro>
+      <NotLoggedInIntro :newestCourse="highlightedCourse"></NotLoggedInIntro>
     </div>
     <div class="not-logged-in-page--content">
       <h2>Alle tilgjengelige kompetansepakker</h2>
@@ -22,7 +22,7 @@ import Banner from '../components/Banner.vue'
 import NotLoggedInIntro from '../components/NotLoggedInIntro.vue'
 import {ref} from 'vue'
 
-const { courses, filterData } = defineProps(['courses', 'filterData']);
+const { courses, filterData, highlightedCourse } = defineProps(['courses', 'filterData', 'highlightedCourse']);
 const coursesToView = ref([...courses]);
 
 const onSelectedFiltersUpdate = (updatedFilters) => {

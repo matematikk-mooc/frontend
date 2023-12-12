@@ -27,6 +27,12 @@
 import Card from './Card.vue'
 import Button from './Button.vue';
 const {newestCourse} = defineProps(['newestCourse']);
+
+const enrollToCourse = function (enrollCode) {
+    var domain = window.location.origin
+    window.location.href = domain + '/enroll/' + enrollCode
+}
+
 </script>
 
 <style>

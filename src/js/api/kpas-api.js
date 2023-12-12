@@ -73,6 +73,16 @@ export default (function() {
         uri: '/course/' + courseId + '/settings',
         params: {}
       });
+    },
+    getHighlightedCourse: function(callback, error) {
+      this._get({
+        callback: function(course) {
+          callback(course);
+        },
+        error: error,
+        uri: '/settings/highlighted',
+        params: {}
+      });
     }
 }
 })();
@@ -141,4 +151,3 @@ export const apiWithResultOnly = (function() {
     }
   };
 })();
-
