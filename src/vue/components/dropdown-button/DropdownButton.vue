@@ -1,13 +1,28 @@
 <template>
   <div class="dropdown">
-    <Button type="dropdown" size="lg" @click="toggleDropdown">
+    <Button 
+      type="dropdown" 
+      size="lg" 
+      @click="toggleDropdown"  
+      @keydown.down.prevent="openDropdown"  
+      @keydown.enter.prevent="openDropdown"  
+      @keydown.space.prevent="openDropdown"
+    >
       <span :class="['dropdown-button__content', { 'dropdown-button__content--open': isOpen }]">
         {{ selectedOption?.value ? selectedOption.value : 'Bokmål' }}
         <Icon class="toggle-icon" size="1.5em" name="expand_more" />
       </span>
     </Button>
-    <ul v-if="isOpen" class="dropdown__content">
-      <li v-for="option in filteredOptions" :key="option.key" @click="selectOption(option)" class="dropdown__item">
+    <ul v-show="isOpen" ref="dropdownList" class="dropdown__content" @keydown.prevent="handleKeyDown" tabindex="0">
+      <li 
+        v-for="option in filteredOptions" 
+        :key="option.key"
+        :data-key="option.key"
+        :tabIndex="option.key === currentIndex ? 0 : -1"
+        @click="selectOption(option)" 
+        @focus="currentIndex = option.key"
+        class="dropdown__item"
+      >
         {{ option.value }}
       </li>
     </ul>
@@ -23,11 +38,15 @@ export default {
     options: Array,
     preselect: String
   },
+  components: {
+    Button, 
+    Icon
+  },
   data() {
     return {
       isOpen: false,
       selectedOption: this.preselect ? this.options.find((item) => item.key === this.preselect) : this.options[0],
-
+      currentIndex: this.preselect ? this.options.find((item) => item.key === this.preselect).key : this.options[0].key,
     };
   },
   emits: ['selected'],
@@ -35,26 +54,72 @@ export default {
   methods: {
     toggleDropdown() {
       this.isOpen = !this.isOpen;
+      this.focusOnFirstItem();
+    },
+    openDropdown() {
+      this.isOpen = true;
+      this.focusOnFirstItem();
+      this.currentIndex = this.filteredOptions.length > 0 ? this.filteredOptions[0].key : null;
+    },
+    focusOnFirstItem() {
+      this.$nextTick(() => {
+        const firstItem = this.$refs.dropdownList.querySelector('.dropdown__item[tabIndex="0"]');
+        if (firstItem) {
+          firstItem.focus();
+        }
+      });
     },
     selectOption(option) {
       this.selectedOption = option;
       this.isOpen = false;
       this.$emit('selected', option.key);
-    }
+    },
+    focusOnItem(item) {
+    this.$nextTick(() => {
+      const targetItem = this.$refs.dropdownList.querySelector(`.dropdown__item[data-key="${item.key}"]`);
+      if (targetItem) {
+        targetItem.focus();
+      }
+    });
+  },
+    handleKeyDown(event) {
+      switch (event.key) {
+        case 'ArrowDown':
+          this.navigateList('down');
+          break;
+        case 'ArrowUp':
+          this.navigateList('up');
+          break;
+        case 'Enter':
+          this.selectOption(this.filteredOptions.find(option => option.key === this.currentIndex));
+          break;
+      }
+    },
+    navigateList(direction) {
+      if (direction === 'down') {
+        const index = this.filteredOptions.findIndex(item => item.key === this.currentIndex);
+        if (index >= 0 && index < this.filteredOptions.length - 1) {
+          const option = this.filteredOptions[index + 1]
+          this.currentIndex = option.key;
+          this.focusOnItem(option)
+        } 
+      } else if (direction === 'up') {
+        const index = this.filteredOptions.findIndex(item => item.key === this.currentIndex);
+        if (index > 0) {
+           const option = this.filteredOptions[index - 1]
+          this.currentIndex = option.key;
+          this.focusOnItem(option)
+        }
+      }
+    },
   },
   computed: {
     filteredOptions() {
       return this.options.filter(option => option.key !== this.selectedOption.key);
     }
   },
-  components: {
-    Button,
-    Icon,
-  },
 };
 </script>
-
-
 
 <style lang="scss">
 @import "../../design/hide-show-effect";
@@ -92,7 +157,7 @@ export default {
     padding: 0;
     margin: 0;
     overflow: hidden;
-    background-color:$color-white;
+    background-color: $color-white;
     border-top: none;
     border-radius: 0.25rem;
     display: hidden;
@@ -109,9 +174,14 @@ export default {
     cursor: pointer;
     min-width: 6rem;
 
+    &:focus {
+      background-color: $color-grey-900;
+      color: $color-white;
+    }
+
     &:hover {
       background-color: $color-grey-900;
-      color:$color-white;
+      color: $color-white;
     }
   }
 }
