@@ -40,7 +40,6 @@
       data () {
         return {
             modalOpen: false,
-            selfEnrollmentCode: this.selfEnrollmentCode,
         }
       },
       methods: {

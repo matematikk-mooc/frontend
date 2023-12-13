@@ -139,7 +139,6 @@ jQuery(function($) {
 
   routes.addRouteForPath(/\/search\/all_courses$/, function() {
     enroll.printAllCourses();
-    enroll.goToAllCourses();
   });
 
   routes.addRouteForPath(/\/courses\/\d+\/settings$/, function() {
