@@ -16,7 +16,7 @@ export default (function () {
           let cell2 = tables[i].querySelector('tbody').querySelectorAll('tr td')[0];
           let celltext = cell2.textContent.trim();
 
-          if (celltext == "[uob-tabs]" || celltext == "[uob-tabs]") {
+          if (celltext == "[uob-tabs]" || celltext == "[udir-tabs]") {
             table = tables[i];
           }
 
