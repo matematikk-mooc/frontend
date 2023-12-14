@@ -23,7 +23,7 @@ export default (function() {
                             $table = null;
                             const table = tables[i];
                             tableCells = table.querySelectorAll('tbody > tr > td');
-                            if (tableCells.length > 0 && tableCells[0].textContent.includes('[uob-reveal]')) {
+                            if (tableCells.length > 0 && (tableCells[0].textContent.includes('[uob-reveal]') ||tableCells[0].textContent.includes('[udir-reveal]'))) {
                                 $table = table;
                             }
 
