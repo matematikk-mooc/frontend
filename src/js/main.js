@@ -20,7 +20,6 @@ import login from './modules/login.js';
 import menu from './modules/menu.js';
 import messagehandler from './3party/messagehandler.js';
 import multilanguage from '../vue/utils/previous-lang-utils.js'
-import nextPrevButtons from "./modules/next-prev-buttons";
 import nrk from './3party/nrk.js';
 import pages from './modules/pages.js';
 import { removeCanvasAnnouncementElements } from "./modules/announcements/utils";
@@ -116,7 +115,6 @@ jQuery(function($) {
   routes.addRouteForPath(/\/courses\/\d+$/, function () {
     coursepage.hideElementsFromUsers();
     coursepagebanner.insertCourseBanner();
-    nextPrevButtons.getFrontpageNextPage();
     renderCourseModules("left-side");
     util.updateRightMenuButtons();
     util.removeRecentFeedback();
@@ -334,7 +332,6 @@ jQuery(function($) {
       menu.showLeftMenu();
       menu.listModuleItems();
       pages.modifyMarkAsDoneButton();
-      nextPrevButtons.getPrevAndNextItems();
 
       if (util.isTeacherOrAdmin()) {
         pages.addStudentViewButton();

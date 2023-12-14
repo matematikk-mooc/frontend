@@ -5,7 +5,7 @@ export function renderFooter(hasLicense) {
   const parentElementOfOldFooter = document.getElementById('application');
   const footerElement = parentElementOfOldFooter.appendChild(document.createElement('div'));
   footerElement.setAttribute('id', 'customFooter');
- const customFooter = createApp({
+  const customFooter = createApp({
     render: () => h(PageFooter, { hasLicense }),
   });
   customFooter.component(PageFooter, { hasLicense });
