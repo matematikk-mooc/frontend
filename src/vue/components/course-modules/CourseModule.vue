@@ -96,6 +96,7 @@ onMounted(() => {
   if (props.isActive) {
     collapsed.value = false;
   }
+  
 });
 
 </script>

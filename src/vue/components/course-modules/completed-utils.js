@@ -2,10 +2,14 @@
 export function countPagesAndCompleted(entry) {
   let totalPages = 0;
   let completedPages = 0;
+  const pages = [];
 
   function processNode(node) {
     if (node.type === 'page') {
       totalPages++;
+      pages.push(node)
+      
+
       if (node.isCompleted) {
         completedPages++;
       }
@@ -19,6 +23,7 @@ export function countPagesAndCompleted(entry) {
     id: entry.id,
     totalPages,
     completedPages,
+    pages
   };
 }
 
@@ -40,3 +45,4 @@ export function completedPagesForAllModules(modulesCompletedCount) {
     totalModules: modulesCompletedCount.length
   }
 }
+

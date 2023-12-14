@@ -11,7 +11,9 @@ import CourseModules from './CourseModules.vue';
 import { fetchModulesForCourse } from '../../../js/modules/module-selector/index.js';
 import { Subject } from 'rxjs';
 import { getLanguageCode } from '../../utils/lang-utils';
-import {countPagesAndCompleted} from './completed-utils'
+import { countPagesAndCompleted } from './completed-utils'
+import { renderPreviousAndNextButton } from './page-navigation/index';
+import { findPreviousAndNext, extractCurrentCoursePageIdFromUrl} from './previous-next-utils';
 
 
 
@@ -68,7 +70,13 @@ export default defineComponent({
     const data = ref([]);
     const loading = ref(true);
 
-
+    const createNavigationButtons = (allPages) => {
+      const pageId= extractCurrentCoursePageIdFromUrl();
+      if (pageId) {
+        const { previousPageUrl, nextPageUrl } = findPreviousAndNext(allPages, pageId);
+        renderPreviousAndNextButton(previousPageUrl, nextPageUrl);
+      } 
+    }
   
     const fetchData = async () => {
       try {
@@ -76,7 +84,10 @@ export default defineComponent({
         const response = await fetchModulesForCourse();
         data.value = response;
         completed.value = data.value.map(item => countPagesAndCompleted(item));
-        console.error('completed courses: ', completed.value)
+        const allPages = []
+        completed.value.forEach(module => allPages.push(...module.pages));
+        createNavigationButtons(allPages);
+        
       } catch (error) {
         console.error('Error fetching data:', error);
       } finally {
