@@ -3,7 +3,6 @@ import { createApp } from 'vue'
 
 
 export function renderPrivacyPolicyLink(className) {
-  console.error('The render function is called')
   // Get the parent element
   const appContainer= document.getElementsByClassName(className)[0]
 

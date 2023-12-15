@@ -1,23 +1,23 @@
 <template>
    <Transition name="fade" mode="out-in">
-  <div v-if="isOpen"  :key="isOpen ? 'visible' : 'hidden'" class="backdrop" >
+  <div v-if="isOpen" :tabIndex="0" :key="isOpen ? 'visible' : 'hidden'" class="backdrop" >
 
-    <div class="modal">
-      <div class="modal__close-button">
+    <div class="modal-box">
+      <div class="modal-box__close-button">
         <IconButton @click="closeModal" />
       </div>
-      <div class="modal__header">
+      <div class="modal-box__header">
         <slot name="header" v-if="$slots.header" >
         </slot>
       </div>
 
-      <div class="modal__body" v-if="$slots.main" >
+      <div class="modal-box__body" v-if="$slots.main" >
         <slot name="main" >
 
         </slot>
       </div>
 
-      <div class="modal__actions" v-if="$slots.actions" >
+      <div class="modal-box__actions" v-if="$slots.actions" >
         <slot name="actions">
         </slot>
       </div>
@@ -59,23 +59,26 @@ const closeModal = () => {
 .fade-enter, .fade-leave-to, .fade-leave-active {
   opacity: 0;
 }
-  .modal{
+  .modal-box{
+    box-sizing:border-box;
     position: relative;
     background-color: $color-white;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-start;
-    position: relative;
     min-width: 30rem;
-    padding: 0 0.5rem 0.5rem 0.5rem;
+    max-width: 70rem;
     &__close-button{
       position:absolute;
+      z-index:1010;
       right: 0.5rem;
       top: 0.5rem;
     }
-    &__header, h1, h2, h3 {
+    &__header{
+      box-sizing:border-box;
       position:relative;
+      width: 100%;
       left: 0;
       top:0;
       color:$color-black;
@@ -83,10 +86,16 @@ const closeModal = () => {
       font-family: Montserrat;
       font-weight: 500;
       word-wrap: break-word;
-      width: calc(100% - 1.25rem);
+      width:100%;
+       h1, h2, h3 {
+        padding: 0 1rem 0 1rem;
+        font-size: 1.25rem;
+        width: calc(100% - 2rem);
+       }
     }
 
-    &__body, p {
+    &__body, {
+      box-sizing:border-box;
       color: $color-black;
       font-size: 1rem;
       font-family: Roboto;
@@ -94,13 +103,15 @@ const closeModal = () => {
       line-height: 1.25rem;
       margin-bottom: 1rem;
       word-wrap: break-word;
-      padding:0.5rem 0 0.5rem 0;
-      max-width: 40rem;
+      padding:0.5rem 1rem 0.5rem 1rem;
+      width: 100%;
    }
 
     &__actions {
       position: relative;
+      box-sizing: border-box;
       z-index: 1001;
+      padding: 0 1rem 1rem 1rem;
       width: 100%;
       display:flex;
       justify-content:flex-end;
