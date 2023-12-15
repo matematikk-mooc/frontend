@@ -14,7 +14,7 @@ export default (function() {
 
               for (let j = tables.length - 1; j >= 0; j--) {
                 $table = null
-                if (tables[j].textContent.includes('[uob-accordion]' || tables[j].textContent.includes('[udir-accordion]')) {
+                if (tables[j].textContent.includes('[uob-accordion]' || tables[j].textContent.includes('[udir-accordion]')) ){
                   $table = tables[j];
                 }
 
