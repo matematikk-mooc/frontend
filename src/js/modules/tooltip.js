@@ -12,13 +12,10 @@ export default (function() {
                 var tooltipElements = content.first().filter(function () {
                     return this.innerHTML.match(re);
                 });
-                console.log(tooltipElements)
                 tooltipElements.each(function (i, el) {
                     var matches = re.exec(el.innerHTML);
                     let count = 0;
                     while (matches) {
-                        console.log(el)
-
                         var tooltipSpan = document.createElement("span");
                         tooltipSpan.classList.add("tooltip");
                         tooltipSpan.id = "tooltip-" + count;
