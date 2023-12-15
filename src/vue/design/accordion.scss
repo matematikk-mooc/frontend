@@ -8,11 +8,11 @@
     padding: .5rem 0.5rem 0.5rem 0.5rem;
     justify-content: space-between;
     align-items: flex-start;
-    border-bottom: 1px solid var(--stttefarger-gr-600, #999);
+    border-bottom: 1px solid $color-grey-600;
     border-top: none;
     border-left: none;
     border-right: none;
-    color: var(--stttefarger-svart, #1A1A1A);
+    color: $color-black;
     background-color: #FFF ;
     font-family: Roboto;
     font-size: 1rem;
@@ -22,12 +22,12 @@
 }
 
 .custom-accordion.active {
-    border-bottom: 1px solid var(--fargepalett-link-hover, #00468E);
-    color: var(--fargepalett-link-hover, #00468E);
+    border-bottom: 1px solid $primary-hover-color;
+    color: $primary-hover-color;
 }
 
 .custom-accordion-panel {
-    color: #000;
+    color: $color-black;
     font-family: Roboto;
     font-size: 1rem;
     font-style: normal;
@@ -48,5 +48,5 @@
 .custom-accordion-img {
     width: 1.5rem;
     height: 1.5rem;
-    color: var(--fargepalett-link-hover, #00468E);
+    color: $primary-hover-color;
 }

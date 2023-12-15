@@ -10,7 +10,7 @@
 }
 
 .custom-segments__segments {
-  border-bottom: 0.5rem solid #E6E6E6;
+  border-bottom: 0.5rem solid $color-grey-400;
   white-space: nowrap;
   margin: 0 !important;
 }
@@ -25,16 +25,16 @@
   bottom: -0.5rem;
 
   &:hover {
-    background-color: #E6E6E6;
+    background-color: $color-grey-400;
   }
 
 
 }
 .custom-segments__segment a{
-  color: var(--stttefarger-svart, #1A1A1A);
+  color: $color-black;
   text-align: center;
   font-family: Roboto;
-  font-size: 16px;
+  font-size: 1rem;
   font-style: normal;
   font-weight: 500;
   line-height: normal;
@@ -45,8 +45,8 @@
 }
 
 .custom-segments__segment.active {
-  border-bottom: 0.5rem solid #51698F;
-  color: #fff;
+  border-bottom: 0.5rem solid $primary-hover-color;
+  color: $color-white;
 }
 
 .custom-segments__pane {
@@ -54,10 +54,10 @@
   padding-top: 20px;
   border: none;
   height: fit-content;
-  background-color: #f0f0f0;
+  background-color: $color-grey-400;
 }
 
 .custom-segments__pane.active {
   display: block;
-  background-color: #fff;
+  background-color: $color-white;
 }
