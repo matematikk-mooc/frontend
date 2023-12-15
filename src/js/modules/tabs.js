@@ -1,26 +1,25 @@
 import '../../vue/design/re-styles/tabs.scss';
 export default (function () {
 
-    var strSetNum = 0;
-    function transformTabs(){
-      onElementRendered('#content .user_content.enhanced,#content .show-content.enhanced',
-      function($content) {
-        // Store references to the active tab and pane
-        var activeTab = null;
-        var activePane = null;
-        var tables = document.getElementsByTagName('table');
+  var strSetNum = 0;
+  function transformTabs(){
+    onElementRendered('#content .user_content.enhanced,#content .show-content.enhanced',
+    function() {
+      var tables = document.querySelectorAll('table');
+      //References to the active tabs and panes
+      var activeTab = new Map();
+      var activePane = new Map();
 
-
-        for (var i = 0; i < tables.length; i++) {
+      for (var i = 0; i < tables.length; i++) {
+        var customtabs = []
+        let tbody = tables[i].querySelector('tbody')
+        if (tbody) {
+          let cells = tbody.querySelectorAll('tr td')
+          let celltext = cells[0].textContent.trim();
           var table = null;
-          let cell2 = tables[i].querySelector('tbody').querySelectorAll('tr td')[0];
-          let celltext = cell2.textContent.trim();
-
-          if (celltext == "[uob-tabs]" || celltext == "[udir-tabs]") {
+          if (celltext.includes("[uob-tabs]") || celltext.includes("[udir-tabs]")) {
             table = tables[i];
-          }
 
-          if(table) {
 
             var customSegments = document.createElement('div');
             customSegments.className = 'custom-segments';
@@ -33,54 +32,24 @@ export default (function () {
             customSegments.appendChild(div);
             strSetNum++;
 
+            table.parentElement.insertBefore(customSegments, table);
+            table.remove();
+
+
             const tds = Array.from(table.querySelectorAll('tbody > tr > td'));
             const tbody = Array.from(table.getElementsByTagName('tbody'))[0];
 
-            for (var k = 1; k < tds.length; k++) {
+            for (var k = 2; k < tds.length; k++) {
               var strAnchor = 'set' + strSetNum + 'tab' + Math.floor(k / 2);
               if (tds[k].parentNode.parentNode == tbody) {
                 if (k % 2 === 0) {
                   var li = document.createElement('li');
                   li.className = 'custom-segments__segment';
+                  li.set = strSetNum
+                  customtabs.push(li);
                   var a = document.createElement('a');
                   a.href = '#' + strAnchor;
                   a.innerHTML = tds[k].textContent;
-
-                  // Add a click event listener to the tab
-                  li.addEventListener('click', function (event) {
-                    event.preventDefault();
-
-                    var iframes = document.getElementsByTagName('iframe');
-                    var ready = {
-                      context: 'h5p',
-                      action: 'ready'
-                    };
-                    var resize = {
-                      context: 'h5p',
-                      action: 'resize'
-                    };
-
-                    for (var i = 0; i < iframes.length; i++) {
-                      if (iframes[i].src.indexOf('h5p') !== -1) {
-                        iframes[i].contentWindow.postMessage(ready, '*');
-                        iframes[i].contentWindow.postMessage(resize, '*');
-                      };
-                    }
-
-                    // Deactivate the previously active tab and pane
-                    if (activeTab) {
-                      activeTab.classList.remove('active');
-                    }
-                    if (activePane) {
-                      activePane.classList.remove('active');
-                    }
-
-                    // Activate the current tab and pane
-                    activeTab = this;
-                    activePane = document.getElementById(this.firstChild.getAttribute('href').substring(1));
-                    activeTab.classList.add('active');
-                    activePane.classList.add('active');
-                  });
 
                   li.appendChild(a);
                   ul.appendChild(li);
@@ -98,40 +67,78 @@ export default (function () {
                   if (Math.floor(k / 2) == 1) {
                     pane.classList.add('active');
                     li.classList.add('active');
-                    activeTab = li;
-                    activePane = pane;
+                    activeTab.set(li.set, li);
+                    activePane.set(li.set, pane);
                   }
                 }
               }
             }
-            table.parentElement.insertBefore(customSegments, table);
-            table.remove();
           }
         }
-      });
-    }
-    function onElementRendered(selector, cb, _attempts) {
-        var el = $(selector);
-        _attempts = ++_attempts || 1;
-        if (el.length) return cb(el);
-        if (_attempts >= 60) return;
 
-        setTimeout(function() {
-          onElementRendered(selector, cb, _attempts);
-        }, 200);
-      }
 
-      function onPage(regex, fn) {
-        if (location.pathname.match(regex)) fn();
-      }
-    return {
-        init: function() {
-          // Add UoB enhancements to rich content displayed in courses.
-          onPage(/\/(courses|groups)\/\d+/, function() {
-            transformTabs();
+        for (var l = 0; l < customtabs.length; l++) {
+          customtabs[l].addEventListener('click', function (event) {
+            event.preventDefault();
+
+            var iframes = document.getElementsByTagName('iframe');
+            var ready = {
+              context: 'h5p',
+              action: 'ready'
+            };
+            var resize = {
+              context: 'h5p',
+              action: 'resize'
+            };
+
+            for (var p = 0; p < iframes.length; p++) {
+              if (iframes[p].src.indexOf('h5p') !== -1) {
+                iframes[p].contentWindow.postMessage(ready, '*');
+                iframes[p].contentWindow.postMessage(resize, '*');
+              };
+            }
+            // Deactivate the previously active tab and pane
+            if (activeTab.get(this.set)) {
+              activeTab.get(this.set).classList.remove('active');
+            }
+            if (activePane.get(this.set)) {
+              activePane.get(this.set).classList.remove('active');
+            }
+
+            // Activate the current tab and pane
+            activeTab.set(this.set, this);
+            activePane.set(this.set, document.getElementById(this.firstChild.getAttribute('href').substring(1)));
+            activeTab.get(this.set).classList.add('active');
+            activePane.get(this.set).classList.add('active');
           });
         }
-      };
+      }
+
+    });
+
+  }
+  function onElementRendered(selector, cb, _attempts) {
+    var el = $(selector);
+    _attempts = ++_attempts || 1;
+    if (el.length) return cb(el);
+    if (_attempts >= 60) return;
+
+    setTimeout(function() {
+      onElementRendered(selector, cb, _attempts);
+    }, 200);
+  }
+
+  function onPage(regex, fn) {
+    if (location.pathname.match(regex)) fn();
+  }
+  return {
+    init: function() {
+      // Add UoB enhancements to rich content displayed in courses.
+      onPage(/\/(courses|groups)\/\d+/, function() {
+        transformTabs();
+      });
+    }
+  };
 
 
 })();

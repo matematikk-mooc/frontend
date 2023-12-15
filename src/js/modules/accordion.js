@@ -4,7 +4,7 @@ export default (function() {
     function accordion() {
         onElementRendered(
             '#content .user_content.enhanced,#content .show-content.enhanced',
-            function($content) {
+            function() {
 
               const expandMore = SERVER + 'vector_images/expand_more.svg';
               const expandLess = SERVER + 'vector_images/expand_less_blue.svg';
@@ -14,7 +14,7 @@ export default (function() {
 
               for (let j = tables.length - 1; j >= 0; j--) {
                 $table = null
-                if (tables[j].textContent.includes('[uob-accordion]' || tables[j].textContent.includes('[udir-accordion]')) ){
+                if (tables[j].textContent.includes('[uob-accordion]') || tables[j].textContent.includes('[udir-accordion]') ){
                   $table = tables[j];
                 }
 
@@ -50,10 +50,11 @@ export default (function() {
                 // Remove the original table from the DOM
                 $table.parentNode.removeChild($table);
               }
-
+            }
               let customAccordions = document.querySelectorAll('.custom-accordion');
               for (let i = 0; i < customAccordions.length; i++) {
-                customAccordions[i].addEventListener('click', function() {
+                customAccordions[i].addEventListener('click', function(event) {
+                  event.preventDefault();
                   let img = this.querySelector('img');
                   img.src = img.src === expandMore ? expandLess : expandMore;
                   this.classList.toggle('active');
@@ -66,7 +67,7 @@ export default (function() {
                 });
               }
             }
-            }
+
           );
     }
 
