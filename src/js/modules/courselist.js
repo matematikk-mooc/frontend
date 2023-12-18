@@ -1,16 +1,22 @@
+import LoadingIndicator from "../../vue/components/loading-indicator/LoadingIndicator.vue";
 import MyCoursesPage from "../../vue/pages/MyCoursesPage.vue";
 import api from "../api/api";
 import { createApp } from "vue/dist/vue.runtime.esm-bundler.js";
-import { renderPrivacyPolicyLink } from "../../vue/pages/courselist-page";
 import kpasApi from '../api/kpas-api';
+import { renderPrivacyPolicyLink } from "../../vue/pages/courselist-page";
 import util from "./util";
 
 export default (function () {
   return {
     listCourses(parentId, callback) {
       if (document.getElementsByClassName("reaccept_terms").length === 0) {
-        let htmlLoading = `<div class='loading-gif-wrapper'><span class='loading-gif'></span></div>`;
-        document.getElementById('content').innerHTML = htmlLoading; //Show loader whhil loading courses'
+        document.getElementById('content').innerHTML = '';
+        let loader = document.createElement('div');
+        loader.id = 'loader';
+        let header = document.getElementById("header");
+        let loaderComponent = createApp(LoadingIndicator);
+        header.insertAdjacentElement('afterend', loader);
+        loaderComponent.mount("#loader");
 
         api.getEnrolledCourses((courses) => {
           kpasApi.getAllCourseSettings(function (allCoursesSettings) {
@@ -36,6 +42,7 @@ export default (function () {
                   footerNode.parentNode.insertBefore(myCourses, footerNode);
                   document.getElementById('wrapper').innerHTML = ''
                   $('#wrapper').remove();
+                  document.getElementById('loader').remove();
                   app.mount("#my-courses-container");
 
                 }
