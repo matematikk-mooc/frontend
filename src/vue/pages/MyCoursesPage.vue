@@ -1,6 +1,6 @@
 <template>
   <div class="my-courses-page">
-    <div class="my-courses-page--content">
+    <div id="main" class="my-courses-page--content">
       <h1>Mine kompetansepakker</h1>
       <div class="my-courses-page--layout">
         <CardList :authorized="true" :courses="courses"></CardList>

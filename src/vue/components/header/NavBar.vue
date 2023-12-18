@@ -1,7 +1,7 @@
 <template>
   <div class="header--nav-container">
     <!-- this gives users using screenreader, the opportunity to skip all navigation and go right to content -->
-     <a class="skip-to-content-link" href="#wiki_page_show">
+     <a class="skip-to-content-link" :href="mainContentId">
       Gå til hovedinnhold
 </a>
     <PageHeader :logged_in="logged_in" :admin="admin"></PageHeader>
@@ -14,7 +14,7 @@
 import PageHeader from './PageHeader.vue'
 import NavBarLinks from './NavBarLinks.vue'
 
-const {logged_in, admin} = defineProps(['logged_in', 'admin'])
+const {logged_in, admin, mainContentId} = defineProps(['logged_in', 'admin', 'mainContentId'])
 
 </script>
 

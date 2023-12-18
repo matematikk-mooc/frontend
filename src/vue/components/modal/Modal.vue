@@ -46,6 +46,7 @@ const closeModal = () => {
     left: 0;
     width: 100%;
     height: 100%;
+    max-height: 100vh;
     background-color: $color-grey-100;
     display: flex;
     justify-content: center;
@@ -69,6 +70,7 @@ const closeModal = () => {
     align-items: flex-start;
     min-width: 30rem;
     max-width: 70rem;
+    max-height: 80vh;
     &__close-button{
       position:absolute;
       z-index:1010;
@@ -86,7 +88,6 @@ const closeModal = () => {
       font-family: Montserrat;
       font-weight: 500;
       word-wrap: break-word;
-      width:100%;
        h1, h2, h3 {
         padding: 0 1rem 0 1rem;
         font-size: 1.25rem;
@@ -94,7 +95,7 @@ const closeModal = () => {
        }
     }
 
-    &__body, {
+    &__body {
       box-sizing:border-box;
       color: $color-black;
       font-size: 1rem;
@@ -105,6 +106,7 @@ const closeModal = () => {
       word-wrap: break-word;
       padding:0.5rem 1rem 0.5rem 1rem;
       width: 100%;
+      overflow-y:scroll;
    }
 
     &__actions {
