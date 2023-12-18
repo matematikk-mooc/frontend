@@ -2,6 +2,7 @@ import NavBar from '../../vue/components/header/NavBar.vue';
 import { createApp } from 'vue/dist/vue.runtime.esm-bundler.js';
 import { renderCourseModules } from "../../vue/pages/course-page/left-menu"
 import util from './util.js'
+import { getMainContentId } from './menu-utils';
 
 
 export default (function() {
@@ -38,7 +39,8 @@ export default (function() {
       );
       $('body').addClass('useFullWidth'); //Used to solve problems in making the design 100% width in the new UI. This is the simplest way to implement this.
     },
-    renderUnauthenticatedMenu: function() {
+    renderUnauthenticatedMenu: function () {
+       const mainContentId = getMainContentId() ?? '';
       if (!util.isAuthenticated()) {
 
         $('#header').hide();
@@ -47,7 +49,8 @@ export default (function() {
         headerwrapper.setAttribute("id", "notLoggedInHeader");
         const headerProps = {
           logged_in: false,
-          admin: false
+          admin: false,
+          mainContentId,
         }
         let customHeader = createApp(NavBar, headerProps);
         customHeader.mount("#notLoggedInHeader");
@@ -63,7 +66,8 @@ export default (function() {
         headerwrapper.setAttribute("id", "loggedInHeader");
         const headerProps = {
           logged_in: true,
-          admin: admin
+          admin: admin,
+          mainContentId,
         }
         let customHeader = createApp(NavBar, headerProps);
         customHeader.mount("#loggedInHeader");

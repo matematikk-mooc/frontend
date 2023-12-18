@@ -1,7 +1,7 @@
 
 <template>
     <div class="landing-page">
-      <div class="landing-page--content">
+      <div id="main" class="landing-page--content">
         <h1>Alle tilgjengelige kompetansepakker</h1>
         <div class="landing-page--layout">
           <CardFilter @update:selectedFilters="onSelectedFiltersUpdate" :filterData="filterData"></CardFilter>

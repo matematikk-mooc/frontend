@@ -184,11 +184,15 @@ export default {
   position: relative;
   width: 100%;
   height: 10rem;
+   @media screen and (max-height: 1200px){
+      display:none;
+    }
 
   .course-illustration-box-image {
     width: 100%;
     height: 100%;
     object-position: right bottom;
+   
   }
 }
 
