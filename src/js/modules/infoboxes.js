@@ -35,6 +35,7 @@ export default (function () {
           'udir-general',
           'udir-importantinfo',
           'udir-tools',
+          'udir-info',
           'udir-time',
           'udir-goals',
           'udir-tip',
