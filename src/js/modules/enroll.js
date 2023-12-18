@@ -1,4 +1,5 @@
 import EnrollToCourse from "../../vue/components/enroll/EnrollToCourse.vue";
+import LoadingIndicator from "../../vue/components/loading-indicator/LoadingIndicator.vue";
 import LoggedInLandingPage from "../../vue/pages/LoggedInLandingPage.vue";
 import NotLoggedInPage from "../../vue/pages/NotLoggedInPage.vue";
 import api from "../api/api";
@@ -92,6 +93,13 @@ export default (function () {
     printAllCourses: function () {
       var self = this;
       document.getElementById('content').innerHTML = "";
+      let loader = document.createElement('div');
+      loader.id = 'loader';
+      let header = document.getElementById("header");
+      let loaderComponent = createApp(LoadingIndicator);
+      header.insertAdjacentElement('afterend', loader);
+      loaderComponent.mount("#loader");
+
       api.getAllPublicCourses(function (allCourses) {
         api.getEnrolledCourses(function (enrolledCourses) {
           var allCoursesWithStatus = self.setCourseEnrolledStatus(
@@ -122,6 +130,7 @@ export default (function () {
                     footerNode.parentNode.insertBefore(customContent, footerNode)
                     document.getElementById('wrapper').innerHTML = '';
                     $('#wrapper').remove();
+                    document.getElementById('loader').remove();
                     page.mount("#loggedInLandingPage");
                 }
               } catch (e) {
@@ -153,6 +162,7 @@ export default (function () {
                     footerNode.parentNode.insertBefore(customContent, footerNode)
                     document.getElementById('wrapper').innerHTML = '';
                     $('#wrapper').remove();
+                    document.getElementById('loader').remove();
                     page.mount("#notLoggedInPage");
                   });
                 }
