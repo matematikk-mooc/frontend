@@ -1,4 +1,3 @@
-
 import { hrefAmpQueryString, hrefQueryString } from "../settingsRoot";
 
 import  api from '../api/api.js'
@@ -224,52 +223,52 @@ export default (function () {
       }
     },
 
-    //-------------- DISSE IS-FUNKSJONENE MÅ SKRIVES OM TIL Å BRUKE VERDIENE I UTIL.COURSE FRA KPAS-APIET ----------------
-    isAlertMsg(course) {
+    getBannerType(course) {
+      if(course){
+        return course.kpas.banner_type;
+      }
+      return "NONE";
+    },
+    getAlertMsg(course) {
       if (course) {
-        var arr = course.course_code.split("::");
-        for (var i = 0; i < arr.length; i++) {
-          if (arr[i] == "ALERTMSG") {
-            return arr[i + 1];
-          }
+        if(course.kpas.banner_type == "ALERT"){
+          return course.kpas.banner_text;
         }
       }
       return "";
     },
-    isUnmaintained(course) {
+    getUnmaintainedMsg(course) {
       if (course) {
-        var arr = course.course_code.split("::");
-        for (var i = 0; i < arr.length; i++) {
-          if (arr[i] == "UNMAINTAINED") {
-            return arr[i + 1];
-          }
+        if(course.kpas.banner_type == "UNMAINTAINED"){
+          return course.kpas.banner_text;
         }
       }
       return "";
     },
-    isNotificationToUser(course) {
-      if (course) {
-        var arr = course.course_code.split("::");
-        for (var i =0; i < arr.length; i++) {
-          if (arr[i] == "notificationtouser"){
-            return true ;
-          }
+    getUnmaintainedSinceDate(course) {
+      if(course){
+        if(course.kpas.banner_type == "UNMAINTAINED"){
+          return course.kpas.unmaintained_since;
         }
-      }git
-      return "";
+      }
+      return null;
     },
-    isFeedback(course) {
+    getNotificationMsg(course) {
       if (course) {
-        var arr = course.course_code.split("::");
-        for (var i =0; i < arr.length; i++) {
-          if (arr[i] == "feedback"){
-            return true ;
-          }
+        if(course.kpas.banner_type == "NOTIFICATION"){
+          return course.kpas.banner_text;
         }
       }
       return "";
     },
-    //----------------------------------------------------------------------------------------------------------------
+    getFeedbackMsg(course) {
+      if (course) {
+        if(course.kpas.banner_type == "FEEDBACK"){
+          return course.kpas.banner_text;
+        }
+      }
+      return "";
+    },
 
     //description":"courseId:360:community:1902:940101808"
     getCountyOrCommunityNumber(groupDescription) {
