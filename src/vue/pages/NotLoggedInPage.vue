@@ -9,7 +9,10 @@
       <h2>Alle tilgjengelige kompetansepakker</h2>
       <div class="not-logged-in-page--layout">
         <CardFilter @update:selectedFilters="onSelectedFiltersUpdate" :filterData="filterData"></CardFilter>
-        <CardList :authorized="false" :courses="coursesToView"></CardList>
+        <CardList v-if="coursesToView.length > 0" :authorized="false" :courses="coursesToView"></CardList>
+        <div v-else>
+          <h3>Vi fant ingen treff for filtrene du har valgt. Du kan huke av alle filtrene med “Tilbakestill filter”.</h3>
+        </div>
       </div>
     </div>
   </div>
@@ -21,6 +24,7 @@ import CardFilter from '../components/CardFilter.vue'
 import Banner from '../components/Banner.vue'
 import NotLoggedInIntro from '../components/NotLoggedInIntro.vue'
 import {ref} from 'vue'
+import { filterCourses } from '../utils/filter-courses.js'
 
 const { courses, filterData, highlightedCourse } = defineProps(['courses', 'filterData', 'highlightedCourse']);
 const coursesToView = ref([...courses]);
@@ -30,23 +34,7 @@ const onSelectedFiltersUpdate = (updatedFilters) => {
     coursesToView.value = [...courses]
     return
   }
-  coursesToView.value = []
-  courses.forEach(course =>{
-    if(course.course_settings){
-      course.course_settings.course_filter.forEach(courseFilter => {
-        for (const item of updatedFilters) {
-          if (item.id === courseFilter.filter.id) {
-            if(!coursesToView.value.includes(course)){
-              coursesToView.value.push(course);
-            }
-            break;
-          }
-        }
-      }
-      )
-    }
-  }
-  )
+  coursesToView.value = filterCourses(courses, updatedFilters)
 }
 </script>
 
