@@ -111,68 +111,68 @@ export default (function () {
             kpasApi.getAllFilters(function (allFilters) {
               var allFiltersList = allFilters.result;
               var allCoursesWithSettings = util.mapCourseSettings(allCoursesWithStatus, allCoursesSettings.result);
-
-            var isAuthenticated = util.isAuthenticated();
-            if (isAuthenticated) {
-              document.getElementById('content').innerHTML = "";
-              let wrapper = document.getElementById("content");
-              try {
-                if(wrapper != null){
-                    const customContent = document.createElement("div");
-                    let props = {
-                      courses : allCoursesWithSettings,
-                      filterData : allFiltersList,
-                    };
-                    let page = createApp(LoggedInLandingPage, props);
-                    customContent.setAttribute("id", "loggedInLandingPage");
-                    customContent.setAttribute("style", "width: 100%; justify-content: center; display: flex;");
-                    let footerNode = document.getElementById("wrapper");
-                    footerNode.parentNode.insertBefore(customContent, footerNode)
-                    document.getElementById('wrapper').innerHTML = '';
-                    $('#wrapper').remove();
-                    document.getElementById('loader').remove();
-                    page.mount("#loggedInLandingPage");
+              //Reverse list to show newest courses first
+              allCoursesWithSettings = allCoursesWithSettings.reverse();
+              var isAuthenticated = util.isAuthenticated();
+              if (isAuthenticated) {
+                document.getElementById('content').innerHTML = "";
+                let wrapper = document.getElementById("content");
+                try {
+                  if(wrapper != null){
+                      const customContent = document.createElement("div");
+                      let props = {
+                        courses : allCoursesWithSettings,
+                        filterData : allFiltersList,
+                      };
+                      let page = createApp(LoggedInLandingPage, props);
+                      customContent.setAttribute("id", "loggedInLandingPage");
+                      customContent.setAttribute("style", "width: 100%; justify-content: center; display: flex;");
+                      let footerNode = document.getElementById("wrapper");
+                      footerNode.parentNode.insertBefore(customContent, footerNode)
+                      document.getElementById('wrapper').innerHTML = '';
+                      $('#wrapper').remove();
+                      document.getElementById('loader').remove();
+                      page.mount("#loggedInLandingPage");
+                  }
+                } catch (e) {
+                  console.log(e);
                 }
-              } catch (e) {
-                console.log(e);
               }
-            }
-            else {
-              try {
-                if(wrapper != null){
-                  kpasApi.getHighlightedCourse(function (highlightedCourse) {
-                    var highlightedCourseId = highlightedCourse.result.course_id;
-                    var allFiltersList = allFilters.result;
-                    var allCoursesWithSettings = util.mapCourseSettings(allCoursesWithStatus, allCoursesSettings.result);
+              else {
+                try {
+                  if(wrapper != null){
+                    kpasApi.getHighlightedCourse(function (highlightedCourse) {
+                      var highlightedCourseId = highlightedCourse.result.course_id;
+                      var allFiltersList = allFilters.result;
+                      var allCoursesWithSettings = util.mapCourseSettings(allCoursesWithStatus, allCoursesSettings.result);
 
-                    const customContent = document.createElement("div");
-                    var highlightedCourse = allCoursesWithSettings.find(course => course.id == highlightedCourseId);
-                    if(highlightedCourse == null || highlightedCourse == undefined) {
-                      highlightedCourse = allCoursesWithSettings[0];
-                    }
-                    let props = {
-                      courses : allCoursesWithSettings,
-                      filterData : allFiltersList,
-                      highlightedCourse : highlightedCourse
-                    };
-                    let page = createApp(NotLoggedInPage, props);
-                    customContent.setAttribute("id", "notLoggedInPage");
-                    customContent.setAttribute("style", "width: 100%; justify-content: center; display: flex;");
-                    let footerNode = document.getElementById("wrapper");
-                    footerNode.parentNode.insertBefore(customContent, footerNode)
-                    document.getElementById('wrapper').innerHTML = '';
-                    $('#wrapper').remove();
-                    document.getElementById('loader').remove();
-                    page.mount("#notLoggedInPage");
-                  });
+                      const customContent = document.createElement("div");
+                      var highlightedCourse = allCoursesWithSettings.find(course => course.id == highlightedCourseId);
+                      if(highlightedCourse == null || highlightedCourse == undefined) {
+                        highlightedCourse = allCoursesWithSettings[0];
+                      }
+                      let props = {
+                        courses : allCoursesWithSettings,
+                        filterData : allFiltersList,
+                        highlightedCourse : highlightedCourse
+                      };
+                      let page = createApp(NotLoggedInPage, props);
+                      customContent.setAttribute("id", "notLoggedInPage");
+                      customContent.setAttribute("style", "width: 100%; justify-content: center; display: flex;");
+                      let footerNode = document.getElementById("wrapper");
+                      footerNode.parentNode.insertBefore(customContent, footerNode)
+                      document.getElementById('wrapper').innerHTML = '';
+                      $('#wrapper').remove();
+                      document.getElementById('loader').remove();
+                      page.mount("#notLoggedInPage");
+                    });
+                  }
+                } catch (e) {
+                  console.log(e);
                 }
-              } catch (e) {
-                console.log(e);
               }
-            }
+            });
           });
-        });
-
         });
       });
     },
