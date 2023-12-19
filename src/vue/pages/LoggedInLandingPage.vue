@@ -5,7 +5,10 @@
         <h1>Alle tilgjengelige kompetansepakker</h1>
         <div class="landing-page--layout">
           <CardFilter @update:selectedFilters="onSelectedFiltersUpdate" :filterData="filterData"></CardFilter>
-          <CardList :authorized="true" :courses="coursesToView"></CardList>
+          <CardList v-if="coursesToView.length > 0" :authorized="true" :courses="coursesToView"></CardList>
+          <div class="no-courses-to-show" v-else>
+            <h2>Vi fant ingen treff for filtrene du har valgt. Du kan huke av alle filtrene med “Tilbakestill filter”.</h2>
+          </div>
         </div>
       </div>
     </div>
@@ -15,6 +18,7 @@
   import CardList from '../components/CardList.vue'
   import CardFilter from '../components/CardFilter.vue'
   import {ref} from 'vue'
+  import { filterCourses } from '../utils/filter-courses.js'
 
   const { courses, filterData } = defineProps(['courses', 'filterData']);
   const coursesToView = ref([...courses]);
@@ -24,23 +28,7 @@
       coursesToView.value = [...courses]
       return
     }
-    coursesToView.value = []
-    courses.forEach(course =>{
-      if(course.course_settings){
-        course.course_settings.course_filter.forEach(courseFilter => {
-          for (const item of updatedFilters) {
-            if (item.id === courseFilter.filter.id) {
-              if(!coursesToView.value.includes(course)){
-                coursesToView.value.push(course);
-              }
-              break;
-            }
-          }
-        }
-        )
-      }
-    }
-    )
+    coursesToView.value = filterCourses(courses, updatedFilters)
   }
   </script>
 
