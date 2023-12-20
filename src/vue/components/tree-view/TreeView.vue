@@ -14,7 +14,10 @@
         <span v-if="!isLeaf" class="dropdown-indicator" :class="{ 'dropdown-indicator--collapsed': collapsed }">
           <Icon name="expand_more" size="2em" />
         </span>
-        <Icon class="tree-node__label__text__done-icon" v-if="type === 'page' && isCompleted" name="check_circle_filled" size="1em"></Icon>
+        <Icon class="tree-node__label__text__done-icon" v-if="type === 'page' && isCompleted" name="check_circle_filled" size="0.8em"></Icon>
+        <Icon class="tree-node__label__text__icon" v-if="type === 'page' && isActivity()" name="edit_document" size="0.8em"></Icon>
+        <Icon class="tree-node__label__text__icon" v-else-if="type === 'page' && isVideo()" name="video_camera" size="0.8em"></Icon>
+        <Icon class="tree-node__label__text__icon" v-else-if="type === 'page'" name="article" size="0.8em"></Icon>
         <template v-if="type === 'page'">
           <a :href="url">{{ localizedLabel }}</a>
         </template>
@@ -73,7 +76,7 @@ if (initialIsActive.value && !isLeaf.value) {
 }
 
 const localizedLabel = computed(() => extractLabelForSelectedLanguage(props.label, props.lang));
- 
+
 
     onMounted(() => {
       // Set collapsed.value to false if isActive prop is true
@@ -81,10 +84,19 @@ const localizedLabel = computed(() => extractLabelForSelectedLanguage(props.labe
         collapsed.value = false;
       }
 
-    
 
-  
+
+
 });
+
+const isVideo = function isVideo() {
+  return props.label.toLowerCase().includes('video');
+};
+
+const isActivity = function isActivity() {
+  return props.label.toLowerCase().includes('aktivitet');
+};
+
 </script>
 <style lang="scss">
 @import '../../design/colors';
@@ -158,6 +170,13 @@ const localizedLabel = computed(() => extractLabelForSelectedLanguage(props.labe
         font-size: 1.5rem;
       }
 
+      &__icon {
+        position: relative;
+        padding-right: 0.5rem;
+        color: $color-black;
+        font-size: 1.5rem;
+      }
+
       .dropdown-indicator {
         position: relative;
         font-size: 1rem;
@@ -195,15 +214,6 @@ const localizedLabel = computed(() => extractLabelForSelectedLanguage(props.labe
   span, a{
     word-break: break-word;
   }
- 
+
 }
 </style>
-
-
-
-
-
-
-
-
-
