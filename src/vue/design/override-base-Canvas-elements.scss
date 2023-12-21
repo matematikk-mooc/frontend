@@ -122,6 +122,7 @@ body.with-left-side:not(.useFullWidth) {
   flex-direction: row !important;
   flex-wrap: wrap !important;
   justify-content: center !important;
+  margin-left: unset !important;
 }
 
 .ic-app-course-menu {
