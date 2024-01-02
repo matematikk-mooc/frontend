@@ -57,36 +57,16 @@ module.exports = {
           to: ".",
         },
         {
-          from: "src/vue/assets/logo-black.svg",
-          to: ".",
+          from: "src/bitmaps/",
+          to: "bitmaps/",
         },
         {
-          from: "src/vue/assets/IllustrasjonerKompetansepakker",
-          to: "IllustrasjonerKompetansepakker/",
+          from: "src/vector_images/",
+          to: "vector_images/",
         },
         {
-          from: "src/vue/assets/IllustrasjonerHeaderIkkeInnloggetSide",
-          to: "IllustrasjonerHeaderIkkeInnloggetSide/",
-        },
-        {
-          from: "src/vue/assets/fonts/*.woff",
-          to: "fonts/[name][ext]",
-        },
-        {
-          from: "src/vue/assets/fonts/*.woff2",
-          to: "fonts/[name][ext]",
-        },
-        {
-          from: "src/bitmaps/*",
-          to: "bitmaps/[name][ext]",
-        },
-        {
-          from: "src/vector_images/*",
-          to: "vector_images/[name][ext]",
-        },
-        {
-          from: "kpas/*",
-          to: "kpas/[name][ext]",
+          from: "kpas/",
+          to: "kpas/",
         },
       ],
     }),
