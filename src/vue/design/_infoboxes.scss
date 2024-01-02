@@ -90,7 +90,7 @@
   // skoleleder can be deleted after the design is done.
   &__skoleleder,
   &__leader {
-    background: map-get($color-palette-green, background, 400);
+    background: map-get($color-palette-green, background, 300);
   }
 
   &__link {
