@@ -1,11 +1,11 @@
 const path = require('path');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
-const glob = require('glob');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const webpack = require('webpack');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
+const {VueLoaderPlugin} = require('vue-loader');
 
 module.exports = (env) => {
 
@@ -53,20 +53,25 @@ module.exports = (env) => {
             new CopyWebpackPlugin({
                 patterns: [
                     {
-                        from: 'src/bitmaps/*',
-                        to: 'bitmaps/[name][ext]'
+                        from: "src/vue/assets/",
+                        to: ".",
                     },
                     {
-                        from: 'src/vector_images/*',
-                        to: 'vector_images/[name][ext]'
+                        from: 'src/bitmaps/',
+                        to: 'bitmaps/'
                     },
                     {
-                        from: 'kpas/*',
-                        to: 'kpas/[name][ext]'
+                        from: 'src/vector_images/',
+                        to: 'vector_images/'
+                    },
+                    {
+                        from: 'kpas/',
+                        to: 'kpas/'
                     }
                 ]
             }),
             new webpack.HotModuleReplacementPlugin(),
+            new VueLoaderPlugin(),
         ],
         module: {
             rules: [
@@ -82,19 +87,43 @@ module.exports = (env) => {
                     },
                 },
                 {
+                    test: /\.s[ac]ss$/i,
+                    use: [
+                        MiniCssExtractPlugin.loader,
+                        "css-loader",
+                        {
+                            loader: "sass-loader",
+                            options: {
+                                additionalData:
+                                "$urlToFile: " +
+                                `'https://kompetanseudirno.azureedge.net/udirdesign-staging/'` +
+                                ";",
+                            },
+                        },
+                    ],
+                },
+                {
                     test: /\.css$/,
-                    use: ['style-loader', 'css-loader'],
+                    use: ["style-loader", "css-loader"],
+                },
+                {
+                    test: /\.vue$/,
+                    loader: "vue-loader",
+                    options: {
+                        extractCSS: true,
+                    },
+                    exclude: /node_modules/,
                 },
             ],
         },
         resolve: {
             alias: {
-                setup: path.resolve(__dirname, 'src/css/setup'),
+                setup: path.resolve(__dirname, "src/css/setup"),
+                vue$: path.resolve("node_modules/vue/dist/vue.esm-bundler.js"),
             },
-            extensions: ['.js'],
+            extensions: [".js", ".vue"],
             preferRelative: true,
             modules: ["src", "node_modules"],
-
         },
 
         performance:{
@@ -112,8 +141,8 @@ module.exports = (env) => {
                         parallel: true,
                         extractComments: false
                     }
-                )
-            ],
-        },
-    }
-};
+                    )
+                ],
+            },
+        }
+    };
