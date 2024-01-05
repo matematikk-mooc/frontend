@@ -18,7 +18,8 @@
         <Icon class="tree-node__label__text__icon" v-if="type === 'page' && isActivity()" name="edit_document" size="0.8em"></Icon>
         <Icon class="tree-node__label__text__icon" v-else-if="type === 'page' && isVideo()" name="video_camera" size="0.8em"></Icon>
         <Icon class="tree-node__label__text__icon" v-else-if="type === 'page'" name="article" size="0.8em"></Icon>
-        <template v-if="type === 'page'">
+        <Icon class="tree-node__label__text__icon" v-else-if="type === 'discussion'" name="chat" size="0.8em"></Icon>
+        <template v-if="type === 'page' || type === 'discussion'">
           <a :href="url">{{ localizedLabel }}</a>
         </template>
         <template v-else>

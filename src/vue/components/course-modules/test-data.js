@@ -223,7 +223,7 @@ export const tree_data_2_levels = [
   },
 ];
 
-// three levels: 
+// three levels:
 export const tree_data_3_levels = [
   {
     label: "0. Valg av rolle og lederstøtte",
@@ -403,6 +403,5 @@ export function addPropertiesToTreeData(data) {
       });
     }
   });
- console.log('Hello the data looks like that:', data)
   return data;
 }

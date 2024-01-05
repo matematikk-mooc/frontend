@@ -1,6 +1,8 @@
 import "../vue/design/override-base-Canvas-elements.scss";
 import "../vue/design/override-login-logout-Canvas-elements.scss";
 
+import { removeCanvasAnnouncementElements, removeCanvasDiscussionElements } from "./modules/announcements/utils";
+
 import accordion from './modules/accordion.js';
 import announcements from './modules/announcements.js';
 import api from './api/api.js';
@@ -22,7 +24,6 @@ import messagehandler from './3party/messagehandler.js';
 import multilanguage from '../vue/utils/previous-lang-utils.js'
 import nrk from './3party/nrk.js';
 import pages from './modules/pages.js';
-import { removeCanvasAnnouncementElements } from "./modules/announcements/utils";
 import { renderCourseModules } from "../vue/pages/course-page/left-menu"
 import { renderCourseModulesOnAnnouncementsPage } from "../vue/pages/announcements-page";
 import reveal from './modules/reveal';
@@ -125,7 +126,6 @@ jQuery(function($) {
       coursepage.saveUnenrollDialog();
       document.getElementById("right-side").remove();
     }
-    //        coursepage.hideCourseInvitationsForAllUsers();
 
     var courseId = api.getCurrentCourseId();
     var queryString = document.location.search;
@@ -164,12 +164,13 @@ jQuery(function($) {
   routes.addRouteForPath(/\/courses\/\d+\/announcements$/, function() {
     announcements.printAnnouncementsUnreadCount();
     announcements.setAnnouncementsListUnreadClass();
-      renderCourseModulesOnAnnouncementsPage('left-side');
+    renderCourseModulesOnAnnouncementsPage('left-side');
   });
 
   routes.addRouteForPath(
     /\/courses\/\d+\/discussion_topics$/,
     function() {
+
       announcements.printAnnouncementsUnreadCount();
     }
   );
@@ -272,10 +273,11 @@ jQuery(function($) {
       //If this is a group discussion we do not allow the user to access it because
       //he is apparantly not a member of a group.
       var courseId = api.getCurrentCourseId();
-      removeCanvasAnnouncementElements();
-      renderCourseModulesOnAnnouncementsPage('left-side');
-
-
+      // removeCanvasAnnouncementElements();
+      removeCanvasDiscussionElements();
+      if(!location.search.includes('module_item_id=')) {
+        renderCourseModules('left-side');
+      }
       util.hasRoleInCourse(courseId, "TeacherEnrollment", function(isTeacher) {
         if(!isTeacher) {
           var courseId = api.getCurrentCourseId();

@@ -93,7 +93,6 @@ export default (function() {
 
     saveUnenrollDialog: function() {
       var selfUnenrollmentDialog = document.getElementById("self_unenrollment_dialog");
-      console.log("self unenroll dialog", selfUnenrollmentDialog)
       if(selfUnenrollmentDialog){
         var application = document.getElementById("application");
         application.appendChild(selfUnenrollmentDialog);

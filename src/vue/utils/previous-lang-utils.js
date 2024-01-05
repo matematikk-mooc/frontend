@@ -145,6 +145,7 @@ class MultilangUtils {
       '.translate',
       '.show-content.user_content h1.page-title',
       '.discussion-title',
+      '.css-14fpfr2-text span span',
     ];
     const urlSearchParams = new URLSearchParams(window.location.href);
     if (urlSearchParams.has('lang')) {

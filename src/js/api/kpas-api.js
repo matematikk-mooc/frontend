@@ -19,7 +19,6 @@ export default (function() {
 
 
       const uri = this._location + options.uri;
-      console.log(uri)
       const params = options.params || {};
       const callback = options.callback;
       const customError = options.error;
@@ -103,7 +102,6 @@ export const apiWithResultOnly = (function() {
 
     _get(options) {
       const uri = this._location + options.uri;
-      console.log(uri);
       const params = options.params || {};
       const customError = options.error;
 

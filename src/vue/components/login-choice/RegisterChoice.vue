@@ -50,12 +50,10 @@
           this.modalOpen = false
         },
         goToFeide() {
-            console.log(window.location.origin)
             window.location.href = window.location.origin + "/search/all_courses?enroll_code=" + this.selfEnrollmentCode
 
         },
         goToCanvas() {
-            console.log(window.location.origin)
             window.location.href = window.location.origin + "/enroll/" + this.selfEnrollmentCode
         }
       }
