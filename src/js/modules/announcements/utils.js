@@ -1,4 +1,3 @@
-import { doc } from "prettier";
 
 //For old canvas discussion design
 export function removeCanvasAnnouncementElements() {
