@@ -2,6 +2,20 @@ import api from "../api/api.js";
 import util from "./util.js";
 export default (function() {
   return {
+
+    resizeH5p: function() {
+      var iframes = document.getElementsByTagName('iframe');
+      var resize = {
+        context: 'h5p',
+        action: 'resize'
+      };
+
+      for (var p = 0; p < iframes.length; p++) {
+        if (iframes[p].src.indexOf('h5p') !== -1) {
+          iframes[p].contentWindow.postMessage(resize, '*');
+        };
+      }
+    },
     showCourseInvitation: function () {
       if (!util.isAuthenticated()) {
         var enrollButton = $(".course_enrollment_link");
