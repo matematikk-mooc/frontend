@@ -55,10 +55,11 @@ export function mapModules(modules) {
 // Define functions for mapping Page and SubHeader items
 
 function mapToPage(item) {
+  let type = item.type.toLowerCase();
   return {
     id: Number(item.id),
     label: item.title,
-    type: "page",
+    type: type,
     nodes: [],
     url: item.html_url,
     isActive: item.isActive,
@@ -100,7 +101,7 @@ function mapCoursesInSubDirectory(items) {
       if (item.type === "SubHeader") {
         currentSubheader = mapToSubHeader(item);
         nestedItems.push(currentSubheader);
-      } else if (item.type === "Page") {
+      } else if (item.type === "Page" || item.type === "Discussion") {
         if (currentSubheader) {
            if (item.isActive) {
             currentSubheader.isActive = true;
@@ -114,7 +115,7 @@ function mapCoursesInSubDirectory(items) {
       if (item.type === "SubHeader") {
         currentSubheader = mapToSubHeader(item);
         nestedItems.push(currentSubheader);
-      } else if (item.type === "Page") {
+      } else if (item.type === "Page"  || item.type === "Discussion") {
         if (currentSubheader) {
           if (item.isActive) {
             currentSubheader.isActive = true;
@@ -160,4 +161,3 @@ function findNodeById(targetId, nodes) {
   // If the target ID is not found in the entire structure, return null
   return null;
 }
-

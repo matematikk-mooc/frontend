@@ -16,7 +16,6 @@
 </template>
 <script setup>
   const {logged_in} = defineProps(['logged_in'])
-  console.log("LOGGED", logged_in)
 
   const domain = window.location.origin;
   const myCourses = domain + "/courses?design=udir"

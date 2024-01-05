@@ -22,7 +22,6 @@ export default {
     const { value: fieldValue } = useField(props.name)
 
     watch(modelValue, (newValue) => {
-      console.log('model value is', modelValue)
       fieldValue.value = newValue
     })
     return {
@@ -91,5 +90,3 @@ export default {
   }
 }
 </style>
-
-

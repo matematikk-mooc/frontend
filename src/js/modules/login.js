@@ -9,7 +9,6 @@ export default(() => {
       let parentElement = document.getElementsByClassName('ic-Login-footer')[0];
       parentElement.innerHTML = '';
       parentElement.appendChild(infoMessage);
-      console.log(parentElement);
     }
   };
 })();

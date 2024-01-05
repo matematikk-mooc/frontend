@@ -38,7 +38,6 @@ import License from './License.vue'
 const server = SERVER;
 
 const { hasLicense } = defineProps(['hasLicense']);
-console.log('rendering the footer: ', hasLicense)
 
 </script>
 <style lang="scss">
