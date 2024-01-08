@@ -334,6 +334,7 @@ jQuery(function($) {
       menu.showLeftMenu();
       menu.listModuleItems();
       pages.modifyMarkAsDoneButton();
+      coursepage.resizeH5p();
 
       if (util.isTeacherOrAdmin()) {
         pages.addStudentViewButton();
