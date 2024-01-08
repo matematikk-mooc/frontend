@@ -4,8 +4,8 @@
       <ButtonLink v-show="previousUrl !== null" type="previous" :url="previousUrl">forrige</ButtonLink>
     </div>
     <div class="page-button-link-container-right">
-      <ButtonLink  v-show="nextUrl !== null" type="next" :url="nextUrl">neste</ButtonLink>  
-    </div> 
+      <ButtonLink  v-show="nextUrl !== null" type="next" :url="nextUrl">neste</ButtonLink>
+    </div>
   </div>
 </template>
 
@@ -37,7 +37,7 @@ const props = defineProps(['previousUrl', 'nextUrl']);
 .page-button-link-navigation {
   display: flex;
   width: 100%;
-  gap:2rem;
+  gap: 50%;
   padding: 1rem;
   align-items: center;
   justify-content: center;
@@ -49,7 +49,6 @@ const props = defineProps(['previousUrl', 'nextUrl']);
     align-self: flex-start;
     min-width: 5rem;
   }
-  
+
 }
 </style>
- 

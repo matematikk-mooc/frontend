@@ -2,7 +2,7 @@
   <div class="course-modules-container-with-progression">
       <CourseModules :nodes="data" v-if="!loading" :lang="lang"  :moduleProgressions="completed"/>
   </div>
-  
+
 </template>
 
 <script>
@@ -75,9 +75,9 @@ export default defineComponent({
       if (pageId) {
         const { previousPageUrl, nextPageUrl } = findPreviousAndNext(allPages, pageId);
         renderPreviousAndNextButton(previousPageUrl, nextPageUrl);
-      } 
+      }
     }
-  
+
     const fetchData = async () => {
       try {
         // Fetch modules for the course
@@ -87,7 +87,7 @@ export default defineComponent({
         const allPages = []
         completed.value.forEach(module => allPages.push(...module.pages));
         createNavigationButtons(allPages);
-        
+
       } catch (error) {
         console.error('Error fetching data:', error);
       } finally {
@@ -116,5 +116,3 @@ export default defineComponent({
   margin-right: 1rem;
 }
 </style>
-
-
