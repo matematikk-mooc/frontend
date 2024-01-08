@@ -22,6 +22,10 @@ export function removeCanvasDiscussionElements() {
         document.getElementsByClassName("discussion-topic-reply-button")[0].remove();
     }
     //Toolbar to sort and search discussion posts
-    document.getElementsByClassName("css-13ln38u-view")[0].remove();
-
+    setTimeout(function(){
+        let toolbar = document.getElementsByClassName("css-13ln38u-view")[0]
+        if (toolbar) {
+            toolbar.remove();
+        }
+    }, 1200);
 }

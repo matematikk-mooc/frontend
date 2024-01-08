@@ -5,10 +5,10 @@ export function countPagesAndCompleted(entry) {
   const pages = [];
 
   function processNode(node) {
-    if (node.type === 'page') {
+    if (node.type === 'page' || node.type === 'discussion') {
       totalPages++;
       pages.push(node)
-      
+
 
       if (node.isCompleted) {
         completedPages++;
@@ -45,4 +45,3 @@ export function completedPagesForAllModules(modulesCompletedCount) {
     totalModules: modulesCompletedCount.length
   }
 }
-

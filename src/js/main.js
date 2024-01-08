@@ -256,7 +256,6 @@ jQuery(function($) {
         util.tinyMceEditorIsInDOM(
           () => tinyMCEEditor.injectGroupHashtags(userGroups)
         );
-        discussionTopics.injectReplyButtonAction(userGroups);
       });
     }
   );
@@ -291,8 +290,6 @@ jQuery(function($) {
                   $("#discussion-managebar").html('<div class="uob-warning"> \
                   Dette er en gruppediskusjon, men du er ikke medlem i noen gruppe og kan derfor ikke delta.\
                     Gå tilbake til forsiden og velg fanen "Rolle og grupper".</div>');
-              } else {
-                discussionTopics.moveSequenceLinks();
               }
             });
           }
@@ -314,14 +311,9 @@ jQuery(function($) {
         util.tinyMceEditorIsInDOM(
           () => tinyMCEEditor.injectGroupHashtags(userGroups)
         );
-        discussionTopics.injectReplyButtonAction(userGroups);
       });
     }
   );
-
-  routes.addRouteForPath([/\/groups\/\d+\/discussion_topics\/\d+/], function() {
-    discussionTopics.moveSequenceLinks();
-  });
 
   routes.addRouteForPathOrQueryString(
     [

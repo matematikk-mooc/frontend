@@ -162,7 +162,7 @@ export default (function () {
       return false;
     },
     enrollmentsHasRoleInCourse: function (enrollments, role) {
-      for (i = 0; i < enrollments.length; i++) {
+      for (let i = 0; i < enrollments.length; i++) {
         let enrollment = enrollments[i];
         if (enrollment["role"] == role) {
           return true;
@@ -171,9 +171,10 @@ export default (function () {
       return false;
     },
     hasRoleInCourse: function (courseId, role, callback) {
+      let self = this;
       return function (callback, role) {
         api.getUsersEnrollmentsForCourse(courseId, function (enrollments) {
-          callback(enrollmentsHasRoleInCourse(enrollments, role));
+          callback(self.enrollmentsHasRoleInCourse(enrollments, role));
         });
       }(callback, role)
     },
@@ -484,7 +485,7 @@ export default (function () {
       return false;
     },
     tinyMceEditorIsInDOM(callback) {
-      executeCallbackWhenObjectExists(function () {
+      this.executeCallbackWhenObjectExists(function () {
         tinyMCE.activeEditor;
       }, callback);
     },

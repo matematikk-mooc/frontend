@@ -18,4 +18,3 @@ export function extractCurrentCoursePageIdFromUrl() {
   return currentPageId ? Number(currentPageId) : null;
 
 }
-
