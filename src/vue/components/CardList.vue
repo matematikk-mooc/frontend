@@ -86,6 +86,9 @@ export default {
       window.location.href = this.domain + '/enroll/' + enrollCode;
     },
     truncateString(str) {
+      if (!str) {
+        return '';
+      }
       if (str.length > 100) {
         return str.substring(0, 120) + '...';
       }
@@ -192,7 +195,7 @@ export default {
     width: 100%;
     height: 100%;
     object-position: right bottom;
-   
+
   }
 }
 
