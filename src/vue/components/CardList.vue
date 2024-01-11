@@ -156,8 +156,12 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style scoped lang="scss">
 @import '../design/_card-themes.scss';
+
+.backdrop{
+  background-color: rgba(153, 153, 153, 0.8);
+}
 
 .card-container {
   margin-top: 1rem;
@@ -187,7 +191,7 @@ export default {
   position: relative;
   width: 100%;
   height: 10rem;
-   @media screen and (max-height: 1200px){
+   @media screen and (max-height: 960px){
       display:none;
     }
 
