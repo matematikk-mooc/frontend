@@ -35,6 +35,7 @@ import tooltip from "./modules/tooltip";
 import uob from './3party/uob7.js';
 import util from './modules/util.js';
 import utilRoot from './utilRoot.js';
+import uucheck from './modules/uucheck.js';
 
 jQuery(function($) {
 
@@ -145,6 +146,8 @@ jQuery(function($) {
     coursesettings.addListUsersButton();
     coursesettings.addListGroupsButton();
     coursesettings.addListAssignmentsButton();
+    uucheck.addUUButton();
+
   });
 
   routes.addRouteForPath(/\/profile\/settings$/, function() {
