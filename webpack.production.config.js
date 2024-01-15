@@ -103,7 +103,7 @@ module.exports = (env) => {
                             options: {
                                 additionalData:
                                 "$urlToFile: " +
-                                `'https://kompetanseudirno.azureedge.net/udirdesign/'` +
+                                `'https://kompetanseudirno.azureedge.net/frontend-main/'` +
                                 ";",
                             },
                         },

@@ -285,6 +285,7 @@ export default (function () {
       return window.location.href.includes('/enroll/');
     },
     isMemberOfExpiredCommunity(course, callback) {
+      let self = this
       if(!course) {
         return;
       }
@@ -293,9 +294,9 @@ export default (function () {
         if (groups.length) {
           for (var i = 0; i < groups.length; i++) {
             var group = groups[i];
-            var countyOrCommunityNumber = getCountyOrCommunityNumber(group.description);
+            var countyOrCommunityNumber = self.getCountyOrCommunityNumber(group.description);
             if (countyOrCommunityNumber) {
-              if (utgaatteKommuneNr.indexOf(countyOrCommunityNumber) > -1) {
+              if (fknr.utgaatteKommuneNr.indexOf(countyOrCommunityNumber) > -1) {
                 memberOfUtgaattKommune = true;
                 break;
               }
