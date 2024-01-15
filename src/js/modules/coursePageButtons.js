@@ -1,10 +1,11 @@
 import '../../vue/design/re-styles/buttons.scss';
+import store from '../../vue/store/index'
 
 export default (function () {
     return {
         replaceMarkAsDone: function () {
 
-            const originalMarkAsDoneButton = document.querySelector('#mark-as-done-checkbox');
+          const originalMarkAsDoneButton = document.querySelector('#mark-as-done-checkbox');
 
             if (!originalMarkAsDoneButton) {
               return;
@@ -42,10 +43,12 @@ export default (function () {
                     newMarkAsDoneButton.setAttribute('completed', 'false');
                     newMarkAsDoneButton.classList.remove('custom-mark-as-done-completed');
                     newMarkAsDoneButton.innerHTML = notCompletedContent;
+                    store.dispatch('setPageCompletion', false);
                   } else {
                     newMarkAsDoneButton.setAttribute('completed', 'true');
                     newMarkAsDoneButton.classList.add('custom-mark-as-done-completed');
                     newMarkAsDoneButton.innerHTML = completedContent;
+                    store.dispatch('setPageCompletion', true);
                   }
                 }, 500); // Set the timeout duration in milliseconds (adjust as needed)
             };

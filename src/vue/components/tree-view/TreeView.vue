@@ -20,7 +20,7 @@
         <Icon class="tree-node__label__text__icon" v-else-if="type === 'page'" name="article" size="0.8em"></Icon>
         <Icon class="tree-node__label__text__icon" v-else-if="type === 'discussion'" name="chat" size="0.8em"></Icon>
         <template v-if="type === 'page' || type === 'discussion'">
-          <a :href="url">{{ localizedLabel }}</a>
+          <a @click="setActivePageAndModule(url)">{{ localizedLabel }}</a>
         </template>
         <template v-else>
           <div class="dropdown-title"> {{ localizedLabel }}</div>
@@ -59,6 +59,18 @@ const props = defineProps({
   isActive: Boolean,
 });
 
+import { useStore } from 'vuex'
+const store = useStore()
+const setActivePageAndModule = (url) => {
+    store.dispatch('setActivePageAndModule', url)
+    .then(() => {
+        window.location = url;
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+};
+
 const collapsed = ref(true);
 const initialIsActive = ref(props.isActive);
 const isLeaf = computed(() => props.nodes.length === 0);
@@ -68,7 +80,7 @@ const toggleCollapse = () => {
     collapsed.value = !collapsed.value;
   }
   if (isLeaf.value) {
-    window.location.href = props.url;
+    setActivePageAndModule(props.url)
   }
 };
 

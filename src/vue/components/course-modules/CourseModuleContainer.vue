@@ -1,21 +1,17 @@
 <template>
   <div class="course-modules-container-with-progression">
-      <CourseModules :nodes="data" v-if="!loading" :lang="lang"  :moduleProgressions="completed"/>
+      <CourseModules :nodes="courseModules" v-if="courseModulesInStore" :lang="lang"  :moduleProgressions="completionProgression"/>
   </div>
-
 </template>
 
 <script>
-import { defineComponent, ref, onMounted, onBeforeUnmount} from 'vue';
+import { defineComponent, ref, onMounted, onBeforeUnmount, computed} from 'vue';
 import CourseModules from './CourseModules.vue';
-import { fetchModulesForCourse } from '../../../js/modules/module-selector/index.js';
 import { Subject } from 'rxjs';
 import { getLanguageCode } from '../../utils/lang-utils';
-import { countPagesAndCompleted } from './completed-utils'
 import { renderPreviousAndNextButton } from './page-navigation/index';
 import { findPreviousAndNext, extractCurrentCoursePageIdFromUrl} from './previous-next-utils';
-
-
+import { useStore } from 'vuex'
 
 export default defineComponent({
   name: 'CourseModuleContainer',
@@ -24,11 +20,25 @@ export default defineComponent({
   },
   setup() {
 
+    const store = useStore()
+
+    if (!store) {
+      console.error('Vuex store is not initialized.');
+      return;
+    }
+    const courseModules = computed(() => {
+      return store.getters.courseModules;
+    });
+    const courseModulesInStore = computed(() => {
+      return store.getters.courseModulesInStore;
+    });
+    const completionProgression = computed(() => {
+      return store.getters.completionProgression;
+    })
+
     const urlChangeSubject = new Subject();
     const previousUrl = ref(window.location.href);
     const lang = ref(getLanguageCode());
-    const completed = ref([]);
-
 
     let observer = null;
 
@@ -67,9 +77,6 @@ export default defineComponent({
       stopObservingUrlChanges();
     });
 
-    const data = ref([]);
-    const loading = ref(true);
-
     const createNavigationButtons = (allPages) => {
       const pageId= extractCurrentCoursePageIdFromUrl();
       if (pageId) {
@@ -78,32 +85,19 @@ export default defineComponent({
       }
     }
 
-    const fetchData = async () => {
-      try {
-        // Fetch modules for the course
-        const response = await fetchModulesForCourse();
-        data.value = response;
-        completed.value = data.value.map(item => countPagesAndCompleted(item));
-        const allPages = []
-        completed.value.forEach(module => allPages.push(...module.pages));
-        createNavigationButtons(allPages);
-
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      } finally {
-        // Set loading to false after fetching data
-        loading.value = false;
-      }
-    };
+    const fetchCourseModules = async () => {
+      await store.dispatch('fetchCourseModules');
+      createNavigationButtons(store.getters.pages)
+    }
 
     // Call the asynchronous function within onMounted
-    onMounted(fetchData);
+    onMounted(fetchCourseModules);
 
     return {
-      data,
-      loading,
       lang,
-      completed
+      courseModules,
+      courseModulesInStore,
+      completionProgression
     };
   },
 });
