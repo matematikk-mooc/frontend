@@ -39,7 +39,7 @@ module.exports = (env) => {
 
             }),
             new webpack.DefinePlugin({
-                'DESIGNCSS' : JSON.stringify('subaccount-udirdesign-' + env.timestamp + '.css'),
+                'DESIGNCSS' : JSON.stringify('kompetanseportal-udirdesign-' + env.timestamp + '.css'),
                 'DESIGNJS' : JSON.stringify('kompetanseportal-udirdesign-' + env.timestamp + '.js'),
                 'SERVER': JSON.stringify('https://kompetanseudirno.azureedge.net/udirdesign/'),
                 'KPASAPIURL': JSON.stringify('https://kpas.kompetanse.udir.no/api'),
