@@ -39,13 +39,20 @@ module.exports = (env) => {
 
             }),
             new webpack.DefinePlugin({
-                'DESIGNCSS' : JSON.stringify('subaccount-udirdesign-' + env.timestamp + '.css'),
-                'DESIGNJS' : JSON.stringify('kompetanseportal-udirdesign-' + env.timestamp + '.js'),
-                'SERVER': JSON.stringify('https://kompetanseudirno.azureedge.net/udirdesign/'),
-                'KPASAPIURL': JSON.stringify('https://kpas.kompetanse.udir.no/api'),
-                'ACCOUNTID' : [99, 100, 102, 103, 137, 138, 139, 145],
-                'KPAS_MERGE_LTI_ID' : 845,
-                'KPAS_IFRAME_VERSION' : JSON.stringify('production'),
+                VUECSS: JSON.stringify("index.css"),
+                DESIGNCSS : JSON.stringify(
+                    "subaccount-udirdesign-' + env.timestamp + '.css"),
+                DESIGNJS : JSON.stringify(
+                    "kompetanseportal-udirdesign-' + env.timestamp + '.js"),
+                SERVER: JSON.stringify(
+                    "https://kompetanseudirno.azureedge.net/udirdesign/"),
+                KPASAPIURL: JSON.stringify(
+                    "https://kpas.kompetanse.udir.no/api"),
+                ACCOUNTID : [99, 100, 102, 103, 137, 138, 139, 145],
+                KPAS_MERGE_LTI_ID : 845,
+                KPAS_IFRAME_VERSION : JSON.stringify('production'),
+                __VUE_OPTIONS_API__: "true",
+                __VUE_PROD_DEVTOOLS__: "false",
             }),
             new MiniCssExtractPlugin({
                 filename: '[name]-' + env.timestamp +'.css', // Output CSS filenames
