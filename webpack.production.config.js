@@ -41,7 +41,7 @@ module.exports = (env) => {
             new webpack.DefinePlugin({
                 'DESIGNCSS' : JSON.stringify('subaccount-udirdesign-' + env.timestamp + '.css'),
                 'DESIGNJS' : JSON.stringify('kompetanseportal-udirdesign-' + env.timestamp + '.js'),
-                'SERVER': JSON.stringify('https://kompetanseudirno.azureedge.net/frontend-main/'),
+                'SERVER': JSON.stringify('https://kompetanseudirno.azureedge.net/udirdesign/'),
                 'KPASAPIURL': JSON.stringify('https://kpas.kompetanse.udir.no/api'),
                 'ACCOUNTID' : [99, 100, 102, 103, 137, 138, 139, 145],
                 'KPAS_MERGE_LTI_ID' : 845,
@@ -96,7 +96,7 @@ module.exports = (env) => {
                             options: {
                                 additionalData:
                                 "$urlToFile: " +
-                                `'https://kompetanseudirno.azureedge.net/frontend-main/'` +
+                                `'https://kompetanseudirno.azureedge.net/udirdesign/'` +
                                 ";",
                             },
                         },
