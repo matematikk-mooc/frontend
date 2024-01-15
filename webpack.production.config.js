@@ -41,9 +41,9 @@ module.exports = (env) => {
             new webpack.DefinePlugin({
                 VUECSS: JSON.stringify("index.css"),
                 DESIGNCSS : JSON.stringify(
-                    "kompetanseportal-udirdesign-" + env.timestamp + "".css"),
+                    "kompetanseportal-udirdesign-" + env.timestamp + ".css"),
                 DESIGNJS : JSON.stringify(
-                    "kompetanseportal-udirdesign-" + env.timestamp + "".js"),
+                    "kompetanseportal-udirdesign-" + env.timestamp + ".js"),
                 SERVER: JSON.stringify(
                     "https://kompetanseudirno.azureedge.net/frontend-main/"),
                 KPASAPIURL: JSON.stringify(
