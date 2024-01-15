@@ -1,3 +1,6 @@
+# THIS IS AN ARCHIVE BRANCH
+Meant for backup of the old desigb pre 2024. We switched to the new vue design per 15.01.2024. This is the archive of all old code before this date
+
 # Frontend
 
 Custom JS and CSS frontend for inclusion in [Canvas](http://www.instructure.com/).
