@@ -30,7 +30,7 @@
 </template>
 
 <script setup>
-import { defineProps, ref, computed} from 'vue';
+import { defineProps, ref, computed, watch} from 'vue';
 import Icon from '../icon/Icon.vue';
 import CourseModule from './CourseModule.vue';
 import ModulesProgressIndicator from '../module-progress-indicator/ModulesProgressIndicator.vue'
@@ -46,7 +46,13 @@ const modulesProgressionData = computed(() => {
   return  completedPagesForAllModules(props.moduleProgressions)
 })
 
-const treestructure = props.nodes; // Assign nodes prop to treestructure
+const treestructure = ref(props.nodes);
+
+// Watch for changes in the props.nodes (courseModules) prop
+watch(() => props.nodes, (newValue, oldValue) => {
+    // Update the treestructure with the new value
+    treestructure.value = newValue;
+});
 
 const selectedNode = ref(-1);
 
@@ -78,10 +84,10 @@ const toggleActiveModule = ({moduleId, isOpen}) => {
   box-sizing: border-box;
   width: 100%;
   border-radius: 1.6875rem 0 0 1.6875rem;
-  border: 0.0625rem solid $color-grey-400; 
+  border: 0.0625rem solid $color-grey-400;
   background: $color-white;
   padding: 0 0 0.75rem 0;
-  @include box-shadow(medium); 
+  @include box-shadow(medium);
 
   &__progress-indicator{
     box-sizing: border-box;
@@ -92,7 +98,7 @@ const toggleActiveModule = ({moduleId, isOpen}) => {
   &__header-section {
     color: black;
     word-wrap: break-word;
-    border-bottom: 0.125rem solid $color-grey-400; 
+    border-bottom: 0.125rem solid $color-grey-400;
     padding: 1.75rem 1rem 0.625rem 1.5rem;
     &__header{
       display:flex;
@@ -107,7 +113,7 @@ const toggleActiveModule = ({moduleId, isOpen}) => {
         margin-top: -0.5rem;
       }
     }
-   
+
   }
 
   &__treeview {

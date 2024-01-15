@@ -1,5 +1,5 @@
 <template>
-  <a :href="url"
+  <a
     :class="[
       'btn-link',
       { 'btn-link--filled': isFilled },
@@ -9,6 +9,7 @@
       { 'btn-link--md': !size || size === 'md' },
       { 'btn-link--lg': size === 'lg' }
     ]"
+    @click="setActivePageAndModule(url)"
   >
     <Icon v-if="type === 'previous'" name="chevron_left" size="1.5em" />
     <img class="feide-symbol" v-if="type === 'feideLogin'" :src="`${server}feide_white-symbol.svg`"/>
@@ -24,6 +25,19 @@ const props = defineProps({
   type: String,
   url: String
 });
+
+import store from '../../store/index'
+
+const setActivePageAndModule = (url) => {
+    store.dispatch('setActivePageAndModule', url)
+    .then(() => {
+        window.location = url;
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+};
+
 const server = SERVER;
 
 const isFilled = !props.type || props.type === 'filled' || props.type === 'feideLogin';
