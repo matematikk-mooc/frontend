@@ -6,7 +6,7 @@ Custom JS and CSS frontend for inclusion in [Canvas](http://www.instructure.com/
 
 The custom JS and CSS frontend is built on top of Canvas using the mechanism in Canvas for including custom .js and .css files.
 
-The frontend changes the Canvas graphical design and user interface by using [LESS](http://lesscss.org) and custom HTML injected using JavaScript and [Handlebars.js](http://handlebarsjs.com/) templates.
+The frontend changes the Canvas graphical design and user interface by using [SCSS](https://sass-lang.com/) and custom HTML injected using JavaScript and [Vue](https://vuejs.org/) components.
 
 The custom JS and CSS frontend is compiled and concatenated into a single CSS and JavaScript file using Node and [Webpack](https://webpack.js.org/)
 
@@ -28,13 +28,8 @@ git clone https://github.com/matematikk-mooc/frontend.git
 
 ## Install and build dependencies (Node packages)
 
-Switch to the directory where the frontend is located and install the dependencies using [yarn](https://yarnpkg.com/lang/en/docs/install/#mac-stable) or [NPM](https://www.npmjs.com/).
+Switch to the directory where the frontend is located and install the dependencies using [NPM](https://www.npmjs.com/).
 
-```
-yarn
-```
-
-or
 
 ```
 npm install
@@ -50,17 +45,15 @@ npm run buildDevelopment
 npm run serveDevelopment
 ```
 
-All changes in LESS (CSS) and JavaScript will automatically be compiled and are available using the following URLs:
+All changes in SCSS, Vue and Javascript will automatically be compiled and are available at [http://localhost:9000](http://localhost:9000/)
 
-- [http://localhost:9000/subaccount-localhost.css](http://localhost:9000/subaccount-localhost.css)
-- [http://localhost:9000/rootaccount-localhost.css](http://localhost:9000/rootaccount-localhost.css)
-- [http://localhost:9000/subaccount-localhost.js](http://localhost:9000/subaccount-localhost.js)
-- [http://localhost:9000/rootaccount-localhost.js](http://localhost:9000/rootaccount-localhost.js)
-- [http://localhost:9000/kompetanseportalen-localhost.js](http://localhost:9000/kompetanseportalen-localhost.js)
-- [http://localhost:9000/badges-dev.js](http://localhost:9000/badges-dev.js)
-- [http://localhost:9000/badges-dev.css](http://localhost:9000/badges-dev.css)
 
-## Build JS and CSS files for staging and production environment
+## Build JS and CSS files for dev, staging and production environment
+Compile JS and CSS for the dev environment using
+
+```
+npm run buidDev
+```
 
 Compile JS and CSS for the staging environment using
 
@@ -73,6 +66,7 @@ Compile JS and CSS for the production environment using
 npm run buildProduction
 ```
 
+
 * See scripts section in package.json
 
 The resulting JS and CSS file can be found in the **dist** directory. These commands will get the timestamp of the latest commit to the given branch, and append to the filenames.
@@ -84,37 +78,36 @@ To test code locally allways use buildDevelopment and serveDevelopment, as build
 
 | Directory     | Description                               |
 | ------------- | ----------------------------------------- |
-|~~spec~~       | ~~Jasmine JavaScript tests~~              |
 | src           | Source code                               |
-| src/addons    | modules for canvas addons                 |
-| src/css       | CSS(LESS)                                 |
-| src/js        | JavaScript                                |
-| src/templates | Handlebars.js templates for creating HTML |
+| src/js        | JavaScript files used to inject custom Vue components and hide unused Canvas elements.
+| src/vue       | Custom Vue components and scss            |
 | dist/         | Build output directory                    |
 
-## src/css
+## src/vue
 
-| Directory | Description                                     |
-| --------- | ----------------------------------------------- |
-| framework | CSS for override of global Canvas HTML elements |
-| modules   | CSS for custom HTML modules added to canvas     |
-| pages     | CSS overrides for specific Canvas pages         |
-| setup     | Global LESS variables, mixins, custom font      |
+| Directory     | Description                               |
+| ------------- | ----------------------------------------- |
+| /assets       | Font files and svgs                       |
+| /components   | Custom Vue componets                      |
+| /pages        | Vue views used on urls where replacing the whole page |
+| /design       | SCSS files for own components and override styling of Canvas elements                   |
+| /utils        | util js files used with multilanguage     |
 
 ## src/js
 
-| File              | Description                                                              |
+| File/Directory              | Description                                                              |
 | ----------------- | ------------------------------------------------------------------------ |
 | main.js           | Calls different JS functions to create custom HTML based on URL (routes) |
-| api/api.js        | Call to Canvas REST API etc                                              |
-| modules/          | Various JavaScripts called from main.js                                  |
+| api/        | Call to Canvas REST API and KPAS API                   |
+| modules/          | JavaScripts called from main.js                  |
 | modules/routes.js | Library used to call different JS functions based on URLs using RegExps  |
 
 ## Webpack config files
 
 | File                          | Description                                 |
 | ------------------------------|---------------------------------------------|
-| webpack.development.config.js | Config file for development                 |
+| webpack.development.config.js | Config file for development (running with localhost)                 |
+| webpack.dev.config.js     | Config file for dev environment         |
 | webpack.production.config.js  | Config file for production environment      |
 | webpack.staging.config.js     | Config file for staging environment         |
 
@@ -129,29 +122,6 @@ Note that addons generate different files that may be destinated to different di
 **.github** containts Github Actions pipelines for building staging and production and pushing **dist** directory to Azure.
 
 # Environment specific variables
-## LESS Image paths
-
-The LESS files have URL references to bitmaps which are replaced at build time using globalVars in [Webpack less-loader](https://webpack.js.org/loaders/less-loader/). To change the URL for the server,
-modify the following section in webpack.(production|staging|development).config.js
-
-```
-module: {
-  rules: [
-    ...
-    {
-      loader: 'less-loader',
-      options: {
-        lessOptions: {
-          relativeUrls: false,
-          globalVars: {
-            SERVER: JSON.stringify('http://localhost:9000/'),
-          },
-        }
-      }
-    }
-  ]
-}
-```
 
 ## JS variables
 Some settings and urls differs between environment, these are replaced at build time using [Webpack DefinePlugin](https://webpack.js.org/plugins/define-plugin/) and can be updated in the following section in webpack.(production|staging|development).config.js
@@ -170,3 +140,13 @@ plugins: [
   })
 ]
 ```
+
+## Storybook
+
+Storybook for the custom Vue components. To build the storybook run:
+  ```
+    npm run storybook
+  ```
+Visit storbook:
+
+http://matematikk-mooc.github.io/frontend/

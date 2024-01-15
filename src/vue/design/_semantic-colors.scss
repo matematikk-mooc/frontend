@@ -1,0 +1,23 @@
+@import "./colors.scss";
+
+// Define semantic colors using a more structured format
+$semantic-colors: (
+  success: (
+    background: map-get($color-palette-green, background, 200),
+    foreground: map-get($color-palette-green, background, 600),
+  ),
+  error: (
+    background: map-get($color-palette-red, background, 200),
+    foreground: map-get($color-palette-red, background, 600),
+    text: map-get($color-palette-red, background, 600),
+    icon: map-get($color-palette-red, background, 600),
+  ),
+  info: (
+    background: map-get($color-palette-steel, background, 200),
+    foreground: map-get($color-palette-steel, background, 700),
+  ),
+  warning: map-get($color-palette-orange, background, 600),
+  hover: $primary-hover-color,
+  text: $color-grey-900,
+  focus: $primary-hover-color,
+);

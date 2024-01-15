@@ -1,0 +1,52 @@
+@import './colors.scss';
+@import './typography.scss';
+
+.custom-accordion {
+    display: flex;
+    width: 100%;
+    height: fit-content;
+    padding: .5rem 0.5rem 0.5rem 0.5rem;
+    justify-content: space-between;
+    align-items: flex-start;
+    border-bottom: 1px solid $color-grey-600;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    color: $color-black;
+    background-color: #FFF ;
+    font-family: Roboto;
+    font-size: 1rem;
+    font-style: normal;
+    font-weight: 500;
+
+}
+
+.custom-accordion.active {
+    border-bottom: 1px solid $primary-hover-color;
+    color: $primary-hover-color;
+}
+
+.custom-accordion-panel {
+    color: $color-black;
+    font-family: Roboto;
+    font-size: 1rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 150%;
+    display: none;
+    align-content: center;
+    justify-content: center;
+    padding: 1rem 0.5rem 1rem 0.5rem;
+}
+
+.custom-accordion-panel.active {
+    display: inline;
+}
+
+
+
+.custom-accordion-img {
+    width: 1.5rem;
+    height: 1.5rem;
+    color: $primary-hover-color;
+}

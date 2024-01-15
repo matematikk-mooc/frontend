@@ -234,7 +234,7 @@ export default (function() {
           }
         },
         error: error,
-        uri: '/courses',
+        uri: '/courses?include[]=public_description',
         params: {
           include: ['syllabus_body', 'course_progress'],
           per_page: '100'
@@ -264,6 +264,16 @@ export default (function() {
         params: { per_page: 999 }
       });
     },
+
+    getModulesForCourseIdIncludeItems(courseId, callback, error) {
+      this._get({
+        callback: callback,
+        error: error,
+        uri: `/courses/${courseId}/modules?include[]=items`,
+        params: { per_page: 999 }
+      });
+    },
+
 
     getItemsForModuleId(callback, error, courseId, moduleId, params) {
       this._get({
@@ -561,23 +571,6 @@ export default (function() {
         }
       });
     },
-
-    /*
-        from_conversation_id:
-mode: async
-scope:
-filter:
-group_conversation: true
-course: course_1
-context_code: course_1
-recipients[]: section_6
-subject: Test
-bulk_message: 0
-user_note: 0
-media_comment_id:
-media_comment_type:
-body: test
-*/
 
     postMessageToConversation(
       courseId,
@@ -886,12 +879,7 @@ body: test
         callback(data);
       });
     },
-    /*
-uri = sprintf("/api/v1/courses/%d/enrollments", cid)
-dbg(uri)
-$canvas.post(uri, {'enrollment[user_id]' => user_id, 'enrollment[type]' => etype,
-	'enrollment[enrollment_state]' => "active"})
-*/
+
     enrollUserIdInSection(userId, sectionId, etype, callback, error) {
       this._post({
         callback: callback,
@@ -1069,15 +1057,6 @@ $canvas.post(uri, {'enrollment[user_id]' => user_id, 'enrollment[type]' => etype
         params: params
       });
     },
-
-    //To be used later when displaying info about unread discussion comments.
-    // getDiscussionTopics(courseId, callback) {
-    //     this._get({
-    //         "callback": callback,
-    //         "uri": `/courses/${courseId}/discussion_topics`,
-    //         "params": { per_page: 999 },
-    //     });
-    // },
 
     markDiscussionTopicAsRead(courseId, contentId, callback) {
       this._put({

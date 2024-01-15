@@ -1,4 +1,3 @@
 {
-    "presets": ["@babel/preset-env"],
-    "plugins": ["handlebars-inline-precompile"]
-  }
+    "presets": ["@babel/preset-env"]
+}

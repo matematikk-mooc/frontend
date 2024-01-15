@@ -1,17 +1,21 @@
 import api from "../api/api.js";
-import courseprogress from '../../templates/modules/courseprogress.hbs';
-import courseprogressforstudent from '../../templates/modules/courseprogressforstudent.hbs';
-import discussionTopics from "./discussion-topics.js";
-import footer from "./footer.js";
-import { hrefQueryString } from "../settingsRoot.js";
-import i18n from '../i18n';
-import modulesprincipal from '../../templates/modules/modulesprincipal.hbs';
-import modulesstudent from '../../templates/modules/modulesstudent.hbs';
-import multilanguage from "../3party/multilanguage.js";
 import util from "./util.js";
-
 export default (function() {
   return {
+
+    resizeH5p: function() {
+      var iframes = document.getElementsByTagName('iframe');
+      var resize = {
+        context: 'h5p',
+        action: 'resize'
+      };
+
+      for (var p = 0; p < iframes.length; p++) {
+        if (iframes[p].src.indexOf('h5p') !== -1) {
+          iframes[p].contentWindow.postMessage(resize, '*');
+        };
+      }
+    },
     showCourseInvitation: function () {
       if (!util.isAuthenticated()) {
         var enrollButton = $(".course_enrollment_link");
@@ -19,64 +23,13 @@ export default (function() {
         var selectedCourseId = linkToSelectedCourse[linkToSelectedCourse.length - 1];
 
         if (enrollButton) {
-          enrollButton.text(i18n.EnrollButton);
+          enrollButton.text('Enroll this course');
           enrollButton.click(function (e) {
             e.preventDefault();
-                  window.location.href = '/search/all_courses' + hrefQueryString + '#' + selectedCourseId;
+                  window.location.href = '/search/all_courses' + '?design=udir' + '#' + selectedCourseId;
           })
         }
       }
-    },
-    listModulesAndShowProgressBar: function() {
-      api.getModulesForCurrentCourse(function(modules) {
-        var progressHTML = "";
-        var modulesHTML = "";
-
-        if(util.isActiveCourseRoleBased() && util.isPrincipal()) {
-          progressHTML = util.renderTemplateWithData(courseprogress, {
-            title: i18n.CourseProgressionTitle,
-            modules: modules
-          });
-          modulesHTML = util.renderTemplateWithData(modulesprincipal, {
-            navname: i18n.GoToModule,
-            coursemodules: i18n.ModulePlural,
-            modules: modules,
-            course: util.course
-          });
-        }
-        else {
-          progressHTML = util.renderTemplateWithData(courseprogressforstudent, {
-            title: i18n.CourseProgressionTitle,
-            modules: modules
-          });
-
-          modulesHTML = util.renderTemplateWithData(modulesstudent, {
-            navname: i18n.GoToModule,
-            coursemodules: i18n.ModulePlural,
-            modules: modules,
-            course: util.course
-          });
-        }
-
-        if(util.isMMOOCLicense()) {
-          footer.addLicenseInFooter();
-        }
-
-        document.getElementById('course_home_content').insertAdjacentHTML('beforebegin', progressHTML);
-
-        document.getElementById('course_home_content').insertAdjacentHTML('beforebegin', modulesHTML);
-
-        multilanguage.perform();
-
-        //Canvas case: Slow loading for group discussions when large number of groups Case # 05035288
-        //Display popup box when loading
-        util.postModuleCoursePageProcessing();
-
-        discussionTopics.printDiscussionUnreadCount(
-          modules,
-          'coursepage'
-        );
-      });
     },
     hideCourseInvitationsForAllUsers: function() {
       var acceptanceTextToSearchFor = 'invitert til å delta';
@@ -97,46 +50,66 @@ export default (function() {
           "')"
       ).hide();
     },
+    hideElementsFromUsers:function() {
+    // Remove elements with class "public-license"
+   var publicLicenseElements = document.getElementsByClassName('public-license')[0];
+   if (publicLicenseElements) {
+            publicLicenseElements.parentNode.removeChild(publicLicenseElements);
+        }
 
-    //Until Canvas has corrected the translation of drop course to something else than "slipp emnet", we override the functionality.
+    // Check if the user is a student or if teacher/admin is in student mode.
+    var userIsStudent = !util.isTeacherOrAdmin();
+    // Conditionally remove elements based on userIsStudent
+    if (userIsStudent) {
+        // Remove element with class "header-bar-outer-container"
+        var headerBarContainer = document.getElementsByClassName('header-bar-outer-container')[0];
+        if (headerBarContainer) {
+            headerBarContainer.parentNode.removeChild(headerBarContainer);
+        }
+    } else {
+        // Remove element with class "page-heading"
+        var pageHeadingElement = document.getElementsByClassName('page-heading')[0];
+        if (pageHeadingElement) {
+            pageHeadingElement.parentNode.removeChild(pageHeadingElement);
+        }
+    }
+},
+
     overrideUnregisterDialog: function() {
-      var selfUnenrollmentButton = $('.self_unenrollment_link');
-      var selfUnenrollmentDialog = $('#self_unenrollment_dialog');
-      if (selfUnenrollmentButton.length) {
-        selfUnenrollmentButton.text(
-          selfUnenrollmentButton
-            .text()
-            .replace('Slipp dette emnet', i18n.DropCourse)
-        );
-        //                selfUnenrollmentButton.off(); //Prevent default presentation of the dialog with incorrect translation.
-        selfUnenrollmentButton.on('click', function(e) {
-          setTimeout(function() {
-            $('#ui-id-1').html(i18n.DropCourse);
-          }, 200);
-        });
-      }
-      if (selfUnenrollmentDialog.length) {
-        selfUnenrollmentDialog.find('h2').hide();
-        selfUnenrollmentDialog.find('.button-container a span').text('OK');
-        selfUnenrollmentDialog.find('.button-container a i').hide(); //Hide x at beginning of OK button
+      var selfUnenrollmentButton = document.getElementsByClassName('self_unenrollment_link')[0];
+      if(selfUnenrollmentButton){
+        selfUnenrollmentButton.addEventListener('click', function(e) {
 
-        //Hide default dialog text
-        $('#self_unenrollment_dialog')
-          .contents()
-          .filter(function() {
-            return this.nodeType == 3;
-          })
-          .each(function() {
-            this.textContent = '';
+        var popup = document.getElementById("self_unenrollment_dialog");
+        popup.classList.add("ui-dialog-content");
+        popup.classList.add("ui-widget-content");
+
+        var application = document.getElementById("application")
+        var overlay = document.createElement("div");
+        overlay.classList.add("ui-widget-overlay");
+        overlay.setAttribute("style", "z-index: 1001; width: 100%; height: 100%; top: 0px; left: 0px; display: block;")
+        application.appendChild(overlay);
+
+        popup.setAttribute("style", "outline: 0px; z-index: 1002; position: absolute; height: auto; width: 300px; top: 50%; left: 50%; display: block;")
+        popup.style.display = "block";
+        application.appendChild(popup);
+
+        var close = popup.getElementsByClassName("btn dialog_closer")[0];
+        if(close){
+          close.addEventListener('click', function(e) {
+            popup.style.display = "none";
+            overlay.remove();
           });
-        //Add our dialog text
-        $('#self_unenrollment_dialog').prepend(
-          '<div/><p/><p>' +
-            i18n.DropCourseDialogText +
-            "<span class='unenroll_dialog_sad'></span><p>" +
-            i18n.JoinCourseDialogText +
-            "<span class='unenroll_dialog_happy'></span></p>"
-        );
+        }
+      });
+    }
+    },
+
+    saveUnenrollDialog: function() {
+      var selfUnenrollmentDialog = document.getElementById("self_unenrollment_dialog");
+      if(selfUnenrollmentDialog){
+        var application = document.getElementById("application");
+        application.appendChild(selfUnenrollmentDialog);
       }
     },
 
@@ -148,7 +121,7 @@ export default (function() {
       coming_up.replaceWith(
         "<div class='deadlines-container'>" +
           '<h2>' +
-          i18n.eventsAndDeadlinesTitle +
+          'Viktige datoer' +
           '</h2>' +
           "<div class='deadlines-scroll-up'></div>" +
           "<div class='deadlines-list'></div>" +

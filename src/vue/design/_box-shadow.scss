@@ -1,0 +1,12 @@
+$box-shadow-small: 0 0.1rem 0.2rem rgba(19, 19, 19, 0.15);
+$box-shadow-medium: 0 0.2rem 0.3rem rgba(19, 19, 19, 0.35);
+
+@mixin box-shadow($size: small) {
+  @if $size == small {
+    box-shadow: $box-shadow-small;
+  } @else if $size == medium {
+    box-shadow: $box-shadow-medium;
+  } @else {
+    box-shadow: 0;
+  }
+}

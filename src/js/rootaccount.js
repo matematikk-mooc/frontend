@@ -1,5 +1,5 @@
-import '../css/allrootaccount.less'
-
+import LoginDirectLink from '../vue/components/login-choice/LoginDirectLink.vue';
+import { createApp } from 'vue';
 import { hrefQueryString } from './settingsRoot';
 import utilRoot from './utilRoot';
 
@@ -40,11 +40,6 @@ function getScript(url, callback) {
   return undefined;
 }
 
-function showCanvasLogin() {
-  $('.login-box, .overlay').remove();
-  $('.ic-Login').show();
-  $("#f1_container").show(); //Small screens
-}
 //Redirect if necessary
 var redirected = false;
 //If this is a Feide self enrollment link, forward to a page that requires authentication. It will redirect to the Canvas login page
@@ -62,35 +57,14 @@ if(document.location.pathname == "/search/all_courses" && document.location.sear
     redirected = utilRoot.redirectFeideAuthIfEnrollReferrer();
     if(!redirected) {
       if(!document.location.search.includes("normalLogin=1")) {
-        let html = `
-        <div class="login-box frontPageLoginBox">
-          <div class="login-box__upper">
-            <div class="login-box__text">
-              <div class="unitHeading">Canvas innlogging for åpne nettkurs og kompetansepakker</div>
-              <div class="unitSubHeading">-for fleksibel og livslang læring</div>
-            </div>
-          </div>
-          <div class="loginText"><b>Logg på med</b></div>
-          <div class="login-box__lower">
-            <a class="feide-button mmooc-button mmooc-button-primary" onclick="window.location.href=\'/login/saml/2\'">
-              </a>
-              <a class="icon-question unit-help-login" target="_blank" href="https://bibsys.instructure.com/courses/553"></a>
-              <a class="mmooc-button mmooc-button-secondary">Ikke Feide</a>
-          </div>
-          <div class="unitPartners">
-            <a href="https://udir.no" target="_blank"><img class="unitPartnersUdirLogo unitPartnersLogo" src="${SERVER}bitmaps/udirlogo50px.png"/></a>
-            <a href="https://ntnu.no" target="_blank"><img class="unitPartnersSmallLogo" src="${SERVER}bitmaps/logo_ntnu.png"/></a>
-            <a href="https://unit.no" target="_blank"><img class="unitPartnersUnitLogo" src="${SERVER}bitmaps/unit-logo-farge.svg"/></a>
-          </div>
-        </div>
-        `;
-        var feidLoginBoxPosition = document.getElementById('wrapper');
-        if(!feidLoginBoxPosition) {
-          feidLoginBoxPosition = document.getElementById('f1_container');
-        }
-        feidLoginBoxPosition.insertAdjacentHTML('afterend', html);
-        $(".mmooc-button-secondary").on('click', showCanvasLogin);
-        $('#application').before(`<div class="overlay"></div>`);
+        document.getElementById('wrapper').remove();
+        let parent = document.getElementById('application');
+        let login = document.createElement('div');
+        login.id = 'login-component';
+        let customLogin = createApp(LoginDirectLink);
+        parent.appendChild(login);
+        customLogin.mount("#login-component");
+
       }
       else {
         $(".ic-Login").show();
@@ -100,6 +74,8 @@ if(document.location.pathname == "/search/all_courses" && document.location.sear
   }
 } else if (document.location.pathname == "/courses") {
   redirected = utilRoot.redirectToEnrollIfCodeParamPassed();
+} else if (document.location.href.indexOf('?login_success=1') != -1  ){
+  window.location.href = '/search/all_courses?design=udir';
 } else if (document.location.pathname == "/") {
   setTimeout(function() {
     if(!$(".ic-DashboardCard__header_hero").length) {
@@ -116,6 +92,7 @@ if(document.location.pathname == "/search/all_courses" && document.location.sear
     }
   }, 1000)
 }
+
 
 
 if(!redirected) {

@@ -1,13 +1,14 @@
 const path = require('path');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
-const glob = require('glob');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const webpack = require('webpack');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-const TerserPlugin = require('terser-webpack-plugin')
+const TerserPlugin = require('terser-webpack-plugin');
+const {VueLoaderPlugin} = require('vue-loader');
 
 module.exports = (env) => {
+
     return {
         entry: {
             // ...other entry points...
@@ -23,16 +24,7 @@ module.exports = (env) => {
                 './src/js/subaccount.js',
             ],
             'kompetanseportal-udirdesign': [
-                'src/js/3party/matomo.js',
-                './src/js/i18n.js',
                 './src/js/main.js',
-            ],
-            'badgesave': [
-                './src/addons/badges/js/main.js',
-                './src/js/modules/template.js',
-                './src/js/modules/util.js',
-                './src/js/i18n.js',
-                './src/js/settings.js',
             ],
         },
 
@@ -49,7 +41,7 @@ module.exports = (env) => {
             new webpack.DefinePlugin({
                 'DESIGNCSS' : JSON.stringify('subaccount-udirdesign-' + env.timestamp + '.css'),
                 'DESIGNJS' : JSON.stringify('kompetanseportal-udirdesign-' + env.timestamp + '.js'),
-                'SERVER': JSON.stringify('https://kompetanseudirno.azureedge.net/udirdesign/'),
+                'SERVER': JSON.stringify('https://kompetanseudirno.azureedge.net/frontend-main/'),
                 'KPASAPIURL': JSON.stringify('https://kpas.kompetanse.udir.no/api'),
                 'ACCOUNTID' : [99, 100, 102, 103, 137, 138, 139, 145],
                 'KPAS_MERGE_LTI_ID' : 845,
@@ -61,20 +53,25 @@ module.exports = (env) => {
             new CopyWebpackPlugin({
                 patterns: [
                     {
-                        from: 'src/bitmaps/*',
-                        to: 'bitmaps/[name][ext]'
+                        from: "src/vue/assets/",
+                        to: ".",
                     },
                     {
-                        from: 'src/vector_images/*',
-                        to: 'vector_images/[name][ext]'
+                        from: 'src/bitmaps/',
+                        to: 'bitmaps/'
                     },
                     {
-                        from: 'kpas/*',
-                        to: 'kpas/[name][ext]'
+                        from: 'src/vector_images/',
+                        to: 'vector_images/'
+                    },
+                    {
+                        from: 'kpas/',
+                        to: 'kpas/'
                     }
                 ]
             }),
             new webpack.HotModuleReplacementPlugin(),
+            new VueLoaderPlugin(),
         ],
         module: {
             rules: [
@@ -90,51 +87,41 @@ module.exports = (env) => {
                     },
                 },
                 {
-                    test: /\.hbs$/,
-                    loader:'handlebars-loader',
-                    options: {
-                        helperDirs: path.resolve(__dirname, 'src/js/modules/template.js'),
-                        precompileOptions: {
-                            knownHelpersOnly: false
+                    test: /\.s[ac]ss$/i,
+                    use: [
+                        MiniCssExtractPlugin.loader,
+                        "css-loader",
+                        {
+                            loader: "sass-loader",
+                            options: {
+                                additionalData:
+                                "$urlToFile: " +
+                                `'https://kompetanseudirno.azureedge.net/frontend-main/'` +
+                                ";",
+                            },
                         },
-                    }
+                    ],
                 },
                 {
                     test: /\.css$/,
-                    use: ['style-loader', 'css-loader'],
+                    use: ["style-loader", "css-loader"],
                 },
                 {
-                    test: /\.less$/,
-                    use: [
-                        MiniCssExtractPlugin.loader,
-                        {
-                            loader: 'css-loader',
-                            options: {
-                                url: false
-                            }
-                        },
-                        {
-                            loader: 'less-loader',
-                            options: {
-                                lessOptions: {
-                                    relativeUrls: false,
-                                    globalVars: {
-                                        SERVER: JSON.stringify('https://kompetanseudirno.azureedge.net/udirdesign/'),
-
-                                    },
-                                }
-                            }
-                        },
-                    ],
-                }
+                    test: /\.vue$/,
+                    loader: "vue-loader",
+                    options: {
+                        extractCSS: true,
+                    },
+                    exclude: /node_modules/,
+                },
             ],
         },
         resolve: {
             alias: {
-                setup: path.resolve(__dirname, 'src/css/setup'),
-                Handlebars: path.resolve('src/3party/handlebars-v1.3.0.js')
+                setup: path.resolve(__dirname, "src/css/setup"),
+                vue$: path.resolve("node_modules/vue/dist/vue.esm-bundler.js"),
             },
-            extensions: ['.js', '.less', '.hbs'],
+            extensions: [".js", ".vue"],
             preferRelative: true,
             modules: ["src", "node_modules"],
 
@@ -155,8 +142,8 @@ module.exports = (env) => {
                         parallel: true,
                         extractComments: false
                     }
-                )
-            ],
-        },
-    }
-};
+                    )
+                ],
+            },
+        }
+    };

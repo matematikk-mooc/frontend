@@ -1,39 +1,48 @@
+import "../vue/design/override-base-Canvas-elements.scss";
+import "../vue/design/override-login-logout-Canvas-elements.scss";
+
+import { removeCanvasAnnouncementElements, removeCanvasDiscussionElements } from "./modules/announcements/utils";
+
+import accordion from './modules/accordion.js';
 import announcements from './modules/announcements.js';
 import api from './api/api.js';
+import coursePageButtons from './modules/coursePageButtons.js';
 import courselist from './modules/courselist.js';
 import coursepage from './modules/coursepage.js';
+import coursepagebanner from "./modules/coursepagebanner";
 import coursesettings from './modules/coursesettings.js';
-import dataporten from './modules/dataporten';
-import discussionTopics from './modules/discussion-topics.js';
 import enroll from './modules/enroll.js';
 import footer from './modules/footer.js'
 import greeting from './modules/greeting.js';
 import groups from'./modules/groups.js'
-import i18n from './i18n.js';
+import infoboxes from './modules/infoboxes.js'
 import kpas from './3party/kpas.js';
+import kpasApi from "./api/kpas-api.js";
 import login from './modules/login.js';
 import menu from './modules/menu.js';
 import messagehandler from './3party/messagehandler.js';
-import multilanguage from './3party/multilanguage.js'
+import multilanguage from '../vue/utils/previous-lang-utils.js'
 import nrk from './3party/nrk.js';
 import pages from './modules/pages.js';
-import privacyPolicy from './3party/privacypolicy.js';
+import { renderCourseModules } from "../vue/pages/course-page/left-menu"
+import { renderCourseModulesOnAnnouncementsPage } from "../vue/pages/announcements-page";
+import reveal from './modules/reveal';
 import routes from './modules/routes.js';
 import settings from './settings.js';
+import tabs from './modules/tabs.js';
 import tinyMCEEditor from './modules/tinyMCEEditor';
+import tooltip from "./modules/tooltip";
 import uob from './3party/uob7.js';
 import util from './modules/util.js';
 import utilRoot from './utilRoot.js';
 import uucheck from './modules/uucheck.js';
 
 jQuery(function($) {
-  //KURSP-469 Support embedding of KPAS LTI tool. In general our design should not load in iframes.
-  //The code below detects if we are in an iframe and then returns.
+
   if(window.self != window.top) {
     return;
   }
-  //Multilanguage KURSP-279 Css must be present before javascript is run.
-  //KURSP-376-multilanguage-fix
+
   multilanguage.initializeCss();
 
   routes.addRouteForPath(/\/$/, function() {
@@ -46,13 +55,31 @@ jQuery(function($) {
     }
   });
 
+  routes.addRouteForPath(/\/logout$/, function() {
+    document.getElementById('wrapper').classList.add('canvas-login-page');
+    let loginLogo = document.getElementsByClassName('ic-Login-header__logo');
+    if (loginLogo) {
+      let logo = loginLogo[0].children[0]
+      logo.src  = SERVER + 'logo-white.png';
+      logo.setAttribute("style", "height: 4rem;");
+    }
+  });
+
   routes.addRouteForQueryString(/invitation=/, function() {});
 
   routes.addRouteForPath(/\/login\/canvas$/, function() {
     utilRoot.redirectFeideAuthIfEnrollReferrer();
     utilRoot.triggerForgotPasswordIfParamPassed();
     login.addInfoMessage();
+    let loginLogo = document.getElementsByClassName('ic-Login-header__logo');
+    if (loginLogo) {
+      loginLogo[0].children[0].src = SERVER + 'logo-white.png';
+    }
+    document.getElementById('wrapper').classList.add('canvas-login-page');
+
+
   });
+
 
   ////KURSP-293-RCE-mister-farge-for-redigering
   routes.addRouteForPath(/\/edit$/, function() {
@@ -65,7 +92,6 @@ jQuery(function($) {
 
   routes.addRouteForPath(/\/courses$/, function() {
     utilRoot.redirectToEnrollIfCodeParamPassed();
-    menu.hideRightMenu();
     courselist.listCourses(
       'content',
       courselist.showAddCourseButton
@@ -73,138 +99,45 @@ jQuery(function($) {
   });
 
   routes.addRouteForPath(/\/courses\/\d+/, function() {
-    let forwardTo = encodeURIComponent(window.location.href);
-    let closeOption = false;
+    coursepagebanner.insertCourseBanner();
     let authenticated = util.isAuthenticated();
 
     if(!authenticated) {
-      let registerText = "For å få fullt utbytte av denne siden må du melde deg på med";
-      enroll.displayRegisterPopup(
-        authenticated,
-        closeOption,
-        registerText,
-        i18n.RegisterWithCanvas,
-        util.course.self_enrollment_code,
-        util.course.name,
-        forwardTo);
+      enroll.displayRegisterPopup(authenticated, util.course.self_enrollment_code);
     } else {
       api.getUsersEnrollmentsForCourse(util.course.id, function(courses) {
         if(!courses.length) {
-          let registerText = "For å få fullt utbytte av denne siden må du melde deg på";
-          let registerWithCanvasText = "Meld deg på";
-          enroll.displayRegisterPopup(
-            authenticated,
-            closeOption,
-            registerText,
-            registerWithCanvasText,
-            util.course.self_enrollment_code,
-            util.course.name,
-            forwardTo);
-        } else {
-          util.updateInformationPane();
+          enroll.displayRegisterPopup( authenticated, util.course.self_enrollment_code);
         }
       });
     }
   });
 
   //The logic below should be refactored and cleaned up.
-  routes.addRouteForPath(/\/courses\/\d+$/, function() {
+  routes.addRouteForPath(/\/courses\/\d+$/, function () {
+    coursepage.hideElementsFromUsers();
+    coursepagebanner.insertCourseBanner();
+    renderCourseModules("left-side");
     util.updateRightMenuButtons();
     util.removeRecentFeedback();
     groups.interceptLinksToGroupPage();
     coursepage.showCourseInvitation();
-    // override default view and display all courses list instead
-    var courseView = util.isCourseFrontpageForAllCoursesList();
-    if (courseView == util.courseListEnum.allCoursesList) {
-      menu.hideRightMenu();
-      enroll.printAllCoursesContainer();
-      enroll.printAllCourses();
-      $('body').removeClass('home');
-
-      // skips the rest of this function
-      return null;
+    pages.removeItemsInStudentView();
+    if(!util.isTeacherOrAdmin()) {
+      coursepage.saveUnenrollDialog();
+      document.getElementById("right-side").remove();
     }
-    else if (courseView == util.courseListEnum.myCoursesList) {
-        menu.hideRightMenu();
-        courselist.listCourses(
-          'content',
-          courselist.showAddCourseButton
-        );
-        return null;
-    }
-    else if (courseView == util.courseListEnum.dataportenCallback) {
-        if(window.opener) {
-            $("#application").html('Du er nå logget inn i dataporten.<button id="dataportenLoggedIn">OK</button>');
-            window.opener.popupCompleted();
-            $(document).on("click","#dataportenLoggedIn",function(e) {
-                window.close();
-            });
-        }
-		return null;
-    }
-    else if (courseView == util.courseListEnum.uidpCallback) {
-        if(window.opener) {
-            $("#application").html('Du er nå logget inn i UIDP.<button id="uidpLoggedIn">OK</button>');
-            window.opener.popupCompleted();
-            $(document).on("click","#uidpLoggedIn",function(e) {
-                window.close();
-            });
-        }
-        console.log(document.location.href);
-		return null;
-    }
-    //        coursepage.hideCourseInvitationsForAllUsers();
 
     var courseId = api.getCurrentCourseId();
     var queryString = document.location.search;
-    if (queryString === '?allcanvabadges') {
-      //query string = ?allcanvabadges
-      var courseId = api.getCurrentCourseId();
-      menu.showCourseMenu(courseId, 'Utmerkelser', 'Utmerkelser');
-      //Should be refactored to use json api instead
-      var canvabadgesForCurrentCourse =
-        '<iframe title="canvasbadge" allowfullscreen="true" height="680" id="tool_content" mozallowfullscreen="true" name="tool_content" src="' +
-        settings.CanvaBadgeProtocolAndHost +
-        '/badges/course/' +
-        courseId +
-        '" tabindex="0" webkitallowfullscreen="true" width="100%"></iframe>';
-      $('#content').append(canvabadgesForCurrentCourse);
-    } else {
-        var queryString = document.location.search;
-        if ((queryString === '?dataportengroups=1') && settings.useDataportenGroups) {
-            menu.showCourseMenu(
-              courseId,
-              'Grupper',
-              util.getPageTitleBeforeColon()
-            );
-            dataporten.display();
-        } else {
-          menu.showCourseMenu(courseId, 'Forside', null);
-          if (api.usesFrontPage()) {
-            if (!util.isTeacherOrAdmin()) {
-              var frontPage = $('#wiki_page_show');
-              if (frontPage.length) {
-                frontPage.hide();
-              }
-              coursepage.listModulesAndShowProgressBar();
-            }
-          } //Hvis det ikke er wiki som forside så lister vi ut modulene på vanlig måte.
-          else {
-            coursepage.listModulesAndShowProgressBar();
-          }
-        }
-    }
     announcements.printAnnouncementsUnreadCount();
     if(coursepage.replaceUpcomingInSidebar()) {
       coursepage.printDeadlinesForCourse();
     }
-    coursepage.overrideUnregisterDialog();
-  });
+   });
 
   routes.addRouteForPath(/\/search\/all_courses$/, function() {
-    enroll.printAllCoursesContainer();
     enroll.printAllCourses();
-    enroll.goToAllCourses();
   });
 
   routes.addRouteForPath(/\/courses\/\d+\/settings$/, function() {
@@ -218,65 +151,32 @@ jQuery(function($) {
   });
 
   routes.addRouteForPath(/\/profile\/settings$/, function() {
+    document.getElementById("wrapper").classList.add("user-settings-wrapper");
+    document.getElementById("main").classList.add("user-settings-main");
+    document.getElementById("left-side").remove();
     var elementId = document.getElementById('confirm_email_channel');
     if(!settings.displayProfileLeftMenu) {
       document.getElementById("section-tabs").style.display = "none";
     }
-    var notificationButtonHTML = util.renderTemplateWithData(
-      'notifications',
-      {}
-    );
-    if(settings.displayUserMergeButton) {
-      var mergeUserButtonHTML = util.renderTemplateWithData(
-        'usermerge',
-        {userId:api.getUser().id, userMergeLtiToolId:settings.userMergeLtiToolId}
-      );
-      elementId.insertAdjacentHTML('beforebegin', mergeUserButtonHTML);
-    }
+  });
 
-    elementId.insertAdjacentHTML('beforebegin', notificationButtonHTML);
+  routes.addRouteForPath(/\/theme_editor$/, function() {
+    document.getElementById("main").classList.add("theme-editor");
   });
 
   routes.addRouteForPath(/\/courses\/\d+\/announcements$/, function() {
-    var courseId = api.getCurrentCourseId();
-    menu.showCourseMenu(
-      courseId,
-      'Kunngjøringer',
-      util.getPageTitleBeforeColon()
-    );
-    api.getModulesForCurrentCourse(function(modules) {
-      discussionTopics.printDiscussionUnreadCount(modules);
-    });
     announcements.printAnnouncementsUnreadCount();
     announcements.setAnnouncementsListUnreadClass();
+    renderCourseModulesOnAnnouncementsPage('left-side');
   });
 
   routes.addRouteForPath(
     /\/courses\/\d+\/discussion_topics$/,
     function() {
-      var courseId = api.getCurrentCourseId();
-      menu.showCourseMenu(
-        courseId,
-        'Diskusjoner',
-        util.getPageTitleBeforeColon()
-      );
-      discussionTopics.setDiscussionsListUnreadClass();
-      discussionTopics.insertSearchButton();
-      discussionTopics.hideUnreadCountInDiscussionList();
-      api.getModulesForCurrentCourse(function(modules) {
-        discussionTopics.printDiscussionUnreadCount(
-          modules,
-          'discussionslist'
-        );
-      });
+
       announcements.printAnnouncementsUnreadCount();
     }
   );
-  routes.addRouteForPath(/\/courses\/\d+\/external_tools/, function() {
-    var courseId = api.getCurrentCourseId();
-    menu.showCourseMenu(courseId, this.path, 'Verktøy');
-  });
-
   routes.addRouteForPath(/\/courses\/\d+\/groups$/, function() {
     groups.interceptLinksToGroupPage();
     var courseId = api.getCurrentCourseId();
@@ -285,9 +185,6 @@ jQuery(function($) {
       'Grupper',
       util.getPageTitleBeforeColon()
     );
-    api.getModulesForCurrentCourse(function(modules) {
-      discussionTopics.printDiscussionUnreadCount(modules);
-    });
     announcements.printAnnouncementsUnreadCount();
   });
   routes.addRouteForPath(/\/courses\/\d+\/users$/, function() {
@@ -347,29 +244,9 @@ jQuery(function($) {
     function() {
       menu.showDiscussionGroupMenu();
       const courseId = api.getCurrentCourseId();
+      removeCanvasAnnouncementElements();
+      renderCourseModulesOnAnnouncementsPage('left-side');
 
-      //20180911ETH Need to know if I got here from the discussion list or from the module
-      //            navigation.
-      if (!this.hasQueryString) {
-        //If courseId was found, it is a group discussion created by a teacher.
-        if (courseId) {
-          menu.showBackButton(
-            '/courses/' + courseId + '/discussion_topics',
-            'Tilbake til diskusjoner'
-          );
-        } else {
-          var groupId = api.getCurrentGroupId();
-          if (null != groupId) {
-            api.getGroup(groupId, function(group) {
-              var courseId = group.course_id;
-              menu.showBackButton(
-                '/groups/' + group.id + '/discussion_topics',
-                'Tilbake til gruppeside'
-              );
-            });
-          }
-        }
-      }
 
       if (!util.isTeacherOrAdmin()) {
         menu.hideRightMenu();
@@ -382,7 +259,6 @@ jQuery(function($) {
         util.tinyMceEditorIsInDOM(
           () => tinyMCEEditor.injectGroupHashtags(userGroups)
         );
-        discussionTopics.injectReplyButtonAction(userGroups);
       });
     }
   );
@@ -399,7 +275,11 @@ jQuery(function($) {
       //If this is a group discussion we do not allow the user to access it because
       //he is apparantly not a member of a group.
       var courseId = api.getCurrentCourseId();
-
+      // removeCanvasAnnouncementElements();
+      removeCanvasDiscussionElements();
+      if(!location.search.includes('module_item_id=')) {
+        renderCourseModules('left-side');
+      }
       util.hasRoleInCourse(courseId, "TeacherEnrollment", function(isTeacher) {
         if(!isTeacher) {
           var courseId = api.getCurrentCourseId();
@@ -413,8 +293,6 @@ jQuery(function($) {
                   $("#discussion-managebar").html('<div class="uob-warning"> \
                   Dette er en gruppediskusjon, men du er ikke medlem i noen gruppe og kan derfor ikke delta.\
                     Gå tilbake til forsiden og velg fanen "Rolle og grupper".</div>');
-              } else {
-                discussionTopics.moveSequenceLinks();
               }
             });
           }
@@ -431,36 +309,14 @@ jQuery(function($) {
         );
       }
 
-      // Announcements are some as type of discussions, must use a hack to determine if this is an announcement
-      if (api.currentPageIsAnnouncement()) {
-        menu.showCourseMenu(courseId, 'Kunngjøringer', title);
-        menu.showBackButton(
-          '/courses/' + courseId + '/announcements',
-          'Tilbake til kunngjøringer'
-        );
-        announcements.addMarkAsReadButton();
-      } else if (api.getCurrentModuleItemId() == null) {
-        // Only show course menu if this discussion is not a module item
-        // Note detection if this is a module item is based on precense of query parameter
-        //            menu.showCourseMenu(courseId, 'Diskusjoner', title);
-        menu.showBackButton(
-          '/courses/' + courseId + '/discussion_topics',
-          'Tilbake til diskusjoner'
-        );
-      }
 
       api.getUserGroupsForCourse(courseId, (userGroups) => {
         util.tinyMceEditorIsInDOM(
           () => tinyMCEEditor.injectGroupHashtags(userGroups)
         );
-        discussionTopics.injectReplyButtonAction(userGroups);
       });
     }
   );
-
-  routes.addRouteForPath([/\/groups\/\d+\/discussion_topics\/\d+/], function() {
-    discussionTopics.moveSequenceLinks();
-  });
 
   routes.addRouteForPathOrQueryString(
     [
@@ -473,9 +329,9 @@ jQuery(function($) {
       menu.showLeftMenu();
       menu.listModuleItems();
       pages.modifyMarkAsDoneButton();
+      coursepage.resizeH5p();
 
       if (util.isTeacherOrAdmin()) {
-        pages.addGotoModuleButton();
         pages.addStudentViewButton();
       }
     }
@@ -495,31 +351,6 @@ jQuery(function($) {
     }
   );
 
-  routes.addRouteForPath(
-    /\/courses\/\d+\/external_tools\/\d+$/,
-    function() {
-      function isBadgesafePage() {
-        function extractPluginNumber(input) {
-          return input.substring(input.lastIndexOf('/') + 1);
-        }
-
-        var badgesafeUrl = menu.extractBadgesLinkFromPage().url;
-
-        if(badgesafeUrl) {
-          return (
-            extractPluginNumber(badgesafeUrl) ===
-            extractPluginNumber(window.location.pathname)
-          );
-        }
-        return false;
-      }
-
-      if (isBadgesafePage()) {
-        var courseId = api.getCurrentCourseId();
-        menu.showCourseMenu(courseId, 'Utmerkelser', 'Utmerkelser');
-      }
-    }
-  );
 
   routes.addRouteForPath(
     /\/courses\/\d+\/modules\/items\/\d+$/,
@@ -544,6 +375,7 @@ jQuery(function($) {
       greeting.enableDownloadDiplomaButtonIfNecessary); //This is the newest method which should replace the two old ones.
 
     var courseId = api.getCurrentCourseId();
+    coursePageButtons.replaceMarkAsDone();
 
     if ($("#kpas-lti-info").length ||
         $(".kpas-lti-info").length ||
@@ -561,13 +393,17 @@ jQuery(function($) {
   });
 
   routes.addRouteForPath(/enroll\/[0-9A-Z]+/, function() {
+    if(!util.isAuthenticated()){
+      let loginLogo = document.getElementsByClassName('ic-Login-confirmation__logo')[0];
+      loginLogo.src = SERVER + 'logo-black.svg';
+      loginLogo.setAttribute("style", "height: 4rem !important; width: auto !important");
+    }
     enroll.changeEnrollPage();
   });
 
   routes.addRouteForQueryString(/lang/, () => {
     const language = multilanguage.getLanguageParameter()
-    console.log(`Language: ${language}`);
-    if (multilanguage.isValidLanguage(language)) {
+    if (language === 'se' || language === 'nn') {
       multilanguage.setActiveLanguage(language);
     } else {
       multilanguage.setActiveLanguage('nb');
@@ -583,14 +419,8 @@ jQuery(function($) {
         return;
       }
     }
-
     footer.changeFooter();
-    menu.renderLeftHeaderMenu();
-    menu.showUserMenu();
     menu.renderUnauthenticatedMenu();
-    menu.setMenuActiveLink();
-    menu.showHamburger();
-    menu.showMobileMenu();
   } catch (e) {
     console.log(e);
   }
@@ -603,13 +433,16 @@ jQuery(function($) {
       api.getCourse(
         courseId,
         function(course) {
-          util.course = course;
-          //KURSP-376-multilanguage-fix
-          if (course && util.isMultilangCourse(course)) {
-            var langCode = multilanguage.getLanguageCode();
-            multilanguage.setActiveLanguage(langCode);
-          }
-          routes.performHandlerForUrl(document.location);
+          kpasApi.getSettingsCurrentCourse(courseId, function (courseSettings) {
+            course ={ ...course, kpas: { ...courseSettings}}
+            util.course = course;
+            //KURSP-376-multilanguage-fix
+            if (course && util.isMultilangCourse(course)) {
+              var langCode = multilanguage.getLanguageCode();
+              multilanguage.setActiveLanguage(langCode);
+            }
+            routes.performHandlerForUrl(document.location);
+        });
         },
         function(error) {
           console.error(
@@ -625,23 +458,23 @@ jQuery(function($) {
     console.log(e);
   }
 
-  privacyPolicy.init();
-
   try {
+    tooltip.init();
     messagehandler.init();
     uob.init();
+    infoboxes.init();
     nrk.init();
+    tabs.init();
+    reveal.init();
+    accordion.init();
+
   } catch (e) {
     console.log(e);
   }
 
   try {
-    menu.injectGroupsPage();
     groups.changeGroupListURLs(document.location.href);
-
-    pages.updateSidebarWhenMarkedAsDone();
-    pages.updateSidebarWhenContributedToDiscussion();
-    menu.alterCourseLink();
+    pages.removeItemsInStudentView();
   } catch (e) {
     console.log(e);
   }

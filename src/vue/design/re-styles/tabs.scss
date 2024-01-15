@@ -1,0 +1,63 @@
+@import '../typography.scss';
+@import '../colors.scss';
+
+.custom-segments {
+  position: relative;
+}
+.custom-segments__tabHeaders{
+  overflow-x: auto;
+  margin-bottom: 1rem;
+}
+
+.custom-segments__segments {
+  border-bottom: 0.5rem solid $color-grey-400;
+  white-space: nowrap;
+  margin: 0 !important;
+}
+
+.custom-segments__segment {
+  display: inline-block;
+  padding: 10px;
+  cursor: pointer;
+  color: #333;
+  text-decoration: none;
+  position: relative;
+  bottom: -0.5rem;
+
+  &:hover {
+    background-color: $color-grey-400;
+  }
+
+
+}
+.custom-segments__segment a{
+  color: $color-black;
+  text-align: center;
+  font-family: Roboto;
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  text-decoration: none !important;
+  &:focus {
+    outline: none;
+  }
+}
+
+.custom-segments__segment.active {
+  border-bottom: 0.5rem solid $primary-hover-color;
+  color: $color-white;
+}
+
+.custom-segments__pane {
+  display: none;
+  padding-top: 20px;
+  border: none;
+  height: fit-content;
+  background-color: $color-grey-400;
+}
+
+.custom-segments__pane.active {
+  display: block;
+  background-color: $color-white;
+}

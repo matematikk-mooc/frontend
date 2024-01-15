@@ -1,30 +1,24 @@
-import settings from  '../settings'
+import api from '../api/api'
+import {apiWithResultOnly} from '../api/kpas-api';
+import{ renderFooter } from '../../vue/pages/course-page/footer'
 
-import footer from '../../templates/modules/footer.hbs';
-import  footerLicence from '../../templates/modules/footer-license.hbs';
-import util from './util';
-export default (function() {
+export default (function () {
   return {
-    addLicenseInFooter : function() {
-      $(".public-license").hide()
-      var $mmoocLicenseElement = $('#mmoocLicense');
-
-      var html = util.renderTemplateWithData(footerLicence, {});
-      $mmoocLicenseElement.html(html);
+    changeFooter: async function () {
+      const id = api.getCurrentCourseId();
+      let license = false;
+      if (id) {
+        try {
+          const result = await apiWithResultOnly.getSettingsCurrentCourse(id);
+          if (result.result.licence == 1) {
+            license = true;
+          }
+        } catch (error) {
+          // Handle errors
+          console.error('Error fetching course settings:', error);
+        }
+      }
+      renderFooter(license);
     },
-
-
-    changeFooter : function() {
-      var $parentElementOfOldFooter = $('#application.ic-app #wrapper');
-      var html = util.renderTemplateWithData(footer, {
-        privacyPolicyLink: settings.privacyPolicyLink,
-        homeOrganization: settings.homeOrganization,
-        contactPoint: settings.contactPoint,
-        about: settings.aboutThePlatform,
-        uuStatusNb: settings.uuStatusNb,
-        uuStatusNn: settings.uuStatusNn,
-      });
-      $parentElementOfOldFooter.append(html);
-    }
   };
 })();

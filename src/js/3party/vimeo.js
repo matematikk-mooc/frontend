@@ -1,7 +1,9 @@
+import "../../vue/design/reveal.scss";
+import "../../vue/design/vimeo-transcript.scss";
+
 import Player from '@vimeo/player'
-import multilanguage from "./multilanguage.js";
-import transcriptMenu from "../../templates/modules/transcriptMenu.hbs"
-import util from "../modules/util.js";
+import multilanguage from '../../vue/utils/previous-lang-utils.js'
+
 //https://webapps.stackexchange.com/questions/85517/how-can-i-download-subtitles-for-a-vimeo-video
 export default (function() {
 	var hrefPrefix = KPASAPIURL + "/vimeo/";
@@ -262,60 +264,68 @@ export default (function() {
 			};
 			this.displayErrorMessage = function (oTranscriptArea, msg) {
 				oTranscriptArea.transcriptContentArea.innerHTML = "<p>" + msg + "</p>";
+				oTranscriptArea.transcriptContentArea.id = oTranscriptArea.transcriptContentArea.id + "-select";
+
 			};
 			this.createTranscriptArea = function () {
+				const expandMore = SERVER + 'vector_images/expand_more.svg';
+				const expandLess = SERVER + 'vector_images/expand_less.svg';
+
 				var b = document.createElement('a');
-				b.setAttribute("class", "vimeotranscript-reveal-button");
+				b.setAttribute("class", "custom-reveal-button");
 				b.setAttribute("id", transcriptButtonId);
 				b.setAttribute("href", "#" + transcriptContentId);
 				b.innerHTML = "Videotranskripsjon";
+				let buttonArrow = document.createElement('img');
+				buttonArrow.setAttribute("class", "custom-reveal-button-img");
+				buttonArrow.setAttribute("src", expandMore);
+				b.appendChild(buttonArrow);
 
 				var p = document.createElement('p');
 				transcriptParentDiv.appendChild(p);
 				p.appendChild(b);
 
 				var e = document.createElement('div');
-				transcriptParentDiv.appendChild(e);
 				e.setAttribute("id", transcriptContentId);
 				e.setAttribute("class", "transcript");
+				e.setAttribute("class", "custom-reveal-content")
 				e.setAttribute("tabindex", 0);
 				e.setAttribute("style", "display: none;");
+				transcriptParentDiv.appendChild(e);
 
-				var br = document.createElement('br');
-				transcriptParentDiv.appendChild(br);
 
 				var transcript = this;
-				$('#' + transcriptButtonId)
-					.button({ icons: { secondary: 'ui-icon-triangle-1-e' } })
-					.click(function (event) {
-						var $button = $(this);
+				document.getElementById(transcriptButtonId).addEventListener('click', function(event) {
+					var button = this;
+					var buttonImg = button.getElementsByTagName('img')[0];
+					buttonImg.src = buttonImg.src.includes('expand_more') ? expandLess : expandMore;
+					var transcriptSelect = document.getElementById(transcript.getTranscriptSelectId());
+					transcriptSelect.style.display = transcriptSelect.style.display === 'none' ? 'block' : 'none';
+					transcriptSelect.style.marginTop = '1rem';
 
-						$("#" + transcript.getTranscriptSelectId()).toggle();
-						var body = "#" + transcriptContentId;
-						var iframe = document.getElementById(iframeId);
-						if ($(body).css('display') != 'none') {
-							$(body).slideUp(400);
-							$(body).removeClass("uob-box");
-							var options = { icons: { secondary: 'ui-icon-triangle-1-e' } };
-							var iframeSibling = iframe.nextElementSibling;
-							if (iframeSibling != null) {
-								iframeSibling.setAttribute("style", "padding-bottom: 0px");
-							}
+					var body = document.getElementById(transcriptContentId);
+					var iframe = document.getElementById(iframeId);
+					var bodyDisplayStyle = getComputedStyle(body).display;
 
-						} else {
-							$(body).slideDown(400);
-							$(body).addClass("uob-box");
-							var options = { icons: { secondary: 'ui-icon-triangle-1-s' } };
-							var iframeSibling = iframe.nextElementSibling;
-							if (iframeSibling != null) {
-								iframeSibling.setAttribute("style", "padding-bottom: 200px");
-							}
+					if (bodyDisplayStyle !== 'none') {
+						slideUpAndAdjustIframe(400, body, iframe);
+					} else {
+						slideDownAndAdjustIframe(400, body, iframe);
+					}
 
-						}
-						$button.button('option', options);
 
-						return false;
-					});
+					event.preventDefault();
+				});
+
+				function slideUpAndAdjustIframe(duration, element, iframe) {
+					element.style.display = 'none';
+					element.classList.remove('uob-box');
+				}
+
+				function slideDownAndAdjustIframe(duration, element, iframe) {
+					element.style.display = 'block';
+					element.classList.add('uob-box');
+				}
 
 				return { transcriptArea: p, transcriptContentArea: e };
 			};
@@ -328,16 +338,17 @@ export default (function() {
 					var s = document.createElement('select');
 					e.appendChild(s);
 					s.setAttribute("id", transcriptSelectId);
-					s.setAttribute("class", "vimeoSelectLanguage");
+					s.setAttribute("class", "custom-reveal-button");
 					s.setAttribute("style", "display: none;");
 					s.setAttribute("aria-label", "Velg språk");
 
-					var html = util.renderTemplateWithData(transcriptMenu, {
-						transcriptSelectId: transcriptSelectId,
-						languageTracks: tracks,
-						selectedLanguage: selectedLanguage
+					tracks.forEach(track => {
+  						const option = `
+    						<option value="${track.language}"
+      							${track.language === selectedLanguage ? 'selected' : ''}
+    						>${track.label}</option>`;
+							document.getElementById(transcriptSelectId).insertAdjacentHTML('beforeend', option);
 					});
-					s.innerHTML = html;
 					function show() {
 						transcript.updateTranscriptText(oTranscriptArea.transcriptContentArea, s.value);
 					}
@@ -380,18 +391,14 @@ export default (function() {
 			};
 			this.insertTranscriptParent = function () {
 				transcriptParentDiv = document.createElement('div');
-				transcriptParentDiv.setAttribute("class", "transcriptParent");
+				transcriptParentDiv.setAttribute("class", "custom-reveal-wrapper");
 				transcriptParentDiv.setAttribute("id", transcriptParentId);
-				var e = document.createElement('div');
-				transcriptParentDiv.appendChild(e);
-				e.setAttribute("id", transcriptLoadingId);
-				e.setAttribute("class", "loading-gif");
+				transcriptParentDiv.style.height = "fit-content";
+
 				this.autoPositionTranscriptParent();
 			};
 			this.transcriptLoaded = function (transcriptXml) {
 				var transcript = this;
-				var e = document.getElementById(transcriptLoadingId);
-				e.setAttribute("style", "display: none;");
 
 				var oTranscriptArea = transcript.createTranscriptArea();
 

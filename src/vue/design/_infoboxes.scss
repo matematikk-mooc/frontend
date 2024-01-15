@@ -1,0 +1,100 @@
+@import './colors.scss';
+
+.udir-info {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  padding: 1rem 1.5rem 1rem 1.5rem;
+  border-radius: 0.25rem;
+  min-height: 4rem;
+  overflow-y: visible;
+  border: none;
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  width: 100%;
+
+  .udir-info__icon-container {
+    display: inline-block;
+    font-size: 2rem;
+    vertical-align: center;
+    width: fit-content;
+  }
+
+  &__general {
+    background: $color-grey-200;
+    gap: 0;
+  }
+
+  &__warning {
+    background: map-get($color-palette-red, background, 200);
+    border: 0.125rem solid map-get($color-palette-red, background, 600);
+
+    .udir-info__icon-container {
+      color: map-get($color-palette-red, background, 600);
+    }
+  }
+
+  &__info,
+  // info, and important can be deleted when the new design is implemented
+  &__important,
+  &__importantinfo {
+    background: map-get($color-palette-red, background, 200);
+  }
+
+  // verktoy can be deleted when the new design is implemented
+  &__verktoy,
+  &__tools {
+    background: map-get($color-palette-orange, background, 200);
+  }
+
+  // tid can be deleted when the new design is implemented
+  &__tid,
+  &__time {
+    background: map-get($color-palette-steel, background, 200);
+    ;
+  }
+
+  // maal can be deleted when the new design is implemented
+  &__maal,
+  &__goals {
+    background: map-get($color-palette-green, background, 200);
+  }
+
+  &__tip {
+    background: map-get($color-palette-eggshell, background, 400);
+
+    .udir-info__icon-container {
+      transform: rotate(180deg);
+    }
+  }
+
+  // question and read can be deleted when the design is done.
+  &__read,
+  &__task,
+  &__question {
+    background: map-get($color-palette-azur, background, 400);
+  }
+
+  &__law {
+    background: map-get($color-palette-steel, background, 400);
+
+    .udir-info__icon-container {
+      font-size: 2rem;
+    }
+  }
+
+  &__quote {
+    background: $color-white;
+  }
+
+  // skoleleder can be deleted after the design is done.
+  &__skoleleder,
+  &__leader {
+    background: map-get($color-palette-green, background, 300);
+  }
+
+  &__link {
+    background: map-get($color-palette-peach, background, 400);
+  }
+
+}

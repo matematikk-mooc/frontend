@@ -1,120 +1,64 @@
+import LoadingIndicator from "../../vue/components/loading-indicator/LoadingIndicator.vue";
+import MyCoursesPage from "../../vue/pages/MyCoursesPage.vue";
 import api from "../api/api";
-import courselist from  "../../templates/modules/courselist.hbs"
-import courselistcontainer from "../../templates/modules/courselistcontainer.hbs"
-import enrollprivacypolicy from "../../templates/modules/enrollprivacypolicy.hbs"
-import { hrefQueryString } from "../settingsRoot";
-import i18n from "../i18n";
-import settings from "../settings";
+import { createApp } from "vue/dist/vue.runtime.esm-bundler.js";
+import kpasApi from '../api/kpas-api';
+import { renderPrivacyPolicyLink } from "../../vue/pages/courselist-page";
 import util from "./util";
 
 export default (function () {
   return {
     listCourses(parentId, callback) {
-      if (document.getElementsByClassName('reaccept_terms').length === 0) {
-        let htmlLoading = `<div class='mmooc-loader-wrapper'><span class='loading-gif'></span></div>`;
-        $(`#${parentId}`).html(htmlLoading); //overwrite the contents in parentID and display: 'Laster kurs....'
+      if (document.getElementsByClassName("reaccept_terms").length === 0) {
+        document.getElementById('content').innerHTML = '';
+        let loader = document.createElement('div');
+        loader.id = 'loader';
+        let header = document.getElementById("header");
+        let loaderComponent = createApp(LoadingIndicator);
+        header.insertAdjacentElement('afterend', loader);
+        loaderComponent.mount("#loader");
 
-        api.getEnrolledCourses(courses => {
-          $('.mmooc-loader-wrapper').remove();
+        api.getEnrolledCourses((courses) => {
+          kpasApi.getAllCourseSettings(function (allCoursesSettings) {
+            var myCoursesWithSettings = util.mapCourseSettings(courses, allCoursesSettings.result);
 
-          const $oldContent = $(`#${parentId}`).children(); //After an update the 'Add course button' is in #content including a popupform. So we need to move this to another place in the DOM so we don't overwrite it.
-          $oldContent.appendTo('#right-side-wrapper #right-side');
-          let html = '';
-          let linkToAvailableCourses = util.getLinkToAvailableCourses();
-          if (courses.length == 0) {
-            html = `<h1>Mine ${i18n.CoursePlural.toLowerCase()}</h1><p>${
-              i18n.NoEnrollments
-            }</p><a class='btn' href='${linkToAvailableCourses}'>Se tilgjengelige ${i18n.CoursePlural.toLowerCase()}</a>`;
-            $(`#${parentId}`).html(html);
-          } else {
-            html = util.renderTemplateWithData(courselistcontainer, {
-              courseLabel: i18n.CoursePlural.toLowerCase(),
-              queryString: hrefQueryString
-            });
-            $(`#${parentId}`).html(html);
-            /*
-            const sortedCourses = util.arraySorted(
-              courses,
-              'course_code'
-            );
-            */
-            const sortedCourses = util.sortCourses(courses);
-            const categorys = util.getCourseCategories(sortedCourses);
-            const coursesCategorized = util.getCoursesCategorized(
-              sortedCourses,
-              categorys
-            );
+            if (myCoursesWithSettings.length == 0) {
+              // TODO: Insert not assigned to any courses component
+            } else {
 
-            coursesCategorized.forEach(course => {
-              html = util.renderTemplateWithData(courselist, {
-                title: course.title,
-                courses: course.courses,
-                courseLabel: i18n.Course.toLowerCase()
-              });
-              $('.mmooc-course-list-container').append(html);
-            });
-            util.updateProgressForRoleBasedCourses(courses);
-          }
-          document.title = i18n.CoursePlural;
 
-          $.isFunction(callback) && callback();
+              let wrapper = document.getElementById("application");
+              try {
+                if(wrapper != null){
+                  myCoursesWithSettings.forEach(course => {
+                    course.enrolled = true;
+                  });
+                  const app = createApp(MyCoursesPage, {courses: myCoursesWithSettings});
+
+                  let myCourses = wrapper.appendChild(document.createElement("div"));
+                  myCourses.setAttribute("id", "my-courses-container");
+                  myCourses.setAttribute("style", "width: 100%; justify-content: center; display: flex; min-height: 85vh;");
+                  let footerNode = document.getElementById("wrapper");
+                  footerNode.parentNode.insertBefore(myCourses, footerNode);
+                  document.getElementById('wrapper').innerHTML = ''
+                  $('#wrapper').remove();
+                  document.getElementById('loader').remove();
+                  app.mount("#my-courses-container");
+
+                }
+              }
+              catch(err) {
+                console.error(err);
+              }
+
+            }
+            $.isFunction(callback) && callback();
+          });
         });
       } else {
-        html = util.renderTemplateWithData(enrollprivacypolicy, {
-          privacypolicylink: settings.privacyPolicyLink
-        });
+        renderPrivacyPolicyLink('terms_of_service_link');
+      }
 
-        $(".terms_of_service_link").html(html);
-      }
-    },
-    showAddCourseButton() {
-      // Move canvas Start new course button, since we hide its original location
-      const $button = $('#start_new_course');
-      if ($button.length) {
-        $('#content').append($button);
-        $button.html(i18n.AddACourse);
-      }
-    },
-    showFilter(sortedCourses) {
-      // Show filter options based on first part of course code
-      const filterOptions = ['Alle'];
-      $(sortedCourses).each(index => {
-        const values = sortedCourses[index].course_code.split('::');
-        if (values.length > 1) {
-          if (filterOptions.indexOf(values[0]) == -1)
-            filterOptions.push(values[0]);
-        }
-      });
-      filterOptions.push('Andre');
-      const options = '';
-      filterOptions.forEach(option => {
-        options += `<option value="${option}">${option}</option>`;
-      });
-      $('#filter').append(options);
-    },
-    applyFilter(sortedCourses) {
-      if ($('#filter').val() == 'Alle') {
-        $(sortedCourses).each(function() {
-          $(`#course_${this.id}`).show();
-        });
-      } else if ($('#filter').val() == 'Andre') {
-        $(sortedCourses).each(() => {
-          if (this.course_code.indexOf('::') >= 0) {
-            $(`#course_${this.id}`).hide();
-          } else {
-            $(`#course_${this.id}`).show();
-          }
-        });
-      } else {
-        $(sortedCourses).each(() => {
-          const courseCode = this.course_code.split('::')[0];
-          if ($('#filter').val() == courseCode) {
-            $(`#course_${this.id}`).show();
-          } else {
-            $(`#course_${this.id}`).hide();
-          }
-        });
-      }
     },
     isCourseCompleted(modules) {
       for (let i = 0; i < modules.length; i++) {
@@ -130,6 +74,6 @@ export default (function () {
         }
       }
       return true;
-    }
+    },
   };
 })();

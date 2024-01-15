@@ -1,4 +1,4 @@
-import groupheader from '../../templates/modules/groupheader.hbs';
+
 import api from '../api/api';
 import util from './util';
 
@@ -33,19 +33,6 @@ export default (function() {
       $('#left-side').on('click', '.ui-menu-item a', function(event) {
         var href = $(this).attr('href');
         interceptLinkToGroupPageForHref(href, event);
-      });
-    },
-    showGroupHeader: function(groupId, courseId) {
-      api.getGroupMembers(groupId, function(members) {
-        var headerHTML = util.renderTemplateWithData(groupheader, {
-          groupId: groupId,
-          courseId: courseId,
-          members: members
-        });
-        document
-          .getElementById('content-wrapper')
-          .insertAdjacentHTML('afterbegin', headerHTML);
-        $('body').addClass('group-header');
       });
     },
 

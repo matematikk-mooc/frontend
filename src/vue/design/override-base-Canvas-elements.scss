@@ -1,0 +1,208 @@
+@import "./colors.scss";
+@import "./override-login-logout-Canvas-elements";
+
+.ic-app-course-menu {
+  width: fit-content !important;
+  position: relative !important;
+}
+
+#left-side {
+  width: fit-content !important;
+  max-width: 40rem !important;
+  padding: 1rem 2rem !important;
+  border: none !important;
+
+}
+
+body.with-left-side:not(.useFullWidth) {
+  #application.ic-app {
+    #main {
+      min-width: auto;
+      margin: 0 auto;
+    }
+  }
+}
+
+.ic-Layout-contentWrapper {
+  max-width: 1600px !important;
+}
+
+#right-side {
+  min-width: 200px !important;
+}
+
+@media not all and (min-width: 750px) {
+  #left-side {
+    display: unset!important;
+
+  }
+}
+
+@media ((max-width: 750px)) {
+  .ic-Layout-wrapper {
+    flex-direction: column !important;
+  }
+  .ic-Layout-columns{
+    flex-direction: column !important;
+  }
+
+}
+.ic-Layout-wrapper {
+  margin-left: unset !important;
+  width: 100%;
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: wrap !important;
+  max-width: unset !important;
+  min-height: 0;
+
+}
+
+.admin-button {
+  width: fit-content !important;
+  margin-left: 20px;
+}
+
+.ic-Layout-watermark {
+  display: none !important;
+}
+
+.pages.show,
+.show-content,
+.user_content,
+.mceContentBody {
+  overflow-x: visible !important;
+}
+
+#application.ic-app {
+  .ic-app-nav-toggle-and-crumbs {
+    display: none; // Hide toggling of menu
+  }
+
+  margin-left: unset !important;
+  margin-right: unset !important;
+  justify-content: center !important;
+
+  display: flex !important;
+  flex-direction: column !important;
+}
+
+.ic-app-main-content {
+  margin-top: 1rem !important;
+  width: fit-content !important;
+  min-height: 85vh !important;
+  max-width: 1600px !important;
+  justify-content: center;
+}
+
+.useFullWidth{
+  width: 100vw !important;
+  min-width: unset !important;
+
+}
+@media screen and (max-width: 1200px) {
+
+  body:not(.ic-no-flex-layout):not(.embedded) .ic-app-main-content {
+    flex: auto;
+    width: 100%;
+  }
+  .ic-Layout-contentWrapper{
+    width: 100% !important;
+    min-width: unset !important;
+  }
+  #wiki_page_show {
+    width: 100% !important;
+    min-width: unset !important;
+  }
+}
+
+.ic-Layout-columns {
+  width: 100% !important;
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: wrap !important;
+  justify-content: center !important;
+  margin-left: unset !important;
+}
+
+.ic-app-course-menu {
+  position: relative !important;
+  top: unset !important;
+  right: unset !important;
+
+}
+
+#wrapper {
+  min-height: 70vh !important;
+  padding: 0 !important;
+}
+
+
+.custom-next-button-wrapper {
+  justify-content: center !important;
+  display: flex !important;
+}
+
+.module-sequence-footer {
+  justify-content: center !important;
+  padding-bottom: 2rem !important;
+  height: fit-content !important;
+}
+
+#custom-nav-buttons-wrapper {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  padding-bottom: 2rem !important;
+  gap: 4rem !important;
+
+}
+
+.module-sequence-footer-content {
+  display: block !important;
+  justify-content: center !important;
+  align-items: center !important;
+  padding-bottom: 2rem !important;
+  gap: 4rem !important;
+}
+
+.entry-content {
+   border-bottom: 1px solid #c7cdd1
+}
+
+#application {
+  background-color: $color-white !important;
+}
+
+
+
+.theme-editor {
+  display: unset !important;
+  flex-direction: unset !important;
+}
+
+.user-settings-wrapper {
+  width: 100% !important;
+  margin-left: 0 !important;
+  max-width: unset !important;
+  justify-content: center !important;
+}
+
+.user-settings-main {
+  width: unset !important;
+}
+
+#wiki_page_show {
+  width: 100% !important;
+  max-width: 1400px !important;
+
+}
+
+#self_unenrollment_dialog{
+  padding: 2rem !important;
+}
+
+.button-container{
+  gap: 1rem !important;
+  display: flex !important;
+}

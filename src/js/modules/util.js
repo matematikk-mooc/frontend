@@ -1,11 +1,6 @@
-import './template.js'
-
 import { hrefAmpQueryString, hrefQueryString } from "../settingsRoot";
 
-import { CourseOptions } from "../utilities/course-options";
 import  api from '../api/api.js'
-import fknr from './fknr.js';
-import pages from './pages.js'
 import settings from "../settings";
 
 export default (function () {
@@ -17,6 +12,16 @@ export default (function () {
       dataportenCallback: 4,
       uidpCallback: 5
     },
+
+    mapCourseSettings: function (courses, courseSettings) {
+      courses.forEach(course => {
+        var cc = courseSettings.find(x => x.course_id === course.id)
+        if(cc) {
+          course.course_settings = cc
+        }
+      });
+      return courses
+    },
     mmoocLoadScript: function (mmoocScript) {
       var mmoocScriptElement = document.createElement('script');
       mmoocScriptElement.setAttribute('charset', 'UTF-8');
@@ -24,16 +29,6 @@ export default (function () {
       document.body.appendChild(mmoocScriptElement);
     },
 
-    renderTemplateWithData: function (template, data) {
-      var html = '';
-      try {
-        html = template(data);
-      } catch (e) {
-        console.log(e);
-      }
-
-      return html;
-    },
 
     //Kilde: https://stackoverflow.com/questions/11381673/detecting-a-mobile-browser
     isMobileOrTablet: function() {
@@ -167,7 +162,7 @@ export default (function () {
       return false;
     },
     enrollmentsHasRoleInCourse: function (enrollments, role) {
-      for (i = 0; i < enrollments.length; i++) {
+      for (let i = 0; i < enrollments.length; i++) {
         let enrollment = enrollments[i];
         if (enrollment["role"] == role) {
           return true;
@@ -176,9 +171,10 @@ export default (function () {
       return false;
     },
     hasRoleInCourse: function (courseId, role, callback) {
+      let self = this;
       return function (callback, role) {
         api.getUsersEnrollmentsForCourse(courseId, function (enrollments) {
-          callback(enrollmentsHasRoleInCourse(enrollments, role));
+          callback(self.enrollmentsHasRoleInCourse(enrollments, role));
         });
       }(callback, role)
     },
@@ -204,16 +200,16 @@ export default (function () {
       }
       return false;
     },
-    isPfDKCourse: CourseOptions.hasOptionFunction('PfDK'),
-    isMultilangCourse: CourseOptions.hasOptionFunction('lang'),
-    isNynorskCourse: CourseOptions.hasOptionFunction('NN'),
-    isSamiskCourse: CourseOptions.hasOptionFunction('SE'),
+
+    isMultilangCourse() { return this.course.kpas.multilang != "NONE"},
+    isNynorskCourse() { return this.course.kpas.multilang == "NN"},
+    isSamiskCourse() { return this.course.kpas.multilang == "SE"},
     isPrincipal() {
       return (this.isTeacherOrAdmin() || this.isEnrolledWithRole(this.course, settings.principalRoleType));
     },
-    isRoleBasedCourse: CourseOptions.hasOptionFunction('role'),
+    isRoleBasedCourse() {return this.course.kpas.role_support == 1},
     isMMOOCLicense() {
-      return CourseOptions.hasOption(this.course, 'MMOOCLICENSE');
+      return this.course.kpas.licence == 1;
     },
     postModuleProcessing() {
       try {
@@ -227,70 +223,54 @@ export default (function () {
         console.log(e);
       }
     },
-    postModuleCoursePageProcessing() {
-      try {
-        $(".mmooc-module-items-icons-Discussion").click(function () {
-          postModuleProcessing()
-        });
-      } catch (e) {
-        console.log(e);
+
+    getBannerType(course) {
+      if(course){
+        return course.kpas.banner_type;
       }
+      return "NONE";
     },
-    postModuleMenuProcessing() {
-      try {
-        $(".mmooc-module-items-icons-Discussion").parent().click(function () {
-          postModuleProcessing()
-        });
-      } catch (e) {
-        console.log(e);
+    getAlertMsg(course) {
+      if (course) {
+        if(course.kpas.banner_type == "ALERT"){
+          return course.kpas.banner_text;
+        }
       }
+      return "";
+    },
+    getUnmaintainedMsg(course) {
+      if (course) {
+        if(course.kpas.banner_type == "UNMAINTAINED"){
+          return course.kpas.banner_text;
+        }
+      }
+      return "";
+    },
+    getUnmaintainedSinceDate(course) {
+      if(course){
+        if(course.kpas.banner_type == "UNMAINTAINED"){
+          return course.kpas.unmaintained_since;
+        }
+      }
+      return null;
+    },
+    getNotificationMsg(course) {
+      if (course) {
+        if(course.kpas.banner_type == "NOTIFICATION"){
+          return course.kpas.banner_text;
+        }
+      }
+      return "";
+    },
+    getFeedbackMsg(course) {
+      if (course) {
+        if(course.kpas.banner_type == "FEEDBACK"){
+          return course.kpas.banner_text;
+        }
+      }
+      return "";
     },
 
-
-    isAlertMsg(course) {
-      if (course) {
-        var arr = course.course_code.split("::");
-        for (var i = 0; i < arr.length; i++) {
-          if (arr[i] == "ALERTMSG") {
-            return arr[i + 1];
-          }
-        }
-      }
-      return "";
-    },
-    isUnmaintained(course) {
-      if (course) {
-        var arr = course.course_code.split("::");
-        for (var i = 0; i < arr.length; i++) {
-          if (arr[i] == "UNMAINTAINED") {
-            return arr[i + 1];
-          }
-        }
-      }
-      return "";
-    },
-    isNotificationToUser(course) {
-      if (course) {
-        var arr = course.course_code.split("::");
-        for (var i =0; i < arr.length; i++) {
-          if (arr[i] == "notificationtouser"){
-            return true ;
-          }
-        }
-      }
-      return "";
-    },
-    isFeedback(course) {
-      if (course) {
-        var arr = course.course_code.split("::");
-        for (var i =0; i < arr.length; i++) {
-          if (arr[i] == "feedback"){
-            return true ;
-          }
-        }
-      }
-      return "";
-    },
     //description":"courseId:360:community:1902:940101808"
     getCountyOrCommunityNumber(groupDescription) {
       var arr = groupDescription.split(":");
@@ -303,24 +283,6 @@ export default (function () {
     },
     onEnrollPage() {
       return window.location.href.includes('/enroll/');
-    },
-
-    updateInformationPane() {
-      let self = this
-      let course = this.course
-      this.isMemberOfExpiredCommunity(course, function (isMemberOfExpiredCommunity) {
-        var observer = (self.isAuthenticated() && self.isObserver(course));
-        var pfdk = self.isPfDKCourse(course);
-        var unmaintainedSince = self.isUnmaintained(course);
-        var alertMsg = self.isAlertMsg(course);
-        var notificationtouser= self.isNotificationToUser(course);
-        var feedback= self.isFeedback(self.course);
-        if (observer || pfdk || unmaintainedSince || alertMsg || isMemberOfExpiredCommunity || notificationtouser || feedback) {
-          pages.showInformationPane(observer, pfdk, unmaintainedSince, alertMsg, isMemberOfExpiredCommunity, notificationtouser, feedback);
-        } else {
-          pages.hideInformationPane();
-        }
-      });
     },
     isMemberOfExpiredCommunity(course, callback) {
       let self = this
@@ -364,78 +326,6 @@ export default (function () {
         }
       }
       return groupsInfo;
-    },
-    firstIncompleteItemHtmlUrl: function (items, bIncludeIndentedItems) {
-      var firstHtmlUrl = null;
-      var firstItem = null;
-      if (items != null && items != undefined && items.length > 0) {
-        for (var i = 0; i < items.length; i++) {
-          var item = items[i];
-          if (!firstHtmlUrl && item.html_url) {
-            firstHtmlUrl = item.html_url;
-          }
-          if (item.completion_requirement && !(item.indent && !bIncludeIndentedItems)) {
-            if (!firstItem) {
-              firstItem = item;
-            }
-            if (!item.completion_requirement.completed) {
-              return item.html_url;
-            }
-          }
-        }
-      }
-      if (firstItem) {
-        return firstItem.html_url;
-      }
-      return firstHtmlUrl;
-    },
-
-    percentageProgress: function (modules, bIncludeIndentedItems) {
-      var total = 0;
-      var completed = 0;
-
-      for (var i = 0; i < modules.length; i++) {
-        var module = modules[i];
-        for (var j = 0; j < module.items.length; j++) {
-          var item = module.items[j];
-          if (!(item.indent && !bIncludeIndentedItems)) {
-            if (item.completion_requirement) {
-              total++;
-              if (item.completion_requirement.completed) {
-                completed++;
-              }
-            }
-          }
-        }
-      }
-      return Math.round((completed * 100) / total);
-    },
-    updateProgressForRoleBasedCourses: function (courses) {
-      const error = error => console.error('error calling api', error);
-      let self = this;
-      for (var i = 0; i < courses.length; i++) {
-        var course = courses[i];
-        if (this.isRoleBasedCourse(course) && !this.isEnrolledWithRole(course, settings.principalRoleType)) {
-          api.listModulesForCourse(
-            (function (courseId) {
-              return function (modules) {
-                var bIncludeIndentedItems = false;
-                var p = self.percentageProgress(modules, bIncludeIndentedItems);
-                var divId = "#course_" + courseId + "> div > div.mmooc-course-list-progress > div ";
-                $(divId + " > div").attr("style", "width:" + p + "%; -webkit-transition: width 2s; transition: width 2s;");
-                if (p == 100) {
-                  $(divId).addClass("mmooc-progress-bar-done");
-                }
-              };
-            })(course.id)
-            , error, course.id);
-        }
-      }
-    },
-    setGlobalPeerReviewButtonState: function () {
-      if (settings.disablePeerReviewButton == true) {
-        $('.assignments #right-side :submit').prop('disabled', true);
-      }
     },
 
     formattedDate: function (date) {
@@ -514,39 +404,7 @@ export default (function () {
         return aCourseCode < bCourseCode ? -1 : 1;
       });
     },
-    getCoursesCategorized: function (courses, categorys) {
-      var coursesCategorized = [];
-      for (var i = 0; i < categorys.length; i++) {
-        var categoryCourses = [];
-        var noOfRoleBasedCourses = 0;
-        var noOfPersonalBasedCourses = 0;
-        for (var j = 0; j < courses.length; j++) {
-          var course = courses[j];
-          var category = this.getCourseCategory(course.course_code);
-          if (categorys[i] == category) {
-            course.roleBasedCourse = this.isRoleBasedCourse(course);
-            if(course.roleBasedCourse) {
-              noOfRoleBasedCourses++;
-            } else {
-              noOfPersonalBasedCourses++;
-            }
-            categoryCourses.push(course);
-          }
-        }
-        /*        categoryCourses.sort(function(a, b) {
-                  return a.course_code > b.course_code;
-                });
-        */
-        var categoryObj = {
-          title: categorys[i],
-          noOfRoleBasedCourses: noOfRoleBasedCourses,
-          noOfPersonalBasedCourses: noOfPersonalBasedCourses,
-          courses: categoryCourses
-        };
-        coursesCategorized.push(categoryObj);
-      }
-      return coursesCategorized;
-    },
+
     getCourseCategory: function (courseCode) {
       var category = 'Andre';
       if (courseCode && courseCode.indexOf('::') > -1) {
@@ -554,38 +412,7 @@ export default (function () {
       }
       return category;
     },
-    getToolsInLeftMenu: function (path) {
-      var modulesFound = false;
-      var toolList = [];
-      var activeToolName = 'Verktøy';
-      var activeToolPath = '';
 
-      $('#section-tabs .section > a').each(function () {
-        var currentClass = $(this).attr('class');
-        if (modulesFound && currentClass != 'settings') {
-          var href = $(this).attr('href');
-          var title = $(this).html();
-          var activeTool = false;
-          if (href == path) {
-            activeTool = true;
-            activeToolName = title;
-            activeToolPath = href;
-          }
-          toolList.push({
-            activeTool: activeTool,
-            href: href,
-            title: title
-          });
-        } else if (currentClass == 'modules') {
-          modulesFound = true;
-        }
-      });
-      return {
-        activeToolName: activeToolName,
-        activeToolPath: activeToolPath,
-        toolList: toolList
-      };
-    },
     debounce: function (func, wait, immediate) {
       var timeout;
       return function () {
@@ -659,7 +486,7 @@ export default (function () {
       return false;
     },
     tinyMceEditorIsInDOM(callback) {
-      executeCallbackWhenObjectExists(function () {
+      this.executeCallbackWhenObjectExists(function () {
         tinyMCE.activeEditor;
       }, callback);
     },
