@@ -12,50 +12,54 @@ module.exports = (env) => {
     return {
         entry: {
             // ...other entry points...
-            'rootaccount-udirdesign': [
-                './src/js/settingsRoot.js',
-                './src/js/utilRoot.js',
-                './src/js/rootaccount.js',
+            "rootaccount-udirdesign": [
+                "./src/js/settingsRoot.js",
+                "./src/js/utilRoot.js",
+                "./src/js/rootaccount.js",
             ],
 
-            'subaccount-udirdesign': [
-                './src/js/settingsRoot.js',
-                './src/js/utilRoot.js',
-                './src/js/subaccount.js',
+            "subaccount-udirdesign": [
+                "./src/js/settingsRoot.js",
+                "./src/js/utilRoot.js",
+                "./src/js/subaccount.js",
             ],
-            'kompetanseportal-udirdesign': [
-                './src/js/main.js',
+            "kompetanseportal-udirdesign": [
+                "./src/js/main.js",
             ],
         },
 
         output: {
-            filename: '[name]-' + env.timestamp +'.js',
-            path: path.resolve(__dirname, 'dist'),
+
+            filename: "[name]-" + env.timestamp +".js",
+            path: path.resolve(__dirname, "dist"),
         },
         plugins: [
             new CleanWebpackPlugin({
-                cleanOnceBeforeBuildPatterns: ['dist', 'tmp', 'babel', 'replace'],
-                cleanAfterEveryBuildPatterns: ['dist/*.js.map'],
-
+                cleanOnceBeforeBuildPatterns: ["dist", "tmp", "babel", "replace"],
+                cleanAfterEveryBuildPatterns: ["dist/*.js.map"],
             }),
             new webpack.DefinePlugin({
                 VUECSS: JSON.stringify("index.css"),
                 DESIGNCSS : JSON.stringify(
-                    "kompetanseportal-udirdesign-" + env.timestamp + ".css"),
+                    "kompetanseportal-udirdesign-" + env.timestamp + ".css"
+                    ),
                 DESIGNJS : JSON.stringify(
-                    "kompetanseportal-udirdesign-" + env.timestamp + ".js"),
+                    "kompetanseportal-udirdesign-" + env.timestamp + ".js"
+                    ),
                 SERVER: JSON.stringify(
-                    "https://kompetanseudirno.azureedge.net/frontend-main/"),
+                    "https://kompetanseudirno.azureedge.net/frontend-main/"
+                    ),
                 KPASAPIURL: JSON.stringify(
-                    "https://kpas.kompetanse.udir.no/api"),
-                ACCOUNTID : [99, 100, 102, 103, 137, 138, 139, 145],
-                KPAS_MERGE_LTI_ID : 845,
-                KPAS_IFRAME_VERSION : JSON.stringify('production'),
+                    "https://kpas.kompetanse.udir.no/api"
+                    ),
+                ACCOUNTID: [99, 100, 102, 103, 137, 138, 139, 145],
+                KPAS_MERGE_LTI_ID: 845,
+                KPAS_IFRAME_VERSION: JSON.stringify("production"),
                 __VUE_OPTIONS_API__: "true",
                 __VUE_PROD_DEVTOOLS__: "false",
             }),
             new MiniCssExtractPlugin({
-                filename: '[name]-' + env.timestamp +'.css', // Output CSS filenames
+                filename: "[name]-" + env.timestamp + ".css", // Output CSS filenames
             }),
             new CopyWebpackPlugin({
                 patterns: [
@@ -64,18 +68,18 @@ module.exports = (env) => {
                         to: ".",
                     },
                     {
-                        from: 'src/bitmaps/',
-                        to: 'bitmaps/'
+                        from: "src/bitmaps/",
+                        to: "bitmaps/",
                     },
                     {
-                        from: 'src/vector_images/',
-                        to: 'vector_images/'
+                        from: "src/vector_images/",
+                        to: "vector_images/",
                     },
                     {
-                        from: 'kpas/',
-                        to: 'kpas/'
-                    }
-                ]
+                        from: "kpas/",
+                        to: "kpas/",
+                    },
+                ],
             }),
             new webpack.HotModuleReplacementPlugin(),
             new VueLoaderPlugin(),
@@ -87,9 +91,9 @@ module.exports = (env) => {
                     test: /\.js$/,
                     exclude: /node_modules/,
                     use: {
-                        loader: 'babel-loader',
+                        loader: "babel-loader",
                         options: {
-                            presets: ['@babel/preset-env'],
+                            presets: ["@babel/preset-env"],
                         },
                     },
                 },
@@ -103,7 +107,7 @@ module.exports = (env) => {
                             options: {
                                 additionalData:
                                 "$urlToFile: " +
-                                `'https://kompetanseudirno.azureedge.net/frontend-main/'` +
+                                `"https://kompetanseudirno.azureedge.net/frontend-main/"` +
                                 ";",
                             },
                         },
@@ -131,26 +135,22 @@ module.exports = (env) => {
             extensions: [".js", ".vue"],
             preferRelative: true,
             modules: ["src", "node_modules"],
-
         },
 
-        performance:{
+        performance: {
             maxEntrypointSize: 500000,
-            maxAssetSize: 500000
-
+            maxAssetSize: 500000,
         },
 
         optimization: {
             minimize: true,
             minimizer: [
                 new CssMinimizerPlugin(),
-                new TerserPlugin(
-                    {
+                new TerserPlugin({
                         parallel: true,
-                        extractComments: false
-                    }
-                    )
+                        extractComments: false,
+                    }),
                 ],
             },
-        }
+        };
     };

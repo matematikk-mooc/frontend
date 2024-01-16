@@ -12,7 +12,7 @@ module.exports = (env) => {
     return {
       entry: {
         // ...other entry points...
-        "rootaccount-udirdesign-dev": [
+         "rootaccount-udirdesign-dev": [
           "./src/js/settingsRoot.js",
           "./src/js/utilRoot.js",
           "./src/js/rootaccount.js",
