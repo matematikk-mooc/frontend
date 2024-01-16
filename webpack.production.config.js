@@ -29,6 +29,7 @@ module.exports = (env) => {
         },
 
         output: {
+
             filename: "[name]-" + env.timestamp +".js",
             path: path.resolve(__dirname, "dist"),
         },
