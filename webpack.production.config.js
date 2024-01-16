@@ -47,7 +47,7 @@ module.exports = (env) => {
                     "kompetanseportal-udirdesign-" + env.timestamp + ".js"
                     ),
                 SERVER: JSON.stringify(
-                    "https://kompetanseudirno.azureedge.net/frontend-main/"
+                    "https://kompetanseudirno.azureedge.net/frontend-dev/"
                     ),
                 KPASAPIURL: JSON.stringify(
                     "https://kpas.kompetanse.udir.no/api"
@@ -107,7 +107,7 @@ module.exports = (env) => {
                             options: {
                                 additionalData:
                                 "$urlToFile: " +
-                                `"https://kompetanseudirno.azureedge.net/frontend-main/"` +
+                                `"https://kompetanseudirno.azureedge.net/frontend-dev/"` +
                                 ";",
                             },
                         },
