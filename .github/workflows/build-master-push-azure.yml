@@ -8,7 +8,7 @@ on:
 env:
   ACCOUNT_NAME: udirdit
   SOURCE: dist
-  DESTINATION: frontend-dev
+  DESTINATION: frontend-master
 
 jobs:
   build:
