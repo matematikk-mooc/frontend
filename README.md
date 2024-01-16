@@ -1,4 +1,4 @@
-# Frontend
+# Frontend -
 
 Custom JS and CSS frontend for inclusion in [Canvas](http://www.instructure.com/).
 
