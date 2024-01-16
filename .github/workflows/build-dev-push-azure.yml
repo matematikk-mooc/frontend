@@ -40,6 +40,15 @@ jobs:
           inlineScript: |
               az storage blob upload-batch --account-name ${{ env.ACCOUNT_NAME }} \
                 --auth-mode key -s ${{ env.SOURCE }} -d ${{ env.DESTINATION }} --overwrite
+
+            # Set Content-Type for WOFF files
+              az storage blob update-batch --account-name ${{ env.ACCOUNT_NAME }} \
+                --source ${{ env.DESTINATION }} --pattern "*.woff" --content-type "application/font-woff"
+
+            # Set Content-Type for WOFF2 files
+              az storage blob update-batch --account-name ${{ env.ACCOUNT_NAME }} \
+                --source ${{ env.DESTINATION }} --pattern "*.woff2" --content-type "font/woff2"
+
       # Azure logout - Force step to always run with 'always()', ensures no hanging logins
       - name: logout
         if: always()
