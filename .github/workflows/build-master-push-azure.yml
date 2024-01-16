@@ -8,7 +8,7 @@ on:
 env:
   ACCOUNT_NAME: udirdit
   SOURCE: dist
-  DESTINATION: frontend-main
+  DESTINATION: frontend-dev
 
 jobs:
   build:
@@ -40,6 +40,12 @@ jobs:
           inlineScript: |
               az storage blob upload-batch --account-name ${{ env.ACCOUNT_NAME }} \
                 --auth-mode key -s ${{ env.SOURCE }} -d ${{ env.DESTINATION }} --overwrite
+
+              az storage blob list --account-name ${{ env.ACCOUNT_NAME }} --container-name ${{ env.DESTINATION }} --query "[?ends_with(name, '.woff')].{Name:name}" --output tsv | \
+                xargs -I {} az storage blob update --account-name ${{ env.ACCOUNT_NAME }} --container-name ${{ env.DESTINATION }} --name {} --content-type "application/font-woff"
+
+              az storage blob list --account-name ${{ env.ACCOUNT_NAME }} --container-name ${{ env.DESTINATION }} --query "[?ends_with(name, '.woff2')].{Name:name}" --output tsv | \
+                xargs -I {} az storage blob update --account-name ${{ env.ACCOUNT_NAME }} --container-name ${{ env.DESTINATION }} --name {} --content-type "font/woff2"
       # Azure logout - Force step to always run with 'always()', ensures no hanging logins
       - name: logout
         if: always()
