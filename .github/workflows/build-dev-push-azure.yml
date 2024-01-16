@@ -31,26 +31,24 @@ jobs:
       - name: Login to Azure
         uses: azure/login@v1
         with:
-            creds: ${{ secrets.AZURE_CREDENTIALS }}
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
 
       - name: Upload files to Azure Blob
         uses: azure/CLI@v1
         with:
           azcliversion: 2.48.1
           inlineScript: |
-              az storage blob upload-batch --account-name ${{ env.ACCOUNT_NAME }} \
-                --auth-mode key -s ${{ env.SOURCE }} -d ${{ env.DESTINATION }} --overwrite
+            az storage blob upload-batch --account-name ${{ env.ACCOUNT_NAME }} \
+              --auth-mode key -s ${{ env.SOURCE }} -d ${{ env.DESTINATION }} --overwrite
 
-            # Set Content-Type for WOFF files
-              az storage blob update-batch --account-name ${{ env.ACCOUNT_NAME }} \
-                --source ${{ env.DESTINATION }} --pattern "*.woff" --content-type "application/font-woff"
+            az storage blob update-batch --account-name ${{ env.ACCOUNT_NAME }} \
+              --source ${{ env.DESTINATION }} --pattern "*.woff" --content-type "application/font-woff"
 
-            # Set Content-Type for WOFF2 files
-              az storage blob update-batch --account-name ${{ env.ACCOUNT_NAME }} \
-                --source ${{ env.DESTINATION }} --pattern "*.woff2" --content-type "font/woff2"
+            az storage blob update-batch --account-name ${{ env.ACCOUNT_NAME }} \
+              --source ${{ env.DESTINATION }} --pattern "*.woff2" --content-type "font/woff2"
 
       # Azure logout - Force step to always run with 'always()', ensures no hanging logins
       - name: logout
         if: always()
         run: |
-              az logout
+          az logout
