@@ -29,7 +29,8 @@ module.exports = (env) => {
         },
 
         output: {
-            filename: "[name]-" + env.timestamp + ".js",
+
+            filename: "[name]-" + env.timestamp +".js",
             path: path.resolve(__dirname, "dist"),
         },
         plugins: [
@@ -39,10 +40,10 @@ module.exports = (env) => {
             }),
             new webpack.DefinePlugin({
                 VUECSS: JSON.stringify("index.css"),
-                DESIGNCSS: JSON.stringify(
+                DESIGNCSS : JSON.stringify(
                     "kompetanseportal-udirdesign-" + env.timestamp + ".css"
                     ),
-                DESIGNJS: JSON.stringify(
+                DESIGNJS : JSON.stringify(
                     "kompetanseportal-udirdesign-" + env.timestamp + ".js"
                     ),
                 SERVER: JSON.stringify(
@@ -53,7 +54,7 @@ module.exports = (env) => {
                     ),
                 ACCOUNTID: [99, 100, 102, 103, 137, 138, 139, 145],
                 KPAS_MERGE_LTI_ID: 845,
-                KPAS_IFRAME_VERSION: JSON.stringify('production'),
+                KPAS_IFRAME_VERSION: JSON.stringify("production"),
                 __VUE_OPTIONS_API__: "true",
                 __VUE_PROD_DEVTOOLS__: "false",
             }),
@@ -106,7 +107,7 @@ module.exports = (env) => {
                             options: {
                                 additionalData:
                                 "$urlToFile: " +
-                                `'https://kompetanseudirno.azureedge.net/frontend-main/'` +
+                                `"https://kompetanseudirno.azureedge.net/frontend-main/"` +
                                 ";",
                             },
                         },
