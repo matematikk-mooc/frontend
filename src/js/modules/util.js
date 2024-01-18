@@ -185,6 +185,13 @@ export default (function () {
         (roles.indexOf('teacher') != -1 || roles.indexOf('admin') != -1)
       );
     },
+    isAdmin: function () {
+      var roles = api.getRoles();
+      return (
+        roles != null &&
+        (roles.indexOf('admin') != -1)
+      );
+    },
     isObserver: function (course) {
       if (course && course.enrollments) {
         return this.isEnrolledAsObserver(course.enrollments);
