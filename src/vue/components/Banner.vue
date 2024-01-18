@@ -32,7 +32,6 @@ const server= SERVER
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  min-width: 70rem;
   padding: 0rem 0.625rem 0.625rem 0.625rem;
   flex-grow: 0;
   border: 0 0 6.25rem;
@@ -47,10 +46,16 @@ const server= SERVER
   .before-login-image-left {
     position: relative;
     bottom: -3rem;
+    @media screen and (max-width: 1000px){
+      display: none;
+    }
   }
   .before-login-image-right {
     position: relative;
     bottom: -3rem;
+    @media screen and (max-width: 1000px){
+      display: none;
+    }
   }
   .caption {
     position: relative;

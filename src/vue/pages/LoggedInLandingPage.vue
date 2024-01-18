@@ -37,6 +37,7 @@
     height: 100%;
     width: 100%;
     max-width: 1600px;
+    box-sizing: border-box;
     padding: 1.25rem;
     display: flex;
     flex-direction: column;
@@ -60,5 +61,9 @@
     display: flex;
     align-items: flex-start;
     justify-content: flex-start;
+    @media screen and (max-width: 800px){
+      display: flex;
+      flex-direction: column;
+    }
   }
   </style>
