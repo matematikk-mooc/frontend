@@ -7,7 +7,7 @@
           <CardFilter @update:selectedFilters="onSelectedFiltersUpdate" :filterData="filterData"></CardFilter>
           <CardList v-if="coursesToView.length > 0" :authorized="true" :courses="coursesToView"></CardList>
           <div class="no-courses-to-show" v-else>
-            <h2>Vi fant ingen treff for filtrene du har valgt. Du kan huke av alle filtrene med “Tilbakestill filter”.</h2>
+            <h2>Vi fant ingen treff for filtrene du har valgt. Du kan fjerne alle filtrene med "Tilbakestill filter".</h2>
           </div>
         </div>
       </div>
