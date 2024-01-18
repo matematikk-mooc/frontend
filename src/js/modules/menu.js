@@ -1,9 +1,8 @@
 import NavBar from '../../vue/components/header/NavBar.vue';
 import { createApp } from 'vue/dist/vue.runtime.esm-bundler.js';
+import { getMainContentId } from './menu-utils';
 import { renderCourseModules } from "../../vue/pages/course-page/left-menu"
 import util from './util.js'
-import { getMainContentId } from './menu-utils';
-
 
 export default (function() {
   function createStyleSheet() {
@@ -58,7 +57,7 @@ export default (function() {
       else {
         $('#header').hide();
         let admin = false;
-        if(util.isTeacherOrAdmin()){
+        if(util.isAdmin()){
           admin = true;
         }
         var headerwrapper = document.getElementById("application").children[0];
