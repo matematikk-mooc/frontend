@@ -10,7 +10,7 @@
     <div class="intro-news">
       <h1>Vår nyeste kompetansepakke</h1>
 
-      <Card class="card-highlighted"
+      <CardHighlighted class="card-highlighted"
         :theme="newestCourse.course_settings ? newestCourse.course_settings.course_category.category.color_code : 'theme_0'"
         :courseIllustration="newestCourse.course_settings ? newestCourse.course_settings.image.path : ''"
         :label="newestCourse.name"
@@ -24,7 +24,7 @@
         <template  v-slot:rightButton>
           <Button :type="'outlined'" :size="'md'" @click="handleModal()">Les mer</Button>
         </template>
-      </Card>
+      </CardHighlighted>
 
       <Modal :is-open="isModalOpen" @close="closeModal()">
         <template v-slot:header>
@@ -51,7 +51,7 @@
 </template>
 
 <script>
-import Card from './Card.vue'
+import CardHighlighted from './CardHighlighted.vue';
 import Button from './Button.vue';
 import ModulesList from './ModulesList.vue';
 import Modal from '../components/modal/Modal';
@@ -60,7 +60,7 @@ import RegisterChoice from './login-choice/RegisterChoice.vue';
 export default {
   name: 'NotLoggedInIntro',
   components: {
-    Card,
+    CardHighlighted,
     Button,
     ModulesList,
     Modal,
@@ -145,7 +145,7 @@ export default {
   width: 100%;
   box-sizing: border-box;
   padding: 0.5rem 6rem 0.5rem 9rem;
-  margin-top: 1.5rem;
+  margin-top: 1rem;
   display: inline-grid;
   grid-template-columns: auto auto;
   justify-content: center;
@@ -177,7 +177,14 @@ export default {
 }
 
 .card-highlighted {
-  max-height: 20rem;
+
+  max-height: 100px !important;
+  box-sizing: border-box !important;
+  justify-content: space-between !important;
+  .card-box {
+  min-height: 24rem;
+}
+
 }
 
 .course-illustration-box {

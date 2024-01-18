@@ -32,7 +32,7 @@ const server= SERVER
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  padding: 0rem 0.625rem 0.625rem 0.625rem;
+  padding: 0rem 0.625rem 0.625 0.625rem;
   flex-grow: 0;
   border: 0 0 6.25rem;
   border-radius: 20px;
