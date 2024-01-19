@@ -43,16 +43,19 @@ const onSelectedFiltersUpdate = (updatedFilters) => {
   height: 100%;
   width: 100%;
   max-width: 1600px;
+  box-sizing: border-box;
   padding: 1.25rem;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  min-height: 100vh;
+  min-height: 85vh;
 }
 
 .not-logged-in-page--header {
   width: 100%;
+  box-sizing: border-box;
+  max-width: 1500px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -73,6 +76,10 @@ const onSelectedFiltersUpdate = (updatedFilters) => {
   display: flex;
   align-items: flex-start;
   justify-content: flex-start;
+  @media screen and (max-width: 800px){
+    display: flex;
+    flex-direction: column;
+  }
 }
 .not-logged-in-page--footer {
   width: 100%;

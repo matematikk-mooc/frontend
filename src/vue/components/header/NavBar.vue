@@ -28,6 +28,7 @@ const {logged_in, admin, mainContentId} = defineProps(['logged_in', 'admin', 'ma
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
+  box-sizing: border-box;
   padding: 0;
   .skip-to-content-link {
   left: 50%;
