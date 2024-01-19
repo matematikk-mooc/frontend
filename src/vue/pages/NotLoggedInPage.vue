@@ -42,13 +42,14 @@ const onSelectedFiltersUpdate = (updatedFilters) => {
 .not-logged-in-page {
   height: 100%;
   width: 100%;
-  padding: 1.25rem;
+  max-width: 1600px;
   box-sizing: border-box;
+  padding: 1.25rem;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  min-height: 100vh;
+  min-height: 85vh;
 }
 
 .not-logged-in-page--header {
