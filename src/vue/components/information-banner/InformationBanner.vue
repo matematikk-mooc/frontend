@@ -3,8 +3,9 @@
         <div class="information-banner-content">
             <Icon class="icon" :class="'icon-' + type" :name=this.icon size="1.5em"></Icon>
             <div class="information-banner-content-text">
-                {{ text }}
-                <span v-if="date"> Sist vedlikeholdt: {{ date }}</span>
+                {{ message }}
+                <a v-if="url" :href="url" target="_blank">Les mer</a>
+                <span v-if="date"> Vedlikehold avsluttet: {{ formatedDate }}</span>
             </div>
         </div>
     </div>
@@ -25,10 +26,17 @@ export default {
     data() {
         return {
             icon: '',
+            url: '',
+            message: '',
+            fornatedDate: '',
         };
     },
     created() {
         this.getIcon();
+        this.checkUrl();
+        if(this.date){
+            this.formatDate();
+        }
     },
     methods: {
         getIcon() {
@@ -41,6 +49,29 @@ export default {
             } else if (this.type === "UNMAINTAINED") {
                 this.icon = 'notification_important';
             }
+        },
+        checkUrl() {
+            const urlRegex = /(https?):\/\/[^\s/$.?#].[^\s]*/;
+            const match = this.text.match(urlRegex);
+            if(match){
+                this.url = match[0];
+                this.message = this.text.replace(urlRegex, '');
+            }
+            else{
+                this.message = this.text;
+
+            }
+        },
+        formatDate() {
+            const inputDate = new Date(this.date);
+            const options = {
+                year: 'numeric',
+                month: 'long',
+                day: '2-digit',
+            };
+
+            this.formatedDate = inputDate.toLocaleDateString('no-NB', options);
+
         },
     },
 }
@@ -60,11 +91,11 @@ export default {
     border: 0.125rem solid map-get($color-palette-red, background, 600);
 }
 .information-banner-container-NOTIFICATION{
-    background: map-get($color-palette-steel, background, 400);
+    background: map-get($color-palette-steel, background, 300);
     border: 0.125rem solid map-get($color-palette-steel, background, 700);
 }
 .information-banner-container-FEEDBACK{
-    background: map-get($color-palette-green, background, 300);
+    background: map-get($color-palette-green, background, 200);
     border: 0.125rem solid map-get($color-palette-green, background, 600);
 }
 .information-banner-container-UNMAINTAINED{
