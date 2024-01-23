@@ -16,6 +16,7 @@ import footer from './modules/footer.js'
 import greeting from './modules/greeting.js';
 import groups from'./modules/groups.js'
 import infoboxes from './modules/infoboxes.js'
+import informationBanner from "./modules/informationBanner.js";
 import kpas from './3party/kpas.js';
 import kpasApi from "./api/kpas-api.js";
 import login from './modules/login.js';
@@ -101,7 +102,7 @@ jQuery(function($) {
   routes.addRouteForPath(/\/courses\/\d+/, function() {
     coursepagebanner.insertCourseBanner();
     let authenticated = util.isAuthenticated();
-
+    informationBanner.updateInformationBanner();
     if(!authenticated) {
       enroll.displayRegisterPopup(authenticated, util.course.self_enrollment_code);
     } else {
