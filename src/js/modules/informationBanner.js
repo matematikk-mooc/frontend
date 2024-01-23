@@ -28,11 +28,14 @@ export default (function() {
         else if(bannerType == "NOTIFICATION") {
             bannerText = util.getNotificationMsg();
         }
-        let wrapper = document.getElementById("fixed_bottom");
+        let fixed_bottom = document.createElement("div")
+        fixed_bottom.setAttribute("class", "fixed-bottom");
+        let wrapper = document.getElementById("application")
         let informationBanner = document.createElement("div");
         informationBanner.setAttribute("id", "informationBanner");
         let informationBannerComponent = createApp(InformationBanner, {type: bannerType, text: bannerText, date: bannerDate});
-        wrapper.appendChild(informationBanner);
+        fixed_bottom.appendChild(informationBanner);
+        wrapper.appendChild(fixed_bottom);
         informationBannerComponent.mount("#informationBanner");
 
 

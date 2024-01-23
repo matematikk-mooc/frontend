@@ -67,7 +67,7 @@ export default {
     background: map-get($color-palette-green, background, 300);
     border: 0.125rem solid map-get($color-palette-green, background, 600);
 }
-.infomation-banner-container-UNMAINAINED{
+.information-banner-container-UNMAINTAINED{
     background: map-get($color-palette-red, background, 200);
     border: 0.125rem solid map-get($color-palette-red, background, 600);
 }

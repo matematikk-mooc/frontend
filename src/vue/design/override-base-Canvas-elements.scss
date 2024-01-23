@@ -206,3 +206,11 @@ body.with-left-side:not(.useFullWidth) {
   gap: 1rem !important;
   display: flex !important;
 }
+
+.fixed-bottom {
+  position: fixed;
+  z-index: 100000;
+  left: 0;
+  width: 100vw;
+  bottom: 0;
+}
