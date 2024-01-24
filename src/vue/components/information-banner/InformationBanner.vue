@@ -8,15 +8,18 @@
                 <span v-if="date"> Vedlikehold avsluttet: {{ formatedDate }}</span>
             </div>
         </div>
+        <IconButton @click="closeBanner()" class="information-banner-close"></IconButton>
     </div>
 </template>
 
 <script>
 import Icon from '../icon/Icon.vue'
+import IconButton from '../icon-button/IconButton.vue'
 export default {
     name: 'InformationBanner',
     components: {
         Icon,
+        IconButton,
     },
     props: {
         type: String,
@@ -39,6 +42,9 @@ export default {
         }
     },
     methods: {
+        closeBanner() {
+            document.getElementsByClassName('information-banner-container')[0].style.display = 'none';
+        },
         getIcon() {
             if (this.type === "ALERT") {
                 this.icon = 'campaign';
@@ -83,6 +89,7 @@ export default {
 .information-banner-container {
     height: 3.125rem;
     justify-content: center;
+    align-items: center;
     display: flex;
 
 }
@@ -110,6 +117,17 @@ export default {
     justify-content: center;
     width: 100%;
     gap: .5rem;
+}
+
+.information-banner-close{
+    flex: 0 0 auto;
+    margin-right: 1.5rem;
+    background: none;
+    color: black;
+    cursor: pointer;
+    &:hover{
+        background: white;
+    }
 }
 
 .icon {
