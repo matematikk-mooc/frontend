@@ -120,9 +120,11 @@ export default (function () {
                 try {
                   if(wrapper != null){
                       const customContent = document.createElement("div");
+                      var mobiletablet = util.isMobileOrTablet();
                       let props = {
                         courses : allCoursesWithSettings,
                         filterData : allFiltersList,
+                        mobiletablet : mobiletablet
                       };
                       let page = createApp(LoggedInLandingPage, props);
                       customContent.setAttribute("id", "loggedInLandingPage");
@@ -151,10 +153,12 @@ export default (function () {
                       if(highlightedCourse == null || highlightedCourse == undefined) {
                         highlightedCourse = allCoursesWithSettings[0];
                       }
+                      var mobiletablet = util.isMobileOrTablet();
                       let props = {
                         courses : allCoursesWithSettings,
                         filterData : allFiltersList,
-                        highlightedCourse : highlightedCourse
+                        highlightedCourse : highlightedCourse,
+                        mobiletablet : mobiletablet
                       };
                       let page = createApp(NotLoggedInPage, props);
                       customContent.setAttribute("id", "notLoggedInPage");

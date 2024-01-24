@@ -2,6 +2,7 @@
 <template>
     <div class="landing-page">
       <div id="main" class="landing-page--content">
+        <MobileWarning v-if="mobiletablet"></MobileWarning>
         <h1>Alle tilgjengelige kompetansepakker</h1>
         <div class="landing-page--layout">
           <CardFilter @update:selectedFilters="onSelectedFiltersUpdate" :filterData="filterData"></CardFilter>
@@ -19,8 +20,9 @@
   import CardFilter from '../components/CardFilter.vue'
   import {ref} from 'vue'
   import { filterCourses } from '../utils/filter-courses.js'
+  import MobileWarning from '../components/information-banner/MobileWarning.vue'
 
-  const { courses, filterData } = defineProps(['courses', 'filterData']);
+  const { courses, filterData, mobiletablet } = defineProps(['courses', 'filterData', 'mobiletablet']);
   const coursesToView = ref([...courses]);
 
   const onSelectedFiltersUpdate = (updatedFilters) => {

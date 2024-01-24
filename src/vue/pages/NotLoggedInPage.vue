@@ -2,6 +2,7 @@
 <template>
   <div class="not-logged-in-page">
     <div class="not-logged-in-page--header">
+      <MobileWarning v-if="mobiletablet"></MobileWarning>
       <Banner></Banner>
       <NotLoggedInIntro :newestCourse="highlightedCourse"></NotLoggedInIntro>
     </div>
@@ -25,8 +26,9 @@ import Banner from '../components/Banner.vue'
 import NotLoggedInIntro from '../components/NotLoggedInIntro.vue'
 import {ref} from 'vue'
 import { filterCourses } from '../utils/filter-courses.js'
+import MobileWarning from '../components/information-banner/MobileWarning.vue'
 
-const { courses, filterData, highlightedCourse } = defineProps(['courses', 'filterData', 'highlightedCourse']);
+const { courses, filterData, highlightedCourse, mobiletablet } = defineProps(['courses', 'filterData', 'highlightedCourse', 'mobiletablet']);
 const coursesToView = ref([...courses]);
 
 const onSelectedFiltersUpdate = (updatedFilters) => {
