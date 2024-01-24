@@ -231,48 +231,49 @@ export default (function () {
       }
     },
 
-    getBannerType(course) {
-      if(course){
-        return course.kpas.banner_type;
+    getBannerType() {
+      console.log(this.course)
+      if(this.course && this.course.kpas && this.course.kpas.banner_type){
+        return this.course.kpas.banner_type;
       }
       return "NONE";
     },
-    getAlertMsg(course) {
-      if (course) {
-        if(course.kpas.banner_type == "ALERT"){
-          return course.kpas.banner_text;
+    getAlertMsg() {
+      if (this.course) {
+        if(this.course.kpas.banner_type == "ALERT"){
+          return this.course.kpas.banner_text;
         }
       }
       return "";
     },
-    getUnmaintainedMsg(course) {
-      if (course) {
-        if(course.kpas.banner_type == "UNMAINTAINED"){
-          return course.kpas.banner_text;
+    getUnmaintainedMsg() {
+      if (this.course) {
+        if(this.course.kpas.banner_type == "UNMAINTAINED"){
+          return this.course.kpas.banner_text;
         }
       }
       return "";
     },
-    getUnmaintainedSinceDate(course) {
-      if(course){
-        if(course.kpas.banner_type == "UNMAINTAINED"){
-          return course.kpas.unmaintained_since;
+    getUnmaintainedSinceDate() {
+      if(this.course){
+        if(this.course.kpas.banner_type == "UNMAINTAINED"){
+          return this.course.kpas.unmaintained_since;
         }
       }
       return null;
     },
-    getNotificationMsg(course) {
-      if (course) {
-        if(course.kpas.banner_type == "NOTIFICATION"){
-          return course.kpas.banner_text;
+    getNotificationMsg() {
+      if (this.course) {
+        if(this.course.kpas.banner_type == "NOTIFICATION"){
+          return this.course.kpas.banner_text;
         }
       }
       return "";
     },
-    getFeedbackMsg(course) {
-      if (course) {
-        if(course.kpas.banner_type == "FEEDBACK"){
-          return course.kpas.banner_text;
+    getFeedbackMsg() {
+      if (this.course) {
+        if(this.course.kpas.banner_type == "FEEDBACK"){
+          return this.course.kpas.banner_text;
         }
       }
       return "";
