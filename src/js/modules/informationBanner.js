@@ -9,7 +9,8 @@ export default (function() {
         console.log("Banner type: " + bannerType);
         let bannerText = "";
         let bannerDate = "";
-        if(bannerType == "NONE"){
+        console.log("Banner type: " + bannerType)
+        if(bannerType == "NONE" || bannerType == undefined){
             return;
         }
         else if(bannerType == "FEEDBACK")

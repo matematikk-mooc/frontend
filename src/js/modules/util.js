@@ -233,7 +233,7 @@ export default (function () {
 
     getBannerType() {
       console.log(this.course)
-      if(this.course){
+      if(this.course && this.course.kpas && this.course.kpas.banner_type){
         return this.course.kpas.banner_type;
       }
       return "NONE";
