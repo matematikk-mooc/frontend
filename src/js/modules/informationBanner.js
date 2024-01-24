@@ -4,20 +4,15 @@ import util from "./util";
 
 export default (function() {
     function updateInformationBanner() {
-        console.log("Updating information banner");
         let bannerType = util.getBannerType();
-        console.log("Banner type: " + bannerType);
         let bannerText = "";
         let bannerDate = "";
-        console.log("Banner type: " + bannerType)
         if(bannerType == "NONE" || bannerType == undefined){
             return;
         }
         else if(bannerType == "FEEDBACK")
         {
-            console.log("Found feedback banner")
             bannerText = util.getFeedbackMsg();
-            console.log("Banner text: " + bannerText);
         }
         else if(bannerType == "UNMAINTAINED") {
             bannerText = util.getUnmaintainedMsg();
