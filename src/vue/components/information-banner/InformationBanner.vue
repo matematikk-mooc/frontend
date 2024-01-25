@@ -51,7 +51,7 @@ export default {
             } else if (this.type === "NOTIFICATION") {
                 this.icon = 'info';
             } else if (this.type === "FEEDBACK") {
-                this.icon = 'feedback';
+                this.icon = 'question_mark';
             } else if (this.type === "UNMAINTAINED") {
                 this.icon = 'notification_important';
             }
