@@ -330,11 +330,13 @@ jQuery(function($) {
       menu.showLeftMenu();
       menu.listModuleItems();
       pages.modifyMarkAsDoneButton();
-      coursepage.resizeH5p();
 
       if (util.isTeacherOrAdmin()) {
         pages.addStudentViewButton();
       }
+      setTimeout(function() {
+        coursepage.resizeH5p();
+      }, 500)
     }
   );
 
