@@ -2,6 +2,7 @@
 <template>
   <div class="not-logged-in-page">
     <div class="not-logged-in-page--header">
+      <MobileWarning v-if="mobiletablet"></MobileWarning>
       <Banner></Banner>
       <NotLoggedInIntro :newestCourse="highlightedCourse"></NotLoggedInIntro>
     </div>
@@ -11,7 +12,7 @@
         <CardFilter @update:selectedFilters="onSelectedFiltersUpdate" :filterData="filterData"></CardFilter>
         <CardList v-if="coursesToView.length > 0" :authorized="false" :courses="coursesToView"></CardList>
         <div v-else>
-          <h3>Vi fant ingen treff for filtrene du har valgt. Du kan huke av alle filtrene med “Tilbakestill filter”.</h3>
+          <h3>Vi fant ingen treff for filtrene du har valgt. Du kan fjerne alle filtrene med "Tilbakestill filter".</h3>
         </div>
       </div>
     </div>
@@ -25,8 +26,9 @@ import Banner from '../components/Banner.vue'
 import NotLoggedInIntro from '../components/NotLoggedInIntro.vue'
 import {ref} from 'vue'
 import { filterCourses } from '../utils/filter-courses.js'
+import MobileWarning from '../components/information-banner/MobileWarning.vue'
 
-const { courses, filterData, highlightedCourse } = defineProps(['courses', 'filterData', 'highlightedCourse']);
+const { courses, filterData, highlightedCourse, mobiletablet } = defineProps(['courses', 'filterData', 'highlightedCourse', 'mobiletablet']);
 const coursesToView = ref([...courses]);
 
 const onSelectedFiltersUpdate = (updatedFilters) => {
@@ -43,16 +45,19 @@ const onSelectedFiltersUpdate = (updatedFilters) => {
   height: 100%;
   width: 100%;
   max-width: 1600px;
+  box-sizing: border-box;
   padding: 1.25rem;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  min-height: 100vh;
+  min-height: 85vh;
 }
 
 .not-logged-in-page--header {
   width: 100%;
+  box-sizing: border-box;
+  max-width: 1500px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -73,6 +78,10 @@ const onSelectedFiltersUpdate = (updatedFilters) => {
   display: flex;
   align-items: flex-start;
   justify-content: flex-start;
+  @media screen and (max-width: 800px){
+    display: flex;
+    flex-direction: column;
+  }
 }
 .not-logged-in-page--footer {
   width: 100%;

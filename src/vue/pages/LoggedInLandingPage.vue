@@ -2,12 +2,13 @@
 <template>
     <div class="landing-page">
       <div id="main" class="landing-page--content">
+        <MobileWarning v-if="mobiletablet"></MobileWarning>
         <h1>Alle tilgjengelige kompetansepakker</h1>
         <div class="landing-page--layout">
           <CardFilter @update:selectedFilters="onSelectedFiltersUpdate" :filterData="filterData"></CardFilter>
           <CardList v-if="coursesToView.length > 0" :authorized="true" :courses="coursesToView"></CardList>
           <div class="no-courses-to-show" v-else>
-            <h2>Vi fant ingen treff for filtrene du har valgt. Du kan huke av alle filtrene med “Tilbakestill filter”.</h2>
+            <h2>Vi fant ingen treff for filtrene du har valgt. Du kan fjerne alle filtrene med "Tilbakestill filter".</h2>
           </div>
         </div>
       </div>
@@ -19,8 +20,9 @@
   import CardFilter from '../components/CardFilter.vue'
   import {ref} from 'vue'
   import { filterCourses } from '../utils/filter-courses.js'
+  import MobileWarning from '../components/information-banner/MobileWarning.vue'
 
-  const { courses, filterData } = defineProps(['courses', 'filterData']);
+  const { courses, filterData, mobiletablet } = defineProps(['courses', 'filterData', 'mobiletablet']);
   const coursesToView = ref([...courses]);
 
   const onSelectedFiltersUpdate = (updatedFilters) => {
@@ -37,6 +39,7 @@
     height: 100%;
     width: 100%;
     max-width: 1600px;
+    box-sizing: border-box;
     padding: 1.25rem;
     display: flex;
     flex-direction: column;
@@ -60,5 +63,9 @@
     display: flex;
     align-items: flex-start;
     justify-content: flex-start;
+    @media screen and (max-width: 800px){
+      display: flex;
+      flex-direction: column;
+    }
   }
   </style>

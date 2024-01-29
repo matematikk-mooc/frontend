@@ -56,7 +56,7 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style scoped lang="scss">
 @import '../design/_card-themes.scss';
 
 .card-box {
@@ -65,8 +65,7 @@ export default {
   min-height: 28rem;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
-  align-items: space-evenly;
+  justify-content: space-evenly;
   border-radius: 0.5rem;
   box-shadow: 0 0.25rem 0.25rem 0 rgba(0, 0, 0, 0.25);
   background-color: $card-background-color;
@@ -117,7 +116,6 @@ export default {
 
   .card-content-container {
     box-sizing: border-box;
-    height: 100%;
     flex-grow: 2;
     padding: 0.5rem 1.5rem 0.5rem 1.5rem;
     font-family: Roboto;
@@ -130,7 +128,6 @@ export default {
   .card-content-description {
     display: flex;
     flex-direction: column;
-    height: 100%;
     justify-content: flex-start;
   }
 
@@ -185,4 +182,3 @@ export default {
   }
 }
 </style>
-

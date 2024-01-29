@@ -21,7 +21,7 @@
       <li class="header__list-item" v-if="logged_in">
         <span>
           <a class="header__link" :href="logoutLink">Logg ut</a>
-        </span> 
+        </span>
       </li>
     </ul>
   </header>

@@ -93,12 +93,11 @@ body.with-left-side:not(.useFullWidth) {
   min-height: 85vh !important;
   max-width: 1600px !important;
   justify-content: center;
+  box-sizing: border-box !important;
 }
 
 .useFullWidth{
-  width: 100vw !important;
   min-width: unset !important;
-
 }
 @media screen and (max-width: 1200px) {
 
@@ -172,6 +171,7 @@ body.with-left-side:not(.useFullWidth) {
 
 #application {
   background-color: $color-white !important;
+  box-sizing: border-box !important;
 }
 
 
@@ -205,4 +205,12 @@ body.with-left-side:not(.useFullWidth) {
 .button-container{
   gap: 1rem !important;
   display: flex !important;
+}
+
+.fixed-bottom {
+  position: fixed;
+  z-index: 100000;
+  left: 0;
+  width: 100vw;
+  bottom: 0;
 }
