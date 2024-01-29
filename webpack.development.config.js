@@ -23,6 +23,7 @@ module.exports = {
       "./src/js/subaccount.js",
     ],
     "kompetanseportalen-localhost": [
+      "./src/js/3party/matomo.js",
       "./src/js/main.js",
     ],
   },
