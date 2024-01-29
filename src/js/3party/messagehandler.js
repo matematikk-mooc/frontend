@@ -45,8 +45,6 @@ export default (function() {
                                 e.source.postMessage(sendMsg, e.origin);
                             }, error);
                         } else if(message.subject == "kpas-lti.update") {
-                            util.updateInformationPane();
-
                             var courseId = api.getCurrentCourseId();
 
                             api.getUserGroupsForCourse(courseId, function(groups) {

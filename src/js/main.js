@@ -100,6 +100,7 @@ jQuery(function($) {
   });
 
   routes.addRouteForPath(/\/courses\/\d+/, function() {
+    document.body.classList.add('course-menu-expanded');
     coursepagebanner.insertCourseBanner();
     let authenticated = util.isAuthenticated();
     informationBanner.updateInformationBanner();
