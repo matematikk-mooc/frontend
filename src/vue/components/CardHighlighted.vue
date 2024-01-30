@@ -1,6 +1,7 @@
 <template>
     <article tabIndex="0" :aria-label="label" class="card-highlighted-box">
         <div class="card-highlighted-illustration-box" :class="theme">
+            <slot name="new-flag"></slot>
             <img
             class="card-highlighted-illustration-box-image"
             :src="courseIllustration"

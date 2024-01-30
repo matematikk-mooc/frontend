@@ -15,6 +15,9 @@
         :courseIllustration="newestCourse.course_settings ? newestCourse.course_settings.image.path : ''"
         :label="newestCourse.name"
       >
+        <template v-slot:new-flag>
+          <NewCourseFlag v-if="newCourseFlag()"></NewCourseFlag>
+        </template>
         <template v-slot:title>{{ newestCourse.name }}</template>
         <template v-slot:description>{{ truncateString(newestCourse.public_description) }}</template>
 
@@ -56,6 +59,7 @@ import Button from './Button.vue';
 import ModulesList from './ModulesList.vue';
 import Modal from '../components/modal/Modal';
 import RegisterChoice from './login-choice/RegisterChoice.vue';
+import NewCourseFlag from './NewCourseFlag.vue';
 
 export default {
   name: 'NotLoggedInIntro',
@@ -65,6 +69,7 @@ export default {
     ModulesList,
     Modal,
     RegisterChoice,
+    NewCourseFlag,
   },
   props: {
     newestCourse: Object,
@@ -82,6 +87,16 @@ export default {
   methods: {
     enrollToCourse(enrollCode) {
       window.location.href = this.domain + '/enroll/' + enrollCode;
+    },
+    newCourseFlag() {
+      console.log("NEWEST COURSE", this.newestCourse)
+    if (this.newestCourse.course_settings) {
+      console.log(this.newestCourse.course_settings.course_category.new)
+      if (this.newestCourse.course_settings.course_category) {
+        return this.newestCourse.course_settings.course_category.new;
+      }
+    }
+      return false;
     },
     truncateString(str) {
       if (!str) {

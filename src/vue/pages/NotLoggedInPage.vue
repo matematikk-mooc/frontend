@@ -10,7 +10,7 @@
       <h2>Alle tilgjengelige kompetansepakker</h2>
       <div class="not-logged-in-page--layout">
         <CardFilter @update:selectedFilters="onSelectedFiltersUpdate" :filterData="filterData"></CardFilter>
-        <CardList v-if="coursesToView.length > 0" :authorized="false" :courses="coursesToView"></CardList>
+        <CardList v-if="coursesToView.length > 0" :authorized="false" :courses="coursesToView" :newCoursesIndicator=true></CardList>
         <div v-else>
           <h3>Vi fant ingen treff for filtrene du har valgt. Du kan fjerne alle filtrene med "Tilbakestill filter".</h3>
         </div>
