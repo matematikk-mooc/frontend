@@ -1,6 +1,7 @@
 <template>
   <article tabIndex="0" :aria-label="label" class="card-box">
     <div class="card-illustration-box" :class="theme">
+    <slot name="new-flag"></slot>
       <img
         class="card-illustration-box-image"
         :src="courseIllustration"
@@ -39,9 +40,13 @@
 </template>
 
 <script lang="js">
+import NewCourseFlag from './NewCourseFlag.vue';
+
 export default {
   name: 'Card',
-  components: {},
+  components: {
+    NewCourseFlag,
+  },
   props: {
     theme: String,
     courseIllustration: String,

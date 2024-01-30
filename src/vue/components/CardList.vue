@@ -7,6 +7,9 @@
         :courseIllustration="course.course_settings ? course.course_settings.image.path : ''"
         :label="course.name"
       >
+        <template v-slot:new-flag>
+          <NewCourseFlag v-if="newCoursesIndicator && newCourseFlag(course)"/>
+        </template>
         <template v-slot:title>{{ course.name }}</template>
         <template v-slot:description>{{ truncateString(course.public_description) }}</template>
 
@@ -58,6 +61,7 @@ import Button from './Button.vue';
 import ModulesList from './ModulesList.vue';
 import Modal from '../components/modal/Modal';
 import RegisterChoice from './login-choice/RegisterChoice.vue';
+import NewCourseFlag from './NewCourseFlag.vue';
 
 export default {
   name: 'CardList',
@@ -67,10 +71,12 @@ export default {
     ModulesList,
     RegisterChoice,
     Modal,
+    NewCourseFlag,
   },
   props: {
     courses: Array,
     authorized: Boolean,
+    newCoursesIndicator: Boolean,
   },
   data() {
     return {
@@ -81,9 +87,20 @@ export default {
       kpasApiUrl: KPASAPIURL,
     };
   },
+  created () {
+    console.log(this.courses)
+  },
   methods: {
     enrollToCourse(enrollCode) {
       window.location.href = this.domain + '/enroll/' + enrollCode;
+    },
+    newCourseFlag(course) {
+      if (course.course_settings) {
+        if (course.course_settings.course_category) {
+          return course.course_settings.course_category.new;
+        }
+      }
+      return false;
     },
     truncateString(str) {
       if (!str) {
