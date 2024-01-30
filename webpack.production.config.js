@@ -24,6 +24,7 @@ module.exports = (env) => {
                 "./src/js/subaccount.js",
             ],
             "kompetanseportal-udirdesign": [
+                "./src/js/3party/matomo.js",
                 "./src/js/main.js",
             ],
         },
