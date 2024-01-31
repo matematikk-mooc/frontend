@@ -22,8 +22,8 @@ export default (function () {
           kpasApi.getAllCourseSettings(function (allCoursesSettings) {
             var myCoursesWithSettings = util.mapCourseSettings(courses, allCoursesSettings.result);
 
-            if (myCoursesWithSettings.length == 0) {
-              // TODO: Insert not assigned to any courses component
+            if (courses.length == 0) {
+              window.location.href = "/search/all_courses?design=udir";
             } else {
 
 

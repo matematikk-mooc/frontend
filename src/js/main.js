@@ -336,6 +336,9 @@ jQuery(function($) {
       if (util.isTeacherOrAdmin()) {
         pages.addStudentViewButton();
       }
+      if(!util.isTeacherOrAdmin()) {
+        pages.removeItemsInStudentView();
+      }
       setTimeout(function() {
         coursepage.resizeH5p();
       }, 500)
