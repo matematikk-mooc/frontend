@@ -14,7 +14,7 @@
           </div>
 
           <div class="page-footer--link-container">
-            <PageFooterLink :url="'https://kompetanseudirno.azureedge.net/udirdesign/omkompetanseudirno.html'"><template v-slot:footerlink>Om kompetanskepakker</template></PageFooterLink>
+            <PageFooterLink :url="'https://kompetanseudirno.azureedge.net/udirdesign/omkompetanseudirno.html'"><template v-slot:footerlink>Om kompetansepakker</template></PageFooterLink>
             <div class="page-footer--divider"></div>
             <PageFooterLink :url="'mailto:kompetansesupport@udir.no'"><template v-slot:footerlink>Kontakt</template></PageFooterLink>
             <div class="page-footer--divider"></div>
