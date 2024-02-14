@@ -74,6 +74,18 @@ export default (function() {
                             kpasCheckElement.show();
                             console.error("Din nettleser støtter IKKE cookies fra tredjeparter. Rolle og gruppeverktøyet krever cookies fra tredjepart.");
                         }
+                        else if(message.subject == "kpas-lti.getcurrentuserroles") {
+                            let userroles = api.getRoles();
+                            let currentPath = window.location.pathname;
+                            const roles = {
+                                subject: 'kpas-lti.rolesofuser',
+                                roles: userroles,
+                                path: currentPath
+
+                            }
+                            e.source.postMessage(roles, e.origin);
+
+                        }
                     }
                 } catch(err) {
                     console.log.call(console, 'KPAS LTI: skip message:' +err);
