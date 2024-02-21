@@ -82,7 +82,6 @@ jQuery(function($) {
   });
 
 
-  ////KURSP-293-RCE-mister-farge-for-redigering
   routes.addRouteForPath(/\/edit$/, function() {
     multilanguage.applyColorCodingInEditor();
   });
@@ -92,6 +91,12 @@ jQuery(function($) {
   });
 
   routes.addRouteForPath(/\/courses$/, function() {
+    let confirmationWindowLogo = document.getElementsByClassName('ic-Login-confirmation__logo')
+    if(confirmationWindowLogo.length > 0) {
+      confirmationWindowLogo[0].src = SERVER + 'logo-white.png';
+      confirmationWindowLogo[0].setAttribute("style", "height: 4rem; width: auto;"); 
+
+    }
     utilRoot.redirectToEnrollIfCodeParamPassed();
     courselist.listCourses(
       'content',
@@ -403,7 +408,7 @@ jQuery(function($) {
   routes.addRouteForPath(/enroll\/[0-9A-Z]+/, function() {
     if(!util.isAuthenticated()){
       let loginLogo = document.getElementsByClassName('ic-Login-confirmation__logo')[0];
-      loginLogo.src = SERVER + 'logo-black.svg';
+      loginLogo.src = SERVER + 'logo-white.png';
       loginLogo.setAttribute("style", "height: 4rem !important; width: auto !important");
     }
     enroll.changeEnrollPage();
