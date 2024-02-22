@@ -1,4 +1,5 @@
 import { countPagesAndCompleted } from '../components/course-modules/completed-utils.js';
+import store from './index.js';
 
 function isSessionStorageAvailable() {
   try {
@@ -28,8 +29,14 @@ const deepCompare = (arg1, arg2) => {
         return false;
       }
       return (Object.keys(arg1).every(function(key){
+        if (key === 'isActive' && store.getters.pageCompletion) {
+          return true
+        }
         return deepCompare(arg1[key],arg2[key]);
       }));
+    }
+    if(store.getters.pageCompletion) {
+      return true
     }
     return (arg1===arg2);
   }
