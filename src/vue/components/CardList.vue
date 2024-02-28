@@ -41,6 +41,7 @@
             />
           </div>
           <h2>{{ course.name }}</h2>
+          <h2>{{ console.log("hello") }}</h2>
         </template>
         <template v-slot:main>
           <p class="course-description">{{ course.public_description }}</p>

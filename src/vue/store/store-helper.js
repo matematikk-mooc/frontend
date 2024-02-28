@@ -17,6 +17,23 @@ function setSessionStorage(key, data) {
   }
 }
 
+function isLocalStorageAvailable() {
+  try {
+    const key = '__storage_test__';
+    localStorage.setItem(key, key);
+    localStorage.removeItem(key);
+    return true;
+  } catch (error) {
+    return false;
+  }
+}
+
+function setLocalStorage(key, data) {
+  if (isLocalStorageAvailable()) {
+    localStorage.setItem(key, JSON.stringify(data));
+  }
+}
+
 const calculateModuleProgression = (courseModule) => {
   return [...courseModule].map(item => countPagesAndCompleted(item))
 }
@@ -137,6 +154,7 @@ const updatePropertiesRecursively = (data, searchPropertyName, searchPropertyVal
   return results;
 };
 
-export { isSessionStorageAvailable, setSessionStorage, calculateModuleProgression,
-         deepCompare, findAllAndUpdateByProperty, findAndUpdateByProperty,
+export { isSessionStorageAvailable, setSessionStorage, isLocalStorageAvailable,
+         setLocalStorage, calculateModuleProgression, deepCompare,
+         findAllAndUpdateByProperty, findAndUpdateByProperty,
          updatePropertiesRecursively };

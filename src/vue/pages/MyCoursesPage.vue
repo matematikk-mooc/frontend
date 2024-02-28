@@ -3,7 +3,7 @@
     <div id="main" class="my-courses-page--content">
       <h1>Mine kompetansepakker</h1>
       <div class="my-courses-page--layout">
-        <CardList :authorized="true" :courses="courses" :newCoursesIndicator=false></CardList>
+        <CardList :authorized="true" :courses="courses" v-if="coursesInStore" :newCoursesIndicator=false></CardList>
       </div>
     </div>
   </div>
@@ -12,15 +12,49 @@
 
 <script>
 import CardList from '../components/CardList.vue';
+import { useStore } from 'vuex'
+import { computed, onMounted, watch } from 'vue';
+
 export default{
   name: 'MyCoursesPage',
   components: {
     CardList
   },
-  props: {
-    courses: Array,
-  },
+  setup() {
+    const store = useStore()
+
+    if(!store) {
+        console.error("Vuex store is not initialized.")
+        return
+    }
+    const courses = computed(() => {
+        return store.getters.myCourses
+    })
+    const coursesInStore = computed(() => {
+        return store.getters.myCoursesReady
+    })
+
+    const fetchMyCourses = async () => {
+        await store.dispatch('fetchMyCourses');
+    }
+
+    //Call the asynchronous function within onMounted
+    onMounted(fetchMyCourses)
+
+    // Watch for changes in 'courses' and navigate if it becomes empty
+    watch(courses, (newValue, oldvalue) => {
+      if (newValue.length === 0) {
+        window.location.href = "/search/all_courses?design=udir";
+      }
+    });
+
+    return {
+        courses,
+        coursesInStore
+    };
+  }
 }
+
 </script>
 
 <style lang="scss">
