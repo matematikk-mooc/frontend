@@ -102,10 +102,11 @@
 }
 
 .ic-Login-confirmation__header {
-    background-color: $color-white;
+    background-color: #ffffff00;
     border: none;
     justify-content: center !important;
     display: flex;
+    padding-bottom: 2rem;
 
 }
 
@@ -115,6 +116,49 @@
     gap: 0.5rem;
 
     .btn {
+        cursor: pointer;
+        position: relative;
+        background: $color-grey-900;
+        color: $color-white;
+        border: solid white 0.5px;
+        border-radius: 0.1875rem;
+        font-weight: 700;
+        line-height: 1;
+        display: flex;
+        align-items: center;
+        bottom: -0.05rem;
+        &:hover {
+            background: #00468e;
+            color: $color-white;
+        }
+    }
+}
+
+.ic-Login-confirmation__actions {
+    display: grid !important;
+    justify-content: center;
+    gap: 0.5rem;
+
+    .btn {
+        cursor: pointer;
+        position: relative;
+        background: $color-grey-900;
+        color: $color-white;
+        border: solid white 0.5px;
+        border-radius: 0.1875rem;
+        font-weight: 700;
+        line-height: 1;
+        display: flex;
+        align-items: center;
+        bottom: -0.05rem;
+        font-family: "Lato Extended","Lato","Helvetica Neue",Helvetica,Arial,sans-serif;
+        &:hover {
+            background: #00468e;
+            color: $color-white;
+        }
+    }
+
+    .Button{
         cursor: pointer;
         position: relative;
         background: $color-grey-900;
