@@ -2,11 +2,15 @@
 <template>
     <div class="landing-page">
       <div id="main" class="landing-page--content">
-        <MobileWarning v-if="mobiletablet"></MobileWarning>
+        <!--MobileWarning v-if="mobiletablet"></MobileWarning-->
+        <MobileWarning v-if="mobile"></MobileWarning>
         <h1>Alle tilgjengelige kompetansepakker</h1>
         <div class="landing-page--layout">
+          <!--CardFilter @update:selectedFilters="onSelectedFiltersUpdate" :filterData="filterData"></CardFilter-->
           <CardFilter @update:selectedFilters="onSelectedFiltersUpdate" :filterData="filterData"></CardFilter>
-          <CardList v-if="coursesToView.length > 0" :authorized="true" :courses="coursesToView" :newCoursesIndicator=true></CardList>
+          <!--CardList v-if="coursesToView.length > 0" :authorized="true" :courses="coursesToView" :newCoursesIndicator=true></CardList-->
+          <!--CardList v-if="allCoursesReady" :authorized="true" :courses="allCourses" :newCoursesIndicator=true></CardList-->
+          <CardList v-if="allCoursesReady" :authorized="true" :courses="viewCourses" :newCoursesIndicator=true></CardList>
           <div class="no-courses-to-show" v-else>
             <h2>Vi fant ingen treff for filtrene du har valgt. Du kan fjerne alle filtrene med "Tilbakestill filter".</h2>
           </div>
@@ -18,20 +22,81 @@
   <script setup>
   import CardList from '../components/CardList.vue'
   import CardFilter from '../components/CardFilter.vue'
-  import {ref} from 'vue'
+  import { ref, computed, onMounted } from 'vue'
   import { filterCourses } from '../utils/filter-courses.js'
   import MobileWarning from '../components/information-banner/MobileWarning.vue'
+
+  import { useStore } from 'vuex'
+
+  // Destructure the store
+  const store = useStore()
+
+  if(!store) {
+    console.error("Vuex store is not initialized.")
+    /* return */
+  }
+
+  // Getters
+  const allCourses = computed(() => store.getters.allCourses)
+  const viewCourses = computed(() => store.getters.viewCourses)
+  const filterList = computed(() => store.getters.filterList)
+  /* const highlightedCourse = computed(() => store.getters.highlightedCourse) */
+  const mobile = computed(() => store.getters.mobile)
+  const allCoursesReady = computed(() => store.getters.allCoursesReady)
+
+
+  const onSelectedFiltersUpdate = (updatedFilters) => {
+    console.log("onSelectedFiltersUpdate")
+    console.log(updatedFilters)
+    /* store.dispatch.updateFilter(updatedFilters) */
+    store.dispatch('updateFilter', updatedFilters)
+    /* if (updatedFilters.length == 0) { */
+      /* coursesToView.value = [...allCourses.value] */
+      /* return */
+    /* } */
+    /* coursesToView.value = filterCourses(allCourses.value, updatedFilters) */
+    /* coursesToView.value = filterCourses([...allCourses], updatedFilters) */
+  }
+
+
+
+  /* const coursesToView = ref([...allCourses.value]); */
+
+  /* const onSelectedFiltersUpdate = (updatedFilters) => { */
+    /* console.log("onSelectedFiletersUpdate") */
+    /* console.log((updatedFilters)) */
+    /* console.log((updatedFilters.lenth)) */
+    /* console.log((updatedFilters)) */
+    /* console.log("filterlist from store") */
+    /* console.log(filterList) */
+    /* console.log(filterList.value) */
+    /* if (updatedFilters.length == 0) { */
+      /* coursesToView.value = [...allCourses.value] */
+      /* return */
+    /* } */
+    /* [> coursesToView.value = filterCourses(allCourses.value, updatedFilters) <] */
+    /* coursesToView.value = filterCourses([...allCourses], updatedFilters) */
+  /* } */
+
+  const fetchAllCourses = async () => {
+      await store.dispatch('fetchallcourses');
+  }
+
+  //Call the asynchronous function within onMounted
+  onMounted(fetchAllCourses)
+
 
   const { courses, filterData, mobiletablet } = defineProps(['courses', 'filterData', 'mobiletablet']);
   const coursesToView = ref([...courses]);
 
-  const onSelectedFiltersUpdate = (updatedFilters) => {
-    if(updatedFilters.length == 0){
-      coursesToView.value = [...courses]
-      return
-    }
-    coursesToView.value = filterCourses(courses, updatedFilters)
-  }
+
+  /* const onSelectedFiltersUpdate = (updatedFilters) => { */
+    /* if(updatedFilters.length == 0){ */
+      /* coursesToView.value = [...courses] */
+      /* return */
+    /* } */
+    /* coursesToView.value = filterCourses(courses, updatedFilters) */
+  /* } */
   </script>
 
   <style lang="scss">

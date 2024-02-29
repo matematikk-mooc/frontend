@@ -10,6 +10,8 @@ import settings from "../settings";
 import util from "./util";
 import utilRoot from "../utilRoot";
 
+import store from '../../vue/store/all-courses/index'
+
 export default (function () {
 
   return {
@@ -126,7 +128,20 @@ export default (function () {
                         filterData : allFiltersList,
                         mobiletablet : mobiletablet
                       };
+
+                      console.log("These are the types")
+                      console.log(allCoursesWithSettings)
+                      console.log(typeof(allCoursesWithSettings))
+                      console.log(allFiltersList)
+                      console.log(typeof(allFiltersList))
+                      console.log(mobiletablet)
+                      console.log(typeof(mobiletablet))
+
+
                       let page = createApp(LoggedInLandingPage, props);
+                      // let page = createApp(LoggedInLandingPage);
+                      page.use(store)
+
                       customContent.setAttribute("id", "loggedInLandingPage");
                       customContent.setAttribute("style", "width: 100%; justify-content: center; display: flex;");
                       let footerNode = document.getElementById("wrapper");
@@ -160,7 +175,10 @@ export default (function () {
                         highlightedCourse : highlightedCourse,
                         mobiletablet : mobiletablet
                       };
-                      let page = createApp(NotLoggedInPage, props);
+                      // let page = createApp(NotLoggedInPage, props);
+                      let page = createApp(NotLoggedInPage);
+                      page.use(store)
+
                       customContent.setAttribute("id", "notLoggedInPage");
                       customContent.setAttribute("style", "width: 100%; justify-content: center; display: flex;");
                       let footerNode = document.getElementById("wrapper");

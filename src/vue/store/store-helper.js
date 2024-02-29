@@ -154,7 +154,22 @@ const updatePropertiesRecursively = (data, searchPropertyName, searchPropertyVal
   return results;
 };
 
+const setCourseEnrolledStatus = (allCourses, enrolledCourses) => {
+  var allCoursesWithStatus = [];
+  for (var i = 0; i < allCourses.length; i++) {
+    allCourses[i].course.enrolled = false;
+    for (var j = 0; j < enrolledCourses.length; j++) {
+      if (allCourses[i].course.id == enrolledCourses[j].id) {
+        allCourses[i].course.enrolled = true;
+      }
+    }
+    allCoursesWithStatus.push(allCourses[i].course);
+  }
+  return allCoursesWithStatus;
+};
+
+
 export { isSessionStorageAvailable, setSessionStorage, isLocalStorageAvailable,
          setLocalStorage, calculateModuleProgression, deepCompare,
          findAllAndUpdateByProperty, findAndUpdateByProperty,
-         updatePropertiesRecursively };
+         updatePropertiesRecursively, setCourseEnrolledStatus };
