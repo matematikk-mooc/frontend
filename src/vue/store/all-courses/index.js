@@ -100,9 +100,11 @@ const store =  createStore({
                     var mobiletablet = util.isMobileOrTablet();
 
                     commit('SET_ALL_COURSES', allCoursesWithSettings)
-                    commit('SET_FILTER_DATA', allFiltersList)
+                    // commit('SET_FILTER_DATA', allFiltersList)
+                    commit('SET_FILTER_DATA', [])
                     commit('SET_HIGHTLIGTED_COURSE', highlightedCourse)
                     commit('SET_MOBILE_TABLET', mobiletablet)
+                    commit('SET_VIEW_COURSES')
                     commit('SET_ALL_COURSES_READY', true)
                   })
                 })
@@ -111,6 +113,7 @@ const store =  createStore({
           })
         } else {
           console.log("fetchallcourses else")
+          commit('SET_VIEW_COURSES')
           commit('SET_ALL_COURSES_READY', true)
           // dispatch('fetchallcoursesBackgroud')
         }

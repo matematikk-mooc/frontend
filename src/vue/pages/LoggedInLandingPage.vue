@@ -11,7 +11,8 @@
           <!--CardList v-if="coursesToView.length > 0" :authorized="true" :courses="coursesToView" :newCoursesIndicator=true></CardList-->
           <!--CardList v-if="allCoursesReady" :authorized="true" :courses="allCourses" :newCoursesIndicator=true></CardList-->
           <CardList v-if="allCoursesReady" :authorized="true" :courses="viewCourses" :newCoursesIndicator=true></CardList>
-          <div class="no-courses-to-show" v-else>
+          <div class="no-courses-to-show" v-if="allCoursesReady && viewCourses.length === 0">
+          <!--div class="no-courses-to-show" v-else-->
             <h2>Vi fant ingen treff for filtrene du har valgt. Du kan fjerne alle filtrene med "Tilbakestill filter".</h2>
           </div>
         </div>
