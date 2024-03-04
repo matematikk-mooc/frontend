@@ -16,7 +16,7 @@ const store =  createStore({
     JSON.parse(localStorage.getItem('viewCourses')) : [],
 
     filterList: isLocalStorageAvailable() ?
-    JSON.parse(localStorage.getItem('filterlist')) : [],
+    JSON.parse(localStorage.getItem('filterlist')) || []: [],
 
     highlightedCourse: isLocalStorageAvailable() ?
     JSON.parse(localStorage.getItem('highlightedcourse')) : {},
@@ -100,8 +100,8 @@ const store =  createStore({
                     var mobiletablet = util.isMobileOrTablet();
 
                     commit('SET_ALL_COURSES', allCoursesWithSettings)
-                    // commit('SET_FILTER_DATA', allFiltersList)
-                    commit('SET_FILTER_DATA', [])
+                    commit('SET_FILTER_DATA', allFiltersList)
+                    // commit('SET_FILTER_DATA', [])
                     commit('SET_HIGHTLIGTED_COURSE', highlightedCourse)
                     commit('SET_MOBILE_TABLET', mobiletablet)
                     commit('SET_VIEW_COURSES')

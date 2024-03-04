@@ -7,7 +7,7 @@
         <h1>Alle tilgjengelige kompetansepakker</h1>
         <div class="landing-page--layout">
           <!--CardFilter @update:selectedFilters="onSelectedFiltersUpdate" :filterData="filterData"></CardFilter-->
-          <CardFilter @update:selectedFilters="onSelectedFiltersUpdate" :filterData="filterData"></CardFilter>
+          <CardFilter v-if="allCoursesReady" @update:selectedFilters="onSelectedFiltersUpdate" :filterData="filterList"></CardFilter>
           <!--CardList v-if="coursesToView.length > 0" :authorized="true" :courses="coursesToView" :newCoursesIndicator=true></CardList-->
           <!--CardList v-if="allCoursesReady" :authorized="true" :courses="allCourses" :newCoursesIndicator=true></CardList-->
           <CardList v-if="allCoursesReady" :authorized="true" :courses="viewCourses" :newCoursesIndicator=true></CardList>
@@ -24,7 +24,7 @@
   import CardList from '../components/CardList.vue'
   import CardFilter from '../components/CardFilter.vue'
   import { ref, computed, onMounted } from 'vue'
-  import { filterCourses } from '../utils/filter-courses.js'
+  /* import { filterCourses } from '../utils/filter-courses.js' */
   import MobileWarning from '../components/information-banner/MobileWarning.vue'
 
   import { useStore } from 'vuex'
@@ -48,7 +48,7 @@
 
   const onSelectedFiltersUpdate = (updatedFilters) => {
     console.log("onSelectedFiltersUpdate")
-    console.log(updatedFilters)
+    /* console.log(updatedFilters) */
     /* store.dispatch.updateFilter(updatedFilters) */
     store.dispatch('updateFilter', updatedFilters)
     /* if (updatedFilters.length == 0) { */
@@ -87,8 +87,8 @@
   onMounted(fetchAllCourses)
 
 
-  const { courses, filterData, mobiletablet } = defineProps(['courses', 'filterData', 'mobiletablet']);
-  const coursesToView = ref([...courses]);
+  /* const { courses, filterData, mobiletablet } = defineProps(['courses', 'filterData', 'mobiletablet']); */
+  /* const coursesToView = ref([...courses]); */
 
 
   /* const onSelectedFiltersUpdate = (updatedFilters) => { */

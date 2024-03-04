@@ -102,6 +102,68 @@ export default (function () {
       header.insertAdjacentElement('afterend', loader);
       loaderComponent.mount("#loader");
 
+
+
+              var isAuthenticated = util.isAuthenticated()
+              if (isAuthenticated) {
+                document.getElementById('content').innerHTML = "";
+                let wrapper = document.getElementById("content");
+                try {
+                  if(wrapper != null){
+                      const customContent = document.createElement("div");
+
+                      // let page = createApp(LoggedInLandingPage, props);
+                      let page = createApp(LoggedInLandingPage);
+                      // let page = createApp(LoggedInLandingPage);
+                      page.use(store)
+
+                      customContent.setAttribute("id", "loggedInLandingPage");
+                      customContent.setAttribute("style", "width: 100%; justify-content: center; display: flex;");
+                      let footerNode = document.getElementById("wrapper");
+                      footerNode.parentNode.insertBefore(customContent, footerNode)
+                      document.getElementById('wrapper').innerHTML = '';
+                      $('#wrapper').remove();
+                      document.getElementById('loader').remove();
+                      page.mount("#loggedInLandingPage");
+                  }
+                } catch (e) {
+                  console.log(e);
+                }
+              }
+              else {
+                try {
+                  if(wrapper != null){
+
+                      const customContent = document.createElement("div");
+                      // var highlightedCourse = allCoursesWithSettings.find(course => course.id == highlightedCourseId);
+                      // if(highlightedCourse == null || highlightedCourse == undefined) {
+                        // highlightedCourse = allCoursesWithSettings[0];
+                      // }
+                      // let page = createApp(NotLoggedInPage, props);
+                      // let page = createApp(NotLoggedInPage);
+                      // page.use(store)
+
+                      customContent.setAttribute("id", "notLoggedInPage");
+                      customContent.setAttribute("style", "width: 100%; justify-content: center; display: flex;");
+                      let footerNode = document.getElementById("wrapper");
+                      footerNode.parentNode.insertBefore(customContent, footerNode)
+                      document.getElementById('wrapper').innerHTML = '';
+                      $('#wrapper').remove();
+                      document.getElementById('loader').remove();
+                      // page.mount("#notLoggedInPage");
+                  }
+                } catch (e) {
+                  console.log(e);
+                }
+              }
+
+
+
+
+
+
+
+      if(false) {
       api.getAllPublicCourses(function (allCourses) {
         api.getEnrolledCourses(function (enrolledCourses) {
           var allCoursesWithStatus = self.setCourseEnrolledStatus(
@@ -197,6 +259,7 @@ export default (function () {
           });
         });
       });
+      }
     },
   };
 })();
