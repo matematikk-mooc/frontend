@@ -257,7 +257,6 @@ jQuery(function($) {
 
 
       if (!util.isTeacherOrAdmin()) {
-        menu.hideRightMenu();
         menu.hideSectionTabsHeader();
       } else {
         groups.interceptLinksToTeacherGroupPage();
@@ -306,17 +305,6 @@ jQuery(function($) {
           }
         }
       });
-
-      if (!util.isTeacherOrAdmin()) {
-        menu.hideRightMenu();
-        var contentId = api.getCurrentTypeAndContentId().contentId;
-        api.getDiscussionTopic(
-          courseId,
-          contentId,
-          discussionTopics.setDiscussionTopicPubDate
-        );
-      }
-
 
       api.getUserGroupsForCourse(courseId, (userGroups) => {
         util.tinyMceEditorIsInDOM(
