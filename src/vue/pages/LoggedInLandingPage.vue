@@ -7,7 +7,11 @@
         <h1>Alle tilgjengelige kompetansepakker</h1>
         <div class="landing-page--layout">
           <!--CardFilter @update:selectedFilters="onSelectedFiltersUpdate" :filterData="filterData"></CardFilter-->
-          <CardFilter v-if="allCoursesReady" @update:selectedFilters="onSelectedFiltersUpdate" :filterData="filterList"></CardFilter>
+
+          <!--CardFilter v-if="allCoursesReady" @update:selectedFilters="onSelectedFiltersUpdate" :filterData="filterList"></CardFilter-->
+          <CardFilter v-if="allCoursesReady"></CardFilter>
+
+
           <!--CardList v-if="coursesToView.length > 0" :authorized="true" :courses="coursesToView" :newCoursesIndicator=true></CardList-->
           <!--CardList v-if="allCoursesReady" :authorized="true" :courses="allCourses" :newCoursesIndicator=true></CardList-->
           <CardList v-if="allCoursesReady" :authorized="true" :courses="viewCourses" :newCoursesIndicator=true></CardList>
@@ -45,12 +49,20 @@
   const mobile = computed(() => store.getters.mobile)
   const allCoursesReady = computed(() => store.getters.allCoursesReady)
 
+    const fetchAllCourses = async () => {
+        await store.dispatch('fetchallcourses');
+    }
+
+    //Call the asynchronous function within onMounted
+    onMounted(fetchAllCourses)
 
   const onSelectedFiltersUpdate = (updatedFilters) => {
     console.log("onSelectedFiltersUpdate")
     /* console.log(updatedFilters) */
     /* store.dispatch.updateFilter(updatedFilters) */
+
     store.dispatch('updateFilter', updatedFilters)
+
     /* if (updatedFilters.length == 0) { */
       /* coursesToView.value = [...allCourses.value] */
       /* return */
@@ -79,12 +91,6 @@
     /* coursesToView.value = filterCourses([...allCourses], updatedFilters) */
   /* } */
 
-  const fetchAllCourses = async () => {
-      await store.dispatch('fetchallcourses');
-  }
-
-  //Call the asynchronous function within onMounted
-  onMounted(fetchAllCourses)
 
 
   /* const { courses, filterData, mobiletablet } = defineProps(['courses', 'filterData', 'mobiletablet']); */

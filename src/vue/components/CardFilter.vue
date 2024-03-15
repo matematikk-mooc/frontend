@@ -1,7 +1,8 @@
 <template>
   <div class="filter-container">
     <Button :type="'outlined'" :size="'md'" @click="clearFilters">Tilbakestill filter</Button>
-    <div class="filter-group" v-for="item in filters">
+    <!--div class="filter-group" v-for="item in filters"-->
+    <div class="filter-group" v-for="item in filterListWithArray">
       <div class="filter-title">
         {{ item.name }}
       </div>
@@ -24,36 +25,67 @@
 import { ref, watch } from 'vue'
 import Button from './Button.vue'
 
-const {filterData} = defineProps(['filterData'])
+  import { computed, onMounted } from 'vue'
+  import { useStore } from 'vuex'
 
-const data = [
-  {
-    name: 'Målgruppe',
-    filter: filterData.filter(item => item.type == 'TARGET').map(item => item)
+  // Destructure the store
+  const store = useStore()
 
-  },
-  {
-    name: 'Kategori',
-    filter: filterData.filter(item => item.type == 'CATEGORY').map(item => item)
+  if(!store) {
+    console.error("Vuex store is not initialized.")
   }
-]
 
-const filters = ref(data)
+  /* const filterList = computed(() => store.getters.filterList) */
+  const filterListWithArray = computed(() => store.getters.filterListWithArray)
+
+  // Handle the refresh of the page
+    const pageRefreshHandler = async () => {
+      console.log("pageRefresherHandler")
+      await store.dispatch('resetViewFilters');
+  }
+
+  //Call the asynchronous function within onMounted
+  onMounted(pageRefreshHandler)
+
+
+
+/* const {filterData} = defineProps(['filterData']) */
+
+/* const data = [ */
+  /* { */
+    /* name: 'Målgruppe', */
+    /* [> filter: filterData.filter(item => item.type == 'TARGET').map(item => item) <] */
+    /* filter: filterList.value.filter(item => item.type == 'TARGET').map(item => item) */
+
+  /* }, */
+  /* { */
+    /* name: 'Kategori', */
+    /* [> filter: filterData.filter(item => item.type == 'CATEGORY').map(item => item) <] */
+    /* filter: filterList.value.filter(item => item.type == 'CATEGORY').map(item => item) */
+  /* } */
+/* ] */
+
+/* const filters = ref(data) */
 const selectedFilters = ref([])
 
 defineExpose({
-  filters,
-  selectedFilters
+  /* filters, */
+  selectedFilters,
+  filterListWithArray
 })
 
-const emit = defineEmits(['update:selectedFilters'])
+/* const emit = defineEmits(['update:selectedFilters']) */
 
 watch(selectedFilters, (newValue, oldValue) => {
-  emit('update:selectedFilters', newValue)
+  /* emit('update:selectedFilters', newValue) */
+  store.dispatch('updateFilter', newValue)
 })
 
 const clearFilters = () => {
-  selectedFilters.value = []
+  console.log("Pressing clearFilters")
+  store.dispatch('updateFilter', [])
+  pageRefreshHandler()
+  /* selectedFilters.value = [] */
 }
 
 </script>

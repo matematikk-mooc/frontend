@@ -3,20 +3,26 @@ import api from "../../../js/api/api";
 import kpasApi from '../../../js/api/kpas-api';
 import util from "../../../js/modules/util";
 import { filterCourses } from '../../utils/filter-courses.js'
-import { isLocalStorageAvailable, setLocalStorage, deepCompare, setCourseEnrolledStatus, updatePropertiesRecursively } from '../store-helper';
+import { isLocalStorageAvailable, setLocalStorage, deepCompare, setCourseEnrolledStatus } from '../store-helper';
 
 
 
 const store =  createStore({
   state: {
+    // All courses do not change
     allCourses: isLocalStorageAvailable() ?
-    JSON.parse(localStorage.getItem('allcourses')) : [],
+    JSON.parse(localStorage.getItem('allCourses')) : [],
 
+    // All courses has been trough current filter
     viewCourses: isLocalStorageAvailable() ?
     JSON.parse(localStorage.getItem('viewCourses')) : [],
 
+    // All filters do not change
     filterList: isLocalStorageAvailable() ?
-    JSON.parse(localStorage.getItem('filterlist')) || []: [],
+    JSON.parse(localStorage.getItem('allFilters')) || []: [],
+
+    viewList: isLocalStorageAvailable() ?
+    JSON.parse(localStorage.getItem('viewFilters')) || []: [],
 
     highlightedCourse: isLocalStorageAvailable() ?
     JSON.parse(localStorage.getItem('highlightedcourse')) : {},
@@ -31,17 +37,17 @@ const store =  createStore({
       console.log("SET_ALL_COURSES", allcourses)
       console.log(typeof(allcourses))
       state.allCourses = [...allcourses];
-      setLocalStorage('allcourses', state.allCourses)
+      setLocalStorage('allCourses', state.allCourses)
     },
     // SET_VIEW_COURSES (state, updatedFilters) {
     SET_VIEW_COURSES (state) {
       console.log("SET_VIEW_COURSES")
       // console.log("SET_VIEW_COURSES", updatedFilters)
       // console.log(typeof(updatedFilters))
-      if (state.filterList.length === 0) {
+      if (state.viewList.length === 0) {
         state.viewCourses = state.allCourses
       } else {
-        state.viewCourses = filterCourses(state.allCourses, state.filterList)
+        state.viewCourses = filterCourses(state.allCourses, state.viewList)
       }
       setLocalStorage('viewCourses', state.viewCourses)
     },
@@ -49,7 +55,15 @@ const store =  createStore({
       console.log("SET_FILTER_DATA", filterdata)
       console.log(typeof(filterdata))
       state.filterList = [...filterdata]
-      setLocalStorage('filterlist', state.filterList)
+      state.viewList = [...filterdata]
+      setLocalStorage('allFilters', state.filterList)
+      setLocalStorage('viewFilters', state.viewList)
+    },
+    SET_UPDATE_FILTER_DATA (state, filterdata) {
+      console.log("SET_UPDATE_FILTER_DATA", filterdata)
+      console.log(typeof(filterdata))
+      state.viewList = [...filterdata]
+      setLocalStorage('viewFilters', state.viewList)
     },
     SET_HIGHTLIGTED_COURSE (state, highlightedcourse) {
       console.log("SET_HIGHTLIGTED_COURSE", highlightedcourse)
@@ -68,6 +82,11 @@ const store =  createStore({
       console.log(typeof(contentInStore))
       state.allCoursesReady = contentInStore
     },
+    SET_VIEWFILTER_TO_ALLFILTER (state) {
+      console.log("SET_VIEWFILTER_TO_ALLFILTER")
+      state.viewList = state.filterList
+      setLocalStorage('viewFilters', state.filterList)
+    },
   },
   actions: {
 
@@ -76,7 +95,7 @@ const store =  createStore({
       console.log("fetchallcourses");
       try {
         console.log("fetchallcourses try");
-        if (localStorage.getItem('allcourses') === null) {
+        if (localStorage.getItem('allCourses') === null) {
           console.log("fetchallcourses if");
 
           api.getAllPublicCourses(function (allCourses) {
@@ -123,7 +142,13 @@ const store =  createStore({
     },
     async updateFilter({ commit }, updatedfilter) {
       console.log("updatefiter inside store")
-      commit('SET_FILTER_DATA', updatedfilter)
+      // commit('SET_FILTER_DATA', updatedfilter)
+      commit('SET_UPDATE_FILTER_DATA', updatedfilter)
+      commit('SET_VIEW_COURSES')
+    },
+    async resetViewFilters({ commit } ) {
+      console.log("resetViewFilters inside store")
+      commit('SET_VIEWFILTER_TO_ALLFILTER')
       commit('SET_VIEW_COURSES')
     },
 
@@ -181,10 +206,34 @@ const store =  createStore({
       return state.viewCourses
     },
     filterList(state) {
-      console.log("filterList in store")
-      console.log(state.filterList)
-      console.log(state.filterList.value)
-      return state.filterList
+      console.log("viewFilterList in store")
+      console.log(state.viewList)
+      console.log(state.viewList.value)
+      return state.viewList
+    },
+    filterListWithArray(state) {
+      var data = [
+        {
+          name: 'Målgruppe',
+          /* filter: filterData.filter(item => item.type == 'TARGET').map(item => item) */
+          // filter: state.viewList.filter(item => item.type == 'TARGET').map(item => item)
+          filter: state.filterList.filter(item => item.type == 'TARGET').map(item => item)
+
+        },
+        {
+          name: 'Kategori',
+          /* filter: filterData.filter(item => item.type == 'CATEGORY').map(item => item) */
+          // filter: state.viewList.filter(item => item.type == 'CATEGORY').map(item => item)
+          filter: state.filterList.filter(item => item.type == 'CATEGORY').map(item => item)
+        }
+      ]
+      console.log("filterListWithArray")
+      console.log(data)
+      return data
+      // console.log("viewFilterList in store")
+      // console.log(state.viewList)
+      // console.log(state.viewList.value)
+      // return state.viewList
     },
     highlightedCourse(state) {
       return state.highlightedCourse
