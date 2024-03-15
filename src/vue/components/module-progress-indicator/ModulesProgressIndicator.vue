@@ -9,23 +9,16 @@
 </template>
 
 <script>
-import { reactive, computed } from 'vue';
 
 export default {
   props: {
     modulesProgressionData: Object,
   },
-  setup(props) {
-    const state = reactive({
-      modulesProgressionData: props.modulesProgressionData,
-      percentageCompleted: computed(() => {
-        return Math.round((state.modulesProgressionData.completedPages / state.modulesProgressionData.totalPages) * 100);
-      }),
-    });
-
-    // Expose reactive properties as plain refs for template access
+  data() {
     return {
-      ...state,
+      percentageCompleted: Math.round((this.modulesProgressionData.completedPages / this.modulesProgressionData.totalPages) * 100),
+      modulesProgressionData: this.modulesProgressionData,
+
     };
   },
 };
@@ -62,7 +55,7 @@ export default {
     background-color: map-get($color-palette-green, background, 500);
     height: 0.625rem;
   }
-
+  
 }
 .progress-label {
    font-size: 0.875rem;
@@ -70,5 +63,5 @@ export default {
    font-weight: 400;
   }
 }
-
+  
 </style>
