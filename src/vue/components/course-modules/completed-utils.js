@@ -14,7 +14,7 @@ export function countPagesAndCompleted(entry) {
         completedPages++;
       }
     }
-    else if (node.type === 'discussion') {
+    else if (node.type === 'discussion' || node.type === 'quiz') {
       pages.push(node);
     }
     else if (node.type === 'module') {
