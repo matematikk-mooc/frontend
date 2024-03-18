@@ -101,7 +101,7 @@ function mapCoursesInSubDirectory(items) {
       if (item.type === "SubHeader") {
         currentSubheader = mapToSubHeader(item);
         nestedItems.push(currentSubheader);
-      } else if (item.type === "Page" || item.type === "Discussion") {
+      } else if (item.type === "Page" || item.type === "Discussion" || item.type === "Quiz") {
         if (currentSubheader) {
            if (item.isActive) {
             currentSubheader.isActive = true;
@@ -115,7 +115,7 @@ function mapCoursesInSubDirectory(items) {
       if (item.type === "SubHeader") {
         currentSubheader = mapToSubHeader(item);
         nestedItems.push(currentSubheader);
-      } else if (item.type === "Page"  || item.type === "Discussion") {
+      } else if (item.type === "Page"  || item.type === "Discussion" || item.type === "Quiz") {
         if (currentSubheader) {
           if (item.isActive) {
             currentSubheader.isActive = true;

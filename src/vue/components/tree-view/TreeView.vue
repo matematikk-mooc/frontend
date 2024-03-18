@@ -14,12 +14,13 @@
         <span v-if="!isLeaf" class="dropdown-indicator" :class="{ 'dropdown-indicator--collapsed': collapsed }">
           <Icon name="expand_more" size="2em" />
         </span>
-        <Icon class="tree-node__label__text__done-icon" v-if="(type === 'page' || type === 'discussion') && isCompleted" name="check_circle_filled" size="0.8em"></Icon>
-        <Icon class="tree-node__label__text__icon" v-if="type === 'page' && isActivity()" name="edit_document" size="0.8em"></Icon>
+        <Icon class="tree-node__label__text__done-icon" v-if="(type === 'page' || type === 'discussion' || type === 'quiz') && isCompleted" name="check_circle_filled" size="0.8em"></Icon>
+        <Icon class="tree-node__label__text__icon" v-if="type === 'page'  && isActivity()" name="edit_document" size="0.8em"></Icon>
         <Icon class="tree-node__label__text__icon" v-else-if="type === 'page' && isVideo()" name="video_camera" size="0.8em"></Icon>
         <Icon class="tree-node__label__text__icon" v-else-if="type === 'page'" name="article" size="0.8em"></Icon>
         <Icon class="tree-node__label__text__icon" v-else-if="type === 'discussion'" name="chat" size="0.8em"></Icon>
-        <template v-if="type === 'page' || type === 'discussion'">
+        <Icon class="tree-node__label__text__icon" v-else-if="type === 'quiz'" name="edit_document" size="0.8em"></Icon>
+        <template v-if="type === 'page' || type === 'discussion' || type === 'quiz'">
           <a @click="setActivePageAndModule(url)">{{ localizedLabel }}</a>
         </template>
         <template v-else>
