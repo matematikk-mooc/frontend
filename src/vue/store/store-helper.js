@@ -29,14 +29,11 @@ const deepCompare = (arg1, arg2) => {
         return false;
       }
       return (Object.keys(arg1).every(function(key){
-        if (key === 'isActive' && store.getters.pageCompletion) {
+        if (key === 'isActive' && (store.getters.pageCompletion === 'true')) {
           return true
         }
         return deepCompare(arg1[key],arg2[key]);
       }));
-    }
-    if(store.getters.pageCompletion) {
-      return true
     }
     return (arg1===arg2);
   }

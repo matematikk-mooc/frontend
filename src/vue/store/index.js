@@ -13,7 +13,7 @@ const store = createStore({
     courseModulesInStore: false,
     completionProgression: [],
     pages: [],
-    pageCompletion: isSessionStorageAvailable() ? sessionStorage.getItem('pageCompletion') : false,
+    pageCompletion: isSessionStorageAvailable() ? sessionStorage.getItem('pageCompletion') : 'false',
   },
   mutations: {
     SET_COURSE_MODULES (state, fetchedCourseModules) {
@@ -30,8 +30,8 @@ const store = createStore({
       state.courseModulesInStore = contentInStore
     },
     SET_PAGE_COMPLETION(state, completed) {
-      state.pageCompletion = true
-      sessionStorage.setItem('pageCompletion', true)
+      state.pageCompletion = 'true'
+      sessionStorage.setItem('pageCompletion', 'true')
       const pageId = api.getCurrentModuleItemId()
       findAndUpdateByProperty(state.courseModules, 'id', pageId, 'isCompleted', completed)
       setSessionStorage(api.getCurrentCourseId(), state.courseModules)
@@ -69,15 +69,17 @@ const store = createStore({
         const responseCourseModules = JSON.parse(JSON.stringify(response));
 
         if (!(deepCompare(storeCourseModules, responseCourseModules))) {
-          commit('SET_COURSE_MODULES', response);
-          commit('SET_COURSE_COMPLETION_PROGRESSION');
-          commit('SET_LIST_ALL_PAGES');
-          commit('SET_COURSE_MODULES_IN_STORE', true);
+          if (state.pageCompletion === 'false') {
+            commit('SET_COURSE_MODULES', response);
+            commit('SET_COURSE_COMPLETION_PROGRESSION');
+            commit('SET_LIST_ALL_PAGES');
+            commit('SET_COURSE_MODULES_IN_STORE', true);
+          }
         }
       } catch (error) {
         console.error('Error fetching course modules:', error);
       } finally {
-        sessionStorage.setItem('pageCompletion', false)
+        sessionStorage.setItem('pageCompletion', 'false')
       }
     },
     setActivePageAndModule( { commit }, url) {
