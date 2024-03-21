@@ -3,7 +3,7 @@ import api from "../../js/api/api";
 import { fetchModulesForCourse } from '../../js/modules/module-selector/index';
 import { isSessionStorageAvailable, setSessionStorage, calculateModuleProgression,
          deepCompare, findAllAndUpdateByProperty, findAndUpdateByProperty,
-         updatePropertiesRecursively } from './store-helper'
+         updatePropertiesRecursively, checkProperties, checkSecondPropertyExistence } from './store-helper'
 
 
 const store = createStore({
@@ -39,6 +39,12 @@ const store = createStore({
     SET_ACTIVE_MODULE_AND_PAGE(state, url) {
       findAllAndUpdateByProperty(state.courseModules, 'isActive', true, false)
       updatePropertiesRecursively(state.courseModules, 'url', url, 'isActive', true)
+      if (checkProperties(state.courseModules, 'url', url, 'type', 'discussion') &&
+          checkSecondPropertyExistence(state.courseModules, 'url', url, 'isCompleted')) {
+        state.pageCompletion = 'true'
+        sessionStorage.setItem('pageCompletion', 'true')
+        findAndUpdateByProperty(state.courseModules, 'url', url, 'isCompleted', true)
+      }
       setSessionStorage(api.getCurrentCourseId(), state.courseModules)
     }
   },
