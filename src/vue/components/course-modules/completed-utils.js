@@ -15,7 +15,12 @@ export function countPagesAndCompleted(entry) {
       }
     }
     else if (node.type === 'discussion' || node.type === 'quiz') {
+      totalPages++;
       pages.push(node);
+
+      if (node.isCompleted) {
+        completedPages++;
+      }
     }
     else if (node.type === 'module') {
       node.nodes.forEach((child) => processNode(child));
