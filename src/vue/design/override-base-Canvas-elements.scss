@@ -23,6 +23,11 @@ body.with-left-side:not(.useFullWidth) {
   }
 }
 
+@media (max-width: 768px) {
+  body.course-menu-expanded:not(.ic-no-flex-layout):not(.embedded):not(.is-inside-submission-frame) .ic-Layout-columns {
+    flex-direction: column !important;
+  }
+}
 .ic-Layout-contentWrapper {
   max-width: 1600px !important;
 }
@@ -103,7 +108,7 @@ body.with-left-side:not(.useFullWidth) {
 
   body:not(.ic-no-flex-layout):not(.embedded) .ic-app-main-content {
     flex: auto;
-    width: 100%;
+    width: 100% !important;
   }
   .ic-Layout-contentWrapper{
     width: 100% !important;
