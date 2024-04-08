@@ -124,6 +124,7 @@ const isActivity = function isActivity() {
   line-height: normal;
   margin-bottom: .5rem;
   box-sizing: border-box;
+  padding-right: 0.5rem;
 
   &--active {
     color: $color-black;
@@ -173,6 +174,7 @@ const isActivity = function isActivity() {
       display:flex;
       justify-content: flex-start;
       align-items: center;
+      margin-right: 0.5rem;
       .dropdown-title{
         font-weight: 500;
       }
