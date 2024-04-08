@@ -5,22 +5,16 @@ export function countPagesAndCompleted(entry) {
   const pages = [];
 
   function processNode(node) {
-    if (node.type === 'page') {
-      totalPages++;
-      pages.push(node)
-
+    if (node.type === 'page' || node.type === 'discussion' || node.type === 'quiz') {
+      if ("isCompleted" in node) {
+        totalPages++;
+      }
 
       if (node.isCompleted) {
         completedPages++;
       }
-    }
-    else if (node.type === 'discussion' || node.type === 'quiz') {
-      totalPages++;
+
       pages.push(node);
-
-      if (node.isCompleted) {
-        completedPages++;
-      }
     }
     else if (node.type === 'module') {
       node.nodes.forEach((child) => processNode(child));
@@ -28,6 +22,7 @@ export function countPagesAndCompleted(entry) {
   }
 
   processNode(entry);
+
   return {
     id: entry.id,
     totalPages,
