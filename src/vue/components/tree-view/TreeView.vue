@@ -21,7 +21,7 @@
         <Icon class="tree-node__label__text__icon" v-else-if="type === 'discussion'" name="chat" size="0.8em"></Icon>
         <Icon class="tree-node__label__text__icon" v-else-if="type === 'quiz'" name="edit_document" size="0.8em"></Icon>
         <template v-if="type === 'page' || type === 'discussion' || type === 'quiz'">
-          <a @click="setActivePageAndModule(url)">{{ localizedLabel }}</a>
+          <a>{{ localizedLabel }}</a>
         </template>
         <template v-else>
           <div class="dropdown-title"> {{ localizedLabel }}</div>
