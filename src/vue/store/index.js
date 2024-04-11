@@ -3,7 +3,7 @@ import api from "../../js/api/api";
 import { fetchModulesForCourse } from '../../js/modules/module-selector/index';
 import { isSessionStorageAvailable, setSessionStorage, calculateModuleProgression,
          deepCompare, findAllAndUpdateByProperty, findAndUpdateByProperty,
-         updatePropertiesRecursively } from './store-helper'
+         updatePropertiesRecursively, checkProperties, checkSecondPropertyExistence } from './store-helper'
 
 
 const store = createStore({
@@ -13,7 +13,7 @@ const store = createStore({
     courseModulesInStore: false,
     completionProgression: [],
     pages: [],
-    pageCompletion: isSessionStorageAvailable() ? sessionStorage.getItem('pageCompletion') : false,
+    pageCompletion: isSessionStorageAvailable() ? sessionStorage.getItem('pageCompletion') : 'false',
   },
   mutations: {
     SET_COURSE_MODULES (state, fetchedCourseModules) {
@@ -30,8 +30,8 @@ const store = createStore({
       state.courseModulesInStore = contentInStore
     },
     SET_PAGE_COMPLETION(state, completed) {
-      state.pageCompletion = true
-      sessionStorage.setItem('pageCompletion', true)
+      state.pageCompletion = 'true'
+      sessionStorage.setItem('pageCompletion', 'true')
       const pageId = api.getCurrentModuleItemId()
       findAndUpdateByProperty(state.courseModules, 'id', pageId, 'isCompleted', completed)
       setSessionStorage(api.getCurrentCourseId(), state.courseModules)
@@ -39,6 +39,12 @@ const store = createStore({
     SET_ACTIVE_MODULE_AND_PAGE(state, url) {
       findAllAndUpdateByProperty(state.courseModules, 'isActive', true, false)
       updatePropertiesRecursively(state.courseModules, 'url', url, 'isActive', true)
+      if (checkProperties(state.courseModules, 'url', url, 'type', 'discussion') &&
+          checkSecondPropertyExistence(state.courseModules, 'url', url, 'isCompleted')) {
+        state.pageCompletion = 'true'
+        sessionStorage.setItem('pageCompletion', 'true')
+        findAndUpdateByProperty(state.courseModules, 'url', url, 'isCompleted', true)
+      }
       setSessionStorage(api.getCurrentCourseId(), state.courseModules)
     }
   },
@@ -69,15 +75,17 @@ const store = createStore({
         const responseCourseModules = JSON.parse(JSON.stringify(response));
 
         if (!(deepCompare(storeCourseModules, responseCourseModules))) {
-          commit('SET_COURSE_MODULES', response);
-          commit('SET_COURSE_COMPLETION_PROGRESSION');
-          commit('SET_LIST_ALL_PAGES');
-          commit('SET_COURSE_MODULES_IN_STORE', true);
+          if (state.pageCompletion === 'false') {
+            commit('SET_COURSE_MODULES', response);
+            commit('SET_COURSE_COMPLETION_PROGRESSION');
+            commit('SET_LIST_ALL_PAGES');
+            commit('SET_COURSE_MODULES_IN_STORE', true);
+          }
         }
       } catch (error) {
         console.error('Error fetching course modules:', error);
       } finally {
-        sessionStorage.setItem('pageCompletion', false)
+        sessionStorage.setItem('pageCompletion', 'false')
       }
     },
     setActivePageAndModule( { commit }, url) {

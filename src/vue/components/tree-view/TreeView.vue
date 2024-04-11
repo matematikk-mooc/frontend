@@ -21,7 +21,7 @@
         <Icon class="tree-node__label__text__icon" v-else-if="type === 'discussion'" name="chat" size="0.8em"></Icon>
         <Icon class="tree-node__label__text__icon" v-else-if="type === 'quiz'" name="edit_document" size="0.8em"></Icon>
         <template v-if="type === 'page' || type === 'discussion' || type === 'quiz'">
-          <a @click="setActivePageAndModule(url)">{{ localizedLabel }}</a>
+          <a>{{ localizedLabel }}</a>
         </template>
         <template v-else>
           <div class="dropdown-title"> {{ localizedLabel }}</div>
@@ -124,6 +124,7 @@ const isActivity = function isActivity() {
   line-height: normal;
   margin-bottom: .5rem;
   box-sizing: border-box;
+  padding-right: 0.5rem;
 
   &--active {
     color: $color-black;
@@ -173,6 +174,7 @@ const isActivity = function isActivity() {
       display:flex;
       justify-content: flex-start;
       align-items: center;
+      margin-right: 0.5rem;
       .dropdown-title{
         font-weight: 500;
       }

@@ -29,14 +29,11 @@ const deepCompare = (arg1, arg2) => {
         return false;
       }
       return (Object.keys(arg1).every(function(key){
-        if (key === 'isActive' && store.getters.pageCompletion) {
+        if (key === 'isActive' && (store.getters.pageCompletion === 'true')) {
           return true
         }
         return deepCompare(arg1[key],arg2[key]);
       }));
-    }
-    if(store.getters.pageCompletion) {
-      return true
     }
     return (arg1===arg2);
   }
@@ -144,6 +141,58 @@ const updatePropertiesRecursively = (data, searchPropertyName, searchPropertyVal
   return results;
 };
 
+const checkProperties = (data, searchPropertyName, searchPropertyValue, secondPropertyName, secondPropertyValue) => {
+  // Function to recursively search through the data structure
+  const search = (items) => {
+    for (const item of items) {
+      // Check if the current item has the search property and the value matches
+      if (item.hasOwnProperty(searchPropertyName) && item[searchPropertyName] === searchPropertyValue) {
+        // If the second property is present and has the specified value, return true
+        if (item.hasOwnProperty(secondPropertyName) && item[secondPropertyName] === secondPropertyValue) {
+          return true;
+        }
+      }
+      // Recursively search through nested nodes
+      if (item.nodes && item.nodes.length > 0) {
+        if (search(item.nodes)) {
+          return true;
+        }
+      }
+    }
+    // If no matching item is found, return false
+    return false;
+  };
+
+  // Start the search from the root of the data structure
+  return search(data);
+};
+
+const checkSecondPropertyExistence = (data, searchPropertyName, searchPropertyValue, secondPropertyName) => {
+  // Function to recursively search through the data structure
+  const search = (items) => {
+    for (const item of items) {
+      // Check if the current item has the search property and the value matches
+      if (item.hasOwnProperty(searchPropertyName) && item[searchPropertyName] === searchPropertyValue) {
+        // If the second property exists, return true
+        if (item.hasOwnProperty(secondPropertyName)) {
+          return true;
+        }
+      }
+      // Recursively search through nested nodes
+      if (item.nodes && item.nodes.length > 0) {
+        if (search(item.nodes)) {
+          return true;
+        }
+      }
+    }
+    // If no matching item is found, return false
+    return false;
+  };
+
+  // Start the search from the root of the data structure
+  return search(data);
+};
+
 export { isSessionStorageAvailable, setSessionStorage, calculateModuleProgression,
          deepCompare, findAllAndUpdateByProperty, findAndUpdateByProperty,
-         updatePropertiesRecursively };
+         updatePropertiesRecursively, checkProperties, checkSecondPropertyExistence};
