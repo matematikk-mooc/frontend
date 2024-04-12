@@ -9,16 +9,17 @@ env:
   ACCOUNT_NAME: udirdit
   SOURCE: dist
   DESTINATION: frontend-dev
+  AZURE_STORAGE_KEY: ${{ secrets.AZURE_STORAGE_KEY }}
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - name: Check out repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Setup node
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: 20
 
@@ -29,14 +30,14 @@ jobs:
         run: yarn buildDev
 
       - name: Login to Azure
-        uses: azure/login@v1
+        uses: azure/login@v2
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
       - name: Upload files to Azure Blob
-        uses: azure/CLI@v1
+        uses: azure/CLI@v2
         with:
-          azcliversion: 2.48.1
+          azcliversion: 2.34.1
           inlineScript: |
             az storage blob upload-batch --account-name ${{ env.ACCOUNT_NAME }} \
               --auth-mode key -s ${{ env.SOURCE }} -d ${{ env.DESTINATION }} --overwrite
