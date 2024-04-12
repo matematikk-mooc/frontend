@@ -37,7 +37,7 @@ jobs:
       - name: Upload files to Azure Blob
         uses: azure/CLI@v2
         with:
-          azcliversion: 2.30.0
+          azcliversion: 2.34.1
           inlineScript: |
             az storage blob upload-batch --account-name ${{ env.ACCOUNT_NAME }} \
               --auth-mode key -s ${{ env.SOURCE }} -d ${{ env.DESTINATION }} --overwrite
