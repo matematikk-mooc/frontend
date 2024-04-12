@@ -43,10 +43,10 @@ export default {
       this.modalOpen = false
     },
     goToFeide() {
-        window.location.href = window.location.origin + "/courses?login=1&design=udir"
+        window.location.href = window.location.origin + "/login/saml/2"
     },
     goToCanvas() {
-        window.location.href = window.location.origin + "/login/canvas?normalLogin=1&design=udir"
+        window.location.href = window.location.origin + "/login/canvas?normalLogin=1"
     }
   }
 }

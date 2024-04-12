@@ -6,21 +6,23 @@ const webpack = require('webpack');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const {VueLoaderPlugin} = require('vue-loader');
-const { response } = require("express");
 
 module.exports = {
   entry: {
     // ...other entry points...
-    "rootaccount-localhost": [
-      "./src/js/settingsRoot.js",
-      "./src/js/utilRoot.js",
-      "./src/js/rootaccount.js",
-    ],
+    // "rootaccount-localhost": [
+    //   "./src/js/settingsRoot.js",
+    //   "./src/js/utilRoot.js",
+    //   "./src/js/rootaccount.js",
+    // ],
 
-    "subaccount-localhost": [
+    "theme-localhost": [
       "./src/js/settingsRoot.js",
-      "./src/js/utilRoot.js",
-      "./src/js/subaccount.js",
+      // "./src/js/utilRoot.js",
+      // "./src/js/subaccount.js",
+      // "./src/js/settingsRoot.js",
+      // "./src/js/utilRoot.js",
+      "./src/js/account-theme.js",
     ],
     "kompetanseportalen-localhost": [
       "./src/js/3party/matomo.js",
