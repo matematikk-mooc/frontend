@@ -9,19 +9,8 @@ const {VueLoaderPlugin} = require('vue-loader');
 
 module.exports = {
   entry: {
-    // ...other entry points...
-    // "rootaccount-localhost": [
-    //   "./src/js/settingsRoot.js",
-    //   "./src/js/utilRoot.js",
-    //   "./src/js/rootaccount.js",
-    // ],
-
     "theme-localhost": [
       "./src/js/settingsRoot.js",
-      // "./src/js/utilRoot.js",
-      // "./src/js/subaccount.js",
-      // "./src/js/settingsRoot.js",
-      // "./src/js/utilRoot.js",
       "./src/js/account-theme.js",
     ],
     "kompetanseportalen-localhost": [
