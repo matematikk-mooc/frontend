@@ -28,7 +28,6 @@
 
 <script setup>
 import  IconButton  from '../icon-button/IconButton.vue';
-import { ref, defineProps, defineEmits } from 'vue'
 
 const { isOpen } = defineProps(['isOpen'])
 const emit = defineEmits()
