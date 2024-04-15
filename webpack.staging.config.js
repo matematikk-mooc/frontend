@@ -11,17 +11,9 @@ module.exports = (env) => {
 
     return {
         entry: {
-            // ...other entry points...
-            'rootaccount-udirdesign-staging': [
+            'theme-udirdesign-staging': [
                 './src/js/settingsRoot.js',
-                './src/js/utilRoot.js',
-                './src/js/rootaccount.js',
-            ],
-
-            'subaccount-udirdesign-staging': [
-                './src/js/settingsRoot.js',
-                './src/js/utilRoot.js',
-                './src/js/subaccount.js',
+                './src/js/account-theme.js',
             ],
             'kompetanseportal-udirdesign-staging': [
                 './src/js/3party/matomo.js',
