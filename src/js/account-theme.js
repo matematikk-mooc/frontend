@@ -4,9 +4,7 @@ import utilRoot from './utilRoot';
 
 var udirDesignLoaded;
 
-// Replace the normal jQuery getScript function with one that supports
-// debugging and which references the script files as external resources
-// rather than inline.
+
 jQuery.extend({
   getScript: function (url, callback) {
     var head = document.getElementsByTagName("head")[0];
