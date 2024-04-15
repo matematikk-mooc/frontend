@@ -1,4 +1,3 @@
-import { hrefQueryString } from "./settingsRoot";
 import settingsRoot from "./settingsRoot";
 
 export default (function() {
@@ -11,7 +10,7 @@ export default (function() {
       return this.getRoles() !== null;
     },
     getLinkToMyCourses: function () {
-        var linkToMyCourses = "/courses" + hrefQueryString;
+        var linkToMyCourses = "/courses";
         return linkToMyCourses;
     },
 
@@ -103,10 +102,7 @@ export default (function() {
 
         var enrollCode = this.isEnrollCodeParamPassed(urlParamsObj);
         if (enrollCode) {
-          newHref = "/enroll/" + enrollCode;  // + hrefQueryString;
-          if(design) {
-            newHref += "?design=" + design;
-          }
+          newHref = "/enroll/" + enrollCode;
         }
 
         var forwardTo = urlParamsObj && urlParamsObj['forwardTo'];

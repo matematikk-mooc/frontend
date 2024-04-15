@@ -1,6 +1,5 @@
 import LoginDirectLink from '../vue/components/login-choice/LoginDirectLink.vue';
 import { createApp } from 'vue';
-import { hrefQueryString } from './settingsRoot';
 import utilRoot from './utilRoot';
 
 // Replace the normal jQuery getScript function with one that supports
@@ -48,8 +47,8 @@ if(document.location.pathname == "/search/all_courses" && document.location.sear
   window.location.href = '/courses' + document.location.search;
   redirected = true;
 } else if(document.location.pathname == "/login/canvas") {
-  if (document.referrer.endsWith("/logout" + hrefQueryString)) {
-    window.location.href = '/search/all_courses' + hrefQueryString;
+  if (document.referrer.endsWith("/logout")) {
+    window.location.href = '/search/all_courses';
     redirected = true;
   } else if(!document.referrer.includes("/login/canvas")) {
     $(".ic-Login").hide();
@@ -75,7 +74,7 @@ if(document.location.pathname == "/search/all_courses" && document.location.sear
 } else if (document.location.pathname == "/courses") {
   redirected = utilRoot.redirectToEnrollIfCodeParamPassed();
 } else if (document.location.href.indexOf('?login_success=1') != -1  ){
-  window.location.href = '/search/all_courses?design=udir';
+  window.location.href = '/search/all_courses';
 } else if (document.location.pathname == "/") {
   setTimeout(function() {
     if(!$(".ic-DashboardCard__header_hero").length) {

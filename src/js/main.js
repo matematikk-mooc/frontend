@@ -52,7 +52,7 @@ jQuery(function($) {
     if (document.location.search === '?mmpf') {
       mmooc.powerFunctions.show(parentId);
     } else {
-      window.location.href = '/courses?design=udir';
+      window.location.href = '/courses';
     }
   });
 

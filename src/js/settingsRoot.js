@@ -1,10 +1,6 @@
 
 var settingsRoot = {
-
-    hrefQueryString: "?design=udir",
-    hrefAmpQueryString: "&design=udir",
     feideEnrollRefferers: [
-      "design=udir",
       "enroll_code",
       "kslaring.no"
     ],
