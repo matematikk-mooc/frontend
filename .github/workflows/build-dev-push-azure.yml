@@ -5,6 +5,8 @@ on:
   push:
     branches:
       - dev
+  workflow_dispatch:
+
 env:
   ACCOUNT_NAME: udirdit
   SOURCE: dist
