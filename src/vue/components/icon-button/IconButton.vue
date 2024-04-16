@@ -6,7 +6,6 @@
 
 <script setup>
 import Icon from "../icon/Icon.vue";
-import { defineEmits } from 'vue';
 
 const emits = defineEmits(['handleClick']);
 
@@ -40,5 +39,3 @@ const handleClick = () => {
   }
 }
 </style>
-
-

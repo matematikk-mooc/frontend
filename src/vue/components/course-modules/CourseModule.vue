@@ -45,7 +45,7 @@
 </template>
 
 <script setup>
-import { ref, computed, defineProps, defineEmits, onMounted} from 'vue';
+import { ref, computed, onMounted} from 'vue';
 import Icon from '../icon/Icon.vue';
 import TreeView from '../tree-view/TreeView.vue';
 import { extractLabelForSelectedLanguage } from '../../utils/lang-utils';
@@ -96,7 +96,7 @@ onMounted(() => {
   if (props.isActive) {
     collapsed.value = false;
   }
-  
+
 });
 
 </script>

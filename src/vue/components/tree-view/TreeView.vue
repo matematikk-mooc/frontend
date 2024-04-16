@@ -46,7 +46,7 @@
 </template>
 
 <script setup>
-import { ref, computed, defineProps, onMounted } from 'vue';
+import { ref, computed, onMounted } from 'vue';
 import Icon from '../icon/Icon.vue'
 import { getSelectedLanguage, extractLabelForSelectedLanguage } from '../../utils/lang-utils';
 const props = defineProps({
