@@ -18,8 +18,8 @@
   const {logged_in} = defineProps(['logged_in'])
 
   const domain = window.location.origin;
-  const myCourses = domain + "/courses?design=udir"
-  const allCourses = domain + "/search/all_courses?design=udir"
+  const myCourses = domain + "/courses"
+  const allCourses = domain + "/search/all_courses"
 </script>
 
 <style lang="scss">

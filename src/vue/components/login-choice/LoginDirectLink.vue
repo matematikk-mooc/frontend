@@ -77,6 +77,7 @@ export default {
     align-items: center;
     justify-content: center;
     margin-bottom: 2rem;
+    text-align: center;
 }
 .login-options {
     display: flex;

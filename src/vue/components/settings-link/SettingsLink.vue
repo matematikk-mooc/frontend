@@ -1,5 +1,5 @@
 <template>
-  <a href="/profile/communication?design=udir" class="edit_settings_link btn button-sidebar-wide">
+  <a href="/profile/communication" class="edit_settings_link btn button-sidebar-wide">
     <i class="icon-edit"></i> Rediger varslingsinnstillinger
   </a>
 </template>

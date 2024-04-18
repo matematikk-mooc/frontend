@@ -18,7 +18,7 @@ export default {
   },
   computed: {
     linkUrl() {
-      return `/users/${this.userId}/external_tools/${this.userMergeLtiToolId}?design=udir`;
+      return `/users/${this.userId}/external_tools/${this.userMergeLtiToolId}`;
     }
   }
 };

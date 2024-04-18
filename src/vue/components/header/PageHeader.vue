@@ -33,9 +33,9 @@
   const {logged_in, admin} = defineProps(['logged_in', 'admin'])
   const domain = window.location.origin;
   const loginLink = domain + "/login/canvas"
-  const settingsLink = domain + "/profile/settings?design=udir"
-  const logoutLink = domain + "/logout?design=udir"
-  const adminLink = domain + "/accounts?design=udir"
+  const settingsLink = domain + "/profile/settings"
+  const logoutLink = domain + "/logout"
+  const adminLink = domain + "/accounts"
 
 </script>
 <style lang="scss">
