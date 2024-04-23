@@ -12,16 +12,9 @@ module.exports = (env) => {
     return {
         entry: {
             // ...other entry points...
-            "rootaccount-udirdesign": [
+            "theme-udirdesign": [
                 "./src/js/settingsRoot.js",
-                "./src/js/utilRoot.js",
-                "./src/js/rootaccount.js",
-            ],
-
-            "subaccount-udirdesign": [
-                "./src/js/settingsRoot.js",
-                "./src/js/utilRoot.js",
-                "./src/js/subaccount.js",
+                "./src/js/account-theme.js",
             ],
             "kompetanseportal-udirdesign": [
                 "./src/js/3party/matomo.js",
@@ -139,8 +132,8 @@ module.exports = (env) => {
         },
 
         performance: {
-            maxEntrypointSize: 500000,
-            maxAssetSize: 500000,
+            maxEntrypointSize: 1000000,
+            maxAssetSize: 1000000,
         },
 
         optimization: {

@@ -19,14 +19,12 @@ export default (function() {
     showCourseInvitation: function () {
       if (!util.isAuthenticated()) {
         var enrollButton = $(".course_enrollment_link");
-        var linkToSelectedCourse = window.location.href.split('/');
-        var selectedCourseId = linkToSelectedCourse[linkToSelectedCourse.length - 1];
 
         if (enrollButton) {
           enrollButton.text('Enroll this course');
           enrollButton.click(function (e) {
             e.preventDefault();
-                  window.location.href = '/search/all_courses' + '?design=udir' + '#' + selectedCourseId;
+                  window.location.href = '/search/all_courses';
           })
         }
       }

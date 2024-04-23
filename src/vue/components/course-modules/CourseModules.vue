@@ -30,7 +30,7 @@
 </template>
 
 <script setup>
-import { defineProps, ref, computed, watch} from 'vue';
+import {ref, computed, watch} from 'vue';
 import Icon from '../icon/Icon.vue';
 import CourseModule from './CourseModule.vue';
 import ModulesProgressIndicator from '../module-progress-indicator/ModulesProgressIndicator.vue'

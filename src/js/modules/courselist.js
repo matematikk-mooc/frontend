@@ -23,7 +23,7 @@ export default (function () {
             var myCoursesWithSettings = util.mapCourseSettings(courses, allCoursesSettings.result);
 
             if (courses.length == 0) {
-              window.location.href = "/search/all_courses?design=udir";
+              window.location.href = "/search/all_courses";
             } else {
 
 

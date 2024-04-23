@@ -1,5 +1,3 @@
-import { hrefAmpQueryString, hrefQueryString } from "../settingsRoot";
-
 import  api from '../api/api.js'
 import settings from "../settings";
 
@@ -477,7 +475,7 @@ export default (function () {
           $this.remove();
         }
         else{
-          $this.attr("href", _href + hrefAmpQueryString);
+          $this.attr("href", _href);
         }
       });
     },
@@ -488,7 +486,7 @@ export default (function () {
       });
     },
     getLinkToAvailableCourses: function () {
-      var linkToAvailableCourses = "/search/all_courses" + hrefQueryString;
+      var linkToAvailableCourses = "/search/all_courses";
       //ETH20190409 By making sure the root account loads our design, we do not need a front page.
       /*
               if (allCoursesFrontpageCourseID > 0) {

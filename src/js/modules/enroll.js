@@ -4,7 +4,6 @@ import LoggedInLandingPage from "../../vue/pages/LoggedInLandingPage.vue";
 import NotLoggedInPage from "../../vue/pages/NotLoggedInPage.vue";
 import api from "../api/api";
 import { createApp } from "vue/dist/vue.runtime.esm-bundler.js";
-import { hrefQueryString } from "../settingsRoot";
 import kpasApi from "../api/kpas-api";
 import settings from "../settings";
 import util from "./util";
@@ -60,7 +59,7 @@ export default (function () {
         if ($this.hasClass('btn-primary')){
           var _href = $this.attr("href");
         }else {
-          var _href = $this.attr("href") + hrefQueryString;
+          var _href = $this.attr("href");
         }
 
         const urlParamsObj = utilRoot.urlParamsToObject();
