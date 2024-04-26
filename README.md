@@ -48,18 +48,14 @@ npm run serveDevelopment
 All changes in SCSS, Vue and Javascript will automatically be compiled and are available at [http://localhost:9000](http://localhost:9000/)
 
 
-## Build JS and CSS files for dev, staging and production environment
+## Build JS and CSS files for dev and production environment
 Compile JS and CSS for the dev environment using
 
 ```
 npm run buidDev
 ```
 
-Compile JS and CSS for the staging environment using
 
-```
-npm run buildStaging
-```
 Compile JS and CSS for the production environment using
 
 ```
@@ -70,7 +66,7 @@ npm run buildProduction
 * See scripts section in package.json
 
 The resulting JS and CSS file can be found in the **dist** directory. These commands will get the timestamp of the latest commit to the given branch, and append to the filenames.
-To test code locally allways use buildDevelopment and serveDevelopment, as buildStaging and buildProduction will use the file already uploaded to Azure, and will not pick up local changes.
+To test code locally allways use buildDevelopment and serveDevelopment, as buildDev and buildProduction will use the file already uploaded to Azure, and will not pick up local changes.
 
 # Project structure
 
@@ -109,7 +105,7 @@ To test code locally allways use buildDevelopment and serveDevelopment, as build
 | webpack.development.config.js | Config file for development (running with localhost)                 |
 | webpack.dev.config.js     | Config file for dev environment         |
 | webpack.production.config.js  | Config file for production environment      |
-| webpack.staging.config.js     | Config file for staging environment         |
+
 
 
 # Deployment
@@ -119,12 +115,12 @@ Note that addons generate different files that may be destinated to different di
 
 ## Workflow
 
-**.github** containts Github Actions pipelines for building staging and production and pushing **dist** directory to Azure.
+**.github** containts Github Actions pipelines for building dev and production and pushing **dist** directory to Azure.
 
 # Environment specific variables
 
 ## JS variables
-Some settings and urls differs between environment, these are replaced at build time using [Webpack DefinePlugin](https://webpack.js.org/plugins/define-plugin/) and can be updated in the following section in webpack.(production|staging|development).config.js
+Some settings and urls differs between environment, these are replaced at build time using [Webpack DefinePlugin](https://webpack.js.org/plugins/define-plugin/) and can be updated in the following section in webpack.(production|dev|development).config.js
 
 ```
 plugins: [
