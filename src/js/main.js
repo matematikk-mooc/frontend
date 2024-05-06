@@ -162,6 +162,26 @@ jQuery(function($) {
     document.getElementById("wrapper").classList.add("user-settings-wrapper");
     document.getElementById("main").classList.add("user-settings-main");
     document.getElementById("left-side").remove();
+
+    //Styling for pair with observer button
+    let parent = document.getElementById("pairing-code");
+    if(parent) {
+      let observerButton = parent.getElementsByClassName("css-r0ye9w-view--block-baseButton");
+      parent.appendChild(observerButton[0]);
+      parent.removeChild(parent.firstChild);
+
+      if(observerButton.length > 0) {
+        observerButton[0].classList.add("btn");
+        observerButton[0].classList.add("button-sidebar-wide");
+        observerButton[0].classList.remove("css-r0ye9w-view--block-baseButton");
+
+        let content = document.getElementsByClassName("css-kmrjxt-baseButton__content")[0]
+        content.classList.remove("css-kmrjxt-baseButton__content");
+        content.style.fontFamily = "Roboto";
+        content.style.fontWeight = "700";
+      }
+    }
+
     var elementId = document.getElementById('confirm_email_channel');
     if(!settings.displayProfileLeftMenu) {
       document.getElementById("section-tabs").style.display = "none";
