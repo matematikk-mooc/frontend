@@ -46,26 +46,60 @@ export default (function() {
 				var iframe = document.getElementById(iframeId);
 				player = new Player(iframe)
 
+				//Auto enables caption for Vimeo player to bokmal by default, unless user has customized option set already.
+				//If bokmal is not avaiable then select the first track that is avaiable.
+				player.getTextTracks()
+					.then(function(tracks) {
+						var tracksHasLength = tracks.length > 0;
+						if (tracksHasLength) {
+							var userHasAlreadySelected = false;
+							var hasBokmal = false;
 
-				player.on('play', function () {
-					transcript.playerPlaying();
-				});
-				player.on('pause', function () {
-					transcript.playerNotPlaying();
-				});
-				player.getVideoTitle().then(function (title) {
-				});
-				player.on('cuechange', function (d) {
-				});
-				player.on('cuepoint', function (d) {
-				});
-				player.on('texttrackchange', function (d) {
-				});
-				player.on('playbackratechange', function (d) {
-					transcript.setPlaybackRate(d.playbackRate);
-				});
+							for (var trackIndex in tracks) {
+								var trackItem = tracks[trackIndex];
 
-			};
+								var isSelected = trackItem.mode == "showing";
+								if (isSelected) {
+									userHasAlreadySelected = true;
+									break;
+								}
+
+								var isBokmal = trackItem.language == "nb";
+								if (isBokmal) {
+									hasBokmal = true;
+								}
+							}
+
+							if (!userHasAlreadySelected) {	
+								var trackToUse = hasBokmal ? "nb" : tracks[0].language;
+								player.enableTextTrack(trackToUse)
+									.then(function (track) {})
+									.catch(function (err) {
+										console.error(err);
+									});
+							}
+						}
+					});
+
+					player.on('play', function () {
+						transcript.playerPlaying();
+					});
+					player.on('pause', function () {
+						transcript.playerNotPlaying();
+					});
+					player.getVideoTitle().then(function (title) {
+					});
+					player.on('cuechange', function (d) {
+					});
+					player.on('cuepoint', function (d) {
+					});
+					player.on('texttrackchange', function (d) {
+					});
+					player.on('playbackratechange', function (d) {
+						transcript.setPlaybackRate(d.playbackRate);
+					});
+
+				};
 			var findCaptionIndexFromTimestamp = function (timeStamp) {
 				var start = 0;
 				var duration = 0;
