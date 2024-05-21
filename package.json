@@ -55,7 +55,6 @@
     "vue-loader": "^17.2.2",
     "webpack": "^5.88.2",
     "webpack-cli": "^5.1.3",
-    "webpack-config-utils": "^2.3.1",
     "webpack-dev-server": "^4.15.0",
     "webpack-replace-plugin": "^0.0.4"
   },
@@ -65,7 +64,6 @@
   },
   "scripts": {
     "buildProduction": "webpack --config webpack.production.config.js --mode production  --env timestamp=$(git log origin/master -1 --pretty=format:'%ad' --date=format:'%Y-%m-%dT%H:%M:%S')",
-    "buildStaging": "webpack --config webpack.staging.config.js --mode production  --env timestamp=$(git log origin/staging -1 --pretty=format:'%ad' --date=format:'%Y-%m-%dT%H:%M:%S')",
     "buildDev": "webpack --config webpack.dev.config.js --mode production  --env timestamp=$(git log origin/dev -1 --pretty=format:'%ad' --date=format:'%Y-%m-%dT%H:%M:%S')",
     "buildDevelopment": "webpack --config webpack.development.config.js  --mode development --progress",
     "serveDevelopment": "webpack-dev-server --config webpack.development.config.js --mode development --open",
