@@ -1,0 +1,120 @@
+
+// Uncomment this to see the positioning and size of all elements
+// * {
+//   outline: .0625rem solid darkslategrey !important;
+// }
+
+// Styles for desktop devices related to mobile
+@media (min-width: 30rem) {
+  .desktop-hide {
+    display: none !important;
+  }
+}
+
+// Styles for mobile devices
+@media (max-width: 30rem) {
+  // Fixes issue with horizontal scrolling on mobile devices.
+  #my-courses-container,
+  .header,
+  ul,
+  li,
+  .page-footer--content,
+  .nav-bar__link-list-container {
+    overflow-x: hidden !important;
+  }
+  .mobile-hide {
+    display: none !important;
+  }
+
+  // Header
+  .header__content {
+    height: 3.75rem !important;
+    padding: 0 !important;
+    .header__link-list {
+      margin: 0 !important;
+      text-align: center !important;
+      .header__list-item {
+        width: 100% !important;
+        margin-left: 1.25rem !important;
+        margin-right: 1.25rem !important;
+        .header__link {
+          text-align: center !important;
+          font-size: 0.875rem !important;
+          white-space: nowrap !important;
+        }
+      }
+    }
+    .header-brand {
+      font-size: 1.125rem !important;
+      margin-left: 1.25rem !important;
+    }
+    .logout {
+      max-width: 3.75rem !important;
+      font-size: 0.875rem !important;
+      white-space: nowrap !important;
+      font-weight: 500;
+    }
+  }
+
+  // Navbar
+  .page--nav-bar {
+    height: 5.1875rem !important;
+    padding: 0 !important;
+    flex-direction: column !important;
+    align-items: unset !important;
+    background-color: black !important;
+    .nav-bar__link-list-container {
+      display: flex !important;
+      flex-direction: column;
+      .nav-bar__link-list {
+        display: unset !important;
+        height: 5.1875rem !important;
+        margin: unset !important;
+        padding: unset !important;
+        margin-left: 1.25rem !important;
+        margin-top: 0.5rem !important;
+        li:first-of-type {
+          margin-bottom: 1rem !important;
+        }
+        a:active {
+          font-weight: 700 !important;
+        }
+        .active {
+          font-weight: 700 !important;
+        }
+        .nav-bar__list-item {
+          margin: 0 !important;
+          padding: 0 !important;
+          width: fit-content !important;
+          .nav-bar__link {
+            height: 1.25rem !important;
+            overflow-y: hidden !important;
+            font-size: 1rem !important;
+            border-bottom: 0.0625rem solid #ffffff !important;
+          }
+        }
+      }
+    }
+  }
+
+  //Footer
+  .page-footer--content-wrapper {
+    display: unset !important;
+    line-height: 1.0625rem;
+    .page-footer--main-content {
+      display: unset !important;
+      .main-content--header {
+        width: 50% !important;
+        margin-top: 1.25rem !important;
+        margin: 0 auto;
+      }
+      .page-footer--link-container {
+        flex-wrap: wrap !important;
+        justify-content: center !important;
+        .page-footer--link {
+          padding-bottom: 0.25rem !important;
+        }
+      }
+    }
+  }
+}

@@ -12,14 +12,13 @@
           <div class="main-content--header">
             Kompetansepakker er levert av Utdanningsdirektoratet
           </div>
-
           <div class="page-footer--link-container">
             <PageFooterLink :url="'https://kompetanseudirno.azureedge.net/udirdesign/omkompetanseudirno.html'"><template v-slot:footerlink>Om kompetansepakker</template></PageFooterLink>
-            <div class="page-footer--divider"></div>
+            <div class="page-footer--divider mobile-hide"></div>
             <PageFooterLink :url="'mailto:kompetansesupport@udir.no'"><template v-slot:footerlink>Kontakt</template></PageFooterLink>
-            <div class="page-footer--divider"></div>
+            <div class="page-footer--divider mobile-hide"></div>
             <PageFooterLink :url="'https://kompetanseudirno.azureedge.net/udirdesign/privacypolicy.html?v=1_0'"><template v-slot:footerlink>Personvernerklæring</template></PageFooterLink>
-            <div class="page-footer--divider"></div>
+            <div class="page-footer--divider mobile-hide"></div>
             <span class="page-footer--accessibility-declaration">
               Tilgjengelighetserklæring på
             </span>
@@ -27,19 +26,25 @@
             <PageFooterLink aria-label="Tilgjengelighetserklæring på bokmål" :type="'open-in-new'" :url="'https://uustatus.no/nb/erklaringer/publisert/2796ebc6-161f-4dc9-9429-70d7dd136431'"><template v-slot:footerlink>Bokmål</template></PageFooterLink>
             <PageFooterLink aria-label="Tilgjengelighetserklæring på nynorsk" :type="'open-in-new'" :url="'https://uustatus.no/nn/erklaringer/publisert/2796ebc6-161f-4dc9-9429-70d7dd136431'"><template v-slot:footerlink>Nynorsk</template></PageFooterLink>
           </div>
+          <Button :type="'footer'" :size="'md'" @click="onClick">udir.no</Button>
         </div>
       </div>
     </div>
   </footer>
 </template>
 <script setup>
+import Button from '../Button.vue'
 import PageFooterLink from './PageFooterLink.vue'
 import License from './License.vue'
 const server = SERVER;
 
 const { hasLicense } = defineProps(['hasLicense']);
 
+const onClick = () => {
+  window.open("https://www.udir.no/", "_blank");
+}
 </script>
+
 <style lang="scss">
 @import '../../design/colors.scss';
 
@@ -106,6 +111,9 @@ const { hasLicense } = defineProps(['hasLicense']);
     height: 1.25rem;
     margin: 0 1.5rem -0.25rem 1.5rem;
     border-right: 0.0625rem solid $color-white;
+  }
+  .page-footer--link {
+    text-underline-offset: 2px;
   }
 }
 </style>

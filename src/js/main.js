@@ -1,6 +1,6 @@
 import "../vue/design/override-base-Canvas-elements.scss";
 import "../vue/design/override-login-logout-Canvas-elements.scss";
-
+import "../vue/design/override-mobile.scss";
 import { removeCanvasAnnouncementElements, removeCanvasDiscussionElements } from "./modules/announcements/utils";
 
 import accordion from './modules/accordion.js';
