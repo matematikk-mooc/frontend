@@ -117,4 +117,46 @@
       }
     }
   }
+
+  //CoursePage
+  .course-page__banner-container {
+    padding: unset !important;
+    margin: unset !important;
+    height: unset !important;
+  }
+  .course-page__banner {
+    height: unset !important;
+    padding: 1.25rem !important;
+    padding-bottom: 0 !important;
+    display: flex;
+    align-items: center;
+    justify-content: unset !important;
+    flex-direction: column;
+    box-sizing: border-box;
+
+    &__title {
+      font-size: 1.5rem !important;
+      margin-bottom: 1.5rem !important;
+      padding-bottom: 1.5rem !important;
+      margin: unset !important;
+    }
+  
+    &__actions {
+      flex-direction: row-reverse !important;
+      justify-content:space-between !important;
+      width: 100% !important;
+      margin-right: unset !important;
+      margin-bottom: .875rem !important;
+      button {
+        height:2.5rem !important;
+      }
+      .dropdown{
+        width: unset !important;
+        .dropdown__content {
+          top: unset !important;
+        }
+      } 
+    }
+  }
+
 }
