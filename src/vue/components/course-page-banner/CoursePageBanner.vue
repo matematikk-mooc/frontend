@@ -134,6 +134,9 @@ export default {
     margin-right: 1rem;
     button {
       height: 3rem;
+      &:hover {
+        background-color: #00468e;
+      }
     }
     .dropdown {
       width: 100%;
