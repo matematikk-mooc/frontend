@@ -222,4 +222,16 @@
     }
   }
 
+  // Infoboxes
+  .udir-info {
+    width: unset !important;
+    flex-direction: column !important;
+    gap: 0.5rem !important;
+    h3 {
+      display: flex;
+      justify-content: center;
+      font-size: 1rem;
+      font-weight: 600;
+    }
+  }
 }
