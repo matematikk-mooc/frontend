@@ -1,7 +1,7 @@
 
 <template>
   <div class="card-container">
-    <div v-for="course in courses" :key="course.id">
+    <div class="card-instance" v-for="course in courses" :key="course.id">
       <Card class="card-item"
         :theme="course.course_settings ? course.course_settings.course_category.category.color_code : 'theme_0'"
         :courseIllustration="course.course_settings ? course.course_settings.image.path : ''"
@@ -27,7 +27,8 @@
           <ModulesList :modules="modules"></ModulesList>
         </template>
         <template v-if="course.enrolled" v-slot:goToCourse>
-          <Button :type="'outlined'" :size="'md'" @click="goToCourse(course.id)">Gå til kompetansepakke</Button>
+          <Button :type="'filled'" :size="'md'" @click="goToCourse(course.id)"><p>
+            Gå til kompetansepakke</p></Button>
         </template>
       </Card>
 

@@ -111,11 +111,74 @@
       .page-footer--link-container {
         flex-wrap: wrap !important;
         justify-content: center !important;
+        padding-top: 20px !important;
         .page-footer--link {
           padding-bottom: 0.25rem !important;
         }
       }
     }
+  }
+
+  //MyCoursesPage
+  .my-courses-page {
+    padding: unset !important;
+    .my-courses-page--content {
+      margin: unset !important;
+      h1 {
+        margin-left: 25px;
+        font-family: "Roboto", sans-serif !important;
+        font-size: 18px !important;
+        color:black;
+      }
+      .my-courses-page--layout {
+        .card-container {
+          align-items: center;
+          .card-instance {
+            display:flex;
+            width:80%;
+            margin-bottom:24px;
+            .card-box {
+              min-height: unset !important;
+            }
+            .card-content-container {
+              padding-top: 20px !important;
+              padding-left: 13px !important;
+              p{
+                margin-top: 0;
+              }
+              h2 {
+                font-size: 16px !important;
+                font-weight: 500 !important;
+                color: black;
+                margin-bottom: 16px;
+              }
+              .card-content-enrolled-text {
+                margin-bottom: 0;
+                p {
+                  font-size: 14px !important;
+                  color: #6A6A6A;
+                }
+              }
+              .card-content-enrolled {
+                gap: 13px !important;
+              }
+              .card-content-button-container {
+                display: unset !important;
+                p{
+                  font-family: "Roboto", sans-serif !important;
+                  margin: unset !important
+                }
+                
+              }
+            }
+          }
+          .card-item {
+            margin: unset !important;
+          }
+        }
+      }
+    }
+    
   }
 
   //CoursePage
