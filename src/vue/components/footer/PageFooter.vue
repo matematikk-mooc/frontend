@@ -17,16 +17,26 @@
             <div class="page-footer--divider mobile-hide"></div>
             <PageFooterLink :url="'mailto:kompetansesupport@udir.no'"><template v-slot:footerlink>Kontakt</template></PageFooterLink>
             <div class="page-footer--divider mobile-hide"></div>
-            <PageFooterLink :url="'https://kompetanseudirno.azureedge.net/udirdesign/privacypolicy.html?v=1_0'"><template v-slot:footerlink>Personvernerklæring</template></PageFooterLink>
-            <div class="page-footer--divider mobile-hide"></div>
-            <span class="page-footer--accessibility-declaration">
-              Tilgjengelighetserklæring på
+              <PageFooterLink :url="'https://kompetanseudirno.azureedge.net/udirdesign/privacypolicy.html?v=1_0'"><template v-slot:footerlink>Personvernerklæring</template></PageFooterLink>
+              <div class="page-footer--divider mobile-hide"></div>
+            <span class="mobile-hide">
+              <span class="page-footer--accessibility-declaration mobile-accessibility-container ">
+                Tilgjengelighetserklæring på
+              </span>
+              <PageFooterLink aria-label="Tilgjengelighetserklæring på bokmål" :type="'open-in-new'" :url="'https://uustatus.no/nb/erklaringer/publisert/2796ebc6-161f-4dc9-9429-70d7dd136431'"><template v-slot:footerlink>Bokmål</template></PageFooterLink>
+              <PageFooterLink aria-label="Tilgjengelighetserklæring på nynorsk" :type="'open-in-new'" :url="'https://uustatus.no/nn/erklaringer/publisert/2796ebc6-161f-4dc9-9429-70d7dd136431'"><template v-slot:footerlink>Nynorsk</template></PageFooterLink>
             </span>
-
-            <PageFooterLink aria-label="Tilgjengelighetserklæring på bokmål" :type="'open-in-new'" :url="'https://uustatus.no/nb/erklaringer/publisert/2796ebc6-161f-4dc9-9429-70d7dd136431'"><template v-slot:footerlink>Bokmål</template></PageFooterLink>
-            <PageFooterLink aria-label="Tilgjengelighetserklæring på nynorsk" :type="'open-in-new'" :url="'https://uustatus.no/nn/erklaringer/publisert/2796ebc6-161f-4dc9-9429-70d7dd136431'"><template v-slot:footerlink>Nynorsk</template></PageFooterLink>
           </div>
-          <Button :type="'footer'" :size="'md'" @click="onClick">udir.no</Button>
+          <div class="mobile-accessibility-container page-footer--link-container desktop-hide"> 
+              Tilgjengelighetserklæring på
+            <span class="mobile-accessibility-links">
+              <PageFooterLink aria-label="Tilgjengelighetserklæring på bokmål" :type="'open-in-new'" :url="'https://uustatus.no/nb/erklaringer/publisert/2796ebc6-161f-4dc9-9429-70d7dd136431'"><template v-slot:footerlink>Bokmål</template></PageFooterLink>
+              <PageFooterLink aria-label="Tilgjengelighetserklæring på nynorsk" :type="'open-in-new'" :url="'https://uustatus.no/nn/erklaringer/publisert/2796ebc6-161f-4dc9-9429-70d7dd136431'"><template v-slot:footerlink>Nynorsk</template></PageFooterLink>
+            </span>
+          </div>
+          <div class="desktop-hide">
+            <Button :type="'footer'" :size="'md'" @click="onClick">udir.no</Button>
+          </div>
         </div>
       </div>
     </div>
