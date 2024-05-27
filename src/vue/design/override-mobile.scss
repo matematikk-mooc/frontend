@@ -104,16 +104,33 @@
     .page-footer--main-content {
       display: unset !important;
       .main-content--header {
-        width: 50% !important;
+        width: 75% !important;
         margin-top: 1.25rem !important;
         margin: 0 auto;
       }
       .page-footer--link-container {
         flex-wrap: wrap !important;
         justify-content: center !important;
+        margin-bottom:16px;
         .page-footer--link {
           padding-bottom: 0.25rem !important;
         }
+        &:nth-child(2) > a:nth-child(5) {
+        flex-basis: 100%;
+        }
+      }
+    }
+    .mobile-accessibility-container {
+      display: flex;
+      flex-direction: column;
+      color: white;
+      font-size: 14px;
+      justify-content: center;
+      .mobile-accessibility-links {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+
       }
     }
   }
