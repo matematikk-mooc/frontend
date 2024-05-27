@@ -111,7 +111,7 @@
       .page-footer--link-container {
         flex-wrap: wrap !important;
         justify-content: center !important;
-        margin-bottom:16px;
+        margin-bottom:1rem;
         .page-footer--link {
           padding-bottom: 0.25rem !important;
         }
@@ -124,7 +124,7 @@
       display: flex;
       flex-direction: column;
       color: white;
-      font-size: 14px;
+      font-size: .875rem;
       justify-content: center;
       .mobile-accessibility-links {
         display: flex;
@@ -134,52 +134,57 @@
     }
   }
 
-  //MyCoursesPage
-  .my-courses-page {
+  //MyCoursesPage and LandingPage
+  .my-courses-page, .landing-page {
     padding: unset !important;
-    .my-courses-page--content {
+    .my-courses-page--content, .landing-page--content {
       margin: unset !important;
       h1 {
-        margin-left: 25px;
+        margin-left: 1.5625rem;
         font-family: "Roboto", sans-serif !important;
-        font-size: 18px !important;
+        font-size: 1.125rem !important;
         color:black;
       }
-      .my-courses-page--layout {
+      .my-courses-page--layout, .landing-page--layout {
         .card-container {
           align-items: center;
           .card-instance {
             display:flex;
             width:80%;
-            margin-bottom:24px;
+            margin-bottom:1.5rem;
             .card-box {
               min-height: unset !important;
             }
             .card-content-container {
-              padding-top: 20px !important;
-              padding-left: 13px !important;
+              padding-top: 1.25rem !important;
+              padding-left: .8125rem !important;
               p{
                 margin-top: 0;
               }
               h2 {
-                font-size: 16px !important;
+                font-size: 1rem !important;
                 font-weight: 500 !important;
                 color: black;
-                margin-bottom: 16px;
+                margin-bottom: 1rem;
               }
               .card-content-enrolled-text {
                 margin-bottom: 0;
                 p {
-                  font-size: 14px !important;
+                  font-size: .875rem !important;
                   color: #6A6A6A;
                 }
               }
               .card-content-enrolled {
-                gap: 13px !important;
+                gap: .8125rem !important;
               }
               .card-content-button-container {
-                display: unset !important;
+                display: flex !important;
+                button {
+                  max-width: fit-content;
+                  margin-right: .625rem;
+                }
                 p{
+                  font-weight: 500;
                   font-family: "Roboto", sans-serif !important;
                   margin: unset !important
                 }
@@ -192,8 +197,21 @@
           }
         }
       }
+      .filter-container {
+        display: flex;
+        flex-direction: column;
+        width: 80%;
+        margin: 0 auto;
+        button {
+          max-width: 50%;
+        }
+      }
     }
-    
+    .mobile-warning-container {
+      margin: 0 auto;
+      margin-top: 1rem;
+      width: 75% !important;
+    }
   }
 
   //CoursePage
