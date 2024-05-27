@@ -7,7 +7,7 @@
         <li v-if="admin"><a @click="handleLinkClick" class="dropdown-item" :href="adminLink">Administrator <Icon name="chevron_right" size="22"/></a> </li>
         <li v-if="logged_in"><a  @click="handleLinkClick" class="dropdown-item" :href="settingsLink">Innstillinger <Icon name="chevron_right" size="22"/></a> </li>
         <li v-if="!logged_in"><a class="dropdown-item" :href="loginLink"> Logg inn <Icon name="chevron_right" size="22"/></a></li>  
-        <!-- <li ><a class="dropdown-item" :href="logoutLink"> Logg ut <Icon name="chevron_right" size="22"/></a></li> -->
+        <li v-if="logged_in"><a class="dropdown-item" :href="logoutLink"> Logg ut <Icon name="chevron_right" size="22"/></a></li>
     </ul>
   </div>
 </template>

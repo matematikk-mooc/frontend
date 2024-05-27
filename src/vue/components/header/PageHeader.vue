@@ -2,7 +2,6 @@
   <header class="header__content">
     <!-- Header -->
     <div class="header-brand">Kompetanseportalen</div>
-    <a class="header__link logout desktop-hide" :href="logoutLink" v-if="logged_in">Logg ut</a>
     <Dropdown :logged_in="logged_in" :admin="admin" :backgroundColor="'white'"  :iconType="'hamburger'" :icon="'settings'" :link="settingsLink"></Dropdown>
     <!-- Navbar -->
     <ul class="header__link-list mobile-hide">
