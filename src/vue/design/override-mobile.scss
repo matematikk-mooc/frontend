@@ -152,6 +152,7 @@
       }
       .dropdown{
         width: unset !important;
+        z-index: 11;
         .dropdown__content {
           top: unset !important;
         }
