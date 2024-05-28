@@ -5,7 +5,6 @@
       { 'btn--filled': isFilled },
       { 'btn--outlined': isOutlined },
       { 'btn--dropdown': isDropdown },
-      { 'btn--footer': isFooter},
       { 'btn--sm': size === 'sm' },
       { 'btn--md': !size || size === 'md' },
       { 'btn--lg': size === 'lg' },
@@ -15,7 +14,6 @@
     <img class="feide-symbol" v-if="type === 'feideLogin'" :src="`${server}feide_white-symbol.svg`"/>
     <slot></slot>
     <Icon v-if="type === 'next'" name="chevron_right" size="1.5em" />
-    <Icon v-if="type === 'footer'" name="open_in_new" size="1em" />
   </button>
 </template>
 
@@ -30,7 +28,6 @@ const server = SERVER;
 const isFilled = !props.type || props.type === 'submit' || props.type === 'filled' || props.type === 'feideLogin';
 const isOutlined = props.type === 'outlined' || props.type === 'previous' || props.type === 'next';
 const isDropdown = props.type === 'dropdown';
-const isFooter = props.type === 'footer';
 </script>
 
 <style lang="scss">
@@ -107,20 +104,6 @@ const isFooter = props.type === 'footer';
     }
     &.btn--lg {
       padding: 0.625rem 1.625rem 0.625rem 1.625rem;
-    }
-  }
-
-  &--footer {
-    background: #7DBF9D;
-    color: black;
-    font-size: .875rem;
-    height: 1.75rem;
-    width: 5.5rem;
-    margin: 0 auto;
-    margin-top: 1rem;
-    span {
-      margin-left: .3125rem;
-      margin-top: .125rem;
     }
   }
 }

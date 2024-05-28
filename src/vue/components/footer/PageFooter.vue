@@ -34,25 +34,17 @@
               <PageFooterLink aria-label="Tilgjengelighetserklæring på nynorsk" :type="'open-in-new'" :url="'https://uustatus.no/nn/erklaringer/publisert/2796ebc6-161f-4dc9-9429-70d7dd136431'"><template v-slot:footerlink>Nynorsk</template></PageFooterLink>
             </span>
           </div>
-          <div class="desktop-hide">
-            <Button :type="'footer'" :size="'md'" @click="onClick">udir.no</Button>
-          </div>
         </div>
       </div>
     </div>
   </footer>
 </template>
 <script setup>
-import Button from '../Button.vue'
 import PageFooterLink from './PageFooterLink.vue'
 import License from './License.vue'
 const server = SERVER;
 
 const { hasLicense } = defineProps(['hasLicense']);
-
-const onClick = () => {
-  window.open("https://www.udir.no/", "_blank");
-}
 </script>
 
 <style lang="scss">
