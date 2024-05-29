@@ -14,6 +14,7 @@
         :theme="newestCourse.course_settings ? newestCourse.course_settings.course_category.category.color_code : 'theme_0'"
         :courseIllustration="newestCourse.course_settings ? newestCourse.course_settings.image.path : ''"
         :label="newestCourse.name"
+        :filters="newestCourse.course_settings ? newestCourse.course_settings.course_filter : []"
       >
         <template v-slot:new-flag>
           <NewCourseFlag v-if="newCourseFlag()"></NewCourseFlag>
@@ -161,6 +162,7 @@ export default {
   box-sizing: border-box;
   padding: 0.5rem 6rem 0.5rem 9rem;
   margin-top: 1rem;
+  margin-bottom: 20px;
   display: inline-grid;
   grid-template-columns: auto auto;
   justify-content: center;
@@ -192,14 +194,8 @@ export default {
 }
 
 .card-highlighted {
-
-  max-height: 100px !important;
   box-sizing: border-box !important;
   justify-content: space-between !important;
-  .card-box {
-  min-height: 24rem;
-}
-
 }
 
 .course-illustration-box {
