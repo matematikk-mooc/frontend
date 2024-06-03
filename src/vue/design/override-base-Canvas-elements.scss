@@ -23,27 +23,27 @@ body.with-left-side:not(.useFullWidth) {
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 48rem) {
   body.course-menu-expanded:not(.ic-no-flex-layout):not(.embedded):not(.is-inside-submission-frame) .ic-Layout-columns {
     flex-direction: column !important;
   }
 }
 .ic-Layout-contentWrapper {
-  max-width: 1600px !important;
+  max-width: 100rem !important;
 }
 
 #right-side {
-  min-width: 200px !important;
+  min-width: 12.5rem !important;
 }
 
-@media not all and (min-width: 750px) {
+@media not all and (min-width: 46.875rem) {
   #left-side {
     display: unset!important;
 
   }
 }
 
-@media ((max-width: 750px)) {
+@media ((max-width: 46.875rem)) {
   .ic-Layout-wrapper {
     flex-direction: column !important;
   }
@@ -65,7 +65,7 @@ body.with-left-side:not(.useFullWidth) {
 
 .admin-button {
   width: fit-content !important;
-  margin-left: 20px;
+  margin-left: 1.25rem;
 }
 
 .ic-Layout-watermark {
@@ -96,7 +96,7 @@ body.with-left-side:not(.useFullWidth) {
   margin-top: 1rem !important;
   width: fit-content !important;
   min-height: 85vh !important;
-  max-width: 1600px !important;
+  max-width: 100rem !important;
   justify-content: center;
   box-sizing: border-box !important;
 }
@@ -104,7 +104,7 @@ body.with-left-side:not(.useFullWidth) {
 .useFullWidth{
   min-width: unset !important;
 }
-@media screen and (max-width: 1200px) {
+@media screen and (max-width: 75rem) {
 
   body:not(.ic-no-flex-layout):not(.embedded) .ic-app-main-content {
     flex: auto;
@@ -171,7 +171,7 @@ body.with-left-side:not(.useFullWidth) {
 }
 
 .entry-content {
-   border-bottom: 1px solid #c7cdd1
+   border-bottom: .0625rem solid #c7cdd1
 }
 
 #application {
@@ -199,7 +199,7 @@ body.with-left-side:not(.useFullWidth) {
 
 #wiki_page_show {
   width: 100% !important;
-  max-width: 1400px !important;
+  max-width: 87.5rem !important;
 
 }
 

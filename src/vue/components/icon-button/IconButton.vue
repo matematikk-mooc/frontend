@@ -24,8 +24,8 @@ const handleClick = () => {
   z-index: 1020;
   padding: 0.125rem;
   font-size: 2rem;
-  height: 2.5rem;
-  width: 2.5rem;
+  height: 2.75rem;
+  width: 2.75rem;
   cursor: pointer;
   transition: all 0.2s ease;
   border-radius: 70%;

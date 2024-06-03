@@ -1,0 +1,326 @@
+
+// Uncomment this to see the positioning and size of all elements
+// * {
+//   outline: .0625rem solid darkslategrey !important;
+// }
+
+// Styles for desktop devices related to mobile
+@media (min-width: 30rem) {
+  .desktop-hide {
+    display: none !important;
+  }
+}
+
+// Styles for mobile devices
+@media (max-width: 30rem) {
+  // Fixes issue with horizontal scrolling on mobile devices.
+  #my-courses-container,
+  .header,
+  ul,
+  li,
+  .page-footer--content,
+  .nav-bar__link-list-container {
+    overflow-x: hidden !important;
+  }
+  .mobile-hide {
+    display: none !important;
+  }
+
+  // Header
+  .header__content {
+    height: 3.75rem !important;
+    padding: 0 !important;
+    .header__link-list {
+      margin: 0 !important;
+      text-align: center !important;
+      .header__list-item {
+        width: 100% !important;
+        margin-left: 1.25rem !important;
+        margin-right: 1.25rem !important;
+        .header__link {
+          text-align: center !important;
+          font-size: 0.875rem !important;
+          white-space: nowrap !important;
+        }
+      }
+    }
+    .header-brand {
+      font-size: 1.125rem !important;
+      margin-left: 1.25rem !important;
+    }
+    .logout {
+      max-width: 3.75rem !important;
+      font-size: 0.875rem !important;
+      white-space: nowrap !important;
+      font-weight: 500;
+    }
+  }
+
+  // Navbar
+  .page--nav-bar {
+    height: 5.1875rem !important;
+    padding: 0 !important;
+    flex-direction: column !important;
+    align-items: unset !important;
+    background-color: black !important;
+    .nav-bar__link-list-container {
+      display: flex !important;
+      flex-direction: column;
+      .nav-bar__link-list {
+        display: unset !important;
+        height: 5.1875rem !important;
+        margin: unset !important;
+        padding: unset !important;
+        margin-left: 1.25rem !important;
+        margin-top: 0.5rem !important;
+        li:first-of-type {
+          margin-bottom: 1rem !important;
+        }
+        a:active {
+          font-weight: 700 !important;
+        }
+        .active {
+          font-weight: 700 !important;
+        }
+        .nav-bar__list-item {
+          margin: 0 !important;
+          padding: 0 !important;
+          width: fit-content !important;
+          .nav-bar__link {
+            height: 1.25rem !important;
+            overflow-y: hidden !important;
+            font-size: 1rem !important;
+            border-bottom: 0.0625rem solid #ffffff !important;
+          }
+        }
+      }
+    }
+  }
+
+  //Footer
+  .page-footer--content-wrapper {
+    display: unset !important;
+    line-height: 1.0625rem;
+    .page-footer--main-content {
+      display: unset !important;
+      .main-content--header {
+        width: 75% !important;
+        margin-top: 1.25rem !important;
+        margin: 0 auto;
+      }
+      .page-footer--link-container {
+        flex-wrap: wrap !important;
+        justify-content: center !important;
+        margin-bottom:1rem;
+        .page-footer--link {
+          padding-bottom: 0.25rem !important;
+        }
+        &:nth-child(2) > a:nth-child(5) {
+          flex-basis: 100%;
+          }
+      }
+    }
+    .mobile-accessibility-container {
+      display: flex;
+      flex-direction: column;
+      color: white;
+      font-size: .875rem;
+      justify-content: center;
+      .mobile-accessibility-links {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+      }
+    }
+  }
+
+  //MyCoursesPage and LandingPage
+  .my-courses-page, .landing-page {
+    padding: unset !important;
+    .my-courses-page--content, .landing-page--content {
+      margin: unset !important;
+      h1 {
+        margin-left: 1.5625rem;
+        font-family: "Roboto", sans-serif !important;
+        font-size: 1.125rem !important;
+        color:black;
+      }
+      .my-courses-page--layout, .landing-page--layout {
+        .card-container {
+          align-items: center;
+          .card-instance {
+            display:flex;
+            width:80%;
+            margin-bottom:1.5rem;
+            .card-box {
+              min-height: unset !important;
+            }
+            .card-content-container {
+              padding-top: 1.25rem !important;
+              padding-left: .8125rem !important;
+              p{
+                margin-top: 0;
+              }
+              h2 {
+                font-size: 1rem !important;
+                font-weight: 500 !important;
+                color: black;
+                margin-bottom: 1rem;
+              }
+              .card-content-enrolled-text {
+                margin-bottom: 0;
+                p {
+                  font-size: .875rem !important;
+                  color: #6A6A6A;
+                }
+              }
+              .card-content-enrolled {
+                gap: .8125rem !important;
+              }
+              .card-content-button-container {
+                display: flex !important;
+                button {
+                  max-width: fit-content;
+                  margin-right: .625rem;
+                }
+                p{
+                  font-weight: 500;
+                  font-family: "Roboto", sans-serif !important;
+                  margin: unset !important
+                }
+                
+              }
+            }
+          }
+          .card-item {
+            margin: unset !important;
+          }
+        }
+      }
+      .filter-container {
+        display: flex;
+        flex-direction: column;
+        width: 80%;
+        margin: 0 auto;
+        button {
+          max-width: 50%;
+        }
+      }
+    }
+    .mobile-warning-container {
+      margin: 0 auto;
+      margin-top: 1rem;
+      width: 75% !important;
+    }
+  }
+
+  //CoursePage
+  .course-page__banner-container {
+    padding: unset !important;
+    margin: unset !important;
+    height: unset !important;
+  }
+  .course-page__banner {
+    height: unset !important;
+    padding: 1.25rem !important;
+    padding-bottom: 0 !important;
+    display: flex;
+    align-items: center;
+    justify-content: unset !important;
+    flex-direction: column;
+    box-sizing: border-box;
+
+    &__title {
+      font-size: 1.5rem !important;
+      margin-bottom: 1.5rem !important;
+      padding-bottom: 1.5rem !important;
+      margin: unset !important;
+    }
+  
+    &__actions {
+      flex-direction: row-reverse !important;
+      justify-content:space-between !important;
+      width: 100% !important;
+      margin-right: unset !important;
+      margin-bottom: .875rem !important;
+      button {
+        height:2.5rem !important;
+      }
+      .dropdown{
+        width: unset !important;
+        z-index: 11;
+        .dropdown__content {
+          top: unset !important;
+        }
+      } 
+    }
+  }
+
+  // Infoboxes
+  .udir-info {
+    width: unset !important;
+    flex-direction: column !important;
+    gap: 0.5rem !important;
+    h3 {
+      display: flex;
+      justify-content: center;
+      font-size: 1rem;
+      font-weight: 600;
+    }
+  }
+
+  // Modal
+  .backdrop {
+    background-color: hsla(0, 0%, 25%, 0.8) !important;
+  }
+  .modal-box {
+    min-width: unset !important;
+    max-width: 85% !important;
+    border-radius: 12px !important;
+    h2 {
+      font-family: "Roboto", sans-serif !important;
+      font-size: 1rem !important;
+      font-weight: 500 !important;
+      margin: unset !important;
+      margin-top: 10px !important;
+      line-height: normal;
+    }
+    .course-description{
+      font-family: "Roboto", sans-serif !important;
+      font-size: 14px !important;
+      font-weight: 400 !important;
+      color: #6A6A6A  !important; 
+      line-height: normal !important;
+    }
+    .modules-list {
+      h3 {
+        font-family: "Roboto", sans-serif !important;
+        font-size: 14px !important;
+        font-weight: 500 !important;
+        margin: unset !important;
+        line-height: normal;
+        color:#6A6A6A !important;
+      }
+      ul {
+        padding: 0;
+        margin: 0;
+      }
+      li {
+        font-size: 14px;
+        color: #6A6A6A;
+        padding: 0;
+        margin: 0;
+      }
+      li:before {
+        content: unset;
+      }
+    }
+    .modal-box__actions {
+      justify-content: unset;
+    }
+    .course-illustration-box {
+      display: flex !important;
+      border-radius: 12px !important;
+    }
+  }
+}

@@ -92,7 +92,7 @@ export default {
 
 .course-page__banner {
   width: 100%;
-  max-width: 2100px;
+  max-width: 131.25rem;
   height: 12rem;
   padding: 0 1rem 0 1rem;
   display: flex;
@@ -111,17 +111,18 @@ export default {
       width: 100%;
     }
 
-    @media screen and (max-width: 1100px) {
+    @media screen and (max-width: 68.75rem) {
       display: none;
     }
   }
 
   &__title {
     font-family: Montserrat;
-    font-size: 36px;
+    font-size: 2.25rem;
     font-style: normal;
     font-weight: 500;
     line-height: normal;
+    color: black;
     margin: 0 1rem 0 1rem;
   }
 
@@ -130,8 +131,16 @@ export default {
     flex-direction: column;
     gap: 1rem;
     justify-content: center;
-    align-items: flex-end;
     margin-right: 1rem;
+    button {
+      height: 3rem;
+      &:hover {
+        background-color: #00468e;
+      }
+    }
+    .dropdown {
+      width: 100%;
+    }
   }
 }
 </style>
