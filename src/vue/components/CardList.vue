@@ -1,11 +1,12 @@
 
 <template>
   <div class="card-container">
-    <div v-for="course in courses" :key="course.id">
+    <div v-for="course in courses" :key="course.id" class="card-container-wrapper">
       <Card class="card-item"
         :theme="course.course_settings ? course.course_settings.course_category.category.color_code : 'theme_0'"
         :courseIllustration="course.course_settings ? course.course_settings.image.path : ''"
         :label="course.name"
+        :filters="course.course_settings ? course.course_settings.course_filter : []"
       >
         <template v-slot:new-flag>
           <NewCourseFlag v-if="newCoursesIndicator && newCourseFlag(course)"/>
@@ -198,9 +199,11 @@ export default {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  width: 140rem;
+  width: 100%;
   align-items: flex-start;
   justify-content: flex-start;
+  gap: 32px 24px;
+  margin-bottom: 40px;
 
   @media (max-width: 1025px) {
     width: 64rem;
@@ -212,8 +215,9 @@ export default {
   }
 }
 
-.card-item {
-  margin: 0.25rem 1.5rem 2rem 0;
+.card-container-wrapper {
+  position: relative;
+  align-self: stretch;
 }
 
 .course-illustration-box {
