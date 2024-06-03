@@ -223,3 +223,73 @@ body.with-left-side:not(.useFullWidth) {
 .add_access_token_link{
   width: fit-content !important;
 }
+
+body.notifications, body.profile, body.profile_settings, body.content_shares, body.qr_mobile_login, body.past_global_announcements {
+  #application.ic-app {
+    #main {
+      display: flex !important;
+      flex-direction: column !important;
+      width: 100% !important;
+
+      #left-side {
+        display: block !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        padding: 0px !important;
+
+        #sticky-container {
+          padding: 0px !important;
+
+          nav {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #f1f1f1;
+            padding: 20px 40px;
+            padding-right: 24px;
+
+            @media not all and (min-width: 768px) {
+              justify-content: flex-start;
+              padding-left: 12px;
+              padding-right: 12px;
+            }
+
+            ul {
+              display: flex !important;
+              flex-direction: row !important;
+              flex-wrap: wrap !important;
+
+              @media not all and (min-width: 768px) {
+                flex-direction: column !important;
+              }
+
+              li {
+                display: flex;
+
+                a {
+                  color: #303030 !important;
+                  text-decoration: none !important;
+                  margin: 4px 12px;
+                  padding: 4px 2px;
+                  border-bottom: 2px solid transparent !important;
+
+                  &.active, &:hover, &:focus {
+                    color: #00468e !important;
+                    border-bottom: 2px solid #00468e !important;
+                    border-left: unset !important;
+                    border-radius: unset !important;
+                  }
+
+                  @media not all and (min-width: 768px) {
+                    margin: 4px 0px;
+                    padding: 4px 0px;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

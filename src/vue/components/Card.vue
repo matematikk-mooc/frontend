@@ -18,6 +18,13 @@
           <slot name="description"></slot>
           <slot name="moduleList"></slot>
         </p>
+
+        <ul class="card-content-tags">
+          <template  v-for="filterItem in filters" :key="filterItem.filter_id">
+            <li>{{ filterItem.filter.filter_name }}</li>
+          </template>
+        </ul>
+
         <div class="card-content-enrolled">
           <img
             v-if="hasGoToCourse"
@@ -51,6 +58,7 @@ export default {
     theme: String,
     courseIllustration: String,
     label: String,
+    filters: Array
   },
   data() {
     return {
@@ -67,13 +75,13 @@ export default {
 .card-box {
   position: relative;
   width: 24rem;
-  min-height: 28rem;
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
   border-radius: 0.5rem;
   box-shadow: 0 0.25rem 0.25rem 0 rgba(0, 0, 0, 0.25);
   background-color: $card-background-color;
+  height: 100%;
 
   .card-illustration-box {
     position: relative;
@@ -134,6 +142,29 @@ export default {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
+  }
+
+  .card-content-tags {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    list-style-type: none;
+    padding: 0px;
+    margin: 0px;
+    margin-top: 10px;
+  }
+
+  .card-content-tags li {
+    background: #eaeaf5;
+    padding: 4px 15px;
+    margin: 0px;
+    margin-right: 8px;
+    margin-bottom: 8px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 21px;
   }
 
   .card-content-button-container {

@@ -18,6 +18,13 @@
                     <slot name="description"></slot>
                     <slot name="moduleList"></slot>
                 </p>
+
+                <ul class="card-highlighted-content-tags">
+                    <template  v-for="filterItem in filters" :key="filterItem.filter_id">
+                        <li>{{ filterItem.filter.filter_name }}</li>
+                    </template>
+                </ul>
+
                 <div class="card-highlighted-content-button-container">
                     <slot name="leftButton"></slot>
                     <slot name="rightButton"></slot>
@@ -36,6 +43,7 @@ export default {
         theme: String,
         courseIllustration: String,
         label: String,
+        filters: Array
     },
     data() {
         return {
@@ -52,7 +60,6 @@ export default {
 .card-highlighted-box {
     position: relative;
     width: 24rem;
-    min-height: 24rem;
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
@@ -119,6 +126,29 @@ export default {
         display: flex;
         flex-direction: column;
         justify-content: flex-start;
+    }
+
+    .card-highlighted-content-tags {
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        flex-wrap: wrap;
+        list-style-type: none;
+        padding: 0px;
+        margin: 0px;
+        margin-top: 10px;
+    }
+
+    .card-highlighted-content-tags li {
+        background: #eaeaf5;
+        padding: 4px 15px;
+        margin: 0px;
+        margin-right: 8px;
+        margin-bottom: 8px;
+        border-radius: 20px;
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 21px;
     }
 
     .card-highlighted-content-button-container {

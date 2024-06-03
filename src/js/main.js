@@ -161,7 +161,6 @@ jQuery(function($) {
   routes.addRouteForPath(/\/profile\/settings$/, function() {
     document.getElementById("wrapper").classList.add("user-settings-wrapper");
     document.getElementById("main").classList.add("user-settings-main");
-    document.getElementById("left-side").remove();
 
     //Styling for pair with observer button
     let parent = document.getElementById("pairing-code");

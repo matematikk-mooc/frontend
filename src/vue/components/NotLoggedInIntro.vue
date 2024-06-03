@@ -14,6 +14,7 @@
         :theme="newestCourse.course_settings ? newestCourse.course_settings.course_category.category.color_code : 'theme_0'"
         :courseIllustration="newestCourse.course_settings ? newestCourse.course_settings.image.path : ''"
         :label="newestCourse.name"
+        :filters="newestCourse.course_settings ? newestCourse.course_settings.course_filter : []"
       >
         <template v-slot:new-flag>
           <NewCourseFlag v-if="newCourseFlag()"></NewCourseFlag>
@@ -46,7 +47,6 @@
         </template>
         <template v-slot:actions>
           <RegisterChoice :selfEnrollmentCode="newestCourse.self_enrollment_code"></RegisterChoice>
-          <Button type="outlined" :size="'md'" @click="closeModal()">Lukk</Button>
         </template>
       </Modal>
     </div>
@@ -60,6 +60,7 @@ import ModulesList from './ModulesList.vue';
 import Modal from '../components/modal/Modal';
 import RegisterChoice from './login-choice/RegisterChoice.vue';
 import NewCourseFlag from './NewCourseFlag.vue';
+import { shallowUpdateUrlParameter } from '../utils/url-utils';
 
 export default {
   name: 'NotLoggedInIntro',
@@ -75,13 +76,19 @@ export default {
     newestCourse: Object,
   },
   data() {
+    var url = new URL(window.location.href);
+    var coursePreviewId = url.searchParams.get("course_preview_id");
+    var showCoursePreview = coursePreviewId != null && this.newestCourse != null
+      && coursePreviewId == this.newestCourse.id;
+
+    if (showCoursePreview) {
+      this.viewModules(coursePreviewId)
+    }
+
     return {
       modules: [],
-      showModal: false,
-      kpasApiUrl: KPASAPIURL,
-      isModalOpen: false,
+      isModalOpen: showCoursePreview,
       domain: window.location.origin,
-
     }
   },
   methods: {
@@ -89,7 +96,6 @@ export default {
       window.location.href = this.domain + '/enroll/' + enrollCode;
     },
     newCourseFlag() {
-      console.log("NEWEST COURSE", this.newestCourse)
     if (this.newestCourse.course_settings) {
       console.log(this.newestCourse.course_settings.course_category.new)
       if (this.newestCourse.course_settings.course_category) {
@@ -112,32 +118,37 @@ export default {
     },
     async handleModal() {
       await this.viewModules(this.newestCourse.id);
-      this.isModalOpen = true;
     },
     closeModal() {
+      shallowUpdateUrlParameter("course_preview_id", null)
       this.isModalOpen = false;
     },
     async viewModules(courseId) {
+      shallowUpdateUrlParameter("course_preview_id", courseId)
+
+      this.isModalOpen = true;
       let self = this;
       self.modules = [];
 
-        await fetch(this.kpasApiUrl + '/course/' + courseId + '/moduletitles', {
-          method: 'GET',
-          headers: {},
-        })
-          .then(response => response.json())
-          .then(response => {
-            response = response.result;
-            response.forEach(module => {
-              if (module.published === true) {
-                if (module.name.includes('nb:')) {
-                  self.handleMultilangModules(module);
-                }
-                self.modules.push(module);
+      await fetch(KPASAPIURL + '/course/' + courseId + '/moduletitles', {
+        method: 'GET',
+        headers: {},
+      })
+        .then(response => response.json())
+        .then(response => {
+          response = response.result;
+          response.forEach(module => {
+            if (module.published === true) {
+              if (module.name.includes('nb:')) {
+                self.handleMultilangModules(module);
               }
-            });
+              self.modules.push(module);
+            }
           });
-
+        })
+        .catch(() => {
+          this.closeModal()
+        });
     },
 
     handleMultilangModules(module) {
@@ -161,6 +172,7 @@ export default {
   box-sizing: border-box;
   padding: 0.5rem 6rem 0.5rem 9rem;
   margin-top: 1rem;
+  margin-bottom: 20px;
   display: inline-grid;
   grid-template-columns: auto auto;
   justify-content: center;
@@ -192,14 +204,8 @@ export default {
 }
 
 .card-highlighted {
-
-  max-height: 100px !important;
   box-sizing: border-box !important;
   justify-content: space-between !important;
-  .card-box {
-  min-height: 24rem;
-}
-
 }
 
 .course-illustration-box {
