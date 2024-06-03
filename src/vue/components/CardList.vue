@@ -49,7 +49,6 @@
         </template>
         <template v-slot:actions>
           <Button :type="'filled'" :size="'md'" @click="enrollToCourse(course.self_enrollment_code)">Meld deg på</Button>
-          <Button type="outlined" :size="'md'" @click="closeModal(course)">Lukk</Button>
         </template>
       </Modal>
     </div>
