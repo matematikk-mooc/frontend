@@ -127,7 +127,7 @@ export default (function () {
                       };
                       let page = createApp(LoggedInLandingPage, props);
                       customContent.setAttribute("id", "loggedInLandingPage");
-                      customContent.setAttribute("style", "width: 100%; justify-content: center; display: flex;");
+                      customContent.setAttribute("style", "width: 100%; justify-content: center; display: flex; flex-direction: column;");
                       let footerNode = document.getElementById("wrapper");
                       footerNode.parentNode.insertBefore(customContent, footerNode)
                       document.getElementById('wrapper').innerHTML = '';

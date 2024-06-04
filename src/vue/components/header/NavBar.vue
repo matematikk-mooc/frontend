@@ -13,8 +13,8 @@
 <script setup>
 import PageHeader from './PageHeader.vue'
 import NavBarLinks from './NavBarLinks.vue'
-
 const {logged_in, admin, mainContentId} = defineProps(['logged_in', 'admin', 'mainContentId'])
+
 
 </script>
 

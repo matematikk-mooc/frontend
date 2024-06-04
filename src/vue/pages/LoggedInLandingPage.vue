@@ -1,9 +1,12 @@
 
 <template>
+  <div class="mobile-hide">
+    <Crumbs :courses="coursesToView" :allCourses="true"/>
+  </div>
     <div class="landing-page">
       <div id="main" class="landing-page--content">
         <MobileWarning v-if="mobiletablet"></MobileWarning>
-        <h1>Alle tilgjengelige kompetansepakker</h1>
+        <h1 class="course-page-title">Alle tilgjengelige kompetansepakker</h1>
         <div class="landing-page--layout">
           <CardFilter @update:selectedFilters="onSelectedFiltersUpdate" :filterData="filterData"></CardFilter>
           <CardList v-if="coursesToView.length > 0" :authorized="true" :courses="coursesToView" :newCoursesIndicator=true></CardList>
@@ -16,6 +19,7 @@
   </template>
 
   <script setup>
+  import Crumbs from '../components/header/Crumbs.vue'
   import CardList from '../components/CardList.vue'
   import CardFilter from '../components/CardFilter.vue'
   import {ref} from 'vue'
@@ -24,7 +28,7 @@
 
   const { courses, filterData, mobiletablet } = defineProps(['courses', 'filterData', 'mobiletablet']);
   const coursesToView = ref([...courses]);
-
+  console.log(coursesToView)
   const onSelectedFiltersUpdate = (updatedFilters) => {
     if(updatedFilters.length == 0){
       coursesToView.value = [...courses]
@@ -32,8 +36,10 @@
     }
     coursesToView.value = filterCourses(courses, updatedFilters)
   }
-  </script>
 
+  console.log(coursesToView)
+  </script>
+  
   <style lang="scss">
   .landing-page {
     height: 100%;

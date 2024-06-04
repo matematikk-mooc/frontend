@@ -1,4 +1,6 @@
 <template>
+<div>
+  <Crumbs :courseTitle="title" :myCourses="true"/>
   <div class="course-page__banner-container" :class="theme">
     <div class="course-page__banner">
       <div class="course-page__banner__illustration" ariaHidden="true">
@@ -9,13 +11,15 @@
       </h1>
       <div class="course-page__banner__actions">
         <Button v-if="isEnrolled && isFrontPage" type="outlined" class="self_unenrollment_link">Meld deg av</Button>
-      <LanguageSelectorContainer :languages="languages"></LanguageSelectorContainer>
+        <LanguageSelectorContainer :languages="languages"></LanguageSelectorContainer>
       </div>
     </div>
   </div>
+</div>
 </template>
 
 <script>
+import Crumbs from '../header/Crumbs.vue';
 import Button from '../Button.vue';
 import LanguageSelectorContainer from '../language-selector-container/LanguageSelectorContainer.vue';
 
@@ -39,6 +43,7 @@ export default {
     };
   },
   components: {
+    Crumbs,
     Button,
     LanguageSelectorContainer
   },
@@ -56,6 +61,7 @@ export default {
   justify-content: center;
   padding: 0 1rem 0 1rem;
   margin: 2.5rem 0 2.5rem 0;
+  margin-top: 0;
 
 
   &.theme_0 {

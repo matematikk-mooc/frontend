@@ -9,6 +9,11 @@
   .desktop-hide {
     display: none !important;
   }
+  .my-courses-page {
+    .mobile-hide {
+      width: 100%;
+    }
+  }
 }
 
 // Styles for mobile devices
@@ -24,6 +29,7 @@
   }
   .mobile-hide {
     display: none !important;
+    width: 100% !important;
   }
 
   // Header
