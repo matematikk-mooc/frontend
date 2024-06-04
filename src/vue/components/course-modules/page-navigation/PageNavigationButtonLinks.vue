@@ -1,10 +1,10 @@
 <template>
   <div class="page-button-link-navigation">
     <div class="page-button-link-container-left">
-      <ButtonLink v-show="previousUrl !== null" type="previous" :url="previousUrl">forrige</ButtonLink>
+      <ButtonLink v-show="previousUrl !== null" type="previous" :url="previousUrl">Forrige</ButtonLink>
     </div>
     <div class="page-button-link-container-right">
-      <ButtonLink  v-show="nextUrl !== null" type="next" :url="nextUrl">neste</ButtonLink>
+      <ButtonLink  v-show="nextUrl !== null" type="next" :url="nextUrl">Neste</ButtonLink>
     </div>
   </div>
 </template>
