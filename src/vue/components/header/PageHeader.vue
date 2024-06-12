@@ -1,13 +1,15 @@
 <template>
   <header class="header__content">
+    <!-- Header -->
     <div class="header-brand">Kompetanseportalen</div>
-    <ul class="header__link-list">
+    <Dropdown :logged_in="logged_in" :admin="admin" :backgroundColor="'white'"  :iconType="'hamburger'" :icon="'settings'" :link="settingsLink"></Dropdown>
+    <!-- Navbar -->
+    <ul class="header__link-list mobile-hide">
       <li class="header__list-item" v-if="admin">
         <span>
           <a class="header__link" :href="adminLink">Administrator</a>
         </span>
       </li>
-
       <li class="header__list-item" v-if="!logged_in">
         <span>
           <LoginChoice></LoginChoice>
@@ -29,7 +31,7 @@
 
 <script setup>
   import LoginChoice from '../login-choice/LoginChoice.vue';
-
+  import Dropdown from '../dropdown/Dropdown.vue'
   const {logged_in, admin} = defineProps(['logged_in', 'admin'])
   const domain = window.location.origin;
   const loginLink = domain + "/login/canvas"

@@ -1,8 +1,8 @@
 <template>
   <div class="modules-list">
-   <h3>Moduler:</h3> 
-    <ul v-for="m in modulesList" :key="m.id">
-      <li>
+  <h3>Moduler:</h3> 
+    <ul>
+      <li v-for="m in modulesList" :key="m.id">
         {{m.name}}
       </li>
     </ul>

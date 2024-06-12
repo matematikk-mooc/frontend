@@ -7,7 +7,7 @@
       { 'btn--dropdown': isDropdown },
       { 'btn--sm': size === 'sm' },
       { 'btn--md': !size || size === 'md' },
-      { 'btn--lg': size === 'lg' }
+      { 'btn--lg': size === 'lg' },
     ]"
   >
     <Icon v-if="type === 'previous'" name="chevron_left" size="1.5em" />

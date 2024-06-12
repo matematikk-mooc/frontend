@@ -3,12 +3,12 @@
     <ul class="nav-bar__link-list">
       <li class="nav-bar__list-item" v-if="logged_in">
         <span>
-          <a class="nav-bar__link" :href="myCourses">Mine kompetansepakker</a>
+          <a class="nav-bar__link " :class="(currentPage === 'courses') ? 'active' : '' " :href="myCourses">Mine kompetansepakker</a>
         </span>
       </li>
       <li class="nav-bar__list-item" v-if="logged_in">
         <span>
-          <a class="nav-bar__link" :href="allCourses">Alle tilgjengelige kompetansepakker</a>
+          <a class="nav-bar__link " :class="(currentPage === 'all_courses') ? 'active' : '' " :href="allCourses" >Alle tilgjengelige kompetansepakker</a>
         </span>
       </li>
     </ul>
@@ -16,7 +16,7 @@
 </template>
 <script setup>
   const {logged_in} = defineProps(['logged_in'])
-
+  const currentPage = window.location.href.split("/").pop();
   const domain = window.location.origin;
   const myCourses = domain + "/courses"
   const allCourses = domain + "/search/all_courses"

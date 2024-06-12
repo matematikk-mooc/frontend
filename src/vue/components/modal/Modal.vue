@@ -105,7 +105,7 @@ const closeModal = () => {
       word-wrap: break-word;
       padding:0.5rem 1rem 0.5rem 1rem;
       width: 100%;
-      overflow-y:scroll;
+      overflow-y:auto;
    }
 
     &__actions {
