@@ -323,4 +323,17 @@
       border-radius: 12px !important;
     }
   }
+  .custom-reveal-wrapper {
+    p {
+      display: flex;
+    }
+    a {
+      width: 100%;
+      justify-content: space-evenly;
+    }
+    .custom-reveal-content {
+      display: flex !important;
+      width: 80vw;
+  }
+  }
 }
