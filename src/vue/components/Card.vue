@@ -12,18 +12,18 @@
     <div class="card-content-container">
       <header class="card-box-title">
         <h2><slot name="title"></slot></h2>
-      </header>
-      <section class="card-content-description">
         <p :class="{ description_text: true }">
           <slot name="description"></slot>
           <slot name="moduleList"></slot>
         </p>
-
         <ul class="card-content-tags">
           <template  v-for="filterItem in filters" :key="filterItem.filter_id">
             <li>{{ filterItem.filter.filter_name }}</li>
           </template>
         </ul>
+      </header>
+      <section class="card-content-description">
+
 
         <div class="card-content-enrolled">
           <img
@@ -82,6 +82,7 @@ export default {
   box-shadow: 0 0.25rem 0.25rem 0 rgba(0, 0, 0, 0.25);
   background-color: $card-background-color;
   height: 100%;
+  min-height: 31rem;
 
   .card-illustration-box {
     position: relative;
@@ -187,7 +188,6 @@ export default {
   }
 
   .card-content-enrolled {
-    margin-top: 1rem;
     display: flex;
     flex-direction: row;
     align-items: center;
