@@ -323,4 +323,14 @@
       border-radius: 12px !important;
     }
   }
+  // Unenrollment
+  #self_unenrollment_dialog {
+    display: flex !important;
+    flex-direction: column !important;
+    left: 0 !important;
+    right: 0 !important;
+    margin-left: auto !important ;
+    margin-right: auto !important;
+
+  }
 }
