@@ -82,7 +82,6 @@ export default {
   box-shadow: 0 0.25rem 0.25rem 0 rgba(0, 0, 0, 0.25);
   background-color: $card-background-color;
   height: 100%;
-  min-height: 31rem;
 
   .card-illustration-box {
     position: relative;
