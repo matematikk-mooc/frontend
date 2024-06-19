@@ -3,8 +3,8 @@
   <div class="card-container">
     <div v-for="course in courses" :key="course.id">
       <Card class="card-item"
-        :theme="course.course_settings ? course.course_settings.course_category.category.color_code : 'theme_0'"
-        :courseIllustration="course.course_settings ? course.course_settings.image.path : ''"
+        :theme="course.course_settings ? course.course_settings?.course_category?.category.color_code : 'theme_0'"
+        :courseIllustration="course.course_settings ? course.course_settings?.image.path : ''"
         :label="course.name"
       >
         <template v-slot:new-flag>
@@ -33,10 +33,10 @@
 
       <Modal :is-open="course.isModalOpen" @close="closeModal(course)">
         <template v-slot:header>
-          <div class="course-illustration-box" :class="course.course_settings ? course.course_settings.course_category.category.color_code : 'theme_0'">
+          <div class="course-illustration-box" :class="course.course_settings ? course.course_settings?.course_category?.category.color_code : 'theme_0'">
             <img
               class="course-illustration-box-image"
-              :src="course.course_settings ? course.course_settings.image.path : ''"
+              :src="course.course_settings ? course.course_settings?.image.path : ''"
               alt=""
             />
           </div>
@@ -96,8 +96,8 @@ export default {
     },
     newCourseFlag(course) {
       if (course.course_settings) {
-        if (course.course_settings.course_category) {
-          return course.course_settings.course_category.new;
+        if (course.course_settings?.course_category) {
+          return course.course_settings?.course_category.new;
         }
       }
       return false;
