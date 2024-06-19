@@ -169,11 +169,11 @@ export default {
   }
 
   .card-content-button-container {
+    display:flex;
+    justify-content: space-between;
     margin-top: 1.5rem;
     margin-bottom: 1rem;
-    display: inline-grid;
-    grid-template-columns: auto auto;
-    gap: 0.5rem;
+    gap: 0.5rem;    
   }
 
   .card-box-title {
