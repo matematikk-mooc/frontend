@@ -6,7 +6,7 @@ import kpasApi from "../api/kpas-api";
 
 export default (function() {
     return {
-    insertCourseBanner: function () {
+    insertCourseBanner: function (courseId, courseUnenrollmentUuid) {
         let currentCourseId  = ENV.COURSE_ID? ENV.COURSE_ID : ENV.course_id ? ENV.course_id : ENV.COURSE.id;
         let isEnrolled = ENV.current_user_is_student? ENV.current_user_is_student || ENV.COURSE.is_student : false;
         let isFrontPage = false;
@@ -25,7 +25,9 @@ export default (function() {
                     title: course.name,
                     isEnrolled: isEnrolled,
                     isFrontPage: isFrontPage,
-                    languages: settings.multilang.toLowerCase()
+                    languages: settings.multilang.toLowerCase(),
+                    courseId: courseId,
+                    unenrollmentUuid: courseUnenrollmentUuid
                 });
                 let coursePageBannerWrapper = document.createElement("div");
                 coursePageBannerWrapper.id =  "course-page-banner-wrapper";
