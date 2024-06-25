@@ -14,6 +14,8 @@
     <img class="feide-symbol" v-if="type === 'feideLogin'" :src="`${server}feide_white-symbol.svg`"/>
     <slot></slot>
     <Icon v-if="type === 'next'" name="chevron_right" size="1.5em" />
+    <Icon v-if="type === 'filter'" name="filter" size="1.5em" />
+    <Icon v-if="type === 'filter_reset'" name="filter_reset" size="1.5em" />
   </button>
 </template>
 
@@ -107,6 +109,19 @@ const isDropdown = props.type === 'dropdown';
     }
   }
 }
+
+.filter-button, .reset-button {
+      svg {
+        margin-left: 10px;
+        height:1.3rem;
+        width:1.3rem;
+      }
+    }
+    .reset-button {
+      background-color: white;
+      color: black;
+      border: 1px solid black;
+    }
 
 .feide-symbol{
   width: 1em;
