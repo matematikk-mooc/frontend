@@ -1,34 +1,23 @@
 <template>
-  <div class="filter-wrapper">
-
-    <div class="filter-buttons">
-      <Button class="desktop-hide filter-button" :type="'filter'" :size="'md'" @click="toggleFilters">Filter</Button>
-    <Button class="reset-button" :type="'filter_reset'" :size="'md'" @click="clearFilters">Tilbakestill</Button>
-  </div>
-  <div class="filter-modal">
-  <div class="filter-container mobile-hide">
-    <div class="filter-groups">
-      <div class="filter-group" v-for="item in filters">
-        <div class="filter-title">
-            {{ item.name }}
-          </div>
-          <ul class="cardfilter-list">
-            <li v-for="filter in item.filter" :key="filter.id">
-              <label class="checkbox-label" :for="filter.id">
-                {{ filter.filter_name }}
-                <input :id="filter.id" :value="filter" :name="filter" type="checkbox" v-model="selectedFilters" /><span
-                class="checkmark"
-                ></span
-                ></label>
-              </li>
-            </ul>
-          </div>
-        </div>
-        <Button class="desktop-hide" :type="'filled'" :size="'md'" @click="toggleFilters">Vis treff</Button>
+  <div class="filter-container">
+    <Button :type="'outlined'" :size="'md'" @click="clearFilters">Tilbakestill filter</Button>
+    <div class="filter-group" v-for="item in filters">
+      <div class="filter-title">
+        {{ item.name }}
       </div>
+
+      <ul class="cardfilter-list">
+        <li v-for="filter in item.filter" :key="filter.id">
+          <label class="checkbox-label" :for="filter.id">
+            {{ filter.filter_name }}
+            <input :id="filter.id" :value="filter" :name="filter" type="checkbox" v-model="selectedFilters" /><span
+              class="checkmark"
+            ></span
+          ></label>
+        </li>
+      </ul>
     </div>
   </div>
-
 </template>
 
 <script setup lang="js">
@@ -67,16 +56,6 @@ const clearFilters = () => {
   selectedFilters.value = []
 }
 
-const toggleFilters = () => {
-  const filterContainers = document.getElementsByClassName('filter-container');
-  const filterModal = document.getElementsByClassName('filter-modal');
-  for (let i = 0; i < filterContainers.length; i++) {
-    filterContainers[i].classList.toggle('mobile-hide');
-    filterModal[i].classList.toggle('backdrop');
-  }
-}
-
-
 </script>
 
 <style lang="scss">
@@ -107,10 +86,6 @@ const toggleFilters = () => {
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
-}
-
-.filter-wrapper {
-  width:100%;
 }
 
 .checkbox-label input {
