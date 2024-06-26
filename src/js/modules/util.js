@@ -1,4 +1,4 @@
-import  api from '../api/api.js'
+import api from '../api/api.js'
 import settings from "../settings";
 
 export default (function () {
@@ -14,7 +14,7 @@ export default (function () {
     mapCourseSettings: function (courses, courseSettings) {
       courses.forEach(course => {
         var cc = courseSettings.find(x => x.course_id === course.id)
-        if(cc) {
+        if (cc) {
           course.course_settings = cc
         }
       });
@@ -28,19 +28,19 @@ export default (function () {
     },
 
 
-    isMobileOrTablet: function() {
+    isMobileOrTablet: function () {
       if (navigator.userAgent.match(/Android/i)
-         || navigator.userAgent.match(/webOS/i)
-         || navigator.userAgent.match(/iPhone/i)
-         || navigator.userAgent.match(/iPad/i)
-         || navigator.userAgent.match(/iPod/i)
-         || navigator.userAgent.match(/BlackBerry/i)
-         || navigator.userAgent.match(/Windows Phone/i)) {
+        || navigator.userAgent.match(/webOS/i)
+        || navigator.userAgent.match(/iPhone/i)
+        || navigator.userAgent.match(/iPad/i)
+        || navigator.userAgent.match(/iPod/i)
+        || navigator.userAgent.match(/BlackBerry/i)
+        || navigator.userAgent.match(/Windows Phone/i)) {
         return true;
       }
       else {
-            return false;
-         }
+        return false;
+      }
     },
 
     getPageTitleBeforeColon: function () {
@@ -214,13 +214,13 @@ export default (function () {
       return false;
     },
 
-    isMultilangCourse() { return this.course.kpas.multilang != "NONE"},
-    isNynorskCourse() { return this.course.kpas.multilang == "NN"},
-    isSamiskCourse() { return this.course.kpas.multilang == "SE"},
+    isMultilangCourse() { return this.course.kpas.multilang != "NONE" },
+    isNynorskCourse() { return this.course.kpas.multilang == "NN" },
+    isSamiskCourse() { return this.course.kpas.multilang == "SE" },
     isPrincipal() {
       return (this.isTeacherOrAdmin() || this.isEnrolledWithRole(this.course, settings.principalRoleType));
     },
-    isRoleBasedCourse() {return this.course.kpas.role_support == 1},
+    isRoleBasedCourse() { return this.course.kpas.role_support == 1 },
     isMMOOCLicense() {
       return this.course.kpas.licence == 1;
     },
@@ -239,14 +239,14 @@ export default (function () {
 
     getBannerType() {
       console.log(this.course)
-      if(this.course && this.course.kpas && this.course.kpas.banner_type){
+      if (this.course && this.course.kpas && this.course.kpas.banner_type) {
         return this.course.kpas.banner_type;
       }
       return "NONE";
     },
     getAlertMsg() {
       if (this.course) {
-        if(this.course.kpas.banner_type == "ALERT"){
+        if (this.course.kpas.banner_type == "ALERT") {
           return this.course.kpas.banner_text;
         }
       }
@@ -254,15 +254,15 @@ export default (function () {
     },
     getUnmaintainedMsg() {
       if (this.course) {
-        if(this.course.kpas.banner_type == "UNMAINTAINED"){
+        if (this.course.kpas.banner_type == "UNMAINTAINED") {
           return this.course.kpas.banner_text;
         }
       }
       return "";
     },
     getUnmaintainedSinceDate() {
-      if(this.course){
-        if(this.course.kpas.banner_type == "UNMAINTAINED"){
+      if (this.course) {
+        if (this.course.kpas.banner_type == "UNMAINTAINED") {
           return this.course.kpas.unmaintained_since;
         }
       }
@@ -270,7 +270,7 @@ export default (function () {
     },
     getNotificationMsg() {
       if (this.course) {
-        if(this.course.kpas.banner_type == "NOTIFICATION"){
+        if (this.course.kpas.banner_type == "NOTIFICATION") {
           return this.course.kpas.banner_text;
         }
       }
@@ -278,7 +278,7 @@ export default (function () {
     },
     getFeedbackMsg() {
       if (this.course) {
-        if(this.course.kpas.banner_type == "FEEDBACK"){
+        if (this.course.kpas.banner_type == "FEEDBACK") {
           return this.course.kpas.banner_text;
         }
       }
@@ -300,7 +300,7 @@ export default (function () {
     },
     isMemberOfExpiredCommunity(course, callback) {
       let self = this
-      if(!course) {
+      if (!course) {
         return;
       }
       api.getUserGroupsForCourse(course.id, function (groups) {
@@ -327,6 +327,16 @@ export default (function () {
       return api.getRoles() !== null;
     },
 
+    getCourseUnenrollmentUuid() {
+      const unenrollmentLink = document.querySelector("#self_unenrollment_dialog a.btn-primary.action");
+      if (!unenrollmentLink) return null;
+
+      const hrefValue = unenrollmentLink.getAttribute("href") ?? "";
+      const match = hrefValue.match(/\/self_unenrollment\/([^/]+)/);
+
+      const unenrollmentUuid = match ? match[1] : null;
+      return unenrollmentUuid;
+    },
     getGroupsInfo(groups) {
       var groupsInfo = {};
       for (var i = 0; i < groups.length; i++) {
@@ -467,20 +477,20 @@ export default (function () {
         (key, value) => key === "" ? value : decodeURIComponent(value)
       );
     },
-    updateRightMenuButtons: function() {
-      $("#course_show_secondary > a").each(function() {
+    updateRightMenuButtons: function () {
+      $("#course_show_secondary > a").each(function () {
         var $this = $(this);
         var _href = $this.attr("href");
-        if(_href.includes("/calendar?")){
+        if (_href.includes("/calendar?")) {
           $this.remove();
         }
-        else{
+        else {
           $this.attr("href", _href);
         }
       });
     },
-    removeRecentFeedback: function() {
-      $(".recent_feedback").each(function() {
+    removeRecentFeedback: function () {
+      $(".recent_feedback").each(function () {
         var $this = $(this);
         $this.remove()
       });

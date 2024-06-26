@@ -8,16 +8,24 @@
         {{ title }}
       </h1>
       <div class="course-page__banner__actions">
-        <Button v-if="isEnrolled && isFrontPage" type="outlined" class="self_unenrollment_link">Meld deg av</Button>
-      <LanguageSelectorContainer :languages="languages"></LanguageSelectorContainer>
+        <Button v-if="unenrollmentUuid != null" type="outlined" id="actions_self_unenrollment" @click="openUnenrollment">Meld deg av</Button>
+        <LanguageSelectorContainer :languages="languages"></LanguageSelectorContainer>
       </div>
     </div>
+
+    <UnenrollCourse
+      :courseId="courseId"
+      :unenrollmentUuid="unenrollmentUuid"
+      :isModalOpen="isUnenrollmentOpen"
+      :closeModal="closeUnenrollment"
+    />
   </div>
 </template>
 
 <script>
 import Button from '../Button.vue';
 import LanguageSelectorContainer from '../language-selector-container/LanguageSelectorContainer.vue';
+import UnenrollCourse from '../unenroll/UnenrollCourse.vue';
 
 export default {
   props: {
@@ -27,6 +35,8 @@ export default {
     isEnrolled: Boolean,
     isFrontPage: Boolean,
     languages: String,
+    courseId: String,
+    unenrollmentUuid: String
   },
   setup(props) {
     return {
@@ -35,12 +45,28 @@ export default {
       title: props.title,
       isEnrolled: props.isEnrolled,
       isFrontPage: props.isFrontPage,
-      languages: props.languages
+      languages: props.languages,
+      courseId: props.courseId,
+      unenrollmentUuid: props.unenrollmentUuid,
     };
+  },
+  data() {
+    return {
+      isUnenrollmentOpen: false
+    };
+  },
+  methods: {
+    openUnenrollment() {
+      this.isUnenrollmentOpen = true;
+    },
+    closeUnenrollment() {
+      this.isUnenrollmentOpen = false;
+    }
   },
   components: {
     Button,
-    LanguageSelectorContainer
+    LanguageSelectorContainer,
+    UnenrollCourse
   },
 };
 </script>
@@ -49,6 +75,7 @@ export default {
 @import '../../design/card-themes';
 
 .course-page__banner-container {
+  margin-top: 0px !important;
   width: 100%;
   height: 12rem;
   box-sizing: border-box;
