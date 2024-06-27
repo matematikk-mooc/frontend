@@ -3,6 +3,7 @@
     :class="[
       'btn',
       { 'btn--filled': isFilled },
+      { 'btn--fullwidth': isFullWidth },
       { 'btn--outlined': isOutlined },
       { 'btn--dropdown': isDropdown },
       { 'btn--sm': size === 'sm' },
@@ -22,12 +23,14 @@ import Icon from './icon/Icon.vue';
 const props = defineProps({
   size: String,
   type: String,
+  fullWidth: Boolean,
 });
 const server = SERVER;
 
 const isFilled = !props.type || props.type === 'submit' || props.type === 'filled' || props.type === 'feideLogin';
 const isOutlined = props.type === 'outlined' || props.type === 'previous' || props.type === 'next';
 const isDropdown = props.type === 'dropdown';
+const isFullWidth = props.fullWidth;
 </script>
 
 <style lang="scss">
@@ -60,10 +63,14 @@ const isDropdown = props.type === 'dropdown';
     }
     &.btn--md {
       padding: 0.5rem 1.375rem 0.5rem 1.375rem;
+      height: 40px; 
     }
     &.btn--lg {
       padding: 0.75rem 1.75rem 0.75rem 1.75rem;
     }
+  }
+  &--fullwidth {
+    width: 100%;
   }
 
   &--outlined {

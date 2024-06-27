@@ -1,6 +1,6 @@
 <template>
 
-    <Button :type="'filled'" :size="'md'" @click="openModal">Meld deg på</Button>
+    <Button :fullWidth="true" :type="'filled'" :size="'md'" @click="openModal">Meld deg på</Button>
     <Modal :is-open="modalOpen" @close="closeModal">
         <template v-slot:header>
             <h1>Meld deg på kompetansepakken</h1>
