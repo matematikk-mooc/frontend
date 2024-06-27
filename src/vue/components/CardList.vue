@@ -1,7 +1,7 @@
 
 <template>
   <div class="card-container">
-    <div class="card-instance"  v-for="course in courses" :key="course.id">
+    <div class="card-instance card-container-wrapper"  v-for="course in courses" :key="course.id">
       <Card class="card-item"
         :theme="course.course_settings ? course.course_settings.course_category.category.color_code : 'theme_0'"
         :courseIllustration="course.course_settings ? course.course_settings.image.path : ''"
@@ -202,6 +202,11 @@ export default {
   justify-content: flex-start;
   gap: 32px 24px;
   margin-bottom: 40px;
+
+  .card-container-wrapper {
+    position:relative;
+    align-self: stretch;
+  }
 
   @media (max-width: 1025px) {
     width: 64rem;
