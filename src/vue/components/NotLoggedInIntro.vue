@@ -26,7 +26,7 @@
           <RegisterChoice :selfEnrollmentCode="newestCourse.self_enrollment_code"></RegisterChoice>
         </template>
         <template  v-slot:rightButton>
-          <Button :type="'outlined'" :size="'md'" @click="handleModal()">Les mer</Button>
+          <Button :fullWidth="true" :type="'outlined'" :size="'md'" @click="handleModal()">Les mer</Button>
         </template>
       </CardHighlighted>
 
