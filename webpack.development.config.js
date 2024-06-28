@@ -5,7 +5,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const webpack = require('webpack');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
-const {VueLoaderPlugin} = require('vue-loader');
+const { VueLoaderPlugin } = require('vue-loader');
 
 module.exports = {
   entry: {
@@ -111,7 +111,7 @@ module.exports = {
       setup: path.resolve(__dirname, "src/css/setup"),
       vue$: path.resolve("node_modules/vue/dist/vue.runtime.esm-bundler.js"),
     },
-    extensions: [".js",".vue"],
+    extensions: [".js", ".vue"],
     preferRelative: true,
     modules: ["src", "node_modules"],
   },
@@ -140,7 +140,7 @@ module.exports = {
     },
     port: 9000,
     host: "localhost",
-    open: true,
+    open: false,
     allowedHosts: "all",
     headers: {
       "Access-Control-Allow-Origin": "*",
