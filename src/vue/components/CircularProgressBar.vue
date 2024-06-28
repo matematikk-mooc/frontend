@@ -21,7 +21,7 @@
             />
 
             <!-- Percentage text -->
-            <text x="18" :y="isFinished ? 25.35 : 21.35" class="percentage" :fill="isFinished ? 'white' : progressColor" :font-size="isFinished ? '20px' : '10px'">
+            <text x="18" :y="isFinished ? 25.35 : 21.35" class="percentage" :fill="isFinished ? 'white' : 'black'" :font-size="isFinished ? '20px' : '10px'">
                 {{ isFinished ? "✔" : `${percentage}%` }}
             </text>
         </svg>
@@ -76,6 +76,7 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-shrink: 0;
 }
 
 .circular-chart {

@@ -27,7 +27,7 @@
           <div class="card-content-enrolled-text">
             <p class="card-content-enrolled-count">{{ requirementsCompleted }} av {{ requirementsTotal }} fullført</p>
 
-            <p class="card-content-enrolled-description">{{ allRequirementsCompleted ? "Gratulerer! Du har fullført kurset!" : "Fortsett for å fullføre kurset!" }}</p>
+            <p class="card-content-enrolled-description">{{ allRequirementsCompleted ? "Du har fullført kompetansepakken!" : "Fortsett for å fullføre kompetansepakken!" }}</p>
           </div>
         </div>
 
@@ -224,7 +224,7 @@ export default {
     font-size: 0.875rem;
     font-family: 'Roboto';
     font-weight: 400;
-    color: black;
+    color: black !important;
     line-height: 1.4;
   }
 
@@ -239,6 +239,12 @@ export default {
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
     text-overflow: ellipsis;
+  }
+}
+
+@media (max-width: 30rem) {
+  .card-content-enrolled-text {
+    margin-left: 5px !important;
   }
 }
 </style>
