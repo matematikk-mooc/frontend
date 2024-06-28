@@ -13,23 +13,23 @@ export default (function () {
 
   return {
 
-    displayRegisterPopup: function(authenticated, selfRegisterCode) {
+    displayRegisterPopup: function (authenticated, selfRegisterCode) {
       let wrapper = document.getElementById("wrapper");
       let enrollPopup = document.createElement("div");
       enrollPopup.setAttribute("id", "enrollPopup");
-      let enrollPopupComponent = createApp(EnrollToCourse, {authenticated: authenticated, selfEnrollmentCode: selfRegisterCode});
+      let enrollPopupComponent = createApp(EnrollToCourse, { authenticated: authenticated, selfEnrollmentCode: selfRegisterCode });
       wrapper.appendChild(enrollPopup);
       enrollPopupComponent.mount("#enrollPopup");
 
     },
     changeEnrollInformationPolicyLink: function () {
       var informationPolicy = $('.ic-Self-enrollment-footer__Secondary > a');
-      if(informationPolicy) {
+      if (informationPolicy) {
         informationPolicy.attr("href", settings.privacyPolicyLink);
       }
 
       var termsOfService = $('#create_user_info > div.ic-Checkbox-group > div > label');
-      if(termsOfService) {
+      if (termsOfService) {
         termsOfService.html("Jeg er enig i personvernspolitikken.");
       }
     },
@@ -53,23 +53,23 @@ export default (function () {
       const newUserButton = $('#selfEnrollmentAuthRegCreate');
       newUserButton.on('click', _ => forgotPasswordButton.hide());
     },
-    updateGotoDashboardButton: function() {
-      $(".ic-Self-enrollment-footer__Primary > a").each(function() {
+    updateGotoDashboardButton: function () {
+      $(".ic-Self-enrollment-footer__Primary > a").each(function () {
         var $this = $(this);
-        if ($this.hasClass('btn-primary')){
+        if ($this.hasClass('btn-primary')) {
           var _href = $this.attr("href");
-        }else {
+        } else {
           var _href = $this.attr("href");
         }
 
         const urlParamsObj = utilRoot.urlParamsToObject();
 
         let forwardTo = urlParamsObj && urlParamsObj['forwardTo'];
-        if(forwardTo) {
+        if (forwardTo) {
           _href += "&forwardTo=" + encodeURIComponent(forwardTo);
         }
         $this.attr("href", _href);
-     });
+      });
     },
     changeEnrollPage: function () {
       this.changeEnrollInformationPolicyLink();
@@ -80,9 +80,11 @@ export default (function () {
       var allCoursesWithStatus = [];
       for (var i = 0; i < allCourses.length; i++) {
         allCourses[i].course.enrolled = false;
+        allCourses[i].course.course_progress = null;
         for (var j = 0; j < enrolledCourses.length; j++) {
           if (allCourses[i].course.id == enrolledCourses[j].id) {
             allCourses[i].course.enrolled = true;
+            allCourses[i].course.course_progress = enrolledCourses[j].course_progress;
           }
         }
         allCoursesWithStatus.push(allCourses[i].course);
@@ -117,23 +119,23 @@ export default (function () {
                 document.getElementById('content').innerHTML = "";
                 let wrapper = document.getElementById("content");
                 try {
-                  if(wrapper != null){
-                      const customContent = document.createElement("div");
-                      var mobiletablet = util.isMobileOrTablet();
-                      let props = {
-                        courses : allCoursesWithSettings,
-                        filterData : allFiltersList,
-                        mobiletablet : mobiletablet
-                      };
-                      let page = createApp(LoggedInLandingPage, props);
-                      customContent.setAttribute("id", "loggedInLandingPage");
-                      customContent.setAttribute("style", "width: 100%; justify-content: center; display: flex;");
-                      let footerNode = document.getElementById("wrapper");
-                      footerNode.parentNode.insertBefore(customContent, footerNode)
-                      document.getElementById('wrapper').innerHTML = '';
-                      $('#wrapper').remove();
-                      document.getElementById('loader').remove();
-                      page.mount("#loggedInLandingPage");
+                  if (wrapper != null) {
+                    const customContent = document.createElement("div");
+                    var mobiletablet = util.isMobileOrTablet();
+                    let props = {
+                      courses: allCoursesWithSettings,
+                      filterData: allFiltersList,
+                      mobiletablet: mobiletablet
+                    };
+                    let page = createApp(LoggedInLandingPage, props);
+                    customContent.setAttribute("id", "loggedInLandingPage");
+                    customContent.setAttribute("style", "width: 100%; justify-content: center; display: flex;");
+                    let footerNode = document.getElementById("wrapper");
+                    footerNode.parentNode.insertBefore(customContent, footerNode)
+                    document.getElementById('wrapper').innerHTML = '';
+                    $('#wrapper').remove();
+                    document.getElementById('loader').remove();
+                    page.mount("#loggedInLandingPage");
                   }
                 } catch (e) {
                   console.log(e);
@@ -141,7 +143,7 @@ export default (function () {
               }
               else {
                 try {
-                  if(wrapper != null){
+                  if (wrapper != null) {
                     kpasApi.getHighlightedCourse(function (highlightedCourse) {
                       var highlightedCourseId = highlightedCourse.result.course_id;
                       var allFiltersList = allFilters.result;
@@ -149,15 +151,15 @@ export default (function () {
 
                       const customContent = document.createElement("div");
                       var highlightedCourse = allCoursesWithSettings.find(course => course.id == highlightedCourseId);
-                      if(highlightedCourse == null || highlightedCourse == undefined) {
+                      if (highlightedCourse == null || highlightedCourse == undefined) {
                         highlightedCourse = allCoursesWithSettings[0];
                       }
                       var mobiletablet = util.isMobileOrTablet();
                       let props = {
-                        courses : allCoursesWithSettings,
-                        filterData : allFiltersList,
-                        highlightedCourse : highlightedCourse,
-                        mobiletablet : mobiletablet
+                        courses: allCoursesWithSettings,
+                        filterData: allFiltersList,
+                        highlightedCourse: highlightedCourse,
+                        mobiletablet: mobiletablet
                       };
                       let page = createApp(NotLoggedInPage, props);
                       customContent.setAttribute("id", "notLoggedInPage");

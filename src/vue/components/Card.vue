@@ -1,41 +1,36 @@
 <template>
   <article tabIndex="0" :aria-label="label" class="card-box">
     <div class="card-illustration-box" :class="theme">
-    <slot name="new-flag"></slot>
-      <img
-        class="card-illustration-box-image"
-        :src="courseIllustration"
-        alt=""
-      />
+      <slot name="new-flag"></slot>
+      <img class="card-illustration-box-image" :src="courseIllustration" alt="" />
       <slot name="closeModalButton"></slot>
     </div>
     <div class="card-content-container">
       <header class="card-box-title">
-        <h2><slot name="title"></slot></h2>
-      </header>
-      <section class="card-content-description">
+        <h2>
+          <slot name="title"></slot>
+        </h2>
         <p :class="{ description_text: true }">
           <slot name="description"></slot>
           <slot name="moduleList"></slot>
         </p>
-
         <ul class="card-content-tags">
-          <template  v-for="filterItem in filters" :key="filterItem.filter_id">
+          <template v-for="filterItem in filters" :key="filterItem.filter_id">
             <li>{{ filterItem.filter.filter_name }}</li>
           </template>
         </ul>
+      </header>
+      <section class="card-content-description">
+        <div class="card-content-enrolled" v-if="hasGoToCourse">
+          <CircularProgressBar :percentage="percentageValue" :size="50" />
 
-        <div class="card-content-enrolled">
-          <img
-            v-if="hasGoToCourse"
-            class="card-content-enrolled-icon"
-            alt=""
-            :src="server + 'enrolled-green-circle.svg'"
-          />
-          <p v-if="hasGoToCourse" class="card-content-enrolled-text">
-            <slot name="enrolled"></slot>
-          </p>
+          <div class="card-content-enrolled-text">
+            <p class="card-content-enrolled-count">{{ requirementsCompleted }} av {{ requirementsTotal }} fullført</p>
+
+            <p class="card-content-enrolled-description">{{ allRequirementsCompleted ? "Gratulerer! Du har fullført kurset!" : "Fortsett for å fullføre kurset!" }}</p>
+          </div>
         </div>
+
         <div class="card-content-button-container">
           <slot name="leftButton"></slot>
           <slot name="rightButton"></slot>
@@ -48,17 +43,21 @@
 
 <script lang="js">
 import NewCourseFlag from './NewCourseFlag.vue';
+import CircularProgressBar from './CircularProgressBar.vue';
 
 export default {
   name: 'Card',
   components: {
     NewCourseFlag,
+    CircularProgressBar
   },
   props: {
     theme: String,
     courseIllustration: String,
     label: String,
-    filters: Array
+    filters: Array,
+    requirementsCompleted: Number,
+    requirementsTotal: Number
   },
   data() {
     return {
@@ -66,6 +65,15 @@ export default {
       hasGoToCourse: this.$slots.goToCourse !== undefined,
     };
   },
+  computed: {
+    allRequirementsCompleted() {
+      return this.requirementsCompleted >= this.requirementsTotal;
+    },
+    percentageValue() {
+      if (this.requirementsTotal == 0) return 100;
+      return Math.floor((this.requirementsCompleted / this.requirementsTotal) * 100);
+    }
+  }
 };
 </script>
 
@@ -93,30 +101,39 @@ export default {
   .theme_0 {
     background: map-get($theme_0, background);
   }
+
   .theme_1 {
     background: map-get($theme_1, background);
   }
+
   .theme_2 {
     background: map-get($theme_2, background);
   }
+
   .theme_3 {
     background: map-get($theme_3, background);
   }
+
   .theme_4 {
     background: map-get($theme_4, background);
   }
+
   .theme_5 {
     background: map-get($theme_5, background);
   }
+
   .theme_6 {
     background: map-get($theme_6, background);
   }
+
   .theme_7 {
     background: map-get($theme_7, background);
   }
+
   .theme_8 {
     background: map-get($theme_8, background);
   }
+
   .theme_9 {
     background: map-get($theme_9, background);
   }
@@ -168,14 +185,16 @@ export default {
   }
 
   .card-content-button-container {
+    display: flex;
+    justify-content: space-between;
     margin-top: 1.5rem;
     margin-bottom: 1rem;
-    display: inline-grid;
-    grid-template-columns: auto auto;
     gap: 0.5rem;
   }
 
   .card-box-title {
+    margin-bottom: 20px;
+
     h2,
     h3 {
       font-size: 1.125rem;
@@ -187,26 +206,31 @@ export default {
   }
 
   .card-content-enrolled {
-    margin-top: 1rem;
     display: flex;
     flex-direction: row;
     align-items: center;
     gap: 0.25rem;
-    height: 2rem;
+    min-height: 2rem;
     width: 100%;
+    margin-top: 20px;
   }
 
   .card-content-enrolled-text {
+    margin-left: 10px;
+  }
+
+  .card-content-enrolled-text p {
+    margin: 0;
     font-size: 0.875rem;
     font-family: 'Roboto';
     font-weight: 400;
     color: black;
+    line-height: 1.4;
   }
 
-  .card-content-enrolled-icon {
-    width: 1.25rem;
-    height: 1.25rem;
-    flex-shrink: 0;
+  p.card-content-enrolled-count {
+    font-weight: 500;
+    margin-bottom: 2px;
   }
 
   .description_text {
