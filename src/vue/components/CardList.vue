@@ -86,9 +86,12 @@ export default {
     console.log("COURSES", this.courses);
     var url = new URL(window.location.href);
     var coursePreviewId = url.searchParams.get("course_preview_id");
+    var coursePreviewFeatured = url.searchParams.get("course_preview_featured");
+
     this.courses.find((courseItem) => {
-      if (courseItem.id == coursePreviewId) {
+      if (!coursePreviewFeatured && courseItem.id == coursePreviewId) {
         this.handleModal(courseItem)
+        return true;
       }
     });
 
