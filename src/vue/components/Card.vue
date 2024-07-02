@@ -23,10 +23,8 @@
       <section class="card-content-description">
         <div class="card-content-enrolled" v-if="hasGoToCourse">
           <CircularProgressBar :percentage="percentageValue" :size="50" />
-
           <div class="card-content-enrolled-text">
             <p class="card-content-enrolled-count">{{ requirementsCompleted }} av {{ requirementsTotal }} fullført</p>
-
             <p class="card-content-enrolled-description">{{ allRequirementsCompleted ? "Du har fullført kompetansepakken!" : "Fortsett for å fullføre kompetansepakken!" }}</p>
           </div>
         </div>
