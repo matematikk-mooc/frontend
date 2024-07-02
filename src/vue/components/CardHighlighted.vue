@@ -154,8 +154,7 @@ export default {
     .card-highlighted-content-button-container {
         margin-top: 1.5rem;
         margin-bottom: 1rem;
-        display: inline-grid;
-        grid-template-columns: auto auto;
+        display: flex;
         gap: 0.5rem;
     }
 
