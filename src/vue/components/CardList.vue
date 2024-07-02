@@ -7,6 +7,8 @@
         :courseIllustration="course.course_settings ? course.course_settings.image.path : ''"
         :label="course.name"
         :filters="course.course_settings ? course.course_settings.course_filter : []"
+        :requirementsCompleted="course?.course_progress?.requirement_completed_count ?? 0"
+        :requirementsTotal="course?.course_progress?.requirement_count ?? 0"
       >
         <template v-slot:new-flag>
           <NewCourseFlag v-if="newCoursesIndicator && newCourseFlag(course)"/>
@@ -81,6 +83,7 @@ export default {
     newCoursesIndicator: Boolean,
   },
   data() {
+    console.log("COURSES", this.courses);
     var url = new URL(window.location.href);
     var coursePreviewId = url.searchParams.get("course_preview_id");
     this.courses.find((courseItem) => {
