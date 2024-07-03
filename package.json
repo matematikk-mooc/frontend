@@ -1,24 +1,40 @@
 {
-  "name": "mooc",
-  "version": "0.1.0",
+  "name": "matematikk-mooc-frontend",
+  "version": "1.0.0",
   "description": "Custom JS and CSS frontend for inclusion in [Canvas](http://www.instructure.com/).",
-  "jest": {
-    "setupFiles": [
-      "<rootDir>/test-env-setup.js"
-    ],
-    "setupTestFrameworkScriptFile": "<rootDir>/jest-setup.js"
+  "homepage": "https://kompetanse.udir.no/",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/matematikk-mooc/frontend.git"
+  },
+  "author": {
+    "name": "UDIR - DIT",
+    "email": "kompetansesupport@udir.no",
+    "url": "https://udir.no/"
+  },
+  "scripts": {
+    "production": "webpack --config webpack.production.config.js --mode production  --env timestamp=$(git log origin/master -1 --pretty=format:'%ad' --date=format:'%Y-%m-%dT%H:%M:%S')",
+    "stage": "webpack --config webpack.stage.config.js --mode production  --env timestamp=$(git log origin/dev -1 --pretty=format:'%ad' --date=format:'%Y-%m-%dT%H:%M:%S')",
+    "build": "webpack --config webpack.development.config.js  --mode development --progress",
+    "watch": "webpack-dev-server --config webpack.development.config.js --mode development",
+    "clean": "rm -rf dist node_modules"
+  },
+  "directories": {
+    "doc": "doc",
+    "test": "test"
+  },
+  "dependencies": {
+    "@babel/preset-react": "^7.23.3",
+    "@material-symbols/font-400": "^0.13.0",
+    "@vimeo/player": "^2.20.1",
+    "svg-tags": "^1.0.0",
+    "vue-style-loader": "^4.1.3",
+    "vuex": "^4.1.0"
   },
   "devDependencies": {
     "@babel/core": "^7.22.1",
     "@babel/preset-env": "^7.23.5",
-    "@storybook/addon-essentials": "^7.5.1",
-    "@storybook/addon-interactions": "^7.5.1",
-    "@storybook/addon-links": "^7.5.1",
-    "@storybook/addon-styling": "^1.3.7",
-    "@storybook/blocks": "^7.5.1",
-    "@storybook/testing-library": "^0.2.2",
-    "@storybook/vue3": "^7.6.17",
-    "@storybook/vue3-webpack5": "^7.5.1",
     "@vue/babel-helper-vue-jsx-merge-props": "^1.4.0",
     "@vue/babel-plugin-jsx": "^1.1.5",
     "@vue/cli": "^5.0.8",
@@ -38,15 +54,12 @@
     "glob": "^10.2.6",
     "html-webpack-plugin": "^5.5.1",
     "mini-css-extract-plugin": "^2.7.6",
-    "node-sass": "^9.0.0",
     "prettier": "^3.0.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "replace-in-file-webpack-plugin": "^1.0.6",
-    "sass": "^1.68.0",
+    "sass": "^1.77.6",
     "sass-loader": "^13.3.2",
-    "storybook": "^7.5.1",
-    "storybook-addon-sass-postcss": "^0.1.3",
     "string-replace-loader": "^3.1.0",
     "style-loader": "^3.3.3",
     "terser-webpack-plugin": "^5.3.9",
@@ -58,36 +71,5 @@
     "webpack-dev-server": "^4.15.0",
     "webpack-replace-plugin": "^0.0.4"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+ssh://git@github.com/matematikk-mooc/frontend.git"
-  },
-  "scripts": {
-    "buildProduction": "webpack --config webpack.production.config.js --mode production  --env timestamp=$(git log origin/master -1 --pretty=format:'%ad' --date=format:'%Y-%m-%dT%H:%M:%S')",
-    "buildDev": "webpack --config webpack.dev.config.js --mode production  --env timestamp=$(git log origin/dev -1 --pretty=format:'%ad' --date=format:'%Y-%m-%dT%H:%M:%S')",
-    "buildDevelopment": "webpack --config webpack.development.config.js  --mode development --progress",
-    "serveDevelopment": "webpack-dev-server --config webpack.development.config.js --mode development --open",
-    "noCache": "webpack --no-cache",
-    "clean": "rm -rf dist node_modules",
-    "storybook": "storybook dev -p 6006 --config-dir src/vue/.storybook",
-    "build-storybook": "storybook build --config-dir src/vue/.storybook"
-  },
-  "bugs": {
-    "url": "https://github.com/matematikk-mooc/frontend/issues"
-  },
-  "homepage": "https://github.com/matematikk-mooc/frontend#readme",
-  "directories": {
-    "doc": "doc",
-    "test": "test"
-  },
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "@babel/preset-react": "^7.23.3",
-    "@material-symbols/font-400": "^0.13.0",
-    "@vimeo/player": "^2.20.1",
-    "svg-tags": "^1.0.0",
-    "vue-style-loader": "^4.1.3",
-    "vuex": "^4.1.0"
-  }
+  "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e"
 }

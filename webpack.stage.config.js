@@ -11,11 +11,11 @@ module.exports = (env) => {
 
     return {
       entry: {
-        "theme-udirdesign-dev": [
+        "theme-udirdesign-stage": [
           "./src/js/settingsRoot.js",
           "./src/js/account-theme.js",
         ],
-        "kompetanseportal-udirdesign-dev": [
+        "kompetanseportal-udirdesign-stage": [
           "./src/js/3party/matomo.js",
           "./src/js/main.js",
         ],
@@ -33,20 +33,20 @@ module.exports = (env) => {
         new webpack.DefinePlugin({
           VUECSS: JSON.stringify("index.css"),
           DESIGNCSS: JSON.stringify(
-            "kompetanseportal-udirdesign-dev-" + env.timestamp + ".css"
+            "kompetanseportal-udirdesign-stage-" + env.timestamp + ".css"
           ),
           DESIGNJS: JSON.stringify(
-            "kompetanseportal-udirdesign-dev-" + env.timestamp + ".js"
+            "kompetanseportal-udirdesign-stage-" + env.timestamp + ".js"
           ),
           SERVER: JSON.stringify(
-            "https://kompetanseudirno.azureedge.net/frontend-dev/"
+            "https://kompetanseudirno.azureedge.net/frontend-stage/"
           ),
           KPASAPIURL: JSON.stringify(
             "https://kpas.staging.kompetanse.udir.no/api"
           ),
           ACCOUNTID: [99, 100, 102, 103, 137, 138, 139, 145],
           KPAS_MERGE_LTI_ID: 863,
-          KPAS_IFRAME_VERSION: JSON.stringify("dev"),
+          KPAS_IFRAME_VERSION: JSON.stringify("stage"),
           __VUE_OPTIONS_API__: "true",
           __VUE_PROD_DEVTOOLS__: "false",
         }),
@@ -99,7 +99,7 @@ module.exports = (env) => {
                 options: {
                   additionalData:
                     "$urlToFile: " +
-                    `'https://kompetanseudirno.azureedge.net/frontend-dev/'` +
+                    `'https://kompetanseudirno.azureedge.net/frontend-stage/'` +
                     ";",
                 },
               },

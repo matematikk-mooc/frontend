@@ -32,7 +32,7 @@ Switch to the directory where the frontend is located and install the dependenci
 
 
 ```
-npm install
+yarn install
 ```
 
 
@@ -41,71 +41,70 @@ npm install
 If you want to serve the CSS and JS files on your local machine for development, you can do this using Webpack DevServer:
 
 ```
-npm run buildDevelopment
-npm run serveDevelopment
+yarn run build
+yarn run watch
 ```
 
 All changes in SCSS, Vue and Javascript will automatically be compiled and are available at [http://localhost:9000](http://localhost:9000/)
 
 
-## Build JS and CSS files for dev and production environment
-Compile JS and CSS for the dev environment using
+## Build JS and CSS files for stage and production environment
+Compile JS and CSS for the stage environment using
 
 ```
-npm run buidDev
+yarn run stage
 ```
 
 
 Compile JS and CSS for the production environment using
 
 ```
-npm run buildProduction
+yarn run production
 ```
 
 
 * See scripts section in package.json
 
 The resulting JS and CSS file can be found in the **dist** directory. These commands will get the timestamp of the latest commit to the given branch, and append to the filenames.
-To test code locally allways use buildDevelopment and serveDevelopment, as buildDev and buildProduction will use the file already uploaded to Azure, and will not pick up local changes.
+To test code locally allways use "build" and "watch", as "stage" and "production" will use the file already uploaded to Azure, and will not pick up local changes.
 
 # Project structure
 
 ## Directories
 
-| Directory     | Description                               |
-| ------------- | ----------------------------------------- |
-| src           | Source code                               |
-| src/js        | JavaScript files used to inject custom Vue components and hide unused Canvas elements.
-| src/vue       | Custom Vue components and scss            |
-| dist/         | Build output directory                    |
+| Directory | Description |
+| --- | --- |
+| src | Source code |
+| src/js | JavaScript files used to inject custom Vue components and hide unused Canvas elements. |
+| src/vue | Custom Vue components and scss |
+| dist/ | Build output directory |
 
 ## src/vue
 
-| Directory     | Description                               |
-| ------------- | ----------------------------------------- |
-| /assets       | Font files and svgs                       |
-| /components   | Custom Vue componets                      |
-| /pages        | Vue views used on urls where replacing the whole page |
-| /design       | SCSS files for own components and override styling of Canvas elements                   |
-| /utils        | util js files used with multilanguage     |
+| Directory | Description |
+| --- | --- |
+| /assets | Font files and svgs |
+| /components | Custom Vue componets |
+| /pages | Vue views used on urls where replacing the whole page |
+| /design | SCSS files for own components and override styling of Canvas elements |
+| /utils | util js files used with multilanguage |
 
 ## src/js
 
-| File/Directory              | Description                                                              |
-| ----------------- | ------------------------------------------------------------------------ |
-| main.js           | Calls different JS functions to create custom HTML based on URL (routes) |
-| api/        | Call to Canvas REST API and KPAS API                   |
-| modules/          | JavaScripts called from main.js                  |
-| modules/routes.js | Library used to call different JS functions based on URLs using RegExps  |
+| File/Directory | Description |
+| --- | --- |
+| main.js | Calls different JS functions to create custom HTML based on URL (routes) |
+| api/ | Call to Canvas REST API and KPAS API |
+| modules/ | JavaScripts called from main.js |
+| modules/routes.js | Library used to call different JS functions based on URLs using RegExps |
 
 ## Webpack config files
 
-| File                          | Description                                 |
-| ------------------------------|---------------------------------------------|
-| webpack.development.config.js | Config file for development (running with localhost)                 |
-| webpack.dev.config.js     | Config file for dev environment         |
-| webpack.production.config.js  | Config file for production environment      |
-
+| File | Description |
+| --- | --- |
+| webpack.development.config.js | Config file for development (running with localhost) |
+| webpack.stage.config.js | Config file for stage environment |
+| webpack.production.config.js | Config file for production environment |
 
 
 # Deployment
@@ -136,13 +135,3 @@ plugins: [
   })
 ]
 ```
-
-## Storybook
-
-Storybook for the custom Vue components. To build the storybook run:
-  ```
-    npm run storybook
-  ```
-Visit storbook:
-
-http://matematikk-mooc.github.io/frontend/

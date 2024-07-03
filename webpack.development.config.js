@@ -140,7 +140,7 @@ module.exports = {
     },
     port: 9000,
     host: "localhost",
-    open: true,
+    open: false,
     allowedHosts: "all",
     headers: {
       "Access-Control-Allow-Origin": "*",
