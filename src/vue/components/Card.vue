@@ -184,7 +184,7 @@ export default {
 
   .card-content-button-container {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     margin-top: 1.5rem;
     margin-bottom: 1rem;
     gap: 0.5rem;

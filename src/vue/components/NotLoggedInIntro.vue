@@ -26,7 +26,7 @@
           <RegisterChoice :selfEnrollmentCode="newestCourse.self_enrollment_code"></RegisterChoice>
         </template>
         <template  v-slot:rightButton>
-          <Button :type="'outlined'" :size="'md'" @click="handleModal()">Les mer</Button>
+          <Button :fullWidth="true" :type="'outlined'" :size="'md'" @click="handleModal()">Les mer</Button>
         </template>
       </CardHighlighted>
 
@@ -78,7 +78,8 @@ export default {
   data() {
     var url = new URL(window.location.href);
     var coursePreviewId = url.searchParams.get("course_preview_id");
-    var showCoursePreview = coursePreviewId != null && this.newestCourse != null
+    var coursePreviewFeatured = url.searchParams.get("course_preview_featured");
+    var showCoursePreview = coursePreviewFeatured == "true" && coursePreviewId != null && this.newestCourse != null
       && coursePreviewId == this.newestCourse.id;
 
     if (showCoursePreview) {
@@ -121,10 +122,12 @@ export default {
     },
     closeModal() {
       shallowUpdateUrlParameter("course_preview_id", null)
+      shallowUpdateUrlParameter("course_preview_featured", null)
       this.isModalOpen = false;
     },
     async viewModules(courseId) {
       shallowUpdateUrlParameter("course_preview_id", courseId)
+      shallowUpdateUrlParameter("course_preview_featured", "true")
 
       this.isModalOpen = true;
       let self = this;
@@ -139,6 +142,7 @@ export default {
           response = response.result;
           response.forEach(module => {
             if (module.published === true) {
+              console.log(111111, module, self.modules)
               if (module.name.includes('nb:')) {
                 self.handleMultilangModules(module);
               }

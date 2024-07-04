@@ -18,19 +18,19 @@
 
         <template v-if="course.enrolled" v-slot:enrolled>Påmeldt</template>
         <template v-if="authorized && !course.enrolled" v-slot:leftButton>
-          <Button :type="'filled'" :size="'md'" @click="enrollToCourse(course.self_enrollment_code)">Meld deg på</Button>
+          <Button :fullWidth="true" :type="'filled'" :size="'md'" @click="enrollToCourse(course.self_enrollment_code)">Meld deg på</Button>
         </template>
         <template v-if="!authorized" v-slot:leftButton>
           <RegisterChoice :selfEnrollmentCode="course.self_enrollment_code"></RegisterChoice>
         </template>
         <template v-if="(!authorized || !course.enrolled)" v-slot:rightButton>
-          <Button :type="'outlined'" :size="'md'" @click="handleModal(course)">Les mer</Button>
+          <Button :fullWidth="true" :type="'outlined'" :size="'md'" @click="handleModal(course)">Les mer</Button>
         </template>
         <template v-if="course.isModalOpen && modules.length > 0" v-slot:moduleList>
           <ModulesList :modules="modules"></ModulesList>
         </template>
         <template v-if="course.enrolled" v-slot:goToCourse>
-          <Button :type="'filled'" :size="'md'" @click="goToCourse(course.id)"><p>
+          <Button :fullWidth="true" :type="'filled'" :size="'md'" @click="goToCourse(course.id)"><p>
             Gå til kompetansepakke</p></Button>
         </template>
       </Card>
@@ -86,9 +86,12 @@ export default {
     console.log("COURSES", this.courses);
     var url = new URL(window.location.href);
     var coursePreviewId = url.searchParams.get("course_preview_id");
+    var coursePreviewFeatured = url.searchParams.get("course_preview_featured");
+
     this.courses.find((courseItem) => {
-      if (courseItem.id == coursePreviewId) {
+      if (!coursePreviewFeatured && courseItem.id == coursePreviewId) {
         this.handleModal(courseItem)
+        return true;
       }
     });
 
