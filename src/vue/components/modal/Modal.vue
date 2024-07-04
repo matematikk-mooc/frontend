@@ -119,4 +119,8 @@ const closeModal = () => {
        > *  { margin: 0 0.125rem; }
     }
   }
+
+  .course-page__banner-container .modal-box{
+    max-width: 40rem;
+  }
 </style>

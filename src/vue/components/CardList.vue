@@ -1,12 +1,14 @@
 
 <template>
   <div class="card-container">
-    <div class="card-instance"  v-for="course in courses" :key="course.id">
+    <div class="card-instance card-container-wrapper"  v-for="course in courses" :key="course.id">
       <Card class="card-item"
         :theme="course.course_settings ? course.course_settings.course_category.category.color_code : 'theme_0'"
         :courseIllustration="course.course_settings ? course.course_settings.image.path : ''"
         :label="course.name"
         :filters="course.course_settings ? course.course_settings.course_filter : []"
+        :requirementsCompleted="course?.course_progress?.requirement_completed_count ?? 0"
+        :requirementsTotal="course?.course_progress?.requirement_count ?? 0"
       >
         <template v-slot:new-flag>
           <NewCourseFlag v-if="newCoursesIndicator && newCourseFlag(course)"/>
@@ -16,19 +18,19 @@
 
         <template v-if="course.enrolled" v-slot:enrolled>Påmeldt</template>
         <template v-if="authorized && !course.enrolled" v-slot:leftButton>
-          <Button :type="'filled'" :size="'md'" @click="enrollToCourse(course.self_enrollment_code)">Meld deg på</Button>
+          <Button :fullWidth="true" :type="'filled'" :size="'md'" @click="enrollToCourse(course.self_enrollment_code)">Meld deg på</Button>
         </template>
         <template v-if="!authorized" v-slot:leftButton>
           <RegisterChoice :selfEnrollmentCode="course.self_enrollment_code"></RegisterChoice>
         </template>
         <template v-if="(!authorized || !course.enrolled)" v-slot:rightButton>
-          <Button :type="'outlined'" :size="'md'" @click="handleModal(course)">Les mer</Button>
+          <Button :fullWidth="true" :type="'outlined'" :size="'md'" @click="handleModal(course)">Les mer</Button>
         </template>
         <template v-if="course.isModalOpen && modules.length > 0" v-slot:moduleList>
           <ModulesList :modules="modules"></ModulesList>
         </template>
         <template v-if="course.enrolled" v-slot:goToCourse>
-          <Button :type="'filled'" :size="'md'" @click="goToCourse(course.id)"><p>
+          <Button :fullWidth="true" :type="'filled'" :size="'md'" @click="goToCourse(course.id)"><p>
             Gå til kompetansepakke</p></Button>
         </template>
       </Card>
@@ -81,6 +83,7 @@ export default {
     newCoursesIndicator: Boolean,
   },
   data() {
+    console.log("COURSES", this.courses);
     var url = new URL(window.location.href);
     var coursePreviewId = url.searchParams.get("course_preview_id");
     this.courses.find((courseItem) => {
@@ -202,6 +205,11 @@ export default {
   justify-content: flex-start;
   gap: 32px 24px;
   margin-bottom: 40px;
+
+  .card-container-wrapper {
+    position:relative;
+    align-self: stretch;
+  }
 
   @media (max-width: 1025px) {
     width: 64rem;

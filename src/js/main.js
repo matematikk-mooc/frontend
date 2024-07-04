@@ -105,9 +105,11 @@ jQuery(function($) {
   });
 
   routes.addRouteForPath(/\/courses\/\d+/, function() {
+    let courseUnenrollmentUuid = util.getCourseUnenrollmentUuid();
+
     document.body.classList.add('course-menu-expanded');
     document.getElementById('left-side').setAttribute('style', 'display: block !important');
-    coursepagebanner.insertCourseBanner();
+    coursepagebanner.insertCourseBanner(util.course.id, courseUnenrollmentUuid);
     let authenticated = util.isAuthenticated();
     informationBanner.updateInformationBanner();
     if(!authenticated) {
@@ -123,8 +125,10 @@ jQuery(function($) {
 
   //The logic below should be refactored and cleaned up.
   routes.addRouteForPath(/\/courses\/\d+$/, function () {
+    let courseUnenrollmentUuid = util.getCourseUnenrollmentUuid();
+
     coursepage.hideElementsFromUsers();
-    coursepagebanner.insertCourseBanner();
+    coursepagebanner.insertCourseBanner(util.course.id, courseUnenrollmentUuid);
     renderCourseModules("left-side");
     util.updateRightMenuButtons();
     util.removeRecentFeedback();

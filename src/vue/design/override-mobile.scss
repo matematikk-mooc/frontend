@@ -9,6 +9,11 @@
   .desktop-hide {
     display: none !important;
   }
+  .my-courses-page {
+    .mobile-hide {
+      width: 100%;
+    }
+  }
 }
 
 // Styles for mobile devices
@@ -24,6 +29,7 @@
   }
   .mobile-hide {
     display: none !important;
+    width: 100% !important;
   }
 
   // Header
@@ -179,10 +185,6 @@
               }
               .card-content-button-container {
                 display: flex !important;
-                button {
-                  max-width: fit-content;
-                  margin-right: .625rem;
-                }
                 p{
                   font-weight: 500;
                   font-family: "Roboto", sans-serif !important;
@@ -321,6 +323,11 @@
     .course-illustration-box {
       display: flex !important;
       border-radius: 12px !important;
+    }
+  }
+  .module-sequence-footer {
+    .page-button-link-navigation {
+      gap: 16px !important;
     }
   }
 }
