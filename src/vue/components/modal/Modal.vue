@@ -72,7 +72,7 @@ const closeModal = () => {
     max-height: 80vh;
     &__close-button{
       position:absolute;
-      z-index:1010;
+      z-index:999;
       right: 0.5rem;
       top: 0.5rem;
     }

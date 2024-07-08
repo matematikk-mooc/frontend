@@ -21,7 +21,7 @@
           <Button :fullWidth="true" :type="'filled'" :size="'md'" @click="enrollToCourse(course.self_enrollment_code)">Meld deg på</Button>
         </template>
         <template v-if="!authorized" v-slot:leftButton>
-          <RegisterChoice :selfEnrollmentCode="course.self_enrollment_code"></RegisterChoice>
+          <RegisterChoice :fullWidth="true" :selfEnrollmentCode="course.self_enrollment_code"></RegisterChoice>
         </template>
         <template v-if="(!authorized || !course.enrolled)" v-slot:rightButton>
           <Button :fullWidth="true" :type="'outlined'" :size="'md'" @click="handleModal(course)">Les mer</Button>
