@@ -21,7 +21,7 @@
         </ul>
       </header>
       <section class="card-content-description">
-        <div class="card-content-enrolled" v-if="hasGoToCourse">
+        <div class="card-content-enrolled" v-if="hasGoToCourse && !isInvited">
           <CircularProgressBar :percentage="percentageValue" :size="50" />
           <div class="card-content-enrolled-text">
             <p class="card-content-enrolled-count">{{ requirementsCompleted }} av {{ requirementsTotal }} fullført</p>
@@ -55,7 +55,8 @@ export default {
     label: String,
     filters: Array,
     requirementsCompleted: Number,
-    requirementsTotal: Number
+    requirementsTotal: Number,
+    isInvited: Boolean
   },
   data() {
     return {
