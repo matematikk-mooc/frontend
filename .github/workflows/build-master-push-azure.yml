@@ -29,7 +29,7 @@ jobs:
         run: yarn install
 
       - name: Run build script
-        run: yarn buildProduction
+        run: yarn production
 
       - name: Login to Azure
         uses: azure/login@v2
