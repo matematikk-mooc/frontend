@@ -23,13 +23,14 @@ a.page-footer--link {
   text-decoration: underline;
   word-wrap: break-word;
   text-underline-offset: 0.3rem;
-  &:hover {
-    color: map-get($color-palette-green, background, 400);
-  }
   padding: 0.75rem 0.25rem 0.5rem 0.25rem;
   display: inline-flex;
   justify-content: center;
   align-items: center;
+
+  &:hover {
+    color: map-get($color-palette-green, background, 400);
+  }
 
   .material-design-icon.icon-size {
     height: 1.125rem;

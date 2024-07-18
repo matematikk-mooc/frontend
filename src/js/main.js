@@ -445,6 +445,7 @@ jQuery(function($) {
     }
     footer.changeFooter();
     menu.renderUnauthenticatedMenu();
+    informationBanner.handleCloseQuizWarning();
   } catch (e) {
     console.log(e);
   }
