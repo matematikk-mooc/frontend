@@ -80,9 +80,11 @@ export default (function () {
       var allCoursesWithStatus = [];
       for (var i = 0; i < allCourses.length; i++) {
         allCourses[i].course.enrolled = false;
+        allCourses[i].course.enrolled_status = null;
         for (var j = 0; j < enrolledCourses.length; j++) {
           let foundCourse = allCourses[i].course.id == enrolledCourses[j].id;
           if (foundCourse) {
+            allCourses[i].course.enrolled_status = enrolledCourses[j].enrollments[0]?.enrollment_state;
             allCourses[i].course.enrolled = true;
           }
         }
@@ -105,6 +107,7 @@ export default (function () {
 
           if (!courseAlreadyExists) {
             enrolledCourseItem.enrolled = true;
+            enrolledCourseItem.enrolled_status = enrolledCourseItem.enrollments[0]?.enrollment_state;
             allCoursesWithStatus.unshift(enrolledCourseItem);
           }
         }
