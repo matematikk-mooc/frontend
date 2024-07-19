@@ -1,11 +1,14 @@
 
 <template>
   <div class="card-container">
-    <div v-for="course in courses" :key="course.id">
+    <div class="card-instance card-container-wrapper"  v-for="course in courses" :key="course.id">
       <Card class="card-item"
         :theme="course.course_settings ? course.course_settings?.course_category?.category.color_code : 'theme_0'"
         :courseIllustration="course.course_settings ? course.course_settings?.image.path : ''"
         :label="course.name"
+        :filters="course.course_settings ? course.course_settings.course_filter : []"
+        :requirementsCompleted="course?.course_progress?.requirement_completed_count ?? 0"
+        :requirementsTotal="course?.course_progress?.requirement_count ?? 0"
       >
         <template v-slot:new-flag>
           <NewCourseFlag v-if="newCoursesIndicator && newCourseFlag(course)"/>
@@ -15,19 +18,20 @@
 
         <template v-if="course.enrolled" v-slot:enrolled>Påmeldt</template>
         <template v-if="authorized && !course.enrolled" v-slot:leftButton>
-          <Button :type="'filled'" :size="'md'" @click="enrollToCourse(course.self_enrollment_code)">Meld deg på</Button>
+          <Button :fullWidth="true" :type="'filled'" :size="'md'" @click="enrollToCourse(course.self_enrollment_code)">Meld deg på</Button>
         </template>
         <template v-if="!authorized" v-slot:leftButton>
-          <RegisterChoice :selfEnrollmentCode="course.self_enrollment_code"></RegisterChoice>
+          <RegisterChoice :fullWidth="true" :selfEnrollmentCode="course.self_enrollment_code"></RegisterChoice>
         </template>
         <template v-if="(!authorized || !course.enrolled)" v-slot:rightButton>
-          <Button :type="'outlined'" :size="'md'" @click="handleModal(course)">Les mer</Button>
+          <Button :fullWidth="true" :type="'outlined'" :size="'md'" @click="handleModal(course)">Les mer</Button>
         </template>
         <template v-if="course.isModalOpen && modules.length > 0" v-slot:moduleList>
           <ModulesList :modules="modules"></ModulesList>
         </template>
         <template v-if="course.enrolled" v-slot:goToCourse>
-          <Button :type="'outlined'" :size="'md'" @click="goToCourse(course.id)">Gå til kompetansepakke</Button>
+          <Button :fullWidth="true" :type="'filled'" :size="'md'" @click="goToCourse(course.id)"><p>
+            Gå til kompetansepakke</p></Button>
         </template>
       </Card>
 
@@ -46,9 +50,8 @@
           <p class="course-description">{{ course.public_description }}</p>
           <ModulesList :modules="modules"></ModulesList>
         </template>
-        <template v-slot:actions>
+        <template v-if="(!authorized || !course.enrolled)" v-slot:actions>
           <Button :type="'filled'" :size="'md'" @click="enrollToCourse(course.self_enrollment_code)">Meld deg på</Button>
-          <Button type="outlined" :size="'md'" @click="closeModal(course)">Lukk</Button>
         </template>
       </Modal>
     </div>
@@ -62,6 +65,7 @@ import ModulesList from './ModulesList.vue';
 import Modal from '../components/modal/Modal';
 import RegisterChoice from './login-choice/RegisterChoice.vue';
 import NewCourseFlag from './NewCourseFlag.vue';
+import { shallowUpdateUrlParameter } from '../utils/url-utils';
 
 export default {
   name: 'CardList',
@@ -79,12 +83,22 @@ export default {
     newCoursesIndicator: Boolean,
   },
   data() {
+    console.log("COURSES", this.courses);
+    var url = new URL(window.location.href);
+    var coursePreviewId = url.searchParams.get("course_preview_id");
+    var coursePreviewFeatured = url.searchParams.get("course_preview_featured");
+
+    this.courses.find((courseItem) => {
+      if (!coursePreviewFeatured && courseItem.id == coursePreviewId) {
+        this.handleModal(courseItem)
+        return true;
+      }
+    });
+
     return {
-      showModal: false,
       domain: window.location.origin,
       selectedCourse: {},
       modules: [],
-      kpasApiUrl: KPASAPIURL,
     };
   },
   created () {
@@ -115,17 +129,19 @@ export default {
       window.location.href = this.domain + '/courses/' + courseId;
     },
     async handleModal(course) {
-      await this.viewModules(course.id);
-      course.isModalOpen = true;
+      shallowUpdateUrlParameter("course_preview_id", course.id)
+      await this.viewModules(course);
     },
     closeModal(course) {
+      shallowUpdateUrlParameter("course_preview_id", null)
       course.isModalOpen = false;
     },
-    async viewModules(courseId) {
+    async viewModules(course) {
+      let courseId = course.id;
       let self = this;
       self.modules = [];
       if (this.authorized) {
-        await fetch(self.domain + '/api/v1/courses/' + courseId + '/modules', {
+        await fetch(window.location.origin + '/api/v1/courses/' + courseId + '/modules', {
           method: 'GET',
           headers: {},
         })
@@ -141,7 +157,7 @@ export default {
             });
           });
       } else {
-        await fetch(this.kpasApiUrl + '/course/' + courseId + '/moduletitles', {
+        await fetch(KPASAPIURL + '/course/' + courseId + '/moduletitles', {
           method: 'GET',
           headers: {},
         })
@@ -158,6 +174,8 @@ export default {
             });
           });
       }
+
+      course.isModalOpen = true;
     },
 
     handleMultilangModules(module) {
@@ -185,9 +203,16 @@ export default {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  width: 140rem;
+  width: 100%;
   align-items: flex-start;
   justify-content: flex-start;
+  gap: 32px 24px;
+  margin-bottom: 40px;
+
+  .card-container-wrapper {
+    position:relative;
+    align-self: stretch;
+  }
 
   @media (max-width: 1025px) {
     width: 64rem;
@@ -197,10 +222,6 @@ export default {
     flex-direction: column;
     width: 100%;
   }
-}
-
-.card-item {
-  margin: 0.25rem 1.5rem 2rem 0;
 }
 
 .course-illustration-box {

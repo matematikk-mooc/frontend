@@ -327,6 +327,16 @@ export default (function () {
       return api.getRoles() !== null;
     },
 
+    getCourseUnenrollmentUuid() {
+      const unenrollmentLink = document.querySelector("#self_unenrollment_dialog a.btn-primary.action");
+      if (!unenrollmentLink) return null;
+
+      const hrefValue = unenrollmentLink.getAttribute("href") ?? "";
+      const match = hrefValue.match(/\/self_unenrollment\/([^/]+)/);
+
+      const unenrollmentUuid = match ? match[1] : null;
+      return unenrollmentUuid;
+    },
     getGroupsInfo(groups) {
       var groupsInfo = {};
       for (var i = 0; i < groups.length; i++) {

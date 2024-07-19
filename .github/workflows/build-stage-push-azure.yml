@@ -1,16 +1,16 @@
-name: CICD Frontend master
+name: CICD Frontend Stage
 run-name: ${{ github.actor }} Committed code for azure blob storage
 
 on:
   push:
     branches:
-      - master
+      - stage
   workflow_dispatch:
 
 env:
   ACCOUNT_NAME: udirdit
   SOURCE: dist
-  DESTINATION: frontend-master
+  DESTINATION: frontend-stage
   AZURE_STORAGE_KEY: ${{ secrets.AZURE_STORAGE_KEY }}
 
 jobs:
@@ -29,7 +29,7 @@ jobs:
         run: yarn install
 
       - name: Run build script
-        run: yarn production
+        run: yarn stage
 
       - name: Login to Azure
         uses: azure/login@v2
@@ -49,6 +49,7 @@ jobs:
 
             az storage blob list --account-name ${{ env.ACCOUNT_NAME }} --container-name ${{ env.DESTINATION }} --query "[?ends_with(name, '.woff2')].{Name:name}" --output tsv | \
               xargs -I {} az storage blob update --account-name ${{ env.ACCOUNT_NAME }} --container-name ${{ env.DESTINATION }} --name {} --content-type "font/woff2"
+
       # Azure logout - Force step to always run with 'always()', ensures no hanging logins
       - name: logout
         if: always()

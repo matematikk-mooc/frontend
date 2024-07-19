@@ -1,6 +1,6 @@
 import "../vue/design/override-base-Canvas-elements.scss";
 import "../vue/design/override-login-logout-Canvas-elements.scss";
-
+import "../vue/design/override-mobile.scss";
 import { removeCanvasAnnouncementElements, removeCanvasDiscussionElements } from "./modules/announcements/utils";
 
 import accordion from './modules/accordion.js';
@@ -105,9 +105,11 @@ jQuery(function($) {
   });
 
   routes.addRouteForPath(/\/courses\/\d+/, function() {
+    let courseUnenrollmentUuid = util.getCourseUnenrollmentUuid();
+
     document.body.classList.add('course-menu-expanded');
     document.getElementById('left-side').setAttribute('style', 'display: block !important');
-    coursepagebanner.insertCourseBanner();
+    coursepagebanner.insertCourseBanner(util.course.id, courseUnenrollmentUuid);
     let authenticated = util.isAuthenticated();
     informationBanner.updateInformationBanner();
     if(!authenticated) {
@@ -123,8 +125,10 @@ jQuery(function($) {
 
   //The logic below should be refactored and cleaned up.
   routes.addRouteForPath(/\/courses\/\d+$/, function () {
+    let courseUnenrollmentUuid = util.getCourseUnenrollmentUuid();
+
     coursepage.hideElementsFromUsers();
-    coursepagebanner.insertCourseBanner();
+    coursepagebanner.insertCourseBanner(util.course.id, courseUnenrollmentUuid);
     renderCourseModules("left-side");
     util.updateRightMenuButtons();
     util.removeRecentFeedback();
@@ -161,7 +165,6 @@ jQuery(function($) {
   routes.addRouteForPath(/\/profile\/settings$/, function() {
     document.getElementById("wrapper").classList.add("user-settings-wrapper");
     document.getElementById("main").classList.add("user-settings-main");
-    document.getElementById("left-side").remove();
 
     //Styling for pair with observer button
     let parent = document.getElementById("pairing-code");
@@ -442,6 +445,7 @@ jQuery(function($) {
     }
     footer.changeFooter();
     menu.renderUnauthenticatedMenu();
+    informationBanner.handleCloseQuizWarning();
   } catch (e) {
     console.log(e);
   }

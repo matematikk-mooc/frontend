@@ -23,27 +23,27 @@ body.with-left-side:not(.useFullWidth) {
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 48rem) {
   body.course-menu-expanded:not(.ic-no-flex-layout):not(.embedded):not(.is-inside-submission-frame) .ic-Layout-columns {
     flex-direction: column !important;
   }
 }
 .ic-Layout-contentWrapper {
-  max-width: 1600px !important;
+  max-width: 100rem !important;
 }
 
 #right-side {
-  min-width: 200px !important;
+  min-width: 12.5rem !important;
 }
 
-@media not all and (min-width: 750px) {
+@media not all and (min-width: 46.875rem) {
   #left-side {
     display: unset!important;
 
   }
 }
 
-@media ((max-width: 750px)) {
+@media ((max-width: 46.875rem)) {
   .ic-Layout-wrapper {
     flex-direction: column !important;
   }
@@ -65,7 +65,7 @@ body.with-left-side:not(.useFullWidth) {
 
 .admin-button {
   width: fit-content !important;
-  margin-left: 20px;
+  margin-left: 1.25rem;
 }
 
 .ic-Layout-watermark {
@@ -80,23 +80,23 @@ body.with-left-side:not(.useFullWidth) {
 }
 
 #application.ic-app {
-  .ic-app-nav-toggle-and-crumbs {
-    display: none; // Hide toggling of menu
-  }
-
   margin-left: unset !important;
   margin-right: unset !important;
   justify-content: center !important;
 
   display: flex !important;
   flex-direction: column !important;
+
+  .ic-app-nav-toggle-and-crumbs {
+    display: none; // Hide toggling of menu
+  }
 }
 
 .ic-app-main-content {
   margin-top: 1rem !important;
   width: fit-content !important;
   min-height: 85vh !important;
-  max-width: 1600px !important;
+  max-width: 100rem !important;
   justify-content: center;
   box-sizing: border-box !important;
 }
@@ -104,7 +104,7 @@ body.with-left-side:not(.useFullWidth) {
 .useFullWidth{
   min-width: unset !important;
 }
-@media screen and (max-width: 1200px) {
+@media screen and (max-width: 75rem) {
 
   body:not(.ic-no-flex-layout):not(.embedded) .ic-app-main-content {
     flex: auto;
@@ -171,7 +171,7 @@ body.with-left-side:not(.useFullWidth) {
 }
 
 .entry-content {
-   border-bottom: 1px solid #c7cdd1
+   border-bottom: .0625rem solid #c7cdd1
 }
 
 #application {
@@ -199,7 +199,7 @@ body.with-left-side:not(.useFullWidth) {
 
 #wiki_page_show {
   width: 100% !important;
-  max-width: 1400px !important;
+  max-width: 87.5rem !important;
 
 }
 
@@ -222,4 +222,74 @@ body.with-left-side:not(.useFullWidth) {
 
 .add_access_token_link{
   width: fit-content !important;
+}
+
+body.notifications, body.profile, body.profile_settings, body.content_shares, body.qr_mobile_login, body.past_global_announcements {
+  #application.ic-app {
+    #main {
+      display: flex !important;
+      flex-direction: column !important;
+      width: 100% !important;
+
+      #left-side {
+        display: block !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        padding: 0px !important;
+
+        #sticky-container {
+          padding: 0px !important;
+
+          nav {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #f1f1f1;
+            padding: 20px 40px;
+            padding-right: 24px;
+
+            @media not all and (min-width: 768px) {
+              justify-content: flex-start;
+              padding-left: 12px;
+              padding-right: 12px;
+            }
+
+            ul {
+              display: flex !important;
+              flex-direction: row !important;
+              flex-wrap: wrap !important;
+
+              @media not all and (min-width: 768px) {
+                flex-direction: column !important;
+              }
+
+              li {
+                display: flex;
+
+                a {
+                  color: #303030 !important;
+                  text-decoration: none !important;
+                  margin: 4px 12px;
+                  padding: 4px 2px;
+                  border-bottom: 2px solid transparent !important;
+
+                  &.active, &:hover, &:focus {
+                    color: #00468e !important;
+                    border-bottom: 2px solid #00468e !important;
+                    border-left: unset !important;
+                    border-radius: unset !important;
+                  }
+
+                  @media not all and (min-width: 768px) {
+                    margin: 4px 0px;
+                    padding: 4px 0px;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
 }

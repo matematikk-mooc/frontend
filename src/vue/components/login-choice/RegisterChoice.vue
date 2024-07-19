@@ -1,6 +1,6 @@
 <template>
 
-    <Button :type="'filled'" :size="'md'" @click="openModal">Meld deg på</Button>
+    <Button :fullWidth="fullWidth" :type="'filled'" :size="'md'" @click="openModal">Meld deg på</Button>
     <Modal :is-open="modalOpen" @close="closeModal">
         <template v-slot:header>
             <h1>Meld deg på kompetansepakken</h1>
@@ -35,7 +35,8 @@
       },
       props: {
         forwardTo: String,
-        selfEnrollmentCode: String
+        selfEnrollmentCode: String,
+        fullWidth: Boolean
       },
       data () {
         return {

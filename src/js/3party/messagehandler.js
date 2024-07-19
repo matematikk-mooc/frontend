@@ -1,5 +1,6 @@
 import api from "../api/api";
 import kpas from "./kpas";
+import multilanguage from "../../vue/utils/previous-lang-utils";
 import uob from "./uob7";
 import util from "../modules/util";
 
@@ -84,7 +85,21 @@ export default (function() {
 
                             }
                             e.source.postMessage(roles, e.origin);
+                        }
 
+                        else if(message.subject == "kpas-lti.getcurrentlang"){
+                            let lang = "nb";
+                            let isMultiLang = util.isMultilangCourse();
+
+                            if (isMultiLang) {
+                                lang = multilanguage.getLanguageCode();
+                            }
+                            const langmsg = {
+                                subject: 'kpas-lti.lang',
+                                isMultiLang: isMultiLang,
+                                lang: lang,
+                            }
+                            e.source.postMessage(JSON.stringify(langmsg), e.origin);
                         }
                     }
                 } catch(err) {

@@ -72,7 +72,7 @@ const closeModal = () => {
     max-height: 80vh;
     &__close-button{
       position:absolute;
-      z-index:1010;
+      z-index:999;
       right: 0.5rem;
       top: 0.5rem;
     }
@@ -105,7 +105,7 @@ const closeModal = () => {
       word-wrap: break-word;
       padding:0.5rem 1rem 0.5rem 1rem;
       width: 100%;
-      overflow-y:scroll;
+      overflow-y:auto;
    }
 
     &__actions {
@@ -118,5 +118,9 @@ const closeModal = () => {
       justify-content:flex-end;
        > *  { margin: 0 0.125rem; }
     }
+  }
+
+  .course-page__banner-container .modal-box{
+    max-width: 40rem;
   }
 </style>

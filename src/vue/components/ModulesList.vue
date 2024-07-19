@@ -1,8 +1,8 @@
 <template>
   <div class="modules-list">
-   <h3>Moduler:</h3> 
-    <ul v-for="m in modulesList" :key="m.id">
-      <li>
+  <h3>Moduler:</h3>
+    <ul>
+      <li v-for="m in modules" :key="m.id">
         {{m.name}}
       </li>
     </ul>
@@ -10,10 +10,12 @@
   </div>
 </template>
 
-<script setup lang="js">
-import { ref } from 'vue'
-const {modules} = defineProps(['modules'])
-const modulesList = ref([...modules])
+<script>
+export default {
+  props: {
+    modules: Array
+  }
+}
 </script>
 
 <style lang="scss">
@@ -28,7 +30,7 @@ const modulesList = ref([...modules])
 
 li {
   position: relative;
-  padding-left: 1rem; 
+  padding-left: 1rem;
   margin-bottom: 0.5rem;
 }
 
