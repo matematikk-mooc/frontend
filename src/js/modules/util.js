@@ -533,6 +533,45 @@ export default (function () {
           }
         }
       }, 1000);
+    },
+
+    // V2: Add timeout support for revalidation, so that we can for example limit it to only call the API every 15 minutes
+    fetchWithSwr: function (key, fetcher, callback) {
+      //return stale content while data is revalidating in the background
+      //clear cache if data is not valid json/corrupted
+      let storageKey = `swr_${key}`
+      let initStorageDataIsSent = false;
+      let storageData = window.localStorage.getItem(storageKey);
+      if (storageData != null) {
+        try {
+          let parsedJsonData = JSON.parse(storageData);
+          callback(parsedJsonData);
+          initStorageDataIsSent = true;
+        } catch (error) {
+          window.localStorage.removeItem(storageKey);
+        }
+      }
+
+      //revalidate data when everything else has already loaded
+      //execute fetch data call right away if there is no cache response in storage
+      if (window.document.readyState != 'complete' && initStorageDataIsSent) {
+        window.addEventListener('load', () => {
+          this.swrFetcher(storageKey, fetcher, callback, storageData, initStorageDataIsSent);
+        });
+      } else {
+        this.swrFetcher(storageKey, fetcher, callback, storageData, initStorageDataIsSent);
+      }
+    },
+    swrFetcher: function (key, fetcher, callback, stringData, init) {
+      fetcher().then(function (res) {
+        let newStorageDataString = JSON.stringify(res);
+        let diffInData = stringData != newStorageDataString;
+
+        if (!init || diffInData) {
+          callback(res);
+          window.localStorage.setItem(key, newStorageDataString);
+        }
+      });
     }
   };
 })();

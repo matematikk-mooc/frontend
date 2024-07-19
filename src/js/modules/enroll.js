@@ -76,23 +76,86 @@ export default (function () {
       this.addForgotPasswordLink();
       this.updateGotoDashboardButton();
     },
-    setCourseEnrolledStatus: function (allCourses, enrolledCourses) {
+    setCourseEnrolledStatus: function (allCourses, enrolledCourses, merge = false) {
       var allCoursesWithStatus = [];
       for (var i = 0; i < allCourses.length; i++) {
         allCourses[i].course.enrolled = false;
-        allCourses[i].course.course_progress = null;
+        allCourses[i].course.enrolled_status = null;
         for (var j = 0; j < enrolledCourses.length; j++) {
-          if (allCourses[i].course.id == enrolledCourses[j].id) {
+          let foundCourse = allCourses[i].course.id == enrolledCourses[j].id;
+          if (foundCourse) {
+            allCourses[i].course.enrolled_status = enrolledCourses[j].enrollments[0]?.enrollment_state;
             allCourses[i].course.enrolled = true;
             allCourses[i].course.course_progress = enrolledCourses[j].course_progress;
           }
         }
+
         allCoursesWithStatus.push(allCourses[i].course);
       }
+
+      //merge courses from enrolled that does not exist in the public all courses listing
+      if (merge) {
+        for (var j = 0; j < enrolledCourses.length; j++) {
+          let enrolledCourseItem = enrolledCourses[j];
+          let courseAlreadyExists = false;
+
+          for (var i = 0; i < allCoursesWithStatus.length; i++) {
+            let allCoursesWithStatusItem = allCoursesWithStatus[i];
+            if (enrolledCourseItem.id == allCoursesWithStatusItem.id) {
+              courseAlreadyExists = true;
+            }
+          }
+
+          if (!courseAlreadyExists) {
+            enrolledCourseItem.enrolled = true;
+            enrolledCourseItem.enrolled_status = enrolledCourseItem.enrollments[0]?.enrollment_state;
+            allCoursesWithStatus.unshift(enrolledCourseItem);
+          }
+        }
+      }
+
       return allCoursesWithStatus;
     },
-    printAllCourses: function () {
-      var self = this;
+    filterOnlyEnrolledCourses: function(courses) {
+      let enrolledCourses = [];
+      for (var j = 0; j < courses.length; j++) {
+        let courseItem = courses[j];
+        let isEnrolled = courseItem.enrolled == true;
+
+        if (isEnrolled) {
+          enrolledCourses.push(courseItem);
+        }
+      }
+
+      return enrolledCourses;
+    },
+    withEnrolledCourses: function(setCourseEnrolledStatus, frontpageData, callback, merge = false) {
+      let isAuthenticated = util.isAuthenticated();
+      if (!isAuthenticated) {
+        frontpageData.courses = setCourseEnrolledStatus(frontpageData.courses, [], merge);
+        callback(frontpageData);
+      } else {
+        api.getEnrolledCourses(function (enrolledCourses) {
+          frontpageData.courses = setCourseEnrolledStatus(frontpageData.courses, enrolledCourses, merge);
+          callback(frontpageData);
+        });
+      }
+    },
+    fetchFrontpageCourses: function() {
+      return new Promise(async (resolve, reject) => {
+        kpasApi.getCoursesForFrontpage(function (result, error) {
+          if (error) {
+            reject(error);
+          } else {
+            resolve(result);
+          }
+        });
+      });
+    },
+    printAllCourses: async function () {
+      let withEnrolledCourses = this.withEnrolledCourses;
+      let setCourseEnrolledStatus = this.setCourseEnrolledStatus;
+
       document.getElementById('content').innerHTML = "";
       let loader = document.createElement('div');
       loader.id = 'loader';
@@ -101,31 +164,29 @@ export default (function () {
       header.insertAdjacentElement('afterend', loader);
       loaderComponent.mount("#loader");
 
-      api.getAllPublicCourses(function (allCourses) {
-        api.getEnrolledCourses(function (enrolledCourses) {
-          var allCoursesWithStatus = self.setCourseEnrolledStatus(
-            allCourses,
-            enrolledCourses
-          );
-
-          kpasApi.getAllCourseSettings(function (allCoursesSettings) {
-            kpasApi.getAllFilters(function (allFilters) {
-              var allFiltersList = allFilters.result;
-              var allCoursesWithSettings = util.mapCourseSettings(allCoursesWithStatus, allCoursesSettings.result);
-              //Reverse list to show newest courses first
-              allCoursesWithSettings = allCoursesWithSettings.reverse();
-              var isAuthenticated = util.isAuthenticated();
+      util.fetchWithSwr("frontpage_courses", this.fetchFrontpageCourses, function(frontpageData) {
+        if (frontpageData && frontpageData.result) {
+          withEnrolledCourses(setCourseEnrolledStatus, frontpageData.result, function(dataWithEnrolled) {
+            let courses = dataWithEnrolled.courses;
+            let settings = dataWithEnrolled.settings;
+            let filters = dataWithEnrolled.filters;
+            let highlightedCourseId =  dataWithEnrolled.highligthed != null ? dataWithEnrolled.highligthed.course_id : null;
+  
+            var allCoursesWithSettings = util.mapCourseSettings(courses, settings);
+            allCoursesWithSettings = allCoursesWithSettings.reverse(); //Reverse list to show newest courses first
+            var isAuthenticated = util.isAuthenticated();
+            let wrapper = document.getElementById("content");
+  
+            if(wrapper != null){
               if (isAuthenticated) {
-                document.getElementById('content').innerHTML = "";
-                let wrapper = document.getElementById("content");
                 try {
-                  if (wrapper != null) {
+                    document.getElementById('content').innerHTML = "";
                     const customContent = document.createElement("div");
                     var mobiletablet = util.isMobileOrTablet();
                     let props = {
-                      courses: allCoursesWithSettings,
-                      filterData: allFiltersList,
-                      mobiletablet: mobiletablet
+                      courses : allCoursesWithSettings,
+                      filterData : filters,
+                      mobiletablet : mobiletablet
                     };
                     let page = createApp(LoggedInLandingPage, props);
                     customContent.setAttribute("id", "loggedInLandingPage");
@@ -136,49 +197,39 @@ export default (function () {
                     $('#wrapper').remove();
                     document.getElementById('loader').remove();
                     page.mount("#loggedInLandingPage");
-                  }
                 } catch (e) {
                   console.log(e);
                 }
-              }
-              else {
+              } else {
                 try {
-                  if (wrapper != null) {
-                    kpasApi.getHighlightedCourse(function (highlightedCourse) {
-                      var highlightedCourseId = highlightedCourse.result.course_id;
-                      var allFiltersList = allFilters.result;
-                      var allCoursesWithSettings = util.mapCourseSettings(allCoursesWithStatus, allCoursesSettings.result);
-
-                      const customContent = document.createElement("div");
-                      var highlightedCourse = allCoursesWithSettings.find(course => course.id == highlightedCourseId);
-                      if (highlightedCourse == null || highlightedCourse == undefined) {
-                        highlightedCourse = allCoursesWithSettings[0];
-                      }
-                      var mobiletablet = util.isMobileOrTablet();
-                      let props = {
-                        courses: allCoursesWithSettings,
-                        filterData: allFiltersList,
-                        highlightedCourse: highlightedCourse,
-                        mobiletablet: mobiletablet
-                      };
-                      let page = createApp(NotLoggedInPage, props);
-                      customContent.setAttribute("id", "notLoggedInPage");
-                      customContent.setAttribute("style", "width: 100%; justify-content: center; display: flex;");
-                      let footerNode = document.getElementById("wrapper");
-                      footerNode.parentNode.insertBefore(customContent, footerNode)
-                      document.getElementById('wrapper').innerHTML = '';
-                      $('#wrapper').remove();
-                      document.getElementById('loader').remove();
-                      page.mount("#notLoggedInPage");
-                    });
-                  }
+                    const customContent = document.createElement("div");
+                    var highlightedCourse = allCoursesWithSettings.find(course => course.id == highlightedCourseId);
+                    if(highlightedCourse == null || highlightedCourse == undefined) {
+                      highlightedCourse = allCoursesWithSettings[0];
+                    }
+                    var mobiletablet = util.isMobileOrTablet();
+                    let props = {
+                      courses : allCoursesWithSettings,
+                      filterData : filters,
+                      highlightedCourse : highlightedCourse,
+                      mobiletablet : mobiletablet
+                    };
+                    let page = createApp(NotLoggedInPage, props);
+                    customContent.setAttribute("id", "notLoggedInPage");
+                    customContent.setAttribute("style", "width: 100%; justify-content: center; display: flex;");
+                    let footerNode = document.getElementById("wrapper");
+                    footerNode.parentNode.insertBefore(customContent, footerNode)
+                    document.getElementById('wrapper').innerHTML = '';
+                    $('#wrapper').remove();
+                    document.getElementById('loader').remove();
+                    page.mount("#notLoggedInPage");
                 } catch (e) {
                   console.log(e);
                 }
               }
-            });
+            }
           });
-        });
+        }
       });
     },
   };

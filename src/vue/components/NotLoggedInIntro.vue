@@ -11,8 +11,8 @@
       <h1>Vår nyeste kompetansepakke</h1>
 
       <CardHighlighted class="card-highlighted"
-        :theme="newestCourse.course_settings ? newestCourse.course_settings.course_category.category.color_code : 'theme_0'"
-        :courseIllustration="newestCourse.course_settings ? newestCourse.course_settings.image.path : ''"
+        :theme="newestCourse.course_settings ? newestCourse.course_settings?.course_category?.category.color_code : 'theme_0'"
+        :courseIllustration="newestCourse.course_settings ? newestCourse.course_settings?.image.path : ''"
         :label="newestCourse.name"
         :filters="newestCourse.course_settings ? newestCourse.course_settings.course_filter : []"
       >
@@ -32,10 +32,10 @@
 
       <Modal :is-open="isModalOpen" @close="closeModal()">
         <template v-slot:header>
-          <div class="course-illustration-box" :class="newestCourse.course_settings ? newestCourse.course_settings.course_category.category.color_code : 'theme_0'">
+          <div class="course-illustration-box" :class="newestCourse.course_settings ? newestCourse.course_settings?.course_category?.category.color_code : 'theme_0'">
             <img
               class="course-illustration-box-image"
-              :src="newestCourse.course_settings ? newestCourse.course_settings.image.path : ''"
+              :src="newestCourse.course_settings ? newestCourse.course_settings?.image.path : ''"
               alt=""
             />
           </div>
@@ -98,9 +98,9 @@ export default {
     },
     newCourseFlag() {
     if (this.newestCourse.course_settings) {
-      console.log(this.newestCourse.course_settings.course_category.new)
-      if (this.newestCourse.course_settings.course_category) {
-        return this.newestCourse.course_settings.course_category.new;
+      console.log(this.newestCourse.course_settings?.course_category.new)
+      if (this.newestCourse.course_settings?.course_category) {
+        return this.newestCourse.course_settings?.course_category.new;
       }
     }
       return false;
