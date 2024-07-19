@@ -982,6 +982,20 @@ export default (function() {
         params: params
       });
     },
+    postEnrollmentAcceptInvite(courseId, enrollmentId, params, callback) {
+      this._post({
+        callback: callback,
+        uri: `/courses/${courseId}/enrollments/${enrollmentId}/accept`,
+        params: params
+      });
+    },
+    postEnrollmentRejectInvite(courseId, enrollmentId, params, callback) {
+      this._post({
+        callback: callback,
+        uri: `/courses/${courseId}/enrollments/${enrollmentId}/reject`,
+        params: params
+      });
+    },
     getEnrollmentsForSection(sectionId, params, callback) {
       this._get({
         callback: callback,

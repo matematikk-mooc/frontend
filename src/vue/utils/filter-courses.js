@@ -35,7 +35,8 @@ export function filterCourses(courses, filters){
         coursesToView = filter(courses, categories)
     }
     return coursesToView;
+}
 
-
-
+export function isInvitedCourse(course) {
+    return course?.enrolled_status == "invited";
 }
