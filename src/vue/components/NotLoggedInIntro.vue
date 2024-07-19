@@ -23,7 +23,7 @@
         <template v-slot:description>{{ truncateString(newestCourse.public_description) }}</template>
 
         <template v-slot:leftButton>
-          <RegisterChoice :selfEnrollmentCode="newestCourse.self_enrollment_code"></RegisterChoice>
+          <RegisterChoice :fullWidth="true" :selfEnrollmentCode="newestCourse.self_enrollment_code"></RegisterChoice>
         </template>
         <template  v-slot:rightButton>
           <Button :fullWidth="true" :type="'outlined'" :size="'md'" @click="handleModal()">Les mer</Button>

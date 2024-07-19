@@ -24,7 +24,7 @@
         </template>
 
         <template v-if="!authorized" v-slot:leftButton>
-          <RegisterChoice :selfEnrollmentCode="course.self_enrollment_code"></RegisterChoice>
+          <RegisterChoice :fullWidth="true" :selfEnrollmentCode="course.self_enrollment_code"></RegisterChoice>
         </template>
 
         <template v-if="(!authorized || !course.enrolled)" v-slot:rightButton>

@@ -68,14 +68,16 @@ const { hasLicense } = defineProps(['hasLicense']);
     gap: 4rem;
     display: inline-flex;
     .page-footer--logo-wrapper {
-      a{
-          cursor: pointer;
-      }
       height: 100%;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
+
+      a{
+          cursor: pointer;
+      }
+
       .page-footer--logo {
         width: 9.125rem;
         height: 2.625rem;

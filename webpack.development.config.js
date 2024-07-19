@@ -23,6 +23,12 @@ module.exports = {
     filename: "[name].js",
     path: path.resolve(__dirname, "dist"),
   },
+
+  devtool: 'eval-cheap-module-source-map',
+  cache: {
+    type: 'filesystem',
+  },
+
   plugins: [
     new CleanWebpackPlugin({
       cleanOnceBeforeBuildPatterns: ["dist", "tmp", "babel", "replace"],
@@ -32,7 +38,7 @@ module.exports = {
       DESIGNCSS: JSON.stringify("kompetanseportalen-localhost.css"),
       DESIGNJS: JSON.stringify("kompetanseportalen-localhost.js"),
       SERVER: JSON.stringify("http://localhost:9000/"),
-      KPASAPIURL: JSON.stringify("https://kpas.kompetanse.udir.no/api"),
+      KPASAPIURL: JSON.stringify("https://kpas.staging.kompetanse.udir.no/api"),
       ACCOUNTID: [99, 100, 102, 103, 137, 138, 139, 145],
       KPAS_MERGE_LTI_ID: 863,
       KPAS_IFRAME_VERSION: JSON.stringify("localhost"),
@@ -75,6 +81,7 @@ module.exports = {
           loader: "babel-loader",
           options: {
             presets: ["@babel/preset-env"],
+            cacheDirectory: true
           },
         },
       },
@@ -137,10 +144,14 @@ module.exports = {
     },
     static: {
       directory: path.resolve(__dirname, "dist"),
+      watch: {
+        ignored: /node_modules/
+      },
     },
     port: 9000,
     host: "localhost",
-    open: true,
+    hot: true,
+    open: false,
     allowedHosts: "all",
     headers: {
       "Access-Control-Allow-Origin": "*",
