@@ -82,6 +82,16 @@ export default (function() {
         uri: '/settings/highlighted',
         params: {}
       });
+    },
+    getCoursesForFrontpage: function(callback, error) {
+     this._get({
+        callback: function(course) {
+          callback(course);
+        },
+        error: error,
+        uri: '/bff/frontpage/courses',
+        params: {}
+      });
     }
 }
 })();
