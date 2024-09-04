@@ -11,8 +11,8 @@
       <h1>Vår nyeste kompetansepakke</h1>
 
       <CardHighlighted class="card-highlighted"
-        :theme="newestCourse.course_settings ? newestCourse.course_settings.course_category.category.color_code : 'theme_0'"
-        :courseIllustration="newestCourse.course_settings ? newestCourse.course_settings.image.path : ''"
+        :theme="newestCourse.course_settings ? newestCourse.course_settings?.course_category?.category.color_code : 'theme_0'"
+        :courseIllustration="newestCourse.course_settings ? newestCourse.course_settings?.image.path : ''"
         :label="newestCourse.name"
         :filters="newestCourse.course_settings ? newestCourse.course_settings.course_filter : []"
       >
@@ -23,7 +23,7 @@
         <template v-slot:description>{{ truncateString(newestCourse.public_description) }}</template>
 
         <template v-slot:leftButton>
-          <RegisterChoice :selfEnrollmentCode="newestCourse.self_enrollment_code"></RegisterChoice>
+          <RegisterChoice :fullWidth="true" :selfEnrollmentCode="newestCourse.self_enrollment_code"></RegisterChoice>
         </template>
         <template  v-slot:rightButton>
           <Button :fullWidth="true" :type="'outlined'" :size="'md'" @click="handleModal()">Les mer</Button>
@@ -32,10 +32,10 @@
 
       <Modal :is-open="isModalOpen" @close="closeModal()">
         <template v-slot:header>
-          <div class="course-illustration-box" :class="newestCourse.course_settings ? newestCourse.course_settings.course_category.category.color_code : 'theme_0'">
+          <div class="course-illustration-box" :class="newestCourse.course_settings ? newestCourse.course_settings?.course_category?.category.color_code : 'theme_0'">
             <img
               class="course-illustration-box-image"
-              :src="newestCourse.course_settings ? newestCourse.course_settings.image.path : ''"
+              :src="newestCourse.course_settings ? newestCourse.course_settings?.image.path : ''"
               alt=""
             />
           </div>
@@ -78,7 +78,8 @@ export default {
   data() {
     var url = new URL(window.location.href);
     var coursePreviewId = url.searchParams.get("course_preview_id");
-    var showCoursePreview = coursePreviewId != null && this.newestCourse != null
+    var coursePreviewFeatured = url.searchParams.get("course_preview_featured");
+    var showCoursePreview = coursePreviewFeatured == "true" && coursePreviewId != null && this.newestCourse != null
       && coursePreviewId == this.newestCourse.id;
 
     if (showCoursePreview) {
@@ -97,9 +98,9 @@ export default {
     },
     newCourseFlag() {
     if (this.newestCourse.course_settings) {
-      console.log(this.newestCourse.course_settings.course_category.new)
-      if (this.newestCourse.course_settings.course_category) {
-        return this.newestCourse.course_settings.course_category.new;
+      console.log(this.newestCourse.course_settings?.course_category.new)
+      if (this.newestCourse.course_settings?.course_category) {
+        return this.newestCourse.course_settings?.course_category.new;
       }
     }
       return false;
@@ -121,10 +122,12 @@ export default {
     },
     closeModal() {
       shallowUpdateUrlParameter("course_preview_id", null)
+      shallowUpdateUrlParameter("course_preview_featured", null)
       this.isModalOpen = false;
     },
     async viewModules(courseId) {
       shallowUpdateUrlParameter("course_preview_id", courseId)
+      shallowUpdateUrlParameter("course_preview_featured", "true")
 
       this.isModalOpen = true;
       let self = this;
@@ -139,6 +142,7 @@ export default {
           response = response.result;
           response.forEach(module => {
             if (module.published === true) {
+              console.log(111111, module, self.modules)
               if (module.name.includes('nb:')) {
                 self.handleMultilangModules(module);
               }

@@ -80,16 +80,16 @@ body.with-left-side:not(.useFullWidth) {
 }
 
 #application.ic-app {
-  .ic-app-nav-toggle-and-crumbs {
-    display: none; // Hide toggling of menu
-  }
-
   margin-left: unset !important;
   margin-right: unset !important;
   justify-content: center !important;
 
   display: flex !important;
   flex-direction: column !important;
+
+  .ic-app-nav-toggle-and-crumbs {
+    display: none; // Hide toggling of menu
+  }
 }
 
 .ic-app-main-content {
