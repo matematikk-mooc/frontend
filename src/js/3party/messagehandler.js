@@ -18,6 +18,7 @@ export default (function() {
     return {
         init: function() {
             window.addEventListener('message', function(e) {
+                // console.log("FRONTEND_LTI_MESSAGE_RECEIVED", e)
 
                 const error = error => console.error('error calling api', error);
                 try {
@@ -29,7 +30,17 @@ export default (function() {
                             }
                         }
                     } else {
-                        var message = JSON.parse(e.data);
+                        var ignoreMessage = e.data != null && typeof e.data == 'string' && e.data?.toLowerCase()?.includes("webpack");
+                        var messageIsObject = e.data !== null && typeof e.data === 'object' && !Array.isArray(e.data);
+
+                        var message = {};
+                        if (messageIsObject) {
+                            message = e.data;
+                        } else if (!ignoreMessage) {
+                            message = JSON.parse(e.data);
+                        }
+
+                        // console.log("FRONTEND_LTI_MESSAGE_DATA", message)
                         if(message.subject == "kpas-lti.connect") {
                             const connectedMsg = {
                                 subject: 'kpas-lti.ltiparentready'
