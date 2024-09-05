@@ -81,6 +81,7 @@ export default (function () {
       for (var i = 0; i < allCourses.length; i++) {
         allCourses[i].course.enrolled = false;
         allCourses[i].course.enrolled_status = null;
+        allCourses[i].course.course_progress = null;
         for (var j = 0; j < enrolledCourses.length; j++) {
           let foundCourse = allCourses[i].course.id == enrolledCourses[j].id;
           if (foundCourse) {
