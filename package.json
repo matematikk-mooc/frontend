@@ -15,7 +15,7 @@
   },
   "scripts": {
     "production": "webpack --config webpack.production.config.js --mode production  --env timestamp=$(git log origin/master -1 --pretty=format:'%ad' --date=format:'%Y-%m-%dT%H:%M:%S')",
-    "stage": "webpack --config webpack.stage.config.js --mode production  --env timestamp=$(git log origin/dev -1 --pretty=format:'%ad' --date=format:'%Y-%m-%dT%H:%M:%S')",
+    "stage": "webpack --config webpack.stage.config.js --mode production  --env timestamp=$(git log origin/stage -1 --pretty=format:'%ad' --date=format:'%Y-%m-%dT%H:%M:%S')",
     "build": "webpack --config webpack.development.config.js  --mode development --progress --no-cache",
     "watch": "webpack-dev-server --config webpack.development.config.js --mode development --hot",
     "clean": "rm -rf dist node_modules"
