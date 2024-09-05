@@ -18,7 +18,7 @@ export default (function() {
     return {
         init: function() {
             window.addEventListener('message', function(e) {
-                console.log("FRONTEND_LTI_MESSAGE_RECEIVED", e)
+                // console.log("FRONTEND_LTI_MESSAGE_RECEIVED", e)
 
                 const error = error => console.error('error calling api', error);
                 try {
@@ -40,7 +40,7 @@ export default (function() {
                             message = JSON.parse(e.data);
                         }
 
-                        console.log("FRONTEND_LTI_MESSAGE_DATA", message)
+                        // console.log("FRONTEND_LTI_MESSAGE_DATA", message)
                         if(message.subject == "kpas-lti.connect") {
                             const connectedMsg = {
                                 subject: 'kpas-lti.ltiparentready'
