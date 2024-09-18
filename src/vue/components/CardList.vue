@@ -1,14 +1,15 @@
 
 <template>
   <div class="card-container">
-    <div class="card-instance card-container-wrapper"  v-for="course in courses" :key="course.id">
+    <div class="card-instance card-container-wrapper" v-for="course in courses" :key="course.id">
       <Card class="card-item"
-        :theme="course.course_settings ? course.course_settings.course_category.category.color_code : 'theme_0'"
-        :courseIllustration="course.course_settings ? course.course_settings.image.path : ''"
+        :theme="course.course_settings ? course.course_settings?.course_category?.category.color_code : 'theme_0'"
+        :courseIllustration="course.course_settings ? course.course_settings?.image.path : ''"
         :label="course.name"
         :filters="course.course_settings ? course.course_settings.course_filter : []"
         :requirementsCompleted="course?.course_progress?.requirement_completed_count ?? 0"
         :requirementsTotal="course?.course_progress?.requirement_count ?? 0"
+        :isInvited="isInvitedCourse(course)"
       >
         <template v-slot:new-flag>
           <NewCourseFlag v-if="newCoursesIndicator && newCourseFlag(course)"/>
@@ -17,30 +18,40 @@
         <template v-slot:description>{{ truncateString(course.public_description) }}</template>
 
         <template v-if="course.enrolled" v-slot:enrolled>Påmeldt</template>
+
         <template v-if="authorized && !course.enrolled" v-slot:leftButton>
           <Button :fullWidth="true" :type="'filled'" :size="'md'" @click="enrollToCourse(course.self_enrollment_code)">Meld deg på</Button>
         </template>
+
         <template v-if="!authorized" v-slot:leftButton>
           <RegisterChoice :fullWidth="true" :selfEnrollmentCode="course.self_enrollment_code"></RegisterChoice>
         </template>
+
         <template v-if="(!authorized || !course.enrolled)" v-slot:rightButton>
           <Button :fullWidth="true" :type="'outlined'" :size="'md'" @click="handleModal(course)">Les mer</Button>
         </template>
+
         <template v-if="course.isModalOpen && modules.length > 0" v-slot:moduleList>
           <ModulesList :modules="modules"></ModulesList>
         </template>
+
         <template v-if="course.enrolled" v-slot:goToCourse>
-          <Button :fullWidth="true" :type="'filled'" :size="'md'" @click="goToCourse(course.id)"><p>
-            Gå til kompetansepakke</p></Button>
+          <Button :fullWidth="true" :type="'filled'" :size="'md'" @click="goToCourse(course.id)" v-if="!isInvitedCourse(course)">
+            <p>Gå til kompetansepakke</p>
+          </Button>
+
+          <div class="card-item-invite" v-if="isInvitedCourse(course)">
+            <p>Du har blitt invitert til å delta i denne pakken, gå til Mine Kompetansepakker for å godta eller avslå.</p>
+          </div>
         </template>
       </Card>
 
       <Modal :is-open="course.isModalOpen" @close="closeModal(course)">
         <template v-slot:header>
-          <div class="course-illustration-box" :class="course.course_settings ? course.course_settings.course_category.category.color_code : 'theme_0'">
+          <div class="course-illustration-box" :class="course.course_settings ? course.course_settings?.course_category?.category.color_code : 'theme_0'">
             <img
               class="course-illustration-box-image"
-              :src="course.course_settings ? course.course_settings.image.path : ''"
+              :src="course.course_settings ? course.course_settings?.image.path : ''"
               alt=""
             />
           </div>
@@ -66,6 +77,7 @@ import Modal from '../components/modal/Modal';
 import RegisterChoice from './login-choice/RegisterChoice.vue';
 import NewCourseFlag from './NewCourseFlag.vue';
 import { shallowUpdateUrlParameter } from '../utils/url-utils';
+import { isInvitedCourse } from "../utils/filter-courses";
 
 export default {
   name: 'CardList',
@@ -105,13 +117,14 @@ export default {
     console.log(this.courses)
   },
   methods: {
+    isInvitedCourse,
     enrollToCourse(enrollCode) {
       window.location.href = this.domain + '/enroll/' + enrollCode;
     },
     newCourseFlag(course) {
       if (course.course_settings) {
-        if (course.course_settings.course_category) {
-          return course.course_settings.course_category.new;
+        if (course.course_settings?.course_category) {
+          return course.course_settings?.course_category.new;
         }
       }
       return false;
@@ -284,4 +297,29 @@ export default {
 .theme_9 {
   background: map-get($theme_9, background);
 }
+</style>
+
+<style lang="scss">
+  .card-content-button-container button.btn,
+  .card-highlighted-content-button-container button.btn {
+    height: 35px;
+    line-height: 1.4;
+    font-weight: 600;
+    font-size: 14px;
+    padding: 4px 15px;
+    border-radius: 4px;
+
+    p {
+      margin: 0px;
+    }
+  }
+
+  .card-item .card-item-invite p {
+    color: #000 !important;
+    font-family: Roboto;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.4;
+    margin: 0;
+  }
 </style>
