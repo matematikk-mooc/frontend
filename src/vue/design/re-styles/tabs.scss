@@ -14,11 +14,12 @@
   border-bottom: 0.5rem solid $color-grey-400;
   white-space: nowrap;
   margin: 0 !important;
-  
+  width: fit-content;
+  overflow-x: initial !important;
 }
 
 .custom-segments__segment {
-  display: inline-block;
+  display: inline-flex;
   position: relative;
   padding: 10px;
   border-right: 1px solid lightgray;
@@ -49,7 +50,7 @@
   margin-bottom: -1rem;
   border-bottom: 0.5rem solid $primary-hover-color;
   color: $color-white;
-  
+    overflow-x: initial !important;
 }
 
 .custom-segments__pane {
