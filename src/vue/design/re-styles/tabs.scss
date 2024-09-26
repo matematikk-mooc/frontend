@@ -3,6 +3,7 @@
 
 .custom-segments {
   position: relative;
+  border: 2px solid lightgray;
 }
 .custom-segments__tabHeaders{
   overflow-x: auto;
@@ -13,21 +14,22 @@
   border-bottom: 0.5rem solid $color-grey-400;
   white-space: nowrap;
   margin: 0 !important;
+  width: fit-content;
+  overflow-x: initial !important;
 }
 
 .custom-segments__segment {
-  display: inline-block;
+  display: inline-flex;
+  position: relative;
   padding: 10px;
+  border-right: 1px solid lightgray;
   cursor: pointer;
   color: #333;
   text-decoration: none;
-  position: relative;
-  bottom: -0.5rem;
-
+  font-weight: 500;
   &:hover {
     background-color: $color-grey-400;
   }
-
 
 }
 .custom-segments__segment a{
@@ -36,7 +38,7 @@
   font-family: Roboto;
   font-size: 1rem;
   font-style: normal;
-  font-weight: 500;
+
   line-height: normal;
   text-decoration: none !important;
   &:focus {
@@ -45,16 +47,18 @@
 }
 
 .custom-segments__segment.active {
+  margin-bottom: -1rem;
   border-bottom: 0.5rem solid $primary-hover-color;
   color: $color-white;
+    overflow-x: initial !important;
 }
 
 .custom-segments__pane {
   display: none;
-  padding-top: 20px;
   border: none;
   height: fit-content;
   background-color: $color-grey-400;
+  padding:10px;
 }
 
 .custom-segments__pane.active {
