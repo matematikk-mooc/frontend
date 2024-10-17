@@ -334,6 +334,7 @@
     .custom-reveal-content {
       display: flex !important;
       width: 80vw;
+      overflow-wrap: anywhere;
   }
   }
 }
