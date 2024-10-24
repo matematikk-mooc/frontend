@@ -3,24 +3,27 @@
 
 .ic-Login {
     color: $color-black !important;
-    justify-content: unset !important;
     background-color: map-get($color-palette-steel, background, 700);
-    width: fit-content !important;
     padding-bottom: 3rem;
     padding-left: 2rem;
     padding-right: 2rem;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    position: relative;
+    margin: 0 auto;
+    max-width: 400px;
+    box-shadow: rgba(50, 50, 93, 0.85) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
 }
-
 
 .ic-Login__text {
     padding-bottom: 2rem;
 }
 
 .ic-Login__actions{
+    @media screen and (max-width: 380px) {
+        flex-direction: column-reverse;
+    }
+    label {
+        font-size: 16px;
+    }
     .ic-Form-control--login{
         cursor: pointer;
         position: relative;
@@ -50,8 +53,17 @@
     }
 }
 
+.ic-Login__content {
+    width: auto;
+    padding: unset;
+}
+
 .ic-Login-header__logo {
     padding-left: 1.125rem;
+    img {
+        height: unset !important;
+        max-height: 4rem;
+    }
 }
 
 .ic-Login-header__links{
@@ -87,6 +99,14 @@
     }
 }
 
+.ic-Login-header, .ic-Login__header {
+    display: unset;
+    .ic-Login-header__logo {
+        display: flex;
+        justify-content: center;
+
+    }
+}
 
 .ic-Login-confirmation{
     color: $color-black !important;
