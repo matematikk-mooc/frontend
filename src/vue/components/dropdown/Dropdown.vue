@@ -1,5 +1,5 @@
 <template>
-  <div class="dropdown-container desktop-hide">
+  <div class="dropdown-container">
     <button aria-label="Åpne nedtrekksmeny" @click="handleFocus" class="dropdown-toggle-button">
         <Icon :name="iconType"/>
     </button>
@@ -42,6 +42,11 @@ const handleLinkClick = () => {
 <style scoped lang="scss">
 @import "../../design/colors.scss";
 
+.dropdown-container {
+  @media screen and (min-width: 679px) {
+    display: none;
+  }
+}
 .dropdown-toggle-button {
   height: 3.75rem;
   width: 3.75rem;

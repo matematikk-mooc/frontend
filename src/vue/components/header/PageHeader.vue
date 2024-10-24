@@ -75,6 +75,10 @@
   align-items: center;
   margin-left: 1.7rem;
   margin-top: 0.875rem;
+  @media screen and (max-width: 679.5px) {
+    display: none;
+    
+  }
 }
 
 .header__list-item {
