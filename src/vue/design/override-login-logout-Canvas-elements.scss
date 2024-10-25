@@ -18,13 +18,15 @@
 }
 
 .ic-Login__actions{
-    @media screen and (max-width: 380px) {
+/*     @media screen and (max-width: 380px) {
         flex-direction: column-reverse;
-    }
+    } */
+    flex-direction: column-reverse;
     label {
         font-size: 16px;
     }
     .ic-Form-control--login{
+        width:100%;
         cursor: pointer;
         position: relative;
         background: $color-grey-900;
@@ -40,9 +42,34 @@
             background: #00468e;
             color: $color-white;
         }
+        input{
+            width: 100%;
+        }
+    }
+    .ic-Login__actions-timeout {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        width:100%;
+        padding-top: 10px;
+        input {
+            margin: unset;
+            margin-right:4px;
+        }
+        label{
+            margin-right: auto;
+            align-self: flex-start;
+        }
+        div {
+            margin-left: auto;
+            align-self: flex-end;
+        }
+    }
+    .ic-Login__link {
+        margin-top:16px;
     }
 }
-
 .ic-Login-footer{
     color: $color-white !important;
     font-weight: 500;
@@ -158,6 +185,7 @@
     display: grid !important;
     justify-content: center;
     gap: 0.5rem;
+
 
     .btn {
         cursor: pointer;
