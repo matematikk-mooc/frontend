@@ -43,6 +43,8 @@
 <style lang="scss">
 @import '../../design/colors.scss';
 
+
+
 .header__content {
   display: flex;
   align-items: center;
@@ -66,6 +68,12 @@
   text-align: left;
   color: $color-black;
   margin-left: .75rem;
+}
+
+@media screen and (max-width: 345px) {
+  .header-brand {
+     font-size: 7vw;
+  }
 }
 
 .header__link-list {

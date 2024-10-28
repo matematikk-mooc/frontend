@@ -51,7 +51,7 @@
       }
     }
     .header-brand {
-      font-size: 1.125rem !important;
+/*       font-size: 1.125rem !important; */
       margin-left: 1.25rem !important;
     }
     .logout {
@@ -68,7 +68,7 @@
     padding: 0 !important;
     flex-direction: column !important;
     align-items: unset !important;
-    background-color: black !important;
+    background-color: #303030;
     .nav-bar__link-list-container {
       display: flex !important;
       flex-direction: column;
@@ -158,6 +158,7 @@
             display:flex;
             width:80%;
             margin-bottom:1.5rem;
+            margin-left: 26px;
             .card-box {
               min-height: unset !important;
             }

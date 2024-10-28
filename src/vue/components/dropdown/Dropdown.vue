@@ -50,6 +50,7 @@ const handleLinkClick = () => {
 .dropdown-toggle-button {
   height: 3.75rem;
   width: 3.75rem;
+  max-width: fit-content;
   border: none;
   padding: 0.125rem;
   z-index: 1020;
@@ -77,6 +78,7 @@ const handleLinkClick = () => {
   z-index: 2000;
   box-shadow: rgba(50, 50, 93, 0.25) 0rem .8125rem 1.6875rem -0.3125rem, rgba(0, 0, 0, 0.3) 0rem .5rem 1rem -0.5rem;
   transition: all 0.2s ease;
+  list-style: none;
   .dropdown-item {
     display: flex;
     justify-content: space-between;
