@@ -24,7 +24,7 @@ a.page-footer--link {
   word-wrap: break-word;
   text-underline-offset: 0.3rem;
   padding: 0.75rem 0.25rem 0.5rem 0.25rem;
-  display: inline-flex;
+  display: flex;
   justify-content: center;
   align-items: center;
 
