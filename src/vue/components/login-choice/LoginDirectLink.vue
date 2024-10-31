@@ -98,8 +98,12 @@ export default {
 }
 
 .login-logo {
-    height: 6vh;
+    height: 6rem;
     cursor: pointer;
+    @media screen and (max-width: 768px) {
+        height: 6vh;
+    }
+
 }
 
 .login-header-title {
