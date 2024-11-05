@@ -95,7 +95,8 @@ export default (function() {
                                 }
                                 options = { icons: { secondary: 'ui-icon-triangle-1-e' } };
                             } else {
-                                document.querySelector(body).style.display = 'block';
+                                document.querySelector(body).style.display = 'flex';
+                                document.getElementsByClassName("custom-reveal-wrapper")[0].style.width = 'unset';
                                 options = { icons: { secondary: 'ui-icon-triangle-1-s' } };
                             }
 
