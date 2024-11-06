@@ -2,7 +2,6 @@
 <template>
   <div class="not-logged-in-page">
     <div class="not-logged-in-page--header">
-      <MobileWarning v-if="mobiletablet"></MobileWarning>
       <Banner></Banner>
       <NotLoggedInIntro :newestCourse="highlightedCourse"></NotLoggedInIntro>
     </div>
