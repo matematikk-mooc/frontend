@@ -2,7 +2,7 @@
     position: relative;
     align-content: center;
     z-index: unset;
-    display: flex;
+    display: inline-flex;
 }
 
 
@@ -21,9 +21,8 @@
     position: absolute;
     right: 0;
     bottom: 0;
-    width: max-content;
+    width: auto;
     min-width:fit-content;
-    max-width: 10rem;
     border: 1px solid lightgrey;
     border-radius: 4px;
     background: white;

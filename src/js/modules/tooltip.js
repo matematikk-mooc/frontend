@@ -55,7 +55,7 @@ export default (function() {
                         tooltip.addEventListener("click", function (e) {
                             e.stopPropagation();
                             var tooltipText = this.querySelector(".tooltiptext-box");
-                            tooltipText.style.display = "flex";
+                            tooltipText.style.display = "inline";
                             tooltipText.style.flexDirection = "row";
 
                         });
