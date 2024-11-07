@@ -81,7 +81,8 @@ export default {
 
 .card-box {
   position: relative;
-  width: 24rem;
+  width: 100%;
+  max-width: 24rem;
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;

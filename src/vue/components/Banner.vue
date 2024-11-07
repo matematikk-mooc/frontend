@@ -38,8 +38,8 @@ const server= SERVER
   border-radius: 20px;
   word-break: break-word;
   img {
-    width: 10.173rem;
-    height: 10.294rem;
+    width: webkit-fill-available;
+    height: webkit-fill-available;
     flex-grow: 0;
     object-fit: contain;
   }
@@ -47,16 +47,12 @@ const server= SERVER
   .before-login-image-left {
     position: relative;
     bottom: -3rem;
-    @media screen and (max-width: 1000px){
-      display: none;
-    }
+
   }
   .before-login-image-right {
     position: relative;
     bottom: -3rem;
-    @media screen and (max-width: 1000px){
-      display: none;
-    }
+
   }
   .caption {
     position: relative;
