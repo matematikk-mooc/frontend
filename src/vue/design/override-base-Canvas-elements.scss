@@ -30,6 +30,9 @@ body.with-left-side:not(.useFullWidth) {
 }
 .ic-Layout-contentWrapper {
   max-width: 100rem !important;
+  .ic-Layout-contentMain {
+    width: fit-content;
+  }
 }
 
 #right-side {

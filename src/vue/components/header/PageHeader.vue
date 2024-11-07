@@ -108,6 +108,7 @@
   text-decoration: none;
   border-bottom: 0.125rem solid $color-white;
   &:hover {
+    text-decoration: none;
     color: #00468e;
     border-bottom: 0.125rem solid #00468e;
   }
