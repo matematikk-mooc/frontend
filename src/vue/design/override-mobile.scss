@@ -323,6 +323,20 @@
       border-radius: 12px !important;
     }
   }
+  .custom-reveal-wrapper {
+    p {
+      display: flex;
+    }
+    a {
+      width: 100%;
+      justify-content: space-evenly;
+    }
+    .custom-reveal-content {
+      display: flex !important;
+      width: 80vw;
+      overflow-wrap: anywhere;
+  }
+  }
   .module-sequence-footer {
     .page-button-link-navigation {
       gap: 16px !important;
