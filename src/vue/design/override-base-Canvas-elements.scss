@@ -14,6 +14,75 @@
 
 }
 
+.ef-quota-usage {
+  min-width: unset !important;
+  justify-content: center !important;
+} 
+.ef-main {
+  border: 1px solid rgb(199, 205, 209);
+}
+.ef-header {
+  border-bottom: unset !important;
+}
+
+.ef-footer {
+  border-top: unset !important;
+}
+
+.ef-actions {
+  max-width: -webkit-fill-available !important;
+}
+
+.ef-search-form {
+  .Button {
+    max-height: 38px;
+  }
+}
+.ef-select-col {
+  display:none;
+}
+.ef-links-col {
+  .al-trigger {
+    opacity: 1 !important;
+  }
+  button {
+    padding: 8px !important;
+  }
+  .hiddenState, .unpublished, .published {
+    margin-right: 8px;
+  }
+}
+
+#content > div > div.ef-footer.grid-row {
+  margin-left: unset !important;
+  margin-right: unset !important;
+}
+
+#content > div > div.ef-footer {
+  padding: unset !important;
+  .grid-row {
+    margin: unset !important;
+  }
+}
+
+#content > div > div.ef-footer.grid-row > .col-xs-6 {
+  flex-basis: unset !important;
+  width: 100% !important;
+  max-width: unset !important;
+  padding: unset !important;
+  
+  .col-xs-3 {
+    flex-basis: unset !important;
+    max-width: 70%;
+    width: 100%;
+  }
+  .col-xs-9 {
+    flex-basis: unset !important;
+    max-width: unset;
+
+  }
+}
+
 body.with-left-side:not(.useFullWidth) {
   #application.ic-app {
     #main {
@@ -30,8 +99,6 @@ body.with-left-side:not(.useFullWidth) {
 }
 .ic-Layout-contentWrapper {
   max-width: 100rem !important;
-  .ic-Layout-contentMain {
-    width: fit-content;  }
 }
 
 #right-side {
