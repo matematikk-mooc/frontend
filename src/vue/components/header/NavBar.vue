@@ -43,6 +43,8 @@ const {logged_in, admin, mainContentId} = defineProps(['logged_in', 'admin', 'ma
   left: 50%;
   position: absolute;
   transform: translateY(-100%);
+  opacity: 0;
+  cursor: default;
 }
 }
 
