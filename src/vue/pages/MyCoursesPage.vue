@@ -76,10 +76,8 @@ export default {
 <style lang="scss">
 .my-courses-page {
     height: 100%;
-    width: 100%;
     max-width: 1600px;
     padding: 1.25rem;
-    display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
@@ -93,7 +91,6 @@ export default {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    margin-left: 1.5rem;
 
     h1 {
       margin-bottom: 20px;

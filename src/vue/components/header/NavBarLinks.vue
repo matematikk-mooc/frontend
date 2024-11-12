@@ -36,7 +36,6 @@
   padding: 0.25rem;
   margin-left: 1.7rem;
   margin-top: 0.875rem;
-  width: 100%;
   height: 100%;
 }
 
