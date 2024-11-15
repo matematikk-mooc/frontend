@@ -139,13 +139,66 @@
     color: $color-black !important;
     justify-content: unset !important;
     background-color: map-get($color-palette-steel, background, 700);
-    width: fit-content !important;
-    padding: 6rem;
-    position: absolute !important;
+    width: 100%;
+    max-width: fit-content;
+    padding: 3rem;
+    margin-bottom:40px;
     top: 50% !important;
     left: 50% !important;
-    transform: translate(-50%, -50%);
     z-index: 1002 !important;
+    box-shadow: 0 13px 27px -5px rgba(50, 50, 93, .85), 0 8px 16px -8px rgba(0, 0, 0, .3);
+
+    .ic-Login-confirmation__content {
+        width:100%;
+        overflow-wrap: anywhere;
+        background-color: map-get($color-palette-steel, background, 700);
+        color: white;
+        padding-bottom: unset;
+    }
+    .ic-Form-control {
+        display: block !important;
+    }
+    .ic-Self-enrollment-footer {
+        flex-direction: column-reverse;
+    }
+
+    .ic-Self-enrollment-form {
+        padding-top: 0;
+    }
+    .ic-Label {
+        padding-top: 10px;
+        padding-bottom: 4px;
+        margin-bottom: unset;
+    }
+    .ic-Login-confirmation__headline {
+        display: none;
+    }
+    #enroll_form > p {
+        display: none;
+    }
+    .ic-Radio input[type=radio]:checked~.ic-Label:before {
+        border-color: unset; 
+    }
+    .ic-Form-control.ic-Form-control--checkbox input[type=checkbox]:checked~.ic-Label:before {
+        border-color: unset;
+    }
+    .ic-Radio {
+        display: flex;
+        .ic-Label {
+            padding: 2px;
+            padding-left: 28px;
+        }
+    }
+    .ic-Form-control {
+       margin-bottom:0;
+    }
+    #initial_action {
+        padding-top: 16px;
+    }
+    .ic-Form-control--checkbox {
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
 }
 
 .ic-Login-confirmation__header {
@@ -156,9 +209,16 @@
     padding-bottom: 2rem;
 
 }
+.ic-Self-enrollment-footer__Secondary{ 
+    padding-top: 16px;
+    a {
+        color: white;
+    }
+}
 
 .ic-Self-enrollment-footer__Primary{
-    display: grid !important;
+    display: flex;
+    flex-direction: row;
     justify-content: center;
     gap: 0.5rem;
 
@@ -231,3 +291,4 @@
     flex-direction: column;
     align-items: center;
 }
+
