@@ -57,21 +57,46 @@ const onSelectedFiltersUpdate = (updatedFilters) => {
 .not-logged-in-page--header {
   width: 100%;
   box-sizing: border-box;
-  max-width: 1500px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  .intro-text {
+      border-radius: 10px;
+      background: #dff4ff;
+      padding: 16px;
+    }
+  @media (max-width: 30rem) {
+    h1 {
+      font-size: 22px;
+      text-align: center;
+      line-height: normal;
+      padding: 1rem
+    };
+    .intro-text {
+      margin-top: unset;
+      font-size: 1.125rem;
+      font-weight: normal;
+      line-height: normal;
+      border-radius: 20px;
+      background: #dff4ff;
+      padding: 16px;
+    }
+  }
+
 }
 .not-logged-in-page--content {
   width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  margin-left: 1.5rem;
   h2 {
-    font-size: 2rem;
+    font-size: 1.5rem;
     margin: 1.5rem 0 1.5rem 0;
+    @media (max-width: 30rem) {
+      font-size: 1.250rem;
+      margin: 1rem 0 1rem 0;
+    }
   }
 }
 .not-logged-in-page--layout {

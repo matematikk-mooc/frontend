@@ -1,7 +1,8 @@
 .tooltip {
     position: relative;
-    display: inline-block;
     align-content: center;
+    z-index: unset;
+    display: flex;
 }
 
 
@@ -16,23 +17,30 @@
 }
 
 .tooltiptext-box {
+    display: none;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: max-content;
+    min-width:fit-content;
+    max-width: 10rem;
+    border: 1px solid lightgrey;
     border-radius: 4px;
-    background: #ECEFF2;
+    background: white;
     color: black;
     border-radius: 6px;
-    display: none;
     padding: 1rem;
     margin: 0.5rem 0 0.5rem 0;
     gap: 1rem;
-    position: absolute;
     z-index: 1;
-    width: 100%;
-    min-width: 40rem;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 
     .close-tooltip {
         cursor: pointer;
         float: right;
-        background: #ECEFF2;
     }
 
+    img {
+        max-width: unset;
+    }
 }

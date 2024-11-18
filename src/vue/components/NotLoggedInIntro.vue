@@ -8,7 +8,7 @@
     </div>
 
     <div class="intro-news">
-      <h1>Vår nyeste kompetansepakke</h1>
+      <h2>Vår nyeste kompetansepakke</h2>
 
       <CardHighlighted class="card-highlighted"
         :theme="newestCourse.course_settings ? newestCourse.course_settings?.course_category?.category.color_code : 'theme_0'"
@@ -172,15 +172,13 @@ export default {
 <style scoped lang="scss">
 @import '../design/_card-themes.scss';
 .intro-container {
-  width: 100%;
-  box-sizing: border-box;
-  padding: 0.5rem 6rem 0.5rem 9rem;
-  margin-top: 1rem;
-  margin-bottom: 20px;
-  display: inline-grid;
-  grid-template-columns: auto auto;
+  display: flex;
   justify-content: center;
+  margin-top: 2rem;
+  margin-bottom: 20px;
+  width: 100%;
   gap: 3rem;
+  box-sizing: border-box;
   @media screen and (max-width: 1000px){
     display: flex;
     flex-direction: column;
@@ -195,11 +193,14 @@ export default {
 .intro-news {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
   justify-content: flex-start;
-  h1 {
-    font-size: 1.375rem;
+  h2 {
+    font-size: 1.5rem;
     line-height: 2.5rem;
+    @media (max-width: 30rem) {
+      font-size: 1.250rem;
+    }
   }
 }
 

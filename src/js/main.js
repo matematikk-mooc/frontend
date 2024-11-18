@@ -37,6 +37,7 @@ import uob from './3party/uob7.js';
 import util from './modules/util.js';
 import utilRoot from './utilRoot.js';
 import uucheck from './modules/uucheck.js';
+import h5p from './3party/h5p.js';
 
 jQuery(function($) {
 
@@ -492,6 +493,7 @@ jQuery(function($) {
     tabs.init();
     reveal.init();
     accordion.init();
+    h5p.init();
 
   } catch (e) {
     console.log(e);

@@ -54,16 +54,20 @@ jQuery(document).ready(function ($) {
       redirected = true;
     } else if (!document.referrer.includes("/login/canvas")) {
       $(".ic-Login").hide();
-      $("#f1_container").hide(); // Small screens
+/*       $("#f1_container").hide(); // Small screens */
       redirected = utilRoot.redirectFeideAuthIfEnrollReferrer();
       if (!redirected) {
         if (!document.location.search.includes("normalLogin=1")) {
-          document.getElementById('wrapper').remove();
+          if (document.getElementById('wrapper')) {
+            document.getElementById('wrapper').remove();
+          }
           let parent = document.getElementById('application');
           let login = document.createElement('div');
           login.id = 'login-component';
           let customLogin = createApp(LoginDirectLink);
-          parent.appendChild(login);
+          if (parent) {
+            parent.appendChild(login);
+          }
           customLogin.mount("#login-component");
         } else {
           $(".ic-Login").show();
