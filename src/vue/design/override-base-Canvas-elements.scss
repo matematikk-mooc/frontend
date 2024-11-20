@@ -175,9 +175,16 @@ body.with-left-side:not(.useFullWidth) {
     justify-content: center !important;
     #qr_login_container {
       max-width: fit-content !important;
+      align-self: center !important;
+    }
+    .css-1rcgr3a-view--flex-flex, .css-mum2ig-text {
+      align-self: center !important;
+    }
+    .button-area-block {
+      width: unset !important;
+      flex-direction: unset !important;
     }
   }
-
 }
 
 .useFullWidth{
