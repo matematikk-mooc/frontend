@@ -43,14 +43,16 @@
 <style lang="scss">
 @import '../../design/colors.scss';
 
+
+
 .header__content {
   display: flex;
   align-items: center;
   justify-content: space-between;
   flex-grow: 1;
   font-family: 'Montserrat', 'Helvetica Neue', 'sans-serif';
-  padding: 1.25rem 0 1.25rem 0;
   width: 100%;
+  min-height: 3.75rem;
 }
 
 .header-brand {
@@ -68,6 +70,12 @@
   margin-left: .75rem;
 }
 
+@media screen and (max-width: 345px) {
+  .header-brand {
+     font-size: 7vw;
+  }
+}
+
 .header__link-list {
   display: flex;
   position: relative;
@@ -75,6 +83,10 @@
   align-items: center;
   margin-left: 1.7rem;
   margin-top: 0.875rem;
+  @media screen and (max-width: 679.5px) {
+    display: none;
+    
+  }
 }
 
 .header__list-item {
