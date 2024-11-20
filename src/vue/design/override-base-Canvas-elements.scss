@@ -171,6 +171,7 @@ body.with-left-side:not(.useFullWidth) {
 #not_right_side {
   #content {
     display: flex !important;
+    flex-direction: column !important;
     justify-content: center !important;
     #qr_login_container {
       max-width: fit-content !important;
