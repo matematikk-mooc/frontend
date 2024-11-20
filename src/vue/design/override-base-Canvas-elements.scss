@@ -163,11 +163,20 @@ body.with-left-side:not(.useFullWidth) {
 
 .ic-app-main-content {
   margin-top: 1rem !important;
-  width: fit-content !important;
   min-height: 85vh !important;
-  max-width: 100rem !important;
   justify-content: center;
   box-sizing: border-box !important;
+}
+
+#not_right_side {
+  #content {
+    display: flex !important;
+    justify-content: center !important;
+    #qr_login_container {
+      max-width: fit-content !important;
+    }
+  }
+
 }
 
 .useFullWidth{
