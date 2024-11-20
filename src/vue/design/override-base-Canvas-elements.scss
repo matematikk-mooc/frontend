@@ -215,6 +215,26 @@ body.with-left-side:not(.useFullWidth) {
     .css-1iimhyf-view--inlineBlock-baseButton {
       width: 100% !important;
     }
+    //Instillinger -> Table
+    .profile_table {
+      border-collapse: separate;
+      border-spacing: 0 12px;
+      th {
+        display: flex;
+        text-align: left;
+        label {
+          font-weight: bold;
+          position: relative;
+        }
+      }
+      td {
+        line-height: 18px;
+        .edit_or_show_data {
+          font-style: italic !important;
+          color: #949292;
+        }
+      }
+    }
   }
 }
 
