@@ -1,6 +1,12 @@
 @import "./colors.scss";
 @import "./override-login-logout-Canvas-elements";
 
+
+// Uncomment this to see the positioning and size of all elements
+/* * {
+  outline: .0625rem solid darkslategrey !important;
+}  */
+
 .ic-app-course-menu {
   width: fit-content !important;
   position: relative !important;
@@ -180,9 +186,34 @@ body.with-left-side:not(.useFullWidth) {
     .css-1rcgr3a-view--flex-flex, .css-mum2ig-text {
       align-self: center !important;
     }
+    .css-1fnhbjn-view-flexItem {
+      max-width: 85%;
+    }
+    .css-pljkwv-view-heading {
+      font-size: 1.7rem;
+    }
+    .css-mum2ig-text {
+      font-size: 16px;
+    }
     .button-area-block {
       width: unset !important;
       flex-direction: unset !important;
+      margin-top: 9px;
+    }
+    // Instillinger -> Funksjonsvalg 
+    .css-10d73cs-view--flex-flex {
+      flex-direction: column !important;
+      max-width: 450px;
+    }
+    .css-183j57y-formFieldLayout {
+      flex-direction: column !important;
+      width: 100% !important;
+    }
+    .css-dz0svk-view-flexItem, .css-10inoki-formFieldLayout {
+      width: 100% !important;
+    }
+    .css-1iimhyf-view--inlineBlock-baseButton {
+      width: 100% !important;
     }
   }
 }
