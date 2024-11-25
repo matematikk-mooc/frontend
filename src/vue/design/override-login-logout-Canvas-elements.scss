@@ -3,25 +3,30 @@
 
 .ic-Login {
     color: $color-black !important;
-    justify-content: unset !important;
     background-color: map-get($color-palette-steel, background, 700);
-    width: fit-content !important;
     padding-bottom: 3rem;
     padding-left: 2rem;
     padding-right: 2rem;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    position: relative;
+    margin: 0 auto;
+    max-width: 400px;
+    box-shadow: rgba(50, 50, 93, 0.85) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
 }
-
 
 .ic-Login__text {
     padding-bottom: 2rem;
 }
 
 .ic-Login__actions{
+/*     @media screen and (max-width: 380px) {
+        flex-direction: column-reverse;
+    } */
+    flex-direction: column-reverse;
+    label {
+        font-size: 16px;
+    }
     .ic-Form-control--login{
+        width:100%;
         cursor: pointer;
         position: relative;
         background: $color-grey-900;
@@ -37,9 +42,34 @@
             background: #00468e;
             color: $color-white;
         }
+        input{
+            width: 100%;
+        }
+    }
+    .ic-Login__actions-timeout {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        width:100%;
+        padding-top: 10px;
+        input {
+            margin: unset;
+            margin-right:4px;
+        }
+        label{
+            margin-right: auto;
+            align-self: flex-start;
+        }
+        div {
+            margin-left: auto;
+            align-self: flex-end;
+        }
+    }
+    .ic-Login__link {
+        margin-top:16px;
     }
 }
-
 .ic-Login-footer{
     color: $color-white !important;
     font-weight: 500;
@@ -50,8 +80,17 @@
     }
 }
 
+.ic-Login__content {
+    width: auto;
+    padding: unset;
+}
+
 .ic-Login-header__logo {
     padding-left: 1.125rem;
+    img {
+        height: unset !important;
+        max-height: 4rem;
+    }
 }
 
 .ic-Login-header__links{
@@ -87,6 +126,14 @@
     }
 }
 
+.ic-Login-header, .ic-Login__header {
+    display: unset;
+    .ic-Login-header__logo {
+        display: flex;
+        justify-content: center;
+
+    }
+}
 
 .ic-Login-confirmation{
     color: $color-black !important;
@@ -138,6 +185,7 @@
     display: grid !important;
     justify-content: center;
     gap: 0.5rem;
+
 
     .btn {
         cursor: pointer;
