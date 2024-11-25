@@ -200,6 +200,10 @@ body.with-left-side:not(.useFullWidth) {
       flex-direction: unset !important;
       margin-top: 9px;
     }
+    p:nth-child(8) {
+      display: flex;
+      gap: 1rem;
+    }
     // Instillinger -> Funksjonsvalg 
     .css-10d73cs-view--flex-flex {
       flex-direction: column !important;
@@ -225,6 +229,7 @@ body.with-left-side:not(.useFullWidth) {
         label {
           font-weight: bold;
           position: relative;
+
         }
       }
       td {
@@ -256,7 +261,6 @@ body.with-left-side:not(.useFullWidth) {
     min-width: unset !important;
   }
 }
-
 .ic-Layout-columns {
   width: 100% !important;
   display: flex !important;
