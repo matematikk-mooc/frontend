@@ -1,3 +1,4 @@
+
 import "../../vue/design/re-styles/tooltip.scss";
 
 export default (function() {
@@ -22,6 +23,7 @@ export default (function() {
 
                         var textSpan = document.createElement("span");
                         textSpan.classList.add("tooltiptext-box");
+                        textSpan.id = "tooltiptext-box-" + count;
 
                         var tooltipContent = document.createElement("span");
                         tooltipContent.classList.add("tooltiptext");
@@ -57,9 +59,16 @@ export default (function() {
                             var tooltipText = this.querySelector(".tooltiptext-box");
                             tooltipText.style.display = "inline";
                             tooltipText.style.flexDirection = "row";
-
                         });
-
+                        $(tooltip).hover(function () {
+                          var textBox = this.querySelector(".tooltiptext-box")
+                          $(textBox).fadeIn(200); 
+                        }, 
+                          function () {    
+                            var textBox = this.querySelector(".tooltiptext-box")
+                            $(textBox).fadeOut(400);
+                          }
+                        );
                         var closeTooltip = tooltip.querySelector(".close-tooltip");
                         closeTooltip.addEventListener("click", function (e) {
                             e.stopPropagation();
