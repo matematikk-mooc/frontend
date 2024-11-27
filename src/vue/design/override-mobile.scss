@@ -325,16 +325,17 @@
     }
   }
   .custom-reveal-wrapper {
+    td {
+      width: unset !important;
+    }
     p {
       display: flex;
     }
     a {
       width: 100%;
-      justify-content: space-evenly;
+      justify-content: space-between;
     }
     .custom-reveal-content {
-      display: flex !important;
-      width: 80vw;
       overflow-wrap: anywhere;
   }
   }
