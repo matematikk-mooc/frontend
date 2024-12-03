@@ -67,12 +67,13 @@ font-family: Arial, Helvetica, sans-serif;
   font-family: 'Montserrat', 'Helvetica Neue', 'sans-serif';
   padding: 20px 0 20px 0;
   width: 100%;
+  min-height: 3.75rem;
   &.prod {
     background-color: white;
   }
   &.stage {
   background-color: #BED5E8;
-}
+  }
 }
 
 .header-brand {
@@ -90,13 +91,23 @@ font-family: Arial, Helvetica, sans-serif;
   margin-left: 12px;
 }
 
+@media screen and (max-width: 345px) {
+  .header-brand {
+     font-size: 7vw;
+  }
+}
+
 .header__link-list {
   display: flex;
   position: relative;
   justify-content: flex-start;
   align-items: center;
-  margin-left: 27.2px;
-  margin-top: 14px;
+  margin-left: 1.7rem;
+  margin-top: 0.875rem;
+  @media screen and (max-width: 679.5px) {
+    display: none;
+    
+  }
 }
 
 .header__list-item {

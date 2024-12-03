@@ -4,6 +4,10 @@
 .custom-segments {
   position: relative;
   border: 2px solid lightgray;
+  
+  img {
+    max-width: 55%;
+  }
 }
 .custom-segments__tabHeaders{
   overflow-x: auto;
