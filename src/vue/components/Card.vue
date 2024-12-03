@@ -226,6 +226,7 @@ export default {
     font-weight: 400;
     color: black !important;
     line-height: 1.4;
+    word-break: break-word;
   }
 
   p.card-content-enrolled-count {
