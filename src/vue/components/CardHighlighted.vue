@@ -66,6 +66,9 @@ export default {
     border-radius: 0.5rem;
     box-shadow: 0 0.25rem 0.25rem 0 rgba(0, 0, 0, 0.25);
     background-color: $card-background-color;
+    @media (max-width: 30rem) {
+        width: unset;
+    }
 
     .card-highlighted-illustration-box {
         position: relative;

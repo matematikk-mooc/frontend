@@ -11,7 +11,7 @@
   display: flex;
   align-items: center;
   gap: 2rem;
-  width: 100%;
+  word-break: break-word;
 
   .udir-info__icon-container {
     display: inline-block;
@@ -20,6 +20,9 @@
     width: fit-content;
   }
 
+  img {
+    max-width: 55%;
+  }
   &__general {
     background: $color-grey-200;
     gap: 0;
