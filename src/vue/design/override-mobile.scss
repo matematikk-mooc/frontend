@@ -52,6 +52,10 @@
 /*       font-size: 1.125rem !important; */
       margin-left: 1.25rem !important;
     }
+    .stage-banner {
+      padding: 0.5rem;
+      font-size: 18px;
+    }
     .logout {
       max-width: 3.75rem !important;
       font-size: 0.875rem !important;
@@ -188,6 +192,9 @@
                   font-weight: 500;
                   font-family: "Roboto", sans-serif !important;
                   margin: unset !important
+                }
+                button {
+                  height: unset;
                 }
                 
               }
