@@ -269,6 +269,12 @@
       font-weight: 600;
     }
   }
+  .uob-box {
+    flex-direction: column !important;
+    p {
+      display: block;
+    }
+  }
 
   // Modal
   .backdrop {
@@ -336,6 +342,7 @@
       justify-content: space-between;
     }
     .custom-reveal-content {
+      width: 80vw;
       overflow-wrap: anywhere;
   }
   }
