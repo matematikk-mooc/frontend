@@ -272,7 +272,7 @@
   .uob-box {
     flex-direction: column !important;
     p {
-      display: block;
+      display: block !important;
     }
   }
 
@@ -336,9 +336,9 @@
     }
     p {
       display: flex;
+      flex-direction: column;
     }
     a {
-      width: 100%;
       justify-content: space-between;
     }
     .custom-reveal-content {
