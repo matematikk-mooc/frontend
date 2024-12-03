@@ -2,7 +2,6 @@
 <template>
     <div class="landing-page">
       <div id="main" class="landing-page--content">
-        <MobileWarning v-if="mobiletablet"></MobileWarning>
         <h1>Alle tilgjengelige kompetansepakker</h1>
         <div class="landing-page--layout">
           <CardFilter @update:selectedFilters="onSelectedFiltersUpdate" :filterData="filterData"></CardFilter>
