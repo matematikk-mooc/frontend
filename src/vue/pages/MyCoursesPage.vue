@@ -76,7 +76,6 @@ export default {
 <style lang="scss">
 .my-courses-page {
     height: 100%;
-    max-width: 1600px;
     padding: 1.25rem;
     flex-direction: column;
     justify-content: flex-start;

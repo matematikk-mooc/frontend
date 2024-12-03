@@ -17,3 +17,8 @@ frontend.code-workspace
 src/js/settings.js
 src/js/modules/dataporten.js
 package-lock.json
+node_modules/
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/

@@ -1,0 +1,91 @@
+on:
+    workflow_call:
+        inputs:
+            node_version:
+                type: string
+                description: 'Node.js version'
+                required: true
+            app_env:
+                type: string
+                description: 'Application environment'
+                required: true
+            app_version:
+                type: string
+                description: 'Application version'
+                required: true
+
+            canvas_theme_js_file:
+                type: string
+                description: 'Canvas theme JS file'
+                required: true
+            canvas_theme_css_file:
+                type: string
+                description: 'Canvas theme CSS file'
+                required: true
+            canvas_username:
+                type: string
+                description: 'Canvas username'
+                required: true
+
+        secrets:
+            canvas_password:
+                description: 'Canvas password'
+                required: true
+
+jobs:
+    build-canvas:
+        name: Build - Canvas
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v4
+
+            - name: Set up Node.js
+              uses: actions/setup-node@v4
+              with:
+                  node-version: ${{ inputs.node_version }}
+
+            - name: Cache pnpm packages
+              uses: actions/cache@v4
+              with:
+                  path: ~/.pnpm-store
+                  key: pnpm-cache
+                  restore-keys: |
+                      pnpm-
+
+            - name: Install PNPM and Dependencies
+              run: |
+                  npm install -g pnpm
+                  pnpm install --frozen-lockfile
+ 
+            - name: Cache Playwright dependencies
+              id: playwright-cache
+              uses: actions/cache@v4
+              with:
+                  path: ~/.cache/ms-playwright
+                  key: playwright-cache
+                  restore-keys: |
+                      playwright-
+
+            - name: Install Playwright dependencies
+              if: steps.playwright-cache.outputs.cache-hit != 'true'
+              run: pnpm exec playwright install --with-deps
+
+            - name: Run Playwright Tests
+              run: pnpm exec playwright test ./tests/canvas/build-theme.spec.js
+              env:
+                APP_ENV: ${{ inputs.app_env }}
+                APP_VERSION: ${{ inputs.app_version }}
+                THEME_JS_FILE: ${{ inputs.canvas_theme_js_file }}
+                THEME_CSS_FILE: ${{ inputs.canvas_theme_css_file }}
+                BASIC_AUTH_USERNAME: ${{ inputs.canvas_username }}
+                BASIC_AUTH_PASSWORD: ${{ secrets.canvas_password }}
+                CI: true
+
+            - name: Generate Markdown Report
+              id: generate-markdown
+              run: node .github/playwright/markdown-reporter.js
+
+            - name: Upload Markdown Report to GitHub Summary
+              run: |
+                cat ./playwright-report/report.md >> $GITHUB_STEP_SUMMARY

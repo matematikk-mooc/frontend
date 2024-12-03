@@ -42,11 +42,11 @@ The custom JS and CSS frontend is built on top of Canvas using the mechanism in 
 
 1. Install Node.js: `nvm install`
 1. Enable corepack for Node.js: `corepack enable`
-1. Install NPM packages: `yarn install`
+1. Install NPM packages: `pnpm install`
 
 ### Upload localhost theme to Canvas LMS
 
-1. Build theme: `yarn build`
+1. Build theme: `pnpm build`
 1. Create a new theme here: https://bibsys.test.instructure.com/accounts/1/brand_configs/
 1. Click on create from default template and under the upload tab, select the build files from the first step that are located in the `dist` folder:
     - CSS-fil: `theme-localhost.css`
@@ -55,24 +55,16 @@ The custom JS and CSS frontend is built on top of Canvas using the mechanism in 
 ## Development
 
 1. Use Node.js: `nvm install`
-1. Install NPM packages: `yarn watch`
+1. Install NPM packages: `pnpm watch`
 1. Vist https://bibsys.test.instructure.com/search/all_courses/
 
 ## Deployment (WIP)
 
-Compile JS and CSS for the stage environment using
+Compile JS and CSS for the production using
 
 ```
-yarn run stage
+pnpm run production
 ```
-
-
-Compile JS and CSS for the production environment using
-
-```
-yarn run production
-```
-
 
 * See scripts section in package.json
 
