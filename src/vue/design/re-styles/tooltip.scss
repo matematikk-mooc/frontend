@@ -2,7 +2,7 @@
     position: relative;
     align-content: center;
     z-index: unset;
-    display: flex;
+    display: inline-flex;
 }
 
 
@@ -19,13 +19,12 @@
 .tooltiptext-box {
     display: none;
     position: absolute;
-    right: 0;
     bottom: 0;
-    width: max-content;
+    width: auto;
     min-width:fit-content;
-    max-width: 10rem;
     border: 1px solid lightgrey;
     border-radius: 4px;
+    margin-bottom: 25px !important;
     background: white;
     color: black;
     border-radius: 6px;
@@ -34,10 +33,13 @@
     gap: 1rem;
     z-index: 1;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-
+    
     .close-tooltip {
         cursor: pointer;
         float: right;
+        @media (pointer: fine) {
+            display: none;
+        }
     }
 
     img {
