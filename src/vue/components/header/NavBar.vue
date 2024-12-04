@@ -56,6 +56,7 @@ const {logged_in, admin, mainContentId} = defineProps(['logged_in', 'admin', 'ma
   align-items: center;
   padding: 0.75rem 0;
   background-color: $color-grey-900;
+  z-index: 1;
 }
 
 .header--links {

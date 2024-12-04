@@ -41,7 +41,7 @@ export default (function () {
   
                     let myCourses = wrapper.appendChild(document.createElement("div"));
                     myCourses.setAttribute("id", "my-courses-container");
-                    myCourses.setAttribute("style", "width: 100%; justify-content: center; display: flex; min-height: 85vh;");
+                    myCourses.setAttribute("style", "width: 100%; justify-content: center; min-height: 85vh;");
                     let footerNode = document.getElementById("wrapper");
                     footerNode.parentNode.insertBefore(myCourses, footerNode);
                     document.getElementById('wrapper').innerHTML = ''

@@ -1,8 +1,8 @@
 
 // Uncomment this to see the positioning and size of all elements
-// * {
-//   outline: .0625rem solid darkslategrey !important;
-// }
+/*  * {
+   outline: .0625rem solid darkslategrey !important;
+}  */
 
 // Styles for desktop devices related to mobile
 @media (min-width: 30rem) {
@@ -49,8 +49,12 @@
       }
     }
     .header-brand {
-      font-size: 1.125rem !important;
+/*       font-size: 1.125rem !important; */
       margin-left: 1.25rem !important;
+    }
+    .stage-banner {
+      padding: 0.5rem;
+      font-size: 18px;
     }
     .logout {
       max-width: 3.75rem !important;
@@ -66,7 +70,7 @@
     padding: 0 !important;
     flex-direction: column !important;
     align-items: unset !important;
-    background-color: black !important;
+    background-color: #303030;
     .nav-bar__link-list-container {
       display: flex !important;
       flex-direction: column;
@@ -156,6 +160,7 @@
             display:flex;
             width:80%;
             margin-bottom:1.5rem;
+            margin-left: 26px;
             .card-box {
               min-height: unset !important;
             }
@@ -187,6 +192,9 @@
                   font-weight: 500;
                   font-family: "Roboto", sans-serif !important;
                   margin: unset !important
+                }
+                button {
+                  height: unset;
                 }
                 
               }
