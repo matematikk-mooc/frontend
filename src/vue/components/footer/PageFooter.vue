@@ -1,5 +1,5 @@
 <template>
-  <footer>
+  <footer class="footer">
     <License v-if="hasLicense"></License>
     <div class="page-footer--content">
       <div class="page-footer--content-wrapper">
@@ -18,22 +18,16 @@
             <PageFooterLink :url="'mailto:kompetansesupport@udir.no'"><template v-slot:footerlink>Kontakt</template></PageFooterLink>
             <div class="page-footer--divider mobile-hide"></div>
               <PageFooterLink :url="'https://kompetanseudirno.azureedge.net/udirdesign/privacypolicy.html?v=1_0'"><template v-slot:footerlink>Personvernerklæring</template></PageFooterLink>
-              <div class="page-footer--divider mobile-hide"></div>
-            <span class="mobile-hide">
-              <span class="page-footer--accessibility-declaration mobile-accessibility-container ">
-                Tilgjengelighetserklæring på
-              </span>
-              <PageFooterLink aria-label="Tilgjengelighetserklæring på bokmål" :type="'open-in-new'" :url="'https://uustatus.no/nb/erklaringer/publisert/2796ebc6-161f-4dc9-9429-70d7dd136431'"><template v-slot:footerlink>Bokmål</template></PageFooterLink>
-              <PageFooterLink aria-label="Tilgjengelighetserklæring på nynorsk" :type="'open-in-new'" :url="'https://uustatus.no/nn/erklaringer/publisert/2796ebc6-161f-4dc9-9429-70d7dd136431'"><template v-slot:footerlink>Nynorsk</template></PageFooterLink>
-            </span>
           </div>
-          <div class="mobile-accessibility-container page-footer--link-container desktop-hide"> 
-              Tilgjengelighetserklæring på
-            <span class="mobile-accessibility-links">
-              <PageFooterLink aria-label="Tilgjengelighetserklæring på bokmål" :type="'open-in-new'" :url="'https://uustatus.no/nb/erklaringer/publisert/2796ebc6-161f-4dc9-9429-70d7dd136431'"><template v-slot:footerlink>Bokmål</template></PageFooterLink>
-              <PageFooterLink aria-label="Tilgjengelighetserklæring på nynorsk" :type="'open-in-new'" :url="'https://uustatus.no/nn/erklaringer/publisert/2796ebc6-161f-4dc9-9429-70d7dd136431'"><template v-slot:footerlink>Nynorsk</template></PageFooterLink>
+          <span class="page-footer--accessibility-declaration mobile-accessibility-container ">
+                <p class="accessibility-text">
+                  Tilgjengelighetserklæring på
+                </p>
+                <div class="accessibility-languages">
+                  <PageFooterLink aria-label="Tilgjengelighetserklæring på bokmål" :type="'open-in-new'" :url="'https://uustatus.no/nb/erklaringer/publisert/2796ebc6-161f-4dc9-9429-70d7dd136431'"><template v-slot:footerlink>Bokmål</template></PageFooterLink>
+                  <PageFooterLink aria-label="Tilgjengelighetserklæring på nynorsk" :type="'open-in-new'" :url="'https://uustatus.no/nn/erklaringer/publisert/2796ebc6-161f-4dc9-9429-70d7dd136431'"><template v-slot:footerlink>Nynorsk</template></PageFooterLink>
+                </div>
             </span>
-          </div>
         </div>
       </div>
     </div>
@@ -50,12 +44,15 @@ const { hasLicense } = defineProps(['hasLicense']);
 <style lang="scss">
 @import '../../design/colors.scss';
 
+footer {
+  width: 100%; 
+}
+
 .page-footer--content {
-  display: inline-flex;
+  display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
-  width: 100%;
   height: 100%;
 
   .page-footer--content-wrapper {
@@ -64,15 +61,15 @@ const { hasLicense } = defineProps(['hasLicense']);
     padding-bottom: 2rem;
     background: map-get($color-palette-steel, background, 700);
     justify-content: center;
-    align-items: flex-end;
+    align-items: center;
     gap: 4rem;
-    display: inline-flex;
     .page-footer--logo-wrapper {
       height: 100%;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
+      margin-bottom: 16px;
 
       a{
           cursor: pointer;
@@ -87,7 +84,7 @@ const { hasLicense } = defineProps(['hasLicense']);
       flex-direction: column;
       justify-content: flex-start;
       align-items: center;
-      display: inline-flex;
+      display: flex;
     }
     .main-content--header {
       color: $color-white;
@@ -98,7 +95,21 @@ const { hasLicense } = defineProps(['hasLicense']);
       word-wrap: break-word;
     }
   }
-
+  .accessibility-text {
+    align-self: center;
+      color: $color-white;
+      font-size: 0.875rem;
+      font-family: 'Montserrat';
+      font-weight: 600;
+      word-wrap: break-word;
+      margin-bottom: unset;
+    }
+    .accessibility-languages {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 0.5rem;
+    }
   .page-footer--link-container {
     font-size: 0.875rem;
     display: flex;
@@ -106,18 +117,20 @@ const { hasLicense } = defineProps(['hasLicense']);
     align-items: center;
     color: $color-white;
     font-family: 'Montserrat';
-    .page-footer--accessibility-declaration {
-      margin-bottom: -0.5rem;
-    }
+    gap:0.5rem;
+
   }
   .page-footer--divider {
     width: 0.0625rem;
     height: 1.25rem;
-    margin: 0 1.5rem -0.25rem 1.5rem;
     border-right: 0.0625rem solid $color-white;
   }
   .page-footer--link {
     text-underline-offset: 2px;
+    align-items: center;
+    .material-icon {
+      display: flex;
+    }
   }
 }
 </style>

@@ -3,25 +3,30 @@
 
 .ic-Login {
     color: $color-black !important;
-    justify-content: unset !important;
     background-color: map-get($color-palette-steel, background, 700);
-    width: fit-content !important;
     padding-bottom: 3rem;
     padding-left: 2rem;
     padding-right: 2rem;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    position: relative;
+    margin: 0 auto;
+    max-width: 400px;
+    box-shadow: rgba(50, 50, 93, 0.85) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
 }
-
 
 .ic-Login__text {
     padding-bottom: 2rem;
 }
 
 .ic-Login__actions{
+/*     @media screen and (max-width: 380px) {
+        flex-direction: column-reverse;
+    } */
+    flex-direction: column-reverse;
+    label {
+        font-size: 16px;
+    }
     .ic-Form-control--login{
+        width:100%;
         cursor: pointer;
         position: relative;
         background: $color-grey-900;
@@ -37,9 +42,34 @@
             background: #00468e;
             color: $color-white;
         }
+        input{
+            width: 100%;
+        }
+    }
+    .ic-Login__actions-timeout {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        width:100%;
+        padding-top: 10px;
+        input {
+            margin: unset;
+            margin-right:4px;
+        }
+        label{
+            margin-right: auto;
+            align-self: flex-start;
+        }
+        div {
+            margin-left: auto;
+            align-self: flex-end;
+        }
+    }
+    .ic-Login__link {
+        margin-top:16px;
     }
 }
-
 .ic-Login-footer{
     color: $color-white !important;
     font-weight: 500;
@@ -50,8 +80,17 @@
     }
 }
 
+.ic-Login__content {
+    width: auto;
+    padding: unset;
+}
+
 .ic-Login-header__logo {
     padding-left: 1.125rem;
+    img {
+        height: unset !important;
+        max-height: 4rem;
+    }
 }
 
 .ic-Login-header__links{
@@ -87,18 +126,79 @@
     }
 }
 
+.ic-Login-header, .ic-Login__header {
+    display: unset;
+    .ic-Login-header__logo {
+        display: flex;
+        justify-content: center;
+
+    }
+}
 
 .ic-Login-confirmation{
     color: $color-black !important;
     justify-content: unset !important;
     background-color: map-get($color-palette-steel, background, 700);
-    width: fit-content !important;
-    padding: 6rem;
-    position: absolute !important;
+    width: 100%;
+    max-width: fit-content;
+    padding: 3rem;
+    margin-bottom:40px;
     top: 50% !important;
     left: 50% !important;
-    transform: translate(-50%, -50%);
     z-index: 1002 !important;
+    box-shadow: 0 13px 27px -5px rgba(50, 50, 93, .85), 0 8px 16px -8px rgba(0, 0, 0, .3);
+
+    .ic-Login-confirmation__content {
+        width:100%;
+        overflow-wrap: anywhere;
+        background-color: map-get($color-palette-steel, background, 700);
+        color: white;
+        padding-bottom: unset;
+    }
+    .ic-Form-control {
+        display: block !important;
+    }
+    .ic-Self-enrollment-footer {
+        flex-direction: column-reverse;
+    }
+
+    .ic-Self-enrollment-form {
+        padding-top: 0;
+    }
+    .ic-Label {
+        padding-top: 10px;
+        padding-bottom: 4px;
+        margin-bottom: unset;
+    }
+    .ic-Login-confirmation__headline {
+        display: none;
+    }
+    #enroll_form > p {
+        display: none;
+    }
+    .ic-Radio input[type=radio]:checked~.ic-Label:before {
+        border-color: unset; 
+    }
+    .ic-Form-control.ic-Form-control--checkbox input[type=checkbox]:checked~.ic-Label:before {
+        border-color: unset;
+    }
+    .ic-Radio {
+        display: flex;
+        .ic-Label {
+            padding: 2px;
+            padding-left: 28px;
+        }
+    }
+    .ic-Form-control {
+       margin-bottom:0;
+    }
+    #initial_action {
+        padding-top: 16px;
+    }
+    .ic-Form-control--checkbox {
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
 }
 
 .ic-Login-confirmation__header {
@@ -109,9 +209,16 @@
     padding-bottom: 2rem;
 
 }
+.ic-Self-enrollment-footer__Secondary{ 
+    padding-top: 16px;
+    a {
+        color: white;
+    }
+}
 
 .ic-Self-enrollment-footer__Primary{
-    display: grid !important;
+    display: flex;
+    flex-direction: row;
     justify-content: center;
     gap: 0.5rem;
 
@@ -138,6 +245,7 @@
     display: grid !important;
     justify-content: center;
     gap: 0.5rem;
+
 
     .btn {
         cursor: pointer;
@@ -183,3 +291,4 @@
     flex-direction: column;
     align-items: center;
 }
+
