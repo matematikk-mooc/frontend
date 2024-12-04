@@ -5,9 +5,11 @@
       Gå til hovedinnhold
     </a>
     <PageHeader :logged_in="logged_in" :admin="admin"></PageHeader>
-    <nav class="page--nav-bar">
-      <NavBarLinks :logged_in="logged_in"></NavBarLinks>
-    </nav>
+    <span class="nav-bar-container" :class="{ logged_out: !logged_in }">
+      <nav class="page--nav-bar">
+        <NavBarLinks :logged_in="logged_in"></NavBarLinks>
+      </nav>
+    </span>
   </div>
 </template>
 <script setup>
@@ -21,6 +23,12 @@ const {logged_in, admin, mainContentId} = defineProps(['logged_in', 'admin', 'ma
 <style lang="scss">
 @import '../../design/colors.scss';
 
+.nav-bar-container {
+  width: 100%;
+}
+.logged_out {
+  display: none;
+}
 .header--nav-container {
   width: 100%;
   flex-grow: 0;
@@ -30,6 +38,7 @@ const {logged_in, admin, mainContentId} = defineProps(['logged_in', 'admin', 'ma
   align-items: flex-start;
   box-sizing: border-box;
   padding: 0;
+  border-bottom: 1px solid black;
   .skip-to-content-link {
   left: 50%;
   position: absolute;
@@ -45,6 +54,7 @@ const {logged_in, admin, mainContentId} = defineProps(['logged_in', 'admin', 'ma
   align-items: center;
   padding: 0.75rem 0;
   background-color: $color-grey-900;
+  z-index: 1;
 }
 
 .header--links {
