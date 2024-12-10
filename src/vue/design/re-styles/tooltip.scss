@@ -5,6 +5,12 @@
     display: inline-flex;
 }
 
+.tooltip:focus-visible {
+    outline: 3px solid dimgray;
+    .tooltiptext-box {
+        display: inline !important;
+    }
+}
 
 .tooltip-underline {
     border-bottom: 0.5px dashed #00468E;
