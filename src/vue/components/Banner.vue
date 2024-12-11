@@ -40,6 +40,8 @@ const server= SERVER
   img {
     width: webkit-fill-available;
     height: webkit-fill-available;
+    width: moz-available;
+    height: moz-available;
     flex-grow: 0;
     object-fit: contain;
   }
