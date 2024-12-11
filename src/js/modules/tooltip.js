@@ -20,7 +20,7 @@ export default (function() {
                         var tooltipSpan = document.createElement("span");
                         tooltipSpan.classList.add("tooltip");
                         tooltipSpan.id = "tooltip-" + count;
-
+                        
                         var textSpan = document.createElement("span");
                         textSpan.classList.add("tooltiptext-box");
                         textSpan.id = "tooltiptext-box-" + count;
@@ -46,14 +46,13 @@ export default (function() {
                         tooltipSpan.appendChild(underLineSpan);
                         tooltipSpan.appendChild(questionMarkSpan);
                         tooltipSpan.appendChild(textSpan);
-
-
                         el.innerHTML = el.innerHTML.replace(matches[0], tooltipSpan.outerHTML);
                         matches = re.exec(el.innerHTML);
                         count++;
                     }
                     for (var j = 0; j < count; j++) {
                         var tooltip = document.getElementById("tooltip-" + j);
+                        tooltip.tabIndex = 1;
                         tooltip.addEventListener("click", function (e) {
                             e.stopPropagation();
                             var tooltipText = this.querySelector(".tooltiptext-box");
