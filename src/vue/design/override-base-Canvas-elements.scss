@@ -157,8 +157,7 @@ body.with-left-side:not(.useFullWidth) {
 #application.ic-app {
   margin-left: unset !important;
   margin-right: unset !important;
-  justify-content: center !important;
-
+  justify-content: space-between !important;
   display: flex !important;
   flex-direction: column !important;
 
