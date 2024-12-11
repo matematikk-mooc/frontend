@@ -88,14 +88,14 @@ export default (function() {
                             var options;
 
                             if (document.querySelector(body).style.display !== 'none') {
-                                document.querySelector(body).style.display = 'none';
+                                $(body).slideToggle(250);
                                 var hideLink = document.querySelector(body + ' .hide_youtube_embed_link');
                                 if (hideLink) {
                                     hideLink.click();
                                 }
                                 options = { icons: { secondary: 'ui-icon-triangle-1-e' } };
                             } else {
-                                document.querySelector(body).style.display = 'flex';
+                                $(body).slideToggle(250);
                                 document.getElementsByClassName("custom-reveal-wrapper")[0].style.width = 'unset';
                                 options = { icons: { secondary: 'ui-icon-triangle-1-s' } };
                             }

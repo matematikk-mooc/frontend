@@ -334,9 +334,8 @@ export default (function() {
 					var buttonImg = button.getElementsByTagName('img')[0];
 					buttonImg.src = buttonImg.src.includes('expand_more') ? expandLess : expandMore;
 					var transcriptSelect = document.getElementById(transcript.getTranscriptSelectId());
-					transcriptSelect.style.display = transcriptSelect.style.display === 'none' ? 'block' : 'none';
+					$(transcriptSelect).fadeToggle(250);
 					transcriptSelect.style.marginTop = '1rem';
-
 					var body = document.getElementById(transcriptContentId);
 					var iframe = document.getElementById(iframeId);
 					var bodyDisplayStyle = getComputedStyle(body).display;
@@ -346,19 +345,15 @@ export default (function() {
 					} else {
 						slideDownAndAdjustIframe(400, body, iframe);
 					}
-
-
 					event.preventDefault();
 				});
 
 				function slideUpAndAdjustIframe(duration, element, iframe) {
-					element.style.display = 'none';
-					element.classList.remove('uob-box');
+					$(element).slideToggle(250);
 				}
 
 				function slideDownAndAdjustIframe(duration, element, iframe) {
-					element.style.display = 'block';
-					element.classList.add('uob-box');
+					$(element).slideToggle(250);
 				}
 
 				return { transcriptArea: p, transcriptContentArea: e };
