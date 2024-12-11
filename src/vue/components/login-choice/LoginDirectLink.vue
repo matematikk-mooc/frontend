@@ -64,8 +64,9 @@ export default {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    width: 60rem;
     height: 30rem;
+    max-width: 60rem;
+    width: 100%;
     background-color: white;
     border: 1px solid #e0e0e0;
     border-radius: 0.5rem;
@@ -99,5 +100,24 @@ export default {
 .login-logo {
     height: 6rem;
     cursor: pointer;
+    @media screen and (max-width: 768px) {
+        height: 6vh;
+    }
+
+}
+
+.login-header-title {
+    font-size: 2,25rem;
+    line-height: unset;
+    @media screen and (max-width: 768px) {
+        font-size: 4vw;
+    }
+}
+
+.login-header-description {
+    font-size: 1.5rem;
+    @media screen and (max-width: 768px) {
+        font-size: 3vw;
+    }
 }
 </style>

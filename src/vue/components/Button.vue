@@ -119,6 +119,6 @@ const isFullWidth = props.fullWidth;
   width: 1em;
   height: 1em;
   margin-right: 0.5em;
-  margin-top: -0.5em;
+  margin-top: -0.1em;
 }
 </style>
