@@ -12,8 +12,12 @@ export const useDesktopViewport = () => {
 };
 
 export const getEnv = () => {
-  const env = process.env.APP_ENV;
+  let env = process.env.APP_ENV;
   expect(env).toBeDefined();
+
+  const validEnvironments = ['stage', 'production'];
+  if (env === 'development') env = 'stage';
+  expect(validEnvironments).toContain(env);
 
   return env;
 };
