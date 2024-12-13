@@ -4,7 +4,7 @@
     <div class="card-instance card-container-wrapper" v-for="course in courses" :key="course.id">
       <Card class="card-item"
         :theme="course.course_settings ? course.course_settings?.course_category?.category.color_code : 'theme_0'"
-        :courseIllustration="course.course_settings ? course.course_settings?.image.path : ''"
+        :courseIllustration="thumbnail(course)"
         :label="course.name"
         :filters="course.course_settings ? course.course_settings.course_filter : []"
         :requirementsCompleted="course?.course_progress?.requirement_completed_count ?? 0"
@@ -51,7 +51,7 @@
           <div class="course-illustration-box" :class="course.course_settings ? course.course_settings?.course_category?.category.color_code : 'theme_0'">
             <img
               class="course-illustration-box-image"
-              :src="course.course_settings ? course.course_settings?.image.path : ''"
+              :src="thumbnail(course)"
               alt=""
             />
           </div>
@@ -117,6 +117,10 @@ export default {
     console.log(this.courses)
   },
   methods: {
+    thumbnail(course) {
+      if (course.image_download_url != null) return course.image_download_url;
+      return course.course_settings ? course.course_settings?.image.path : '';
+    },
     isInvitedCourse,
     enrollToCourse(enrollCode) {
       window.location.href = this.domain + '/enroll/' + enrollCode;
