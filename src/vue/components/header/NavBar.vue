@@ -25,6 +25,7 @@ const {logged_in, admin, mainContentId} = defineProps(['logged_in', 'admin', 'ma
 
 .nav-bar-container {
   width: 100%;
+  z-index: 3;
 }
 .logged_out {
   display: none;
@@ -43,6 +44,8 @@ const {logged_in, admin, mainContentId} = defineProps(['logged_in', 'admin', 'ma
   left: 50%;
   position: absolute;
   transform: translateY(-100%);
+  opacity: 0;
+  cursor: default;
 }
 }
 

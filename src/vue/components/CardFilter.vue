@@ -132,14 +132,14 @@ const clearFilters = () => {
 
 /* Style the checkmark/indicator */
 .checkbox-label .checkmark:after {
-  left: 0.5rem;
-  top: 0.125rem;
+  left: 0.43rem;
   width: 0.5rem;
   height: 1rem;
   border: solid white;
-  border-width: 0 0.25rem 0.25rem 0;
-  -webkit-transform: rotate(45deg);
-  -ms-transform: rotate(45deg);
-  transform: rotate(45deg);
+  border-radius: 0rem 0.1rem 0rem 0.1rem;
+  border-width: 0 0.2rem 0.2rem 0;
+  -webkit-transform: rotate(40deg);
+  -ms-transform: rotate(40deg);
+  transform: rotate(40deg);
 }
 </style>

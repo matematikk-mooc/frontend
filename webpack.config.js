@@ -26,7 +26,7 @@ module.exports = (env) => {
         './src/js/settingsRoot.js',
         './src/js/account-theme.js',
       ],
-      'kompetanseportal-udirdesign': [
+      'kompetanseportalen-udirdesign': [
         './src/js/3party/matomo.js',
         './src/js/main.js',
       ],
@@ -43,8 +43,8 @@ module.exports = (env) => {
       }),
       new webpack.DefinePlugin({
         VUECSS: JSON.stringify('index.css'),
-        DESIGNCSS: JSON.stringify('kompetanseportal-udirdesign.css'),
-        DESIGNJS: JSON.stringify('kompetanseportal-udirdesign.js'),
+        DESIGNCSS: JSON.stringify('kompetanseportalen-udirdesign.css'),
+        DESIGNJS: JSON.stringify('kompetanseportalen-udirdesign.js'),
         SERVER: JSON.stringify(cdnBaseUrl),
         KPASAPIURL: JSON.stringify(apiBaseUrl),
         ACCOUNTID: [99, 100, 102, 103, 137, 138, 139, 145],

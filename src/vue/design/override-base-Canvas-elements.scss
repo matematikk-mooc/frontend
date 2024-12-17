@@ -1,6 +1,12 @@
 @import "./colors.scss";
 @import "./override-login-logout-Canvas-elements";
 
+
+// Uncomment this to see the positioning and size of all elements
+/* * {
+  outline: .0625rem solid darkslategrey !important;
+}  */
+
 .ic-app-course-menu {
   width: fit-content !important;
   position: relative !important;
@@ -12,6 +18,75 @@
   padding: 1rem 2rem !important;
   border: none !important;
 
+}
+
+.ef-quota-usage {
+  min-width: unset !important;
+  justify-content: center !important;
+} 
+.ef-main {
+  border: 1px solid rgb(199, 205, 209);
+}
+.ef-header {
+  border-bottom: unset !important;
+}
+
+.ef-footer {
+  border-top: unset !important;
+}
+
+.ef-actions {
+  max-width: -webkit-fill-available !important;
+}
+
+.ef-search-form {
+  .Button {
+    max-height: 38px;
+  }
+}
+.ef-select-col {
+  display:none;
+}
+.ef-links-col {
+  .al-trigger {
+    opacity: 1 !important;
+  }
+  button {
+    padding: 8px !important;
+  }
+  .hiddenState, .unpublished, .published {
+    margin-right: 8px;
+  }
+}
+
+#content > div > div.ef-footer.grid-row {
+  margin-left: unset !important;
+  margin-right: unset !important;
+}
+
+#content > div > div.ef-footer {
+  padding: unset !important;
+  .grid-row {
+    margin: unset !important;
+  }
+}
+
+#content > div > div.ef-footer.grid-row > .col-xs-6 {
+  flex-basis: unset !important;
+  width: 100% !important;
+  max-width: unset !important;
+  padding: unset !important;
+  
+  .col-xs-3 {
+    flex-basis: unset !important;
+    max-width: 70%;
+    width: 100%;
+  }
+  .col-xs-9 {
+    flex-basis: unset !important;
+    max-width: unset;
+
+  }
 }
 
 body.with-left-side:not(.useFullWidth) {
@@ -82,8 +157,7 @@ body.with-left-side:not(.useFullWidth) {
 #application.ic-app {
   margin-left: unset !important;
   margin-right: unset !important;
-  justify-content: center !important;
-
+  justify-content: space-between !important;
   display: flex !important;
   flex-direction: column !important;
 
@@ -94,11 +168,82 @@ body.with-left-side:not(.useFullWidth) {
 
 .ic-app-main-content {
   margin-top: 1rem !important;
-  width: fit-content !important;
   min-height: 85vh !important;
-  max-width: 100rem !important;
   justify-content: center;
   box-sizing: border-box !important;
+}
+
+#access_tokens_holder {
+  overflow-x: auto !important;
+}
+
+#not_right_side {
+  #content {
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    #qr_login_container {
+      max-width: fit-content !important;
+      align-self: center !important;
+    }
+    .css-1rcgr3a-view--flex-flex, .css-mum2ig-text {
+      align-self: center !important;
+    }
+    .css-1fnhbjn-view-flexItem {
+      max-width: 85%;
+    }
+    .css-pljkwv-view-heading {
+      font-size: 1.7rem;
+    }
+    .css-mum2ig-text {
+      font-size: 16px;
+    }
+    .button-area-block {
+      width: unset !important;
+      flex-direction: unset !important;
+      margin-top: 9px;
+    }
+    p:nth-child(8) {
+      display: flex;
+      gap: 1rem;
+    }
+    // Instillinger -> Funksjonsvalg 
+    .css-10d73cs-view--flex-flex {
+      flex-direction: column !important;
+      max-width: 450px;
+    }
+    .css-183j57y-formFieldLayout {
+      flex-direction: column !important;
+      width: 100% !important;
+    }
+    .css-dz0svk-view-flexItem, .css-10inoki-formFieldLayout {
+      width: 100% !important;
+    }
+    .css-1iimhyf-view--inlineBlock-baseButton {
+      width: 100% !important;
+    }
+    //Instillinger -> Table
+    .profile_table {
+      border-collapse: separate;
+      border-spacing: 0 12px;
+      th {
+        display: flex;
+        text-align: left;
+        label {
+          font-weight: bold;
+          position: relative;
+
+        }
+      }
+      td {
+        line-height: 18px;
+        .edit_or_show_data {
+          font-style: italic !important;
+          color: #949292;
+        }
+      }
+    }
+  }
 }
 
 .useFullWidth{
@@ -119,7 +264,6 @@ body.with-left-side:not(.useFullWidth) {
     min-width: unset !important;
   }
 }
-
 .ic-Layout-columns {
   width: 100% !important;
   display: flex !important;

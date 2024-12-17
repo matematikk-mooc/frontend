@@ -12,7 +12,7 @@
 
       <CardHighlighted class="card-highlighted"
         :theme="newestCourse.course_settings ? newestCourse.course_settings?.course_category?.category.color_code : 'theme_0'"
-        :courseIllustration="newestCourse.course_settings ? newestCourse.course_settings?.image.path : ''"
+        :courseIllustration="thumbnail"
         :label="newestCourse.name"
         :filters="newestCourse.course_settings ? newestCourse.course_settings.course_filter : []"
       >
@@ -35,7 +35,7 @@
           <div class="course-illustration-box" :class="newestCourse.course_settings ? newestCourse.course_settings?.course_category?.category.color_code : 'theme_0'">
             <img
               class="course-illustration-box-image"
-              :src="newestCourse.course_settings ? newestCourse.course_settings?.image.path : ''"
+              :src="thumbnail"
               alt=""
             />
           </div>
@@ -91,6 +91,12 @@ export default {
       isModalOpen: showCoursePreview,
       domain: window.location.origin,
     }
+  },
+  computed: {
+    thumbnail() {
+      if (this.newestCourse?.image_download_url != null) return this.newestCourse.image_download_url;
+      return this.newestCourse.course_settings ? this.newestCourse.course_settings?.image.path : '';
+    },
   },
   methods: {
     enrollToCourse(enrollCode) {
