@@ -3,12 +3,21 @@
     align-content: center;
     z-index: unset;
     display: inline-flex;
+     &:focus-visible {
+        outline: 3px solid dimgray;
+        .tooltiptext-box {
+            display: inline !important;
+            word-wrap: normal;
+        }
+    }
 }
 
-.tooltip:focus-visible {
-    outline: 3px solid dimgray;
-    .tooltiptext-box {
-        display: inline !important;
+.custom-segments__pane {
+    .tooltip:hover {
+        .tooltiptext-box {
+            display: inline !important;
+            word-wrap: normal;
+        }
     }
 }
 
