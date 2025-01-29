@@ -9,6 +9,7 @@
     outline: 3px solid dimgray;
     .tooltiptext-box {
         display: inline !important;
+        word-wrap: normal;
     }
 }
 
@@ -39,6 +40,7 @@
     gap: 1rem;
     z-index: 1;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    word-break: normal !important;
     
     .close-tooltip {
         cursor: pointer;
