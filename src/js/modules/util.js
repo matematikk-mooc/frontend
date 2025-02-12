@@ -1,5 +1,5 @@
-import api from '../api/api.js'
-import settings from "../settings";
+import api from '../api/api.js';
+import settings from '../settings';
 
 export default (function () {
   return {
@@ -8,17 +8,17 @@ export default (function () {
       allCoursesList: 2,
       myCoursesList: 3,
       dataportenCallback: 4,
-      uidpCallback: 5
+      uidpCallback: 5,
     },
 
     mapCourseSettings: function (courses, courseSettings) {
-      courses.forEach(course => {
-        var cc = courseSettings.find(x => x.course_id === course.id)
+      courses.forEach((course) => {
+        var cc = courseSettings.find((x) => x.course_id === course.id);
         if (cc) {
-          course.course_settings = cc
+          course.course_settings = cc;
         }
       });
-      return courses
+      return courses;
     },
     mmoocLoadScript: function (mmoocScript) {
       var mmoocScriptElement = document.createElement('script');
@@ -27,18 +27,18 @@ export default (function () {
       document.body.appendChild(mmoocScriptElement);
     },
 
-
     isMobileOrTablet: function () {
-      if (navigator.userAgent.match(/Android/i)
-        || navigator.userAgent.match(/webOS/i)
-        || navigator.userAgent.match(/iPhone/i)
-        || navigator.userAgent.match(/iPad/i)
-        || navigator.userAgent.match(/iPod/i)
-        || navigator.userAgent.match(/BlackBerry/i)
-        || navigator.userAgent.match(/Windows Phone/i)) {
+      if (
+        navigator.userAgent.match(/Android/i) ||
+        navigator.userAgent.match(/webOS/i) ||
+        navigator.userAgent.match(/iPhone/i) ||
+        navigator.userAgent.match(/iPad/i) ||
+        navigator.userAgent.match(/iPod/i) ||
+        navigator.userAgent.match(/BlackBerry/i) ||
+        navigator.userAgent.match(/Windows Phone/i)
+      ) {
         return true;
-      }
-      else {
+      } else {
         return false;
       }
     },
@@ -71,7 +71,9 @@ export default (function () {
       if (!settings.filterCourses) {
         return true;
       }
-      return settings.filterCoursesOnAccountId.includes(course.course.account_id);
+      return settings.filterCoursesOnAccountId.includes(
+        course.course.account_id,
+      );
     },
     callWhenElementIsPresent: function (classId, callback) {
       var checkExist = setInterval(function () {
@@ -145,7 +147,7 @@ export default (function () {
       var scrollHeight =
         Number(
           document.getElementById(frameId).contentWindow.document.body
-            .scrollHeight
+            .scrollHeight,
         ) + 20;
       document.getElementsByClassName(containerId)[0].style.height =
         scrollHeight + 'px';
@@ -153,7 +155,9 @@ export default (function () {
 
     isEnrolledAsStudent: function (enrollments) {
       for (var i = 0; i < enrollments.length; i++) {
-        if (enrollments[i].role == 'StudentEnrollment') {
+        var isStudent = enrollments[i].role == 'StudentEnrollment';
+        var isPreviewStudent = enrollments[i].role == 'StudentViewEnrollment';
+        if (isStudent || isPreviewStudent) {
           return true;
         }
       }
@@ -170,7 +174,7 @@ export default (function () {
     enrollmentsHasRoleInCourse: function (enrollments, role) {
       for (let i = 0; i < enrollments.length; i++) {
         let enrollment = enrollments[i];
-        if (enrollment["role"] == role) {
+        if (enrollment['role'] == role) {
           return true;
         }
       }
@@ -178,11 +182,24 @@ export default (function () {
     },
     hasRoleInCourse: function (courseId, role, callback) {
       let self = this;
-      return function (callback, role) {
+      return (function (callback, role) {
         api.getUsersEnrollmentsForCourse(courseId, function (enrollments) {
           callback(self.enrollmentsHasRoleInCourse(enrollments, role));
         });
-      }(callback, role)
+      })(callback, role);
+    },
+    isAdmin: function () {
+      var roles = api.getRoles();
+      return roles != null && roles.indexOf('admin') != -1;
+    },
+    isObserver: function (course) {
+      if (course && course.enrollments) {
+        return this.isEnrolledAsObserver(course.enrollments);
+      }
+    },
+    isTeacher: function () {
+      var roles = api.getRoles();
+      return roles != null && roles.indexOf('teacher') != -1;
     },
     isTeacherOrAdmin: function () {
       var roles = api.getRoles();
@@ -191,18 +208,7 @@ export default (function () {
         (roles.indexOf('teacher') != -1 || roles.indexOf('admin') != -1)
       );
     },
-    isAdmin: function () {
-      var roles = api.getRoles();
-      return (
-        roles != null &&
-        (roles.indexOf('admin') != -1)
-      );
-    },
-    isObserver: function (course) {
-      if (course && course.enrollments) {
-        return this.isEnrolledAsObserver(course.enrollments);
-      }
-    },
+
     isEnrolledWithRole(course, role) {
       if (course && course.enrollments) {
         for (var i = 0; i < course.enrollments.length; i++) {
@@ -214,23 +220,35 @@ export default (function () {
       return false;
     },
 
-    isMultilangCourse() { return this.course.kpas.multilang != "NONE" },
-    isNynorskCourse() { return this.course.kpas.multilang == "NN" },
-    isSamiskCourse() { return this.course.kpas.multilang == "SE" },
-    isPrincipal() {
-      return (this.isTeacherOrAdmin() || this.isEnrolledWithRole(this.course, settings.principalRoleType));
+    isMultilangCourse() {
+      return this.course.kpas.multilang != 'NONE';
     },
-    isRoleBasedCourse() { return this.course.kpas.role_support == 1 },
+    isNynorskCourse() {
+      return this.course.kpas.multilang == 'NN';
+    },
+    isSamiskCourse() {
+      return this.course.kpas.multilang == 'SE';
+    },
+    isPrincipal() {
+      return (
+        this.isTeacher() ||
+        this.isEnrolledWithRole(this.course, settings.principalRoleType)
+      );
+    },
+    isRoleBasedCourse() {
+      return this.course.kpas.role_support == 1;
+    },
     isMMOOCLicense() {
       return this.course.kpas.licence == 1;
     },
     postModuleProcessing() {
       try {
-        let html = '<div class="login-box" style="position: fixed">Laster diskusjonen</div>';
-        $("#wrapper").append(html);
+        let html =
+          '<div class="login-box" style="position: fixed">Laster diskusjonen</div>';
+        $('#wrapper').append(html);
         setInterval(function () {
-          console.log("postModuleProcessing intervall timer called")
-          $(".login-box").append(".");
+          console.log('postModuleProcessing intervall timer called');
+          $('.login-box').append('.');
         }, 1000);
       } catch (e) {
         console.log(e);
@@ -238,31 +256,31 @@ export default (function () {
     },
 
     getBannerType() {
-      console.log(this.course)
+      console.log(this.course);
       if (this.course && this.course.kpas && this.course.kpas.banner_type) {
         return this.course.kpas.banner_type;
       }
-      return "NONE";
+      return 'NONE';
     },
     getAlertMsg() {
       if (this.course) {
-        if (this.course.kpas.banner_type == "ALERT") {
+        if (this.course.kpas.banner_type == 'ALERT') {
           return this.course.kpas.banner_text;
         }
       }
-      return "";
+      return '';
     },
     getUnmaintainedMsg() {
       if (this.course) {
-        if (this.course.kpas.banner_type == "UNMAINTAINED") {
+        if (this.course.kpas.banner_type == 'UNMAINTAINED') {
           return this.course.kpas.banner_text;
         }
       }
-      return "";
+      return '';
     },
     getUnmaintainedSinceDate() {
       if (this.course) {
-        if (this.course.kpas.banner_type == "UNMAINTAINED") {
+        if (this.course.kpas.banner_type == 'UNMAINTAINED') {
           return this.course.kpas.unmaintained_since;
         }
       }
@@ -270,26 +288,26 @@ export default (function () {
     },
     getNotificationMsg() {
       if (this.course) {
-        if (this.course.kpas.banner_type == "NOTIFICATION") {
+        if (this.course.kpas.banner_type == 'NOTIFICATION') {
           return this.course.kpas.banner_text;
         }
       }
-      return "";
+      return '';
     },
     getFeedbackMsg() {
       if (this.course) {
-        if (this.course.kpas.banner_type == "FEEDBACK") {
+        if (this.course.kpas.banner_type == 'FEEDBACK') {
           return this.course.kpas.banner_text;
         }
       }
-      return "";
+      return '';
     },
 
     //description":"courseId:360:community:1902:940101808"
     getCountyOrCommunityNumber(groupDescription) {
-      var arr = groupDescription.split(":");
+      var arr = groupDescription.split(':');
       for (var i = 0; i < arr.length; i++) {
-        if ((arr[i] == "community") || (arr[i] == "county")) {
+        if (arr[i] == 'community' || arr[i] == 'county') {
           return parseInt(arr[i + 1], 10);
         }
       }
@@ -299,7 +317,7 @@ export default (function () {
       return window.location.href.includes('/enroll/');
     },
     isMemberOfExpiredCommunity(course, callback) {
-      let self = this
+      let self = this;
       if (!course) {
         return;
       }
@@ -308,9 +326,13 @@ export default (function () {
         if (groups.length) {
           for (var i = 0; i < groups.length; i++) {
             var group = groups[i];
-            var countyOrCommunityNumber = self.getCountyOrCommunityNumber(group.description);
+            var countyOrCommunityNumber = self.getCountyOrCommunityNumber(
+              group.description,
+            );
             if (countyOrCommunityNumber) {
-              if (fknr.utgaatteKommuneNr.indexOf(countyOrCommunityNumber) > -1) {
+              if (
+                fknr.utgaatteKommuneNr.indexOf(countyOrCommunityNumber) > -1
+              ) {
                 memberOfUtgaattKommune = true;
                 break;
               }
@@ -328,10 +350,12 @@ export default (function () {
     },
 
     getCourseUnenrollmentUuid() {
-      const unenrollmentLink = document.querySelector("#self_unenrollment_dialog a.btn-primary.action");
+      const unenrollmentLink = document.querySelector(
+        '#self_unenrollment_dialog a.btn-primary.action',
+      );
       if (!unenrollmentLink) return null;
 
-      const hrefValue = unenrollmentLink.getAttribute("href") ?? "";
+      const hrefValue = unenrollmentLink.getAttribute('href') ?? '';
       const match = hrefValue.match(/\/self_unenrollment\/([^/]+)/);
 
       const unenrollmentUuid = match ? match[1] : null;
@@ -341,10 +365,10 @@ export default (function () {
       var groupsInfo = {};
       for (var i = 0; i < groups.length; i++) {
         if (groups[i].description) {
-          var s = groups[i].description.split(":");
-          if (s[2] == "community") {
+          var s = groups[i].description.split(':');
+          if (s[2] == 'community') {
             groupsInfo.municipalityId = s[3];
-          } else if (s[2] == "county") {
+          } else if (s[2] == 'county') {
             groupsInfo.countyId = s[3];
           }
         }
@@ -387,7 +411,7 @@ export default (function () {
         'sep',
         'okt',
         'nov',
-        'des'
+        'des',
       ];
       return months[date.getMonth()];
     },
@@ -412,14 +436,14 @@ export default (function () {
     },
     sortCourses: function (courses) {
       return courses.sort(function (a, b) {
-        var aParams = a.course_code.split("::");
+        var aParams = a.course_code.split('::');
         if (aParams.length < 2) {
           return 1;
         }
 
         var aCourseCode = aParams[aParams.length - 1];
 
-        var bParams = b.course_code.split("::");
+        var bParams = b.course_code.split('::');
         if (bParams.length < 2) {
           return -1;
         }
@@ -440,7 +464,8 @@ export default (function () {
     debounce: function (func, wait, immediate) {
       var timeout;
       return function () {
-        var context = this, args = arguments;
+        var context = this,
+          args = arguments;
         var later = function () {
           timeout = null;
           if (!immediate) func.apply(context, args);
@@ -453,16 +478,14 @@ export default (function () {
     },
     filter: function (arr, fun) {
       var len = arr.length;
-      if (typeof fun != "function")
-        throw new TypeError();
+      if (typeof fun != 'function') throw new TypeError();
 
       var res = new Array();
       var thisp = arguments[1];
       for (var i = 0; i < len; i++) {
         if (i in arr) {
           var val = arr[i];
-          if (fun.call(thisp, val, i, arr))
-            res.push(val);
+          if (fun.call(thisp, val, i, arr)) res.push(val);
         }
       }
 
@@ -474,29 +497,28 @@ export default (function () {
       const hash = location.hash.substring(1);
       return JSON.parse(
         '{"' + hash.replace(/&/g, '","').replace(/=/g, '":"') + '"}',
-        (key, value) => key === "" ? value : decodeURIComponent(value)
+        (key, value) => (key === '' ? value : decodeURIComponent(value)),
       );
     },
     updateRightMenuButtons: function () {
-      $("#course_show_secondary > a").each(function () {
+      $('#course_show_secondary > a').each(function () {
         var $this = $(this);
-        var _href = $this.attr("href");
-        if (_href.includes("/calendar?")) {
+        var _href = $this.attr('href');
+        if (_href.includes('/calendar?')) {
           $this.remove();
-        }
-        else {
-          $this.attr("href", _href);
+        } else {
+          $this.attr('href', _href);
         }
       });
     },
     removeRecentFeedback: function () {
-      $(".recent_feedback").each(function () {
+      $('.recent_feedback').each(function () {
         var $this = $(this);
-        $this.remove()
+        $this.remove();
       });
     },
     getLinkToAvailableCourses: function () {
-      var linkToAvailableCourses = "/search/all_courses";
+      var linkToAvailableCourses = '/search/all_courses';
       //ETH20190409 By making sure the root account loads our design, we do not need a front page.
       /*
               if (allCoursesFrontpageCourseID > 0) {
@@ -539,7 +561,7 @@ export default (function () {
     fetchWithSwr: function (key, fetcher, callback) {
       //return stale content while data is revalidating in the background
       //clear cache if data is not valid json/corrupted
-      let storageKey = `swr_${key}`
+      let storageKey = `swr_${key}`;
       let initStorageDataIsSent = false;
       let storageData = window.localStorage.getItem(storageKey);
       if (storageData != null) {
@@ -556,10 +578,22 @@ export default (function () {
       //execute fetch data call right away if there is no cache response in storage
       if (window.document.readyState != 'complete' && initStorageDataIsSent) {
         window.addEventListener('load', () => {
-          this.swrFetcher(storageKey, fetcher, callback, storageData, initStorageDataIsSent);
+          this.swrFetcher(
+            storageKey,
+            fetcher,
+            callback,
+            storageData,
+            initStorageDataIsSent,
+          );
         });
       } else {
-        this.swrFetcher(storageKey, fetcher, callback, storageData, initStorageDataIsSent);
+        this.swrFetcher(
+          storageKey,
+          fetcher,
+          callback,
+          storageData,
+          initStorageDataIsSent,
+        );
       }
     },
     swrFetcher: function (key, fetcher, callback, stringData, init) {
@@ -572,6 +606,6 @@ export default (function () {
           window.localStorage.setItem(key, newStorageDataString);
         }
       });
-    }
+    },
   };
 })();

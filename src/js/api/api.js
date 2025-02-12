@@ -1,8 +1,8 @@
-import settings from "../settings";
-import util from "../modules/util";
-import utilRoot from "../utilRoot";
+import settings from '../settings';
+import util from '../modules/util';
+import utilRoot from '../utilRoot';
 
-export default (function() {
+export default (function () {
   let _urlToTypeMapping = [];
 
   _urlToTypeMapping['quizzes'] = 'Quiz';
@@ -47,7 +47,7 @@ export default (function() {
         data: params,
         success(response) {
           if ('student_id' in params) {
-            response = response.map(el => {
+            response = response.map((el) => {
               el.student_id = params.student_id;
               return el;
             });
@@ -56,7 +56,7 @@ export default (function() {
             const groupId = uri.split('/groups/');
             groupId = groupId[1].split('/users');
             groupId = parseInt(groupId[0]);
-            response = response.map(el => {
+            response = response.map((el) => {
               el.group_id = groupId;
               return el;
             });
@@ -65,10 +65,10 @@ export default (function() {
         },
         error(XMLHttpRequest, textStatus, errorThrown) {
           console.log('Error during GET');
-          if(customError) {
+          if (customError) {
             customError(XMLHttpRequest.responseText);
           }
-        }
+        },
       });
     },
 
@@ -90,7 +90,7 @@ export default (function() {
         },
         error(XMLHttpRequest, textStatus, errorThrown) {
           console.log('Error during PUT');
-        }
+        },
       });
     },
 
@@ -108,7 +108,7 @@ export default (function() {
         },
         error(XMLHttpRequest, textStatus, errorThrown) {
           console.log('Error during DELETE');
-        }
+        },
       });
     },
 
@@ -120,7 +120,7 @@ export default (function() {
      */
     listModulesForCourse(callback, error, cid) {
       let href = `/api/v1/courses/${cid}/modules?per_page=100`;
-      $.getJSON(href, modules => {
+      $.getJSON(href, (modules) => {
         const noOfModules = modules.length;
         let asyncsDone = 0;
         modules.forEach((module, index) => {
@@ -129,14 +129,14 @@ export default (function() {
           }/items?per_page=100`;
           $.getJSON(
             href,
-            (function(j) {
-              return function(items) {
+            (function (j) {
+              return function (items) {
                 modules[j].items = items;
                 asyncsDone++;
 
                 asyncsDone === noOfModules && callback(modules);
               };
-            })(index) // calling the function with the current value
+            })(index), // calling the function with the current value
           );
         });
       });
@@ -156,7 +156,7 @@ export default (function() {
 
         moduleId = q.substring(
           q.indexOf(paramName) + paramName.length + 1,
-          q.length
+          q.length,
         );
         if (moduleId.indexOf('&') != -1)
           moduleId = moduleId.substring(0, moduleId.indexOf('&'));
@@ -190,34 +190,30 @@ export default (function() {
 
     getAllCourses(callback, error) {
       this._get({
-        callback: function(courses) {
-          const filteredCourses = courses.filter(
-            util.filterSearchAllCourse
-          );
+        callback: function (courses) {
+          const filteredCourses = courses.filter(util.filterSearchAllCourse);
           callback(filteredCourses);
         },
         error: error,
         uri: '/search/all_courses',
-        params: { per_page: 999 }
+        params: { per_page: 999 },
       });
     },
 
-    getAllPublicCourses: function(callback, error) {
+    getAllPublicCourses: function (callback, error) {
       this._get({
-        callback: function(courses) {
-          var filteredCourses = courses.filter(
-            util.filterSearchAllCourse
-          );
+        callback: function (courses) {
+          var filteredCourses = courses.filter(util.filterSearchAllCourse);
           callback(filteredCourses);
         },
         error: error,
         // if not authenticated, it displays only courses with Open Enrollment enabled
         uri: '/search/all_courses?open_enrollment_only=true',
-        params: { per_page: 999 }
+        params: { per_page: 999 },
       });
     },
 
-    getEnrolledCourses: function(callback, error) {
+    getEnrolledCourses: function (callback, error) {
       // returns empty set if a user is not authenticated
       if (!util.isAuthenticated()) {
         callback([]);
@@ -225,8 +221,8 @@ export default (function() {
       }
 
       this._get({
-        callback: function(courses) {
-          if(settings.filterCourses) {
+        callback: function (courses) {
+          if (settings.filterCourses) {
             const filteredCourses = courses.filter(util.filterCourse);
             callback(filteredCourses);
           } else {
@@ -237,8 +233,8 @@ export default (function() {
         uri: '/courses?include[]=public_description',
         params: {
           include: ['syllabus_body', 'course_progress'],
-          per_page: '100'
-        }
+          per_page: '100',
+        },
       });
     },
 
@@ -261,7 +257,7 @@ export default (function() {
         callback: callback,
         error: error,
         uri: `/courses/${courseId}/modules`,
-        params: { per_page: 999 }
+        params: { per_page: 999 },
       });
     },
 
@@ -270,17 +266,16 @@ export default (function() {
         callback: callback,
         error: error,
         uri: `/courses/${courseId}/modules?include[]=items`,
-        params: { per_page: 999 }
+        params: { per_page: 999 },
       });
     },
-
 
     getItemsForModuleId(callback, error, courseId, moduleId, params) {
       this._get({
         callback: callback,
         error: error,
         uri: `/courses/${courseId}/modules/${moduleId}/items`,
-        params: params
+        params: params,
       });
     },
 
@@ -290,10 +285,12 @@ export default (function() {
     },
     getModuleItemSequence(courseId, moduleItemId, callback, error) {
       this._get({
-        callback: function(moduleItemSequence) {callback(courseId, moduleItemSequence)},
+        callback: function (moduleItemSequence) {
+          callback(courseId, moduleItemSequence);
+        },
         error: error,
         uri: `/courses/${courseId}/module_item_sequence`,
-        params: { asset_id: moduleItemId, asset_type: "ModuleItem" }
+        params: { asset_id: moduleItemId, asset_type: 'ModuleItem' },
       });
     },
 
@@ -301,21 +298,21 @@ export default (function() {
       this._get({
         callback: callback,
         error: error,
-        uri: `/courses/${courseId}?include[]=self_enrollment_code`,
-        params: {}
+        uri: `/courses/${courseId}?include[]=self_enrollment_code&include[]=course_image`,
+        params: {},
       });
     },
     //Note that in newer versions of Canvas, worked on 8.2.2019.
     //we can use ENV to check this.
-    isGroupDiscussion: function(courseId, contentId, callback) {
-        if (typeof ENV.DISCUSSION.IS_GROUP !== 'undefined') {
-          callback(ENV.DISCUSSION.IS_GROUP);
-        } else {
-          //Fallback for older versions.
-          this.getDiscussionTopic(courseId, contentId, function(discussion) {
-            callback(discussion.group_category_id ? true : false);
-          });
-        }
+    isGroupDiscussion: function (courseId, contentId, callback) {
+      if (typeof ENV.DISCUSSION.IS_GROUP !== 'undefined') {
+        callback(ENV.DISCUSSION.IS_GROUP);
+      } else {
+        //Fallback for older versions.
+        this.getDiscussionTopic(courseId, contentId, function (discussion) {
+          callback(discussion.group_category_id ? true : false);
+        });
+      }
     },
 
     getCurrentGroupId() {
@@ -332,7 +329,7 @@ export default (function() {
         callback: callback,
         error: error,
         uri: `/groups/${groupId}`,
-        params: {}
+        params: {},
       });
     },
 
@@ -341,7 +338,7 @@ export default (function() {
         callback: callback,
         error: error,
         uri: `/groups/${groupId}/users`,
-        params: { include: ['avatar_url'], per_page: 999 }
+        params: { include: ['avatar_url'], per_page: 999 },
       });
     },
 
@@ -349,9 +346,9 @@ export default (function() {
       moduleItemId,
       typeAndContentId,
       callback,
-      error
+      error,
     ) {
-      this.getModulesForCurrentCourse(modules => {
+      this.getModulesForCurrentCourse((modules) => {
         let bCurrentItemFound = false;
         let currentHeaderItem = null;
         for (let i = 0; i < modules.length; i++) {
@@ -444,26 +441,26 @@ export default (function() {
       this.getSpecificGroupDiscussionTopic(
         groupId,
         groupTopicId,
-        groupDiscussion => {
-          _this.getUserGroups(groups => {
+        (groupDiscussion) => {
+          _this.getUserGroups((groups) => {
             for (let i = 0; i < groups.length; i++) {
               if (groups[i].id == groupId) {
                 const moduleItemId = null;
                 const currentTypeAndContentId = {
                   contentId: groupDiscussion.root_topic_id,
-                  type: 'Discussion'
+                  type: 'Discussion',
                 };
                 _this.getCurrentModuleForItemOrTypeAndContentId(
                   moduleItemId,
                   currentTypeAndContentId,
                   callback,
-                  error
+                  error,
                 );
                 break; //We found the correct group, no need to check the rest.
               }
             } //end for all the groups
           }); //getUserGroups
-        }
+        },
       ); //getSpecificGroupDiscussionTopic
     },
 
@@ -487,7 +484,7 @@ export default (function() {
           currentModuleItemId,
           currentTypeAndContentId,
           callback,
-          error
+          error,
         );
       }
     },
@@ -513,7 +510,7 @@ export default (function() {
         callback: callback,
         error: error,
         uri: '/users/self/profile',
-        params: {}
+        params: {},
       });
     },
     getActivityStreamForUser(callback, error) {
@@ -521,16 +518,12 @@ export default (function() {
         callback: callback,
         error: error,
         uri: '/users/self/activity_stream',
-        params: {}
+        params: {},
       });
     },
 
     currentPageIsAnnouncement() {
-      return (
-        $('#section-tabs')
-          .find('a.announcements.active')
-          .size() == 1
-      );
+      return $('#section-tabs').find('a.announcements.active').size() == 1;
     },
 
     currentPageIsModuleItem() {
@@ -551,7 +544,7 @@ export default (function() {
         callback: callback,
         error: error,
         uri: '/conversations/unread_count',
-        params: {}
+        params: {},
       });
     },
     //api/v1/search/recipients?search=&per_page=20&permissions[]=send_messages_all&messageable_only=true&synthetic_contexts=true&context=course_1_sections
@@ -567,8 +560,8 @@ export default (function() {
           messageable_only: true,
           synthetic_contexts: true,
           context: recipientsContext,
-          per_page: 999
-        }
+          per_page: 999,
+        },
       });
     },
 
@@ -578,7 +571,7 @@ export default (function() {
       subject,
       body,
       callback,
-      error
+      error,
     ) {
       const courseContext = `course_${courseId}`;
       this._post({
@@ -589,8 +582,8 @@ export default (function() {
           course: courseContext,
           recipients: [recipient],
           subject: subject,
-          body: body
-        }
+          body: body,
+        },
       });
     },
 
@@ -599,7 +592,7 @@ export default (function() {
         callback: callback,
         error: error,
         uri: '/accounts',
-        params: {}
+        params: {},
       });
     },
 
@@ -608,7 +601,7 @@ export default (function() {
         callback: callback,
         error: error,
         uri: `/accounts/${account}/users`,
-        params: {}
+        params: {},
       });
     },
     getCoursesForAccount(account, callback, error) {
@@ -616,7 +609,7 @@ export default (function() {
         callback: callback,
         error: error,
         uri: `/accounts/${account}/courses`,
-        params: { per_page: 999 }
+        params: { per_page: 999 },
       });
     },
 
@@ -625,7 +618,7 @@ export default (function() {
         callback: callback,
         error: error,
         uri: '/courses',
-        params: { per_page: 999 }
+        params: { per_page: 999 },
       });
     },
 
@@ -634,7 +627,7 @@ export default (function() {
         callback: callback,
         error: error,
         uri: `/accounts/${account}/group_categories`,
-        params: {}
+        params: {},
       });
     },
 
@@ -643,7 +636,7 @@ export default (function() {
         callback: callback,
         error: error,
         uri: `/courses/${course}/group_categories`,
-        params: { per_page: 999 }
+        params: { per_page: 999 },
       });
     },
 
@@ -657,7 +650,7 @@ export default (function() {
         const next = xhr
           .getResponseHeader('Link')
           .split(',')
-          .find(e => {
+          .find((e) => {
             return e.match('rel="next"');
           });
         if (next === undefined) {
@@ -668,11 +661,11 @@ export default (function() {
             callback: that._getGroupsForAccountHelper(
               accumulatedGroups,
               callback,
-              error
+              error,
             ),
             error: error,
             uri: fullURI.split('api/v1')[1],
-            params: {}
+            params: {},
           });
         }
       };
@@ -683,7 +676,7 @@ export default (function() {
         callback: this._getGroupsForAccountHelper([], callback, error),
         error: error,
         uri: `/accounts/${account}/groups`,
-        params: { per_page: 999 }
+        params: { per_page: 999 },
       });
     },
 
@@ -693,7 +686,7 @@ export default (function() {
         callback: callback,
         error: error,
         uri: `/group_categories/${categoryID}`,
-        params: {}
+        params: {},
       });
     },
 
@@ -703,7 +696,7 @@ export default (function() {
         callback: callback,
         error: error,
         uri: `/group_categories/${categoryID}/groups`,
-        params: { per_page: 999 }
+        params: { per_page: 999 },
       });
     },
 
@@ -713,7 +706,7 @@ export default (function() {
         callback: callback,
         error: error,
         uri: `/courses/${courseID}/groups`,
-        params: { per_page: 999 }
+        params: { per_page: 999 },
       });
     },
 
@@ -722,21 +715,20 @@ export default (function() {
         callback: callback,
         error: error,
         uri: '/users/self/groups',
-        params: { per_page: 999 }
+        params: { per_page: 999 },
       });
     },
     getUserGroupsForCourse(courseId, callback, error) {
-      this.getUserGroups(groups => {
-          let usersGroups = [];
-          for (let i = 0; i < groups.length; i++) {
-            const group = groups[i];
-            if (group.course_id == courseId) {
-              usersGroups.push(group);
-            }
+      this.getUserGroups((groups) => {
+        let usersGroups = [];
+        for (let i = 0; i < groups.length; i++) {
+          const group = groups[i];
+          if (group.course_id == courseId) {
+            usersGroups.push(group);
           }
-          callback(usersGroups);
         }
-      );
+        callback(usersGroups);
+      });
     },
 
     // /api/v1/courses/:course_id/sections
@@ -745,7 +737,7 @@ export default (function() {
         callback: callback,
         error: error,
         uri: `/courses/${courseID}/sections`,
-        params: params
+        params: params,
       });
     },
 
@@ -755,7 +747,7 @@ export default (function() {
         callback: callback,
         error: error,
         uri: `/sections/${sectionID}`,
-        params: {}
+        params: {},
       });
     },
 
@@ -766,7 +758,7 @@ export default (function() {
         error: error,
         uri: `/courses/${courseId}/assignments/${assignmentId}`,
         // "params": {"include": ["submission", "assignment_visibility", "overrides", "observed_users"]},
-        params: {}
+        params: {},
       });
     },
 
@@ -776,14 +768,14 @@ export default (function() {
         callback: callback,
         error: error,
         uri: `/courses/${courseId}/assignments`,
-        params: { per_page: 999 }
+        params: { per_page: 999 },
       });
     },
     getPagesForCourse(courseId, callback) {
       this._get({
         callback: callback,
         uri: `/courses/${courseId}/pages`,
-        params: { per_page: 999 }
+        params: { per_page: 999 },
       });
     },
 
@@ -791,14 +783,14 @@ export default (function() {
       this._get({
         callback: callback,
         uri: `/courses/${courseId}/discussion_topics`,
-        params: { per_page: 999 }
+        params: { per_page: 999 },
       });
     },
     getQuizzesForCourse(courseId, callback) {
       this._get({
         callback: callback,
         uri: `/courses/${courseId}/quizzes`,
-        params: { per_page: 999 }
+        params: { per_page: 999 },
       });
     },
 
@@ -808,7 +800,7 @@ export default (function() {
       assignmentId,
       user_id,
       callback,
-      error
+      error,
     ) {
       this._get({
         callback: callback,
@@ -821,9 +813,9 @@ export default (function() {
             'rubric_assessment',
             'visibility',
             'course',
-            'user'
-          ]
-        }
+            'user',
+          ],
+        },
         // "params": {"include": ["rubric_assessment", "visibility"]},
       });
     },
@@ -835,7 +827,7 @@ export default (function() {
       assignmentId,
       submission_id,
       callback,
-      error
+      error,
     ) {
       // Returns only the student's peer reviews if you are a student. Returns all peer reviews if you are a teacher or admin
       this._get({
@@ -843,7 +835,7 @@ export default (function() {
         error: error,
         uri: `/courses/${courseId}/assignments/${assignmentId}/submissions/${submission_id}/peer_reviews`,
         // "params": {"include": ["submission_comments", "user"]},
-        params: { include: ['user'] }
+        params: { include: ['user'] },
       });
     },
 
@@ -853,7 +845,7 @@ export default (function() {
         callback: callback,
         error: error,
         uri: `/courses/${courseId}/assignments/${assignmentId}/peer_reviews`,
-        params: { include: ['user'] }
+        params: { include: ['user'] },
       });
     },
 
@@ -863,19 +855,19 @@ export default (function() {
       submissionID,
       userID,
       callback,
-      error
+      error,
     ) {
       this._post({
         callback: callback,
         error: error,
         uri: `/courses/${courseID}/assignments/${assignmentID}/submissions/${submissionID}/peer_reviews`,
-        params: { user_id: userID }
+        params: { user_id: userID },
       });
     },
 
     //https://kurs.iktsenteret.no/api/v1/courses/41/enrollments?enrollment%5Bself_enrollment_code%5D=WJTLML&enrollment%5Buser_id%5D=self
     enrollUser(enrollAction, callback) {
-      const jqxhr = $.post(enrollAction, data => {
+      const jqxhr = $.post(enrollAction, (data) => {
         callback(data);
       });
     },
@@ -889,8 +881,8 @@ export default (function() {
           'enrollment[user_id]': userId,
           'enrollment[type]': etype,
           'enrollment[enrollment_state]': 'active',
-          'enrollment[limit_privileges_to_course_section]': true
-        }
+          'enrollment[limit_privileges_to_course_section]': true,
+        },
       });
       return true;
     },
@@ -900,8 +892,8 @@ export default (function() {
         error: error,
         uri: `/group_categories/${categoryId}/groups`,
         params: {
-          name: groupName
-        }
+          name: groupName,
+        },
       });
     },
     createSection(courseId, sectionName, callback, error) {
@@ -910,8 +902,8 @@ export default (function() {
         error: error,
         uri: `/courses/${courseId}/sections`,
         params: {
-          'course_section[name]': sectionName
-        }
+          'course_section[name]': sectionName,
+        },
       });
     },
 
@@ -920,7 +912,7 @@ export default (function() {
         callback: callback,
         error: error,
         uri: `/groups/${gid}/memberships`,
-        params: { user_id: uid }
+        params: { user_id: uid },
       });
     },
 
@@ -931,7 +923,7 @@ export default (function() {
         callback: callback,
         error: error,
         uri: `/accounts/${account_id}/logins`,
-        params: params
+        params: params,
       });
     },
 
@@ -939,7 +931,7 @@ export default (function() {
       this._get({
         callback: callback,
         uri: `/courses/${courseId}/discussion_topics/${contentId}`,
-        params: { per_page: 999 }
+        params: { per_page: 999 },
       });
     },
 
@@ -947,7 +939,7 @@ export default (function() {
       this._get({
         callback: callback,
         uri: `/courses/${courseId}/quizzes/${contentId}`,
-        params: { per_page: 999 }
+        params: { per_page: 999 },
       });
     },
 
@@ -955,7 +947,7 @@ export default (function() {
       this._get({
         callback: callback,
         uri: `/groups/${groupId}/discussion_topics/${contentId}`,
-        params: { per_page: 999 }
+        params: { per_page: 999 },
       });
     },
 
@@ -963,7 +955,7 @@ export default (function() {
       this._get({
         callback: callback,
         uri: `/groups/${contentId}/discussion_topics/`,
-        params: { per_page: 999 }
+        params: { per_page: 999 },
       });
     },
 
@@ -971,7 +963,7 @@ export default (function() {
       this._get({
         callback: callback,
         uri: `/courses/${courseId}/discussion_topics`,
-        params: { only_announcements: true, per_page: 999 }
+        params: { only_announcements: true, per_page: 999 },
       });
     },
 
@@ -979,47 +971,47 @@ export default (function() {
       this._get({
         callback: callback,
         uri: `/courses/${courseId}/enrollments`,
-        params: params
+        params: params,
       });
     },
     postEnrollmentAcceptInvite(courseId, enrollmentId, params, callback) {
       this._post({
         callback: callback,
         uri: `/courses/${courseId}/enrollments/${enrollmentId}/accept`,
-        params: params
+        params: params,
       });
     },
     postEnrollmentRejectInvite(courseId, enrollmentId, params, callback) {
       this._post({
         callback: callback,
         uri: `/courses/${courseId}/enrollments/${enrollmentId}/reject`,
-        params: params
+        params: params,
       });
     },
     getEnrollmentsForSection(sectionId, params, callback) {
       this._get({
         callback: callback,
         uri: `/sections/${sectionId}/enrollments`,
-        params: params
+        params: params,
       });
     },
     getUsersEnrollmentsForCourse(courseId, callback) {
       this._get({
-        callback: courses => {
+        callback: (courses) => {
           const filteredCourses = courses.filter(
-            course => course.course_id == courseId
+            (course) => course.course_id == courseId,
           );
           callback(filteredCourses);
         },
         uri: `/users/self/enrollments`,
-        params: {per_page: 999}
+        params: { per_page: 999 },
       });
     },
     getEnrollmentsForSection(sectionId, params, callback) {
       this._get({
         callback: callback,
         uri: `/sections/${sectionId}/enrollments`,
-        params: params
+        params: params,
       });
     },
     deleteUserCustomData(callback) {
@@ -1027,8 +1019,8 @@ export default (function() {
         callback: callback,
         uri: `/users/self/custom_data`,
         params: {
-          "ns": "no.udir.kompetanse"
-        }
+          ns: 'no.udir.kompetanse',
+        },
       });
     },
 
@@ -1037,11 +1029,11 @@ export default (function() {
         callback: callback,
         uri: `/users/self/custom_data`,
         params: {
-          "ns": "no.udir.kompetanse",
-          "data": {
-            "privacyPolicyVersion": privacyPolicyVersion,
-          }
-        }
+          ns: 'no.udir.kompetanse',
+          data: {
+            privacyPolicyVersion: privacyPolicyVersion,
+          },
+        },
       });
     },
 
@@ -1055,8 +1047,8 @@ export default (function() {
         error: error,
         uri: `/users/self/custom_data`,
         params: {
-          "ns": "no.udir.kompetanse",
-        }
+          ns: 'no.udir.kompetanse',
+        },
       });
     },
 
@@ -1068,7 +1060,7 @@ export default (function() {
       this._get({
         callback: callback,
         uri: '/calendar_events/',
-        params: params
+        params: params,
       });
     },
 
@@ -1076,8 +1068,8 @@ export default (function() {
       this._put({
         callback: callback,
         uri: `/courses/${courseId}/discussion_topics/${contentId}/read_all`,
-        params: { forced_read_state: 'false' }
+        params: { forced_read_state: 'false' },
       });
-    }
+    },
   };
 })();
