@@ -85,15 +85,19 @@ describe('Canvas: Theme', async () => {
         .locator('.Theme__header-secondary button:has-text("Lagre tema")')
         .click();
       await page
-        .locator('span[role="dialog"] h2:has-text("Lagre tema")')
+        .locator('form[aria-label="Lagre temadialog"]')
         .waitFor({ state: 'visible' });
 
-      await page.locator('#new_theme_theme_name').fill(themeName);
       await page
-        .locator('span[role="dialog"] button:has-text("Lagre tema")')
+        .locator('form[aria-label="Lagre temadialog"] input[name="name"]')
+        .fill(themeName);
+      await page
+        .locator(
+          'form[aria-label="Lagre temadialog"] button:has-text("Lagre tema")',
+        )
         .click();
       await page
-        .locator('span[role="dialog"] h2:has-text("Lagre tema")')
+        .locator('form[aria-label="Lagre temadialog"]')
         .waitFor({ state: 'hidden' });
     });
 
