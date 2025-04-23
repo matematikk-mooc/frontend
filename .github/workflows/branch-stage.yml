@@ -4,6 +4,7 @@ on:
     push:
         branches:
             - stage
+    workflow_dispatch:
 
 jobs:
     build-node:
