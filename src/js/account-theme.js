@@ -166,6 +166,7 @@ jQuery(document).ready(function ($) {
           else if (document.getElementById('f1_container')) {
             console.log('f1_container'); 
             var parent = document.getElementById('f1_container');
+            $('.ic-Login').show();
           }
             let login = document.createElement('div');
             login.id = 'login-component';

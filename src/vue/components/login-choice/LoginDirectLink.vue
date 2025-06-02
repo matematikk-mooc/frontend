@@ -62,7 +62,6 @@ export default {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 30rem;
     max-width: 40rem;
     width: 100%;
     margin-top: 16px;
@@ -87,6 +86,9 @@ export default {
     justify-content: center;
     margin-bottom: 2rem;
     gap: 1rem;
+    .btn--filled.btn--md {
+        height: auto !important;
+    }
 }
 .login-logos {
     display: flex;
