@@ -330,6 +330,25 @@ body.with-left-side:not(.useFullWidth) {
   flex-direction: unset !important;
 }
 
+// Admin new theme menu
+
+.css-161w609-menu {
+  overflow: hidden !important;
+}
+
+.css-7y752m-menuItem {
+  padding-inline-start: 0.8rem !important;
+}
+
+.css-zptgsl-menuItem__label {
+word-break: break-all !important;
+}
+
+.css-qb5lup-view-table {
+    table-layout:fixed;
+    overflow-wrap: break-word;
+}
+
 .user-settings-wrapper {
   width: 100% !important;
   margin-left: 0 !important;
