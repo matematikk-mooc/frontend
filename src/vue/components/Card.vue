@@ -148,7 +148,7 @@ export default {
     box-sizing: border-box;
     flex-grow: 2;
     padding: 0.5rem 1.5rem 0.5rem 1.5rem;
-    font-family: Roboto;
+    font-family: "Inter" !important;
     font-weight: 400;
     display: flex;
     flex-direction: column;
@@ -198,7 +198,7 @@ export default {
     h2,
     h3 {
       font-size: 1.125rem;
-      font-family: 'Roboto';
+      font-family: 'Inter';
       font-weight: 600;
       line-height: 1.5rem;
       margin: 0;
@@ -222,7 +222,7 @@ export default {
   .card-content-enrolled-text p {
     margin: 0;
     font-size: 0.875rem;
-    font-family: 'Roboto';
+    font-family: 'Inter';
     font-weight: 400;
     color: black !important;
     line-height: 1.4;

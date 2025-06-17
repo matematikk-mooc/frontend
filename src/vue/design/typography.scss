@@ -1,42 +1,6 @@
 $path: $urlToFile;
 
 @font-face {
-    font-family:'Montserrat'; 
-	src: url(#{$path} + 'fonts/MontserratRegular.woff2') format('woff2'),
-	     url(#{$path} + 'fonts/MontserratRegular.woff') format('woff');
-    font-weight: 400;
-    font-style: normal;
-    font-stretch: normal;
-}
-@font-face {
-    font-family:'Montserrat';
-    
-	src:url(#{$path} + 'fonts/MontserratMedium.woff2') format('woff2'),
-	    url(#{$path} + 'fonts/MontserratMedium.woff') format('woff');
-    font-weight: 500;
-    font-style: normal;
-    font-stretch: normal;
-}
-
-@font-face {
-    font-family:'Montserrat';
-	src:url(#{$path} + 'fonts/MontserratSemiBold.woff2') format('woff2'),
-		url(#{$path}+ 'fonts/MontserratSemiBold.woff') format('woff');
-    font-weight: 600;
-    font-style: normal;
-    font-stretch: normal;
-}
-
-@font-face {
-    font-family:'Montserrat';
-    src: url(#{$path} + 'fonts/MontserratBold.woff2') format('woff2'),
-	     url(#{$path} + 'fonts/MontserratBold.woff') format('woff');
-    font-weight: 700;
-    font-style: normal;
-    font-stretch: normal;
-}
-
-@font-face {
     font-family: 'robotobold';
     src: url(#{$path} + 'fonts/Robotobold.woff2') format('woff2'),
          url(#{$path} + 'fonts/RobotoBold.woff') format('woff');
@@ -62,38 +26,47 @@ $path: $urlToFile;
     font-style: normal;
 
 }
+
+@font-face {
+    font-family: 'Inter';
+    src: url(#{$path} + '/fonts/Inter/Inter-VariableFont_opsz,wght.ttf') format("truetype-variations");
+    font-weight: "700";
+}
 body{
-    font-family: 'Roboto';
+    font-family: 'Inter';
     font-size:1rem;
     line-height: 1.5rem;
+    font-variation-settings: "wght" 400;
 }
 
 h1{
-    font-family:'MontSerrat';
+    font-family:'Inter';
     font-weight: 500;
+    font-variation-settings: "wght" 600;
     font-size: 2.25rem;
     line-height: 2.75rem;
 }
 h2{
-    font-family:'MontSerrat';
+    font-family:'Inter';
+    font-variation-settings: "wght" 700;
     font-weight: 500;
     font-size: 1.5rem;
     line-height: 2.25rem;
 }
 h3{
-    font-family:'MontSerrat';
+    font-family:'Inter';
     font-weight: 400;
     font-size: 1.5rem;
     line-height: 2.25rem;
 }
 h4{
-    font-family:'MontSerrat';
+    font-family:'Inter';
     font-weight: 500;
     font-size: 1.25rem;
     line-height: 1.75rem;
 }
 h5{
-    font-family:'MontSerrat';
+    font-family:'Inter';
     font-weight: 500;
     font-size: 1rem;
     line-height: 1.5rem;

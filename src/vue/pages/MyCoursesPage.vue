@@ -92,6 +92,7 @@ export default {
     justify-content: center;
 
     h1 {
+      font-family: "Inter";
       margin-bottom: 20px;
     }
 

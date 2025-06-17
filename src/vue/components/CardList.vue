@@ -320,7 +320,7 @@ export default {
 
   .card-item .card-item-invite p {
     color: #000 !important;
-    font-family: Roboto;
+    font-family: Inter;
     font-size: 14px;
     font-weight: 500;
     line-height: 1.4;

@@ -181,7 +181,7 @@ jQuery(function($) {
 
         let content = document.getElementsByClassName("css-kmrjxt-baseButton__content")[0]
         content.classList.remove("css-kmrjxt-baseButton__content");
-        content.style.fontFamily = "Roboto";
+        content.style.fontFamily = "Inter";
         content.style.fontWeight = "700";
       }
     }

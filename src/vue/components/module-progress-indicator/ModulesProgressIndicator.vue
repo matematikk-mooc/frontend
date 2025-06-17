@@ -41,7 +41,7 @@ export default {
   padding-left: 1.5rem;
   box-sizing: border-box;
   h5{
-    font-family: Montserrat;
+    font-family: Inter;
     font-weight: 500;
   }
 
@@ -66,7 +66,7 @@ export default {
 }
 .progress-label {
    font-size: 0.875rem;
-   font-family: 'Roboto';
+   font-family: 'Inter';
    font-weight: 400;
   }
 }

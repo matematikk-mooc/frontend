@@ -64,7 +64,7 @@ font-family: Arial, Helvetica, sans-serif;
   align-items: center;
   justify-content: space-between;
   flex-grow: 1;
-  font-family: 'Montserrat', 'Helvetica Neue', 'sans-serif';
+  font-family: 'Inter', 'Helvetica Neue', 'sans-serif';
   padding: 20px 0 20px 0;
   width: 100%;
   min-height: 3.75rem;
@@ -79,7 +79,7 @@ font-family: Arial, Helvetica, sans-serif;
 .header-brand {
   height: 29.008px;
   flex-grow: 0;
-  font-family: 'montserrat';
+  font-family: 'Inter';
   font-size: 24px;
   font-weight: 500;
   font-stretch: normal;
