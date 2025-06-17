@@ -6,41 +6,54 @@
     <Dropdown :logged_in="logged_in" :admin="admin" :backgroundColor="'white'"  :iconType="'hamburger'" :icon="'settings'" :link="settingsLink"></Dropdown>
     <!-- Navbar -->
     <ul class="header__link-list mobile-hide">
+      <template v-if="!logged_in">
+        <li class="header__list-item" v-if="renderLoginLink">
+          <a class="header__link" :href="loginLink">Logg inn</a>
+        </li>
+          <li class="header__list-item" v-else="renderLoginLink">
+            <a class="header__link" :href="frontpageLink">Forsiden</a>
+          </li>
+      </template>
+      <template v-if="logged_in">
       <li class="header__list-item" v-if="admin">
-        <span>
-          <a class="header__link" :href="adminLink">Administrator</a>
-        </span>
+        <a class="header__link" :href="adminLink">Administrator</a>
       </li>
-      <li class="header__list-item" v-if="!logged_in">
-        <span>
-          <LoginChoice></LoginChoice>
-        </span>
-      </li>
-      <li class="header__list-item" v-if="logged_in">
-        <span>
+        <li class="header__list-item">
           <a class="header__link" :href="settingsLink">Innstillinger</a>
-        </span>
-      </li>
-      <li class="header__list-item" v-if="logged_in">
-        <span>
+        </li>
+        <li class="header__list-item">
           <a class="header__link" :href="logoutLink">Logg ut</a>
-        </span>
-      </li>
+        </li>
+      </template>
     </ul>
   </header>
 </template>
 
 <script setup>
-  import LoginChoice from '../login-choice/LoginChoice.vue';
   import Dropdown from '../dropdown/Dropdown.vue'
   const {logged_in, admin} = defineProps(['logged_in', 'admin'])
   const domain = window.location.origin;
   const loginLink = domain + "/login/canvas"
+  const normalLoginLink = loginLink + "?normalLogin=1&design=udir"
+  const frontpageLink = domain + "/search/all_courses"
   const settingsLink = domain + "/profile/settings"
   const logoutLink = domain + "/logout"
   const adminLink = domain + "/accounts"
   const isStage =  domain.includes('bibsys.test')
+  const currentPath = window.location;
+import { ref, onMounted, computed } from 'vue';
+
+// On component mount, get the current path
+
+
+const renderLoginLink = computed(() => {
+    return currentPath == loginLink ? (console.log("1st"), false)
+         : currentPath == normalLoginLink ? (console.log("2nd"), false)
+         : (console.log("3rd"), true)
+});
 </script>
+
+
 <style lang="scss">
 @import '../../design/colors.scss';
 

@@ -3,7 +3,7 @@
 <div class="login-direct-link">
     <div class="login-direct-box">
         <div class="login-logos">
-            <img class="login-logo" :src="`${this.server}logo-black.svg`" @click="goToUdir">
+            <img class="login-logo" :src="`${this.server}logo-white.png`" @click="goToUdir">
         </div>
         <div class="login-header">
             <h1 class="login-header-title">Canvas innlogging for åpne nettkurs og kompetansepakker</h1>
@@ -55,22 +55,21 @@ export default {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
     height: 100vh;
-    background-color: map-get($color-palette-green, background, 300);
 }
 .login-direct-box {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 30rem;
-    max-width: 60rem;
+    max-width: 40rem;
     width: 100%;
-    background-color: white;
-    border: 1px solid #e0e0e0;
+    margin-top: 16px;
+    border: 1px solid #2e3c51;
     border-radius: 0.5rem;
-    box-shadow: 0 0.25rem 0.25rem 0 rgba(0, 0, 0, 0.25);
+    color:white;
+    background-color: #2e3c51;
+    box-shadow: rgba(50, 50, 93, 0.85) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
 }
 .login-header {
     display: flex;
@@ -87,6 +86,9 @@ export default {
     justify-content: center;
     margin-bottom: 2rem;
     gap: 1rem;
+    .btn--filled.btn--md {
+        height: auto !important;
+    }
 }
 .login-logos {
     display: flex;
@@ -107,7 +109,7 @@ export default {
 }
 
 .login-header-title {
-    font-size: 2,25rem;
+    font-size: 1.4rem;
     line-height: unset;
     @media screen and (max-width: 768px) {
         font-size: 4vw;
@@ -115,7 +117,7 @@ export default {
 }
 
 .login-header-description {
-    font-size: 1.5rem;
+    font-size: 1.0rem;
     @media screen and (max-width: 768px) {
         font-size: 3vw;
     }

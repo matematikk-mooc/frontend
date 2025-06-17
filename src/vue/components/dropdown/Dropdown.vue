@@ -4,24 +4,32 @@
         <Icon :name="iconType"/>
     </button>
     <ul class="dropdown-list" v-show="showMenu">
-        <li v-if="admin"><a @click="handleLinkClick" class="dropdown-item" :href="adminLink">Administrator <Icon name="chevron_right" size="22"/></a> </li>
-        <li v-if="logged_in"><a  @click="handleLinkClick" class="dropdown-item" :href="settingsLink">Innstillinger <Icon name="chevron_right" size="22"/></a> </li>
-        <li v-if="!logged_in"><a class="dropdown-item" :href="loginLink"> Logg inn <Icon name="chevron_right" size="22"/></a></li>  
+      <template v-if="logged_in">
+          <li v-if="admin"><a @click="handleLinkClick" class="dropdown-item" :href="adminLink">Administrator <Icon name="chevron_right" size="22"/></a> </li>
+          <li v-if="logged_in"><a  @click="handleLinkClick" class="dropdown-item" :href="settingsLink">Innstillinger <Icon name="chevron_right" size="22"/></a> </li>
+      </template>
+      <template v-if="!logged_in">
+          <li v-if="renderLoginLink"><a class="dropdown-item" :href="loginLink"> Logg inn <Icon name="chevron_right" size="22"/></a></li> 
+          <li v-if="!renderLoginLink"><a class="dropdown-item" :href="frontPageLink"> Forsiden <Icon name="chevron_right" size="22"/></a></li>   
+      </template>
         <li v-if="logged_in"><a class="dropdown-item" :href="logoutLink"> Logg ut <Icon name="chevron_right" size="22"/></a></li>
     </ul>
   </div>
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 import Icon from "../icon/Icon.vue";
 
 const domain = window.location.origin;
+const frontPageLink = domain + "/search/all_courses"
 const loginLink = domain + "/login/canvas"
+const normalLoginLink = loginLink + "?normalLogin=1&design=udir"
 const logoutLink = domain + "/logout"
 const settingsLink = domain + "/profile/settings"
 const adminLink = domain + "/accounts"
 const showMenu = ref(false);
+const currentPath = window.location;
 
 const props = defineProps({
 iconType: String,
@@ -37,6 +45,12 @@ const handleFocus = () => {
 const handleLinkClick = () => {
     showMenu.value = false;
 };
+
+const renderLoginLink = computed(() => {
+    return currentPath == loginLink ? (console.log("1st"), false)
+         : currentPath == normalLoginLink ? (console.log("2nd"), false)
+         : (console.log("3rd"), true)
+});
 </script>
 
 <style scoped lang="scss">
