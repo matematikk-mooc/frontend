@@ -1,7 +1,7 @@
 <template>
   <div class="page-button-link-navigation">
     <div class="page-button-link-container-left">
-      <ButtonLink v-show="previousUrl !== null" type="previous" :url="previousUrl">Forrige</ButtonLink>
+      <ButtonLink v-show="previousUrl !== null" type="previous" :url="previousUrl"><span>Forrige</span></ButtonLink>
     </div>
     <div class="page-button-link-container-right">
       <ButtonLink  v-show="nextUrl !== null" type="next" :url="nextUrl">Neste</ButtonLink>
@@ -48,6 +48,10 @@ const props = defineProps(['previousUrl', 'nextUrl']);
   .page-button-link-container-left{
     align-self: flex-start;
     min-width: 5rem;
+  }
+
+  .btn-link {
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
   }
 
 }

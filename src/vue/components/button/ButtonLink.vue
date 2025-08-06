@@ -11,10 +11,10 @@
     ]"
     @click="setActivePageAndModule(url)"
   >
-    <Icon v-if="type === 'previous'" name="chevron_left" size="1.5em" />
+    <Icon v-if="type === 'previous'" name="chevron_left" size="1em" />
     <img class="feide-symbol" v-if="type === 'feideLogin'" :src="`${server}feide_white-symbol.svg`"/>
     <slot></slot>
-    <Icon v-if="type === 'next'" name="chevron_right" size="1.5em" />
+    <Icon v-if="type === 'next'" name="chevron_right" size="1em" />
   </a>
 </template>
 

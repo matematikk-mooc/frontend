@@ -52,6 +52,7 @@ export default {
 <style lang="scss">
 .material-icon {
   color: inherit;
+  display: flex;
 
   &__icon {
     @each $size in (1em, 2em, 3em) {
