@@ -116,7 +116,7 @@ onMounted(() => {
     padding:0.5rem 1.5rem 0.5rem 0;
     height: 4.375rem;
     color: $color-black;
-    font-family: Roboto;
+    font-family: Inter;
     font-size: 1.125rem;
     vertical-align: center;
     position: relative;

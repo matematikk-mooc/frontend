@@ -21,7 +21,7 @@ export default {
 <style lang="scss">
 .modules-list {
   margin-top: 1rem;
-  font-family: 'Roboto';
+  font-family: 'Inter';
   font-weight: 400;
   ul {
   list-style-type: none;

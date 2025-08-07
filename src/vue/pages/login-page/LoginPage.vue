@@ -34,7 +34,7 @@ const server = SERVER
     justify-content: flex-start;
   }
  &__title{
-  font-family: Montserrat;
+  font-family: Inter;
   font-size: 1.5rem;
   font-weight: 500;
  }

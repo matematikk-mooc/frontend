@@ -144,7 +144,7 @@ export default {
   }
 
   &__title {
-    font-family: Montserrat;
+    font-family: Inter;
     font-size: 2.25rem;
     font-style: normal;
     font-weight: 500;

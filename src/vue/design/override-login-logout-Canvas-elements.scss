@@ -246,7 +246,9 @@
         }
     }
 }
-
+input,button,select,textarea {
+    font-family: "Inter" !important;
+}
 .ic-Login-confirmation__actions {
     display: grid !important;
     justify-content: center;
@@ -265,7 +267,6 @@
         display: flex;
         align-items: center;
         bottom: -0.05rem;
-        font-family: "Lato Extended","Lato","Helvetica Neue",Helvetica,Arial,sans-serif;
         &:hover {
             background: #00468e;
             color: $color-white;
