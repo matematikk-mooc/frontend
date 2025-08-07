@@ -1,10 +1,10 @@
 <template>
   <div class="page-button-link-navigation">
     <div class="page-button-link-container-left">
-      <ButtonLink v-show="previousUrl !== null" type="previous" :url="previousUrl"><span>Forrige</span></ButtonLink>
+      <ButtonLink v-show="previousUrl !== null" type="previous" :url="previousUrl"><span class="leftText">Forrige</span></ButtonLink>
     </div>
     <div class="page-button-link-container-right">
-      <ButtonLink  v-show="nextUrl !== null" type="next" :url="nextUrl">Neste</ButtonLink>
+      <ButtonLink  v-show="nextUrl !== null" type="next" :url="nextUrl"><span class="rightText">Neste</span></ButtonLink>
     </div>
   </div>
 </template>
@@ -44,10 +44,29 @@ const props = defineProps(['previousUrl', 'nextUrl']);
   .page-button-link-container-right{
     align-self: flex-end;
     min-width: 5rem;
+    a {
+      height: 26px;
+      .rightText {
+        padding-right:10px;
+      }
+      svg {
+        margin-right: -10px;
+      }
+    }
   }
   .page-button-link-container-left{
     align-self: flex-start;
     min-width: 5rem;
+    height: 42px;
+        a {
+      height: 26px;
+      .leftText {
+        padding-left: 10px;
+      }
+      svg {
+        margin-left: -10px;
+      }
+    }
   }
 
   .btn-link {
