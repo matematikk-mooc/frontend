@@ -37,7 +37,7 @@ describe('Canvas: Theme', async () => {
         test.skip(true, 'Theme already exists, skip uploading theme');
 
       await page.locator('button[data-testid="new-theme-button"]').click();
-      await page.waitForSelector('ul[role="menu"]', { state: 'visible' });
+      await page.waitForSelector('div[role="menu"]', { state: 'visible' });
       await page
         .locator('span[role="menuitemradio"]:has-text("Standardmal")')
         .click();
