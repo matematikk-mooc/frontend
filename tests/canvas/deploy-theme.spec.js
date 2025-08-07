@@ -26,7 +26,7 @@ describe('Canvas: Theme', async () => {
       await page
         .locator('.ic-ThemeCard-container__Main')
         .locator(
-          '.ic-ThemeCard-main__name button:has-text("' + themeName + '")',
+          '.ic-ThemeCard-main__name span:has-text("' + themeName + '")',
         )
         .waitFor({ state: 'visible' });
     });
