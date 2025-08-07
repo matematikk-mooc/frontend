@@ -90,7 +90,7 @@ footer {
       color: $color-white;
       text-align: center;
       font-size: 0.875rem;
-      font-family: 'Montserrat';
+      font-family: 'Inter';
       font-weight: 600;
       word-wrap: break-word;
     }
@@ -99,7 +99,7 @@ footer {
     align-self: center;
       color: $color-white;
       font-size: 0.875rem;
-      font-family: 'Montserrat';
+      font-family: 'Inter';
       font-weight: 600;
       word-wrap: break-word;
       margin-bottom: unset;
@@ -116,7 +116,7 @@ footer {
     justify-content: flex-start;
     align-items: center;
     color: $color-white;
-    font-family: 'Montserrat';
+    font-family: 'Inter';
     gap:0.5rem;
 
   }

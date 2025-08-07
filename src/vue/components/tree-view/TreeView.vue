@@ -117,7 +117,7 @@ const isActivity = function isActivity() {
 @import '../../design/hide-show-effect';
 .tree-node {
   color: $color-black;
-  font-family: Roboto;
+  font-family: Inter;
   font-size: 0.875rem;
   font-style: normal;
   font-weight: 400;
@@ -128,7 +128,7 @@ const isActivity = function isActivity() {
 
   &--active {
     color: $color-black;
-    font-family: Roboto;
+    font-family: Inter;
     font-style: normal;
     font-weight: 700;
     line-height: normal;

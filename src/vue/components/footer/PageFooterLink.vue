@@ -18,7 +18,7 @@ a.page-footer--link {
   text-align: center;
   color: $color-white;
   font-size: 0.875;
-  font-family: 'Montserrat';
+  font-family: 'Inter';
   font-weight: 400;
   text-decoration: underline;
   word-wrap: break-word;

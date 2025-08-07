@@ -105,7 +105,7 @@ const toggleActiveModule = ({moduleId, isOpen}) => {
       align-items: center;
       justify-content: flex-start;
       font-size: 1.25rem;
-      font-family: Roboto;
+      font-family: Inter;
       font-weight: 600;
       margin-left: 1rem;
       &__title{

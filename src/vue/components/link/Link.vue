@@ -20,7 +20,7 @@ export default defineComponent({
   cursor: pointer;
   &__text {
     color: #000;
-    font-family: Montserrat;
+    font-family: Inter;
     font-size: 0.85rem;
     font-style: normal;
     font-weight: 400;

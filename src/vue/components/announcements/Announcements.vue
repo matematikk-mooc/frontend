@@ -56,7 +56,7 @@ const concatenatedUrl = computed(() => {
     display: flex;
     position: relative;
     box-sizing: border-box;
-    font-family: Roboto;
+    font-family: Inter;
     color: map-get($color-palette-steel, foreground, 200);
     align-items: center;
     justify-content: flex-start;
