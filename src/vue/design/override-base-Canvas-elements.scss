@@ -322,7 +322,9 @@ body.with-left-side:not(.useFullWidth) {
   background-color: $color-white !important;
   box-sizing: border-box !important;
 }
-
+.backdrop {
+  background-color: rgba(64, 64, 64, .8) !important;
+}
 
 
 .theme-editor {

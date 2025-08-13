@@ -18,26 +18,24 @@ const handleClick = () => {
 @import "../../design/colors.scss";
 
 .icon-button {
-  background-color: map-get($color-palette-peach, background, 400);
+  background-color: white;
   color: $color-black;
-  border: none;
+  border: 1px solid black;
   z-index: 1020;
   padding: 0.125rem;
   font-size: 2rem;
-  height: 2.75rem;
-  width: 2.75rem;
+  height: 2rem;
+  width: 2rem;
   cursor: pointer;
   transition: all 0.2s ease;
   border-radius: 70%;
-.material-icon{
-  display: flex;
-  place-content: center;
-
+    .material-icon{
+      display: flex;
+      place-content: center;
+      svg {
+        font-size: 24px;
+      }
 }
-
-  &:hover {
-    background-color: map-get($color-palette-peach, background, 500);
-  }
 
   &:focus {
     background-color: map-get($color-palette-peach, background, 500);

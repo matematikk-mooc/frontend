@@ -22,10 +22,15 @@ export default {
 .modules-list {
   margin-top: 1rem;
   font-family: 'Inter';
-  font-weight: 400;
+  h3 {
+    font-variation-settings: "wght" 500;
+  }
   ul {
-  list-style-type: none;
-  padding: 0;
+    list-style-type: none;
+    padding: 0;
+    li::before {
+      content: none;
+    }
 }
 
 li {
