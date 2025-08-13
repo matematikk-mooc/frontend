@@ -2,11 +2,11 @@
 
     <Modal :is-open="modalOpen" @close="closeModal">
         <template v-slot:header>
-            <h1>Meld deg på kompetansepakken</h1>
+            <h1>Ikke påmeldt</h1>
         </template>
         <template v-slot:main>
             <p>
-                For å få fullt utbytte av denne siden må du melde deg på
+                For å utnytte innholdet i denne kompetansepakken best mulig, må du melde deg på. 
             </p>
             <p v-if="!authenticated">
                 Dersom du har Feide-bruker kan du logge inn med denne,
@@ -16,8 +16,7 @@
         <template v-slot:actions>
             <Button v-if="!authenticated" class="btn--lg" type="feideLogin" @click="goToFeide">LOGG INN MED FEIDE</Button>
             <Button v-if="!authenticated" class="btn--lg" type="outlined"  @click="goToCanvas">LOGG INN UTEN FEIDE</Button>
-            <Button v-if="authenticated" class="btn--lg" type="outlined"  @click="goToCanvas">MELD DEG PÅ</Button>
-
+            <Button v-if="authenticated" :fullWidth="true" :type="'filled'" :size="'md'"  @click="goToCanvas">Meld deg på</Button>
         </template>
 
     </Modal>

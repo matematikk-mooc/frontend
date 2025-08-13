@@ -29,6 +29,11 @@ const handleClick = () => {
   cursor: pointer;
   transition: all 0.2s ease;
   border-radius: 70%;
+.material-icon{
+  display: flex;
+  place-content: center;
+
+}
 
   &:hover {
     background-color: map-get($color-palette-peach, background, 500);
