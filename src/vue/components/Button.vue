@@ -13,8 +13,7 @@
   >
     <Icon v-if="type === 'previous'" name="chevron_left" size="1.5em" />
     <img class="feide-symbol" v-if="type === 'feideLogin'" :src="`${server}feide_white-symbol.svg`"/>
-    <!-- Uncomment when logo is up on azure -->
-    <!-- <img class="canvas-symbol" v-if="type === 'canvasLogin'" :src="`${server}canvas_logo.svg`"/> -->
+    <img class="canvas-symbol" v-if="type === 'canvasLogin'" :src="`${server}canvas_logo.svg`"/>
     <slot></slot>
     <Icon v-if="type === 'next'" name="chevron_right" size="1.5em" />
   </button> 

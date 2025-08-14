@@ -37,6 +37,10 @@ const handleClick = () => {
       }
 }
 
+  &:hover {
+    background-color: map-get($color-palette-peach, background, 400);
+  }
+
   &:focus {
     background-color: map-get($color-palette-peach, background, 500);
   }
