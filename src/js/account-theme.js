@@ -62,7 +62,6 @@ jQuery.extend({
 });
 
 jQuery(document).ready(function ($) {
-  console.log('START.');
 
   var redirected = false;
   var themeSettings = {
@@ -158,18 +157,25 @@ jQuery(document).ready(function ($) {
       /*       $("#f1_container").hide(); // Small screens */
       redirected = utilRoot.redirectFeideAuthIfEnrollReferrer();
       if (!redirected) {
-        if (!document.location.search.includes('normalLogin=1')) {
-          if (document.getElementById('wrapper')) {
+        if (!document.location.search.includes("normalLogin=1")) {
+          if (document.getElementById('application')) {
             document.getElementById('wrapper').remove();
+            console.log("application");
+            var parent = document.getElementById('application');
           }
-          let parent = document.getElementById('application');
-          let login = document.createElement('div');
-          login.id = 'login-component';
-          let customLogin = createApp(LoginDirectLink);
-          if (parent) {
-            parent.appendChild(login);
+          else if (document.getElementById('f1_container')) {
+            console.log('f1_container'); 
+            var parent = document.getElementById('f1_container');
+            $('.ic-Login').show();
           }
-          customLogin.mount('#login-component');
+            let login = document.createElement('div');
+            login.id = 'login-component';
+            let customLogin = createApp(LoginDirectLink);
+            if (parent) {
+              console.log(parent, "parent")
+              parent.appendChild(login);
+            }
+            customLogin.mount("#login-component");
         } else {
           $('.ic-Login').show();
           $('#f1_container').show(); // Small screens

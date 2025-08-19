@@ -96,7 +96,7 @@ export default {
 }
 
 .percentage {
-    font-family: "Roboto";
+    font-family: "Inter";
     font-weight: 400;
     text-anchor: middle;
 }

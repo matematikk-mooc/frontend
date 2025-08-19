@@ -18,7 +18,7 @@
 .custom-button p {
   margin: 0;
   font-size: 14px;
-  font-family: Roboto;
+  font-family: Inter;
   font-weight: 500;
   line-height: 150%;
 }
@@ -30,16 +30,27 @@
 }
 
 .custom-mark-as-done-checkbox {
+  height:42px;
   border-radius: 3px;
-  border: 2px solid #3B7858;
+  border: 2px solid #5BA27E;
   background: #FFF;
-  color: #3B7858;
-}
+  color: black !important;
+  &:hover {
+    background: #BBE3CE;
+  }
+box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;}
 
 .custom-mark-as-done-completed {
+  height: 42px;
   border-radius: 3px;
-  border: 2px solid #3B7858;
-  background: #3B7858;
-  color: #FFF;
+  border: 2px solid #5BA27E;
+  background: #5BA27E;
+  color: #FFF !important;
+box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;}
 
+.mark-done-labels p {
+  font-size: 16px;
+}
+.btn-success:focus {
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
 }

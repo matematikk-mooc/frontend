@@ -41,11 +41,19 @@ export default (function() {
     renderUnauthenticatedMenu: function () {
        const mainContentId = getMainContentId() ?? '';
       if (!util.isAuthenticated()) {
-
         $('#header').hide();
-        var headerwrapper = document.getElementById("application").children[0];
-        headerwrapper.append(document.createElement("div"));
-        headerwrapper.setAttribute("id", "notLoggedInHeader");
+        if(document.getElementById("application")){
+          // non-mobile
+          var headerwrapper = document.getElementById("application").children[0];
+          headerwrapper.append(document.createElement("div"));
+          headerwrapper.setAttribute("id", "notLoggedInHeader");
+        }
+        else if(document.getElementById("f1_container")){
+          // mobile
+          var mobileHeaderWrapper = document.getElementById("f1_container").children[0];
+          mobileHeaderWrapper.append(document.createElement("div"));
+          mobileHeaderWrapper.setAttribute("id", "notLoggedInHeader");
+        }
         const headerProps = {
           logged_in: false,
           admin: false,

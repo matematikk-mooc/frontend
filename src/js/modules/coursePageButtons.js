@@ -11,8 +11,8 @@ export default (function () {
               return;
             }
 
-            const notCompletedContent = `<span class="mark-done-labels"><img src="${SERVER}vector_images/markasdone.svg"/><p>Merk som ferdig</p></span>`;
-            const completedContent = `<span class="mark-done-labels"><img src="${SERVER}vector_images/markasdonecompleted.svg"/><p>Ferdig</p></span>`;
+            const notCompletedContent = `<span class="mark-done-labels"><img src="${SERVER}vector_images/markasdone.svg"/><p>Ferdig?</p></span>`;
+            const completedContent = `<span class="mark-done-labels"><img src="${SERVER}vector_images/markasdonecompleted.svg"/><p>Ferdig!</p></span>`;
 
             const attributes = Array.from(originalMarkAsDoneButton.attributes).reduce((acc, attr) => {
               if (attr.name !== 'class') {

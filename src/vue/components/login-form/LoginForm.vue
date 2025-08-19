@@ -69,7 +69,7 @@ export default {
 
   &__title {
     color: map-get($color-palette-steel, background, 700);
-    font-family: Montserrat, sans-serif;
+    font-family: Inter, sans-serif;
     font-size: 1.25rem;
     font-weight: 700;
     margin-bottom: 1rem;
@@ -83,7 +83,7 @@ export default {
 
   &__title2 {
     color: $color-black;
-    font-family: Montserrat, sans-serif;
+    font-family: Inter, sans-serif;
     font-size: 1rem;
     font-weight: 700;
     margin-top: 2rem;
@@ -99,7 +99,7 @@ export default {
 
   &__new-user {
     color: $color-black;
-    font-family: Roboto, sans-serif;
+    font-family: Inter, sans-serif;
     font-size: 1rem;
     font-weight: 400;
     line-height: 1.5;

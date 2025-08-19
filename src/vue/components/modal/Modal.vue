@@ -84,7 +84,7 @@ const closeModal = () => {
       top:0;
       color:$color-black;
       font-size: 1.125rem;
-      font-family: Montserrat;
+      font-family: Inter;
       font-weight: 500;
       word-wrap: break-word;
        h1, h2, h3 {
@@ -98,7 +98,7 @@ const closeModal = () => {
       box-sizing:border-box;
       color: $color-black;
       font-size: 1rem;
-      font-family: Roboto;
+      font-family: Inter;
       font-weight: 400;
       line-height: 1.25rem;
       margin-bottom: 1rem;

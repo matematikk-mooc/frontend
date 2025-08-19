@@ -63,7 +63,7 @@ export default {
 
 .form-field {
   width: 100%;
-  font-family: Roboto;
+  font-family: Inter;
   display: flex;
   flex-direction: column;
   margin-bottom: 1rem;
@@ -118,7 +118,7 @@ export default {
 
     input {
       box-sizing: border-box;
-      font-family: "Roboto";
+      font-family: "Inter";
       border-top-left-radius: 0.25rem;
       border-top-right-radius: 0.25rem;
       font-size: 1rem;
