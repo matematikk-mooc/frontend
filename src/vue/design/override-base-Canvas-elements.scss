@@ -387,6 +387,10 @@ word-break: break-all !important;
   width: fit-content !important;
 }
 
+.ic-ThemeCard {
+  word-break: break-word;
+}
+
 body.notifications, body.profile, body.profile_settings, body.content_shares, body.qr_mobile_login, body.past_global_announcements {
   #application.ic-app {
     #main {
