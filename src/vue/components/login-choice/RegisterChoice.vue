@@ -20,10 +20,7 @@
         </template>
 
     </Modal>
-
     </template>
-
-
     <script>
     import Modal from '../modal/Modal.vue'
     import Button from '../Button.vue'

@@ -79,7 +79,7 @@ jQuery(document).ready(function ($) {
   } else {
     console.log('Using default theme:', themeSettings);
   }
-
+    
   var isBrandConfigPage =
     window.location.pathname === '/accounts/1/brand_configs';
   if (isBrandConfigPage) {
