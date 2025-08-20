@@ -27,6 +27,10 @@
   padding-right: 8px;
   height: 16px;
   width: 16px;
+}               
+
+.btn--filled:focus {
+  color: white !important;
 }
 
 .custom-mark-as-done-checkbox {

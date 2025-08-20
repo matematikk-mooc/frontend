@@ -25,7 +25,6 @@ import Banner from '../components/Banner.vue'
 import NotLoggedInIntro from '../components/NotLoggedInIntro.vue'
 import {ref} from 'vue'
 import { filterCourses } from '../utils/filter-courses.js'
-import MobileWarning from '../components/information-banner/MobileWarning.vue'
 
 const { courses, filterData, highlightedCourse, mobiletablet } = defineProps(['courses', 'filterData', 'highlightedCourse', 'mobiletablet']);
 const coursesToView = ref([...courses]);
@@ -58,7 +57,6 @@ const onSelectedFiltersUpdate = (updatedFilters) => {
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
   .intro-text {
       border-radius: 10px;
@@ -66,12 +64,6 @@ const onSelectedFiltersUpdate = (updatedFilters) => {
       padding: 16px;
     }
   @media (max-width: 30rem) {
-    h1 {
-      font-size: 22px;
-      text-align: center;
-      line-height: normal;
-      padding: 1rem
-    };
     .intro-text {
       margin-top: unset;
       font-size: 1.125rem;
@@ -91,7 +83,7 @@ const onSelectedFiltersUpdate = (updatedFilters) => {
   justify-content: center;
   h2 {
     font-size: 1.5rem;
-    margin: 1.5rem 0 1.5rem 0;
+     margin: 10px 0;
     @media (max-width: 30rem) {
       font-size: 1.250rem;
       margin: 1rem 0 1rem 0;

@@ -2,22 +2,21 @@
 
     <Modal :is-open="modalOpen" @close="closeModal">
         <template v-slot:header>
-            <h1>Meld deg på kompetansepakken</h1>
+            <h1>Ikke påmeldt</h1>
         </template>
         <template v-slot:main>
             <p>
-                For å få fullt utbytte av denne siden må du melde deg på
+                For å utnytte innholdet i denne kompetansepakken best mulig, burde du melde deg på.
             </p>
             <p v-if="!authenticated">
-                Dersom du har Feide-bruker kan du logge inn med denne,
-                dersom du ikke har en Feide-bruker, kan du opprette en bruker ved hjelp av en annen e-postadresse og logge inn med denne.
+                Dersom du har en Feide-bruker kan du logge inn med denne,
+                dersom du ikke har en Feide-bruker, kan du opprette en Canvas bruker ved hjelp av en annen e-postadresse og logge inn med denne.
             </p>
         </template>
         <template v-slot:actions>
-            <Button v-if="!authenticated" class="btn--lg" type="feideLogin" @click="goToFeide">LOGG INN MED FEIDE</Button>
-            <Button v-if="!authenticated" class="btn--lg" type="outlined"  @click="goToCanvas">LOGG INN UTEN FEIDE</Button>
-            <Button v-if="authenticated" class="btn--lg" type="outlined"  @click="goToCanvas">MELD DEG PÅ</Button>
-
+            <Button v-if="!authenticated" :type="'filled'" :size="'lg'" @click="goToFeide">Feide pålogging</Button>
+            <Button v-if="!authenticated" class="btn--lg" type="outlined"  @click="goToCanvas">Canvas pålogging</Button>
+            <Button v-if="authenticated"  :type="'filled'" :size="'md'"  @click="goToCanvas">Meld deg på</Button>
         </template>
 
     </Modal>
@@ -66,7 +65,7 @@ export default {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(153, 153, 153, 0.8);
+    background-color: rgba(64, 64, 64, .8) !important;
     display: flex;
     justify-content: center;
     align-items: center;

@@ -202,11 +202,8 @@ export default {
   align-items: center;
   justify-content: flex-start;
   h2 {
-    font-size: 1.5rem;
+    font-size: 1.25rem;
     line-height: 2.5rem;
-    @media (max-width: 30rem) {
-      font-size: 1.250rem;
-    }
   }
 }
 
