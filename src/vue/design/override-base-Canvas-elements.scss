@@ -154,6 +154,16 @@
 
 .ui-dialog {
   border-radius: 0.8rem;
+  .ui-dialog-buttonset {
+    display: flex;
+    flex-direction: row;
+    place-content: center;
+    
+  }
+  .form-horizontal .control-group .controls {
+    display: flex;
+    margin: unset;
+  }
 }
 
 .ic-app-course-menu {

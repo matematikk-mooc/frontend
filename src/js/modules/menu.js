@@ -59,13 +59,23 @@ export default (function() {
         const observer = new MutationObserver((mutationsList, observer) => {
           const modal = document.querySelector('.ui-dialog');
           if (modal) {
+            // Remove double button
+            const doubleParentButton = modal.querySelector(".button-container")
+            if (doubleParentButton) {
+              doubleParentButton.remove()
+            }
+            // Find and edit terms text
             const userTerms = modal.querySelector('.checkbox').children[1];
             const privacyPolicy = modal.querySelector('.checkbox').children[2];
-            userTerms.href = "https://www.instructure.com/policies/acceptable-use"
-            privacyPolicy.textContent = "personværnserklæringen"
-            observer.disconnect();
+            if (privacyPolicy) {
+              privacyPolicy.innerText = "personvernserklæringen og brukervilkårene"
+              privacyPolicy.href = "test"
+              userTerms.remove()
+              observer.disconnect();
+            }
           }
-        });
+        }
+      );
 
         observer.observe(document.body, { childList: true, subtree: true });
           // Add navbar to register page
@@ -115,7 +125,6 @@ export default (function() {
         
             // Change terms link
             const regDialog = document.getElementsByClassName("registration-dialog")[0];
-            console.log(regDialog)
           }
         const headerProps = {
           logged_in: false,
