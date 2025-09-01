@@ -69,7 +69,7 @@ export default (function() {
             const privacyPolicy = modal.querySelector('.checkbox').children[2];
             if (privacyPolicy) {
               privacyPolicy.innerText = "personvernserklæringen og brukervilkårene"
-              privacyPolicy.href = "test"
+              privacyPolicy.href = "https://kompetanseudirno.azureedge.net/udirdesign/privacypolicy.html?v=1_0"
               userTerms.remove()
               observer.disconnect();
             }
