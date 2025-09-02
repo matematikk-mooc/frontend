@@ -6,6 +6,165 @@
 /* * {
   outline: .0625rem solid darkslategrey !important;
 }  */
+  body > div.ui-widget-overlay {
+    background-color: rgba(39,53,64,.75);
+}
+#main {
+  .registration-content{
+    background-color: white !important;
+  }
+  #registration_content{
+    background: white;;
+
+    .registration-content {
+      display: flex;
+      height: 100%;
+      margin: unset;
+      flex-direction: column-reverse;
+      justify-content: flex-start;
+    }
+      #registration_options {
+      display: flex;
+      justify-content: flex-end;
+      flex-direction: column-reverse;
+      height:450px;
+      width:600px;
+      padding: 0;
+      place-self: center;
+      box-shadow: 0 13px 27px -5px rgba(50, 50, 93, .85), 0 8px 16px -8px rgba(0, 0, 0, .3);
+      background: unset;
+      background-color: #2e3c51;
+      border-radius: .5rem;
+      @media (max-width: 30rem) {
+        width: 90%;
+
+      }
+      .canvas_logo {
+        margin-top: 25px;
+        place-self: center;
+        width: 300px;
+        height:auto;
+        @media (max-width: 30rem) {
+        width: 65%;
+      }
+      }
+      .registration-button-container{
+        display: flex;
+        flex-direction: row;
+        place-content: center;
+        gap: 1.5rem;
+        height: 100px;
+        margin-top: 180px;
+
+        @media (max-width: 30rem) {
+          gap: 0.5rem;
+      }
+        a {
+          position: unset;
+          align-content: center;
+          justify-content: center;
+          place-self: center;
+          text-align: center;
+          text-indent: unset;
+          background-image: unset;
+          border-radius: .5rem;
+          right: unset;
+          left: unset;
+          height:60px;
+          box-sizing: border-box;
+          box-shadow: 0 13px 27px -5px rgba(50, 50, 93, .85), 0 8px 16px -8px rgba(0, 0, 0, .3);
+          @media (max-width: 30rem) {
+            width: 35%;
+      }
+        }
+      }
+      p {
+        position: absolute;
+        left:50%;
+        top:45%;
+        transform: translate(-50%, -50%);
+        width: 80%;
+        color: white;
+        font-size: 16px;
+        @media (max-width: 30rem) {
+          width:90%;
+          font-size: 16px;
+        } 
+      }
+      h2 {
+        position: absolute;
+        text-indent: unset;
+        color: white;
+          top: 35%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          @media (max-width: 30rem) {
+            top:25%;
+          } 
+      }
+
+      
+      #signup_student{
+        
+      }
+      #signup_teacher{
+
+      }
+      #signup_parent{
+        background: unset;
+        width:100%;
+        box-shadow: unset;
+      }
+    }
+  } 
+}
+#registration_header {
+  display: flex;
+  box-sizing: border-box;
+  justify-content: flex-end;
+  flex-direction: row;
+  margin-bottom: 30px;
+  height: 100px !important;
+  padding: 12px 0;
+  @media (max-width: 30rem) {
+    height: 60px !important;
+  }
+  .registration-content{
+    width:100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    margin:0;
+  }
+  #registration_login {
+   position: unset;
+  }
+  h1 {
+    padding: unset;
+    font-size: 24px;
+    &::before {
+      content: "Kompetanseportalen"
+    }
+    a {
+      display: none;
+    }
+  }
+}
+
+.ui-dialog {
+  border-radius: 0.8rem;
+  .ui-dialog-buttonset {
+    display: flex;
+    flex-direction: row;
+    place-content: center;
+    
+  }
+  .form-horizontal .control-group .controls {
+    display: flex;
+    margin: unset;
+  }
+}
 
 .ic-app-course-menu {
   width: fit-content !important;
@@ -285,6 +444,14 @@ body.with-left-side:not(.useFullWidth) {
   padding: 0 !important;
 }
 
+#main:has(#registration_content){
+  background-color: white;
+  height: 100vh;
+  #customFooter {
+    position: sticky;
+    top: 100%;
+  }
+}
 
 .custom-next-button-wrapper {
   justify-content: center !important;

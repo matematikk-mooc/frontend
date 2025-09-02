@@ -54,6 +54,78 @@ export default (function() {
           mobileHeaderWrapper.append(document.createElement("div"));
           mobileHeaderWrapper.setAttribute("id", "notLoggedInHeader");
         }
+        // Find modal on render and update content
+        else if(document.getElementById("registration_header")){
+        const observer = new MutationObserver((mutationsList, observer) => {
+          const modal = document.querySelector('.ui-dialog');
+          if (modal) {
+            // Remove double button
+            const doubleParentButton = modal.querySelector(".button-container")
+            if (doubleParentButton) {
+              doubleParentButton.remove()
+            }
+            // Find and edit terms text
+            const userTerms = modal.querySelector('.checkbox').children[1];
+            const privacyPolicy = modal.querySelector('.checkbox').children[2];
+            if (privacyPolicy) {
+              privacyPolicy.innerText = "personvernserklæringen og brukervilkårene"
+              privacyPolicy.href = "https://kompetanseudirno.azureedge.net/udirdesign/privacypolicy.html?v=1_0"
+              userTerms.remove()
+              observer.disconnect();
+            }
+          }
+        }
+      );
+
+        observer.observe(document.body, { childList: true, subtree: true });
+          // Add navbar to register page
+          var registrationHeaderWrapper = document.getElementById("registration_header").children[0];
+          registrationHeaderWrapper.append(document.createElement("div"));
+          registrationHeaderWrapper.setAttribute("id", "notLoggedInHeader");
+          
+          // Define reg nodes
+          var registrationContent = document.getElementById("registration_options");
+          var registrationFooter = document.getElementById("registration_footer");
+          var registrationVideo = document.getElementById("registration_video")
+          var student = document.getElementById('signup_student');
+          var teacher = document.getElementById('signup_teacher');
+          var grownup = document.getElementById('signup_parent');
+          var heading = document.querySelector("#registration_options > h2");
+          const description = document.createElement('p');
+          
+          // Create and populate image
+          const logo = document.createElement('img')
+          logo.classList.add("canvas_logo")
+          logo.src = `${SERVER}canvas_transparent.png`;
+
+
+          // Remove bloat src/vue/assets/canvas_reg_tr.png
+          registrationFooter.remove()
+          registrationVideo.remove()
+
+          // Create elements and apppend
+            const parent = student.parentNode;
+            const newParentDiv = document.createElement('div');
+            newParentDiv.classList.add("registration-button-container")
+            parent.insertBefore(newParentDiv, student);
+            newParentDiv.append(student)
+            newParentDiv.append(teacher)
+            registrationContent.append(newParentDiv)
+            registrationContent.append(description)
+            registrationContent.append(logo)
+
+          // Change texts
+            student.textContent = "Student";
+            student.classList.add("btn", "btn--filled");
+            teacher.classList.add("btn", "btn--outlined");
+            teacher.textContent = "Lærer"
+            grownup.textContent = "Foresatte kan registrere seg her"
+            heading.textContent = "Registrering"
+            description.textContent = "Dersom du ikke har Feide-bruker, eller trenger tilgang til Kompetanseportel uten dette - kan du registrere deg for Canvas ved å velge korrekt rolle og fylle inn nødvendig informasjon her."
+        
+            // Change terms link
+            const regDialog = document.getElementsByClassName("registration-dialog")[0];
+          }
         const headerProps = {
           logged_in: false,
           admin: false,
