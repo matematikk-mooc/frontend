@@ -89,7 +89,8 @@ jQuery(document).ready(function ($) {
         var checkInterval;
 
         function runWhenTemaVisible() {
-          var isThemeHeadingVisible = $("h1:contains('Tema')").is(':visible');
+          var themeButton = document.getElementById('Menu__label___0');
+          var isThemeHeadingVisible = themeButton.is(':visible');
 
           if (isThemeHeadingVisible) {
             var content = $('#content');
