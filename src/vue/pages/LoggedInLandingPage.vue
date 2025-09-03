@@ -53,9 +53,14 @@
     flex-direction: column;
     justify-content: center;
     margin-left: 1.5rem;
+    .modal-box__header {
+      h2 {
+        font-size: 1.5rem;
+      }
+    }
     h2 {
-      font-size: 2rem;
-      margin: 1.5rem 0 1.5rem 0;
+      font-size: 1.5rem;
+      margin: 0.7rem 0;
     }
   }
   .landing-page--layout {

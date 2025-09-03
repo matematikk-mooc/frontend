@@ -10,8 +10,8 @@
             <h2 class="login-header-description">-for fleksibel og livslang læring</h2>
         </div>
         <div class="login-options">
-            <Button class="btn--lg" type="feideLogin" @click="goToFeide">LOGG INN MED FEIDE</Button>
-            <Button class="btn--lg" type="outlined"  @click="goToCanvas">LOGG INN UTEN FEIDE</Button>
+            <Button class="btn--lg" type="feideLogin" @click="goToFeide">Feide pålogging</Button>
+            <Button class="btn--lg" type="outlined"  @click="goToCanvas">Canvas pålogging</Button>
         </div>
     </div>
 </div>
