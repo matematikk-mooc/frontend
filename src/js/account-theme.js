@@ -89,7 +89,7 @@ jQuery(document).ready(function ($) {
         var checkInterval;
 
         function runWhenTemaVisible() {
-          var themeButton = document.getElementByID('Menu__label___0')
+          var themeButton = document.getElementById('Menu__label___0');
           var isThemeHeadingVisible = themeButton.is(':visible');
 
           if (isThemeHeadingVisible) {
