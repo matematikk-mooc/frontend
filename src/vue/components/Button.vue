@@ -37,6 +37,10 @@ const isFullWidth = props.fullWidth;
 <style lang="scss">
 @import '../design/colors.scss';
 
+div.modal-box__actions > button {
+  height: unset !important;
+}
+
 .btn {
   cursor: pointer;
   position: relative;
