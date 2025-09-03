@@ -1,7 +1,9 @@
 <template>
   <header class="header__content" :class="{'stage': isStage, 'prod': !isStage}">
     <!-- Header -->
-    <div class="header-brand">Kompetanseportalen</div>
+    <a :href="isStage ? 'https://bibsys.test.instructure.com/search/all_courses' : 'https://bibsys.instructure.com/search/all_courses'" class="header-brand">
+      Kompetanseportalen
+    </a>
     <div v-if="isStage" class="stage-banner">stage</div>
     <Dropdown :logged_in="logged_in" :admin="admin" :backgroundColor="'white'"  :iconType="'hamburger'" :icon="'settings'" :link="settingsLink"></Dropdown>
     <!-- Navbar -->
@@ -78,7 +80,6 @@ font-family: Arial, Helvetica, sans-serif;
   justify-content: space-between;
   flex-grow: 1;
   font-family: 'Inter', 'Helvetica Neue', 'sans-serif';
-  padding: 20px 0 20px 0;
   width: 100%;
   min-height: 3.75rem;
   &.prod {
@@ -90,7 +91,8 @@ font-family: Arial, Helvetica, sans-serif;
 }
 
 .header-brand {
-  height: 29.008px;
+  height:100px;
+  place-content: center;
   flex-grow: 0;
   font-family: 'Inter';
   font-size: 24px;
@@ -102,6 +104,12 @@ font-family: Arial, Helvetica, sans-serif;
   text-align: left;
   color: $color-black;
   margin-left: 12px;
+  text-decoration: none !important;
+  transition: transform 0.2s ease;
+  &:hover {
+    color: #1a1a1a !important;
+    transform: scale(1.02);
+  }
 }
 
 @media screen and (max-width: 345px) {
