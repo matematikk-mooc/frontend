@@ -629,3 +629,56 @@ body.notifications, body.profile, body.profile_settings, body.content_shares, bo
     }
   }
 }
+
+// Custom css to copy missing menu form "../files"
+#file-menu{
+  display: flex;
+  max-width: 100%;
+  width: 100vw;
+  flex-direction: row;
+  .file-menu-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 20px 24px 20px 40px;
+    background-color: #f1f1f1;
+    @media (max-width:768px) {
+      flex-direction: column;
+      justify-content: flex-start;
+      padding-left: 0;
+      
+    }
+    #section-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      list-style: none;
+      @media (max-width:768px) {
+        flex-direction: column;
+        justify-content: flex-start;
+        margin-left: 0;
+    }
+      .section {
+        color: black;
+        width: fit-content;
+        a {
+          display: block;
+          color: black;
+          margin: 4px 12px;
+          padding: 4px 2px;
+          
+          &:hover {
+            color:#00468e;
+            border-bottom: 2px solid #00468e;
+            text-decoration: none;
+          }
+        }
+        &:nth-child(3) {
+          a{
+            color:#00468e;
+            border-bottom: 2px solid #00468e;
+          }
+        }
+      }
+    }
+  }
+}
