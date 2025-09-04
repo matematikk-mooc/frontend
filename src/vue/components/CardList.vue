@@ -62,7 +62,7 @@
           <ModulesList :modules="modules"></ModulesList>
         </template>
         <template v-if="(!authorized || !course.enrolled)" v-slot:actions>
-          <Button :type="'filled'" :size="'md'" @click="enrollToCourse(course.self_enrollment_code)">Meld deg på</Button>
+           <RegisterChoice :fullWidth="true"  :selfEnrollmentCode="course.self_enrollment_code"></RegisterChoice>
         </template>
       </Modal>
     </div>
