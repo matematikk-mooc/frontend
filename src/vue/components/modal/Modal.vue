@@ -126,6 +126,9 @@ const closeModal = () => {
       justify-content:flex-end;
        > *  { margin: 0 0.125rem; }
     }
+    .btn {
+      font-size: 14px;
+    }
   }
 
   .course-page__banner-container .modal-box{
