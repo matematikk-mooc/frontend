@@ -1,0 +1,111 @@
+name: Security Audit
+
+on:
+  push:
+    branches:
+      - 'FIX:*'
+      - 'UPDATE:*'
+  pull_request:
+    branches:
+      - main
+      - stage
+  workflow_dispatch:
+
+jobs:
+  dependency-review:
+    name: Dependency Review (GitHub advisories)
+    runs-on: ubuntu-latest
+    outputs:
+      review-output: ${{ steps.dependency-review-step.outputs.comment-content }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: GitHub Dependency Review
+        id: dependency-review-step
+        uses: actions/dependency-review-action@v4
+        with:
+          fail-on-severity: low
+        continue-on-error: true
+
+  pnpm-audit:
+    name: pnpm Audit (branch vulnerabilities)
+    runs-on: ubuntu-latest
+    needs: dependency-review
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          run_install: false
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Run pnpm audit (JSON)
+        id: audit
+        run: |
+          pnpm audit --json > audit.json || true
+
+      - name: Generate audit comment
+        id: comment
+        run: |
+          # Parse pnpm audit
+          critical=$(jq '.advisories | map(select(.severity=="critical")) | length' audit.json)
+          high=$(jq '.advisories | map(select(.severity=="high")) | length' audit.json)
+          moderate=$(jq '.advisories | map(select(.severity=="moderate")) | length' audit.json)
+          low=$(jq '.advisories | map(select(.severity=="low")) | length' audit.json)
+
+          # Details grouped by severity
+          jq -r '
+          .advisories
+          | to_entries
+          | map(.value)
+          | group_by(.severity)
+          | map({
+              severity: .[0].severity,
+              list: map("* " + .module_name + "@" + .findings[0].version + " → " + .url)
+            })
+          | map("#### " + (.severity | ascii_upcase) + "\n" + ( .list | join("\n")))
+          | join("\n\n")
+          ' audit.json > audit-details.md || echo "" > audit-details.md
+
+          # Use Dependency Review output directly
+          dep_review_summary="${{ needs.dependency-review.outputs.review-output }}"
+          if [ -z "$dep_review_summary" ]; then
+            dep_review_summary="No Dependency Review findings"
+          fi
+
+          # Combine into PR comment
+          echo "PR_COMMENT<<EOF" >> $GITHUB_ENV
+          echo "### 🔒 Security Audit Report" >> $GITHUB_ENV
+          echo "$dep_review_summary" >> $GITHUB_ENV
+          echo "" >> $GITHUB_ENV
+          echo "<h1>pnpm Audit</h1>" >> $GITHUB_ENV
+          echo "" >> $GITHUB_ENV
+          echo "Critical: 🚨 $critical" >> $GITHUB_ENV
+          echo "High: ⚠️ $high" >> $GITHUB_ENV
+          echo "Moderate: 🔧 $moderate" >> $GITHUB_ENV
+          echo "Low: ℹ️ $low" >> $GITHUB_ENV
+          echo "" >> $GITHUB_ENV
+          cat audit-details.md >> $GITHUB_ENV
+          echo "_This report is informational only; CI/CD is not blocked_" >> $GITHUB_ENV
+          echo "_pnpm audit: Show vulnerabilities_" >> $GITHUB_ENV
+          echo "_pnpm update: updates, but is constrained by semversioning in package.json._" >> $GITHUB_ENV
+          echo "_Fix semversioning in package.json then reattempt pnpm update and pnpm audit_" >> $GITHUB_ENV
+          echo "EOF" >> $GITHUB_ENV
+
+      - name: Comment audit findings on PR
+        if: github.event_name == 'pull_request'
+        uses: marocchino/sticky-pull-request-comment@v2
+        with:
+          header: security-audit
+          message: ${{ env.PR_COMMENT }}
