@@ -79,7 +79,7 @@ jQuery(document).ready(function ($) {
   } else {
     console.log('Using default theme:', themeSettings);
   }
-
+    
   var isBrandConfigPage =
     window.location.pathname === '/accounts/1/brand_configs';
   if (isBrandConfigPage) {
@@ -89,7 +89,8 @@ jQuery(document).ready(function ($) {
         var checkInterval;
 
         function runWhenTemaVisible() {
-          var isThemeHeadingVisible = $("h1:contains('Tema')").is(':visible');
+          var themeButton = $('#Menu__label___0');
+          var isThemeHeadingVisible = themeButton.is(':visible');
 
           if (isThemeHeadingVisible) {
             var content = $('#content');

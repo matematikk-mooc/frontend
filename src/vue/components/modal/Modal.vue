@@ -68,8 +68,9 @@ const closeModal = () => {
     justify-content: flex-start;
     align-items: flex-start;
     min-width: 30rem;
-    max-width: 70rem;
+    max-width: 60%;
     max-height: 80vh;
+    border-radius: 12px!important;
     &__close-button{
       position:absolute;
       z-index:999;
@@ -87,7 +88,14 @@ const closeModal = () => {
       font-family: Inter;
       font-weight: 500;
       word-wrap: break-word;
-       h1, h2, h3 {
+      border-bottom: lightgray 0.5px solid;
+      .course-illustration-box { 
+        border-radius: 12px 12px 0 0;
+      }
+      h1 {
+          margin: 4px 0;
+      }
+      h1, h2, h3 {
         padding: 0 1rem 0 1rem;
         font-size: 1.25rem;
         width: calc(100% - 2rem);
@@ -117,6 +125,9 @@ const closeModal = () => {
       display:flex;
       justify-content:flex-end;
        > *  { margin: 0 0.125rem; }
+    }
+    .btn {
+      font-size: 14px;
     }
   }
 

@@ -160,6 +160,67 @@ jQuery(function($) {
     coursesettings.addListGroupsButton();
     coursesettings.addListAssignmentsButton();
     uucheck.addUUButton();
+  });
+
+  routes.addRouteForPath(/\/files$/, function () {
+    // Generate and populate missing menu from ".com/files"
+    function createMenuItem(href, id, className, text, isActive = false, ariaCurrent = null) {
+    const li = document.createElement("li");
+    li.className = "section";
+
+    const a = document.createElement("a");
+    a.href = href;
+    a.id = id;
+    a.className = className;
+    a.tabIndex = 0;
+    a.textContent = text;
+
+    if (isActive) a.classList.add("active");
+    if (ariaCurrent) a.setAttribute("aria-current", ariaCurrent);
+
+    li.appendChild(a);
+    return li;
+  }
+
+  function generateMenu() {
+    const fileMenu = document.createElement("div");
+    fileMenu.id = "file-menu";
+    fileMenu.style.display = "block";
+
+    const stickyContainer = document.createElement("div");
+    stickyContainer.id = "sticky-container";
+    stickyContainer.className = "file-menu-container";
+
+    const ul = document.createElement("ul");
+    ul.id = "section-tabs";
+
+    const items = [
+      ["/profile/communication", "varslinger-link", "notifications", "Varslinger"],
+      ["/profile", "profil-link", "profile", "Profil"],
+      ["/files", "filer-link", "files", "Filer"],
+      ["/profile/settings", "innstillinger-link", "profile_settings", "Innstillinger", true, "page"],
+      ["/profile/content_shares", "delt-innhold-link", "content_shares", "Delt innhold"],
+      ["/users/374694/external_tools/845", "brukersammenslåing-link", "context_external_tool_845", "Brukersammenslåing"],
+      ["/profile/qr_mobile_login", "qr-eller-mobil-innlogging-link", "qr_mobile_login", "QR eller mobil-innlogging"],
+      ["/account_notifications", "globale-kunngjøringer-link", "past_global_announcements", "Globale kunngjøringer"],
+    ];
+
+    items.forEach(([href, id, className, text, isActive = false, ariaCurrent = null]) => {
+      ul.appendChild(createMenuItem(href, id, className, text, isActive, ariaCurrent));
+    });
+
+    stickyContainer.appendChild(ul);
+    fileMenu.appendChild(stickyContainer);
+
+    const wrapper = document.getElementById("wrapper");
+    if (wrapper) {
+      wrapper.insertBefore(fileMenu, wrapper.firstChild);
+    } else {
+      console.warn('Element with id "wrapper" not found.');
+    }
+  }
+
+  generateMenu();
 
   });
 

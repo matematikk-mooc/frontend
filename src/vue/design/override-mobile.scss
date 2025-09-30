@@ -43,7 +43,7 @@
       }
     }
     .header-brand {
-/*       font-size: 1.125rem !important; */
+      /*font-size: 1.125rem !important; */
       margin-left: 1.25rem !important;
     }
     .stage-banner {
@@ -287,48 +287,37 @@
     border-radius: 12px !important;
     h2 {
       font-family: "Inter", sans-serif !important;
-      font-size: 1rem !important;
-      font-weight: 500 !important;
-      margin: unset !important;
+      font-size: 1.25rem !important;
       margin-top: 10px !important;
       line-height: normal;
     }
     .course-description{
       font-family: "Inter", sans-serif !important;
-      font-size: 14px !important;
-      font-weight: 400 !important;
-      color: #6A6A6A  !important; 
-      line-height: normal !important;
+      font-size: 16px !important;
+      color: var(--ic-brand-font-color-dark);
     }
     .modules-list {
       h3 {
         font-family: "Inter", sans-serif !important;
-        font-size: 14px !important;
-        font-weight: 500 !important;
+        font-size: 16px !important;
         margin: unset !important;
-        line-height: normal;
-        color:#6A6A6A !important;
       }
       ul {
-        padding: 0;
         margin: 0;
+        color: var(--ic-brand-font-color-dark);
       }
       li {
-        font-size: 14px;
         color: #6A6A6A;
-        padding: 0;
-        margin: 0;
+        margin-bottom: 0.3rem;
+        color: var(--ic-brand-font-color-dark);
       }
       li:before {
         content: unset;
       }
     }
-    .modal-box__actions {
-      justify-content: unset;
-    }
     .course-illustration-box {
       display: flex !important;
-      border-radius: 12px !important;
+      border-radius: 12px;
     }
   }
   .custom-reveal-wrapper {

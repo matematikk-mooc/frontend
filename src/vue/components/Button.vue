@@ -13,9 +13,10 @@
   >
     <Icon v-if="type === 'previous'" name="chevron_left" size="1.5em" />
     <img class="feide-symbol" v-if="type === 'feideLogin'" :src="`${server}feide_white-symbol.svg`"/>
+    <img class="canvas-symbol" v-if="type === 'canvasLogin'" :src="`${server}canvas_logo.svg`"/>
     <slot></slot>
     <Icon v-if="type === 'next'" name="chevron_right" size="1.5em" />
-  </button>
+  </button> 
 </template>
 
 <script setup>
@@ -28,13 +29,19 @@ const props = defineProps({
 const server = SERVER;
 
 const isFilled = !props.type || props.type === 'submit' || props.type === 'filled' || props.type === 'feideLogin';
-const isOutlined = props.type === 'outlined' || props.type === 'previous' || props.type === 'next';
+const isOutlined = props.type === 'outlined' || props.type === 'previous' || props.type === 'next' || props.type === 'canvasLogin' ;
 const isDropdown = props.type === 'dropdown';
 const isFullWidth = props.fullWidth;
 </script>
 
 <style lang="scss">
 @import '../design/colors.scss';
+
+div.modal-box__actions > button {
+  height: unset !important;
+  width: fit-content;
+
+}
 
 .btn {
   cursor: pointer;
