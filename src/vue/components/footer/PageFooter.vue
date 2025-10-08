@@ -48,6 +48,24 @@ footer {
   width: 100%; 
 }
 
+#f1_container {
+  .page-footer--content-wrapper {
+    position:fixed;
+    bottom:0;
+
+  }
+      #banner {
+    padding: 8px;
+    margin-top: 55px;
+    margin-left: 20px;
+    margin-right: 20px;
+    border: 1px solid black;
+    border-radius: 10px;
+    color: white;
+    background: #2e3c51;
+    }
+}
+
 .page-footer--content {
   display: flex;
   flex-direction: column;
