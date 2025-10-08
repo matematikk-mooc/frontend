@@ -50,9 +50,17 @@ export default (function() {
         }
         else if(document.getElementById("f1_container")){
           // mobile
+          // header
           var mobileHeaderWrapper = document.getElementById("f1_container").children[0];
           mobileHeaderWrapper.append(document.createElement("div"));
           mobileHeaderWrapper.setAttribute("id", "notLoggedInHeader");
+
+          // login banner
+          var wrapper = document.getElementById("f1_container");
+          var banner = document.createElement("div");
+          banner.setAttribute("id", "banner")
+          banner.textContent = "Påloggingsløsningen for Kompetanseportalen uten Feide-bruker er for tiden nede på mobile enheter. Vi anbefaler bruk av datamaskin frem til problemet er løst."
+          wrapper.append(banner)
         }
         // Find modal on render and update content
         else if(document.getElementById("registration_header")){
