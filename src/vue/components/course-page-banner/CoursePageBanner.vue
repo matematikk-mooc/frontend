@@ -84,11 +84,6 @@ export default {
   padding: 0 1rem 0 1rem;
   margin: 2.5rem 0 2.5rem 0;
 
-  .course-page__banner__illustration{
-    img {
-      height: 100%;
-    }
-  }
 
   &.theme_0 {
     background: map-get($theme_0, background);
