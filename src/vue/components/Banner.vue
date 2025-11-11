@@ -2,7 +2,7 @@
   <div class="banner">
     <div class="before-login-image-left">
       <img
-        aria-label="illustrasjon-banner" :src ="`${server}IllustrasjonerHeaderIkkeInnloggetSide/illustrasjon-kvinne-hovedside-innlogging.svg`"
+        aria-label="illustrasjon-banner" :src ="`${server}IllustrasjonerHeaderIkkeInnloggetSide/banner-laptop.svg`"
       />
     </div>
     <div class="caption">
@@ -10,7 +10,7 @@
     </div>
     <div class="before-login-image-right">
       <img
-      aria-label="illustrasjon-banner" :src="`${server}IllustrasjonerHeaderIkkeInnloggetSide/illustrasjon-mann-hovedside-innlogging.svg`"
+      aria-label="illustrasjon-banner" :src="`${server}IllustrasjonerHeaderIkkeInnloggetSide/banner-gant.svg`"
       />
     </div>
   </div>
@@ -48,12 +48,12 @@ const server= SERVER
 
   .before-login-image-left {
     position: relative;
-    bottom: -3rem;
+    bottom: -1rem;
 
   }
   .before-login-image-right {
     position: relative;
-    bottom: -3rem;
+    bottom: -1rem;
 
   }
   .caption {
