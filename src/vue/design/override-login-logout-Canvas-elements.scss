@@ -10,11 +10,11 @@
 .ic-Login {
     color: $color-black !important;
     background-color: map-get($color-palette-steel, background, 700);
-    padding-bottom: 3rem;
     padding-left: 2rem;
     padding-right: 2rem;
     position: relative;
     margin: 0 auto;
+    border-radius: 0.5rem;
     max-width: 400px;
     box-shadow: rgba(50, 50, 93, 0.85) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
 }
@@ -80,6 +80,7 @@
     color: $color-white !important;
     font-weight: 500;
     padding-left: 1.125rem;
+    padding-bottom: 2rem;
     a {
         color: $color-white !important;
         text-decoration: underline !important;
@@ -141,6 +142,13 @@
     }
 }
 
+.reaccept_terms {
+    max-width: 50% !important; 
+    .ic-Login-confirmation__actions {
+        display: flex !important;
+    }
+}
+
 .ic-Login-confirmation{
     color: $color-black !important;
     justify-content: unset !important;
@@ -149,6 +157,7 @@
     max-width: fit-content;
     padding: 3rem;
     margin-bottom:40px;
+    border-radius: 0.5rem;
     top: 50% !important;
     left: 50% !important;
     z-index: 1002 !important;
