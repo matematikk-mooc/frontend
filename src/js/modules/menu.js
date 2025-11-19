@@ -62,6 +62,8 @@ export default (function() {
           banner.textContent = "Påloggingsløsningen for Kompetanseportalen uten Feide-bruker er for tiden nede på mobile enheter. Vi anbefaler bruk av datamaskin frem til problemet er løst."
           wrapper.append(banner)
         }
+        
+        
         // Find modal on render and update content
         else if(document.getElementById("registration_header")){
         const observer = new MutationObserver((mutationsList, observer) => {
@@ -133,6 +135,25 @@ export default (function() {
         
             // Change terms link
             const regDialog = document.getElementsByClassName("registration-dialog")[0];
+          }
+
+          // Restructure reaccept terms page (Newly registered)
+          else if(!!document.querySelector(".reaccept_terms")){
+            const contentNode = document.querySelector(".ic-Login-confirmation__content").children[2];
+            const checkboxNode = document.querySelector(".ic-Login-confirmation__content").children[3];
+            // Create DOM element <a>, link, with text
+            const privacyLink = Object.assign(document.createElement('a'), {
+              href: 'https://kompetanseudirno.azureedge.net/udirdesign/privacypolicy.html?v=1_0',
+              textContent: 'Personvernerklæringen',
+              target: '_blank'
+            });
+            contentNode.replaceChildren('Velkommen til Kompetanseportalen! Dersom du er ny her, eller vilkårene for bruk av tjenesten har endret seg siden sist du var innom, vennligst les over innholdet i ', privacyLink, '.');
+            // look through nodes and remove textnodes not recognized as children
+            checkboxNode.childNodes.forEach(node => { 
+              if (node.nodeType === Node.TEXT_NODE) {
+                node.remove(); }
+                }
+            );
           }
         const headerProps = {
           logged_in: false,
