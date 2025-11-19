@@ -147,9 +147,13 @@ export default (function() {
               textContent: 'Personvernerklæringen',
               target: '_blank'
             });
-            
             contentNode.replaceChildren('Velkommen til Kompetanseportalen! Dersom du er ny her, eller vilkårene for bruk av tjenesten har endret seg siden sist du var innom, vennligst les over innholdet i ', privacyLink, '.');
-            checkboxNode.children[1].replaceChildren('Jeg godkjenner innholdet i ', privacyLink, '.')
+            // look through nodes and remove textnodes not recognized as children
+            checkboxNode.childNodes.forEach(node => { 
+              if (node.nodeType === Node.TEXT_NODE) {
+                node.remove(); }
+                }
+            );
           }
         const headerProps = {
           logged_in: false,
