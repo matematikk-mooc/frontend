@@ -132,7 +132,7 @@ export default {
     width: auto;
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-end;
 
     img {
       width: 100%;
