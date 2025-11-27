@@ -30,26 +30,25 @@ $path: $urlToFile;
 @font-face {
     font-family: 'Inter';
     src: url(#{$path} + '/fonts/Inter/Inter-VariableFont_opsz,wght.ttf') format("truetype-variations");
-    font-weight: "700";
+    font-weight: 100 900;
+    font-style: normal;
 }
 body{
     font-family: 'Inter';
     font-size:1rem;
     line-height: 1.5rem;
-    font-variation-settings: "wght" 400;
+    font-weight: 400
 }
 
 h1{
     font-family:'Inter';
-    font-weight: 500;
-    font-variation-settings: "wght" 600;
+    font-weight: 700;
     font-size: 2.25rem;
     line-height: 2.75rem;
 }
 h2{
     font-family:'Inter';
-    font-variation-settings: "wght" 700;
-    font-weight: 500;
+    font-weight: 600;
     font-size: 1.5rem;
     line-height: 2.25rem;
 }
