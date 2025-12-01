@@ -42,7 +42,6 @@ import h5p from './3party/h5p.js';
 jQuery(function($) {
   // Generate and populate missing user menu
   function generateMenu() {
-  // if (!document.querySelector("#sticky-container")) {
     const fileMenu = document.createElement("div");
     fileMenu.id = "file-menu";
     fileMenu.style.display = "block";
@@ -92,9 +91,7 @@ jQuery(function($) {
     } else {
       console.warn('Element with id "wrapper" not found.');
     }
-      console.log("MenuGeneration Complete")
-    }
-  // }
+  }
 
   if(window.self != window.top) {
     return;
@@ -202,7 +199,7 @@ jQuery(function($) {
     if(coursepage.replaceUpcomingInSidebar()) {
       coursepage.printDeadlinesForCourse();
     }
-   });
+  });
 
   routes.addRouteForPath(/\/search\/all_courses$/, function() {
     enroll.printAllCourses();
@@ -217,24 +214,19 @@ jQuery(function($) {
     uucheck.addUUButton();
   });
 const routeMap = [
-  { pattern: /\/files$/,                     message: "FILES PATH" },
-  { pattern: /\/profile\/communication$/,    message: "COMMUNICATION PATH" },
-  { pattern: /\/account_notifications$/,     message: "ACCOUNT NOTIFICATIONS PATH" },
-  { pattern: /\/profile$/,                   message: "PROFILE PATH" },
-  { pattern: /\/profile\/qr_mobile_login$/,  message: "COMMUNICATION PATH" },
+  { pattern: /\/files$/},
+  { pattern: /\/profile\/communication$/},
+  { pattern: /\/account_notifications$/},
+  { pattern: /\/profile$/},
+  { pattern: /\/profile\/qr_mobile_login$/},
 ];
 
-routeMap.forEach(({ pattern, message }) => {
+routeMap.forEach(({ pattern }) => {
   const menuList = document.querySelector("ul");
   const hasAdmin = [...menuList.querySelectorAll("li")]
   .some(li => li.textContent.trim().toLowerCase() === "administrator");
   routes.addRouteForPath(pattern, () => {
-    if (pattern.source === "\\/files$") {
-      console.log(message);
-      generateMenu();
-    return;
-    }
-    if(!hasAdmin) {
+    if(pattern.source === "\\/files$" || !hasAdmin) {
       console.log(message);
       generateMenu();
     }
