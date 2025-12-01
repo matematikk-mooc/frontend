@@ -40,6 +40,61 @@ import uucheck from './modules/uucheck.js';
 import h5p from './3party/h5p.js';
 
 jQuery(function($) {
+  // Generate and populate missing user menu
+  function generateMenu() {
+  // if (!document.querySelector("#sticky-container")) {
+    const fileMenu = document.createElement("div");
+    fileMenu.id = "file-menu";
+    fileMenu.style.display = "block";
+    const stickyContainer = document.createElement("div");
+    stickyContainer.id = "sticky-container";
+    stickyContainer.className = "file-menu-container";
+    const ul = document.createElement("ul");
+    ul.id = "section-tabs";
+
+    const items = [
+      ["/profile/communication", "varslinger-link", "notifications", "Varslinger"],
+      ["/profile", "profil-link", "profile", "Profil"],
+      ["/files", "filer-link", "files", "Filer"],
+      ["/profile/settings", "innstillinger-link", "profile_settings", "Innstillinger", true, "page"],
+      ["/profile/content_shares", "delt-innhold-link", "content_shares", "Delt innhold"],
+      ["/users/374694/external_tools/845", "brukersammenslåing-link", "context_external_tool_845", "Brukersammenslåing"],
+      ["/profile/qr_mobile_login", "qr-eller-mobil-innlogging-link", "qr_mobile_login", "QR eller mobil-innlogging"],
+      ["/account_notifications", "globale-kunngjøringer-link", "past_global_announcements", "Globale kunngjøringer"],
+    ];
+    function createMenuItem(href, id, className, text, isActive = false, ariaCurrent = null) {
+      const li = document.createElement("li");
+      li.className = "section";
+
+      const a = document.createElement("a");
+      a.href = href;
+      a.id = id;
+      a.className = className;
+      a.tabIndex = 0;
+      a.textContent = text;
+
+      if (isActive) a.classList.add("active");
+      if (ariaCurrent) a.setAttribute("aria-current", ariaCurrent);
+
+      li.appendChild(a);
+      return li;
+    }
+    items.forEach(([href, id, className, text, isActive = false, ariaCurrent = null]) => {
+      ul.appendChild(createMenuItem(href, id, className, text, isActive, ariaCurrent));
+    });
+
+    stickyContainer.appendChild(ul);
+    fileMenu.appendChild(stickyContainer);
+
+    const wrapper = document.getElementById("wrapper");
+    if (wrapper) {
+      wrapper.insertBefore(fileMenu, wrapper.firstChild);
+    } else {
+      console.warn('Element with id "wrapper" not found.');
+    }
+      console.log("MenuGeneration Complete")
+    }
+  // }
 
   if(window.self != window.top) {
     return;
@@ -161,68 +216,30 @@ jQuery(function($) {
     coursesettings.addListAssignmentsButton();
     uucheck.addUUButton();
   });
+const routeMap = [
+  { pattern: /\/files$/,                     message: "FILES PATH" },
+  { pattern: /\/profile\/communication$/,    message: "COMMUNICATION PATH" },
+  { pattern: /\/account_notifications$/,     message: "ACCOUNT NOTIFICATIONS PATH" },
+  { pattern: /\/profile$/,                   message: "PROFILE PATH" },
+  { pattern: /\/profile\/qr_mobile_login$/,  message: "COMMUNICATION PATH" },
+];
 
-  routes.addRouteForPath(/\/files$/, function () {
-    // Generate and populate missing menu from ".com/files"
-    function createMenuItem(href, id, className, text, isActive = false, ariaCurrent = null) {
-    const li = document.createElement("li");
-    li.className = "section";
-
-    const a = document.createElement("a");
-    a.href = href;
-    a.id = id;
-    a.className = className;
-    a.tabIndex = 0;
-    a.textContent = text;
-
-    if (isActive) a.classList.add("active");
-    if (ariaCurrent) a.setAttribute("aria-current", ariaCurrent);
-
-    li.appendChild(a);
-    return li;
-  }
-
-  function generateMenu() {
-    const fileMenu = document.createElement("div");
-    fileMenu.id = "file-menu";
-    fileMenu.style.display = "block";
-
-    const stickyContainer = document.createElement("div");
-    stickyContainer.id = "sticky-container";
-    stickyContainer.className = "file-menu-container";
-
-    const ul = document.createElement("ul");
-    ul.id = "section-tabs";
-
-    const items = [
-      ["/profile/communication", "varslinger-link", "notifications", "Varslinger"],
-      ["/profile", "profil-link", "profile", "Profil"],
-      ["/files", "filer-link", "files", "Filer"],
-      ["/profile/settings", "innstillinger-link", "profile_settings", "Innstillinger", true, "page"],
-      ["/profile/content_shares", "delt-innhold-link", "content_shares", "Delt innhold"],
-      ["/users/374694/external_tools/845", "brukersammenslåing-link", "context_external_tool_845", "Brukersammenslåing"],
-      ["/profile/qr_mobile_login", "qr-eller-mobil-innlogging-link", "qr_mobile_login", "QR eller mobil-innlogging"],
-      ["/account_notifications", "globale-kunngjøringer-link", "past_global_announcements", "Globale kunngjøringer"],
-    ];
-
-    items.forEach(([href, id, className, text, isActive = false, ariaCurrent = null]) => {
-      ul.appendChild(createMenuItem(href, id, className, text, isActive, ariaCurrent));
-    });
-
-    stickyContainer.appendChild(ul);
-    fileMenu.appendChild(stickyContainer);
-
-    const wrapper = document.getElementById("wrapper");
-    if (wrapper) {
-      wrapper.insertBefore(fileMenu, wrapper.firstChild);
-    } else {
-      console.warn('Element with id "wrapper" not found.');
+routeMap.forEach(({ pattern, message }) => {
+  const menuList = document.querySelector("ul");
+  const hasAdmin = [...menuList.querySelectorAll("li")]
+  .some(li => li.textContent.trim().toLowerCase() === "administrator");
+  routes.addRouteForPath(pattern, () => {
+    if (pattern.source === "\\/files$") {
+      console.log(message);
+      generateMenu();
+    return;
     }
-  }
-
-  generateMenu();
-
+    if(!hasAdmin) {
+      console.log(message);
+      generateMenu();
+    }
   });
+});
 
   routes.addRouteForPath(/\/profile\/settings$/, function() {
     document.getElementById("wrapper").classList.add("user-settings-wrapper");
@@ -248,8 +265,12 @@ jQuery(function($) {
     }
 
     var elementId = document.getElementById('confirm_email_channel');
-    if(!settings.displayProfileLeftMenu) {
-      document.getElementById("section-tabs").style.display = "none";
+    // if(!settings.displayProfileLeftMenu) {
+    //   document.getElementById("section-tabs").style.display = "none";
+    // }
+      if (!document.querySelector(".sticky-container")) {
+      console.log("enters bottom generate")
+      generateMenu();
     }
   });
 
@@ -370,6 +391,7 @@ jQuery(function($) {
       // removeCanvasAnnouncementElements();
       removeCanvasDiscussionElements();
       if(!location.search.includes('module_item_id=')) {
+        console.log("LEFTSIDE")
         renderCourseModules('left-side');
       }
       util.hasRoleInCourse(courseId, "TeacherEnrollment", function(isTeacher) {
