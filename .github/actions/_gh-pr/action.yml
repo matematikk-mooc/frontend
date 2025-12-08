@@ -1,0 +1,141 @@
+# GitHub Pull Request Action
+# Creates GitHub pull requests with auto-merge support
+# Copy to other projects: .github/actions/_gh-pr/
+
+name: 'GitHub Pull Request'
+description: 'Create GitHub pull requests with auto-merge support'
+
+inputs:
+  github-token:
+    description: 'GitHub token for creating PR'
+    required: true
+  title:
+    description: 'PR title'
+    required: true
+  body:
+    description: 'PR body content'
+    required: false
+    default: ''
+  base:
+    description: 'Base branch to merge into'
+    required: false
+    default: 'main'
+  head:
+    description: 'Head branch with changes (default: current branch)'
+    required: false
+    default: ''
+  draft:
+    description: 'Create as draft PR'
+    required: false
+    default: 'false'
+  auto-merge:
+    description: 'Enable auto-merge when checks pass'
+    required: false
+    default: 'false'
+  merge-method:
+    description: 'Merge method: squash, merge, or rebase'
+    required: false
+    default: 'squash'
+  delete-branch:
+    description: 'Delete head branch after merge'
+    required: false
+    default: 'false'
+
+outputs:
+  pr-number:
+    description: 'Created PR number'
+    value: ${{ steps.pr.outputs.number }}
+  pr-url:
+    description: 'URL of the created PR'
+    value: ${{ steps.pr.outputs.url }}
+  pr-operation:
+    description: 'Whether PR was created or already existed (created, existing)'
+    value: ${{ steps.pr.outputs.operation }}
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Create or find PR
+      id: pr
+      shell: bash
+      env:
+        GH_TOKEN: ${{ inputs.github-token }}
+        TITLE: ${{ inputs.title }}
+        BODY: ${{ inputs.body }}
+        BASE: ${{ inputs.base }}
+        HEAD_INPUT: ${{ inputs.head }}
+        IS_DRAFT: ${{ inputs.draft }}
+      run: |
+        # Determine head branch
+        HEAD="${HEAD_INPUT:-$(git rev-parse --abbrev-ref HEAD)}"
+
+        # Push head branch
+        git push -u origin "$HEAD" 2>/dev/null || true
+
+        # Check for existing PR
+        EXISTING=$(gh pr list --head "$HEAD" --base "$BASE" --json number,url -q '.[0]' 2>/dev/null || echo "")
+        if [ -n "$EXISTING" ] && [ "$EXISTING" != "null" ]; then
+          echo "number=$(echo "$EXISTING" | jq -r '.number')" >> $GITHUB_OUTPUT
+          echo "url=$(echo "$EXISTING" | jq -r '.url')" >> $GITHUB_OUTPUT
+          echo "operation=existing" >> $GITHUB_OUTPUT
+          echo "Found existing PR: $(echo "$EXISTING" | jq -r '.url')"
+          exit 0
+        fi
+
+        # Verify base branch exists
+        if ! git ls-remote --heads origin "$BASE" | grep -qE "refs/heads/${BASE}$"; then
+          echo "::error::Base branch '$BASE' does not exist"
+          exit 1
+        fi
+
+        # Build create args
+        ARGS=(--title "$TITLE" --base "$BASE" --head "$HEAD")
+        [ -n "$BODY" ] && ARGS+=(--body "$BODY") || ARGS+=(--body "")
+        [ "$IS_DRAFT" = "true" ] && ARGS+=(--draft)
+
+        # Create PR
+        PR_URL=$(gh pr create "${ARGS[@]}" 2>&1) || { echo "::error::Failed to create PR: $PR_URL"; exit 1; }
+        PR_NUMBER=$(echo "$PR_URL" | grep -oE '[0-9]+$')
+
+        echo "number=$PR_NUMBER" >> $GITHUB_OUTPUT
+        echo "url=$PR_URL" >> $GITHUB_OUTPUT
+        echo "operation=created" >> $GITHUB_OUTPUT
+        echo "Created PR #$PR_NUMBER: $PR_URL"
+
+    - name: Enable auto-merge
+      id: auto-merge
+      if: inputs.auto-merge == 'true' && inputs.draft != 'true'
+      shell: bash
+      env:
+        GH_TOKEN: ${{ inputs.github-token }}
+        PR_NUMBER: ${{ steps.pr.outputs.number }}
+        MERGE_METHOD: ${{ inputs.merge-method }}
+        DELETE_BRANCH: ${{ inputs.delete-branch }}
+      run: |
+        ARGS=("$PR_NUMBER" --auto "--$MERGE_METHOD")
+        [ "$DELETE_BRANCH" = "true" ] && ARGS+=(--delete-branch)
+
+        if gh pr merge "${ARGS[@]}" 2>&1; then
+          echo "Auto-merge enabled ($MERGE_METHOD)"
+        else
+          echo "::warning::Failed to enable auto-merge"
+        fi
+
+    - name: Summary
+      shell: bash
+      env:
+        PR_NUMBER: ${{ steps.pr.outputs.number }}
+        PR_URL: ${{ steps.pr.outputs.url }}
+        PR_OPERATION: ${{ steps.pr.outputs.operation }}
+        AUTO_MERGE: ${{ inputs.auto-merge }}
+        MERGE_METHOD: ${{ inputs.merge-method }}
+      run: |
+        if [ "$PR_OPERATION" = "existing" ]; then
+          echo "## Existing PR Found" >> $GITHUB_STEP_SUMMARY
+        else
+          echo "## PR Created" >> $GITHUB_STEP_SUMMARY
+        fi
+        echo "- **PR:** [#$PR_NUMBER]($PR_URL)" >> $GITHUB_STEP_SUMMARY
+        if [ "$AUTO_MERGE" = "true" ]; then
+          echo "- **Auto-merge:** $MERGE_METHOD" >> $GITHUB_STEP_SUMMARY
+        fi
