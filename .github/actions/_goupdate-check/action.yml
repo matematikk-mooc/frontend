@@ -1,0 +1,113 @@
+# Goupdate Check Action
+# Checks for available dependency updates
+
+name: 'Goupdate Check'
+description: 'Check for available dependency updates'
+
+inputs:
+  working-directory:
+    description: 'Working directory containing dependency files'
+    required: false
+    default: '.'
+  rule:
+    description: 'Package manager rule to use (e.g., composer, npm, mod)'
+    required: true
+  exclude-packages:
+    description: 'Packages to skip (comma-separated)'
+    required: false
+    default: ''
+  verbose:
+    description: 'Enable verbose output'
+    required: false
+    default: 'false'
+
+outputs:
+  has-updates:
+    description: 'Whether any minor/patch updates are available (excludes major-only)'
+    value: ${{ steps.check.outputs.has_updates }}
+  has-major-only:
+    description: 'Whether there are ONLY major updates (no minor/patch available)'
+    value: ${{ steps.check.outputs.has_major_only }}
+  outdated-output:
+    description: 'Raw JSON output from goupdate outdated command'
+    value: ${{ steps.check.outputs.outdated_output }}
+  summary:
+    description: 'Human-readable summary of updates'
+    value: ${{ steps.check.outputs.summary }}
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Check for updates
+      id: check
+      shell: bash
+      working-directory: ${{ inputs.working-directory }}
+      env:
+        RULE: ${{ inputs.rule }}
+        EXCLUDE: ${{ inputs.exclude-packages }}
+        VERBOSE: ${{ inputs.verbose }}
+      run: |
+        EXCLUDE_FLAG=""
+        if [[ -n "$EXCLUDE" ]]; then
+          EXCLUDE_FLAG="-e $EXCLUDE"
+        fi
+
+        VERBOSE_FLAG=""
+        if [[ "$VERBOSE" == "true" ]]; then
+          VERBOSE_FLAG="-v"
+        fi
+
+        # Get JSON output
+        STDERR_FILE=$(mktemp)
+        JSON=$(goupdate outdated -r "$RULE" -o json $EXCLUDE_FLAG $VERBOSE_FLAG 2>"$STDERR_FILE") || {
+          EXIT_CODE=$?
+          cat "$STDERR_FILE" >&2
+          rm -f "$STDERR_FILE"
+          # If command failed and verbose was not enabled, re-run with verbose for debugging
+          if [[ "$VERBOSE" != "true" ]]; then
+            echo ""
+            echo "::group::Re-running with verbose output for debugging"
+            echo "Command failed with exit code $EXIT_CODE. Re-running with verbose mode to show detailed failure information..."
+            echo ""
+            goupdate outdated -r "$RULE" -o json $EXCLUDE_FLAG -v 2>&1 || true
+            echo "::endgroup::"
+          fi
+          exit $EXIT_CODE
+        }
+        rm -f "$STDERR_FILE"
+
+        # Parse counts from JSON
+        MAJOR_COUNT=$(echo "$JSON" | jq -r '.summary.has_major // 0')
+        MINOR_COUNT=$(echo "$JSON" | jq -r '.summary.has_minor // 0')
+        PATCH_COUNT=$(echo "$JSON" | jq -r '.summary.has_patch // 0')
+
+        # Check if there are minor or patch updates (not just major-only)
+        HAS_UPDATES="false"
+        HAS_MAJOR_ONLY="false"
+        if [[ -n "$JSON" ]]; then
+          MINOR_PATCH=$(echo "$JSON" | jq '[.packages[] | select(.status == "Outdated" and (.minor != "#N/A" or .patch != "#N/A"))] | length' 2>/dev/null) || MINOR_PATCH=0
+          MAJOR_ONLY=$(echo "$JSON" | jq '[.packages[] | select(.status == "Outdated" and .major != "#N/A" and .minor == "#N/A" and .patch == "#N/A")] | length' 2>/dev/null) || MAJOR_ONLY=0
+          if [[ "$MINOR_PATCH" -gt 0 ]]; then
+            HAS_UPDATES="true"
+          fi
+          if [[ "$MAJOR_ONLY" -gt 0 && "$MINOR_PATCH" -eq 0 ]]; then
+            HAS_MAJOR_ONLY="true"
+          fi
+        fi
+
+        # Create summary
+        SUMMARY="Major: $MAJOR_COUNT, Minor: $MINOR_COUNT, Patch: $PATCH_COUNT"
+
+        echo "has_updates=$HAS_UPDATES" >> "$GITHUB_OUTPUT"
+        echo "has_major_only=$HAS_MAJOR_ONLY" >> "$GITHUB_OUTPUT"
+        echo "summary=$SUMMARY" >> "$GITHUB_OUTPUT"
+        {
+          echo "outdated_output<<EOF"
+          echo "$JSON"
+          echo "EOF"
+        } >> "$GITHUB_OUTPUT"
+
+        # Output raw JSON and summary
+        echo "$JSON"
+        echo ""
+        echo "Update check complete: $SUMMARY"
