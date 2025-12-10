@@ -1,113 +1,61 @@
 # Auto Update Workflow
 # Automated dependency updates via PR
 #
-# Usage:
-#   1. Copy this .github folder to your repository
-#   2. Modify the env section below for your project
-#   3. Push to your repository
-#
-# Supported Package Managers:
-#   - Node.js: npm, yarn, pnpm
-#   - PHP: composer
-#   - Python: requirements (pip), pipfile (pipenv)
-#   - Go: mod
-#   - .NET: nuget
-#
-# Multiple Package Managers:
-#   Enable multiple package managers for projects like Laravel (composer + npm),
-#   Django (requirements + npm), or full-stack apps.
-#   Only the tools you enable will be installed.
-#
-# Update Policy:
-#   - Minor/Patch updates: Applied automatically
-#   - Major updates: Alerts only, does not block other updates
+# Supported: npm, yarn, pnpm, composer, pip, pipenv, go mod, nuget
+# Enable multiple package managers by setting ENABLE_* to 'true'
 
 name: Auto Update Dependencies
 
 on:
   schedule:
     - cron: '0 0 * * 1'  # Weekly on Monday
-
   workflow_dispatch:
     inputs:
       mode:
-        description: 'Operation mode'
-        required: true
+        description: 'Mode'
         default: 'update'
         type: choice
-        options:
-          - check-only
-          - update
+        options: [check-only, update]
       update-type:
-        description: 'Dependency update type'
-        required: false
+        description: 'Update type'
         default: 'minor'
         type: choice
-        options:
-          - minor
-          - patch
+        options: [minor, patch]
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: false
 
 # ============================================================================
-# CONFIGURATION - Modify for your project
+# CONFIGURATION
 # ============================================================================
 env:
-  # Goupdate source (change to your org's fork if needed)
   GOUPDATE_REPO: 'ajxudir/goupdate'
 
-  # -------------------------------------------------------------------------
-  # Package Managers - Enable the ones your project uses
-  # Set to 'true' to enable, 'false' to disable
-  # -------------------------------------------------------------------------
-  # Node.js package managers
+  # Package Managers (set to 'true' to enable)
   ENABLE_NPM: 'false'
   ENABLE_YARN: 'false'
-  ENABLE_PNPM: 'true'       # Frontend uses pnpm
-
-  # PHP package manager
+  ENABLE_PNPM: 'true'
   ENABLE_COMPOSER: 'false'
-
-  # Python package managers
-  ENABLE_PIP: 'false'         # requirements.txt
-  ENABLE_PIPENV: 'false'      # Pipfile
-
-  # Go package manager
+  ENABLE_PIP: 'false'
+  ENABLE_PIPENV: 'false'
   ENABLE_GO: 'false'
-
-  # .NET package manager
   ENABLE_NUGET: 'false'
 
-  # -------------------------------------------------------------------------
-  # Language Versions - Configure versions for enabled package managers
-  # -------------------------------------------------------------------------
-  NODE_VERSION: '20'        # For npm, yarn, pnpm
-  PHP_VERSION: '8.2'        # For composer
-  PYTHON_VERSION: '3.12'    # For pip, pipenv
-  GO_VERSION: '1.24'        # For go mod
-  DOTNET_VERSION: '8.0'     # For nuget
+  # Versions
+  NODE_VERSION: '20'
+  PHP_VERSION: '8.2'
+  PYTHON_VERSION: '3.12'
+  GO_VERSION: '1.24'
+  DOTNET_VERSION: '8.0'
 
-  # -------------------------------------------------------------------------
-  # Branch Settings
-  # -------------------------------------------------------------------------
-  UPDATE_BRANCH: 'goupdate/auto-update'
+  # Branches - {type} will be replaced with minor/patch
+  UPDATE_BRANCH: 'goupdate/{type}'
   TARGET_BRANCH: 'stage-updates'
 
-  # -------------------------------------------------------------------------
-  # PR Settings - use {date} for current date, {type} for update type
-  # -------------------------------------------------------------------------
-  PR_TITLE: 'chore(deps): Auto update - {type} ({date})'
-
-  # -------------------------------------------------------------------------
-  # Test Command - runs after updates (set to empty to skip)
-  # -------------------------------------------------------------------------
+  # PR
+  PR_TITLE: 'GoUpdate: Auto update - {type} ({date})'
   TEST_COMMAND: 'pnpm run build'
-
-  # -------------------------------------------------------------------------
-  # Packages to exclude (comma-separated)
-  # -------------------------------------------------------------------------
   EXCLUDE_PACKAGES: ''
 
 permissions:
@@ -115,374 +63,62 @@ permissions:
   pull-requests: write
 
 jobs:
-  prepare:
-    runs-on: ubuntu-latest
-    timeout-minutes: 2
-    outputs:
-      run-updates: ${{ steps.config.outputs.run_updates }}
-      update-type: ${{ steps.config.outputs.update_type }}
-      use-node: ${{ steps.detect.outputs.use_node }}
-      use-php: ${{ steps.detect.outputs.use_php }}
-      use-python: ${{ steps.detect.outputs.use_python }}
-      use-go: ${{ steps.detect.outputs.use_go }}
-      use-dotnet: ${{ steps.detect.outputs.use_dotnet }}
-      package-managers: ${{ steps.detect.outputs.package_managers }}
-    steps:
-      - id: config
-        run: |
-          EVENT="${{ github.event_name }}"
-          MODE="${{ github.event.inputs.mode }}"
-          TYPE="${{ github.event.inputs.update-type }}"
-
-          if [ "$EVENT" = "schedule" ]; then
-            echo "run_updates=true" >> $GITHUB_OUTPUT
-            echo "update_type=minor" >> $GITHUB_OUTPUT
-          elif [ "$MODE" = "check-only" ]; then
-            echo "run_updates=false" >> $GITHUB_OUTPUT
-            echo "update_type=${TYPE:-minor}" >> $GITHUB_OUTPUT
-          else
-            echo "run_updates=true" >> $GITHUB_OUTPUT
-            echo "update_type=${TYPE:-minor}" >> $GITHUB_OUTPUT
-          fi
-
-      - id: detect
-        env:
-          ENABLE_NPM: ${{ env.ENABLE_NPM }}
-          ENABLE_YARN: ${{ env.ENABLE_YARN }}
-          ENABLE_PNPM: ${{ env.ENABLE_PNPM }}
-          ENABLE_COMPOSER: ${{ env.ENABLE_COMPOSER }}
-          ENABLE_PIP: ${{ env.ENABLE_PIP }}
-          ENABLE_PIPENV: ${{ env.ENABLE_PIPENV }}
-          ENABLE_GO: ${{ env.ENABLE_GO }}
-          ENABLE_NUGET: ${{ env.ENABLE_NUGET }}
-        run: |
-          USE_NODE="false"
-          USE_PHP="false"
-          USE_PYTHON="false"
-          USE_GO="false"
-          USE_DOTNET="false"
-          MANAGERS=""
-
-          # Node.js package managers
-          if [ "$ENABLE_NPM" = "true" ]; then
-            USE_NODE="true"
-            MANAGERS="${MANAGERS}npm,"
-          fi
-          if [ "$ENABLE_YARN" = "true" ]; then
-            USE_NODE="true"
-            MANAGERS="${MANAGERS}yarn,"
-          fi
-          if [ "$ENABLE_PNPM" = "true" ]; then
-            USE_NODE="true"
-            MANAGERS="${MANAGERS}pnpm,"
-          fi
-
-          # PHP
-          if [ "$ENABLE_COMPOSER" = "true" ]; then
-            USE_PHP="true"
-            MANAGERS="${MANAGERS}composer,"
-          fi
-
-          # Python
-          if [ "$ENABLE_PIP" = "true" ]; then
-            USE_PYTHON="true"
-            MANAGERS="${MANAGERS}requirements,"
-          fi
-          if [ "$ENABLE_PIPENV" = "true" ]; then
-            USE_PYTHON="true"
-            MANAGERS="${MANAGERS}pipfile,"
-          fi
-
-          # Go
-          if [ "$ENABLE_GO" = "true" ]; then
-            USE_GO="true"
-            MANAGERS="${MANAGERS}mod,"
-          fi
-
-          # .NET
-          if [ "$ENABLE_NUGET" = "true" ]; then
-            USE_DOTNET="true"
-            MANAGERS="${MANAGERS}nuget,"
-          fi
-
-          MANAGERS="${MANAGERS%,}"
-
-          echo "use_node=$USE_NODE" >> $GITHUB_OUTPUT
-          echo "use_php=$USE_PHP" >> $GITHUB_OUTPUT
-          echo "use_python=$USE_PYTHON" >> $GITHUB_OUTPUT
-          echo "use_go=$USE_GO" >> $GITHUB_OUTPUT
-          echo "use_dotnet=$USE_DOTNET" >> $GITHUB_OUTPUT
-          echo "package_managers=$MANAGERS" >> $GITHUB_OUTPUT
-
-          echo "Package managers: $MANAGERS"
-
-  check:
-    needs: prepare
-    runs-on: ubuntu-latest
-    timeout-minutes: 15
-    outputs:
-      has-updates: ${{ steps.aggregate.outputs.has_updates }}
-      has-major-only: ${{ steps.aggregate.outputs.has_major_only }}
-      summary: ${{ steps.aggregate.outputs.summary }}
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          ref: main
-          fetch-depth: 0
-
-      - name: Ensure target branch
-        uses: ./.github/actions/_git-branch
-        with:
-          branch: ${{ env.TARGET_BRANCH }}
-          base: main
-          create-if-missing: 'true'
-          push: 'true'
-
-      # -----------------------------------------------------------------------
-      # Setup Node.js (npm, yarn, pnpm)
-      # -----------------------------------------------------------------------
-      - name: Setup Node.js
-        if: needs.prepare.outputs.use-node == 'true'
-        uses: actions/setup-node@v4
-        with:
-          node-version: ${{ env.NODE_VERSION }}
-
-      - name: Enable corepack
-        if: env.ENABLE_YARN == 'true' || env.ENABLE_PNPM == 'true'
-        run: corepack enable
-
-      # -----------------------------------------------------------------------
-      # Setup PHP (composer)
-      # -----------------------------------------------------------------------
-      - name: Setup PHP
-        if: needs.prepare.outputs.use-php == 'true'
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: ${{ env.PHP_VERSION }}
-
-      # -----------------------------------------------------------------------
-      # Setup Python (pip, pipenv)
-      # -----------------------------------------------------------------------
-      - name: Setup Python
-        if: needs.prepare.outputs.use-python == 'true'
-        uses: actions/setup-python@v5
-        with:
-          python-version: ${{ env.PYTHON_VERSION }}
-
-      - name: Install pipenv
-        if: env.ENABLE_PIPENV == 'true'
-        run: pip install pipenv
-
-      # -----------------------------------------------------------------------
-      # Setup Go (mod)
-      # -----------------------------------------------------------------------
-      - name: Setup Go
-        if: needs.prepare.outputs.use-go == 'true'
-        uses: actions/setup-go@v5
-        with:
-          go-version: ${{ env.GO_VERSION }}
-
-      # -----------------------------------------------------------------------
-      # Setup .NET (nuget)
-      # -----------------------------------------------------------------------
-      - name: Setup .NET
-        if: needs.prepare.outputs.use-dotnet == 'true'
-        uses: actions/setup-dotnet@v4
-        with:
-          dotnet-version: ${{ env.DOTNET_VERSION }}
-
-      # -----------------------------------------------------------------------
-      # Install goupdate
-      # -----------------------------------------------------------------------
-      - name: Install goupdate
-        uses: ./.github/actions/_goupdate-install
-        with:
-          goupdate-repo: ${{ env.GOUPDATE_REPO }}
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-
-      # -----------------------------------------------------------------------
-      # Check for updates - each enabled package manager
-      # -----------------------------------------------------------------------
-      - name: Check npm updates
-        id: check-npm
-        if: env.ENABLE_NPM == 'true'
-        uses: ./.github/actions/_goupdate-check
-        with:
-          rule: npm
-          exclude-packages: ${{ env.EXCLUDE_PACKAGES }}
-
-      - name: Check yarn updates
-        id: check-yarn
-        if: env.ENABLE_YARN == 'true'
-        uses: ./.github/actions/_goupdate-check
-        with:
-          rule: yarn
-          exclude-packages: ${{ env.EXCLUDE_PACKAGES }}
-
-      - name: Check pnpm updates
-        id: check-pnpm
-        if: env.ENABLE_PNPM == 'true'
-        uses: ./.github/actions/_goupdate-check
-        with:
-          rule: pnpm
-          exclude-packages: ${{ env.EXCLUDE_PACKAGES }}
-
-      - name: Check composer updates
-        id: check-composer
-        if: env.ENABLE_COMPOSER == 'true'
-        uses: ./.github/actions/_goupdate-check
-        with:
-          rule: composer
-          exclude-packages: ${{ env.EXCLUDE_PACKAGES }}
-
-      - name: Check pip updates
-        id: check-pip
-        if: env.ENABLE_PIP == 'true'
-        uses: ./.github/actions/_goupdate-check
-        with:
-          rule: requirements
-          exclude-packages: ${{ env.EXCLUDE_PACKAGES }}
-
-      - name: Check pipenv updates
-        id: check-pipenv
-        if: env.ENABLE_PIPENV == 'true'
-        uses: ./.github/actions/_goupdate-check
-        with:
-          rule: pipfile
-          exclude-packages: ${{ env.EXCLUDE_PACKAGES }}
-
-      - name: Check go mod updates
-        id: check-mod
-        if: env.ENABLE_GO == 'true'
-        uses: ./.github/actions/_goupdate-check
-        with:
-          rule: mod
-          exclude-packages: ${{ env.EXCLUDE_PACKAGES }}
-
-      - name: Check nuget updates
-        id: check-nuget
-        if: env.ENABLE_NUGET == 'true'
-        uses: ./.github/actions/_goupdate-check
-        with:
-          rule: nuget
-          exclude-packages: ${{ env.EXCLUDE_PACKAGES }}
-
-      - name: Aggregate results
-        id: aggregate
-        env:
-          NPM_UPDATES: ${{ steps.check-npm.outputs.has-updates }}
-          YARN_UPDATES: ${{ steps.check-yarn.outputs.has-updates }}
-          PNPM_UPDATES: ${{ steps.check-pnpm.outputs.has-updates }}
-          COMPOSER_UPDATES: ${{ steps.check-composer.outputs.has-updates }}
-          PIP_UPDATES: ${{ steps.check-pip.outputs.has-updates }}
-          PIPENV_UPDATES: ${{ steps.check-pipenv.outputs.has-updates }}
-          MOD_UPDATES: ${{ steps.check-mod.outputs.has-updates }}
-          NUGET_UPDATES: ${{ steps.check-nuget.outputs.has-updates }}
-          NPM_MAJOR_ONLY: ${{ steps.check-npm.outputs.has-major-only }}
-          YARN_MAJOR_ONLY: ${{ steps.check-yarn.outputs.has-major-only }}
-          PNPM_MAJOR_ONLY: ${{ steps.check-pnpm.outputs.has-major-only }}
-          COMPOSER_MAJOR_ONLY: ${{ steps.check-composer.outputs.has-major-only }}
-          PIP_MAJOR_ONLY: ${{ steps.check-pip.outputs.has-major-only }}
-          PIPENV_MAJOR_ONLY: ${{ steps.check-pipenv.outputs.has-major-only }}
-          MOD_MAJOR_ONLY: ${{ steps.check-mod.outputs.has-major-only }}
-          NUGET_MAJOR_ONLY: ${{ steps.check-nuget.outputs.has-major-only }}
-          NPM_SUMMARY: ${{ steps.check-npm.outputs.summary }}
-          YARN_SUMMARY: ${{ steps.check-yarn.outputs.summary }}
-          PNPM_SUMMARY: ${{ steps.check-pnpm.outputs.summary }}
-          COMPOSER_SUMMARY: ${{ steps.check-composer.outputs.summary }}
-          PIP_SUMMARY: ${{ steps.check-pip.outputs.summary }}
-          PIPENV_SUMMARY: ${{ steps.check-pipenv.outputs.summary }}
-          MOD_SUMMARY: ${{ steps.check-mod.outputs.summary }}
-          NUGET_SUMMARY: ${{ steps.check-nuget.outputs.summary }}
-        run: |
-          HAS_UPDATES="false"
-          HAS_MAJOR_ONLY="false"
-          SUMMARY=""
-          MAJOR_ONLY_LIST=""
-
-          for pm in NPM YARN PNPM COMPOSER PIP PIPENV MOD NUGET; do
-            updates_var="${pm}_UPDATES"
-            major_only_var="${pm}_MAJOR_ONLY"
-            summary_var="${pm}_SUMMARY"
-            if [ "${!updates_var}" = "true" ]; then
-              HAS_UPDATES="true"
-              SUMMARY="${SUMMARY}${pm,,}: ${!summary_var}; "
-            fi
-            if [ "${!major_only_var}" = "true" ]; then
-              HAS_MAJOR_ONLY="true"
-              MAJOR_ONLY_LIST="${MAJOR_ONLY_LIST}${pm,,}, "
-            fi
-          done
-
-          echo "has_updates=$HAS_UPDATES" >> $GITHUB_OUTPUT
-          echo "has_major_only=$HAS_MAJOR_ONLY" >> $GITHUB_OUTPUT
-          echo "summary=$SUMMARY" >> $GITHUB_OUTPUT
-
-      - name: Fail on major-only updates
-        if: steps.aggregate.outputs.has_major_only == 'true' && steps.aggregate.outputs.has_updates == 'false'
-        env:
-          SUMMARY: ${{ steps.aggregate.outputs.summary }}
-          NPM_SUMMARY: ${{ steps.check-npm.outputs.summary }}
-          YARN_SUMMARY: ${{ steps.check-yarn.outputs.summary }}
-          PNPM_SUMMARY: ${{ steps.check-pnpm.outputs.summary }}
-          COMPOSER_SUMMARY: ${{ steps.check-composer.outputs.summary }}
-          PIP_SUMMARY: ${{ steps.check-pip.outputs.summary }}
-          PIPENV_SUMMARY: ${{ steps.check-pipenv.outputs.summary }}
-          MOD_SUMMARY: ${{ steps.check-mod.outputs.summary }}
-          NUGET_SUMMARY: ${{ steps.check-nuget.outputs.summary }}
-        run: |
-          echo "::error::Only major updates available - no minor/patch updates to apply automatically"
-          echo ""
-          echo "=== MAJOR UPDATES REQUIRE MANUAL REVIEW ==="
-          echo ""
-          echo "The following packages have ONLY major version updates available:"
-          echo ""
-          for pm in NPM YARN PNPM COMPOSER PIP PIPENV MOD NUGET; do
-            summary_var="${pm}_SUMMARY"
-            if [ -n "${!summary_var}" ]; then
-              echo "${pm,,}: ${!summary_var}"
-            fi
-          done
-          echo ""
-          echo "To resolve:"
-          echo "  1. Review the changelogs for breaking changes"
-          echo "  2. Update packages manually, or"
-          echo "  3. Add packages to 'ignore' in .goupdate.yml to skip them"
-          echo ""
-          exit 1
-
   update:
-    needs: [prepare, check]
-    if: needs.prepare.outputs.run-updates == 'true' && needs.check.outputs.has-updates == 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: main
           fetch-depth: 0
 
-      - name: Ensure target branch
-        uses: ./.github/actions/_git-branch
-        with:
-          branch: ${{ env.TARGET_BRANCH }}
-          base: main
-          create-if-missing: 'true'
-          push: 'true'
+      # Determine what to run
+      - name: Configure
+        id: config
+        run: |
+          # Build rules list
+          RULES=""
+          [ "$ENABLE_NPM" = "true" ] && RULES="${RULES}npm,"
+          [ "$ENABLE_YARN" = "true" ] && RULES="${RULES}yarn,"
+          [ "$ENABLE_PNPM" = "true" ] && RULES="${RULES}pnpm,"
+          [ "$ENABLE_COMPOSER" = "true" ] && RULES="${RULES}composer,"
+          [ "$ENABLE_PIP" = "true" ] && RULES="${RULES}requirements,"
+          [ "$ENABLE_PIPENV" = "true" ] && RULES="${RULES}pipfile,"
+          [ "$ENABLE_GO" = "true" ] && RULES="${RULES}mod,"
+          [ "$ENABLE_NUGET" = "true" ] && RULES="${RULES}nuget,"
+          RULES="${RULES%,}"
 
-      - name: Create update branch
-        uses: ./.github/actions/_git-branch
-        with:
-          branch: ${{ env.UPDATE_BRANCH }}
-          base: ${{ env.TARGET_BRANCH }}
-          delete-remote: 'true'
-          push: 'false'
+          # Detect needed runtimes
+          USE_NODE="false"
+          USE_PHP="false"
+          USE_PYTHON="false"
+          USE_GO="false"
+          USE_DOTNET="false"
+          [[ "$ENABLE_NPM" = "true" || "$ENABLE_YARN" = "true" || "$ENABLE_PNPM" = "true" ]] && USE_NODE="true"
+          [ "$ENABLE_COMPOSER" = "true" ] && USE_PHP="true"
+          [[ "$ENABLE_PIP" = "true" || "$ENABLE_PIPENV" = "true" ]] && USE_PYTHON="true"
+          [ "$ENABLE_GO" = "true" ] && USE_GO="true"
+          [ "$ENABLE_NUGET" = "true" ] && USE_DOTNET="true"
 
-      # -----------------------------------------------------------------------
-      # Setup Node.js (npm, yarn, pnpm)
-      # -----------------------------------------------------------------------
+          # Mode
+          EVENT="${{ github.event_name }}"
+          MODE="${{ inputs.mode }}"
+          TYPE="${{ inputs.update-type }}"
+          [ "$EVENT" = "schedule" ] && MODE="update" && TYPE="minor"
+          [ -z "$TYPE" ] && TYPE="minor"
+
+          echo "rules=$RULES" >> $GITHUB_OUTPUT
+          echo "use_node=$USE_NODE" >> $GITHUB_OUTPUT
+          echo "use_php=$USE_PHP" >> $GITHUB_OUTPUT
+          echo "use_python=$USE_PYTHON" >> $GITHUB_OUTPUT
+          echo "use_go=$USE_GO" >> $GITHUB_OUTPUT
+          echo "use_dotnet=$USE_DOTNET" >> $GITHUB_OUTPUT
+          echo "mode=$MODE" >> $GITHUB_OUTPUT
+          echo "type=$TYPE" >> $GITHUB_OUTPUT
+          echo "Rules: $RULES"
+
+      # Setup runtimes
       - name: Setup Node.js
-        if: needs.prepare.outputs.use-node == 'true'
+        if: steps.config.outputs.use_node == 'true'
         uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
@@ -491,241 +127,183 @@ jobs:
         if: env.ENABLE_YARN == 'true' || env.ENABLE_PNPM == 'true'
         run: corepack enable
 
-      - name: Install npm dependencies
-        if: env.ENABLE_NPM == 'true'
-        run: npm ci
-
-      - name: Install yarn dependencies
-        if: env.ENABLE_YARN == 'true'
-        run: yarn install --frozen-lockfile
-
-      - name: Install pnpm dependencies
-        if: env.ENABLE_PNPM == 'true'
-        run: pnpm install --frozen-lockfile
-
-      # -----------------------------------------------------------------------
-      # Setup PHP (composer)
-      # -----------------------------------------------------------------------
       - name: Setup PHP
-        if: needs.prepare.outputs.use-php == 'true'
+        if: steps.config.outputs.use_php == 'true'
         uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ env.PHP_VERSION }}
 
-      - name: Install composer dependencies
-        if: env.ENABLE_COMPOSER == 'true'
-        run: composer install --no-interaction
-
-      # -----------------------------------------------------------------------
-      # Setup Python (pip, pipenv)
-      # -----------------------------------------------------------------------
       - name: Setup Python
-        if: needs.prepare.outputs.use-python == 'true'
+        if: steps.config.outputs.use_python == 'true'
         uses: actions/setup-python@v5
         with:
           python-version: ${{ env.PYTHON_VERSION }}
 
-      - name: Install pip dependencies
-        if: env.ENABLE_PIP == 'true'
-        run: pip install -r requirements.txt
-
-      - name: Install pipenv
-        if: env.ENABLE_PIPENV == 'true'
-        run: |
-          pip install pipenv
-          pipenv install
-
-      # -----------------------------------------------------------------------
-      # Setup Go (mod)
-      # -----------------------------------------------------------------------
       - name: Setup Go
-        if: needs.prepare.outputs.use-go == 'true'
+        if: steps.config.outputs.use_go == 'true'
         uses: actions/setup-go@v5
         with:
           go-version: ${{ env.GO_VERSION }}
 
-      # -----------------------------------------------------------------------
-      # Setup .NET (nuget)
-      # -----------------------------------------------------------------------
       - name: Setup .NET
-        if: needs.prepare.outputs.use-dotnet == 'true'
+        if: steps.config.outputs.use_dotnet == 'true'
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: ${{ env.DOTNET_VERSION }}
 
-      - name: Restore .NET dependencies
-        if: env.ENABLE_NUGET == 'true'
+      # Install dependencies
+      - if: env.ENABLE_NPM == 'true'
+        run: npm ci
+      - if: env.ENABLE_YARN == 'true'
+        run: yarn install --frozen-lockfile
+      - if: env.ENABLE_PNPM == 'true'
+        run: pnpm install --frozen-lockfile
+      - if: env.ENABLE_COMPOSER == 'true'
+        run: composer install --no-interaction
+      - if: env.ENABLE_PIP == 'true'
+        run: pip install -r requirements.txt
+      - if: env.ENABLE_PIPENV == 'true'
+        run: pip install pipenv && pipenv install
+      - if: env.ENABLE_NUGET == 'true'
         run: dotnet restore
 
-      # -----------------------------------------------------------------------
       # Install goupdate
-      # -----------------------------------------------------------------------
       - name: Install goupdate
         uses: ./.github/actions/_goupdate-install
         with:
           goupdate-repo: ${{ env.GOUPDATE_REPO }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
-      # -----------------------------------------------------------------------
-      # Apply updates - each enabled package manager
-      # -----------------------------------------------------------------------
-      - name: Update npm packages
-        id: update-npm
-        if: env.ENABLE_NPM == 'true'
-        uses: ./.github/actions/_goupdate-update
-        with:
-          rule: npm
-          update-type: ${{ needs.prepare.outputs.update-type }}
-          exclude-packages: ${{ env.EXCLUDE_PACKAGES }}
-          system-test-mode: 'none'
-
-      - name: Update yarn packages
-        id: update-yarn
-        if: env.ENABLE_YARN == 'true'
-        uses: ./.github/actions/_goupdate-update
-        with:
-          rule: yarn
-          update-type: ${{ needs.prepare.outputs.update-type }}
-          exclude-packages: ${{ env.EXCLUDE_PACKAGES }}
-          system-test-mode: 'none'
-
-      - name: Update pnpm packages
-        id: update-pnpm
-        if: env.ENABLE_PNPM == 'true'
-        uses: ./.github/actions/_goupdate-update
-        with:
-          rule: pnpm
-          update-type: ${{ needs.prepare.outputs.update-type }}
-          exclude-packages: ${{ env.EXCLUDE_PACKAGES }}
-          system-test-mode: 'none'
-
-      - name: Update composer packages
-        id: update-composer
-        if: env.ENABLE_COMPOSER == 'true'
-        uses: ./.github/actions/_goupdate-update
-        with:
-          rule: composer
-          update-type: ${{ needs.prepare.outputs.update-type }}
-          exclude-packages: ${{ env.EXCLUDE_PACKAGES }}
-          system-test-mode: 'none'
-
-      - name: Update pip packages
-        id: update-pip
-        if: env.ENABLE_PIP == 'true'
-        uses: ./.github/actions/_goupdate-update
-        with:
-          rule: requirements
-          update-type: ${{ needs.prepare.outputs.update-type }}
-          exclude-packages: ${{ env.EXCLUDE_PACKAGES }}
-          system-test-mode: 'none'
-
-      - name: Update pipenv packages
-        id: update-pipenv
-        if: env.ENABLE_PIPENV == 'true'
-        uses: ./.github/actions/_goupdate-update
-        with:
-          rule: pipfile
-          update-type: ${{ needs.prepare.outputs.update-type }}
-          exclude-packages: ${{ env.EXCLUDE_PACKAGES }}
-          system-test-mode: 'none'
-
-      - name: Update go modules
-        id: update-mod
-        if: env.ENABLE_GO == 'true'
-        uses: ./.github/actions/_goupdate-update
-        with:
-          rule: mod
-          update-type: ${{ needs.prepare.outputs.update-type }}
-          exclude-packages: ${{ env.EXCLUDE_PACKAGES }}
-          system-test-mode: 'none'
-
-      - name: Update nuget packages
-        id: update-nuget
-        if: env.ENABLE_NUGET == 'true'
-        uses: ./.github/actions/_goupdate-update
-        with:
-          rule: nuget
-          update-type: ${{ needs.prepare.outputs.update-type }}
-          exclude-packages: ${{ env.EXCLUDE_PACKAGES }}
-          system-test-mode: 'none'
-
-      # -----------------------------------------------------------------------
-      # Aggregate and commit
-      # -----------------------------------------------------------------------
-      - name: Check for changes
-        id: changes
+      # Check for updates
+      - name: Check for updates
+        id: check
+        env:
+          RULES: ${{ steps.config.outputs.rules }}
+          EXCLUDE: ${{ env.EXCLUDE_PACKAGES }}
         run: |
-          if git diff --quiet; then
-            echo "has_changes=false" >> $GITHUB_OUTPUT
-          else
-            echo "has_changes=true" >> $GITHUB_OUTPUT
+          EXCLUDE_FLAG=""
+          [ -n "$EXCLUDE" ] && EXCLUDE_FLAG="-e $EXCLUDE"
+
+          # Get JSON output
+          JSON=$(goupdate outdated -r "$RULES" -o json $EXCLUDE_FLAG 2>&1) || true
+
+          # Parse summary
+          TOTAL=$(echo "$JSON" | jq -r '.summary.total_packages // 0')
+          OUTDATED=$(echo "$JSON" | jq -r '.summary.outdated_packages // 0')
+          HAS_MAJOR=$(echo "$JSON" | jq -r '.summary.has_major // 0')
+          HAS_MINOR=$(echo "$JSON" | jq -r '.summary.has_minor // 0')
+          HAS_PATCH=$(echo "$JSON" | jq -r '.summary.has_patch // 0')
+
+          # Determine if we have applicable updates
+          HAS_UPDATES="false"
+          [ "$HAS_MINOR" -gt 0 ] || [ "$HAS_PATCH" -gt 0 ] && HAS_UPDATES="true"
+
+          # Major-only check
+          HAS_MAJOR_ONLY="false"
+          [ "$HAS_MAJOR" -gt 0 ] && [ "$HAS_MINOR" -eq 0 ] && [ "$HAS_PATCH" -eq 0 ] && HAS_MAJOR_ONLY="true"
+
+          echo "has_updates=$HAS_UPDATES" >> $GITHUB_OUTPUT
+          echo "has_major_only=$HAS_MAJOR_ONLY" >> $GITHUB_OUTPUT
+          echo "has_major=$HAS_MAJOR" >> $GITHUB_OUTPUT
+          echo "has_minor=$HAS_MINOR" >> $GITHUB_OUTPUT
+          echo "has_patch=$HAS_PATCH" >> $GITHUB_OUTPUT
+
+          # Show summary
+          echo ""
+          echo "══════════════════════════════════════════════════════════════"
+          echo "Update Summary: $OUTDATED/$TOTAL packages outdated"
+          echo "  Major: $HAS_MAJOR | Minor: $HAS_MINOR | Patch: $HAS_PATCH"
+          if [ "$HAS_MAJOR" -gt 0 ]; then
+            echo ""
+            echo "⚠️  $HAS_MAJOR package(s) have MAJOR updates available (not auto-applied)"
           fi
+          echo "══════════════════════════════════════════════════════════════"
 
-      - name: Run tests
-        if: steps.changes.outputs.has_changes == 'true' && env.TEST_COMMAND != ''
-        run: ${{ env.TEST_COMMAND }}
-        continue-on-error: true
+      # Fail on major-only
+      - name: Check major-only
+        if: steps.check.outputs.has_major_only == 'true'
+        run: |
+          echo "::error::Only major updates available - manual review required"
+          echo ""
+          echo "No minor/patch updates to apply. ${{ steps.check.outputs.has_major }} major update(s) need manual review."
+          echo "Add packages to 'ignore' in .goupdate.yml to skip them."
+          exit 1
 
-      - name: Commit and create PR
-        if: steps.changes.outputs.has_changes == 'true'
+      # Apply updates
+      - name: Apply updates
+        id: update
+        if: steps.config.outputs.mode == 'update' && steps.check.outputs.has_updates == 'true'
+        env:
+          RULES: ${{ steps.config.outputs.rules }}
+          TYPE: ${{ steps.config.outputs.type }}
+          EXCLUDE: ${{ env.EXCLUDE_PACKAGES }}
+        run: |
+          EXCLUDE_FLAG=""
+          [ -n "$EXCLUDE" ] && EXCLUDE_FLAG="-e $EXCLUDE"
+
+          TYPE_FLAG="--minor"
+          [ "$TYPE" = "patch" ] && TYPE_FLAG="--patch"
+
+          # Stream output live while also capturing to file
+          # This ensures developers see progress in real-time
+          goupdate update -r "$RULES" $TYPE_FLAG $EXCLUDE_FLAG --continue-on-fail -y 2>&1 | tee /tmp/update-output.txt
+          OUTPUT=$(cat /tmp/update-output.txt)
+
+          # Store for PR body
+          {
+            echo "output<<EOF"
+            echo "$OUTPUT"
+            echo "EOF"
+          } >> $GITHUB_OUTPUT
+
+      # Create PR
+      - name: Create PR
+        if: steps.config.outputs.mode == 'update' && steps.check.outputs.has_updates == 'true'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          UPDATE_TYPE: ${{ needs.prepare.outputs.update-type }}
-          NPM_OUTPUT: ${{ steps.update-npm.outputs.update-output }}
-          YARN_OUTPUT: ${{ steps.update-yarn.outputs.update-output }}
-          PNPM_OUTPUT: ${{ steps.update-pnpm.outputs.update-output }}
-          COMPOSER_OUTPUT: ${{ steps.update-composer.outputs.update-output }}
-          PIP_OUTPUT: ${{ steps.update-pip.outputs.update-output }}
-          PIPENV_OUTPUT: ${{ steps.update-pipenv.outputs.update-output }}
-          MOD_OUTPUT: ${{ steps.update-mod.outputs.update-output }}
-          NUGET_OUTPUT: ${{ steps.update-nuget.outputs.update-output }}
+          TYPE: ${{ steps.config.outputs.type }}
+          OUTPUT: ${{ steps.update.outputs.output }}
+          HAS_MAJOR: ${{ steps.check.outputs.has_major }}
         run: |
+          # Check for changes
+          if git diff --quiet; then
+            echo "No changes to commit"
+            exit 0
+          fi
+
+          # Run tests if configured
+          if [ -n "$TEST_COMMAND" ]; then
+            echo "Running tests..."
+            $TEST_COMMAND || true
+          fi
+
+          # Setup branches - substitute {type} in branch name
+          BRANCH=$(echo "$UPDATE_BRANCH" | sed "s/{type}/$TYPE/g")
+          git fetch origin "$TARGET_BRANCH" 2>/dev/null || git branch "$TARGET_BRANCH" && git push -u origin "$TARGET_BRANCH"
+          git checkout -B "$BRANCH" origin/"$TARGET_BRANCH" 2>/dev/null || git checkout -B "$BRANCH"
+
+          # Commit
           DATE=$(date -u +%Y-%m-%d)
-          TYPE=$(echo "$UPDATE_TYPE" | sed 's/\b\(.\)/\u\1/')
-          TITLE=$(echo "${{ env.PR_TITLE }}" | sed "s/{date}/$DATE/g" | sed "s/{type}/$TYPE/g")
+          TYPE_CAP=$(echo "$TYPE" | sed 's/\b\(.\)/\u\1/')
+          TITLE=$(echo "$PR_TITLE" | sed "s/{date}/$DATE/g" | sed "s/{type}/$TYPE_CAP/g")
 
           git add -A
           git commit -m "$TITLE"
-          git push -u origin "${{ env.UPDATE_BRANCH }}"
+          git push -u origin "$BRANCH" --force
 
           # Build PR body
-          BODY="## Automated Dependency Update
+          BODY="## Dependency Updates
 
-          This PR was automatically created by the dependency update workflow.
-          "
-
-          for output_name in NPM YARN PNPM COMPOSER PIP PIPENV MOD NUGET; do
-            output_var="${output_name}_OUTPUT"
-            if [ -n "${!output_var}" ]; then
-              BODY="${BODY}
-          ### ${output_name,,}
           \`\`\`
-          ${!output_var}
-          \`\`\`
-          "
-            fi
-          done
+          $OUTPUT
+          \`\`\`"
 
-          gh pr create \
-            --title "$TITLE" \
-            --body "$BODY" \
-            --base "${{ env.TARGET_BRANCH }}" \
-            --head "${{ env.UPDATE_BRANCH }}"
+          if [ "$HAS_MAJOR" -gt 0 ]; then
+            BODY="$BODY
 
-  summary:
-    needs: [prepare, check, update]
-    if: always()
-    runs-on: ubuntu-latest
-    timeout-minutes: 2
-    steps:
-      - env:
-          CHECK_SUMMARY: ${{ needs.check.outputs.summary }}
-          PACKAGE_MANAGERS: ${{ needs.prepare.outputs.package-managers }}
-        run: |
-          echo "## Auto Update Summary" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "**Package Managers:** $PACKAGE_MANAGERS" >> $GITHUB_STEP_SUMMARY
-          if [ -n "$CHECK_SUMMARY" ]; then
-            echo "" >> $GITHUB_STEP_SUMMARY
-            echo "**Updates:** $CHECK_SUMMARY" >> $GITHUB_STEP_SUMMARY
+          > ⚠️ **$HAS_MAJOR major update(s) available** - not auto-applied, review manually"
           fi
+
+          # Create PR
+          gh pr create --title "$TITLE" --body "$BODY" --base "$TARGET_BRANCH" --head "$BRANCH" 2>/dev/null || \
+          gh pr edit --title "$TITLE" --body "$BODY"
