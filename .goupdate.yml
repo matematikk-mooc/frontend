@@ -7,68 +7,47 @@ extends: [default]
 
 rules:
   pnpm:
-    # Group related packages for coordinated updates
+    # Only group packages with actual version coupling (peer dependencies)
     groups:
-      # Vue ecosystem - update together
+      # Vue core - vuex/vue-router have peer deps on vue
       vue:
         - vue
         - vuex
         - vue-router
-        - "@vue/reactivity"
-        - "@vueuse/core"
 
-      # React (used alongside Vue in this project)
+      # React - must have matching versions
       react:
         - react
         - react-dom
 
-      # Build tooling
-      build:
+      # Webpack core - cli/dev-server depend on webpack
+      webpack:
         - webpack
         - webpack-cli
         - webpack-dev-server
-        - vue-loader
-        - sass
-        - sass-loader
+
+      # Babel - loader depends on core
+      babel:
         - babel-loader
         - "@babel/core"
         - "@babel/preset-env"
 
-      # Testing tools
-      testing:
+      # Playwright - test package depends on playwright
+      playwright:
         - playwright
         - "@playwright/test"
 
-      # Linting
-      lint:
-        - eslint
-        - eslint-plugin-vue
-        - prettier
-
-      # RxJS
-      rxjs:
-        - rxjs
-
-    # Update Vue/React incrementally for stability
-    incremental:
-      - vue
-      - vuex
-      - react
-
-    # Skip pre-release versions
-    exclude_versions:
-      - "(?i)alpha"
-      - "(?i)beta"
-      - "(?i)rc"
-      - "(?i)canary"
-      - "(?i)preview"
+    # Note: Pre-release filtering inherits from default config
+    # Default patterns exclude: alpha, beta, rc, dev, canary, snapshot, nightly, preview, next
 
 # System test to verify no compile errors after updates
 system_tests:
   run_preflight: true
-  run_mode: after_all
+  run_mode: after_each
   stop_on_fail: true
   tests:
     - name: build
-      commands: pnpm run build
+      commands: |
+        pnpm install
+        pnpm run build
       timeout_seconds: 300

@@ -70,18 +70,26 @@ runs:
         # Check for version files in order of preference
         if [ -f ".nvmrc" ]; then
           echo "file=.nvmrc" >> $GITHUB_OUTPUT
+          echo "found=true" >> $GITHUB_OUTPUT
         elif [ -f ".node-version" ]; then
           echo "file=.node-version" >> $GITHUB_OUTPUT
+          echo "found=true" >> $GITHUB_OUTPUT
         else
           echo "file=" >> $GITHUB_OUTPUT
+          echo "found=false" >> $GITHUB_OUTPUT
         fi
 
-    - name: Setup Node.js
-      if: inputs.use-node == 'true'
+    - name: Setup Node.js (from version file)
+      if: inputs.use-node == 'true' && steps.node-version-file.outputs.found == 'true'
       uses: actions/setup-node@v4
       with:
-        node-version: ${{ steps.node-version-file.outputs.file && '' || inputs.node-version }}
         node-version-file: ${{ steps.node-version-file.outputs.file }}
+
+    - name: Setup Node.js (from input)
+      if: inputs.use-node == 'true' && steps.node-version-file.outputs.found != 'true'
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ inputs.node-version }}
 
     - name: Verify Node.js installation
       if: inputs.use-node == 'true'
@@ -167,16 +175,23 @@ runs:
       run: |
         if [ -f ".python-version" ]; then
           echo "file=.python-version" >> $GITHUB_OUTPUT
+          echo "found=true" >> $GITHUB_OUTPUT
         else
           echo "file=" >> $GITHUB_OUTPUT
+          echo "found=false" >> $GITHUB_OUTPUT
         fi
 
-    - name: Setup Python
-      if: inputs.use-python == 'true'
+    - name: Setup Python (from version file)
+      if: inputs.use-python == 'true' && steps.python-version-file.outputs.found == 'true'
       uses: actions/setup-python@v5
       with:
-        python-version: ${{ steps.python-version-file.outputs.file && '' || inputs.python-version }}
         python-version-file: ${{ steps.python-version-file.outputs.file }}
+
+    - name: Setup Python (from input)
+      if: inputs.use-python == 'true' && steps.python-version-file.outputs.found != 'true'
+      uses: actions/setup-python@v5
+      with:
+        python-version: ${{ inputs.python-version }}
 
     - name: Verify Python installation
       if: inputs.use-python == 'true'
@@ -199,16 +214,23 @@ runs:
       run: |
         if [ -f "go.mod" ]; then
           echo "file=go.mod" >> $GITHUB_OUTPUT
+          echo "found=true" >> $GITHUB_OUTPUT
         else
           echo "file=" >> $GITHUB_OUTPUT
+          echo "found=false" >> $GITHUB_OUTPUT
         fi
 
-    - name: Setup Go
-      if: inputs.use-go == 'true'
+    - name: Setup Go (from version file)
+      if: inputs.use-go == 'true' && steps.go-version-file.outputs.found == 'true'
       uses: actions/setup-go@v5
       with:
-        go-version: ${{ steps.go-version-file.outputs.file && '' || inputs.go-version }}
         go-version-file: ${{ steps.go-version-file.outputs.file }}
+
+    - name: Setup Go (from input)
+      if: inputs.use-go == 'true' && steps.go-version-file.outputs.found != 'true'
+      uses: actions/setup-go@v5
+      with:
+        go-version: ${{ inputs.go-version }}
 
     - name: Verify Go installation
       if: inputs.use-go == 'true'
@@ -230,16 +252,23 @@ runs:
       run: |
         if [ -f "global.json" ]; then
           echo "file=global.json" >> $GITHUB_OUTPUT
+          echo "found=true" >> $GITHUB_OUTPUT
         else
           echo "file=" >> $GITHUB_OUTPUT
+          echo "found=false" >> $GITHUB_OUTPUT
         fi
 
-    - name: Setup .NET
-      if: inputs.use-dotnet == 'true'
+    - name: Setup .NET (from version file)
+      if: inputs.use-dotnet == 'true' && steps.dotnet-version-file.outputs.found == 'true'
       uses: actions/setup-dotnet@v4
       with:
-        dotnet-version: ${{ steps.dotnet-version-file.outputs.file && '' || inputs.dotnet-version }}
         global-json-file: ${{ steps.dotnet-version-file.outputs.file }}
+
+    - name: Setup .NET (from input)
+      if: inputs.use-dotnet == 'true' && steps.dotnet-version-file.outputs.found != 'true'
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: ${{ inputs.dotnet-version }}
 
     - name: Verify .NET installation
       if: inputs.use-dotnet == 'true'
