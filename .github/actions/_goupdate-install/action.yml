@@ -24,7 +24,7 @@ outputs:
     value: ${{ steps.install.outputs.binary_path }}
   version:
     description: 'Installed version of goupdate'
-    value: ${{ steps.install.outputs.version }}
+    value: ${{ steps.verify.outputs.version }}
 
 runs:
   using: 'composite'
@@ -65,23 +65,35 @@ runs:
           grep "browser_download_url.*${OS}_${ARCH}" | head -1 | cut -d '"' -f 4)
 
         if [[ -z "$DOWNLOAD_URL" ]]; then
-          echo "::error::GoUpdate: Failed to find download URL for ${OS}_${ARCH}"
+          echo "::error::goupdate: Failed to find download URL for ${OS}_${ARCH}"
           exit 1
         fi
 
+        echo "Downloading from: $DOWNLOAD_URL"
         curl -sL "$DOWNLOAD_URL" | tar xzf - -C /usr/local/bin goupdate
         BINARY_PATH="/usr/local/bin/goupdate"
 
-        # Verify installation
-        if ! command -v goupdate &> /dev/null && [[ ! -x "$BINARY_PATH" ]]; then
-          echo "::error::GoUpdate: Installation failed"
+        echo "binary_path=$BINARY_PATH" >> "$GITHUB_OUTPUT"
+
+    - name: Verify goupdate installation
+      id: verify
+      shell: bash
+      run: |
+        # Verify command exists
+        if ! command -v goupdate &> /dev/null; then
+          echo "::error::goupdate installation failed - command not found"
           exit 1
         fi
 
-        # Get version (extract just the version line from multiline output)
-        FULL_VERSION=$("$BINARY_PATH" version 2>/dev/null || echo "unknown")
-        INSTALLED_VERSION=$(echo "$FULL_VERSION" | grep -E "Version:" | sed 's/.*Version:[[:space:]]*//' || echo "unknown")
+        # Verify command actually works by running version
+        if ! VERSION_OUTPUT=$(goupdate version 2>&1); then
+          echo "::error::goupdate installation failed - command not executable"
+          echo "Output: $VERSION_OUTPUT"
+          exit 1
+        fi
 
-        echo "binary_path=$BINARY_PATH" >> "$GITHUB_OUTPUT"
+        # Extract version from output
+        INSTALLED_VERSION=$(echo "$VERSION_OUTPUT" | grep -E "Version:" | sed 's/.*Version:[[:space:]]*//' || echo "unknown")
+
         echo "version=$INSTALLED_VERSION" >> "$GITHUB_OUTPUT"
-        echo "Installed goupdate: $INSTALLED_VERSION"
+        echo "goupdate: $INSTALLED_VERSION"

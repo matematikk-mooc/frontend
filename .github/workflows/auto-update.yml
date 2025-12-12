@@ -253,6 +253,7 @@ jobs:
       - name: Setup runtimes
         uses: ./.github/actions/_gh-runtimes
         with:
+          rules: ${{ needs.prepare.outputs.rules }}
           use-node: ${{ needs.prepare.outputs.use-node }}
           use-php: ${{ needs.prepare.outputs.use-php }}
           use-python: ${{ needs.prepare.outputs.use-python }}
@@ -338,6 +339,7 @@ jobs:
       - name: Setup runtimes
         uses: ./.github/actions/_gh-runtimes
         with:
+          rules: ${{ needs.prepare.outputs.rules }}
           use-node: ${{ needs.prepare.outputs.use-node }}
           use-php: ${{ needs.prepare.outputs.use-php }}
           use-python: ${{ needs.prepare.outputs.use-python }}
