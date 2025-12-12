@@ -70,5 +70,7 @@ system_tests:
   stop_on_fail: true
   tests:
     - name: build
-      commands: pnpm run build
+      commands: |
+        pnpm install
+        pnpm run build
       timeout_seconds: 300
