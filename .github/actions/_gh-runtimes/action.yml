@@ -31,9 +31,9 @@ inputs:
     required: false
     default: 'false'
   node-version:
-    description: 'Node.js version'
+    description: 'Node.js version (use lts/* for latest LTS)'
     required: false
-    default: '20'
+    default: 'lts/*'
   php-version:
     description: 'PHP version'
     required: false
@@ -62,11 +62,26 @@ runs:
     # ========================================
     # Node.js ecosystem
     # ========================================
+    - name: Detect Node.js version file
+      id: node-version-file
+      if: inputs.use-node == 'true'
+      shell: bash
+      run: |
+        # Check for version files in order of preference
+        if [ -f ".nvmrc" ]; then
+          echo "file=.nvmrc" >> $GITHUB_OUTPUT
+        elif [ -f ".node-version" ]; then
+          echo "file=.node-version" >> $GITHUB_OUTPUT
+        else
+          echo "file=" >> $GITHUB_OUTPUT
+        fi
+
     - name: Setup Node.js
       if: inputs.use-node == 'true'
       uses: actions/setup-node@v4
       with:
-        node-version: ${{ inputs.node-version }}
+        node-version: ${{ steps.node-version-file.outputs.file && '' || inputs.node-version }}
+        node-version-file: ${{ steps.node-version-file.outputs.file }}
 
     - name: Verify Node.js installation
       if: inputs.use-node == 'true'
@@ -82,8 +97,6 @@ runs:
     - name: Install pnpm
       if: inputs.use-node == 'true' && contains(inputs.rules, 'pnpm')
       uses: pnpm/action-setup@v4
-      with:
-        version: latest
 
     - name: Verify pnpm installation
       if: inputs.use-node == 'true' && contains(inputs.rules, 'pnpm')
@@ -100,7 +113,14 @@ runs:
       shell: bash
       run: |
         corepack enable
-        corepack prepare yarn@stable --activate
+        # Use version from package.json packageManager field if present, otherwise use stable
+        if grep -q '"packageManager".*yarn@' package.json 2>/dev/null; then
+          echo "Using yarn version from package.json packageManager field"
+          corepack install
+        else
+          echo "No packageManager field found, installing yarn@stable"
+          corepack prepare yarn@stable --activate
+        fi
 
     - name: Verify yarn installation
       if: inputs.use-node == 'true' && contains(inputs.rules, 'yarn')
@@ -140,11 +160,23 @@ runs:
     # ========================================
     # Python ecosystem
     # ========================================
+    - name: Detect Python version file
+      id: python-version-file
+      if: inputs.use-python == 'true'
+      shell: bash
+      run: |
+        if [ -f ".python-version" ]; then
+          echo "file=.python-version" >> $GITHUB_OUTPUT
+        else
+          echo "file=" >> $GITHUB_OUTPUT
+        fi
+
     - name: Setup Python
       if: inputs.use-python == 'true'
       uses: actions/setup-python@v5
       with:
-        python-version: ${{ inputs.python-version }}
+        python-version: ${{ steps.python-version-file.outputs.file && '' || inputs.python-version }}
+        python-version-file: ${{ steps.python-version-file.outputs.file }}
 
     - name: Verify Python installation
       if: inputs.use-python == 'true'
@@ -160,11 +192,23 @@ runs:
     # ========================================
     # Go ecosystem
     # ========================================
+    - name: Detect Go version file
+      id: go-version-file
+      if: inputs.use-go == 'true'
+      shell: bash
+      run: |
+        if [ -f "go.mod" ]; then
+          echo "file=go.mod" >> $GITHUB_OUTPUT
+        else
+          echo "file=" >> $GITHUB_OUTPUT
+        fi
+
     - name: Setup Go
       if: inputs.use-go == 'true'
       uses: actions/setup-go@v5
       with:
-        go-version: ${{ inputs.go-version }}
+        go-version: ${{ steps.go-version-file.outputs.file && '' || inputs.go-version }}
+        go-version-file: ${{ steps.go-version-file.outputs.file }}
 
     - name: Verify Go installation
       if: inputs.use-go == 'true'
@@ -179,11 +223,23 @@ runs:
     # ========================================
     # .NET ecosystem
     # ========================================
+    - name: Detect .NET version file
+      id: dotnet-version-file
+      if: inputs.use-dotnet == 'true'
+      shell: bash
+      run: |
+        if [ -f "global.json" ]; then
+          echo "file=global.json" >> $GITHUB_OUTPUT
+        else
+          echo "file=" >> $GITHUB_OUTPUT
+        fi
+
     - name: Setup .NET
       if: inputs.use-dotnet == 'true'
       uses: actions/setup-dotnet@v4
       with:
-        dotnet-version: ${{ inputs.dotnet-version }}
+        dotnet-version: ${{ steps.dotnet-version-file.outputs.file && '' || inputs.dotnet-version }}
+        global-json-file: ${{ steps.dotnet-version-file.outputs.file }}
 
     - name: Verify .NET installation
       if: inputs.use-dotnet == 'true'
