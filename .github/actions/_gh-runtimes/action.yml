@@ -1,0 +1,112 @@
+# GitHub Runtimes Setup Action
+# Modular action for setting up language runtimes based on detected package managers
+# Part of the modular goupdate action suite
+
+name: 'Setup Runtimes'
+description: 'Setup language runtimes (Node.js, PHP, Python, Go, .NET) based on detected rules'
+
+inputs:
+  use-node:
+    description: 'Setup Node.js runtime'
+    required: false
+    default: 'false'
+  use-php:
+    description: 'Setup PHP runtime'
+    required: false
+    default: 'false'
+  use-python:
+    description: 'Setup Python runtime'
+    required: false
+    default: 'false'
+  use-go:
+    description: 'Setup Go runtime'
+    required: false
+    default: 'false'
+  use-dotnet:
+    description: 'Setup .NET runtime'
+    required: false
+    default: 'false'
+  node-version:
+    description: 'Node.js version'
+    required: false
+    default: '20'
+  php-version:
+    description: 'PHP version'
+    required: false
+    default: '8.2'
+  python-version:
+    description: 'Python version'
+    required: false
+    default: '3.11'
+  go-version:
+    description: 'Go version'
+    required: false
+    default: '1.21'
+  dotnet-version:
+    description: '.NET version'
+    required: false
+    default: '8.0'
+
+outputs:
+  runtimes-setup:
+    description: 'Comma-separated list of runtimes that were setup'
+    value: ${{ steps.summary.outputs.runtimes }}
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Setup Node.js
+      if: inputs.use-node == 'true'
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ inputs.node-version }}
+
+    - name: Setup PHP
+      if: inputs.use-php == 'true'
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: ${{ inputs.php-version }}
+
+    - name: Setup Python
+      if: inputs.use-python == 'true'
+      uses: actions/setup-python@v5
+      with:
+        python-version: ${{ inputs.python-version }}
+
+    - name: Setup Go
+      if: inputs.use-go == 'true'
+      uses: actions/setup-go@v5
+      with:
+        go-version: ${{ inputs.go-version }}
+
+    - name: Setup .NET
+      if: inputs.use-dotnet == 'true'
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: ${{ inputs.dotnet-version }}
+
+    - name: Summary
+      id: summary
+      shell: bash
+      env:
+        USE_NODE: ${{ inputs.use-node }}
+        USE_PHP: ${{ inputs.use-php }}
+        USE_PYTHON: ${{ inputs.use-python }}
+        USE_GO: ${{ inputs.use-go }}
+        USE_DOTNET: ${{ inputs.use-dotnet }}
+      run: |
+        RUNTIMES=""
+        [[ "$USE_NODE" == "true" ]] && RUNTIMES="${RUNTIMES}node,"
+        [[ "$USE_PHP" == "true" ]] && RUNTIMES="${RUNTIMES}php,"
+        [[ "$USE_PYTHON" == "true" ]] && RUNTIMES="${RUNTIMES}python,"
+        [[ "$USE_GO" == "true" ]] && RUNTIMES="${RUNTIMES}go,"
+        [[ "$USE_DOTNET" == "true" ]] && RUNTIMES="${RUNTIMES}dotnet,"
+        RUNTIMES="${RUNTIMES%,}"  # Remove trailing comma
+
+        if [[ -n "$RUNTIMES" ]]; then
+          echo "Runtimes setup: $RUNTIMES"
+        else
+          echo "No runtimes were setup"
+        fi
+
+        echo "runtimes=$RUNTIMES" >> "$GITHUB_OUTPUT"

@@ -1,25 +1,21 @@
 # Goupdate Update Action
-# Applies dependency updates for any supported package manager
+# Modular action for applying dependency updates
+# Part of the modular goupdate action suite
+#
+# Uses .goupdate.yml config for rule detection and package exclusion
 
 name: 'Goupdate Update'
-description: 'Apply dependency updates'
+description: 'Apply dependency updates using .goupdate.yml config'
 
 inputs:
   working-directory:
-    description: 'Working directory containing dependency files'
+    description: 'Working directory containing .goupdate.yml config'
     required: false
     default: '.'
-  rule:
-    description: 'Package manager rule to use (e.g., composer, npm, mod)'
-    required: true
   update-type:
-    description: 'Type of updates: none (use constraints), patch, minor, or all (includes major)'
+    description: 'Type of updates: none (use constraints), patch, minor, or major'
     required: false
     default: 'minor'
-  exclude-packages:
-    description: 'Packages to skip (comma-separated)'
-    required: false
-    default: ''
   system-test-mode:
     description: 'System test run mode: after_each, after_all, or none'
     required: false
@@ -34,7 +30,7 @@ outputs:
     description: 'Whether any packages were updated'
     value: ${{ steps.update.outputs.updated }}
   has-changes:
-    description: 'Whether dependency files were modified'
+    description: 'Whether package files were modified (alias for updated)'
     value: ${{ steps.update.outputs.updated }}
   updated-packages:
     description: 'Space-separated list of updated packages'
@@ -57,9 +53,7 @@ runs:
       shell: bash
       working-directory: ${{ inputs.working-directory }}
       env:
-        RULE: ${{ inputs.rule }}
         UPDATE_TYPE: ${{ inputs.update-type }}
-        EXCLUDE: ${{ inputs.exclude-packages }}
         SYSTEM_TEST_MODE: ${{ inputs.system-test-mode }}
         VERBOSE: ${{ inputs.verbose }}
       run: |
@@ -68,15 +62,9 @@ runs:
         case "$UPDATE_TYPE" in
           patch) UPDATE_FLAG="--patch" ;;
           minor) UPDATE_FLAG="--minor" ;;
-          all)   UPDATE_FLAG="--all" ;;
+          major) UPDATE_FLAG="--major" ;;
           none)  UPDATE_FLAG="" ;;
         esac
-
-        # Build exclude flag
-        EXCLUDE_FLAG=""
-        if [[ -n "$EXCLUDE" ]]; then
-          EXCLUDE_FLAG="-e $EXCLUDE"
-        fi
 
         # Build system test flag
         TEST_FLAG=""
@@ -90,12 +78,17 @@ runs:
           VERBOSE_FLAG="-v"
         fi
 
-        # Run update with continue-on-fail to see all errors
+        # Run update - goupdate auto-detects rules from .goupdate.yml config
+        # Package exclusion is also configured in .goupdate.yml
+        # Stream output live while capturing to file for later parsing
+        OUTPUT_FILE=$(mktemp)
         STDERR_FILE=$(mktemp)
         set +e
-        OUTPUT=$(goupdate update -r "$RULE" $UPDATE_FLAG $EXCLUDE_FLAG $TEST_FLAG $VERBOSE_FLAG --continue-on-fail -y 2>"$STDERR_FILE")
-        EXIT_CODE=$?
+        goupdate update $UPDATE_FLAG $TEST_FLAG $VERBOSE_FLAG --continue-on-fail -y 2>"$STDERR_FILE" | tee "$OUTPUT_FILE"
+        EXIT_CODE=${PIPESTATUS[0]}
         set -e
+        OUTPUT=$(cat "$OUTPUT_FILE")
+        rm -f "$OUTPUT_FILE"
 
         # Show any stderr
         if [[ -s "$STDERR_FILE" ]]; then
@@ -103,17 +96,21 @@ runs:
         fi
         rm -f "$STDERR_FILE"
 
-        # Show output
-        echo "$OUTPUT"
-
         # If command failed and verbose was not enabled, re-run with verbose for debugging
         if [[ "$EXIT_CODE" -ne 0 && "$VERBOSE" != "true" ]]; then
           echo ""
-          echo "::group::Re-running with verbose output for debugging"
-          echo "Command failed with exit code $EXIT_CODE. Re-running with verbose mode to show detailed failure information..."
+          echo "════════════════════════════════════════════════════════════════════════"
+          echo "🔍 VERBOSE DEBUG OUTPUT (exit code: $EXIT_CODE)"
+          echo "════════════════════════════════════════════════════════════════════════"
           echo ""
-          goupdate update -r "$RULE" $UPDATE_FLAG $EXCLUDE_FLAG $TEST_FLAG -v --continue-on-fail -y --dry-run 2>&1 || true
-          echo "::endgroup::"
+          echo "Command failed with exit code $EXIT_CODE. Re-running with verbose mode..."
+          echo "Exit codes: 0=success, 1=partial failure, 2=complete failure, 3=config error"
+          echo ""
+          goupdate update $UPDATE_FLAG $TEST_FLAG --verbose --continue-on-fail -y --dry-run 2>&1 || true
+          echo ""
+          echo "════════════════════════════════════════════════════════════════════════"
+          echo "End of verbose debug output"
+          echo "════════════════════════════════════════════════════════════════════════"
         fi
 
         # Parse updated packages from output (space-separated)

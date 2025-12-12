@@ -65,7 +65,7 @@ runs:
           grep "browser_download_url.*${OS}_${ARCH}" | head -1 | cut -d '"' -f 4)
 
         if [[ -z "$DOWNLOAD_URL" ]]; then
-          echo "::error::Failed to find download URL for ${OS}_${ARCH}"
+          echo "::error::GoUpdate: Failed to find download URL for ${OS}_${ARCH}"
           exit 1
         fi
 
@@ -74,7 +74,7 @@ runs:
 
         # Verify installation
         if ! command -v goupdate &> /dev/null && [[ ! -x "$BINARY_PATH" ]]; then
-          echo "::error::goupdate installation failed"
+          echo "::error::GoUpdate: Installation failed"
           exit 1
         fi
 
