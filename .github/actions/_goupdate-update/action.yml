@@ -97,6 +97,7 @@ runs:
         rm -f "$STDERR_FILE"
 
         # If command failed and verbose was not enabled, re-run with verbose for debugging
+        # NOTE: We do NOT add --dry-run here - we want to debug the SAME command that failed
         if [[ "$EXIT_CODE" -ne 0 && "$VERBOSE" != "true" ]]; then
           echo ""
           echo "════════════════════════════════════════════════════════════════════════"
@@ -106,7 +107,7 @@ runs:
           echo "Command failed with exit code $EXIT_CODE. Re-running with verbose mode..."
           echo "Exit codes: 0=success, 1=partial failure, 2=complete failure, 3=config error"
           echo ""
-          goupdate update $UPDATE_FLAG $TEST_FLAG --verbose --continue-on-fail -y --dry-run 2>&1 || true
+          goupdate update $UPDATE_FLAG $TEST_FLAG --verbose --continue-on-fail -y 2>&1 || true
           echo ""
           echo "════════════════════════════════════════════════════════════════════════"
           echo "End of verbose debug output"

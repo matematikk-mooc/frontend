@@ -9,11 +9,11 @@ rules:
   pnpm:
     # Only group packages with actual version coupling (peer dependencies)
     groups:
-      # Vue core - vuex/vue-router have peer deps on vue
+      # Vue core - vuex has peer dep on vue
       vue:
         - vue
         - vuex
-        - vue-router
+        # Add vue-router here if your project uses it
 
       # React - must have matching versions
       react:
@@ -40,7 +40,8 @@ rules:
     # Note: Pre-release filtering inherits from default config
     # Default patterns exclude: alpha, beta, rc, dev, canary, snapshot, nightly, preview, next
 
-# System test to verify no compile errors after updates
+# System tests to verify build after updates
+# Note: This is a config-only example - copy to your actual Vue/pnpm project
 system_tests:
   run_preflight: true
   run_mode: after_each
@@ -51,3 +52,18 @@ system_tests:
         pnpm install
         pnpm run build
       timeout_seconds: 300
+
+    # Start preview server and verify HTTP 200 response (uncomment when using with actual project)
+    # - name: http-test
+    #   commands: |
+    #     # Start preview server in background
+    #     pnpm run preview -- --port 4174 &
+    #     SERVER_PID=$!
+    #     sleep 3
+    #     # Check HTTP 200 status
+    #     STATUS=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:4174/)
+    #     kill $SERVER_PID 2>/dev/null || true
+    #     # Verify status is 2xx
+    #     [ "$STATUS" -ge 200 ] && [ "$STATUS" -lt 300 ] || { echo "HTTP status $STATUS != 2xx"; exit 1; }
+    #     echo "HTTP test passed! Status: $STATUS"
+    #   timeout_seconds: 60
