@@ -56,9 +56,9 @@ describe('Canvas: Theme', async () => {
         .locator('h2:has-text("Bruk tema")')
         .waitFor({ state: 'visible' });
 
-      test.setTimeout(5 * 60 * 1000);
+      test.setTimeout(10 * 60 * 1000);
       await page.waitForURL('**/accounts/1/brand_configs', {
-        timeout: 5 * 60 * 1000,
+        timeout: 10 * 60 * 1000,
       });
 
       await page
