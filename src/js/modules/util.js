@@ -351,11 +351,11 @@ export default (function () {
 
     getCourseUnenrollmentUuid() {
       const unenrollmentLink = document.querySelector(
-        '#self_unenrollment_dialog a.btn-primary.action',
+        '#self_unenrollment_modal_mount_point',
       );
       if (!unenrollmentLink) return null;
 
-      const hrefValue = unenrollmentLink.getAttribute('href') ?? '';
+      const hrefValue = unenrollmentLink.getAttribute('data-api-url') ?? '';
       const match = hrefValue.match(/\/self_unenrollment\/([^/]+)/);
 
       const unenrollmentUuid = match ? match[1] : null;
