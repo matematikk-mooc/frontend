@@ -25,18 +25,14 @@ describe('Canvas: Theme', async () => {
 
       await page
         .locator('.ic-ThemeCard-container__Main')
-        .locator(
-          '.ic-ThemeCard-main__name span:has-text("' + themeName + '")',
-        )
+        .locator('.ic-ThemeCard-main__name span:has-text("' + themeName + '")')
         .waitFor({ state: 'visible' });
     });
 
     await test.step('2.3 Open theme in editor', async () => {
       await page
         .locator('.ic-ThemeCard-container__Main')
-        .locator(
-          '.ic-ThemeCard-main__name span:has-text("' + themeName + '")',
-        )
+        .locator('.ic-ThemeCard-main__name span:has-text("' + themeName + '")')
         .click();
       await page.waitForURL('**/accounts/1/theme_editor');
     });
@@ -57,7 +53,7 @@ describe('Canvas: Theme', async () => {
       });
 
       await page
-        .locator('h2:has-text("Legg til nye stiler til underkontoer")')
+        .locator('h2:has-text("Bruk tema")')
         .waitFor({ state: 'visible' });
 
       test.setTimeout(5 * 60 * 1000);
