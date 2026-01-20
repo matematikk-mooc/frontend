@@ -1,0 +1,299 @@
+# GitHub Runtimes Setup Action
+# Modular action for setting up language runtimes based on detected package managers
+# Part of the modular goupdate action suite
+
+name: 'Setup Runtimes'
+description: 'Setup language runtimes (Node.js, PHP, Python, Go, .NET) based on detected rules'
+
+inputs:
+  rules:
+    description: 'Comma-separated list of detected rules (e.g., npm,pnpm,yarn,mod)'
+    required: false
+    default: ''
+  use-node:
+    description: 'Setup Node.js runtime'
+    required: false
+    default: 'false'
+  use-php:
+    description: 'Setup PHP runtime'
+    required: false
+    default: 'false'
+  use-python:
+    description: 'Setup Python runtime'
+    required: false
+    default: 'false'
+  use-go:
+    description: 'Setup Go runtime'
+    required: false
+    default: 'false'
+  use-dotnet:
+    description: 'Setup .NET runtime'
+    required: false
+    default: 'false'
+  node-version:
+    description: 'Node.js version (use lts/* for latest LTS)'
+    required: false
+    default: 'lts/*'
+  php-version:
+    description: 'PHP version'
+    required: false
+    default: '8.2'
+  python-version:
+    description: 'Python version'
+    required: false
+    default: '3.11'
+  go-version:
+    description: 'Go version'
+    required: false
+    default: '1.21'
+  dotnet-version:
+    description: '.NET version'
+    required: false
+    default: '8.0'
+  github-token:
+    description: 'GitHub token for Composer/npm authentication (avoids rate limiting)'
+    required: false
+    default: ''
+
+outputs:
+  runtimes-setup:
+    description: 'Comma-separated list of runtimes that were setup'
+    value: ${{ steps.summary.outputs.runtimes }}
+
+runs:
+  using: 'composite'
+  steps:
+    # ========================================
+    # Node.js ecosystem
+    # ========================================
+    - name: Detect Node.js version file
+      id: node-version-file
+      if: inputs.use-node == 'true'
+      shell: bash
+      run: |
+        # Check for version files in order of preference
+        if [ -f ".nvmrc" ]; then
+          echo "file=.nvmrc" >> $GITHUB_OUTPUT
+        elif [ -f ".node-version" ]; then
+          echo "file=.node-version" >> $GITHUB_OUTPUT
+        else
+          echo "file=" >> $GITHUB_OUTPUT
+        fi
+
+    - name: Setup Node.js
+      if: inputs.use-node == 'true'
+      uses: actions/setup-node@v4
+      with:
+        # Only set node-version when no version file exists
+        node-version: ${{ steps.node-version-file.outputs.file == '' && inputs.node-version || '' }}
+        node-version-file: ${{ steps.node-version-file.outputs.file || '' }}
+
+    - name: Verify Node.js installation
+      if: inputs.use-node == 'true'
+      shell: bash
+      run: |
+        if ! command -v node &> /dev/null; then
+          echo "::error::Node.js installation failed - command not found"
+          exit 1
+        fi
+        echo "node: $(node --version)"
+        echo "npm: $(npm --version)"
+
+    - name: Install pnpm
+      if: inputs.use-node == 'true' && contains(inputs.rules, 'pnpm')
+      uses: pnpm/action-setup@v4
+
+    - name: Verify pnpm installation
+      if: inputs.use-node == 'true' && contains(inputs.rules, 'pnpm')
+      shell: bash
+      run: |
+        if ! command -v pnpm &> /dev/null; then
+          echo "::error::pnpm installation failed - command not found"
+          exit 1
+        fi
+        echo "pnpm: $(pnpm --version)"
+
+    - name: Install yarn
+      if: inputs.use-node == 'true' && contains(inputs.rules, 'yarn')
+      shell: bash
+      run: |
+        corepack enable
+        # Use version from package.json packageManager field if present, otherwise use stable
+        if grep -q '"packageManager".*yarn@' package.json 2>/dev/null; then
+          echo "Using yarn version from package.json packageManager field"
+          corepack install
+        else
+          echo "No packageManager field found, installing yarn@stable"
+          corepack prepare yarn@stable --activate
+        fi
+
+    - name: Verify yarn installation
+      if: inputs.use-node == 'true' && contains(inputs.rules, 'yarn')
+      shell: bash
+      run: |
+        if ! command -v yarn &> /dev/null; then
+          echo "::error::yarn installation failed - command not found"
+          exit 1
+        fi
+        echo "yarn: $(yarn --version)"
+
+    # ========================================
+    # PHP ecosystem
+    # ========================================
+    - name: Setup PHP
+      if: inputs.use-php == 'true'
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: ${{ inputs.php-version }}
+        tools: composer
+
+    - name: Verify PHP installation
+      if: inputs.use-php == 'true'
+      shell: bash
+      run: |
+        if ! command -v php &> /dev/null; then
+          echo "::error::PHP installation failed - command not found"
+          exit 1
+        fi
+        echo "php: $(php --version | head -1)"
+        if ! command -v composer &> /dev/null; then
+          echo "::error::Composer installation failed - command not found"
+          exit 1
+        fi
+        echo "composer: $(composer --version | head -1)"
+
+    - name: Configure Composer GitHub OAuth
+      if: inputs.use-php == 'true' && inputs.github-token != ''
+      shell: bash
+      env:
+        GITHUB_TOKEN: ${{ inputs.github-token }}
+      run: |
+        # Configure GitHub OAuth to avoid rate limiting when downloading packages
+        composer config --global github-oauth.github.com "$GITHUB_TOKEN"
+        echo "Configured Composer with GitHub OAuth token"
+
+    # ========================================
+    # Python ecosystem
+    # ========================================
+    - name: Detect Python version file
+      id: python-version-file
+      if: inputs.use-python == 'true'
+      shell: bash
+      run: |
+        if [ -f ".python-version" ]; then
+          echo "file=.python-version" >> $GITHUB_OUTPUT
+        else
+          echo "file=" >> $GITHUB_OUTPUT
+        fi
+
+    - name: Setup Python
+      if: inputs.use-python == 'true'
+      uses: actions/setup-python@v5
+      with:
+        # Only set python-version when no version file exists
+        python-version: ${{ steps.python-version-file.outputs.file == '' && inputs.python-version || '' }}
+        python-version-file: ${{ steps.python-version-file.outputs.file || '' }}
+
+    - name: Verify Python installation
+      if: inputs.use-python == 'true'
+      shell: bash
+      run: |
+        if ! command -v python &> /dev/null; then
+          echo "::error::Python installation failed - command not found"
+          exit 1
+        fi
+        echo "python: $(python --version)"
+        echo "pip: $(pip --version)"
+
+    # ========================================
+    # Go ecosystem
+    # ========================================
+    - name: Detect Go version file
+      id: go-version-file
+      if: inputs.use-go == 'true'
+      shell: bash
+      run: |
+        if [ -f "go.mod" ]; then
+          echo "file=go.mod" >> $GITHUB_OUTPUT
+        else
+          echo "file=" >> $GITHUB_OUTPUT
+        fi
+
+    - name: Setup Go
+      if: inputs.use-go == 'true'
+      uses: actions/setup-go@v5
+      with:
+        # Only set go-version when no version file exists
+        go-version: ${{ steps.go-version-file.outputs.file == '' && inputs.go-version || '' }}
+        go-version-file: ${{ steps.go-version-file.outputs.file || '' }}
+
+    - name: Verify Go installation
+      if: inputs.use-go == 'true'
+      shell: bash
+      run: |
+        if ! command -v go &> /dev/null; then
+          echo "::error::Go installation failed - command not found"
+          exit 1
+        fi
+        echo "go: $(go version)"
+
+    # ========================================
+    # .NET ecosystem
+    # ========================================
+    - name: Detect .NET version file
+      id: dotnet-version-file
+      if: inputs.use-dotnet == 'true'
+      shell: bash
+      run: |
+        if [ -f "global.json" ]; then
+          echo "file=global.json" >> $GITHUB_OUTPUT
+        else
+          echo "file=" >> $GITHUB_OUTPUT
+        fi
+
+    - name: Setup .NET
+      if: inputs.use-dotnet == 'true'
+      uses: actions/setup-dotnet@v4
+      with:
+        # Only set dotnet-version when no version file exists
+        dotnet-version: ${{ steps.dotnet-version-file.outputs.file == '' && inputs.dotnet-version || '' }}
+        global-json-file: ${{ steps.dotnet-version-file.outputs.file || '' }}
+
+    - name: Verify .NET installation
+      if: inputs.use-dotnet == 'true'
+      shell: bash
+      run: |
+        if ! command -v dotnet &> /dev/null; then
+          echo "::error::.NET installation failed - command not found"
+          exit 1
+        fi
+        echo "dotnet: $(dotnet --version)"
+
+    # ========================================
+    # Summary
+    # ========================================
+    - name: Summary
+      id: summary
+      shell: bash
+      env:
+        USE_NODE: ${{ inputs.use-node }}
+        USE_PHP: ${{ inputs.use-php }}
+        USE_PYTHON: ${{ inputs.use-python }}
+        USE_GO: ${{ inputs.use-go }}
+        USE_DOTNET: ${{ inputs.use-dotnet }}
+      run: |
+        RUNTIMES=""
+        [[ "$USE_NODE" == "true" ]] && RUNTIMES="${RUNTIMES}node,"
+        [[ "$USE_PHP" == "true" ]] && RUNTIMES="${RUNTIMES}php,"
+        [[ "$USE_PYTHON" == "true" ]] && RUNTIMES="${RUNTIMES}python,"
+        [[ "$USE_GO" == "true" ]] && RUNTIMES="${RUNTIMES}go,"
+        [[ "$USE_DOTNET" == "true" ]] && RUNTIMES="${RUNTIMES}dotnet,"
+        RUNTIMES="${RUNTIMES%,}"  # Remove trailing comma
+
+        if [[ -n "$RUNTIMES" ]]; then
+          echo "Runtimes setup: $RUNTIMES"
+        else
+          echo "No runtimes were setup"
+        fi
+
+        echo "runtimes=$RUNTIMES" >> "$GITHUB_OUTPUT"

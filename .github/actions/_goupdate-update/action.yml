@@ -1,0 +1,144 @@
+# Goupdate Update Action
+# Modular action for applying dependency updates
+# Part of the modular goupdate action suite
+#
+# Uses .goupdate.yml config for rule detection and package exclusion
+
+name: 'Goupdate Update'
+description: 'Apply dependency updates using .goupdate.yml config'
+
+inputs:
+  working-directory:
+    description: 'Working directory containing .goupdate.yml config'
+    required: false
+    default: '.'
+  update-type:
+    description: 'Type of updates: none (use constraints), patch, minor, or major'
+    required: false
+    default: 'minor'
+  system-test-mode:
+    description: 'System test run mode: after_each, after_all, or none'
+    required: false
+    default: ''
+  verbose:
+    description: 'Enable verbose output'
+    required: false
+    default: 'false'
+
+outputs:
+  updated:
+    description: 'Whether any packages were updated'
+    value: ${{ steps.update.outputs.updated }}
+  has-changes:
+    description: 'Whether package files were modified (alias for updated)'
+    value: ${{ steps.update.outputs.updated }}
+  updated-packages:
+    description: 'Space-separated list of updated packages'
+    value: ${{ steps.update.outputs.updated_packages }}
+  updated-count:
+    description: 'Number of packages updated'
+    value: ${{ steps.update.outputs.updated_count }}
+  update-output:
+    description: 'Raw output from goupdate update command'
+    value: ${{ steps.update.outputs.update_output }}
+  exit-code:
+    description: 'Exit code from goupdate update command'
+    value: ${{ steps.update.outputs.exit_code }}
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Apply updates
+      id: update
+      shell: bash
+      working-directory: ${{ inputs.working-directory }}
+      env:
+        UPDATE_TYPE: ${{ inputs.update-type }}
+        SYSTEM_TEST_MODE: ${{ inputs.system-test-mode }}
+        VERBOSE: ${{ inputs.verbose }}
+      run: |
+        # Build update type flag
+        UPDATE_FLAG=""
+        case "$UPDATE_TYPE" in
+          patch) UPDATE_FLAG="--patch" ;;
+          minor) UPDATE_FLAG="--minor" ;;
+          major) UPDATE_FLAG="--major" ;;
+          none)  UPDATE_FLAG="" ;;
+        esac
+
+        # Build system test flag
+        TEST_FLAG=""
+        if [[ -n "$SYSTEM_TEST_MODE" ]]; then
+          TEST_FLAG="--system-test-mode=$SYSTEM_TEST_MODE"
+        fi
+
+        # Build verbose flag
+        VERBOSE_FLAG=""
+        if [[ "$VERBOSE" == "true" ]]; then
+          VERBOSE_FLAG="-v"
+        fi
+
+        # Run update - goupdate auto-detects rules from .goupdate.yml config
+        # Package exclusion is also configured in .goupdate.yml
+        # Stream output live while capturing to file for later parsing
+        OUTPUT_FILE=$(mktemp)
+        STDERR_FILE=$(mktemp)
+        set +e
+        goupdate update $UPDATE_FLAG $TEST_FLAG $VERBOSE_FLAG --continue-on-fail -y 2>"$STDERR_FILE" | tee "$OUTPUT_FILE"
+        EXIT_CODE=${PIPESTATUS[0]}
+        set -e
+        OUTPUT=$(cat "$OUTPUT_FILE")
+        rm -f "$OUTPUT_FILE"
+
+        # Show any stderr
+        if [[ -s "$STDERR_FILE" ]]; then
+          cat "$STDERR_FILE" >&2
+        fi
+        rm -f "$STDERR_FILE"
+
+        # If command failed and verbose was not enabled, re-run with verbose for debugging
+        # NOTE: We do NOT add --dry-run here - we want to debug the SAME command that failed
+        if [[ "$EXIT_CODE" -ne 0 && "$VERBOSE" != "true" ]]; then
+          echo ""
+          echo "════════════════════════════════════════════════════════════════════════"
+          echo "🔍 VERBOSE DEBUG OUTPUT (exit code: $EXIT_CODE)"
+          echo "════════════════════════════════════════════════════════════════════════"
+          echo ""
+          echo "Command failed with exit code $EXIT_CODE. Re-running with verbose mode..."
+          echo "Exit codes: 0=success, 1=partial failure, 2=complete failure, 3=config error"
+          echo ""
+          goupdate update $UPDATE_FLAG $TEST_FLAG --verbose --continue-on-fail -y 2>&1 || true
+          echo ""
+          echo "════════════════════════════════════════════════════════════════════════"
+          echo "End of verbose debug output"
+          echo "════════════════════════════════════════════════════════════════════════"
+        fi
+
+        # Parse updated packages from output (space-separated)
+        # Note: grep returns exit code 1 if no matches, so we use || true to prevent script exit
+        UPDATED_PACKAGES=$(echo "$OUTPUT" | grep -E "🟢 Updated" | awk '{print $NF}' | tr '\n' ' ' | sed 's/ $//' || true)
+        UPDATED_COUNT=$(echo "$UPDATED_PACKAGES" | wc -w | tr -d ' ')
+
+        # Determine if updates were applied by checking git status
+        UPDATED="false"
+        if ! git diff --quiet 2>/dev/null; then
+          UPDATED="true"
+        fi
+
+        echo "updated=$UPDATED" >> "$GITHUB_OUTPUT"
+        echo "updated_packages=$UPDATED_PACKAGES" >> "$GITHUB_OUTPUT"
+        echo "updated_count=$UPDATED_COUNT" >> "$GITHUB_OUTPUT"
+        echo "exit_code=$EXIT_CODE" >> "$GITHUB_OUTPUT"
+
+        # Store output for summaries
+        {
+          echo "update_output<<EOF"
+          echo "$OUTPUT"
+          echo "EOF"
+        } >> "$GITHUB_OUTPUT"
+
+        if [[ "$EXIT_CODE" -ne 0 ]]; then
+          echo "::warning::goupdate update exited with code $EXIT_CODE"
+        fi
+
+        exit $EXIT_CODE

@@ -1,0 +1,162 @@
+# Goupdate Check Action
+# Modular action for checking dependency updates
+# Part of the modular goupdate action suite
+#
+# Uses .goupdate.yml config for rule detection and package exclusion
+
+name: 'Goupdate Check'
+description: 'Check for available dependency updates using .goupdate.yml config'
+
+inputs:
+  working-directory:
+    description: 'Working directory containing .goupdate.yml config'
+    required: false
+    default: '.'
+  verbose:
+    description: 'Enable verbose output'
+    required: false
+    default: 'false'
+
+outputs:
+  has-updates:
+    description: 'Whether any minor/patch updates are available (excludes major-only packages)'
+    value: ${{ steps.check.outputs.has_updates }}
+  has-major-only:
+    description: 'Whether any packages have ONLY major updates'
+    value: ${{ steps.check.outputs.has_major_only }}
+  updates-json:
+    description: 'Full JSON output from goupdate'
+    value: ${{ steps.check.outputs.updates_json }}
+  major-count:
+    description: 'Count of packages with major updates'
+    value: ${{ steps.check.outputs.major_count }}
+  minor-count:
+    description: 'Count of packages with minor updates'
+    value: ${{ steps.check.outputs.minor_count }}
+  patch-count:
+    description: 'Count of packages with patch updates'
+    value: ${{ steps.check.outputs.patch_count }}
+  summary:
+    description: 'Human-readable summary of updates'
+    value: ${{ steps.check.outputs.summary }}
+  outdated-output:
+    description: 'Raw JSON output of outdated packages'
+    value: ${{ steps.check.outputs.outdated_output }}
+  major-packages:
+    description: 'Space-separated list of packages with only major updates'
+    value: ${{ steps.check.outputs.major_packages }}
+  exit-code:
+    description: 'Exit code from goupdate outdated command'
+    value: ${{ steps.check.outputs.exit_code }}
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Check for updates
+      id: check
+      shell: bash
+      working-directory: ${{ inputs.working-directory }}
+      env:
+        VERBOSE: ${{ inputs.verbose }}
+      run: |
+        # Build verbose flag
+        VERBOSE_FLAG=""
+        if [[ "$VERBOSE" == "true" ]]; then
+          VERBOSE_FLAG="-v"
+        fi
+
+        # Run check - goupdate auto-detects rules from .goupdate.yml config
+        # Package exclusion is also configured in .goupdate.yml
+        # Stream output live while capturing to file for later parsing
+        OUTPUT_FILE=$(mktemp)
+        STDERR_FILE=$(mktemp)
+        set +e
+        goupdate outdated -o json $VERBOSE_FLAG 2>"$STDERR_FILE" | tee "$OUTPUT_FILE"
+        EXIT_CODE=${PIPESTATUS[0]}
+        set -e
+        JSON_OUTPUT=$(cat "$OUTPUT_FILE")
+        rm -f "$OUTPUT_FILE"
+
+        # Show any stderr
+        if [[ -s "$STDERR_FILE" ]]; then
+          cat "$STDERR_FILE" >&2
+        fi
+        rm -f "$STDERR_FILE"
+
+        # If command failed and verbose was not enabled, re-run with verbose for debugging
+        if [[ "$EXIT_CODE" -ne 0 && "$VERBOSE" != "true" ]]; then
+          echo ""
+          echo "════════════════════════════════════════════════════════════════════════"
+          echo "🔍 VERBOSE DEBUG OUTPUT (exit code: $EXIT_CODE)"
+          echo "════════════════════════════════════════════════════════════════════════"
+          echo ""
+          echo "Command failed with exit code $EXIT_CODE. Re-running with verbose mode..."
+          echo "Exit codes: 0=success, 1=partial failure, 2=complete failure, 3=config error"
+          echo ""
+          goupdate outdated -o json --verbose 2>&1 || true
+          echo ""
+          echo "════════════════════════════════════════════════════════════════════════"
+          echo "End of verbose debug output"
+          echo "════════════════════════════════════════════════════════════════════════"
+        fi
+
+        # Exit early if command failed
+        if [[ "$EXIT_CODE" -ne 0 ]]; then
+          echo "exit_code=$EXIT_CODE" >> "$GITHUB_OUTPUT"
+          exit $EXIT_CODE
+        fi
+
+        # Parse counts from JSON
+        MAJOR_COUNT=$(echo "$JSON_OUTPUT" | jq -r '.summary.has_major // 0')
+        MINOR_COUNT=$(echo "$JSON_OUTPUT" | jq -r '.summary.has_minor // 0')
+        PATCH_COUNT=$(echo "$JSON_OUTPUT" | jq -r '.summary.has_patch // 0')
+        TO_UPDATE=$(echo "$JSON_OUTPUT" | jq -r '.summary.to_update // 0')
+
+        # Determine if applicable updates are available (minor/patch, not just major-only)
+        # This prevents blocking updates when only major updates exist for some packages
+        HAS_UPDATES="false"
+        MINOR_PATCH_COUNT=$(echo "$JSON_OUTPUT" | jq '[.packages[] | select(.status == "Outdated" and (.minor != "#N/A" or .patch != "#N/A"))] | length' 2>/dev/null) || MINOR_PATCH_COUNT=0
+        if [[ "$MINOR_PATCH_COUNT" -gt 0 ]]; then
+          HAS_UPDATES="true"
+        fi
+
+        # Check for major-only packages (has major but no minor/patch)
+        HAS_MAJOR_ONLY="false"
+        MAJOR_ONLY_PKGS=""
+        if [[ "$MAJOR_COUNT" -gt 0 ]]; then
+          MAJOR_ONLY_PKGS=$(echo "$JSON_OUTPUT" | jq -r '.packages[] | select(.status == "Outdated" and .major != "#N/A" and .minor == "#N/A" and .patch == "#N/A") | .name' | tr '\n' ' ')
+          if [[ -n "$MAJOR_ONLY_PKGS" ]]; then
+            HAS_MAJOR_ONLY="true"
+          fi
+        fi
+
+        # Create summary
+        SUMMARY="Major: $MAJOR_COUNT, Minor: $MINOR_COUNT, Patch: $PATCH_COUNT"
+
+        # Set outputs
+        echo "has_updates=$HAS_UPDATES" >> "$GITHUB_OUTPUT"
+        echo "has_major_only=$HAS_MAJOR_ONLY" >> "$GITHUB_OUTPUT"
+        echo "major_count=$MAJOR_COUNT" >> "$GITHUB_OUTPUT"
+        echo "minor_count=$MINOR_COUNT" >> "$GITHUB_OUTPUT"
+        echo "patch_count=$PATCH_COUNT" >> "$GITHUB_OUTPUT"
+        echo "summary=$SUMMARY" >> "$GITHUB_OUTPUT"
+        echo "major_packages=$MAJOR_ONLY_PKGS" >> "$GITHUB_OUTPUT"
+        echo "exit_code=$EXIT_CODE" >> "$GITHUB_OUTPUT"
+
+        # Store full JSON output (use delimiter for multiline)
+        {
+          echo "updates_json<<EOF"
+          echo "$JSON_OUTPUT"
+          echo "EOF"
+        } >> "$GITHUB_OUTPUT"
+
+        # Store raw JSON output
+        {
+          echo "outdated_output<<EOF"
+          echo "$JSON_OUTPUT"
+          echo "EOF"
+        } >> "$GITHUB_OUTPUT"
+
+        # Output summary (JSON was already streamed via tee)
+        echo ""
+        echo "Update check complete: $SUMMARY"

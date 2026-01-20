@@ -1,0 +1,99 @@
+# Goupdate Install Action
+# Downloads and installs the goupdate binary from GitHub releases
+
+name: 'Goupdate Install'
+description: 'Install goupdate binary from GitHub releases'
+
+inputs:
+  goupdate-version:
+    description: 'Version to install (latest, or specific tag like v1.0.0)'
+    required: false
+    default: 'latest'
+  goupdate-repo:
+    description: 'GitHub repository to download goupdate from (owner/repo format)'
+    required: false
+    default: 'ajxudir/goupdate'
+  github-token:
+    description: 'GitHub token for API requests (helps with rate limits)'
+    required: false
+    default: ''
+
+outputs:
+  binary-path:
+    description: 'Path to the installed goupdate binary'
+    value: ${{ steps.install.outputs.binary_path }}
+  version:
+    description: 'Installed version of goupdate'
+    value: ${{ steps.verify.outputs.version }}
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Install goupdate
+      id: install
+      shell: bash
+      env:
+        GITHUB_TOKEN: ${{ inputs.github-token }}
+        VERSION: ${{ inputs.goupdate-version }}
+        GOUPDATE_REPO: ${{ inputs.goupdate-repo }}
+      run: |
+        echo "Downloading goupdate from $GOUPDATE_REPO..."
+
+        # Determine version URL
+        if [[ "$VERSION" == "latest" ]]; then
+          RELEASE_URL="https://api.github.com/repos/${GOUPDATE_REPO}/releases/latest"
+        else
+          RELEASE_URL="https://api.github.com/repos/${GOUPDATE_REPO}/releases/tags/${VERSION}"
+        fi
+
+        # Get download URL with authentication if token provided
+        AUTH_HEADER=""
+        if [[ -n "$GITHUB_TOKEN" ]]; then
+          AUTH_HEADER="Authorization: Bearer $GITHUB_TOKEN"
+        fi
+
+        # Detect OS and architecture
+        OS=$(uname -s | tr '[:upper:]' '[:lower:]')
+        ARCH=$(uname -m)
+        case "$ARCH" in
+          x86_64) ARCH="amd64" ;;
+          aarch64|arm64) ARCH="arm64" ;;
+        esac
+
+        # Download and extract
+        DOWNLOAD_URL=$(curl -sL ${AUTH_HEADER:+-H "$AUTH_HEADER"} "$RELEASE_URL" | \
+          grep "browser_download_url.*${OS}_${ARCH}" | head -1 | cut -d '"' -f 4)
+
+        if [[ -z "$DOWNLOAD_URL" ]]; then
+          echo "::error::goupdate: Failed to find download URL for ${OS}_${ARCH}"
+          exit 1
+        fi
+
+        echo "Downloading from: $DOWNLOAD_URL"
+        curl -sL "$DOWNLOAD_URL" | tar xzf - -C /usr/local/bin goupdate
+        BINARY_PATH="/usr/local/bin/goupdate"
+
+        echo "binary_path=$BINARY_PATH" >> "$GITHUB_OUTPUT"
+
+    - name: Verify goupdate installation
+      id: verify
+      shell: bash
+      run: |
+        # Verify command exists
+        if ! command -v goupdate &> /dev/null; then
+          echo "::error::goupdate installation failed - command not found"
+          exit 1
+        fi
+
+        # Verify command actually works by running version
+        if ! VERSION_OUTPUT=$(goupdate version 2>&1); then
+          echo "::error::goupdate installation failed - command not executable"
+          echo "Output: $VERSION_OUTPUT"
+          exit 1
+        fi
+
+        # Extract version from output
+        INSTALLED_VERSION=$(echo "$VERSION_OUTPUT" | grep -E "Version:" | sed 's/.*Version:[[:space:]]*//' || echo "unknown")
+
+        echo "version=$INSTALLED_VERSION" >> "$GITHUB_OUTPUT"
+        echo "goupdate: $INSTALLED_VERSION"

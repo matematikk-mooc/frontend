@@ -1,0 +1,680 @@
+# GoUpdate - Auto Update Workflow
+# Automated dependency updates via PR to staging branch
+#
+# Triggers:
+#   - Schedule (weekly): Check dependencies → Create PR with updates
+#   - Manual dispatch: check-only or update mode
+#
+# Flow:
+#   1. Scan repository for package managers
+#   2. Check for dependency updates
+#   3. Apply updates and run tests
+#   4. Create PR to target branch
+#   5. If AUTO_MERGE_UPDATES is true: wait for checks, merge PR
+#   6. If AUTO_MERGE_UPDATES is false: leave PR for manual review
+#
+# Configuration (modify in env section below):
+#   - DEFAULT_BRANCH: Repository default branch (main/master)
+#   - BRANCH_PREFIX: Prefix for update branches (goupdate)
+#   - UPDATE_TARGET_BRANCH: Branch to merge updates into
+#   - AUTO_MERGE_UPDATES: Enable auto-merge for update PRs
+#   - *_VERSION: Runtime versions
+#   - PR_TITLE: PR title template (use {date} and {type} placeholders)
+#   - COMMIT_MESSAGE: Commit message template
+#
+# Package exclusion and rules are configured in .goupdate.yml
+
+name: GoUpdate - Auto Update
+
+on:
+  schedule:
+    - cron: '0 0 * * 1'  # Weekly on Monday
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: 'Operation mode'
+        required: true
+        default: 'update'
+        type: choice
+        options:
+          - check-only
+          - update
+      update-type:
+        description: 'Dependency update type'
+        required: false
+        default: 'minor'
+        type: choice
+        options:
+          - minor
+          - patch
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
+
+# ============================================================================
+# CONFIGURATION - Modify for your project
+# ============================================================================
+env:
+  GOUPDATE_REPO: 'ajxudir/goupdate'
+
+  # Branches
+  DEFAULT_BRANCH: 'main'
+  BRANCH_PREFIX: 'goupdate'
+  UPDATE_TARGET_BRANCH: 'stage-updates'
+
+  # Auto-merge
+  AUTO_MERGE_UPDATES: 'true'
+
+  # Runtime Versions (used when package managers are detected)
+  NODE_VERSION: '20'
+  PHP_VERSION: '8.2'
+  PYTHON_VERSION: '3.12'
+  GO_VERSION: '1.24'
+  DOTNET_VERSION: '8.0'
+
+  # PR title template - use {date} for current date, {type} for update type (minor/patch)
+  PR_TITLE: 'GoUpdate: Auto update - {type} ({date})'
+  # Commit message template - supports {date} and {type} placeholders
+  COMMIT_MESSAGE: 'GoUpdate: Auto update - {type} ({date})'
+
+permissions:
+  contents: write
+  pull-requests: write
+  checks: read
+
+jobs:
+  # ============================================================================
+  # Prepare - Scan repository and determine what actions to take
+  # ============================================================================
+  prepare:
+    name: Prepare
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    outputs:
+      run-dependency-check: ${{ steps.config.outputs.run_dependency_check }}
+      run-updates: ${{ steps.config.outputs.run_updates }}
+      check-only: ${{ steps.config.outputs.check_only }}
+      update-type: ${{ steps.config.outputs.update_type }}
+      auto-merge-updates: ${{ steps.config.outputs.auto_merge_updates }}
+      update-branch-name: ${{ steps.config.outputs.update_branch_name }}
+      rules: ${{ steps.scan.outputs.rules }}
+      use-node: ${{ steps.scan.outputs.use_node }}
+      use-php: ${{ steps.scan.outputs.use_php }}
+      use-python: ${{ steps.scan.outputs.use_python }}
+      use-go: ${{ steps.scan.outputs.use_go }}
+      use-dotnet: ${{ steps.scan.outputs.use_dotnet }}
+
+    steps:
+      - name: Validate GitHub App credentials
+        env:
+          HAS_APP_ID: ${{ secrets.GOUPDATE_APP_ID != '' }}
+          HAS_APP_PRIVATE_KEY: ${{ secrets.GOUPDATE_APP_PRIVATE_KEY != '' }}
+        run: |
+          if [ "$HAS_APP_ID" != "true" ] || [ "$HAS_APP_PRIVATE_KEY" != "true" ]; then
+            echo "::error::GoUpdate: GitHub App credentials required"
+            echo ""
+            echo "To enable auto-merge, configure these repository secrets:"
+            echo "  - GOUPDATE_APP_ID"
+            echo "  - GOUPDATE_APP_PRIVATE_KEY"
+            echo ""
+            echo "See: https://github.com/${{ github.repository }}#github-app-setup"
+            exit 1
+          fi
+
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ env.DEFAULT_BRANCH }}
+
+      - name: Install goupdate
+        uses: ./.github/actions/_goupdate-install
+        with:
+          goupdate-repo: ${{ env.GOUPDATE_REPO }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Scan for package managers
+        id: scan
+        run: |
+          echo "Scanning repository for package managers..."
+          SCAN_OUTPUT=$(goupdate scan --output json 2>/dev/null || echo '{"files":[]}')
+          echo "Scan output: $SCAN_OUTPUT"
+
+          # Extract rules as comma-separated list from files array
+          RULES=$(echo "$SCAN_OUTPUT" | jq -r '.files // [] | map(.rule) | unique | join(",")')
+          echo "Detected rules: $RULES"
+          echo "rules=$RULES" >> $GITHUB_OUTPUT
+
+          # Determine required runtimes based on detected rules
+          USE_NODE="false"
+          USE_PHP="false"
+          USE_PYTHON="false"
+          USE_GO="false"
+          USE_DOTNET="false"
+
+          if echo "$RULES" | grep -qE "(npm|yarn|pnpm)"; then
+            USE_NODE="true"
+          fi
+          if echo "$RULES" | grep -q "composer"; then
+            USE_PHP="true"
+          fi
+          if echo "$RULES" | grep -qE "(requirements|pipfile)"; then
+            USE_PYTHON="true"
+          fi
+          if echo "$RULES" | grep -q "mod"; then
+            USE_GO="true"
+          fi
+          if echo "$RULES" | grep -q "nuget"; then
+            USE_DOTNET="true"
+          fi
+
+          echo "use_node=$USE_NODE" >> $GITHUB_OUTPUT
+          echo "use_php=$USE_PHP" >> $GITHUB_OUTPUT
+          echo "use_python=$USE_PYTHON" >> $GITHUB_OUTPUT
+          echo "use_go=$USE_GO" >> $GITHUB_OUTPUT
+          echo "use_dotnet=$USE_DOTNET" >> $GITHUB_OUTPUT
+
+          echo "Runtime detection: node=$USE_NODE, php=$USE_PHP, python=$USE_PYTHON, go=$USE_GO, dotnet=$USE_DOTNET"
+
+      - name: Determine actions
+        id: config
+        env:
+          AUTO_MERGE: ${{ env.AUTO_MERGE_UPDATES }}
+          BRANCH_PREFIX: ${{ env.BRANCH_PREFIX }}
+        run: |
+          EVENT="${{ github.event_name }}"
+          MODE="${{ github.event.inputs.mode }}"
+          UPDATE_TYPE="${{ github.event.inputs.update-type }}"
+
+          echo "Event: $EVENT, Mode: $MODE, Update-Type: $UPDATE_TYPE, Auto-Merge: $AUTO_MERGE"
+
+          # Pass through auto-merge setting
+          echo "auto_merge_updates=$AUTO_MERGE" >> $GITHUB_OUTPUT
+
+          case "$EVENT" in
+            schedule)
+              echo "run_dependency_check=true" >> $GITHUB_OUTPUT
+              echo "run_updates=true" >> $GITHUB_OUTPUT
+              echo "check_only=false" >> $GITHUB_OUTPUT
+              echo "update_type=minor" >> $GITHUB_OUTPUT
+              echo "update_branch_name=${BRANCH_PREFIX}/auto-update-minor" >> $GITHUB_OUTPUT
+              ;;
+            workflow_dispatch)
+              UTYPE="${UPDATE_TYPE:-minor}"
+              echo "update_branch_name=${BRANCH_PREFIX}/auto-update-${UTYPE}" >> $GITHUB_OUTPUT
+              case "$MODE" in
+                check-only)
+                  echo "run_dependency_check=true" >> $GITHUB_OUTPUT
+                  echo "run_updates=false" >> $GITHUB_OUTPUT
+                  echo "check_only=true" >> $GITHUB_OUTPUT
+                  echo "update_type=$UTYPE" >> $GITHUB_OUTPUT
+                  ;;
+                update|*)
+                  echo "run_dependency_check=true" >> $GITHUB_OUTPUT
+                  echo "run_updates=true" >> $GITHUB_OUTPUT
+                  echo "check_only=false" >> $GITHUB_OUTPUT
+                  echo "update_type=$UTYPE" >> $GITHUB_OUTPUT
+                  ;;
+              esac
+              ;;
+          esac
+
+  # ============================================================================
+  # Check for dependency updates
+  # ============================================================================
+  check-updates:
+    name: Check Updates
+    needs: prepare
+    if: needs.prepare.outputs.run-dependency-check == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    outputs:
+      has-updates: ${{ steps.goupdate.outputs.has-updates }}
+      has-major-only: ${{ steps.goupdate.outputs.has-major-only }}
+      summary: ${{ steps.goupdate.outputs.summary }}
+      outdated-output: ${{ steps.goupdate.outputs.outdated-output }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ env.DEFAULT_BRANCH }}
+          fetch-depth: 0
+
+      - name: Ensure target branch exists
+        uses: ./.github/actions/_git-branch
+        with:
+          branch: ${{ env.UPDATE_TARGET_BRANCH }}
+          base: ${{ env.DEFAULT_BRANCH }}
+          create-if-missing: 'true'
+          push: 'true'
+
+      # Setup runtimes based on scan results
+      - name: Setup runtimes
+        uses: ./.github/actions/_gh-runtimes
+        with:
+          rules: ${{ needs.prepare.outputs.rules }}
+          use-node: ${{ needs.prepare.outputs.use-node }}
+          use-php: ${{ needs.prepare.outputs.use-php }}
+          use-python: ${{ needs.prepare.outputs.use-python }}
+          use-go: ${{ needs.prepare.outputs.use-go }}
+          use-dotnet: ${{ needs.prepare.outputs.use-dotnet }}
+          node-version: ${{ env.NODE_VERSION }}
+          php-version: ${{ env.PHP_VERSION }}
+          python-version: ${{ env.PYTHON_VERSION }}
+          go-version: ${{ env.GO_VERSION }}
+          dotnet-version: ${{ env.DOTNET_VERSION }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Install goupdate
+        uses: ./.github/actions/_goupdate-install
+        with:
+          goupdate-repo: ${{ env.GOUPDATE_REPO }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Check for updates
+        id: goupdate
+        uses: ./.github/actions/_goupdate-check
+
+      - name: Generate job summary
+        env:
+          SUMMARY: ${{ steps.goupdate.outputs.summary }}
+        run: |
+          echo "## GoUpdate - Check Updates" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "Update check complete: $SUMMARY" >> $GITHUB_STEP_SUMMARY
+
+      - name: Fail on major-only updates
+        if: steps.goupdate.outputs.has-major-only == 'true' && steps.goupdate.outputs.has-updates == 'false'
+        env:
+          SUMMARY: ${{ steps.goupdate.outputs.summary }}
+        run: |
+          echo "::error::GoUpdate: Only major updates available"
+          echo ""
+          echo "════════════════════════════════════════════════════════════════"
+          echo "⚠️  MAJOR UPDATES REQUIRE MANUAL REVIEW"
+          echo "════════════════════════════════════════════════════════════════"
+          echo ""
+          echo "Major updates may contain breaking changes. To resolve:"
+          echo "  1. Review changelogs for breaking changes"
+          echo "  2. Update packages manually, or"
+          echo "  3. Add to .goupdate.yml exclude section"
+          echo ""
+          exit 1
+
+  # ============================================================================
+  # Apply updates and create PR
+  # ============================================================================
+  apply-updates:
+    name: Apply Updates
+    needs: [prepare, check-updates]
+    if: |
+      needs.prepare.outputs.run-updates == 'true' &&
+      needs.check-updates.outputs.has-updates == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    outputs:
+      updated-count: ${{ steps.goupdate.outputs.updated-count }}
+      has-changes: ${{ steps.goupdate.outputs.has-changes }}
+      updated-packages: ${{ steps.goupdate.outputs.updated-packages }}
+      update-output: ${{ steps.goupdate.outputs.update-output }}
+      pr-url: ${{ steps.pr.outputs.pr-url }}
+      pr-number: ${{ steps.pr.outputs.pr-number }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ env.DEFAULT_BRANCH }}
+          fetch-depth: 0
+
+      - name: Ensure target branch exists
+        uses: ./.github/actions/_git-branch
+        with:
+          branch: ${{ env.UPDATE_TARGET_BRANCH }}
+          base: ${{ env.DEFAULT_BRANCH }}
+          create-if-missing: 'true'
+          push: 'true'
+
+      # Setup runtimes based on scan results
+      - name: Setup runtimes
+        uses: ./.github/actions/_gh-runtimes
+        with:
+          rules: ${{ needs.prepare.outputs.rules }}
+          use-node: ${{ needs.prepare.outputs.use-node }}
+          use-php: ${{ needs.prepare.outputs.use-php }}
+          use-python: ${{ needs.prepare.outputs.use-python }}
+          use-go: ${{ needs.prepare.outputs.use-go }}
+          use-dotnet: ${{ needs.prepare.outputs.use-dotnet }}
+          node-version: ${{ env.NODE_VERSION }}
+          php-version: ${{ env.PHP_VERSION }}
+          python-version: ${{ env.PYTHON_VERSION }}
+          go-version: ${{ env.GO_VERSION }}
+          dotnet-version: ${{ env.DOTNET_VERSION }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Create update branch
+        uses: ./.github/actions/_git-branch
+        with:
+          branch: ${{ needs.prepare.outputs.update-branch-name }}
+          base: ${{ env.UPDATE_TARGET_BRANCH }}
+          delete-remote: 'true'
+          push: 'false'
+
+      - name: Install goupdate
+        uses: ./.github/actions/_goupdate-install
+        with:
+          goupdate-repo: ${{ env.GOUPDATE_REPO }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Apply updates
+        id: goupdate
+        uses: ./.github/actions/_goupdate-update
+        with:
+          update-type: ${{ needs.prepare.outputs.update-type }}
+
+      - name: Generate messages
+        id: messages
+        if: steps.goupdate.outputs.has-changes == 'true'
+        env:
+          PR_TITLE_TEMPLATE: ${{ env.PR_TITLE }}
+          COMMIT_MSG_TEMPLATE: ${{ env.COMMIT_MESSAGE }}
+          UPDATE_TYPE: ${{ needs.prepare.outputs.update-type }}
+        run: |
+          DATE=$(date -u +%Y-%m-%d)
+          # Capitalize first letter of update type
+          TYPE=$(echo "$UPDATE_TYPE" | sed 's/\b\(.\)/\u\1/')
+
+          # Generate PR title
+          TITLE=$(echo "$PR_TITLE_TEMPLATE" | sed "s/{date}/$DATE/g" | sed "s/{type}/$TYPE/g")
+          echo "pr_title=$TITLE" >> $GITHUB_OUTPUT
+
+          # Generate commit message
+          COMMIT_MSG=$(echo "$COMMIT_MSG_TEMPLATE" | sed "s/{date}/$DATE/g" | sed "s/{type}/$TYPE/g")
+          echo "commit_msg=$COMMIT_MSG" >> $GITHUB_OUTPUT
+
+      - name: Commit and push changes
+        if: steps.goupdate.outputs.has-changes == 'true'
+        env:
+          UPDATE_OUTPUT: ${{ steps.goupdate.outputs.update-output }}
+          COMMIT_MSG: ${{ steps.messages.outputs.commit_msg }}
+          UPDATE_BRANCH: ${{ needs.prepare.outputs.update-branch-name }}
+        run: |
+          # Extract package versions from update output (format: "package v1.0.0 → v2.0.0")
+          FORMATTED_PKGS=$(echo "$UPDATE_OUTPUT" | grep -E "^\s+\S+\s+v?[0-9]" | sed 's/^[[:space:]]*/- /' | head -20)
+
+          git add -A
+          git commit -m "$(cat <<EOF
+          $COMMIT_MSG
+
+          Updated packages:
+          $FORMATTED_PKGS
+          EOF
+          )"
+          git push -u origin "$UPDATE_BRANCH"
+
+      - name: Generate GitHub App token
+        id: app-token
+        if: steps.goupdate.outputs.has-changes == 'true'
+        uses: actions/create-github-app-token@v1
+        with:
+          app-id: ${{ secrets.GOUPDATE_APP_ID }}
+          private-key: ${{ secrets.GOUPDATE_APP_PRIVATE_KEY }}
+
+      - name: Format PR body
+        id: pr-body
+        if: steps.goupdate.outputs.has-changes == 'true'
+        env:
+          UPDATE_OUTPUT: ${{ steps.goupdate.outputs.update-output }}
+        run: |
+          {
+            echo "body<<PR_BODY_EOF_7e3c1a"
+            echo "## GoUpdate - Automated Dependency Update"
+            echo ""
+            echo '```'
+            echo "$UPDATE_OUTPUT"
+            echo '```'
+            echo ""
+            echo "---"
+            echo "*Created by GoUpdate*"
+            echo "PR_BODY_EOF_7e3c1a"
+          } >> $GITHUB_OUTPUT
+
+      - name: Create Pull Request
+        id: pr
+        if: steps.goupdate.outputs.has-changes == 'true'
+        uses: ./.github/actions/_gh-pr
+        with:
+          github-token: ${{ steps.app-token.outputs.token }}
+          title: ${{ steps.messages.outputs.pr_title }}
+          body: ${{ steps.pr-body.outputs.body }}
+          base: ${{ env.UPDATE_TARGET_BRANCH }}
+          head: ${{ needs.prepare.outputs.update-branch-name }}
+          auto-merge: 'false'
+          merge-method: 'squash'
+          delete-branch: 'false'
+
+      - name: Generate job summary
+        if: steps.goupdate.outputs.has-changes == 'true'
+        env:
+          PR_URL: ${{ steps.pr.outputs.pr-url }}
+          PR_NUMBER: ${{ steps.pr.outputs.pr-number }}
+          UPDATE_BRANCH: ${{ needs.prepare.outputs.update-branch-name }}
+          TARGET_BRANCH: ${{ env.UPDATE_TARGET_BRANCH }}
+          UPDATE_OUTPUT: ${{ steps.goupdate.outputs.update-output }}
+        run: |
+          {
+            echo "## GoUpdate - Apply Updates"
+            echo ""
+            echo "### PR Created"
+            echo "- **PR:** [#$PR_NUMBER]($PR_URL)"
+            echo "- **Branch:** \`$UPDATE_BRANCH\` → \`$TARGET_BRANCH\`"
+            echo ""
+            echo '```'
+            echo "$UPDATE_OUTPUT"
+            echo '```'
+          } >> $GITHUB_STEP_SUMMARY
+
+  # ============================================================================
+  # Wait for PR checks and merge
+  # ============================================================================
+  merge-pr:
+    name: Merge PR
+    needs: [prepare, apply-updates]
+    if: |
+      needs.prepare.outputs.auto-merge-updates == 'true' &&
+      needs.apply-updates.outputs.pr-number != '' &&
+      needs.apply-updates.outputs.has-changes == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    outputs:
+      merged: ${{ steps.wait-merge.outputs.merged }}
+      checks-passed: ${{ steps.wait-merge.outputs.checks_passed }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Generate GitHub App token
+        id: app-token
+        uses: actions/create-github-app-token@v1
+        with:
+          app-id: ${{ secrets.GOUPDATE_APP_ID }}
+          private-key: ${{ secrets.GOUPDATE_APP_PRIVATE_KEY }}
+
+      - name: Wait for PR checks and merge
+        id: wait-merge
+        env:
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
+          PR_NUMBER: ${{ needs.apply-updates.outputs.pr-number }}
+          REPO: ${{ github.repository }}
+        run: |
+          echo "Waiting for PR #$PR_NUMBER checks to pass before merging..."
+          echo ""
+
+          MAX_ATTEMPTS=15
+          ATTEMPT=0
+          CHECKS_COMPLETE=false
+
+          while [ $ATTEMPT -lt $MAX_ATTEMPTS ]; do
+            ATTEMPT=$((ATTEMPT + 1))
+            echo "═══════════════════════════════════════════════════════════════"
+            echo "Checking PR status (attempt $ATTEMPT/$MAX_ATTEMPTS)..."
+
+            if ! PR_DATA=$(gh api "repos/$REPO/pulls/$PR_NUMBER" 2>&1); then
+              echo "Failed to fetch PR data, retrying..."
+              sleep 30
+              continue
+            fi
+
+            STATE=$(echo "$PR_DATA" | jq -r '.state')
+            MERGED=$(echo "$PR_DATA" | jq -r '.merged')
+            HEAD_SHA=$(echo "$PR_DATA" | jq -r '.head.sha')
+
+            if [ "$MERGED" = "true" ]; then
+              echo "✅ PR #$PR_NUMBER has been merged!"
+              echo "merged=true" >> $GITHUB_OUTPUT
+              echo "checks_passed=true" >> $GITHUB_OUTPUT
+              exit 0
+            fi
+
+            if [ "$STATE" = "closed" ]; then
+              echo "❌ PR #$PR_NUMBER was closed without merging"
+              echo "merged=false" >> $GITHUB_OUTPUT
+              echo "checks_passed=false" >> $GITHUB_OUTPUT
+              exit 1
+            fi
+
+            if [ "$CHECKS_COMPLETE" = "false" ]; then
+              if ! CHECKS_JSON=$(gh api "repos/$REPO/commits/$HEAD_SHA/check-runs" 2>&1); then
+                sleep 30
+                continue
+              fi
+
+              if echo "$CHECKS_JSON" | jq -e '.check_runs' > /dev/null 2>&1; then
+                TOTAL_CHECKS=$(echo "$CHECKS_JSON" | jq '.total_count')
+                PENDING=$(echo "$CHECKS_JSON" | jq '[.check_runs[] | select(.status != "completed")] | length')
+                FAILED=$(echo "$CHECKS_JSON" | jq '[.check_runs[] | select(.status == "completed" and (.conclusion == "failure" or .conclusion == "cancelled"))] | length')
+
+                echo "Check runs: $TOTAL_CHECKS total, $PENDING pending, $FAILED failed"
+
+                if [ "$FAILED" -gt 0 ]; then
+                  echo "❌ PR checks failed!"
+                  echo "merged=false" >> $GITHUB_OUTPUT
+                  echo "checks_passed=false" >> $GITHUB_OUTPUT
+                  exit 1
+                fi
+
+                if [ "$PENDING" -eq 0 ] && [ "$TOTAL_CHECKS" -gt 0 ]; then
+                  echo "✅ All PR checks passed!"
+                  CHECKS_COMPLETE=true
+                  echo "checks_passed=true" >> $GITHUB_OUTPUT
+
+                  if gh pr merge "$PR_NUMBER" --squash --delete-branch 2>&1; then
+                    echo "✅ PR #$PR_NUMBER merged successfully!"
+                    echo "merged=true" >> $GITHUB_OUTPUT
+                    exit 0
+                  fi
+                elif [ "$TOTAL_CHECKS" -eq 0 ]; then
+                  echo "No CI checks configured, proceeding with merge..."
+                  CHECKS_COMPLETE=true
+                  echo "checks_passed=true" >> $GITHUB_OUTPUT
+
+                  if gh pr merge "$PR_NUMBER" --squash --delete-branch 2>&1; then
+                    echo "✅ PR #$PR_NUMBER merged successfully!"
+                    echo "merged=true" >> $GITHUB_OUTPUT
+                    exit 0
+                  fi
+                fi
+              fi
+            fi
+
+            sleep 30
+          done
+
+          echo "❌ Timeout waiting for PR to merge"
+          echo "merged=false" >> $GITHUB_OUTPUT
+          echo "checks_passed=false" >> $GITHUB_OUTPUT
+          exit 1
+
+      - name: Generate job summary
+        if: always()
+        env:
+          PR_URL: ${{ needs.apply-updates.outputs.pr-url }}
+          PR_NUMBER: ${{ needs.apply-updates.outputs.pr-number }}
+          MERGED: ${{ steps.wait-merge.outputs.merged }}
+        run: |
+          {
+            echo "## GoUpdate - Merge PR"
+            echo ""
+            echo "- **PR:** [#$PR_NUMBER]($PR_URL)"
+            if [ "$MERGED" = "true" ]; then
+              echo "- **Status:** ✅ Merged"
+            else
+              echo "- **Status:** ❌ Not merged"
+            fi
+          } >> $GITHUB_STEP_SUMMARY
+
+  # ============================================================================
+  # Summary
+  # ============================================================================
+  summary:
+    name: Summary
+    needs: [prepare, check-updates, apply-updates, merge-pr]
+    if: always()
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - name: Generate summary
+        env:
+          EVENT: ${{ github.event_name }}
+          MODE: ${{ github.event.inputs.mode }}
+          CHECK_SUMMARY: ${{ needs.check-updates.outputs.summary }}
+          UPDATE_OUTPUT: ${{ needs.apply-updates.outputs.update-output }}
+          PR_URL: ${{ needs.apply-updates.outputs.pr-url }}
+          PR_NUMBER: ${{ needs.apply-updates.outputs.pr-number }}
+          CHECK_RESULT: ${{ needs.check-updates.result }}
+          APPLY_RESULT: ${{ needs.apply-updates.result }}
+          PR_MERGED: ${{ needs.merge-pr.outputs.merged }}
+          AUTO_MERGE_ENABLED: ${{ needs.prepare.outputs.auto-merge-updates }}
+          TARGET_BRANCH: ${{ env.UPDATE_TARGET_BRANCH }}
+        run: |
+          echo "## GoUpdate - Auto Update Summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Trigger:** $EVENT" >> $GITHUB_STEP_SUMMARY
+          if [ -n "$MODE" ]; then
+            echo "**Mode:** $MODE" >> $GITHUB_STEP_SUMMARY
+          fi
+          echo "" >> $GITHUB_STEP_SUMMARY
+
+          # PR info if created
+          if [ -n "$PR_URL" ]; then
+            echo "### Pull Request" >> $GITHUB_STEP_SUMMARY
+            echo "- **PR:** [#$PR_NUMBER]($PR_URL)" >> $GITHUB_STEP_SUMMARY
+            if [ "$AUTO_MERGE_ENABLED" = "true" ]; then
+              if [ "$PR_MERGED" = "true" ]; then
+                echo "- **Status:** ✅ Merged" >> $GITHUB_STEP_SUMMARY
+              fi
+            else
+              echo "- **Status:** Awaiting manual review" >> $GITHUB_STEP_SUMMARY
+            fi
+            echo "" >> $GITHUB_STEP_SUMMARY
+          fi
+
+          # Show Check Updates summary
+          if [ "$CHECK_RESULT" = "success" ] && [ -n "$CHECK_SUMMARY" ]; then
+            echo "### Check Updates" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "Update check complete: $CHECK_SUMMARY" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+          fi
+
+          # Show Apply Updates output
+          if [ "$APPLY_RESULT" = "success" ] && [ -n "$UPDATE_OUTPUT" ]; then
+            echo "### Apply Updates" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo '```' >> $GITHUB_STEP_SUMMARY
+            echo "$UPDATE_OUTPUT" >> $GITHUB_STEP_SUMMARY
+            echo '```' >> $GITHUB_STEP_SUMMARY
+          fi

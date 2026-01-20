@@ -1,0 +1,114 @@
+# Git Branch Action
+# Manage git branches: checkout, create, delete
+
+name: 'Git Branch'
+description: 'Checkout or create git branches'
+
+inputs:
+  branch:
+    description: 'Branch name'
+    required: true
+  base:
+    description: 'Base branch to create from (default: main)'
+    required: false
+    default: 'main'
+  create-if-missing:
+    description: 'Create branch if it does not exist'
+    required: false
+    default: 'true'
+  push:
+    description: 'Push to remote after creating'
+    required: false
+    default: 'true'
+  delete-remote:
+    description: 'Delete remote branch first (for fresh start)'
+    required: false
+    default: 'false'
+  fail-if-missing:
+    description: 'Fail if branch does not exist and create-if-missing is false'
+    required: false
+    default: 'false'
+
+outputs:
+  created:
+    description: 'Whether branch was newly created'
+    value: ${{ steps.branch.outputs.created }}
+  exists:
+    description: 'Whether branch exists (locally or remote)'
+    value: ${{ steps.branch.outputs.exists }}
+  branch:
+    description: 'The branch name'
+    value: ${{ steps.branch.outputs.branch }}
+  sha:
+    description: 'HEAD commit SHA after checkout'
+    value: ${{ steps.branch.outputs.sha }}
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Manage branch
+      id: branch
+      shell: bash
+      env:
+        BRANCH: ${{ inputs.branch }}
+        BASE: ${{ inputs.base }}
+        CREATE_IF_MISSING: ${{ inputs.create-if-missing }}
+        PUSH: ${{ inputs.push }}
+        DELETE_REMOTE: ${{ inputs.delete-remote }}
+        FAIL_IF_MISSING: ${{ inputs.fail-if-missing }}
+      run: |
+        git config user.name "github-actions[bot]"
+        git config user.email "github-actions[bot]@users.noreply.github.com"
+
+        # Delete remote branch if requested
+        if [ "$DELETE_REMOTE" = "true" ]; then
+          echo "Deleting remote branch '$BRANCH'..."
+          git push origin --delete "$BRANCH" 2>/dev/null || true
+        fi
+
+        # Check if branch exists on remote
+        REMOTE_EXISTS="false"
+        if git ls-remote --heads origin "$BRANCH" | grep -q "$BRANCH"; then
+          REMOTE_EXISTS="true"
+        fi
+
+        # Check if branch exists locally
+        LOCAL_EXISTS="false"
+        if git show-ref --verify --quiet "refs/heads/$BRANCH" 2>/dev/null; then
+          LOCAL_EXISTS="true"
+        fi
+
+        EXISTS="false"
+        CREATED="false"
+
+        if [ "$REMOTE_EXISTS" = "true" ]; then
+          echo "Branch '$BRANCH' exists on remote, checking out..."
+          git fetch origin "$BRANCH"
+          git checkout "$BRANCH"
+          EXISTS="true"
+        elif [ "$LOCAL_EXISTS" = "true" ]; then
+          echo "Branch '$BRANCH' exists locally, checking out..."
+          git checkout "$BRANCH"
+          EXISTS="true"
+        elif [ "$CREATE_IF_MISSING" = "true" ]; then
+          echo "Creating branch '$BRANCH' from '$BASE'..."
+          git checkout "$BASE" 2>/dev/null || git checkout -b "$BASE"
+          git checkout -b "$BRANCH"
+          CREATED="true"
+          EXISTS="true"
+          if [ "$PUSH" = "true" ]; then
+            git push -u origin "$BRANCH"
+          fi
+        elif [ "$FAIL_IF_MISSING" = "true" ]; then
+          echo "::error::Branch '$BRANCH' does not exist"
+          exit 1
+        else
+          echo "::warning::Branch '$BRANCH' does not exist, not creating"
+        fi
+
+        SHA=$(git rev-parse HEAD 2>/dev/null || echo "")
+
+        echo "branch=$BRANCH" >> "$GITHUB_OUTPUT"
+        echo "created=$CREATED" >> "$GITHUB_OUTPUT"
+        echo "exists=$EXISTS" >> "$GITHUB_OUTPUT"
+        echo "sha=$SHA" >> "$GITHUB_OUTPUT"
