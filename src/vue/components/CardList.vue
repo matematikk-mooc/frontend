@@ -62,7 +62,7 @@
           <ModulesList :modules="modules"></ModulesList>
         </template>
         <template v-if="(!authorized || !course.enrolled)" v-slot:actions>
-           <RegisterChoice :fullWidth="true"  :selfEnrollmentCode="course.self_enrollment_code"></RegisterChoice>
+           <RegisterChoice :authorized="authorized" :fullWidth="true"  :selfEnrollmentCode="course.self_enrollment_code"></RegisterChoice>
         </template>
       </Modal>
     </div>

@@ -33,16 +33,22 @@
       props: {
         forwardTo: String,
         selfEnrollmentCode: String,
-        fullWidth: Boolean
+        fullWidth: Boolean,
+        authorized: Boolean
       },
       data () {
         return {
             modalOpen: false,
+            isAuthorized: this.authorized || false,
         }
       },
       methods: {
         openModal () {
-          this.modalOpen = true
+          if (this.isAuthorized) {
+            this.goToCanvas();
+          } else {
+            this.modalOpen = true
+          }
         },
         closeModal () {
           this.modalOpen = false
