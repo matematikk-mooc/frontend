@@ -26,6 +26,7 @@ describe('Canvas: Theme', async () => {
       await page
         .locator('.ic-ThemeCard-container__Main')
         .locator('.ic-ThemeCard-main__name span:has-text("' + themeName + '")')
+        .first()
         .waitFor({ state: 'visible' });
     });
 
@@ -48,22 +49,24 @@ describe('Canvas: Theme', async () => {
         .locator('.Theme__header-primary button:has-text("Bruk tema")')
         .click();
 
-      page.on('dialog', async (dialog) => {
-        await dialog.accept();
-      });
-
       await page
         .locator('h2:has-text("Bruk tema")')
         .waitFor({ state: 'visible' });
 
-      test.setTimeout(10 * 60 * 1000);
+      page.locator('button[data-testid="apply-theme-proceed-button"]').click();
+
+      await page
+        .locator('h2:has-text("Legg til nye stiler til underkontoer")')
+        .waitFor({ state: 'visible' });
+
+      test.setTimeout(5 * 60 * 1000);
       await page.waitForURL('**/accounts/1/brand_configs', {
-        timeout: 10 * 60 * 1000,
+        timeout: 5 * 60 * 1000,
       });
 
       await page
         .locator(
-          `.ic-ThemeCard.ic-ThemeCard--is-active-theme span:has-text("${themeName}")`,
+          '.ic-ThemeCard--is-active-theme span:has-text("' + themeName + '")',
         )
         .waitFor({ state: 'visible' });
     });
