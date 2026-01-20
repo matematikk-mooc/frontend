@@ -57,9 +57,15 @@ describe('Canvas: Theme', async () => {
         .waitFor({ state: 'visible' });
 
       test.setTimeout(5 * 60 * 1000);
-      await page.waitForURL('**/accounts/1/brand_configs?theme_applied=1', {
+      await page.waitForURL('**/accounts/1/brand_configs', {
         timeout: 5 * 60 * 1000,
       });
+
+      await page
+        .locator(
+          `.ic-ThemeCard.ic-ThemeCard--is-active-theme span:has-text("${themeName}")`,
+        )
+        .waitFor({ state: 'visible' });
     });
   });
 });
