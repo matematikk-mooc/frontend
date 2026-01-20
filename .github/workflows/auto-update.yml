@@ -67,7 +67,7 @@ env:
   AUTO_MERGE_UPDATES: 'true'
 
   # Runtime Versions (used when package managers are detected)
-  NODE_VERSION: '20'
+  NODE_VERSION: '22'
   PHP_VERSION: '8.2'
   PYTHON_VERSION: '3.12'
   GO_VERSION: '1.24'

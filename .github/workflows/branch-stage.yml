@@ -11,7 +11,7 @@ jobs:
         uses: ./.github/workflows/build-node.yml
 
         with:
-            node_version: "20"
+            node_version: "22"
             app_env: "stage"
             app_version: "ci_${{ github.sha }}"
             azure_storage_account_name: ${{ vars.STAGE_AZURE_STORAGE_ACCOUNT_NAME }}
@@ -24,7 +24,7 @@ jobs:
         needs: [build-node]
         uses: ./.github/workflows/build-canvas.yml
         with:
-            node_version: "20"
+            node_version: "22"
             app_env: "stage"
             app_version: "ci_${{ github.sha }}"
             canvas_theme_js_file: "https://st09417311stage-fybvhtameff0aney.z01.azurefd.net/themes/ci_${{ github.sha }}/theme-udirdesign.js"
@@ -38,7 +38,7 @@ jobs:
         needs: [build-canvas]
         uses: ./.github/workflows/deploy-canvas.yml
         with:
-            node_version: "20"
+            node_version: "22"
             app_env: "stage"
             app_version: "ci_${{ github.sha }}"
             canvas_username: ${{ vars.STAGE_CANVAS_USERNAME }}
