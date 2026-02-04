@@ -1,50 +1,47 @@
-# Frontend App - goupdate configuration
-# Example: pnpm-based Vue.js frontend with grouped dependencies
-#
-# Based on matematikk-mooc/frontend project structure
-
 extends: [default]
 
 rules:
+  npm:
+    enabled: false
   pnpm:
-    # Only group packages with actual version coupling (peer dependencies)
+    include: ['**/package.json']
+    exclude: ['**/node_modules/**', '**/dist/**', '**/.tests_playwright/**']
     groups:
-      # Vue core - vuex has peer dep on vue
       vue:
         - vue
         - vuex
-        # Add vue-router here if your project uses it
-
-      # React - must have matching versions
       react:
         - react
         - react-dom
-
-      # Webpack core - cli/dev-server depend on webpack
       webpack:
         - webpack
         - webpack-cli
         - webpack-dev-server
-
-      # Babel - loader depends on core
       babel:
         - babel-loader
-        - "@babel/core"
-        - "@babel/preset-env"
-
-      # Playwright - test package depends on playwright
+        - '@babel/core'
+        - '@babel/preset-env'
       playwright:
         - playwright
-        - "@playwright/test"
+        - '@playwright/test'
+  yarn:
+    enabled: false
+  composer:
+    enabled: false
+  requirements:
+    enabled: false
+  pipfile:
+    enabled: false
+  mod:
+    enabled: false
+  msbuild:
+    enabled: false
+  nuget:
+    enabled: false
 
-    # Note: Pre-release filtering inherits from default config
-    # Default patterns exclude: alpha, beta, rc, dev, canary, snapshot, nightly, preview, next
-
-# System tests to verify build after updates
-# Note: This is a config-only example - copy to your actual Vue/pnpm project
 system_tests:
   run_preflight: true
-  run_mode: after_each
+  run_mode: after_all
   stop_on_fail: true
   tests:
     - name: build
@@ -52,18 +49,6 @@ system_tests:
         pnpm install
         pnpm run build
       timeout_seconds: 300
-
-    # Start preview server and verify HTTP 200 response (uncomment when using with actual project)
-    # - name: http-test
-    #   commands: |
-    #     # Start preview server in background
-    #     pnpm run preview -- --port 4174 &
-    #     SERVER_PID=$!
-    #     sleep 3
-    #     # Check HTTP 200 status
-    #     STATUS=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:4174/)
-    #     kill $SERVER_PID 2>/dev/null || true
-    #     # Verify status is 2xx
-    #     [ "$STATUS" -ge 200 ] && [ "$STATUS" -lt 300 ] || { echo "HTTP status $STATUS != 2xx"; exit 1; }
-    #     echo "HTTP test passed! Status: $STATUS"
-    #   timeout_seconds: 60
+    #- name: e2e-tests
+    #  commands: ./e2e.sh
+    #  timeout_seconds: 900

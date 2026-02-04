@@ -14,7 +14,6 @@ test-env-setup.js
 _site/
 .stylelintrc
 frontend.code-workspace
-src/js/settings.js
 src/js/modules/dataporten.js
 package-lock.json
 node_modules/
@@ -22,3 +21,4 @@ node_modules/
 /playwright-report/
 /blob-report/
 /playwright/.cache/
+.tests_playwright/
