@@ -21,11 +21,11 @@ mmooc.settings = {
   displayAlertsMenuItem : false,
   displayCallForAssistanceButtonInGroupDisccussions : false,
   displayInboxMenu: false,
-  privacyPolicyLink: 'https://kompetanseudirno.azureedge.net/udirdesign/privacypolicy.html?v=1_0',
+  privacyPolicyLink: 'https://kp.udir.no/personvern/',
   contactPoint: 'kompetansesupport@udir.no',
   platformName: 'UDIR - kompetanseplattform',
   homeOrganization: 'Udir.no',
-  aboutThePlatform: 'https://kompetanseudirno.azureedge.net/udirdesign/omkompetanseudirno.html',
+  aboutThePlatform: 'https://kp.udir.no/om-kompetanseportalen/',
   uuStatusNb: 'https://uustatus.no/nb/erklaringer/publisert/2796ebc6-161f-4dc9-9429-70d7dd136431',
   uuStatusNn: 'https://uustatus.no/nn/erklaringer/publisert/2796ebc6-161f-4dc9-9429-70d7dd136431',
 };
