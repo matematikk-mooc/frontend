@@ -13,11 +13,11 @@
             Kompetansepakker er levert av Utdanningsdirektoratet
           </div>
           <div class="page-footer--link-container">
-            <PageFooterLink :url="'https://kompetanseudirno.azureedge.net/udirdesign/omkompetanseudirno.html'"><template v-slot:footerlink>Om kompetansepakker</template></PageFooterLink>
+            <PageFooterLink :url="'https://kp.udir.no/om-kompetanseportalen/'"><template v-slot:footerlink>Om kompetansepakker</template></PageFooterLink>
             <div class="page-footer--divider mobile-hide"></div>
-            <PageFooterLink :url="'mailto:kompetansesupport@udir.no'"><template v-slot:footerlink>Kontakt</template></PageFooterLink>
+            <PageFooterLink :url="'https://kp.udir.no/kontakt/'"><template v-slot:footerlink>Kontakt</template></PageFooterLink>
             <div class="page-footer--divider mobile-hide"></div>
-              <PageFooterLink :url="'https://kompetanseudirno.azureedge.net/udirdesign/privacypolicy.html?v=1_0'"><template v-slot:footerlink>Personvernerklæring</template></PageFooterLink>
+              <PageFooterLink :url="'https://kp.udir.no/personvern/'"><template v-slot:footerlink>Personvernerklæring</template></PageFooterLink>
           </div>
           <span class="page-footer--accessibility-declaration mobile-accessibility-container ">
                 <p class="accessibility-text">
