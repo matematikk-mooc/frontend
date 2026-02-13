@@ -198,7 +198,7 @@ jQuery(function($) {
       coursepage.saveUnenrollDialog();
       document.getElementById("right-side").remove();
     }
-api.getcu
+// api.getcu
     var courseId = api.getCurrentCourseId();
     var queryString = document.location.search;
     announcements.printAnnouncementsUnreadCount();
