@@ -627,12 +627,12 @@ body.notifications, body.profile, body.profile_settings, body.content_shares, bo
 }
 
 // Custom css to copy missing menu form "../files"
-#file-menu{
+#override-menu{
   display: flex;
   max-width: 100%;
   width: 100vw;
   flex-direction: row;
-  .file-menu-container {
+  .override-menu-container {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
@@ -668,11 +668,11 @@ body.notifications, body.profile, body.profile_settings, body.content_shares, bo
             text-decoration: none;
           }
         }
-        &:nth-child(3) {
-          a{
+        .active {
+                      font-weight: bold;
             color:#00468e;
             border-bottom: 2px solid #00468e;
-          }
+          
         }
       }
     }

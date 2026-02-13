@@ -41,13 +41,13 @@ import h5p from './3party/h5p.js';
 
 jQuery(function($) {
   // Generate and populate missing user menu
-  function generateMenu() {
-    const fileMenu = document.createElement("div");
-    fileMenu.id = "file-menu";
-    fileMenu.style.display = "block";
+  function generateMenu(pattern) {
+    const overrideMenu = document.createElement("div");
+    overrideMenu.id = "override-menu";
+    overrideMenu.style.display = "block";
     const stickyContainer = document.createElement("div");
     stickyContainer.id = "sticky-container";
-    stickyContainer.className = "file-menu-container";
+    stickyContainer.className = "override-menu-container";
     const ul = document.createElement("ul");
     ul.id = "section-tabs";
 
@@ -55,9 +55,10 @@ jQuery(function($) {
       ["/profile/communication", "varslinger-link", "notifications", "Varslinger"],
       ["/profile", "profil-link", "profile", "Profil"],
       ["/files", "filer-link", "files", "Filer"],
-      ["/profile/settings", "innstillinger-link", "profile_settings", "Innstillinger", true, "page"],
+      ["/profile/settings", "innstillinger-link", "profile_settings", "Innstillinger", false, "page"],
       ["/profile/content_shares", "delt-innhold-link", "content_shares", "Delt innhold"],
-      ["/users/374694/external_tools/845", "brukersammenslåing-link", "context_external_tool_845", "Brukersammenslåing"],
+      ["/users/" + api.getUser().id + "/external_tools/845", "brukersammenslåing-link", "context_external_tool_845", "Brukersammenslåing"],
+      ["/users/" + api.getUser().id + "/external_tools/1258", "slettmeg-link", "context_external_tool_1258", "Brukersletting"],
       ["/profile/qr_mobile_login", "qr-eller-mobil-innlogging-link", "qr_mobile_login", "QR eller mobil-innlogging"],
       ["/account_notifications", "globale-kunngjøringer-link", "past_global_announcements", "Globale kunngjøringer"],
     ];
@@ -78,16 +79,21 @@ jQuery(function($) {
       li.appendChild(a);
       return li;
     }
+
     items.forEach(([href, id, className, text, isActive = false, ariaCurrent = null]) => {
-      ul.appendChild(createMenuItem(href, id, className, text, isActive, ariaCurrent));
-    });
+    if (pattern.test(href)) {
+      isActive = true;
+    }
+    ul.appendChild(
+      createMenuItem(href, id, className, text, isActive, ariaCurrent)
+    );
+});
 
     stickyContainer.appendChild(ul);
-    fileMenu.appendChild(stickyContainer);
-
+    overrideMenu.appendChild(stickyContainer);
     const wrapper = document.getElementById("wrapper");
     if (wrapper) {
-      wrapper.insertBefore(fileMenu, wrapper.firstChild);
+      wrapper.insertBefore(overrideMenu, wrapper.firstChild);
     } else {
       console.warn('Element with id "wrapper" not found.');
     }
@@ -192,7 +198,7 @@ jQuery(function($) {
       coursepage.saveUnenrollDialog();
       document.getElementById("right-side").remove();
     }
-
+api.getcu
     var courseId = api.getCurrentCourseId();
     var queryString = document.location.search;
     announcements.printAnnouncementsUnreadCount();
@@ -215,10 +221,13 @@ jQuery(function($) {
   });
 const routeMap = [
   { pattern: /\/files$/},
+  { pattern: /\/settings$/},
   { pattern: /\/profile\/communication$/},
   { pattern: /\/account_notifications$/},
   { pattern: /\/profile$/},
   { pattern: /\/profile\/qr_mobile_login$/},
+  { pattern: /\/users\/\d+\/external_tools\/1258$/},
+  { pattern: /\/users\/\d+\/external_tools\/845$/},
 ];
 
 routeMap.forEach(({ pattern }) => {
@@ -226,9 +235,12 @@ routeMap.forEach(({ pattern }) => {
   const hasAdmin = [...menuList.querySelectorAll("li")]
   .some(li => li.textContent.trim().toLowerCase() === "administrator");
   routes.addRouteForPath(pattern, () => {
-    if(pattern.source === "\\/files$" || !hasAdmin) {
-      console.log(message);
-      generateMenu();
+    // If menu not present, generate it.
+    if (!document.querySelector("#sticky-container")) {
+      generateMenu(pattern);
+    }
+    if(!hasAdmin) {
+      generateMenu(pattern);
     }
   });
 });
@@ -241,7 +253,9 @@ routeMap.forEach(({ pattern }) => {
     let parent = document.getElementById("pairing-code");
     if(parent) {
       let observerButton = parent.getElementsByClassName("css-r0ye9w-view--block-baseButton");
-      parent.appendChild(observerButton[0]);
+      if (observerButton) {
+          parent.appendChild(observerButton[0]);
+      }
       parent.removeChild(parent.firstChild);
 
       if(observerButton.length > 0) {
@@ -257,13 +271,6 @@ routeMap.forEach(({ pattern }) => {
     }
 
     var elementId = document.getElementById('confirm_email_channel');
-    // if(!settings.displayProfileLeftMenu) {
-    //   document.getElementById("section-tabs").style.display = "none";
-    // }
-      if (!document.querySelector(".sticky-container")) {
-      console.log("enters bottom generate")
-      generateMenu();
-    }
   });
 
   routes.addRouteForPath(/\/theme_editor$/, function() {
@@ -383,7 +390,6 @@ routeMap.forEach(({ pattern }) => {
       // removeCanvasAnnouncementElements();
       removeCanvasDiscussionElements();
       if(!location.search.includes('module_item_id=')) {
-        console.log("LEFTSIDE")
         renderCourseModules('left-side');
       }
       util.hasRoleInCourse(courseId, "TeacherEnrollment", function(isTeacher) {
@@ -556,7 +562,7 @@ routeMap.forEach(({ pattern }) => {
       routes.performHandlerForUrl(document.location);
     }
   } catch (e) {
-    console.log(e);
+    console.log(e); 
   }
 
   try {
