@@ -40,15 +40,15 @@ rules:
     enabled: false
 
 system_tests:
-  run_preflight: true
+  run_preflight: false
   run_mode: after_all
-  stop_on_fail: true
+  stop_on_fail: false
   tests:
     - name: build
       commands: |
         pnpm install
         pnpm run build
       timeout_seconds: 300
-    #- name: e2e-tests
-    #  commands: ./e2e.sh
-    #  timeout_seconds: 900
+    - name: e2e-tests
+      commands: ./e2e.sh
+      timeout_seconds: 900
