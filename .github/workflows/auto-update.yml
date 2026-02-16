@@ -1,9 +1,6 @@
 name: GoUpdate - Auto Update
 
 on:
-  push:
-    branches:
-      - main # Only for testing purposes, normal use is via schedule or manual dispatch
   schedule:
     - cron: '0 0 * * 1' # Weekly on Monday
   workflow_dispatch:
@@ -45,12 +42,12 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: ${{ github.event.inputs.base-branch || 'main' }}
+          ref: ${{ github.event.inputs.base-branch || 'stage' }}
           fetch-depth: 0
       - uses: Utdanningsdirektoratet/dit-github-actions/git/checkout@v1
         with:
           branch: goupdate/auto-update-${{ github.event.inputs.update-type || 'minor' }}
-          source-branch: ${{ github.event.inputs.base-branch || 'main' }}
+          source-branch: ${{ github.event.inputs.base-branch || 'stage' }}
           create-branch: 'false'
       - uses: Utdanningsdirektoratet/dit-github-actions/goupdate/install@v1
       - uses: Utdanningsdirektoratet/dit-github-actions/goupdate/scan@v1
@@ -79,7 +76,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: ${{ github.event.inputs.base-branch || 'main' }}
+          ref: ${{ github.event.inputs.base-branch || 'stage' }}
           fetch-depth: 0
       - uses: Utdanningsdirektoratet/dit-github-actions/goupdate/install@v1
       - uses: Utdanningsdirektoratet/dit-github-actions/github/runtimes@v1
@@ -90,7 +87,7 @@ jobs:
         id: checkout-branch
         with:
           branch: goupdate/auto-update-${{ github.event.inputs.update-type || 'minor' }}
-          source-branch: ${{ github.event.inputs.base-branch || 'main' }}
+          source-branch: ${{ github.event.inputs.base-branch || 'stage' }}
 
       - uses: Utdanningsdirektoratet/dit-github-actions/github/clone@v1
         with:
@@ -147,7 +144,7 @@ jobs:
           MINOR: ${{ needs.check.outputs.minor }}
           PATCH: ${{ needs.check.outputs.patch }}
           BRANCH: ${{ needs.update.outputs.branch-name }}
-          BASE: ${{ github.event.inputs.base-branch || 'main' }}
+          BASE: ${{ github.event.inputs.base-branch || 'stage' }}
           RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
           PARTIAL_FAILURE: ${{ needs.update.outputs.partial-failure }}
           DIVERGED: ${{ needs.update.outputs.diverged }}
@@ -189,21 +186,13 @@ jobs:
           app-private-key: ${{ secrets.GOUPDATE_APP_PRIVATE_KEY }}
           title: "GoUpdate: ${{ github.event.inputs.update-type || 'minor' }} ({date})"
           body: ${{ steps.body.outputs.body }}
-          base: ${{ github.event.inputs.base-branch || 'main' }}
+          base: ${{ github.event.inputs.base-branch || 'stage' }}
           head: ${{ needs.update.outputs.branch-name }}
-      - name: Notify partial failure
-        if: needs.update.outputs.partial-failure == 'true'
-        env:
-          GH_TOKEN: ${{ github.token }}
-          PR_NUMBER: ${{ steps.pr.outputs.pr-number }}
-        run: |
-          gh pr comment "$PR_NUMBER" --body "Not all updates succeeded. Auto-merge skipped. @ajxudir please review."
-          echo "::warning::Partial failure — PR created but auto-merge skipped"
       - uses: Utdanningsdirektoratet/dit-github-actions/github/pr-merge@v1
-        if: needs.update.outputs.partial-failure != 'true'
         with:
           app-id: ${{ secrets.GOUPDATE_APP_ID }}
           app-private-key: ${{ secrets.GOUPDATE_APP_PRIVATE_KEY }}
           pr-number: ${{ steps.pr.outputs.pr-number }}
           wait-for-checks: 300
           notify: '@ajxudir'
+          skip-merge-comment: ${{ needs.update.outputs.partial-failure == 'true' && 'Not all updates succeeded. Auto-merge skipped.' || '' }}
