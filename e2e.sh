@@ -68,7 +68,7 @@ if [ -z "$CI" ]; then
 
   # Check Node version
   NODE_VERSION=$(node -v)
-  [[ $NODE_VERSION =~ ^v22\. ]] || { echo "✗ Node.js v22 required (found $NODE_VERSION)"; exit 1; }
+  [[ $NODE_VERSION =~ ^v24\. ]] || { echo "✗ Node.js v24 required (found $NODE_VERSION)"; exit 1; }
   echo "✓ Node.js $NODE_VERSION"
 
   # Install test dependencies if needed
