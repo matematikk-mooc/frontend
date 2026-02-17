@@ -41,8 +41,6 @@ jobs:
         with:
           repository: matematikk-mooc/frontend-react
           path: .tests_playwright
-          app-id: ${{ secrets.GOUPDATE_APP_ID }}
-          app-private-key: ${{ secrets.GOUPDATE_APP_PRIVATE_KEY }}
       - uses: Utdanningsdirektoratet/dit-github-actions/js/install@v1
         with:
           working-directory: .tests_playwright

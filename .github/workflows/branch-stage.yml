@@ -1,4 +1,4 @@
-name: Branch - Stage V1
+name: Branch - Stage
 
 on:
   push:
@@ -6,17 +6,19 @@ on:
       - stage
   workflow_dispatch:
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.head_ref }}
+  cancel-in-progress: true
+
 jobs:
   build-node:
     uses: ./.github/workflows/build-node.yml
-
     with:
       node_version: '22'
       app_env: 'stage'
       app_version: 'ci_${{ github.sha }}'
       azure_storage_account_name: ${{ vars.STAGE_AZURE_STORAGE_ACCOUNT_NAME }}
       azure_storage_container_name: ${{ vars.STAGE_AZURE_STORAGE_CONTAINER_NAME }}
-
     secrets:
       azure_storage_account_key: ${{ secrets.STAGE_AZURE_STORAGE_ACCOUNT_KEY }}
 
@@ -30,7 +32,6 @@ jobs:
       canvas_theme_js_file: 'https://st09417311stage-fybvhtameff0aney.z01.azurefd.net/themes/ci_${{ github.sha }}/theme-udirdesign.js'
       canvas_theme_css_file: 'https://st09417311stage-fybvhtameff0aney.z01.azurefd.net/themes/ci_${{ github.sha }}/theme-udirdesign.css'
       canvas_username: ${{ vars.STAGE_CANVAS_USERNAME }}
-
     secrets:
       canvas_password: ${{ secrets.STAGE_CANVAS_PASSWORD }}
 
@@ -42,6 +43,38 @@ jobs:
       app_env: 'stage'
       app_version: 'ci_${{ github.sha }}'
       canvas_username: ${{ vars.STAGE_CANVAS_USERNAME }}
-
     secrets:
       canvas_password: ${{ secrets.STAGE_CANVAS_PASSWORD }}
+
+  e2e:
+    name: E2E Tests
+    needs: [deploy-canvas]
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: Utdanningsdirektoratet/dit-github-actions/github/runtimes@v1
+        with:
+          node-version: '22'
+          node-pms: pnpm
+
+      - uses: Utdanningsdirektoratet/dit-github-actions/github/clone@v1
+        with:
+          repository: matematikk-mooc/frontend-react
+          path: .tests_playwright
+      - uses: Utdanningsdirektoratet/dit-github-actions/js/install@v1
+        with:
+          working-directory: .tests_playwright
+      - uses: Utdanningsdirektoratet/dit-github-actions/js/playwright@v1
+        with:
+          working-directory: .tests_playwright
+          browsers: chromium
+
+      - uses: Utdanningsdirektoratet/dit-github-actions/js/install@v1
+      - name: Run E2E tests
+        run: ./e2e.sh
+        env:
+          APP_ENV: stage
+          TEST_CANVAS_LOCAL_THEME: 'false'
+          TEST_CANVAS_CHROMIUM_USERNAME: ${{ vars.TEST_CANVAS_CHROMIUM_USERNAME }}
+          TEST_CANVAS_CHROMIUM_PASSWORD: ${{ secrets.TEST_CANVAS_CHROMIUM_PASSWORD }}
