@@ -9,6 +9,7 @@ on:
         description: 'Update type'
         required: true
         type: choice
+        default: 'minor'
         options:
           - major
           - minor
@@ -17,6 +18,7 @@ on:
         description: 'Base branch to update from and open PRs against'
         required: true
         type: string
+        default: 'stage'
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
