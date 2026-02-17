@@ -1,71 +1,71 @@
 on:
-    workflow_call:
-        inputs:
-            node_version:
-                type: string
-                description: 'Node.js version'
-                required: true
-            app_env:
-                type: string
-                description: 'Application environment'
-                required: true
-            app_version:
-                type: string
-                description: 'Application version'
-                required: true
-            azure_storage_account_name:
-                type: string
-                description: 'Azure Storage Account Name'
-                required: true
-            azure_storage_container_name:
-                type: string
-                description: 'Azure Storage Container Name'
-                required: true
+  workflow_call:
+    inputs:
+      node_version:
+        type: string
+        description: 'Node.js version'
+        required: true
+      app_env:
+        type: string
+        description: 'Application environment'
+        required: true
+      app_version:
+        type: string
+        description: 'Application version'
+        required: true
+      azure_storage_account_name:
+        type: string
+        description: 'Azure Storage Account Name'
+        required: true
+      azure_storage_container_name:
+        type: string
+        description: 'Azure Storage Container Name'
+        required: true
 
-        secrets:
-            azure_storage_account_key:
-                description: 'Azure Storage Account Key'
-                required: true
+    secrets:
+      azure_storage_account_key:
+        description: 'Azure Storage Account Key'
+        required: true
 
 jobs:
-    build-node:
-        name: Build - Node.js
-        runs-on: ubuntu-latest
-        steps:
-            - name: Checkout repository
-              uses: actions/checkout@v4
+  build-node:
+    name: Build - Node.js
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-            - name: Set up Node.js
-              uses: actions/setup-node@v4
-              with:
-                  node-version: ${{ inputs.node_version }}
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ inputs.node_version }}
 
-            - name: Cache pnpm packages
-              uses: actions/cache@v4
-              with:
-                  path: ~/.pnpm-store
-                  key: pnpm-cache
-                  restore-keys: |
-                      pnpm-
+      - name: Cache pnpm packages
+        uses: actions/cache@v4
+        with:
+          path: ~/.pnpm-store
+          key: pnpm-cache
+          restore-keys: |
+            pnpm-
 
-            - name: Install PNPM and Dependencies
-              run: |
-                  npm install -g pnpm
-                  pnpm install --frozen-lockfile
+      - name: Install PNPM and Dependencies
+        run: |
+          npm install -g pnpm
+          pnpm install --frozen-lockfile
 
-            - name: Build Node.js application
-              run: pnpm run production
-              env:
-                  APP_ENV: ${{ inputs.app_env }}
-                  APP_VERSION: ${{ inputs.app_version }}
+      - name: Build Node.js application
+        run: pnpm run production
+        env:
+          APP_ENV: ${{ inputs.app_env }}
+          APP_VERSION: ${{ inputs.app_version }}
 
-            - name: Upload to Azure Blob Storage
-              uses: azure/cli@v2
-              with:
-                  inlineScript: |
-                    az storage blob upload-batch \
-                        --account-name ${{ inputs.azure_storage_account_name }} \
-                        --account-key ${{ secrets.azure_storage_account_key }} \
-                        --destination ${{ inputs.azure_storage_container_name }}/${{ inputs.app_version }} \
-                        --source ./dist \
-                        --pattern "*"
+      - name: Upload to Azure Blob Storage
+        uses: azure/cli@v2
+        with:
+          inlineScript: |
+            az storage blob upload-batch \
+                --account-name ${{ inputs.azure_storage_account_name }} \
+                --account-key ${{ secrets.azure_storage_account_key }} \
+                --destination ${{ inputs.azure_storage_container_name }}/${{ inputs.app_version }} \
+                --source ./dist \
+                --pattern "*"
