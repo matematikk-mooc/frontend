@@ -101,7 +101,6 @@ module.exports = {
               api: 'modern',
               sassOptions: {
                 silenceDeprecations: [
-                  'mixed-decls',
                   'color-functions',
                   'global-builtin',
                   'import',

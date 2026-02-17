@@ -4,7 +4,7 @@ rules:
   npm:
     enabled: false
   pnpm:
-    include: ['**/package.json']
+    include: ['package.json']
     exclude: ['**/node_modules/**', '**/dist/**', '**/.tests_playwright/**']
     groups:
       vue:
