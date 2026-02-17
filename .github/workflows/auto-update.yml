@@ -195,6 +195,6 @@ jobs:
           app-id: ${{ secrets.GOUPDATE_APP_ID }}
           app-private-key: ${{ secrets.GOUPDATE_APP_PRIVATE_KEY }}
           pr-number: ${{ steps.pr.outputs.pr-number }}
-          wait-for-checks: 300
+          wait-for-checks: 600
           notify: '@ajxudir'
           skip-merge-comment: ${{ needs.update.outputs.partial-failure == 'true' && 'Not all updates succeeded. Auto-merge skipped.' || '' }}
