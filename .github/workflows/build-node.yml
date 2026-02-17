@@ -21,7 +21,6 @@ on:
         type: string
         description: 'Azure Storage Container Name'
         required: true
-
     secrets:
       azure_storage_account_key:
         description: 'Azure Storage Account Key'
@@ -32,40 +31,24 @@ jobs:
     name: Build - Node.js
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
+      - uses: actions/checkout@v4
+      - uses: Utdanningsdirektoratet/dit-github-actions/github/runtimes@v1
         with:
           node-version: ${{ inputs.node_version }}
-
-      - name: Cache pnpm packages
-        uses: actions/cache@v4
-        with:
-          path: ~/.pnpm-store
-          key: pnpm-cache
-          restore-keys: |
-            pnpm-
-
-      - name: Install PNPM and Dependencies
-        run: |
-          npm install -g pnpm
-          pnpm install --frozen-lockfile
-
+          node-pms: pnpm
+      - uses: Utdanningsdirektoratet/dit-github-actions/js/install@v1
       - name: Build Node.js application
         run: pnpm run production
         env:
           APP_ENV: ${{ inputs.app_env }}
           APP_VERSION: ${{ inputs.app_version }}
-
       - name: Upload to Azure Blob Storage
         uses: azure/cli@v2
         with:
           inlineScript: |
             az storage blob upload-batch \
-                --account-name ${{ inputs.azure_storage_account_name }} \
-                --account-key ${{ secrets.azure_storage_account_key }} \
-                --destination ${{ inputs.azure_storage_container_name }}/${{ inputs.app_version }} \
-                --source ./dist \
-                --pattern "*"
+              --account-name ${{ inputs.azure_storage_account_name }} \
+              --account-key ${{ secrets.azure_storage_account_key }} \
+              --destination ${{ inputs.azure_storage_container_name }}/${{ inputs.app_version }} \
+              --source ./dist \
+              --pattern "*"
