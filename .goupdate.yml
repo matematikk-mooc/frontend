@@ -27,17 +27,21 @@ rules:
       # Risk: LOW — dev-only dependency, not shipped to production, no security exposure.
       '@vue/devtools-api':
         outdated:
-          exclude_version_patterns: ["^[789]\\.", "^\\d{2,}\\."]
+          exclude_version_patterns:
+            - ^8\.
+            - ^7\.
       # eslint pinned to v9 — v10 requires .eslintrc.js→eslint.config.js rewrite
       # No CVEs. Fix: ~1-2h flat config migration. EOL: August 2026.
       # Risk: LOW — dev-only tooling, no runtime/production impact. Migrate before EOL
       #   to keep receiving security patches, but missing the deadline is not critical.
       eslint:
         outdated:
-          exclude_version_patterns: ["^\\d{2,}\\."]
+          exclude_version_patterns:
+            - ^10\.
       eslint-plugin-vue:
         outdated:
-          exclude_version_patterns: ["^\\d{2,}\\."]
+          exclude_version_patterns:
+            - ^10\.
   yarn:
     enabled: false
   composer:
