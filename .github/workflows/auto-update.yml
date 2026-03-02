@@ -64,7 +64,7 @@ jobs:
   update:
     name: Update
     runs-on: ubuntu-latest
-    timeout-minutes: 45
+    timeout-minutes: 60
     needs: check
     outputs:
       has-changes: ${{ steps.update.outputs.has-changes }}
