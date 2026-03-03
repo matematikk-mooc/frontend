@@ -20,7 +20,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: Utdanningsdirektoratet/dit-github-actions/github/runtimes@v1
         with:
-          node-version: '22'
+          node-version: '24'
           node-pms: pnpm
       - uses: Utdanningsdirektoratet/dit-github-actions/js/install@v1
       - name: Build
@@ -34,7 +34,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: Utdanningsdirektoratet/dit-github-actions/github/runtimes@v1
         with:
-          node-version: '22'
+          node-version: '24'
           node-pms: pnpm
 
       - uses: Utdanningsdirektoratet/dit-github-actions/github/clone@v1

@@ -1,10 +1,17 @@
 <template>
   <div class="intro-container">
     <div class="intro-text">
-      Tjenesten er laget for ansatte i skole og barnehage. Den er gratis og du kan logge på med
-      Feide eller opprette en egen bruker. Første gang du skal logge på med egen bruker må du
-      registrere deg i en av kompetansepakkene nedenfor, deretter kan du logge inn med knappen oppe
-      til høyre.
+      <p class="intro-p1" >
+        Tjenesten er laget for ansatte i skole og barnehage. Den er gratis og du kan logge på med
+        Feide eller opprette en egen bruker. Første gang du skal logge på med egen bruker må du
+        registrere deg i en av kompetansepakkene nedenfor, deretter kan du logge inn med knappen oppe
+        til høyre.
+      </p>
+      <p class="intro-p2">
+        I tillegg til denne tjenesten utvikler nå Utdanningsdirektoratet også individuell e-læring som et nytt virkemiddel for å støtte eiere, ledere og ansatte i barnehage og skole. 
+        Målet med kursene er å tilby mer fleksible, tilgjengelige, tidseffektive og målrettede læringsressurser som kan tas i bruk når det passer den enkelte. Her vil det komme flere kurs etterhvert.
+        Du finner disse på <a href="https://kurs.udir.no">kurs.udir.no</a>.
+      </p>
     </div>
 
     <div class="intro-news">

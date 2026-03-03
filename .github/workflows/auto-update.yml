@@ -56,7 +56,7 @@ jobs:
         id: scan
       - uses: Utdanningsdirektoratet/dit-github-actions/github/runtimes@v1
         with:
-          node-version: ${{ contains(steps.scan.outputs.package-managers, 'js') && '22' || '' }}
+          node-version: ${{ contains(steps.scan.outputs.package-managers, 'js') && '24' || '' }}
           node-pms: ${{ steps.scan.outputs.rules }}
       - uses: Utdanningsdirektoratet/dit-github-actions/goupdate/outdated@v1
         id: outdated
@@ -83,7 +83,7 @@ jobs:
       - uses: Utdanningsdirektoratet/dit-github-actions/goupdate/install@v1
       - uses: Utdanningsdirektoratet/dit-github-actions/github/runtimes@v1
         with:
-          node-version: ${{ contains(needs.check.outputs.package-managers, 'js') && '22' || '' }}
+          node-version: ${{ contains(needs.check.outputs.package-managers, 'js') && '24' || '' }}
           node-pms: ${{ needs.check.outputs.rules }}
       - uses: Utdanningsdirektoratet/dit-github-actions/git/checkout@v1
         id: checkout-branch
