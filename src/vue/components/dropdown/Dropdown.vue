@@ -95,6 +95,7 @@ const renderLoginLink = computed(() => {
   list-style: none;
   .dropdown-item {
     display: flex;
+    margin-bottom: -1px !important;
     justify-content: space-between;
     align-items: center;
     height: 100%;
