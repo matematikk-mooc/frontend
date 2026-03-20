@@ -679,6 +679,12 @@ body.notifications, body.profile, body.profile_settings, body.content_shares, bo
   }
 }
 
-.intro-p1 {
+.intro-p1, .intro-p2 {
   margin-bottom: 40px;
+  font-size: 18px;
+}
+.frontheader {
+  font-size: 20px;
+  line-height: normal;
+  margin-bottom: 10px;
 }
