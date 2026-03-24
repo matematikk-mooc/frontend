@@ -11,5 +11,7 @@ export const routeToAuthThemeEditor = async (page) => {
   const canvasBaseUrl = getCanvasBaseUrl();
 
   await page.goto(`${canvasBaseUrl}/accounts/1/brand_configs`);
-  await page.waitForSelector('h1:has-text("Tema")', { state: 'visible' });
+  await page.waitForSelector('button[data-testid="new-theme-button"]', {
+    state: 'visible',
+  });
 };
