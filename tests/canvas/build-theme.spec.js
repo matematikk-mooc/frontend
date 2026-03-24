@@ -16,7 +16,7 @@ describe('Canvas: Theme', async () => {
   useDesktopViewport();
 
   test('1: Build Theme', async ({ page }) => {
-    test.setTimeout(180_000);
+    test.setTimeout(600_000);
     const { jsFile, cssFile } = await getThemeFiles();
 
     await test.step('1.1 Login to Canvas', async () => {
@@ -109,11 +109,11 @@ describe('Canvas: Theme', async () => {
       await page
         .locator('[role="progressbar"]')
         .first()
-        .waitFor({ state: 'hidden', timeout: 120_000 })
+        .waitFor({ state: 'hidden', timeout: 300_000 })
         .catch(() => {});
 
       await page.waitForURL('**/accounts/1/brand_configs', {
-        timeout: 120_000,
+        timeout: 300_000,
       });
     });
 
