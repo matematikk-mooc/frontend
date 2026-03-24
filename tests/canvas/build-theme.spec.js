@@ -26,83 +26,77 @@ describe('Canvas: Theme', async () => {
     await test.step('1.2 Route to theme editor', async () => {
       await routeToAuthThemeEditor(page);
 
-      const isVisable = await page
+      const isVisible = await page
         .locator('.ic-ThemeCard-container__Main')
-        .locator(
-          '.ic-ThemeCard-main__name button:has-text("' + themeName + '")',
-        )
+        .locator('[data-testid="themecard-name-button-name"]')
+        .filter({ hasText: themeName })
         .first()
-        .isVisible();
-      if (isVisable)
+        .isVisible()
+        .catch(() => false);
+      if (isVisible)
         test.skip(true, 'Theme already exists, skip uploading theme');
 
       await page.locator('button[data-testid="new-theme-button"]').click();
       await page.waitForSelector('div[role="menu"]', { state: 'visible' });
-      await page
-        .locator('span[role="menuitemradio"]:has-text("Standardmal")')
-        .click();
+      await page.locator('span[role="menuitemradio"]').first().click();
 
       await page.waitForURL('**/accounts/1/theme_editor');
     });
 
     await test.step('1.3 Upload JS and CSS files', async () => {
-      await page.locator('div[role="tab"]:has-text("Last opp")').click();
+      await page.locator('div[role="tab"]').nth(1).click();
       await page
         .locator('.Theme__editor-upload-overrides')
         .first()
         .waitFor({ state: 'visible' });
 
-      const themeParentContainer =
-        '.Theme__editor-upload-overrides:has-text("Filen(e) blir inkludert på alle sidene i Canvas PC-app")';
       const cssFileInput = page
-        .locator(themeParentContainer)
-        .locator('div.ThemeEditorFileUpload__label:has-text("CSS-fil")')
-        .locator('..')
-        .locator('label input[type="file"][accept=".css"]');
+        .locator('.ThemeEditorFileUpload')
+        .filter({ has: page.locator('input[accept=".css"]') })
+        .first()
+        .locator('input[type="file"]');
       const jsFileInput = page
-        .locator(themeParentContainer)
-        .locator('div.ThemeEditorFileUpload__label:has-text("JavaScript-fil")')
-        .locator('..')
-        .locator('label input[type="file"][accept=".js"]');
+        .locator('.ThemeEditorFileUpload')
+        .filter({ has: page.locator('input[accept=".js"]') })
+        .first()
+        .locator('input[type="file"]');
 
       await cssFileInput.setInputFiles(cssFile);
       await jsFileInput.setInputFiles(jsFile);
     });
 
-    await test.step('1.4 Preview and save theme', async () => {
+    await test.step('1.4 Preview changes', async () => {
       await page.locator('.Theme__preview').waitFor({ state: 'visible' });
       await page.locator('.Theme__preview button[type="submit"]').click();
 
       await page
-        .locator(
-          'span[role="dialog"] h2:has-text("Genererer forhåndsvisning…")',
-        )
-        .waitFor({ state: 'hidden', timeout: 30 * 1000 });
+        .locator('.Theme__preview-overlay')
+        .waitFor({ state: 'hidden', timeout: 60_000 });
     });
 
     await test.step('1.5 Save theme', async () => {
       await page
-        .locator('.Theme__header-secondary button:has-text("Lagre tema")')
-        .click();
-      await page
-        .locator('form[aria-label="Lagre temadialog"]')
-        .waitFor({ state: 'visible' });
-
-      await page
-        .locator('form[aria-label="Lagre temadialog"] input[name="name"]')
-        .fill(themeName);
-      await page
         .locator(
-          'form[aria-label="Lagre temadialog"] button:has-text("Lagre tema")',
+          '.Theme__header-secondary button[aria-label="Save theme"], .Theme__header-secondary button[aria-label="Lagre tema"]',
         )
         .click();
+      await page.locator('form[role="dialog"]').waitFor({ state: 'visible' });
+
       await page
-        .locator('form[aria-label="Lagre temadialog"]')
-        .waitFor({ state: 'hidden' });
+        .locator('form[role="dialog"] input[name="name"]')
+        .fill(themeName);
+      await page.locator('form[role="dialog"] button[type="submit"]').click();
+      await page
+        .locator('form[role="dialog"]')
+        .waitFor({ state: 'hidden', timeout: 30_000 });
     });
 
     await test.step('1.6 Close theme editor', async () => {
-      await page.locator('.Theme__header button:has-text("Avslutt")').click();
+      await page
+        .locator(
+          '.Theme__header-secondary button:has-text("Exit"), .Theme__header-secondary button:has-text("Avslutt")',
+        )
+        .click();
       await page.waitForURL('**/accounts/1/brand_configs');
     });
   });
