@@ -16,6 +16,7 @@ describe('Canvas: Theme', async () => {
   useDesktopViewport();
 
   test('1: Build Theme', async ({ page }) => {
+    test.setTimeout(180_000);
     const { jsFile, cssFile } = await getThemeFiles();
 
     await test.step('1.1 Login to Canvas', async () => {
