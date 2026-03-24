@@ -33,7 +33,7 @@ jobs:
   check:
     name: Check
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 5
     outputs:
       package-managers: ${{ steps.scan.outputs.package-managers }}
       rules: ${{ steps.scan.outputs.rules }}
@@ -64,7 +64,7 @@ jobs:
   update:
     name: Update
     runs-on: ubuntu-latest
-    timeout-minutes: 60
+    timeout-minutes: 20
     needs: check
     outputs:
       has-changes: ${{ steps.update.outputs.has-changes }}
@@ -132,7 +132,7 @@ jobs:
   pr:
     name: Pull Request
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 20
     needs: [check, update]
     if: needs.update.outputs.has-changes == 'true'
     steps:
