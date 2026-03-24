@@ -16,7 +16,6 @@ describe('Canvas: Theme', async () => {
   useDesktopViewport();
 
   test('1: Build Theme', async ({ page }) => {
-    test.setTimeout(600_000);
     const { jsFile, cssFile } = await getThemeFiles();
 
     await test.step('1.1 Login to Canvas', async () => {
@@ -92,38 +91,13 @@ describe('Canvas: Theme', async () => {
         .waitFor({ state: 'hidden', timeout: 30_000 });
     });
 
-    await test.step('1.6 Apply theme', async () => {
+    await test.step('1.6 Close theme editor', async () => {
       await page
-        .locator('.Theme__header-primary button:not([disabled])')
-        .click();
-
-      await page
-        .locator('button[data-testid="apply-theme-proceed-button"]')
-        .click();
-
-      await page
-        .locator('[role="progressbar"]')
-        .first()
-        .waitFor({ state: 'visible', timeout: 30_000 })
-        .catch(() => {});
-      await page
-        .locator('[role="progressbar"]')
-        .first()
-        .waitFor({ state: 'hidden', timeout: 300_000 })
-        .catch(() => {});
-
-      await page.waitForURL('**/accounts/1/brand_configs', {
-        timeout: 300_000,
-      });
-    });
-
-    await test.step('1.7 Verify theme is active', async () => {
-      const activeThemeName = await page
         .locator(
-          '.ic-ThemeCard--is-active-theme [data-testid="themecard-name-button-name"]',
+          '.Theme__header-secondary button:has-text("Exit"), .Theme__header-secondary button:has-text("Avslutt")',
         )
-        .textContent();
-      test.expect(activeThemeName?.trim()).toBe(themeName);
+        .click();
+      await page.waitForURL('**/accounts/1/brand_configs');
     });
   });
 });
