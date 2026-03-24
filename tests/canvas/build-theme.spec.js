@@ -53,10 +53,12 @@ describe('Canvas: Theme', async () => {
       const cssFileInput = page
         .locator('.ThemeEditorFileUpload')
         .filter({ has: page.locator('input[accept=".css"]') })
+        .first()
         .locator('input[type="file"]');
       const jsFileInput = page
         .locator('.ThemeEditorFileUpload')
         .filter({ has: page.locator('input[accept=".js"]') })
+        .first()
         .locator('input[type="file"]');
 
       await cssFileInput.setInputFiles(cssFile);
