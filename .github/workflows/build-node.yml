@@ -31,7 +31,7 @@ jobs:
     name: Build - Node.js
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - uses: Utdanningsdirektoratet/dit-github-actions/github/runtimes@v1
         with:
           node-version: ${{ inputs.node_version }}

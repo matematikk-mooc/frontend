@@ -42,7 +42,7 @@ jobs:
       minor: ${{ steps.outdated.outputs.minor }}
       patch: ${{ steps.outdated.outputs.patch }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           ref: ${{ github.event.inputs.base-branch || 'stage' }}
           fetch-depth: 0
@@ -76,7 +76,7 @@ jobs:
       ((github.event.inputs.update-type || 'minor') == 'minor' && (fromJSON(needs.check.outputs.minor) > 0 || fromJSON(needs.check.outputs.patch) > 0)) ||
       ((github.event.inputs.update-type || 'minor') == 'patch' && fromJSON(needs.check.outputs.patch) > 0)
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           ref: ${{ github.event.inputs.base-branch || 'stage' }}
           fetch-depth: 0
@@ -136,7 +136,7 @@ jobs:
     needs: [check, update]
     if: needs.update.outputs.has-changes == 'true'
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - name: Generate PR body
         id: body
         env:
