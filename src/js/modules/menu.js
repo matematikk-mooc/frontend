@@ -221,7 +221,8 @@ export default (function() {
       }))
       .filter(i => i.label)
       // Remove crumb literally named "search"
-      .filter(i => i.label.toLowerCase() !== 'search');
+      .filter(i => i.label.toLowerCase() !== 'search')
+      .map(i => i.label === 'Mitt dashbord' ? { ...i, label: 'Mine kompetansepakker' } : i);
 
       if (items.length) {
         // De-duplicate adjacent equal labels and ensure last item is non-link
@@ -238,8 +239,10 @@ export default (function() {
 
     // Build from pathname
     const segs = (window.location.pathname || '/').split('/').filter(Boolean)
-      // Remove crumb literally named "search"
-      .filter(s => s.toLowerCase() !== 'search');
+     // Remove crumb literally named "search"
+    .filter(s => s.toLowerCase() !== 'search');
+
+    // Labels for specific subpages
     const labelMap = {
       'courses': 'Mine kompetansepakker',
       'announcements': 'Kunngjøringer',

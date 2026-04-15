@@ -114,6 +114,10 @@ function stripText(text) {
     text-decoration-thickness: 0.06em;
   }
 
+  &__link:hover &__text {
+    text-decoration-thickness: 0.15em;
+  }
+
   &__separator {
     margin: 0 0.85rem;
     color: $color-grey-600;
