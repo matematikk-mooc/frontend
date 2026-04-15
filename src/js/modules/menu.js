@@ -163,7 +163,6 @@ export default (function() {
         }
         let customHeader = createApp(NavBar, headerProps);
         customHeader.mount("#notLoggedInHeader");
-        mountGlobalBreadcrumbs();
       }
       else {
         $('#header').hide();
