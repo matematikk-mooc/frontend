@@ -169,10 +169,9 @@ font-family: Arial, Helvetica, sans-serif;
 
 .dropdown-list {
   position: absolute;
-  top: 0;
+  top: 100%;
   right: 0;
-  margin: unset !important;
-  margin-top: 6.4rem !important;
+  margin: 0 !important;
   width: 13.75rem;
   z-index: 2000;
   box-shadow: rgba(50, 50, 93, 0.25) 0rem .8125rem 1.6875rem -0.3125rem, rgba(0, 0, 0, 0.3) 0rem .5rem 1rem -0.5rem;
@@ -208,19 +207,19 @@ button{
 }
 
 .login-container {
-  height: -webkit-fill-available;
+  align-self: stretch;
   margin: 0;
 
   .login-button {
-  width: 100%;
-  height:100%;
-  flex: 1;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 100%;
     padding: 0 20px;
-      transition: all 0.2s ease;
+    transition: all 0.2s ease;
     &:hover {
       background-color: #94CAAE;
-      
-  }
+    }
   }
   .dropdown-list {
     opacity: 0;
