@@ -80,6 +80,9 @@ const renderLoginLink = computed(() => {
     &:focus {
         background-color: #7DBF9D;
     }
+  @media (min-width: 30rem) {
+    height: max-content;
+  }
 }
 
 .dropdown-list {
@@ -93,6 +96,10 @@ const renderLoginLink = computed(() => {
   box-shadow: rgba(50, 50, 93, 0.25) 0rem .8125rem 1.6875rem -0.3125rem, rgba(0, 0, 0, 0.3) 0rem .5rem 1rem -0.5rem;
   transition: all 0.2s ease;
   list-style: none;
+  @media (min-width: 30rem) {
+    margin-top: 6.2rem !important;
+  }
+
   .dropdown-item {
     display: flex;
     margin-bottom: -1px !important;
