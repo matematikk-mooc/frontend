@@ -1,7 +1,8 @@
 <template>
   <nav class="breadcrumbs" aria-label="Breadcrumb">
     <div class="breadcrumbs__container">
-      <ol class="breadcrumbs__list">
+      <!-- Desktop: full breadcrumb trail -->
+      <ol class="breadcrumbs__list breadcrumbs__list--desktop">
         <li
           v-for="(item, idx) in items"
           :key="idx + '-' + item.label"
@@ -16,11 +17,25 @@
           </span>
         </li>
       </ol>
+
+      <!-- Mobile: back arrow + current page -->
+      <div class="breadcrumbs__mobile">
+        <Link v-if="previousItem" :url="previousItem.url" class="breadcrumbs__back-link">
+          <svg class="breadcrumbs__back-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M15 6l-6 6 6 6" />
+          </svg>
+          <span class="breadcrumbs__text">{{ stripText(previousItem.label) }}</span>
+        </Link>
+        <span v-else class="breadcrumbs__current">
+          <span class="breadcrumbs__text">{{ stripText(currentItem.label) }}</span>
+        </span>
+      </div>
     </div>
   </nav>
 </template>
 
 <script setup>
+import { computed } from 'vue';
 import Link from '../link/Link.vue';
 
 const props = defineProps({
@@ -33,6 +48,9 @@ const props = defineProps({
     default: '›',
   },
 });
+
+const currentItem = computed(() => props.items[props.items.length - 1]);
+const previousItem = computed(() => props.items.length >= 2 ? props.items[props.items.length - 2] : null);
 
 // Fjern lisens fra tittle
 function stripText(text) {
@@ -84,7 +102,7 @@ function stripText(text) {
     }
   }
 
-  /* Ensure no low-res globe/link or other injected icons appear */
+  // Ensure no low-res globe/link or other injected icons appear
   &__link {
     background: none !important;
     background-image: none !important;
@@ -110,7 +128,7 @@ function stripText(text) {
     color: black;
     text-decoration: underline;
     text-underline-offset: 0.2em;
-    text-decoration-thickness: 0.06em;
+    text-decoration-thickness: 0.03em;
   }
 
   &__link:hover &__text {
@@ -127,6 +145,60 @@ function stripText(text) {
     text-decoration: none;
     text-underline-offset: initial;
     text-decoration-thickness: initial;
+  }
+
+  // Mobile: hide full trail, show back + current
+  &__mobile {
+    display: none;
+  }
+
+  @media (max-width: 30rem) {
+    &__list--desktop {
+      display: none;
+    }
+
+    &__mobile {
+      display: flex;
+      align-items: center;
+    }
+
+    &__back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+      color: $primary-hover-color;
+      text-decoration: none;
+      background: none !important;
+      background-image: none !important;
+      padding: 0 !important;
+
+      &::before,
+      &::after {
+        content: none !important;
+        background: none !important;
+        background-image: none !important;
+      }
+
+      &:hover {
+        text-decoration: underline;
+        text-underline-offset: 0.27em;
+        text-decoration-thickness: 0.06em;
+      }
+    }
+    &__text {
+      margin-left: 4px;
+    }
+
+    &__back-icon {
+      flex-shrink: 0;
+      vertical-align: middle;
+      position: relative;
+      top: -1px;
+    }
+
+    &__current {
+      color: $color-grey-600;
+    }
   }
 }
 </style>
