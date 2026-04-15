@@ -51,7 +51,6 @@ function stripText(text) {
   font-size: 1rem;
 
   &__container {
-    max-width: 100rem;
     margin: 0 auto;
     padding: 0.5rem 1.25rem;
   }
