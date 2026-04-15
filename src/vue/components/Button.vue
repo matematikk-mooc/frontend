@@ -39,6 +39,7 @@ const isFullWidth = props.fullWidth;
 
 div.modal-box__actions > button {
   width: fit-content;
+  height: 35px !important;
 }
 
 .btn {
