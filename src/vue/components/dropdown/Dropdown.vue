@@ -81,7 +81,11 @@ const renderLoginLink = computed(() => {
         background-color: #7DBF9D;
     }
   @media (min-width: 30rem) {
+<<<<<<< HEAD
     height: 6.2rem;
+=======
+    height: max-content;
+>>>>>>> cf745801f658ffcb504bd391ee6f6714dbedbfe6
   }
 }
 
