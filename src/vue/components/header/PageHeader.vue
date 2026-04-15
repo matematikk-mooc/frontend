@@ -9,14 +9,14 @@
     <!-- Navbar -->
     <ul class="header__link-list mobile-hide login-container">
       <template v-if="!logged_in">
-          <button  v-if="renderLoginLink" class="login-button">Logg inn</button>
+          <button  v-if="!logged_in" class="login-button">Logg inn</button>
           <li class="header__list-item" v-else="renderLoginLink">
             <a class="header__link" :href="frontpageLink">Forsiden</a>
           </li>
       </template>
         <ul class="dropdown-list">
-          <li v-if="renderLoginLink"><a class="login-dropdown" :href="feideLink"> Feide <Icon name="chevron_right" size="22"/></a></li>
-          <li v-if="renderLoginLink"><a class="login-dropdown" :href="loginLink"> Canvas <Icon name="chevron_right" size="22"/></a></li>
+          <li v-if="!logged_in"><a class="login-dropdown" :href="feideLink"> Feide <Icon name="chevron_right" size="22"/></a></li>
+          <li v-if="!logged_in"><a class="login-dropdown" :href="loginLink"> Canvas <Icon name="chevron_right" size="22"/></a></li>
         </ul> 
       <template v-if="logged_in">
       <li class="header__list-item" v-if="admin">
@@ -35,31 +35,18 @@
 
 <script setup>
   import Dropdown from '../dropdown/Dropdown.vue'
+  import Icon from "../icon/Icon.vue";
   const {logged_in, admin} = defineProps(['logged_in', 'admin'])
   const domain = window.location.origin;
   const loginLink = domain + "/login/canvas"
   const feideLink = domain + "/login/saml/2"
-  const normalLoginLink = loginLink + "?normalLogin=1&design=udir"
   const frontpageLink = domain + "/search/all_courses"
   const settingsLink = domain + "/profile/settings"
   const logoutLink = domain + "/logout"
   const adminLink = domain + "/accounts"
   const isStage =  domain.includes('bibsys.test')
-  const showMenu = ref(false);
-  const currentPath = window.location;
-  
-import { ref, onMounted, computed } from 'vue';
-import Icon from "../icon/Icon.vue";
 
-// On component mount, get the current path
-
-const renderLoginLink = computed(() => {
-    return currentPath == loginLink ? (console.log("1st"), false)
-         : currentPath == normalLoginLink ? (console.log("2nd"), false)
-         : (console.log("3rd"), true)
-});
 </script>
-
 
 <style lang="scss">
 @import '../../design/colors.scss';

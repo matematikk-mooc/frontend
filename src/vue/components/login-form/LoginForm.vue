@@ -6,7 +6,7 @@
       <TextInput v-model="password" name="Password" label="Passord" type="password" />
       <CheckboxInput v-model="stayLoggedIn" name="stayLoggedIn" label="Forbli logget inn" />
       <div class="login-form__action-container">
-        <Button type="submit" >Logg inn</Button>
+        <Button type="submit">Logg inn</Button>
         <Link url="www.example.com">Glemt passord?</Link>
       </div>
       <h3 class="login-form__title2">Opprette ny bruker?</h3>
