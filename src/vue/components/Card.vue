@@ -191,6 +191,7 @@ export default {
     margin-top: 1.5rem;
     margin-bottom: 1rem;
     gap: 0.5rem;
+
   }
 
   .card-box-title {
