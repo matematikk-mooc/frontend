@@ -3,6 +3,7 @@ import { createApp } from 'vue/dist/vue.runtime.esm-bundler.js';
 import { getMainContentId } from './menu-utils';
 import { renderCourseModules } from "../../vue/pages/course-page/left-menu"
 import util from './util.js'
+import Breadcrumbs from '../../vue/components/breadcrumbs/Breadcrumbs.vue';
 
 export default (function() {
   function createStyleSheet() {
@@ -179,7 +180,84 @@ export default (function() {
         }
         let customHeader = createApp(NavBar, headerProps);
         customHeader.mount("#loggedInHeader");
+        mountGlobalBreadcrumbs();
       }
     },
   };
+
+  function mountGlobalBreadcrumbs() {
+    if (document.getElementById('globalBreadcrumbs')) return;
+    const headerEl = document.getElementById('loggedInHeader')
+      || document.getElementById('notLoggedInHeader');
+
+    const bcContainer = document.createElement('div');
+    bcContainer.id = 'globalBreadcrumbs';
+
+    if (headerEl) {
+      headerEl.insertAdjacentElement('afterend', bcContainer);
+    } else {
+      const appFirstChild = document.querySelector('#application > *');
+      if (appFirstChild) {
+        appFirstChild.insertAdjacentElement('afterend', bcContainer);
+      } else {
+        document.body.insertBefore(bcContainer, document.body.firstChild);
+      }
+    }
+
+    const items = buildBreadcrumbItems();
+    const app = createApp(Breadcrumbs, { items });
+    app.mount('#globalBreadcrumbs');
+  }
+
+  function buildBreadcrumbItems() {
+    try {
+      const candidates = Array.from(document.querySelectorAll(
+        '.ic-app-crumbs__crumb a, .ic-app-crumbs__crumb span, #breadcrumbs a, #breadcrumbs .ellipsible'
+      ));
+      let items = candidates.map((el) => ({
+        label: (el.textContent || '').trim(),
+        url: el.tagName === 'A' ? el.getAttribute('href') || undefined : undefined,
+      }))
+      .filter(i => i.label)
+      // Remove crumb literally named "search"
+      .filter(i => i.label.toLowerCase() !== 'search')
+      .map(i => i.label === 'Mitt dashbord' ? { ...i, label: 'Mine kompetansepakker' } : i);
+
+      if (items.length) {
+        // De-duplicate adjacent equal labels and ensure last item is non-link
+        items = items.filter((it, i, arr) => i === 0 || it.label !== arr[i - 1].label);
+        if (items.length) items[items.length - 1].url = undefined;
+        // Ensure we have a home at the beginning if not already present
+        if (items[0] && items[0].label.toLowerCase() !== 'forside') {
+          items = [{ label: 'Forside', url: '/' }, ...items];
+        }
+        return items;
+      }
+    } catch (_) {
+    }
+
+    // Build from pathname
+    const segs = (window.location.pathname || '/').split('/').filter(Boolean)
+     // Remove crumb literally named "search"
+    .filter(s => s.toLowerCase() !== 'search');
+
+    // Labels for specific subpages
+    const labelMap = {
+      'courses': 'Mine kompetansepakker',
+      'announcements': 'Kunngjøringer',
+      'modules': 'Moduler',
+      'pages': 'Sider',
+      'users': 'Brukere',
+      'all_courses': 'Alle kompetansepakker'
+    };
+    const root = [{ label: 'Forside', url: '/' }];
+    let acc = '';
+    const rest = segs.map((s, idx) => {
+      acc += '/' + s;
+      const isLast = idx === segs.length - 1;
+      const label = labelMap[s] || decodeURIComponent(s);
+      return { label, url: isLast ? undefined : acc };
+    });
+    return [...root, ...rest];
+  }
 })();
