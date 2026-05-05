@@ -1,11 +1,19 @@
 <template>
   <div class="filter-wrapper">
-    <!-- Mobile-only toggle button -->
-    <button class="filter-drawer-toggle" @click="drawerOpen = true" aria-haspopup="dialog">
-      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="4" y1="6" x2="20" y2="6"/><line x1="8" y1="12" x2="20" y2="12"/><line x1="12" y1="18" x2="20" y2="18"/></svg>
-      Filter
-      <span v-if="selectedFilters.length > 0" class="filter-count-badge">{{ selectedFilters.length }}</span>
-    </button>
+    <!-- Mobile-only: toggle button + active pills in a wrapping flex row -->
+    <div class="filter-mobile-bar">
+      <button class="filter-drawer-toggle" @click="drawerOpen = true" aria-haspopup="dialog">
+        Filter
+        <span v-if="selectedFilters.length > 0" class="filter-count-badge">{{ selectedFilters.length }}</span>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><g clip-path="url(#clip0_1439_42726)"><path d="M3 17V19H9V17H3ZM3 5V7H13V5H3ZM13 21V19H21V17H13V15H11V21H13ZM7 9V11H3V13H7V15H9V9H7ZM21 13V11H11V13H21ZM15 9H17V7H21V5H17V3H15V9Z" fill="currentColor"/></g><defs><clipPath id="clip0_1439_42726"><rect width="24" height="24" fill="white"/></clipPath></defs></svg>
+      </button>
+      <TransitionGroup v-if="selectedFilters.length > 0" name="tag" tag="ul" class="selected-filters-tags mobile-pills">
+        <li v-for="filter in selectedFilters" :key="filter.id">
+          {{ filter.filter_name }}
+          <button class="selected-filter-remove" @click="removeFilter(filter)" :aria-label="'Fjern filter: ' + filter.filter_name">×</button>
+        </li>
+      </TransitionGroup>
+    </div>
 
     <!-- Backdrop -->
     <Transition name="fade">
@@ -18,7 +26,11 @@
         <span class="filter-panel-title">Filter</span>
         <button class="filter-close-btn" @click="drawerOpen = false" aria-label="Lukk filter">×</button>
       </div>
-      <Button :type="'outlined'" :size="'md'" @click="clearFilters">Tilbakestill filter</Button>
+      <h2 class="filter-desktop-title">Filtrering</h2>
+      <div class="filter-actions">
+        <Button class="bruk-btn" :type="'filled'" :size="'md'" @click="drawerOpen = false">Bruk <Icon name="check" size="1.2em" style="margin-left: 0.4rem" /></Button>
+        <Button :type="'outlined'" :size="'md'" @click="clearFilters(); drawerOpen = false" :disabled="selectedFilters.length === 0">Tilbakestill <Icon name="restart_alt" size="1.2em" style="margin-left: 0.4rem" /></Button>
+      </div>
       <Transition name="slide-down">
         <div v-if="selectedFilters.length > 0" class="selected-filters-wrapper">
           <TransitionGroup name="tag" tag="ul" class="selected-filters-tags">
@@ -51,6 +63,7 @@
 <script setup lang="js">
 import { ref, watch } from 'vue'
 import Button from './Button.vue'
+import Icon from './icon/Icon.vue'
 
 const drawerOpen = ref(false)
 
@@ -109,15 +122,19 @@ const removeFilter = (filter) => {
   display: none;
   align-items: center;
   gap: 0.5rem;
-  background: #fff;
-  border: 0.0625rem solid #51698f;
-  color: #51698f;
-  border-radius: 0.375rem;
-  padding: 0.4rem 1rem;
+  background: #ffffff;
+  color: #303030;
+  border: 0.125rem solid #303030;
+  border-radius: 0.1875rem;
+  padding: 0.375rem 1.25rem 0.375rem 1.15rem;
   font-size: 1rem;
   font-family: 'Inter', sans-serif;
   cursor: pointer;
-  font-weight: 500;
+  font-weight: 700;
+
+  &:hover {
+    border-color: #00468e;
+  }
 }
 
 .filter-count-badge {
@@ -176,14 +193,78 @@ const removeFilter = (filter) => {
   opacity: 0;
 }
 
-// Desktop sidebar
-.filter-container {
-  min-width: 15rem;
+.filter-mobile-bar {
+  display: none;
+}
+
+.mobile-pills {
+  display: none;
+}
+
+.filter-actions {
+  display: flex;
+  gap: 0.5rem;
+
+  .btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+}
+
+.bruk-btn {
+  display: none;
 }
 
 @media (max-width: 800px) {
+  .bruk-btn {
+    display: flex;
+  }
+}
+
+.filter-desktop-title {
+  font-size: 1rem;
+  font-weight: 700;
+  margin: 0 0 1rem 0;
+}
+
+@media (max-width: 800px) {
+  .filter-desktop-title {
+    display: none;
+  }
+}
+
+// Desktop sidebar
+.filter-container {
+  min-width: 15rem;
+  margin-right: 2rem;
+}
+
+@media (max-width: 800px) {
+  .filter-wrapper {
+    margin-bottom: 1rem;
+  }
+}
+
+@media (max-width: 800px) {
+  .filter-wrapper {
+    width: 100%;
+  }
+
+  .filter-mobile-bar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem 0.75rem;
+    margin-left: 1.7rem;
+  }
+
   .filter-drawer-toggle {
     display: flex;
+  }
+
+  .mobile-pills {
+    display: flex;
+    margin: 0;
   }
 
   .filter-panel-header {
