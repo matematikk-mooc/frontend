@@ -5,17 +5,19 @@
       Kompetanseportalen
     </a>
     <div v-if="isStage" class="stage-banner">stage</div>
-    <Dropdown :logged_in="logged_in" :admin="admin" :backgroundColor="'white'"  :iconType="'hamburger'" :icon="'settings'" :link="settingsLink"></Dropdown>
+    <Dropdown :logged_in="logged_in" :admin="admin" :backgroundColor="'white'" :iconType="'hamburger'" :icon="'settings'" :link="settingsLink"></Dropdown>
     <!-- Navbar -->
-    <ul class="header__link-list mobile-hide">
+    <ul class="header__link-list mobile-hide login-container">
       <template v-if="!logged_in">
-        <li class="header__list-item" v-if="renderLoginLink">
-          <a class="header__link" :href="loginLink">Logg inn</a>
-        </li>
+          <button  v-if="!logged_in" class="login-button">Logg inn</button>
           <li class="header__list-item" v-else="renderLoginLink">
             <a class="header__link" :href="frontpageLink">Forsiden</a>
           </li>
       </template>
+        <ul class="dropdown-list">
+          <li v-if="!logged_in"><a class="login-dropdown" :href="feideLink"> Feide <Icon name="chevron_right" size="22"/></a></li>
+          <li v-if="!logged_in"><a class="login-dropdown" :href="loginLink"> Canvas <Icon name="chevron_right" size="22"/></a></li>
+        </ul> 
       <template v-if="logged_in">
       <li class="header__list-item" v-if="admin">
         <a class="header__link" :href="adminLink">Administrator</a>
@@ -33,32 +35,21 @@
 
 <script setup>
   import Dropdown from '../dropdown/Dropdown.vue'
+  import Icon from "../icon/Icon.vue";
   const {logged_in, admin} = defineProps(['logged_in', 'admin'])
   const domain = window.location.origin;
   const loginLink = domain + "/login/canvas"
-  const normalLoginLink = loginLink + "?normalLogin=1&design=udir"
+  const feideLink = domain + "/login/saml/2"
   const frontpageLink = domain + "/search/all_courses"
   const settingsLink = domain + "/profile/settings"
   const logoutLink = domain + "/logout"
   const adminLink = domain + "/accounts"
   const isStage =  domain.includes('bibsys.test')
-  const currentPath = window.location;
-import { ref, onMounted, computed } from 'vue';
 
-// On component mount, get the current path
-
-
-const renderLoginLink = computed(() => {
-    return currentPath == loginLink ? (console.log("1st"), false)
-         : currentPath == normalLoginLink ? (console.log("2nd"), false)
-         : (console.log("3rd"), true)
-});
 </script>
-
 
 <style lang="scss">
 @import '../../design/colors.scss';
-
 .stage-banner {
 position: absolute;
 left:0;
@@ -72,7 +63,6 @@ font-weight: 500;
 font-size: 26px;
 font-family: Arial, Helvetica, sans-serif;
 }
-
 
 .header__content {
   display: flex;
@@ -133,6 +123,7 @@ font-family: Arial, Helvetica, sans-serif;
 
 .header__list-item {
   display: block;
+  z-index: 10000;
   margin: 4px 24px 4px 0;
   position: relative;
   font-weight: 500;
@@ -175,4 +166,73 @@ font-family: Arial, Helvetica, sans-serif;
     width: 2px;
   }
 }
+
+.dropdown-list {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  margin: 0 !important;
+  width: 13.75rem;
+  z-index: 2000;
+  box-shadow: rgba(50, 50, 93, 0.25) 0rem .8125rem 1.6875rem -0.3125rem, rgba(0, 0, 0, 0.3) 0rem .5rem 1rem -0.5rem;
+  transition: all 0.2s ease;
+  list-style: none;
+  cursor: pointer;
+  .login-dropdown {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+    padding: 1rem;
+    background-color: $color-white ;
+    color: black;
+    font-size: .875rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    &:hover {
+      background-color: #E3F2EB;
+      font-weight:bold;
+      text-decoration:none;
+    }
+    .material-icon {
+      display:flex;
+      color: #94CAAE;
+    }
+  }
+}
+
+button{
+  all: unset;
+  cursor: pointer;
+}
+
+.login-container {
+  align-self: stretch;
+  margin: 0;
+
+  .login-button {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    padding: 0 20px;
+    transition: all 0.2s ease;
+    &:hover {
+      background-color: #94CAAE;
+    }
+  }
+  .dropdown-list {
+    opacity: 0;
+    transform: translateY(-10px);
+    pointer-events: none;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+  }
+  &:focus-within .dropdown-list {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+}
+
+
 </style>
