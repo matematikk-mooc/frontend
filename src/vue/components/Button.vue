@@ -54,6 +54,7 @@ div.modal-box__actions > button {
   display: flex;
   align-items: center;
   bottom: -0.05rem;
+  box-sizing: border-box;
 
   &:hover {
     background: #00468e;
@@ -93,6 +94,7 @@ div.modal-box__actions > button {
     }
     &.btn--md {
       padding: 0.375rem 1.25rem 0.375rem 1.15rem;
+      height: 40px;
     }
     &.btn--lg {
       padding: 0.625rem 1.625rem 0.625rem 1.625rem;
@@ -114,6 +116,7 @@ div.modal-box__actions > button {
     }
     &.btn--md {
       padding: 0.375rem 1.25rem 0.375rem 1.25rem;
+      height: 40px;
     }
     &.btn--lg {
       padding: 0.625rem 1.625rem 0.625rem 1.625rem;
