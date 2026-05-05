@@ -1,4 +1,4 @@
-![](https://imgur.com/XWVOBSH.png "")
+![](https://imgur.com/XWVOBSH.png)
 
 # Frontend - Kompetanseportalen (KPAS)
 
@@ -10,17 +10,17 @@ The custom JS and CSS frontend is built on top of Canvas using the mechanism in 
 
 **Services**
 
-| Service | Environment | URL |
-|---------|-------------|-----|
-| Frontend | Production | https://bibsys.instructure.com/search/all_courses/ |
-| Frontend | Stage | https://bibsys.test.instructure.com/search/all_courses/ |
+| Service  | Environment | URL                                                     |
+| -------- | ----------- | ------------------------------------------------------- |
+| Frontend | Production  | https://bibsys.instructure.com/search/all_courses/      |
+| Frontend | Stage       | https://bibsys.test.instructure.com/search/all_courses/ |
 
 **Related Codebases**
 
-| Name | Description |
-|------|-------------|
-| [KPAS API](https://github.com/matematikk-mooc/kpas-api/) | Extends Canvas LMS through LTI tools and REST endpoints |
-| [Statistics API](https://github.com/matematikk-mooc/statistics-api/) | Collects and serves statistics data for KPAS |
+| Name                                                                 | Description                                             |
+| -------------------------------------------------------------------- | ------------------------------------------------------- |
+| [KPAS API](https://github.com/matematikk-mooc/kpas-api/)             | Extends Canvas LMS through LTI tools and REST endpoints |
+| [Statistics API](https://github.com/matematikk-mooc/statistics-api/) | Collects and serves statistics data for KPAS            |
 
 **Quick links**
 
@@ -49,8 +49,8 @@ The custom JS and CSS frontend is built on top of Canvas using the mechanism in 
 1. Build theme: `pnpm build`
 1. Create a new theme here: https://bibsys.test.instructure.com/accounts/1/brand_configs/
 1. Click on create from default template and under the upload tab, select the build files from the first step that are located in the `dist` folder:
-    - CSS-fil: `theme-localhost.css`
-    - JavaScript-Fil: `theme-localhost.js`
+   - CSS-fil: `theme-localhost.css`
+   - JavaScript-Fil: `theme-localhost.js`
 
 ## Development
 
@@ -66,11 +66,10 @@ Compile JS and CSS for the production using
 pnpm run production
 ```
 
-* See scripts section in package.json
+- See scripts section in package.json
 
 The resulting JS and CSS file can be found in the **dist** directory. These commands will get the timestamp of the latest commit to the given branch, and append to the filenames.
 To test code locally allways use "build" and "watch", as "stage" and "production" will use the file already uploaded to Azure, and will not pick up local changes.
-
 
 Copy all files from the dist directory to your web server.
 Note that addons generate different files that may be destinated to different directories in your production server.

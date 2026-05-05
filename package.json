@@ -4,6 +4,11 @@
   "description": "Custom JS and CSS frontend for inclusion in [Canvas](http://www.instructure.com/).",
   "homepage": "https://kompetanse.udir.no/",
   "license": "MIT",
+  "packageManager": "pnpm@10.5.2",
+  "engines": {
+    "node": ">=22.22.0",
+    "pnpm": ">=10.5.2"
+  },
   "repository": {
     "type": "git",
     "url": "git+ssh://git@github.com/matematikk-mooc/frontend.git"
@@ -23,10 +28,9 @@
     "doc": "doc",
     "test": "test"
   },
-  "packageManager": "pnpm@10.5.2",
   "dependencies": {
     "@material-symbols/font-400": "^0.44.4",
-    "@vimeo/player": "^2.30.3",
+    "@vimeo/player": "^2.30.4",
     "@vue/reactivity": "3.5.33",
     "rxjs": "^7.8.2",
     "vee-validate": "^4.15.1",
@@ -35,7 +39,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.29.0",
-    "@babel/preset-env": "^7.29.2",
+    "@babel/preset-env": "^7.29.3",
     "@playwright/test": "^1.59.1",
     "@vue/compiler-sfc": "^3.5.33",
     "@vue/devtools-api": "^6.6.4",
@@ -44,9 +48,9 @@
     "@vue/shared": "^3.5.33",
     "babel-loader": "^10.1.1",
     "clean-webpack-plugin": "^4.0.0",
-    "copy-webpack-plugin": "^13.0.1",
+    "copy-webpack-plugin": "^14.0.0",
     "css-loader": "7.1.4",
-    "css-minimizer-webpack-plugin": "^7.0.4",
+    "css-minimizer-webpack-plugin": "^8.0.0",
     "eslint": "9.39.4",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-jquery": "^1.5.1",
@@ -65,7 +69,7 @@
     "tslib": "^2.8.1",
     "vue-loader": "^17.4.2",
     "webpack": "^5.106.2",
-    "webpack-cli": "^6.0.1",
+    "webpack-cli": "^7.0.2",
     "webpack-dev-server": "5.2.3",
     "webpack-replace-plugin": "^0.0.4"
   },
