@@ -3,6 +3,15 @@
     <div class="landing-page">
       <div id="main" class="landing-page--content">
         <h1>Alle tilgjengelige kompetansepakker</h1>
+
+        <div class="security-banner">
+            <p class="security-banner__title"><b>Sikkerhetshendelse i Canvas</b></p>
+
+            <p class="security-banner__description">Det har vært en sikkerhetshendelse hos vår leverandør av Canvas, Instructure. Situasjonen er under avklaring i dialog med Instructure og Sikt, og oppdatering vil bli gitt ved ny informasjon. Vi ber om at alle utviser økt årvåkenhet for phishing. Ta kontakt med IT-support om du opplever et phishingforsøk.</p>
+
+            <p class="security-banner__link">Du kan lese mer om hendelsen på statussiden til Canvas: <a target="_blank" href="https://status.instructure.com/" rel="noopener noreferrer">status.instructure.com</a></p>
+        </div>
+
         <div class="landing-page--layout">
           <CardFilter @update:selectedFilters="onSelectedFiltersUpdate" :filterData="filterData"></CardFilter>
           <CardList v-if="coursesToView.length > 0" :authorized="true" :courses="coursesToView" :newCoursesIndicator=true></CardList>
@@ -34,6 +43,19 @@
   </script>
 
   <style lang="scss">
+  .security-banner {
+    background: #ef9a9a;
+    border-radius: 5px;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    padding: 10px 20px;
+  }
+
+  .security-banner a {
+    color: black;
+    text-decoration: underline;
+  }
+
   .landing-page {
     height: 100%;
     width: 100%;
