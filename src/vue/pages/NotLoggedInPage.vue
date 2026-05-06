@@ -48,18 +48,18 @@ const onSelectedFiltersUpdate = (updatedFilters) => {
 </script>
 
 <style lang="scss">
-  .security-banner {
-    background: #ef9a9a;
-    border-radius: 5px;
-    margin-top: 10px;
-    margin-bottom: 20px;
-    padding: 10px 20px;
-  }
+.security-banner {
+  background: #ef9a9a;
+  border-radius: 5px;
+  margin-top: 10px;
+  margin-bottom: 20px;
+  padding: 10px 20px;
+}
 
-  .security-banner a {
-    color: black;
-    text-decoration: underline;
-  }
+.security-banner a {
+  color: black;
+  text-decoration: underline;
+}
 
 .not-logged-in-page {
   height: 100%;
