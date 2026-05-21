@@ -105,4 +105,7 @@ export default {
     line-height: 1.5;
   }
 }
+div:not(:focus-within) ul {
+  display: none;
+}
 </style>

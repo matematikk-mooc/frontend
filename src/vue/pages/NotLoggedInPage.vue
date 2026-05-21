@@ -17,7 +17,7 @@
       </div>
 
       <div class="not-logged-in-page--layout">
-        <CardFilter @update:selectedFilters="onSelectedFiltersUpdate" :filterData="filterData"></CardFilter>
+        <CardFilter @update:selectedFilters="onSelectedFiltersUpdate" :filterData="filterData" :courses="courses"></CardFilter>
         <CardList v-if="coursesToView.length > 0" :authorized="false" :courses="coursesToView" :newCoursesIndicator=true></CardList>
         <div v-else>
           <h3>Vi fant ingen treff for filtrene du har valgt. Du kan fjerne alle filtrene med "Tilbakestill filter".</h3>

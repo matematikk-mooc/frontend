@@ -1,18 +1,34 @@
 #!/bin/bash
+# E2E test runner: Utdanningsdirektoratet/dit-e2e-playwright
+#
+# Modes (selected by APP_ENV):
+#   development  → start local webpack-dev-server, run tests against bibsys.test.instructure.com with the use_localhost_theme cookie injected.
+#   stage        → run tests against bibsys.test.instructure.com (deployed theme).
+#   production   → run tests against bibsys.instructure.com (deployed theme).
+#
+# Required env vars (always):
+#   APP_ENV
+#   TEST_CANVAS_CHROMIUM_USERNAME
+#   TEST_CANVAS_CHROMIUM_PASSWORD
+
 set -e
 
 ROOT_DIR=$(pwd)
 CLONE_DIR="./.tests_playwright"
-REPO_URL="https://github.com/matematikk-mooc/frontend-react.git"
+REPO_URL="https://github.com/Utdanningsdirektoratet/dit-e2e-playwright.git"
 DEV_SERVER_URL="${DEV_SERVER_URL:-http://localhost:9000}"
 DEV_SERVER_PORT="${DEV_SERVER_URL##*:}"
 DEV_SERVER_PORT="${DEV_SERVER_PORT%%/*}"
 
-# Validate required environment variables
+# Backwards compatibility
+: "${TEST_KOMP_CHROMIUM_USERNAME:=${TEST_CANVAS_CHROMIUM_USERNAME:-}}"
+: "${TEST_KOMP_CHROMIUM_PASSWORD:=${TEST_CANVAS_CHROMIUM_PASSWORD:-}}"
+export TEST_KOMP_CHROMIUM_USERNAME TEST_KOMP_CHROMIUM_PASSWORD
+
 MISSING=()
 [ -z "$APP_ENV" ] && MISSING+=("APP_ENV")
-[ -z "$TEST_CANVAS_CHROMIUM_USERNAME" ] && MISSING+=("TEST_CANVAS_CHROMIUM_USERNAME")
-[ -z "$TEST_CANVAS_CHROMIUM_PASSWORD" ] && MISSING+=("TEST_CANVAS_CHROMIUM_PASSWORD")
+[ -z "$TEST_KOMP_CHROMIUM_USERNAME" ] && MISSING+=("TEST_KOMP_CHROMIUM_USERNAME")
+[ -z "$TEST_KOMP_CHROMIUM_PASSWORD" ] && MISSING+=("TEST_KOMP_CHROMIUM_PASSWORD")
 
 if [ ${#MISSING[@]} -gt 0 ]; then
   echo "✗ Missing required environment variables:"
@@ -22,11 +38,19 @@ if [ ${#MISSING[@]} -gt 0 ]; then
   exit 1
 fi
 
+case "$APP_ENV" in
+  development) TEST_ENV=local ;;
+  stage)       TEST_ENV=stage ;;
+  production)  TEST_ENV=production ;;
+  *) echo "✗ Unknown APP_ENV: $APP_ENV (expected: development | stage | production)"; exit 1 ;;
+esac
+export TEST_ENV
+
 cleanup() {
   if [ -n "$DEV_SERVER_PID" ]; then
-    # Kill the parent process
+   # Kill the parent process
     kill "$DEV_SERVER_PID" 2>/dev/null || true
-
+    
     # Kill any remaining processes still listening on the dev server port
     # This catches orphaned child processes (e.g. webpack-dev-server)
     if command -v lsof > /dev/null 2>&1; then
@@ -40,11 +64,12 @@ cleanup() {
 trap cleanup EXIT
 
 echo "=== Playwright Test Runner ==="
+echo "  APP_ENV  = $APP_ENV"
+echo "  TEST_ENV = $TEST_ENV"
 
 # ── Setup (local only — CI handles these via actions) ──
 if [ -z "$CI" ]; then
-  # Validate required commands
-  for cmd in node pnpm git curl; do
+  for cmd in node pnpm git curl make; do
     command -v "$cmd" > /dev/null 2>&1 || { echo "✗ Required command not found: $cmd"; exit 1; }
   done
 
@@ -53,10 +78,11 @@ if [ -z "$CI" ]; then
 
   # Clone repo if needed
   if [ -d "$CLONE_DIR" ]; then
-    echo "✓ Test directory exists, skipping clone"
+    echo "✓ Test directory exists, pulling latest"
+    git -C "$CLONE_DIR" pull --ff-only --depth=1 || true
   else
     echo "Cloning repository..."
-    git clone "$REPO_URL" "$CLONE_DIR"
+    git clone --depth 1 "$REPO_URL" "$CLONE_DIR"
   fi
 
   # Install main project dependencies
@@ -66,34 +92,14 @@ if [ -z "$CI" ]; then
   # Setup test project
   cd "$CLONE_DIR"
 
-  # Check Node version
-  NODE_VERSION=$(node -v)
-  [[ $NODE_VERSION =~ ^v24\. ]] || { echo "✗ Node.js v24 required (found $NODE_VERSION)"; exit 1; }
-  echo "✓ Node.js $NODE_VERSION"
-
   # Install test dependencies if needed
   if [ -d "node_modules" ]; then
     echo "✓ Test dependencies already installed"
   else
-    echo "Installing test dependencies..."
-    pnpm install
+    echo "Installing test dependencies + Playwright browsers..."
+    make install
   fi
-
-  # Install Playwright browsers
-  pnpm exec playwright install
-
   cd "$ROOT_DIR"
-fi
-
-# ── Setup .env.test ──
-if [ ! -f "$CLONE_DIR/.env.test" ]; then
-  cat > "$CLONE_DIR/.env.test" << EOF
-APP_ENV=${APP_ENV}
-TEST_CANVAS_LOCAL_THEME=${TEST_CANVAS_LOCAL_THEME:-true}
-TEST_CANVAS_CHROMIUM_USERNAME="${TEST_CANVAS_CHROMIUM_USERNAME}"
-TEST_CANVAS_CHROMIUM_PASSWORD="${TEST_CANVAS_CHROMIUM_PASSWORD}"
-EOF
-  echo "✓ Created .env.test"
 fi
 
 # ── Start dev server (development only) ──
@@ -124,10 +130,12 @@ if [ "$APP_ENV" = "development" ]; then
     sleep 2
   done
   echo "✓ Dev server ready"
+
+  export TEST_CANVAS_LOCAL_THEME=true
 fi
 
 # ── Run tests ──
 echo ""
 echo "=== Running Playwright Tests ==="
 cd "$CLONE_DIR"
-pnpm run test:canvas:chromium
+make test FILTER='komp-frontend-canvas-*' TEST_ENV="$TEST_ENV"
