@@ -20,7 +20,7 @@ jobs:
       - uses: actions/checkout@v6
       - uses: Utdanningsdirektoratet/dit-github-actions/github/runtimes@v1
         with:
-          node-version: '24'
+          node-version: '22'
           node-pms: pnpm
       - uses: Utdanningsdirektoratet/dit-github-actions/js/install@v1
       - name: Build
@@ -34,12 +34,12 @@ jobs:
       - uses: actions/checkout@v6
       - uses: Utdanningsdirektoratet/dit-github-actions/github/runtimes@v1
         with:
-          node-version: '24'
+          node-version: '22'
           node-pms: pnpm
 
       - uses: Utdanningsdirektoratet/dit-github-actions/github/clone@v1
         with:
-          repository: matematikk-mooc/frontend-react
+          repository: Utdanningsdirektoratet/dit-e2e-playwright
           path: .tests_playwright
       - uses: Utdanningsdirektoratet/dit-github-actions/js/install@v1
         with:
@@ -54,6 +54,5 @@ jobs:
         run: ./e2e.sh
         env:
           APP_ENV: development
-          TEST_CANVAS_LOCAL_THEME: 'true'
           TEST_CANVAS_CHROMIUM_USERNAME: ${{ vars.TEST_CANVAS_CHROMIUM_USERNAME }}
           TEST_CANVAS_CHROMIUM_PASSWORD: ${{ secrets.TEST_CANVAS_CHROMIUM_PASSWORD }}

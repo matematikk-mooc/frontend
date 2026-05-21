@@ -3,8 +3,17 @@
     <div class="landing-page">
       <div id="main" class="landing-page--content">
         <h1>Alle tilgjengelige kompetansepakker</h1>
+
+        <div class="security-banner">
+            <p class="security-banner__title"><b>Sikkerhetshendelse i Canvas</b></p>
+
+            <p class="security-banner__description">Det har vært en sikkerhetshendelse hos vår leverandør av Canvas, Instructure. Situasjonen er under avklaring i dialog med Instructure og Sikt, og oppdatering vil bli gitt ved ny informasjon. Vi ber om at alle utviser økt årvåkenhet for <a href="https://en.wikipedia.org/wiki/Phishing" target="_blank" rel="noopener noreferrer">phishing</a>.</p>
+
+            <p class="security-banner__link">Du kan lese mer om hendelsen på statussiden til Canvas: <a target="_blank" href="https://status.instructure.com/" rel="noopener noreferrer">status.instructure.com</a></p>
+        </div>
+
         <div class="landing-page--layout">
-          <CardFilter @update:selectedFilters="onSelectedFiltersUpdate" :filterData="filterData"></CardFilter>
+          <CardFilter @update:selectedFilters="onSelectedFiltersUpdate" :filterData="filterData" :courses="courses"></CardFilter>
           <CardList v-if="coursesToView.length > 0" :authorized="true" :courses="coursesToView" :newCoursesIndicator=true></CardList>
           <div class="no-courses-to-show" v-else>
             <h2>Vi fant ingen treff for filtrene du har valgt. Du kan fjerne alle filtrene med "Tilbakestill filter".</h2>
@@ -34,6 +43,19 @@
   </script>
 
   <style lang="scss">
+  .security-banner {
+    background: #ef9a9a;
+    border-radius: 5px;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    padding: 10px 20px;
+  }
+
+  .security-banner a {
+    color: black;
+    text-decoration: underline;
+  }
+
   .landing-page {
     height: 100%;
     width: 100%;
