@@ -39,7 +39,7 @@ jobs:
 
       - uses: Utdanningsdirektoratet/dit-github-actions/github/clone@v1
         with:
-          repository: matematikk-mooc/frontend-react
+          repository: Utdanningsdirektoratet/dit-e2e-playwright
           path: .tests_playwright
       - uses: Utdanningsdirektoratet/dit-github-actions/js/install@v1
         with:
