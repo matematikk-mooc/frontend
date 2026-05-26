@@ -72,4 +72,7 @@
       flex-direction: column;
     }
   }
+  .no-courses-to-show {
+    margin: 28px;
+  }
   </style>
