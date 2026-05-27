@@ -8,14 +8,6 @@
     <div class="not-logged-in-page--content">
       <h2>Alle tilgjengelige kompetansepakker</h2>
 
-      <div class="security-banner">
-          <p class="security-banner__title"><b>Sikkerhetshendelse i Canvas</b></p>
-
-          <p class="security-banner__description">Det har vært en sikkerhetshendelse hos vår leverandør av Canvas, Instructure. Situasjonen er under avklaring i dialog med Instructure og Sikt, og oppdatering vil bli gitt ved ny informasjon. Vi ber om at alle utviser økt årvåkenhet for <a href="https://en.wikipedia.org/wiki/Phishing" target="_blank" rel="noopener noreferrer">phishing</a>.</p>
-
-          <p class="security-banner__link">Du kan lese mer om hendelsen på statussiden til Canvas: <a target="_blank" href="https://status.instructure.com/" rel="noopener noreferrer">status.instructure.com</a></p>
-      </div>
-
       <div class="not-logged-in-page--layout">
         <CardFilter @update:selectedFilters="onSelectedFiltersUpdate" :filterData="filterData" :courses="courses"></CardFilter>
         <CardList v-if="coursesToView.length > 0" :authorized="false" :courses="coursesToView" :newCoursesIndicator=true></CardList>
