@@ -1,7 +1,7 @@
 <template>
   <div class="intro-container">
     <div class="intro-text">
-      <h2 class="frontheader">Velkommen til Kompetanseportalen!</h2>
+      <h1 class="frontheader">Velkommen til Kompetanseportalen!</h1>
       <p class="intro-p1" >
         Denne tjenesten er laget for ansatte i skole og barnehage, og er gratis å logge på med
         Feide eller ved å opprette egen bruker. Første gang du skal logge på med egen bruker må du
