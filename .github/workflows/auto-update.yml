@@ -56,7 +56,7 @@ jobs:
         id: scan
       - uses: Utdanningsdirektoratet/dit-github-actions/github/runtimes@v1
         with:
-          node-version: ${{ contains(steps.scan.outputs.package-managers, 'js') && '24' || '' }}
+          node-version: ${{ contains(steps.scan.outputs.package-managers, 'js') && '22' || '' }}
           node-pms: ${{ steps.scan.outputs.rules }}
       - uses: Utdanningsdirektoratet/dit-github-actions/goupdate/outdated@v1
         id: outdated
@@ -83,7 +83,7 @@ jobs:
       - uses: Utdanningsdirektoratet/dit-github-actions/goupdate/install@v1
       - uses: Utdanningsdirektoratet/dit-github-actions/github/runtimes@v1
         with:
-          node-version: ${{ contains(needs.check.outputs.package-managers, 'js') && '24' || '' }}
+          node-version: ${{ contains(needs.check.outputs.package-managers, 'js') && '22' || '' }}
           node-pms: ${{ needs.check.outputs.rules }}
       - uses: Utdanningsdirektoratet/dit-github-actions/git/checkout@v1
         id: checkout-branch
@@ -93,7 +93,7 @@ jobs:
 
       - uses: Utdanningsdirektoratet/dit-github-actions/github/clone@v1
         with:
-          repository: matematikk-mooc/frontend-react
+          repository: Utdanningsdirektoratet/dit-e2e-playwright
           path: .tests_playwright
           app-id: ${{ secrets.GOUPDATE_APP_ID }}
           app-private-key: ${{ secrets.GOUPDATE_APP_PRIVATE_KEY }}
@@ -115,7 +115,6 @@ jobs:
           update-type: ${{ github.event.inputs.update-type || 'minor' }}
         env:
           APP_ENV: development
-          TEST_CANVAS_LOCAL_THEME: 'true'
           TEST_CANVAS_CHROMIUM_USERNAME: ${{ vars.TEST_CANVAS_CHROMIUM_USERNAME }}
           TEST_CANVAS_CHROMIUM_PASSWORD: ${{ secrets.TEST_CANVAS_CHROMIUM_PASSWORD }}
       - uses: Utdanningsdirektoratet/dit-github-actions/git/commit@v1

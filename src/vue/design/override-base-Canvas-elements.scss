@@ -688,3 +688,19 @@ body.notifications, body.profile, body.profile_settings, body.content_shares, bo
   line-height: normal;
   margin-bottom: 10px;
 }
+
+.header-bar-outer-container {
+  .page-toolbar {
+    border-bottom: 1px solid lightgray;
+  }
+  .buttons {
+    display: flex;
+    gap: 0.5rem;
+    .hide-when-small {
+      margin-left: 12px;
+    }
+    .btn {
+      justify-content: center;
+    }
+  }
+}

@@ -1,15 +1,16 @@
 <template>
   <div class="dropdown-container">
-    <button aria-label="Åpne nedtrekksmeny" @click="handleFocus" class="dropdown-toggle-button">
+    <button aria-label="Åpne nedtrekksmeny" class="dropdown-toggle-button">
         <Icon :name="iconType"/>
     </button>
-    <ul class="dropdown-list" v-show="showMenu">
+    <ul class="dropdown-list">
       <template v-if="logged_in">
           <li v-if="admin"><a @click="handleLinkClick" class="dropdown-item" :href="adminLink">Administrator <Icon name="chevron_right" size="22"/></a> </li>
           <li v-if="logged_in"><a  @click="handleLinkClick" class="dropdown-item" :href="settingsLink">Innstillinger <Icon name="chevron_right" size="22"/></a> </li>
       </template>
       <template v-if="!logged_in">
-          <li v-if="renderLoginLink"><a class="dropdown-item" :href="loginLink"> Logg inn <Icon name="chevron_right" size="22"/></a></li> 
+        <li v-if="renderLoginLink"><a class="dropdown-item" :href="feideLink"> Feide <Icon name="chevron_right" size="22"/></a></li>  
+          <li v-if="renderLoginLink"><a class="dropdown-item" :href="loginLink"> Canvas <Icon name="chevron_right" size="22"/></a></li>
           <li v-if="!renderLoginLink"><a class="dropdown-item" :href="frontPageLink"> Forsiden <Icon name="chevron_right" size="22"/></a></li>   
       </template>
         <li v-if="logged_in"><a class="dropdown-item" :href="logoutLink"> Logg ut <Icon name="chevron_right" size="22"/></a></li>
@@ -24,24 +25,20 @@ import Icon from "../icon/Icon.vue";
 const domain = window.location.origin;
 const frontPageLink = domain + "/search/all_courses"
 const loginLink = domain + "/login/canvas"
+const feideLink = domain + "/login/saml/2"
 const normalLoginLink = loginLink + "?normalLogin=1&design=udir"
 const logoutLink = domain + "/logout"
 const settingsLink = domain + "/profile/settings"
 const adminLink = domain + "/accounts"
-const showMenu = ref(false);
 const currentPath = window.location;
 
 const props = defineProps({
 iconType: String,
 backgroundColor: String,
-showMenu: Boolean,
 logged_in: Boolean,
 admin: Boolean,
 });
 
-const handleFocus = () => {
-  showMenu.value = !showMenu.value;
-};
 const handleLinkClick = () => {
     showMenu.value = false;
 };
@@ -59,6 +56,17 @@ const renderLoginLink = computed(() => {
 .dropdown-container {
   @media screen and (min-width: 679px) {
     display: none;
+  }
+  .dropdown-list {
+    opacity: 0;
+    transform: translateY(-10px);
+    pointer-events: none;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+  }
+  &:focus-within .dropdown-list {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
   }
 }
 .dropdown-toggle-button {
@@ -80,6 +88,9 @@ const renderLoginLink = computed(() => {
     &:focus {
         background-color: #7DBF9D;
     }
+  @media (min-width: 30rem) {
+    height: 6.2rem;
+  }
 }
 
 .dropdown-list {
@@ -87,14 +98,19 @@ const renderLoginLink = computed(() => {
   top: 0;
   right: 0;
   margin: unset !important;
-  margin-top: 3.6875rem !important;
+  margin-top: 3.8rem !important;
   width: 13.75rem;
   z-index: 2000;
   box-shadow: rgba(50, 50, 93, 0.25) 0rem .8125rem 1.6875rem -0.3125rem, rgba(0, 0, 0, 0.3) 0rem .5rem 1rem -0.5rem;
   transition: all 0.2s ease;
   list-style: none;
+  @media (min-width: 30rem) {
+    margin-top: 6.2rem !important;
+  }
+
   .dropdown-item {
     display: flex;
+    margin-bottom: -1px !important;
     justify-content: space-between;
     align-items: center;
     height: 100%;
@@ -117,7 +133,4 @@ const renderLoginLink = computed(() => {
 }
 
 // Hides the dropdown list when the focus is not within the dropdown or button
-div:not(:focus-within) ul {
-  display: none;
-}
 </style>

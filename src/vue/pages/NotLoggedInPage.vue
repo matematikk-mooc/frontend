@@ -6,8 +6,9 @@
     </div>
     <div class="not-logged-in-page--content">
       <h2>Alle tilgjengelige kompetansepakker</h2>
+
       <div class="not-logged-in-page--layout">
-        <CardFilter @update:selectedFilters="onSelectedFiltersUpdate" :filterData="filterData"></CardFilter>
+        <CardFilter @update:selectedFilters="onSelectedFiltersUpdate" :filterData="filterData" :courses="courses"></CardFilter>
         <CardList v-if="coursesToView.length > 0" :authorized="false" :courses="coursesToView" :newCoursesIndicator=true></CardList>
         <div v-else>
           <h3>Vi fant ingen treff for filtrene du har valgt. Du kan fjerne alle filtrene med "Tilbakestill filter".</h3>
@@ -38,6 +39,19 @@ const onSelectedFiltersUpdate = (updatedFilters) => {
 </script>
 
 <style lang="scss">
+.security-banner {
+  background: #ef9a9a;
+  border-radius: 5px;
+  margin-top: 10px;
+  margin-bottom: 20px;
+  padding: 10px 20px;
+}
+
+.security-banner a {
+  color: black;
+  text-decoration: underline;
+}
+
 .not-logged-in-page {
   height: 100%;
   width: 100%;
