@@ -54,11 +54,13 @@
           this.modalOpen = false
         },
         goToFeide() {
-            window.location.href = window.location.origin + "/search/all_courses?enroll_code=" + this.selfEnrollmentCode
+            window.location.href = window.location.origin + "/login/saml/";
 
         },
         goToCanvas() {
-            window.location.href = window.location.origin + "/enroll/" + this.selfEnrollmentCode
+                  const url = window.location.origin + "/login/canvas";
+        console.log("Redirecting to:", url);
+        window.location.href = url;
         }
       }
     }
