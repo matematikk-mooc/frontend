@@ -5,16 +5,15 @@
       Kompetanseportalen
     </a>
     <div v-if="isStage" class="stage-banner">stage</div>
-    <Dropdown :logged_in="logged_in" :admin="admin" :backgroundColor="'white'" :iconType="'hamburger'" :icon="'settings'" :link="settingsLink"></Dropdown>
-    <!-- Navbar -->
-    <ul class="header__link-list mobile-hide login-container">
+<!-- Navbar -->
+    <ul class="header__link-list login-container" ref="container" @focusout="onFocusOut">
       <template v-if="!logged_in">
-          <button  v-if="!logged_in" class="login-button">Logg inn</button>
+          <button v-if="!logged_in" type="button" class="login-button" aria-haspopup="true" :aria-expanded="open" @click="toggle">Logg inn</button>
           <li class="header__list-item" v-else="renderLoginLink">
             <a class="header__link" :href="frontpageLink">Forsiden</a>
           </li>
       </template>
-        <ul class="dropdown-list">
+        <ul class="dropdown-list" :class="{ open }">
           <li v-if="!logged_in"><a class="login-dropdown" :href="feideLink"> Feide <Icon name="chevron_right" size="22"/></a></li>
           <li v-if="!logged_in"><a class="login-dropdown" :href="loginLink"> Canvas <Icon name="chevron_right" size="22"/></a></li>
         </ul> 
@@ -34,7 +33,7 @@
 </template>
 
 <script setup>
-  import Dropdown from '../dropdown/Dropdown.vue'
+  import { ref, onMounted, onBeforeUnmount } from 'vue'
   import Icon from "../icon/Icon.vue";
   const {logged_in, admin} = defineProps(['logged_in', 'admin'])
   const domain = window.location.origin;
@@ -45,6 +44,31 @@
   const logoutLink = domain + "/logout"
   const adminLink = domain + "/accounts"
   const isStage =  domain.includes('bibsys.test')
+
+  // Dropdown open state is driven by JS so it works in Safari
+  const open = ref(false)
+  const container = ref(null)
+  const toggle = () => { open.value = !open.value }
+  const close = () => { open.value = false }
+
+  const onDocumentClick = (event) => {
+    if (container.value && !container.value.contains(event.target)) close()
+  }
+  const onKeydown = (event) => {
+    if (event.key === 'Escape') close()
+  }
+  const onFocusOut = (event) => {
+    if (container.value && !container.value.contains(event.relatedTarget)) close()
+  }
+
+  onMounted(() => {
+    document.addEventListener('click', onDocumentClick)
+    document.addEventListener('keydown', onKeydown)
+  })
+  onBeforeUnmount(() => {
+    document.removeEventListener('click', onDocumentClick)
+    document.removeEventListener('keydown', onKeydown)
+  })
 
 </script>
 
@@ -227,7 +251,7 @@ button{
     pointer-events: none;
     transition: opacity 0.2s ease, transform 0.2s ease;
   }
-  &:focus-within .dropdown-list {
+  .dropdown-list.open {
     opacity: 1;
     transform: translateY(0);
     pointer-events: auto;
