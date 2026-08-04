@@ -1,10 +1,12 @@
 export const loginWithBasicAuth = async (page, basicAuth) => {
   const { username, password } = basicAuth;
 
-  await page.waitForSelector('form#login_form', { state: 'visible' });
-  await page.fill('#pseudonym_session_unique_id', username);
-  await page.fill('#pseudonym_session_password', password);
-  await page.click('input[type="submit"][value="Logg på"]');
+  const usernameField = page.getByTestId('username-input');
+  await usernameField.waitFor({ state: 'visible' });
+
+  await usernameField.fill(username);
+  await page.getByTestId('password-input').fill(password);
+  await page.getByTestId('login-button').click();
 
   await page.waitForURL(/\/courses|\/search\/all_courses/);
 };
