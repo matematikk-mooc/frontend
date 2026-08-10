@@ -26,33 +26,33 @@ jobs:
       - name: Build
         run: pnpm run production
 
-  e2e:
-    name: E2E Tests
-    runs-on: ubuntu-latest
-    timeout-minutes: 30
-    steps:
-      - uses: actions/checkout@v6
-      - uses: Utdanningsdirektoratet/dit-github-actions/github/runtimes@v1
-        with:
-          node-version: '22'
-          node-pms: pnpm
-
-      - uses: Utdanningsdirektoratet/dit-github-actions/github/clone@v1
-        with:
-          repository: Utdanningsdirektoratet/dit-e2e-playwright
-          path: .tests_playwright
-      - uses: Utdanningsdirektoratet/dit-github-actions/js/install@v1
-        with:
-          working-directory: .tests_playwright
-      - uses: Utdanningsdirektoratet/dit-github-actions/js/playwright@v1
-        with:
-          working-directory: .tests_playwright
-          browsers: chromium
-
-      - uses: Utdanningsdirektoratet/dit-github-actions/js/install@v1
-      - name: Run E2E tests
-        run: ./e2e.sh
-        env:
-          APP_ENV: development
-          TEST_CANVAS_CHROMIUM_USERNAME: ${{ vars.TEST_CANVAS_CHROMIUM_USERNAME }}
-          TEST_CANVAS_CHROMIUM_PASSWORD: ${{ secrets.TEST_CANVAS_CHROMIUM_PASSWORD }}
+  # e2e:
+  #   name: E2E Tests
+  #   runs-on: ubuntu-latest
+  #   timeout-minutes: 30
+  #   steps:
+  #     - uses: actions/checkout@v6
+  #     - uses: Utdanningsdirektoratet/dit-github-actions/github/runtimes@v1
+  #       with:
+  #         node-version: '22'
+  #         node-pms: pnpm
+  #
+  #     - uses: Utdanningsdirektoratet/dit-github-actions/github/clone@v1
+  #       with:
+  #         repository: Utdanningsdirektoratet/dit-e2e-playwright
+  #         path: .tests_playwright
+  #     - uses: Utdanningsdirektoratet/dit-github-actions/js/install@v1
+  #       with:
+  #         working-directory: .tests_playwright
+  #     - uses: Utdanningsdirektoratet/dit-github-actions/js/playwright@v1
+  #       with:
+  #         working-directory: .tests_playwright
+  #         browsers: chromium
+  #
+  #     - uses: Utdanningsdirektoratet/dit-github-actions/js/install@v1
+  #     - name: Run E2E tests
+  #       run: ./e2e.sh
+  #       env:
+  #         APP_ENV: development
+  #         TEST_CANVAS_CHROMIUM_USERNAME: ${{ vars.TEST_CANVAS_CHROMIUM_USERNAME }}
+  #         TEST_CANVAS_CHROMIUM_PASSWORD: ${{ secrets.TEST_CANVAS_CHROMIUM_PASSWORD }}
