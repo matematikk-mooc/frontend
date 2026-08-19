@@ -440,6 +440,12 @@ body.with-left-side:not(.useFullWidth) {
   padding: 0 !important;
 }
 
+.yellow {
+  background-color: lightyellow !important;
+  justify-content: flex-start !important;
+  flex-direction: column !important;
+  gap: 0 !important;
+}
 #main:has(#registration_content){
   background-color: white;
   height: 100vh;
