@@ -24,8 +24,8 @@ importers:
   .:
     dependencies:
       '@material-symbols/font-400':
-        specifier: ^0.45.10
-        version: 0.45.10
+        specifier: ^0.46.0
+        version: 0.46.0
       '@vimeo/player':
         specifier: ^2.30.4
         version: 2.30.4
@@ -115,11 +115,11 @@ importers:
         specifier: ^1.0.6
         version: 1.0.6
       sass:
-        specifier: ^1.102.0
-        version: 1.102.0
+        specifier: ^1.103.1
+        version: 1.103.1
       sass-loader:
         specifier: 16.0.8
-        version: 16.0.8(sass@1.102.0)(webpack@5.109.2)
+        version: 16.0.8(sass@1.103.1)(webpack@5.109.2)
       string-replace-loader:
         specifier: ^3.3.0
         version: 3.3.0(webpack@5.109.2)
@@ -893,8 +893,8 @@ packages:
   '@leichtgewicht/ip-codec@2.0.5':
     resolution: {integrity: sha512-Vo+PSpZG2/fmgmiNzYK9qWRh8h/CHrwD0mo1h1DzL4yzHNSfWYujGTYsWGreD000gcgmZ7K4Ys6Tx9TxtsKdDw==}
 
-  '@material-symbols/font-400@0.45.10':
-    resolution: {integrity: sha512-HUstRoXOYFUe4/zRqwSnA2Zp8Ei5y4m9vqzwHb6sJEfUrYg780an0PcVnrlTJgqRwrOCPR5ttViF+yLAzla0BQ==}
+  '@material-symbols/font-400@0.46.0':
+    resolution: {integrity: sha512-G1oDwRi+m1qHn7ehf6ZwBFr7FW0LvGNp3NrnQT8bz++E03cCWu8KZ6MGlvxnRzickFV3Za5oiyJqrhfsXlv+1Q==}
 
   '@noble/hashes@1.4.0':
     resolution: {integrity: sha512-V1JJ1WTRUqHHrOSh597hURcMqVKVGL/ea3kv0gSnEdsEZ0/+VyPghM1lMNGc00z7CIQorSvbKpuJkxvuHbvdbg==}
@@ -1805,6 +1805,7 @@ packages:
   eslint@9.39.5:
     resolution: {integrity: sha512-DgZS62aPLXKlnxILS/AYCoRvHaZeXceIzlXPkkGGzJWSow1aEk0lbTlxUSlyjC8jcaKxAdOnTDz+o1JFSBsyjw==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
+    deprecated: This version is no longer supported. Please see https://eslint.org/version-support for other options.
     hasBin: true
     peerDependencies:
       jiti: '*'
@@ -2978,8 +2979,8 @@ packages:
       webpack:
         optional: true
 
-  sass@1.102.0:
-    resolution: {integrity: sha512-NSOyTnaQF7rTAEOtI2fwb386vL+akyiQLBZu8Na7hXCb+umJy0GAqlcMIaqACZ6Z1VgTBS4K9PG6B3IdjHGJsw==}
+  sass@1.103.1:
+    resolution: {integrity: sha512-9icZURbP51S6S0QGoyaeqk9uB06GNWxsFYWfH5RgpFgqK5FA8tJcM3AdVxrZEVJ7dz+L87nG95gBKf4VuaMHGw==}
     engines: {node: '>=20.19.0'}
     hasBin: true
 
@@ -4400,7 +4401,7 @@ snapshots:
 
   '@leichtgewicht/ip-codec@2.0.5': {}
 
-  '@material-symbols/font-400@0.45.10': {}
+  '@material-symbols/font-400@0.46.0': {}
 
   '@noble/hashes@1.4.0': {}
 
@@ -6520,14 +6521,14 @@ snapshots:
 
   safer-buffer@2.1.2: {}
 
-  sass-loader@16.0.8(sass@1.102.0)(webpack@5.109.2):
+  sass-loader@16.0.8(sass@1.103.1)(webpack@5.109.2):
     dependencies:
       neo-async: 2.6.2
     optionalDependencies:
-      sass: 1.102.0
+      sass: 1.103.1
       webpack: 5.109.2(postcss@8.5.15)(webpack-cli@7.2.2)
 
-  sass@1.102.0:
+  sass@1.103.1:
     dependencies:
       chokidar: 5.0.0
       immutable: 5.1.5
