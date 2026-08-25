@@ -14,6 +14,9 @@
           </li>
       </template>
         <ul class="dropdown-list" :class="{ open }">
+          <div class="yellow">
+            <p style="margin-bottom: 0px; margin-top: 1px; padding: 8px;"> <b>OBS!</b> Vennligst benytt "Meld deg på" dersom du skal registrere ny bruker.</p>
+          </div>
           <li v-if="!logged_in"><a class="login-dropdown" :href="feideLink"> Feide <Icon name="chevron_right" size="22"/></a></li>
           <li v-if="!logged_in"><a class="login-dropdown" :href="loginLink"> Canvas <Icon name="chevron_right" size="22"/></a></li>
         </ul> 

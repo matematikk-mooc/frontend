@@ -1,11 +1,4 @@
 <template>
-    <div class="intro-container intro-text yellow">
-    <h2>N.B! Ny bruker? Registrer deg i en pakke under!
-    </h2>
-      <p class="intro-p2">Dersom du ikke har benyttet deg av kompetanseportalen før, vennligst meld deg på ved å bruke en av pakkene i listen lenger ned på denne siden.</p>
-
-    </div>
-
   <div class="intro-container">
     <div class="intro-text">
       <h1 class="frontheader">Velkommen til Kompetanseportalen!</h1>
