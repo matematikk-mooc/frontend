@@ -22,3 +22,7 @@ node_modules/
 /blob-report/
 /playwright/.cache/
 .tests_playwright/
+/playwright-report-local/
+/test-results-local/
+/tests-local/
+playwright.local.config.js
