@@ -524,6 +524,12 @@ routeMap.forEach(({ pattern }) => {
         window.location.href = decodeURIComponent(forwardTo);
         return;
       }
+
+      let pendingEnrollCode = utilRoot.consumePendingEnrollment();
+      if(pendingEnrollCode && util.isAuthenticated()) {
+        window.location.href = window.location.origin + "/enroll/" + pendingEnrollCode;
+        return;
+      }
     }
     footer.changeFooter();
     menu.renderUnauthenticatedMenu();
