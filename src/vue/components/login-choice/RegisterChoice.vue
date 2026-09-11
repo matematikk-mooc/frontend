@@ -24,6 +24,7 @@
     <script>
     import Modal from '../modal/Modal.vue'
     import Button from '../Button.vue'
+    import utilRoot from '../../../js/utilRoot'
     export default {
       name: 'RegisterChoice',
       components: {
@@ -31,7 +32,6 @@
         Button,
       },
       props: {
-        forwardTo: String,
         selfEnrollmentCode: String,
         fullWidth: Boolean,
         authorized: Boolean
@@ -54,13 +54,13 @@
           this.modalOpen = false
         },
         goToFeide() {
-            window.location.href = window.location.origin + "/login/saml/";
+
+            utilRoot.setPendingEnrollment(this.selfEnrollmentCode);
+            window.location.href = window.location.origin + "/login/saml/2";
 
         },
         goToCanvas() {
-                  const url = window.location.origin + "/login/canvas";
-        console.log("Redirecting to:", url);
-        window.location.href = url;
+            window.location.href = window.location.origin + "/enroll/" + this.selfEnrollmentCode;
         }
       }
     }

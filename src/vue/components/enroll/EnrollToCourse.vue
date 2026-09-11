@@ -27,6 +27,7 @@
 <script>
 import Modal from '../modal/Modal.vue'
 import Button from '../Button.vue'
+import utilRoot from '../../../js/utilRoot'
 export default {
     name: 'EnrollToCourse',
     components: {
@@ -48,11 +49,18 @@ export default {
             this.modalOpen = false
         },
         goToFeide() {
-            window.location.href = window.location.origin + "/search/all_courses?enroll_code=" + this.selfEnrollmentCode
+            utilRoot.setPendingEnrollment(this.selfEnrollmentCode)
+            window.location.href = window.location.origin + "/login/saml/2"
 
         },
         goToCanvas() {
-            window.location.href = window.location.origin + "/enroll/" + this.selfEnrollmentCode
+            if (this.authenticated) {
+                // Already logged in: /enroll/<code> just shows the confirm-enrollment button, no login form involved.
+                window.location.href = window.location.origin + "/enroll/" + this.selfEnrollmentCode
+                return
+            }
+            utilRoot.setPendingEnrollment(this.selfEnrollmentCode)
+            window.location.href = window.location.origin + "/login/canvas?normalLogin=1"
         }
     }
 }
