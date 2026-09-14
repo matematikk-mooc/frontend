@@ -24,8 +24,8 @@ importers:
   .:
     dependencies:
       '@material-symbols/font-400':
-        specifier: ^0.47.1
-        version: 0.47.1
+        specifier: ^0.47.2
+        version: 0.47.2
       '@vimeo/player':
         specifier: ^2.30.4
         version: 2.30.4
@@ -115,11 +115,11 @@ importers:
         specifier: ^1.0.6
         version: 1.0.6
       sass:
-        specifier: ^1.104.0
-        version: 1.104.0
+        specifier: ^1.104.1
+        version: 1.104.1
       sass-loader:
         specifier: 16.0.8
-        version: 16.0.8(sass@1.104.0)(webpack@5.110.3)
+        version: 16.0.8(sass@1.104.1)(webpack@5.110.3)
       string-replace-loader:
         specifier: ^3.3.0
         version: 3.3.0(webpack@5.110.3)
@@ -893,8 +893,8 @@ packages:
   '@leichtgewicht/ip-codec@2.0.5':
     resolution: {integrity: sha512-Vo+PSpZG2/fmgmiNzYK9qWRh8h/CHrwD0mo1h1DzL4yzHNSfWYujGTYsWGreD000gcgmZ7K4Ys6Tx9TxtsKdDw==}
 
-  '@material-symbols/font-400@0.47.1':
-    resolution: {integrity: sha512-MuLpNwyZm3tb4nLjx7AqILkrjUp5Jp7UwLv+QW8GYgNxUEnOu7aDjKgAyQkx3ndUMgq/0MptwzdMhLSkStWhtg==}
+  '@material-symbols/font-400@0.47.2':
+    resolution: {integrity: sha512-fpzLxWYYNYkNflwT7jOxuYB08bMp+uEbEU9ounB7cU7ElxiFdeOmyMSb59iF0tnYSpnAig7oysXDuWnm8J9zng==}
 
   '@noble/hashes@1.4.0':
     resolution: {integrity: sha512-V1JJ1WTRUqHHrOSh597hURcMqVKVGL/ea3kv0gSnEdsEZ0/+VyPghM1lMNGc00z7CIQorSvbKpuJkxvuHbvdbg==}
@@ -2978,8 +2978,8 @@ packages:
       webpack:
         optional: true
 
-  sass@1.104.0:
-    resolution: {integrity: sha512-btHMApW2bgolvClhRW8AlQJzgI9lUB3pPSofBQQT+E46GWvf9o0TVQ13SYv5riWZVFyPN+JNz3TKW9XhBlc10w==}
+  sass@1.104.1:
+    resolution: {integrity: sha512-yDA+1aIG3EHgN4V/BvuhCvu61FF6hEd4e+9DxikUm9U0CAGuvdIZ/UYy7qbOxjhbbWQraoyLlMuzdRGOSV5Bmw==}
     engines: {node: '>=20.19.0'}
     hasBin: true
 
@@ -4405,7 +4405,7 @@ snapshots:
 
   '@leichtgewicht/ip-codec@2.0.5': {}
 
-  '@material-symbols/font-400@0.47.1': {}
+  '@material-symbols/font-400@0.47.2': {}
 
   '@noble/hashes@1.4.0': {}
 
@@ -6513,14 +6513,14 @@ snapshots:
 
   safer-buffer@2.1.2: {}
 
-  sass-loader@16.0.8(sass@1.104.0)(webpack@5.110.3):
+  sass-loader@16.0.8(sass@1.104.1)(webpack@5.110.3):
     dependencies:
       neo-async: 2.6.2
     optionalDependencies:
-      sass: 1.104.0
+      sass: 1.104.1
       webpack: 5.110.3(postcss@8.5.15)(webpack-cli@7.2.3)
 
-  sass@1.104.0:
+  sass@1.104.1:
     dependencies:
       chokidar: 5.0.0
       immutable: 5.1.5
