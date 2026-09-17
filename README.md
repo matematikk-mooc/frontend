@@ -1,6 +1,6 @@
 ![](https://imgur.com/XWVOBSH.png)
 
-# Frontend - Kompetanseportalen (KPAS)
+# Frontend - Kompetanseportalen
 
 This platform is operated by The Norwegian Directorate of Education's Department for Digital Services, which is responsible for managing a number of national digital solutions that support education and skills development.
 
