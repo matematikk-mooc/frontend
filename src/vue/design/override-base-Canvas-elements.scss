@@ -440,6 +440,12 @@ body.with-left-side:not(.useFullWidth) {
   padding: 0 !important;
 }
 
+.yellow {
+  background-color: lightyellow !important;
+  justify-content: flex-start !important;
+  flex-direction: column !important;
+  gap: 0 !important;
+}
 #main:has(#registration_content){
   background-color: white;
   height: 100vh;
@@ -679,8 +685,14 @@ body.notifications, body.profile, body.profile_settings, body.content_shares, bo
   }
 }
 
-.intro-p1 {
+.intro-p1, .intro-p2 {
   margin-bottom: 40px;
+  font-size: 18px;
+}
+.frontheader {
+  font-size: 20px;
+  line-height: normal;
+  margin-bottom: 10px;
 }
 
 .header-bar-outer-container {

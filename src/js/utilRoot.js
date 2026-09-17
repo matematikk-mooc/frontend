@@ -3,6 +3,8 @@ import settingsRoot from "./settingsRoot";
 export default (function() {
   return {
     _env: typeof ENV !== 'undefined' ? ENV : {},
+    pendingEnrollmentStorageKey: 'kpas_pending_enroll_code',
+    pendingEnrollmentTtlMs: 30 * 60 * 1000, // 30 minutes
     getRoles : function() {
       return this._env.current_user_roles;
     },
@@ -12,6 +14,34 @@ export default (function() {
     getLinkToMyCourses: function () {
         var linkToMyCourses = "/courses";
         return linkToMyCourses;
+    },
+
+    setPendingEnrollment: function(enrollCode) {
+      if (!enrollCode) return;
+      try {
+        window.localStorage.setItem(
+          this.pendingEnrollmentStorageKey,
+          JSON.stringify({ code: enrollCode, ts: Date.now() })
+        );
+      } catch (e) {
+        console.log(e);
+      }
+    },
+    consumePendingEnrollment: function() {
+      try {
+        var raw = window.localStorage.getItem(this.pendingEnrollmentStorageKey);
+        if (!raw) return null;
+        window.localStorage.removeItem(this.pendingEnrollmentStorageKey);
+
+        var parsed = JSON.parse(raw);
+        var isExpired = !parsed.ts || (Date.now() - parsed.ts) > this.pendingEnrollmentTtlMs;
+        if (isExpired || !parsed.code) return null;
+
+        return parsed.code;
+      } catch (e) {
+        console.log(e);
+        return null;
+      }
     },
 
     //Support IE 11
