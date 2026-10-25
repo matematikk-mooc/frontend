@@ -21,11 +21,11 @@ mmooc.settings = {
   displayAlertsMenuItem : false,
   displayCallForAssistanceButtonInGroupDisccussions : false,
   displayInboxMenu: false,
-  privacyPolicyLink: 'https://kp.udir.no/personvern/',
+  privacyPolicyLink: 'https://kpas.kompetanse.udir.no/personvern/',
   contactPoint: 'kompetansesupport@udir.no',
   platformName: 'UDIR - kompetanseplattform',
   homeOrganization: 'Udir.no',
-  aboutThePlatform: 'https://kp.udir.no/om-kompetanseportalen/',
+  aboutThePlatform: 'https://kpas.kompetanse.udir.no/om-kompetanseportalen/',
   uuStatusNb: 'https://uustatus.no/nb/erklaringer/publisert/2796ebc6-161f-4dc9-9429-70d7dd136431',
   uuStatusNn: 'https://uustatus.no/nn/erklaringer/publisert/2796ebc6-161f-4dc9-9429-70d7dd136431',
 };
