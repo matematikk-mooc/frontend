@@ -80,7 +80,7 @@ export default (function() {
             const privacyPolicy = modal.querySelector('.checkbox').children[2];
             if (privacyPolicy) {
               privacyPolicy.innerText = "personvernserklæringen og brukervilkårene"
-              privacyPolicy.href = "https://kp.udir.no/personvern/"
+              privacyPolicy.href = "https://kpas.kompetanse.udir.no/personvern/"
               userTerms.remove()
               observer.disconnect();
             }
@@ -144,7 +144,7 @@ export default (function() {
             const checkboxNode = document.querySelector(".ic-Login-confirmation__content").children[3];
             // Create DOM element <a>, link, with text
             const privacyLink = Object.assign(document.createElement('a'), {
-              href: 'https://kp.udir.no/personvern/',
+              href: 'https://kpas.kompetanse.udir.no/personvern/',
               textContent: 'Personvernerklæringen',
               target: '_blank'
             });
