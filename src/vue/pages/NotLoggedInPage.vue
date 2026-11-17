@@ -1,6 +1,7 @@
 
 <template>
   <div class="not-logged-in-page">
+    <PortalClosureBanner />
     <div class="not-logged-in-page--header">
       <NotLoggedInIntro :newestCourse="highlightedCourse"></NotLoggedInIntro>
     </div>
@@ -21,6 +22,7 @@
 <script setup>
 import CardList from '../components/CardList.vue'
 import CardFilter from '../components/CardFilter.vue'
+import PortalClosureBanner from '../components/PortalClosureBanner.vue'
 import Banner from '../components/Banner.vue'
 import NotLoggedInIntro from '../components/NotLoggedInIntro.vue'
 import {ref} from 'vue'
