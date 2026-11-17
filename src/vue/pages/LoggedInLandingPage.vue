@@ -2,6 +2,7 @@
 <template>
     <div class="landing-page">
       <div id="main" class="landing-page--content">
+        <PortalClosureBanner />
         <h1>Alle tilgjengelige kompetansepakker</h1>
 
         <div class="landing-page--layout">
@@ -18,6 +19,7 @@
   <script setup>
   import CardList from '../components/CardList.vue'
   import CardFilter from '../components/CardFilter.vue'
+  import PortalClosureBanner from '../components/PortalClosureBanner.vue'
   import {ref} from 'vue'
   import { filterCourses } from '../utils/filter-courses.js'
   import MobileWarning from '../components/information-banner/MobileWarning.vue'
