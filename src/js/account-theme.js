@@ -81,61 +81,53 @@ jQuery(document).ready(function ($) {
   }
     
   var isBrandConfigPage =
-    window.location.pathname === '/accounts/1/brand_configs';
+    /^\/accounts\/1\/brand_configs\/?$/.test(window.location.pathname);
   if (isBrandConfigPage) {
     try {
-      if (isBrandConfigPage) {
-        var intervalTime = 1000;
-        var checkInterval;
+      var checkInterval;
 
-        function runWhenTemaVisible() {
-          var themeButton = $('#Menu__label___0');
-          var isThemeHeadingVisible = themeButton.is(':visible');
-
-          if (isThemeHeadingVisible) {
-            var content = $('#content');
-            if (content.length) {
-              var buttonWrapper = $(
-                '<div id="theme-toggle-wrapper" style="margin-bottom: 20px;display: flex;justify-content: flex-end;"></div>',
-              );
-
-              function getButtonLabel() {
-                var cookieValue = $.getCookie(themeCookieName);
-                return cookieValue === 'true'
-                  ? 'Switch to default theme'
-                  : 'Switch to localhost theme';
-              }
-
-              var themeSwitchButton = $('<button>', {
-                class: 'Button Button--primary',
-                type: 'button',
-                text: getButtonLabel(),
-                click: function () {
-                  var currentCookie = $.getCookie(themeCookieName);
-                  if (currentCookie === 'true') {
-                    $.deleteCookie(themeCookieName);
-                  } else {
-                    $.setCookie(themeCookieName, 'true', 15);
-                  }
-
-                  window.location.reload();
-                  $(this).text(getButtonLabel());
-                },
-              });
-
-              buttonWrapper.append(themeSwitchButton);
-              content.prepend(buttonWrapper);
-            }
-
-            clearInterval(checkInterval);
-          } else {
-            console.log(
-              '<h1>Tema</h1> is still not visible. Checking again...',
-            );
-          }
+      function addThemeToggle() {
+        if ($('#theme-toggle-wrapper').length) {
+          return true;
         }
 
-        checkInterval = setInterval(runWhenTemaVisible, intervalTime);
+        var content = $('#content');
+        if (!content.length) {
+          return false;
+        }
+
+        var buttonWrapper = $(
+          '<div id="theme-toggle-wrapper" style="margin-bottom: 20px;display: flex;justify-content: flex-end;"></div>',
+        );
+        var themeSwitchButton = $('<button>', {
+          class: 'Button Button--primary',
+          type: 'button',
+          text:
+            $.getCookie(themeCookieName) === 'true'
+              ? 'Switch to default theme'
+              : 'Switch to localhost theme',
+          click: function () {
+            if ($.getCookie(themeCookieName) === 'true') {
+              $.deleteCookie(themeCookieName);
+            } else {
+              $.setCookie(themeCookieName, 'true', 15);
+            }
+
+            window.location.reload();
+          },
+        });
+
+        buttonWrapper.append(themeSwitchButton);
+        content.prepend(buttonWrapper);
+        return true;
+      }
+
+      if (!addThemeToggle()) {
+        checkInterval = setInterval(function () {
+          if (addThemeToggle()) {
+            clearInterval(checkInterval);
+          }
+        }, 1000);
       }
     } catch (error) {
       console.error('Error in brand config page', error);
