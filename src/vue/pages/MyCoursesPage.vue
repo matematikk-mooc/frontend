@@ -1,6 +1,7 @@
 <template>
   <div class="my-courses-page">
     <div id="main" class="my-courses-page--content">
+      <PortalClosureBanner />
       <h1>Mine kompetansepakker</h1>
 
       <div class="my-courses-invites" v-if="hasInvites">
@@ -29,6 +30,7 @@
 <script>
 import Button from '../components/Button.vue';
 import CardList from '../components/CardList.vue';
+import PortalClosureBanner from '../components/PortalClosureBanner.vue';
 import { isInvitedCourse } from "../utils/filter-courses";
 import api from "../../js/api/api";
 
@@ -36,6 +38,7 @@ export default {
   name: 'MyCoursesPage',
   components: {
     Button,
+    PortalClosureBanner,
     CardList
   },
   computed: {
